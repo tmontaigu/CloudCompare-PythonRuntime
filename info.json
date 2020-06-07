@@ -1,0 +1,27 @@
+{
+  "type": "Standard",
+  "name": "Python Plugin",
+  "icon": ":/CC/plugin/PythonPlugin/images/icon.png",
+  "description": "This is a description of the marvelous Example plugin. It does nothing.",
+  "authors": [
+    {
+      "name": "Thomas Montaigu",
+      "email": "thomas.montaigu@laposte.net"
+    }
+  ],
+  "maintainers": [
+    {
+      "name": "Thomas Montaigu",
+      "email": "thomas.montaigu@laposte.net"
+    }
+  ],
+  "references": [
+    {
+      "text": "Sword swallowing and its side effects",
+      "url": "http://www.bmj.com/content/333/7582/1285"
+    },
+    {
+      "text": "I thought of creating this wonderful plugin while I was hiking up &#x26f0; Mont Blanc"
+    }
+  ]
+}
