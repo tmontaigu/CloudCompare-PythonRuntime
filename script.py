@@ -3,24 +3,22 @@ import numpy as np
 
 
 def main():
-    pycc.PrintMessage("Starting")
-
     entities = pycc.GetSelectedEntities()
-    pycc.PrintMessage(str(entities))
+    print(entities)
 
     if not entities:
         pycc.PrintError("No entities were selected")
         return
 
     pc = entities[0]
-    pycc.PrintMessage(f"The point cloud has {pc.size()} points")
+    print(f"The point cloud has {pc.size()} points")
     pc.setName("Renamed from python")
 
     sf = pc.getScalarField(0).asArray()
-    pycc.PrintMessage(pc.getScalarField(0).getName());
-    pycc.PrintMessage(f"{sf}")
+    print(pc.getScalarField(0).getName())
+    print(f"{sf}")
     sf[:] = 42.0
-    pycc.PrintMessage(f"{sf}")
+    print(f"{sf}")
 
     try:
         pc.getScalarField(157)
@@ -30,5 +28,23 @@ def main():
         assert False
 
 
+def main2():
+    point = pycc.Vector3(1.0, 2.0, 3.0)
+    print(f"First Point: {point}")
+
+    point.x = 17.256
+    point.y = 12.5
+    point.z = 42.65
+    assert np.isclose(point.x, 17.256)
+    assert np.isclose(point.y, 12.5)
+    assert np.isclose(point.z, 42.65)
+
+    point = pycc.Vector3(25.0, 15.0, 30.0)
+    point2 = pycc.Vector3(5.0, 5.0, 5.0)
+
+    p = point - point2
+
+
 if __name__ == '__main__':
     main()
+    main2()

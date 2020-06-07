@@ -20,6 +20,7 @@
 #include <pybind11/embed.h>
 
 #include "ccMainAppInterface.h"
+#include "PythonStdErrOutRedirect.h"
 #include "exposed.h"
 
 namespace py = pybind11;
@@ -48,6 +49,38 @@ void PrintError(const char *message) {
     ccLog::Error(message);
 }
 
+/// Class implementing 'write' to be able to act like
+/// a Python file object in order to be able to
+/// output messages from Python's print to the CloudCompare console
+/// instead of stdout & stderr
+class ccConsoleOutput {
+public:
+    ccConsoleOutput() = default;
+    void write(const char *messagePart) {
+        if (s_appInterface == nullptr) {
+            return;
+        }
+        //  this does not prevent the rest of the message to have a '\n'
+        // but is this a problem ?
+        const char *newLinePos = strchr(messagePart, '\n');
+        if (newLinePos == nullptr) {
+            m_currentMessage += messagePart;
+        } else {
+            s_appInterface->dispToConsole(m_currentMessage);
+            m_currentMessage.clear();
+            m_currentMessage += newLinePos + 1;
+        }
+    }
+private:
+    QString m_currentMessage{};
+};
+
+PYBIND11_EMBEDDED_MODULE(ccinternals, m) {
+    // `m` is a `py::module` which is used to bind functions and classes
+    py::class_<ccConsoleOutput>(m, "ccConsoleOutput")
+            .def(py::init<>())
+            .def("write", &ccConsoleOutput::write);
+}
 
 namespace Python {
     // This is an example of an action's method called when the corresponding action
@@ -62,26 +95,18 @@ namespace Python {
             return;
         }
 
-
         if (s_appInterface == nullptr)
         {
             s_appInterface = appInterface;
         }
 
-//        py::scoped_interpreter guard{};
-
-
         try
         {
+            PyStdErrOutStreamRedirect redirect{};
             py::eval_file("script.py");
         } catch (const std::exception &e)
         {
             appInterface->dispToConsole(QString("[Python] %1").arg(e.what()), ccMainAppInterface::ERR_CONSOLE_MESSAGE);
         }
-
-        //py::exec(R"(raise RuntimeError("koukou"))");
-        //py::exec(R"(pycc.test)");
-
-        /*** HERE ENDS THE ACTION ***/
     }
 }

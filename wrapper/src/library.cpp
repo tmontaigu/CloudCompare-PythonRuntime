@@ -117,7 +117,6 @@ PYBIND11_MODULE(pycc, m) {
             .def("setName", [](ccPointCloud *self, const char *newName) { self->setName(newName); })
             .def("size", &ccPointCloud::size)
             .def("getNumberOfScalarField", &ccPointCloud::getNumberOfScalarFields)
-            .def("getScalarField", &ccPointCloud::getScalarField)
             .def("getScalarFieldName", &ccPointCloud::getScalarFieldName)
             .def("getScalarFieldIndexByName", &ccPointCloud::getScalarFieldIndexByName)
             .def("getScalarField", [](const ccPointCloud *self, int index) {
