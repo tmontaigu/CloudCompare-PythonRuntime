@@ -19,6 +19,10 @@
 
 #include "ccStdPluginInterface.h"
 
+#undef slots
+#include <pybind11/embed.h>
+namespace py = pybind11;
+
 //! Example qCC plugin
 /** Replace 'ExamplePlugin' by your own plugin class name throughout and then
 	check 'ExamplePlugin.cpp' for more directions.
@@ -55,6 +59,8 @@ public:
     void onNewSelection(const ccHObject::Container &selectedEntities) override;
 
     QList<QAction *> getActions() override;
+
+    py::scoped_interpreter guard{};
 
 private:
     //! Default action

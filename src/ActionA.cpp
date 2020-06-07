@@ -62,9 +62,13 @@ namespace Python {
             return;
         }
 
-        s_appInterface = appInterface;
 
-        py::scoped_interpreter guard{};
+        if (s_appInterface == nullptr)
+        {
+            s_appInterface = appInterface;
+        }
+
+//        py::scoped_interpreter guard{};
 
 
         try
