@@ -19,6 +19,7 @@
 
 class ccMainAppInterface;
 
-namespace Python {
-    void performActionA(ccMainAppInterface *appInterface);
+namespace Python
+{
+	void performActionA(ccMainAppInterface *appInterface);
 }

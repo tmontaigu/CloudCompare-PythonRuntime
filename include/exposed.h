@@ -21,6 +21,14 @@
 
 Q_DECL_EXPORT ccHObject::Container GetSelectedEntities();
 
+Q_DECL_EXPORT ccHObject *GetDBRoot();
+
+Q_DECL_EXPORT void SetSelectedInDB(ccHObject* obj, bool selected);
+
+Q_DECL_EXPORT ccHObject *LoadFile(const char *filename);
+
+Q_DECL_EXPORT void RemoveFromDB(ccHObject *obj);
+
 Q_DECL_EXPORT void PrintMessage(const char *message);
 
 Q_DECL_EXPORT void PrintWarning(const char *message);
