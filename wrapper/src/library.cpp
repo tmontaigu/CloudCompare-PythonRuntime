@@ -25,6 +25,8 @@
 #include <ccScalarField.h>
 #include <ccDrawableObject.h>
 
+#include <BoundingBox.h>
+
 #include "wrappers.h"
 #include "casters.h"
 #include "exposed.h"
@@ -76,6 +78,11 @@ PYBIND11_MODULE(pycc, m)
 				return "<Vector3(" + std::to_string(self.x) + ", " + std::to_string(self.y) + ", " +
 				       std::to_string(self.z) + ")>";
 			});
+
+	py::class_<CCCoreLib::BoundingBox>(m, "BoundingBox")
+	        .def("minCorner", [](const CCCoreLib::BoundingBox& self) { return self.minCorner(); })
+			.def("maxCorner", [](const CCCoreLib::BoundingBox & self) { return self.maxCorner(); })
+	        .def("computeVolume", &CCCoreLib::BoundingBox::computeVolume);
 
 	py::class_<ccGenericGLDisplay>(m, "ccGenericGLDisplay");
 

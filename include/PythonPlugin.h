@@ -51,7 +51,7 @@ Q_OBJECT
 	// Replace "Example" by your plugin name (IID should be unique - let's hope your plugin name is unique ;)
 	// The info.json file provides information about the plugin to the loading system and
 	// it is displayed in the plugin information dialog.
-	Q_PLUGIN_METADATA(IID "cccorp.cloudcompare.plugin.Example" FILE "../info.json")
+	Q_PLUGIN_METADATA(IID "cccorp.cloudcompare.plugin.PythonPlugin" FILE "../info.json")
 
 public:
 	explicit PythonPlugin(QObject *parent = nullptr);

@@ -40,18 +40,6 @@ void PythonPlugin::onNewSelection(const ccHObject::Container &selectedEntities)
 		return;
 	}
 
-	// If you need to check for a specific type of object, you can use the methods
-	// in ccHObjectCaster.h or loop and check the objects' classIDs like this:
-	//
-	//	for ( ccHObject *object : selectedEntities )
-	//	{
-	//		if ( object->getClassID() == CC_TYPES::VIEWPORT_2D_OBJECT )
-	//		{
-	//			// ... do something with the viewports
-	//		}
-	//	}
-
-//	 For example - only enable our action if something is selected.
 	m_action->setEnabled(true);
 }
 
