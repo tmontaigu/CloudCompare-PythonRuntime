@@ -24,10 +24,14 @@
 #include "exposed.h"
 #include <FileIOFilter.h>
 #include <QWidget>
+#include <utility>
+#include <Consoles.h>
+
+#include "QPythonREPL.h"
 
 namespace py = pybind11;
 
-static ccMainAppInterface *s_appInterface{nullptr};
+ccPythonInstance *s_pythonInstance{nullptr};
 
 static void ThrowForFileError(CC_FILE_ERROR error)
 {
@@ -72,28 +76,10 @@ static void ThrowForFileError(CC_FILE_ERROR error)
 	}
 }
 
-ccHObject::Container GetSelectedEntities()
+ccPythonInstance *GetInstance()
 {
-	if (s_appInterface == nullptr)
-	{
-		throw std::runtime_error("missing MainAppInterface, is the Python Plugin running ?");
-	} else
-	{
-		return s_appInterface->getSelectedEntities();
-	}
+	return s_pythonInstance;
 }
-
-void RemoveFromDB(ccHObject *obj)
-{
-	if (s_appInterface == nullptr)
-	{
-		throw std::runtime_error("missing MainAppInterface, is the Python Plugin running ?");
-	} else
-	{
-		s_appInterface->removeFromDB(obj, false);
-	}
-}
-
 
 void PrintMessage(const char *message)
 {
@@ -110,105 +96,46 @@ void PrintError(const char *message)
 	ccLog::Error(message);
 }
 
-ccHObject *GetDBRoot()
-{
-	if (s_appInterface)
-	{
-		return s_appInterface->dbRootObject();
-	} else
-	{
-		throw std::runtime_error("missing MainAppInterface, is the Python Plugin running ?");
-	}
-}
-
-void SetSelectedInDB(ccHObject *obj, bool selected)
-{
-	if (s_appInterface)
-	{
-		s_appInterface->setSelectedInDB(obj, selected);
-	} else
-	{
-		throw std::runtime_error("missing MainAppInterface, is the Python Plugin running ?");
-	}
-}
-
-ccHObject *LoadFile(const char *filename)
-{
-	CCVector3d loadCoordinatesShift(0, 0, 0);
-	bool loadCoordinatesTransEnabled = false;
-	FileIOFilter::LoadParameters parameters;
-	parameters.alwaysDisplayLoadDialog = true;
-	parameters.shiftHandlingMode = ccGlobalShiftManager::NO_DIALOG;
-	parameters.coordinatesShift = &loadCoordinatesShift;
-	parameters.coordinatesShiftEnabled = &loadCoordinatesTransEnabled;
-	ccLog::Warning("%f %f %f", loadCoordinatesShift.x, loadCoordinatesShift.y, loadCoordinatesShift.z);
-	parameters.parentWidget = (QWidget *) s_appInterface->getMainWindow();
-
-	CC_FILE_ERROR result = CC_FERR_NO_ERROR;
-	ccHObject *newGroup = FileIOFilter::LoadFromFile(filename, parameters, result);
-	ThrowForFileError(result);
-
-	if (newGroup)
-	{
-		s_appInterface->addToDB(newGroup);
-	}
-	return newGroup;
-}
-
-
-/// Class implementing 'write' to be able to act like
-/// a Python file object in order to be able to
-/// output messages from Python's print to the CloudCompare console
-/// instead of stdout & stderr
-class ccConsoleOutput
-{
-public:
-	ccConsoleOutput() = default;
-
-	void write(const char *messagePart)
-	{
-		if (s_appInterface == nullptr)
-		{
-			return;
-		}
-
-		size_t len = strlen(messagePart);
-		const char* messageEnd = messagePart + len;
-		const char* start = messagePart;
-
-		const char *newLinePos;
-		while((newLinePos = strchr(start, '\n')) != nullptr)
-		{
-			m_currentMessage += QString::fromUtf8(start, static_cast<int>(newLinePos - start));
-			s_appInterface->dispToConsole(m_currentMessage);
-			m_currentMessage.clear();
-			start = newLinePos + 1;
-		}
-
-		if (start != messageEnd)
-		{
-			m_currentMessage += QString::fromUtf8(start, static_cast<int>(messageEnd - start));
-		}
-	}
-
-private:
-	QString m_currentMessage{};
-};
 
 PYBIND11_EMBEDDED_MODULE(ccinternals, m)
 {
 	py::class_<ccConsoleOutput>(m, "ccConsoleOutput")
 			.def(py::init<>())
 			.def("write", &ccConsoleOutput::write);
+
+	py::class_<QListWidget, std::unique_ptr<QListWidget, py::nodelete>>(m, "QListWidget");
+
+	py::class_<ConsoleREPL>(m, "ConsoleREPL")
+			.def(py::init<QListWidget *>())
+			.def("write", &ConsoleREPL::write);
 }
 
 namespace Python
 {
+
+	void setMainAppInterfaceInstance(ccMainAppInterface *appInterface)
+	{
+		if (s_pythonInstance == nullptr)
+		{
+			s_pythonInstance = new ccPythonInstance(appInterface);
+		}
+	}
+
+	void unsetMainAppInterfaceInstance()
+	{
+		if (s_pythonInstance != nullptr)
+		{
+			delete s_pythonInstance;
+			s_pythonInstance = nullptr;
+		}
+	}
+
+
 	// This is an example of an action's method called when the corresponding action
 	// is triggered (i.e. the corresponding icon or menu entry is clicked in CC's
 	// main interface). You can access most of CC's components (database,
 	// 3D views, console, etc.) via the 'appInterface' variable.
-	void performActionA(ccMainAppInterface *appInterface)
+	void runScript(ccMainAppInterface *appInterface)
 	{
 		if (appInterface == nullptr)
 		{
@@ -217,9 +144,9 @@ namespace Python
 			return;
 		}
 
-		if (s_appInterface == nullptr)
+		if (s_pythonInstance == nullptr)
 		{
-			s_appInterface = appInterface;
+			setMainAppInterfaceInstance(appInterface);
 		}
 
 		try
@@ -232,3 +159,37 @@ namespace Python
 		}
 	}
 }
+
+ccPythonInstance::ccPythonInstance(ccMainAppInterface *app) : m_app(app)
+{
+	if (m_app == nullptr)
+	{
+		throw std::invalid_argument("nullptr received for the app");
+	}
+}
+
+ccHObject *ccPythonInstance::loadFile(const char *filename)
+{
+	CCVector3d loadCoordinatesShift(0, 0, 0);
+	bool loadCoordinatesTransEnabled = false;
+	FileIOFilter::LoadParameters parameters;
+	parameters.alwaysDisplayLoadDialog = true;
+	parameters.shiftHandlingMode = ccGlobalShiftManager::NO_DIALOG;
+	parameters.coordinatesShift = &loadCoordinatesShift;
+	parameters.coordinatesShiftEnabled = &loadCoordinatesTransEnabled;
+	parameters.parentWidget = (QWidget *) m_app->getMainWindow();
+
+	CC_FILE_ERROR result = CC_FERR_NO_ERROR;
+	ccHObject *newGroup = FileIOFilter::LoadFromFile(filename, parameters, result);
+	ThrowForFileError(result);
+
+	if (newGroup)
+	{
+		m_app->addToDB(newGroup);
+		m_app->refreshAll();
+		m_app->updateUI();
+	}
+	return newGroup;
+}
+
+

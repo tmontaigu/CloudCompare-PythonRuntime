@@ -18,17 +18,20 @@
 
 
 #include <QtGui>
+#include <iostream>
 
 #include "PythonPlugin.h"
-
+#include "QPythonREPL.h"
 #include "ActionA.h"
 
 // Default constructor:
 //	- pass the Qt resource path to the info.json file (from <yourPluginName>.qrc file) 
 //  - constructor should mainly be used to initialize actions and other members
 PythonPlugin::PythonPlugin(QObject *parent)
-		: QObject(parent), ccStdPluginInterface(":/CC/plugin/PythonPlugin/info.json"), m_action(nullptr)
+		: QObject(parent)
+		, ccStdPluginInterface(":/CC/plugin/PythonPlugin/info.json")
 {
+	m_repl = new ui::QPythonREPL();
 }
 
 // This method should enable or disable your plugin actions
@@ -50,14 +53,33 @@ QList<QAction *> PythonPlugin::getActions()
 	if (!m_action)
 	{
 		m_action = new QAction("Run script", this);
-		m_action->setToolTip(getDescription());
+		m_action->setToolTip("Run a Python Script");
 		m_action->setIcon(getIcon());
 
 		connect(m_action, &QAction::triggered, this, [this]()
 		{
-			Python::performActionA(m_app);
+			Python::runScript(m_app);
 		});
 	}
 
-	return {m_action};
+	if (!m_repl_action) {
+		m_repl_action = new QAction("Show REPL", this);
+		m_repl_action->setToolTip("Start Python REPL");
+		connect(m_repl_action, &QAction::triggered, this, &PythonPlugin::showRepl);
+	}
+
+	return {m_action, m_repl_action};
+}
+
+void PythonPlugin::showRepl() const
+{
+	if (m_repl) {
+		Python::setMainAppInterfaceInstance(m_app);
+		m_repl->show();
+	}
+}
+
+PythonPlugin::~PythonPlugin()
+{
+	Python::unsetMainAppInterfaceInstance();
 }

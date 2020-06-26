@@ -26,6 +26,7 @@
 #include <ccDrawableObject.h>
 
 #include <BoundingBox.h>
+#include <ccMainAppInterface.h>
 
 #include "wrappers.h"
 #include "casters.h"
@@ -44,15 +45,6 @@ PYBIND11_MODULE(pycc, m)
 	m.doc() = R"pbdoc(
         Python module exposing some CloudCompare functions
     )pbdoc";
-
-
-	m.def("GetSelectedEntities", &GetSelectedEntities, py::return_value_policy::automatic_reference,
-	      R"pbdoc(Returns the list of currently selected entities in the CloudCompare DB Tree)pbdoc");
-	m.def("GetDBRoot", &GetDBRoot, py::return_value_policy::reference);
-	m.def("SetSelectedInDB", &SetSelectedInDB);
-	m.def("LoadFile", &LoadFile, py::return_value_policy::reference);
-
-	m.def("RemoveFromDB", &RemoveFromDB);
 
 	m.def("PrintMessage", &PrintMessage);
 	m.def("PrintWarning", &PrintWarning);
@@ -123,4 +115,13 @@ PYBIND11_MODULE(pycc, m)
 			.def("getCurrentDisplayedScalarField", &ccPointCloud::getCurrentDisplayedScalarField)
 			.def("getCurrentDisplayedScalarFieldIndex", &ccPointCloud::getCurrentDisplayedScalarFieldIndex)
 			.def("getScalarField", &ccPointCloud::getScalarField);
+
+
+	py::class_<ccPythonInstance, observer_ptr<ccPythonInstance>>(m, "ccPythonInstance")
+		.def("haveSelection", &ccPythonInstance::haveSelection)
+		.def("haveOneSelection", &ccPythonInstance::haveOneSelection)
+		.def("getSelectedEntities", &ccPythonInstance::getSelectedEntities, py::return_value_policy::reference)
+		.def("loadFile", &ccPythonInstance::loadFile);
+
+	m.def("GetInstance", &GetInstance);
 }

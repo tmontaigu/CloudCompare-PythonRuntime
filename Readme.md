@@ -37,7 +37,7 @@ $env:pythonpath += ";$(Join-Path $env:pythonhome  Lib\site-packages)"
 # Currently, the PYTHONPATH must also be modified to have the path to the "PythonPlugin\wrapper" folder in the build dir
 # to be able to load the pycc python extension
 # eg:
-$env:pythonpath += ;C:\Users\Thomas\CMakeBuilds\CloudCompare-Release\build\plugins\private\PythonPlugin\wrapper" 
+$env:pythonpath += ";C:\Users\Thomas\CMakeBuilds\CloudCompare-Release\build\plugins\private\PythonPlugin\wrapper" 
 ```
 
 # Running
