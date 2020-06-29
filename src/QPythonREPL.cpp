@@ -39,52 +39,9 @@ bool ui::KeyPressEater::eventFilter(QObject *obj, QEvent *event)
 				{
 					return true;
 				}
-
-				const QString text = m_repl->codeEdit()->toPlainText();
-				/// Our raw input contains the ">>> " and "... " and is a QString
-				/// convert it to std::string while filtering out non needed chars
-				m_repl->m_buf.clear();
-				QString::const_iterator iter = text.begin() + replArrows.size();
-				while (iter != text.end())
-				{
-					// FIXME this will return 0 on non latin chars
-					//  we should do better
-					char c = iter->toLatin1();
-					if (c == 0)
-					{
-						// TODO handle better, like print an error or something
-						return true;
-					}
-					m_repl->m_buf += c;
-					if (*iter == '\n')
-					{
-						iter += replArrows.size();
-					}
-					iter++;
-				}
-				m_repl->outputDisplay()->addItem(text);
-				m_repl->codeEdit()->clear();
-				m_repl->codeEdit()->insertPlainText(replArrows);
-				try
-				{
-					// FIXME this should not be done every time
-					py::module::import("pycc");
-					m_repl->m_locals["cc"] = GetInstance();
-
-					PyStdErrOutStreamRedirect redir{m_repl->m_output, m_repl->m_output};
-					py::exec(m_repl->m_buf.c_str(), py::globals(), m_repl->m_locals);
-//				 This part is only useful if we use py::eval
-//				 however py::eval does not work on assignent expr (eg: my_var = 1)
-//				const auto result = py::eval...
-//				if (!result.is_none()) {
-//					const std::string repr = result.attr("__repr__")().cast<std::string>();
-//					m_repl->outputDisplay()->addItem(QString::fromStdString(repr));
-//				}
-				} catch (const std::exception &e)
-				{
-					m_repl->outputDisplay()->addItem(e.what());
-				}
-				m_repl->m_history.add(std::move(text));
+				const QString pythonCode = m_repl->codeEdit()->toPlainText();
+				m_repl->executeCode(pythonCode);
+				m_repl->m_history.add(std::move(pythonCode));
 				return true;
 			}
 			case Qt::Key_Backspace:
@@ -161,6 +118,9 @@ ui::QPythonREPL::QPythonREPL(QWidget *parent) :
 	m_buf.reserve(255);
 	m_output = py::module::import("ccinternals")
 			.attr("ConsoleREPL")(outputDisplay());
+
+	executeCode(replArrows + "import pycc");
+	executeCode(replArrows + "cc = pycc.GetInstance()");
 }
 
 ui::QPythonREPL::~QPythonREPL()
@@ -176,6 +136,49 @@ QPlainTextEdit *ui::QPythonREPL::codeEdit()
 QListWidget *ui::QPythonREPL::outputDisplay()
 {
 	return m_ui->outputDisplay;
+}
+
+void ui::QPythonREPL::executeCode(const QString &pythonCode)
+{
+	/// Our raw input contains the ">>> " and "... " and is a QString
+	/// convert it to std::string while filtering out non needed chars
+	m_buf.clear();
+	QString::const_iterator iter = pythonCode.begin() + replArrows.size();
+	while (iter != pythonCode.end())
+	{
+		// FIXME this will return 0 on non latin chars
+		//  we should do better
+		char c = iter->toLatin1();
+		if (c == 0)
+		{
+			outputDisplay()->addItem("Input contains non Latin1 chars");
+			return;
+		}
+		m_buf += c;
+		if (*iter == '\n')
+		{
+			iter += replArrows.size();
+		}
+		iter++;
+	}
+	outputDisplay()->addItem(pythonCode);
+	codeEdit()->clear();
+	codeEdit()->insertPlainText(replArrows);
+	try
+	{
+		PyStdErrOutStreamRedirect redir{m_output, m_output};
+		py::exec(m_buf.c_str(), py::globals(), m_locals);
+//				 This part is only useful if we use py::eval
+//				 however py::eval does not work on assignent expr (eg: my_var = 1)
+//				const auto result = py::eval...
+//				if (!result.is_none()) {
+//					const std::string repr = result.attr("__repr__")().cast<std::string>();
+//					outputDisplay()->addItem(QString::fromStdString(repr));
+//				}
+	} catch (const std::exception &e)
+	{
+		outputDisplay()->addItem(e.what());
+	}
 }
 
 ui::History::History()

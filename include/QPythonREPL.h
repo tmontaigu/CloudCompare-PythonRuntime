@@ -60,9 +60,12 @@ namespace ui
 	public:
 		explicit QPythonREPL(QWidget *parent = nullptr);
 
+		void executeCode(const QString &pythonCode);
 		~QPythonREPL() override;
 
 	protected:
+
+
 		QPlainTextEdit *codeEdit();
 
 		QListWidget *outputDisplay();
