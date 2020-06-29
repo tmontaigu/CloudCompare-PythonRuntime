@@ -31,19 +31,12 @@ PythonPlugin::PythonPlugin(QObject *parent)
 		: QObject(parent)
 		, ccStdPluginInterface(":/CC/plugin/PythonPlugin/info.json")
 {
-	m_repl = new ui::QPythonREPL();
 }
 
 // This method should enable or disable your plugin actions
 // depending on the currently selected entities ('selectedEntities').
 void PythonPlugin::onNewSelection(const ccHObject::Container &selectedEntities)
 {
-	if (m_action == nullptr)
-	{
-		return;
-	}
-
-	m_action->setEnabled(true);
 }
 
 // This method returns all the 'actions' your plugin can perform.
@@ -60,6 +53,7 @@ QList<QAction *> PythonPlugin::getActions()
 		{
 			Python::runScript(m_app);
 		});
+		m_action->setEnabled(true);
 	}
 
 	if (!m_repl_action) {
@@ -67,17 +61,19 @@ QList<QAction *> PythonPlugin::getActions()
 		m_repl_action->setToolTip("Start Python REPL");
 		m_repl_action->setIcon(QIcon(":/CC/plugin/PythonPlugin/images/repl-icon.png"));
 		connect(m_repl_action, &QAction::triggered, this, &PythonPlugin::showRepl);
+		m_repl_action->setEnabled(true);
 	}
 
 	return {m_action, m_repl_action};
 }
 
-void PythonPlugin::showRepl() const
+void PythonPlugin::showRepl()
 {
-	if (m_repl) {
+	if (m_repl == nullptr) {
 		Python::setMainAppInterfaceInstance(m_app);
-		m_repl->show();
+		m_repl = new ui::QPythonREPL();
 	}
+	m_repl->show();
 }
 
 PythonPlugin::~PythonPlugin()

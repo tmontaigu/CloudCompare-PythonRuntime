@@ -69,7 +69,7 @@ public:
 
 private:
 
-	void showRepl() const;
+	void showRepl();
 
 	py::scoped_interpreter guard{};
 	ui::QPythonREPL *m_repl{nullptr};
