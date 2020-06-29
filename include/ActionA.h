@@ -19,7 +19,11 @@
 
 class ccMainAppInterface;
 
+
 namespace Python
 {
-	void performActionA(ccMainAppInterface *appInterface);
+	void setMainAppInterfaceInstance(ccMainAppInterface *appInterface);
+	void unsetMainAppInterfaceInstance();
+
+	void runScript(ccMainAppInterface *appInterface);
 }

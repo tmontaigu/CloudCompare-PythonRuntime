@@ -19,15 +19,22 @@
 #ifndef CLOUDCOMPAREPROJECTS_EXPOSED_H
 #define CLOUDCOMPAREPROJECTS_EXPOSED_H
 
-Q_DECL_EXPORT ccHObject::Container GetSelectedEntities();
+#include <ccMainAppInterface.h>
 
-Q_DECL_EXPORT ccHObject *GetDBRoot();
+class Q_DECL_EXPORT ccPythonInstance {
+public:
+	ccPythonInstance(ccMainAppInterface *app);
 
-Q_DECL_EXPORT void SetSelectedInDB(ccHObject* obj, bool selected);
+	bool haveSelection() const { return m_app->haveSelection(); };
+	bool haveOneSelection() const { return m_app->haveOneSelection(); }
+	const ccHObject::Container& getSelectedEntities() const { return m_app->getSelectedEntities(); }
+	ccHObject *loadFile(const char* filename);
 
-Q_DECL_EXPORT ccHObject *LoadFile(const char *filename);
+private:
+	ccMainAppInterface* m_app;
+};
 
-Q_DECL_EXPORT void RemoveFromDB(ccHObject *obj);
+Q_DECL_EXPORT ccPythonInstance* GetInstance();
 
 Q_DECL_EXPORT void PrintMessage(const char *message);
 

@@ -21,6 +21,8 @@
 
 #include <pybind11/pybind11.h>
 
+#include <utility>
+
 namespace py = pybind11;
 
 // https://github.com/pybind/pybind11/issues/1622
@@ -39,6 +41,17 @@ public:
 		auto ccConsoleOutput = py::module::import("ccinternals").attr("ccConsoleOutput");
 		m_stdout_buffer = ccConsoleOutput();
 		m_stderr_buffer = ccConsoleOutput();
+		sysm.attr("stdout") = m_stdout_buffer;
+		sysm.attr("stderr") = m_stderr_buffer;
+	}
+
+	PyStdErrOutStreamRedirect(py::object stdout_obj, py::object stderr_obj)
+	{
+		auto sysm = py::module::import("sys");
+		m_stdout = sysm.attr("stdout");
+		m_stderr = sysm.attr("stderr");
+		m_stdout_buffer = std::move(stdout_obj);
+		m_stderr_buffer = std::move(stderr_obj);
 		sysm.attr("stdout") = m_stdout_buffer;
 		sysm.attr("stderr") = m_stderr_buffer;
 	}

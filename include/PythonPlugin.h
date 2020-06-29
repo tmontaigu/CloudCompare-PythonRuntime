@@ -23,6 +23,9 @@
 
 #include <pybind11/embed.h>
 
+namespace ui {
+	class QPythonREPL;
+}
 namespace py = pybind11;
 
 //! Example qCC plugin
@@ -56,20 +59,26 @@ Q_OBJECT
 public:
 	explicit PythonPlugin(QObject *parent = nullptr);
 
-	~PythonPlugin() override = default;
+	virtual ~PythonPlugin();
 
 	// Inherited from ccStdPluginInterface
 	void onNewSelection(const ccHObject::Container &selectedEntities) override;
 
 	QList<QAction *> getActions() override;
 
-	py::scoped_interpreter guard{};
 
 private:
+
+	void showRepl() const;
+
+	py::scoped_interpreter guard{};
+	ui::QPythonREPL *m_repl{nullptr};
+
 	//! Default action
 	/** You can add as many actions as you want in a plugin.
 		Each action will correspond to an icon in the dedicated
 		toolbar and an entry in the plugin menu.
 	**/
-	QAction *m_action;
+	QAction *m_action{nullptr};
+	QAction *m_repl_action{nullptr};
 };
