@@ -6,12 +6,7 @@
 
 #undef slots
 
-#include <pybind11/embed.h>
-#include <iostream>
 #include "PythonStdErrOutRedirect.h"
-#include <QFontMetricsF>
-#include <exposed.h>
-
 namespace py = pybind11;
 
 const static QString replArrows = ">>> ";

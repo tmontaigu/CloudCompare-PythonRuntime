@@ -65,6 +65,7 @@ QList<QAction *> PythonPlugin::getActions()
 	if (!m_repl_action) {
 		m_repl_action = new QAction("Show REPL", this);
 		m_repl_action->setToolTip("Start Python REPL");
+		m_repl_action->setIcon(QIcon(":/CC/plugin/PythonPlugin/images/repl-icon.png"));
 		connect(m_repl_action, &QAction::triggered, this, &PythonPlugin::showRepl);
 	}
 
