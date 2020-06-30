@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include <memory>
 #include "ccStdPluginInterface.h"
 
 #undef slots
@@ -71,8 +72,11 @@ private:
 
 	void showRepl();
 
-	py::scoped_interpreter guard{};
 	ui::QPythonREPL *m_repl{nullptr};
+
+	/// These are used to correctly setup the Python interpreter
+	std::unique_ptr<wchar_t[]> m_pythonPath{nullptr};
+	std::unique_ptr<wchar_t[]> m_pythonHome{nullptr};
 
 	//! Default action
 	/** You can add as many actions as you want in a plugin.

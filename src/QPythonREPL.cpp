@@ -10,6 +10,7 @@
 namespace py = pybind11;
 
 const static QString replArrows = ">>> ";
+const static QString continuationDots = "... ";
 
 bool ui::KeyPressEater::eventFilter(QObject *obj, QEvent *event)
 {
@@ -20,7 +21,8 @@ bool ui::KeyPressEater::eventFilter(QObject *obj, QEvent *event)
 		if (keyEvent->modifiers() & Qt::ShiftModifier &&
 		    (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
 		{
-			m_repl->codeEdit()->appendPlainText("\n... ");
+			m_repl->codeEdit()->appendPlainText("\n");
+			m_repl->codeEdit()->appendPlainText(continuationDots);
 			return true;
 		}
 
@@ -96,10 +98,11 @@ ui::QPythonREPL::QPythonREPL(QWidget *parent) :
 		QWidget(parent),
 		m_ui(new Ui_PythonREPLQt)
 {
+
 	m_ui->setupUi(this);
 	auto keyPressEater = new KeyPressEater(this);
 	codeEdit()->installEventFilter(keyPressEater);
-	codeEdit()->insertPlainText(replArrows);
+	codeEdit()->resize(codeEdit()->width(), 20);
 
 	auto highlighter = new PythonHighlighter(codeEdit()->document());
 	codeEdit()->setTabStopWidth(codeEdit()->fontMetrics().width(' ') * 8);
