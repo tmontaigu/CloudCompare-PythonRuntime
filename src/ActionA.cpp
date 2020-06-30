@@ -130,11 +130,6 @@ namespace Python
 		}
 	}
 
-
-	// This is an example of an action's method called when the corresponding action
-	// is triggered (i.e. the corresponding icon or menu entry is clicked in CC's
-	// main interface). You can access most of CC's components (database,
-	// 3D views, console, etc.) via the 'appInterface' variable.
 	void runScript(ccMainAppInterface *appInterface)
 	{
 		if (appInterface == nullptr)
