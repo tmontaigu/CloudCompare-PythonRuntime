@@ -30,8 +30,7 @@
 
 
 /// Returns a newly allocated array (null terminated) from a QString
-wchar_t *qstring_to_wchar_array(const QString &string)
-{
+wchar_t *qstring_to_wchar_array(const QString &string) {
 	auto *wcharArray = new wchar_t[string.size() + 1];
 	int len = string.toWCharArray(wcharArray);
 	if ( len > string.size())
@@ -45,8 +44,7 @@ wchar_t *qstring_to_wchar_array(const QString &string)
 
 // Useful link: https://docs.python.org/3/c-api/init.html#initialization-finalization-and-threads
 PythonPlugin::PythonPlugin(QObject *parent)
-		: QObject(parent), ccStdPluginInterface(":/CC/plugin/PythonPlugin/info.json")
-{
+		: QObject(parent), ccStdPluginInterface(":/CC/plugin/PythonPlugin/info.json") {
 	QDir pythonEnvDirPath(QApplication::applicationDirPath() + "/plugins/Python");
 	if ( pythonEnvDirPath.exists())
 	{
@@ -106,13 +104,11 @@ PythonPlugin::PythonPlugin(QObject *parent)
 }
 
 
-void PythonPlugin::onNewSelection(const ccHObject::Container &selectedEntities)
-{
+void PythonPlugin::onNewSelection(const ccHObject::Container &selectedEntities) {
 }
 
 
-QList<QAction *> PythonPlugin::getActions()
-{
+QList<QAction *> PythonPlugin::getActions() {
 	if ( !m_show_editor )
 	{
 		m_show_editor = new QAction("Show Editor", this);
@@ -134,33 +130,33 @@ QList<QAction *> PythonPlugin::getActions()
 	return {m_repl_action, m_show_editor};
 }
 
-void PythonPlugin::showRepl()
-{
+void PythonPlugin::showRepl() {
 	if ( m_repl == nullptr )
 	{
 		Python::setMainAppInterfaceInstance(m_app);
 		m_repl = new ui::QPythonREPL();
 	}
 	m_repl->show();
+	m_repl->raise();
+	m_repl->activateWindow();
 }
 
-void PythonPlugin::showEditor()
-{
+void PythonPlugin::showEditor() {
 	if ( editor )
 	{
 		Python::setMainAppInterfaceInstance(m_app);
 		editor->show();
+		editor->raise();
+		editor->activateWindow();
 	}
 }
 
-PythonPlugin::~PythonPlugin()
-{
+PythonPlugin::~PythonPlugin() {
 	py::finalize_interpreter();
 	Python::unsetMainAppInterfaceInstance();
 }
 
-void PythonPlugin::executeEditorCode(const std::string &evalFileName, const std::string &code)
-{
+void PythonPlugin::executeEditorCode(const std::string &evalFileName, const std::string &code) {
 	try
 	{
 		PyStdErrOutStreamRedirect redirect{};
