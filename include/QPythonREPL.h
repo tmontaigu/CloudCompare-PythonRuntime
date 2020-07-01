@@ -5,10 +5,12 @@
 
 #include <string>
 
-#undef slots
 
-#include <pybind11/embed.h>
 #include "PythonStdErrOutRedirect.h"
+#include <pybind11/pybind11.h>
+
+
+namespace py = pybind11;
 
 class Ui_PythonREPLQt;
 

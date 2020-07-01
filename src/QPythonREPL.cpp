@@ -4,8 +4,7 @@
 #include <ui_PythonREPLQt.h>
 #include <ccLog.h>
 
-#undef slots
-
+#include <pybind11/embed.h>
 #include "PythonStdErrOutRedirect.h"
 
 namespace py = pybind11;
@@ -18,7 +17,6 @@ bool ui::KeyPressEater::eventFilter(QObject *obj, QEvent *event)
 	if ( event->type() == QEvent::KeyPress )
 	{
 		auto *keyEvent = static_cast<QKeyEvent *>(event);
-		qDebug("Ate key press %d", keyEvent->key());
 		if ( keyEvent->modifiers() & Qt::ShiftModifier &&
 		     (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
 		{

@@ -5,11 +5,15 @@ if (PLUGIN_PYTHON)
 
     AddPlugin(NAME ${PROJECT_NAME})
 
+    target_compile_definitions(PythonPlugin PRIVATE -DQT_NO_KEYWORDS)
+
     add_subdirectory(wrapper)
 
     add_subdirectory(include)
     add_subdirectory(src)
     add_subdirectory(ui)
+
+    add_subdirectory(QCodeEditor)
 
     find_package(pybind11 CONFIG REQUIRED)
     target_link_libraries(PythonPlugin pybind11::embed)

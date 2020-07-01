@@ -20,7 +20,7 @@
 #include <pybind11/embed.h>
 
 #include "ccMainAppInterface.h"
-#include "PythonStdErrOutRedirect.h"
+
 #include "exposed.h"
 #include <FileIOFilter.h>
 #include <QWidget>
@@ -126,30 +126,6 @@ namespace Python
 		{
 			delete s_pythonInstance;
 			s_pythonInstance = nullptr;
-		}
-	}
-
-	void runScript(ccMainAppInterface *appInterface)
-	{
-		if (appInterface == nullptr)
-		{
-			// The application interface should have already been initialized when the plugin is loaded
-			Q_ASSERT(false);
-			return;
-		}
-
-		if (s_pythonInstance == nullptr)
-		{
-			setMainAppInterfaceInstance(appInterface);
-		}
-
-		try
-		{
-			PyStdErrOutStreamRedirect redirect{};
-			py::eval_file("script.py");
-		} catch (const std::exception &e)
-		{
-			appInterface->dispToConsole(QString("[Python] %1").arg(e.what()), ccMainAppInterface::ERR_CONSOLE_MESSAGE);
 		}
 	}
 }
