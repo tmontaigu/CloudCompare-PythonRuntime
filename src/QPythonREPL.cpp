@@ -37,6 +37,16 @@ bool ui::KeyPressEater::eventFilter(QObject *obj, QEvent *event)
 				{
 					return true;
 				}
+
+				// Try to be smart, create a new line if the python code will need one
+				if ( m_repl->codeEdit()->document()->characterAt(
+						m_repl->codeEdit()->document()->characterCount() - 2) ==
+				     ":" )
+				{
+					m_repl->codeEdit()->appendPlainText(continuationDots);
+					return true;
+				}
+
 				const QString pythonCode = m_repl->codeEdit()->toPlainText();
 				m_repl->executeCode(pythonCode);
 				m_repl->m_history.add(std::move(pythonCode));
@@ -59,7 +69,7 @@ bool ui::KeyPressEater::eventFilter(QObject *obj, QEvent *event)
 				}
 				return true;
 			case Qt::Key_Down:
-				if ( cursor.blockNumber() < m_repl->codeEdit()->blockCount() - 1)
+				if ( cursor.blockNumber() < m_repl->codeEdit()->blockCount() - 1 )
 				{
 					return QObject::eventFilter(obj, event);
 				} else if ( !m_repl->m_history.empty())
