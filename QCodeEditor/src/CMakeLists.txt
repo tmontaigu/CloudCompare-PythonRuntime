@@ -1,0 +1,9 @@
+target_sources(${PROJECT_NAME}
+		PRIVATE
+		${CMAKE_CURRENT_SOURCE_DIR}/QPythonEditor.h
+		${CMAKE_CURRENT_SOURCE_DIR}/codeEditor.h
+		${CMAKE_CURRENT_SOURCE_DIR}/chaiScriptSyntaxHighlighter.h
+		${CMAKE_CURRENT_SOURCE_DIR}/QPythonEditor.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/codeEditor.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/chaiScriptSyntaxHighlighter.cpp
+)

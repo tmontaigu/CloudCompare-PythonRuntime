@@ -24,6 +24,4 @@ namespace Python
 {
 	void setMainAppInterfaceInstance(ccMainAppInterface *appInterface);
 	void unsetMainAppInterfaceInstance();
-
-	void runScript(ccMainAppInterface *appInterface);
 }
