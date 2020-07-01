@@ -4,6 +4,7 @@
 
 #include <QSyntaxHighlighter>
 #include <QRegExp>
+#include <utility>
 
 
 // Started from Qt Syntax Highlighter example and then ported https://wiki.python.org/moin/PyQt/Python%20syntax%20highlighting
@@ -26,12 +27,12 @@ private:
 		int matchIndex = 0;
 
 		HighlightingRule()
+		= default;
+
+		HighlightingRule(const QRegExp &r, int i, QTextCharFormat f) : pattern(r), format(std::move(f)), matchIndex(i)
 		{}
 
-		HighlightingRule(const QRegExp &r, int i, const QTextCharFormat &f) : pattern(r), format(f), matchIndex(i)
-		{}
-
-		HighlightingRule(const QString &p, int i, const QTextCharFormat &f) : pattern(QRegExp(p)), format(f),
+		HighlightingRule(const QString &p, int i, QTextCharFormat f) : pattern(QRegExp(p)), format(std::move(f)),
 		                                                                      matchIndex(i)
 		{}
 	};

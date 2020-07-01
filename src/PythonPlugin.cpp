@@ -19,6 +19,7 @@
 
 #include <QtGui>
 #include <iostream>
+#include <memory>
 
 #include "PythonPlugin.h"
 #include "QPythonREPL.h"
@@ -99,8 +100,8 @@ PythonPlugin::PythonPlugin(QObject *parent)
 
 	py::initialize_interpreter();
 
-	editor = new QPythonEditor();
-	connect(editor, &QPythonEditor::executionCalled, this, &PythonPlugin::executeEditorCode);
+	m_editor = std::make_unique<QPythonEditor>();
+	connect(m_editor.get(), &QPythonEditor::executionCalled, this, &PythonPlugin::executeEditorCode);
 }
 
 
@@ -109,32 +110,32 @@ void PythonPlugin::onNewSelection(const ccHObject::Container &selectedEntities) 
 
 
 QList<QAction *> PythonPlugin::getActions() {
-	if ( !m_show_editor )
+	if ( !m_showEditor )
 	{
-		m_show_editor = new QAction("Show Editor", this);
-		m_show_editor->setToolTip("Show the code editor window");
-		m_show_editor->setIcon(QIcon(":/CC/plugin/PythonPlugin/images/python-editor-icon.png"));
-		connect(m_show_editor, &QAction::triggered, this, &PythonPlugin::showEditor);
-		m_show_editor->setEnabled(true);
+		m_showEditor = new QAction("Show Editor", this);
+		m_showEditor->setToolTip("Show the code editor window");
+		m_showEditor->setIcon(QIcon(":/CC/plugin/PythonPlugin/images/python-editor-icon.png"));
+		connect(m_showEditor, &QAction::triggered, this, &PythonPlugin::showEditor);
+		m_showEditor->setEnabled(true);
 	}
 
-	if ( !m_repl_action )
+	if ( !m_showREPL )
 	{
-		m_repl_action = new QAction("Show REPL", this);
-		m_repl_action->setToolTip("Show the Python REPL");
-		m_repl_action->setIcon(QIcon(":/CC/plugin/PythonPlugin/images/repl-icon.png"));
-		connect(m_repl_action, &QAction::triggered, this, &PythonPlugin::showRepl);
-		m_repl_action->setEnabled(true);
+		m_showREPL = new QAction("Show REPL", this);
+		m_showREPL->setToolTip("Show the Python REPL");
+		m_showREPL->setIcon(QIcon(":/CC/plugin/PythonPlugin/images/repl-icon.png"));
+		connect(m_showREPL, &QAction::triggered, this, &PythonPlugin::showRepl);
+		m_showREPL->setEnabled(true);
 	}
 
-	return {m_repl_action, m_show_editor};
+	return {m_showREPL, m_showEditor};
 }
 
 void PythonPlugin::showRepl() {
 	if ( m_repl == nullptr )
 	{
 		Python::setMainAppInterfaceInstance(m_app);
-		m_repl = new ui::QPythonREPL();
+		m_repl = std::make_unique<ui::QPythonREPL>();
 	}
 	m_repl->show();
 	m_repl->raise();
@@ -142,18 +143,13 @@ void PythonPlugin::showRepl() {
 }
 
 void PythonPlugin::showEditor() {
-	if ( editor )
+	if ( m_editor )
 	{
 		Python::setMainAppInterfaceInstance(m_app);
-		editor->show();
-		editor->raise();
-		editor->activateWindow();
+		m_editor->show();
+		m_editor->raise();
+		m_editor->activateWindow();
 	}
-}
-
-PythonPlugin::~PythonPlugin() {
-	py::finalize_interpreter();
-	Python::unsetMainAppInterfaceInstance();
 }
 
 void PythonPlugin::executeEditorCode(const std::string &evalFileName, const std::string &code) {
@@ -167,3 +163,7 @@ void PythonPlugin::executeEditorCode(const std::string &evalFileName, const std:
 	}
 }
 
+PythonPlugin::~PythonPlugin() {
+	py::finalize_interpreter();
+	Python::unsetMainAppInterfaceInstance();
+}

@@ -50,14 +50,14 @@ private:
 	void showEditor();
 	void executeEditorCode(const std::string &evalFileName, const std::string &code);
 
-	ui::QPythonREPL *m_repl{nullptr};
-	QPythonEditor *editor{nullptr};
+	std::unique_ptr<ui::QPythonREPL> m_repl{nullptr};
+	std::unique_ptr<QPythonEditor> m_editor{nullptr};
 
 	/// These are used to correctly setup the Python interpreter
 	std::unique_ptr<wchar_t[]> m_pythonPath{nullptr};
 	std::unique_ptr<wchar_t[]> m_pythonHome{nullptr};
 
 	/// Actions
-	QAction *m_show_editor{nullptr};
-	QAction *m_repl_action{nullptr};
+	QAction *m_showEditor{nullptr};
+	QAction *m_showREPL{nullptr};
 };
