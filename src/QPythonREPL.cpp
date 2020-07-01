@@ -142,7 +142,7 @@ void ui::QPythonREPL::executeCode(const QString &pythonCode)
 	/// convert it to std::string while filtering out non needed chars
 	m_buf.clear();
 	QString::const_iterator iter = pythonCode.begin() + replArrows.size();
-	while (iter != pythonCode.end())
+	while (iter < pythonCode.end())
 	{
 		// FIXME this will return 0 on non latin chars
 		//  we should do better
@@ -155,7 +155,7 @@ void ui::QPythonREPL::executeCode(const QString &pythonCode)
 		m_buf += c;
 		if (*iter == '\n')
 		{
-			iter += replArrows.size();
+			iter += continuationDots.size() + 1;
 		}
 		iter++;
 	}
