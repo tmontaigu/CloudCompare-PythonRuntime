@@ -113,16 +113,6 @@ void PythonPlugin::onNewSelection(const ccHObject::Container &selectedEntities)
 
 QList<QAction *> PythonPlugin::getActions()
 {
-	if ( !m_action )
-	{
-		m_action = new QAction("Run script", this);
-		m_action->setToolTip("Run a Python Script");
-		m_action->setIcon(getIcon());
-
-		connect(m_action, &QAction::triggered, this, &PythonPlugin::runScript);
-		m_action->setEnabled(true);
-	}
-
 	if ( !m_show_editor )
 	{
 		m_show_editor = new QAction("Show Editor", this);
@@ -141,7 +131,7 @@ QList<QAction *> PythonPlugin::getActions()
 		m_repl_action->setEnabled(true);
 	}
 
-	return {m_action, m_repl_action, m_show_editor};
+	return {m_repl_action, m_show_editor};
 }
 
 void PythonPlugin::showRepl()
@@ -167,18 +157,6 @@ PythonPlugin::~PythonPlugin()
 {
 	py::finalize_interpreter();
 	Python::unsetMainAppInterfaceInstance();
-}
-
-void PythonPlugin::runScript()
-{
-	try
-	{
-		PyStdErrOutStreamRedirect redirect{};
-		py::eval_file("script.py");
-	} catch (const std::exception &e)
-	{
-		m_app->dispToConsole(QString("[Python] %1").arg(e.what()), ccMainAppInterface::ERR_CONSOLE_MESSAGE);
-	}
 }
 
 void PythonPlugin::executeEditorCode(const std::string &evalFileName, const std::string &code)

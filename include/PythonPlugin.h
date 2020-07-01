@@ -48,7 +48,6 @@ public:
 private:
 	void showRepl();
 	void showEditor();
-	void runScript();
 	void executeEditorCode(const std::string &evalFileName, const std::string &code);
 
 	ui::QPythonREPL *m_repl{nullptr};
@@ -59,7 +58,6 @@ private:
 	std::unique_ptr<wchar_t[]> m_pythonHome{nullptr};
 
 	/// Actions
-	QAction *m_action{nullptr};
 	QAction *m_show_editor{nullptr};
 	QAction *m_repl_action{nullptr};
 };
