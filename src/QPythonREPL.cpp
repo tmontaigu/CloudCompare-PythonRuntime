@@ -7,6 +7,7 @@
 #undef slots
 
 #include "PythonStdErrOutRedirect.h"
+
 namespace py = pybind11;
 
 const static QString replArrows = ">>> ";
@@ -14,17 +15,17 @@ const static QString continuationDots = "... ";
 
 bool ui::KeyPressEater::eventFilter(QObject *obj, QEvent *event)
 {
-	if (event->type() == QEvent::KeyPress)
+	if ( event->type() == QEvent::KeyPress )
 	{
 		auto *keyEvent = static_cast<QKeyEvent *>(event);
 		qDebug("Ate key press %d", keyEvent->key());
-		if (keyEvent->modifiers() & Qt::ShiftModifier &&
-		    (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
+		if ( keyEvent->modifiers() & Qt::ShiftModifier &&
+		     (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
 		{
-			m_repl->codeEdit()->appendPlainText("\n");
 			m_repl->codeEdit()->appendPlainText(continuationDots);
 			return true;
 		}
+		QTextCursor cursor = m_repl->codeEdit()->textCursor();
 
 		switch (keyEvent->key())
 		{
@@ -32,7 +33,7 @@ bool ui::KeyPressEater::eventFilter(QObject *obj, QEvent *event)
 				Q_FALLTHROUGH();
 			case Qt::Key_Return:
 			{
-				if (m_repl->codeEdit()->document()->characterCount() <= 5)
+				if ( m_repl->codeEdit()->document()->characterCount() < replArrows.size())
 				{
 					return true;
 				}
@@ -44,7 +45,7 @@ bool ui::KeyPressEater::eventFilter(QObject *obj, QEvent *event)
 			case Qt::Key_Backspace:
 				Q_FALLTHROUGH();
 			case Qt::Key_Delete:
-				if (m_repl->codeEdit()->textCursor().position() > 4)
+				if ( cursor.columnNumber() > replArrows.size())
 				{
 					return QObject::eventFilter(obj, event);
 				} else
@@ -52,35 +53,45 @@ bool ui::KeyPressEater::eventFilter(QObject *obj, QEvent *event)
 					return true;
 				}
 			case Qt::Key_Left:
-				if (m_repl->codeEdit()->textCursor().position() > 4)
+				if ( cursor.columnNumber() > replArrows.size())
 				{
 					return QObject::eventFilter(obj, event);
 				}
 				return true;
 			case Qt::Key_Down:
-				if (!m_repl->m_history.empty())
+				if ( cursor.blockNumber() < m_repl->codeEdit()->blockCount() - 1)
+				{
+					return QObject::eventFilter(obj, event);
+				} else if ( !m_repl->m_history.empty())
 				{
 					m_repl->codeEdit()->clear();
 					m_repl->codeEdit()->insertPlainText(m_repl->m_history.newer());
 				}
 				return true;
 			case Qt::Key_Up:
-				if (!m_repl->m_history.empty())
+				if ( cursor.blockNumber() > 0 )
+				{
+					return QObject::eventFilter(obj, event);
+				} else if ( !m_repl->m_history.empty())
 				{
 					m_repl->codeEdit()->clear();
 					m_repl->codeEdit()->insertPlainText(m_repl->m_history.older());
+					return true;
 				}
-				return true;
 			case Qt::Key_Home:
 				m_repl->codeEdit()->moveCursor(QTextCursor::StartOfLine);
 				m_repl->codeEdit()->moveCursor(QTextCursor::NextWord);
 				return true;
 			default:
-				if (m_repl->codeEdit()->textCursor().position() < 5)
+			{
+				int posDiff = replArrows.size() - cursor.columnNumber();
+				if ( posDiff > 0 )
 				{
-					m_repl->codeEdit()->moveCursor(QTextCursor::NextWord);
+					cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, posDiff);
+					m_repl->codeEdit()->setTextCursor(cursor);
 				}
 				return QObject::eventFilter(obj, event);
+			}
 		}
 
 	} else
@@ -147,18 +158,19 @@ void ui::QPythonREPL::executeCode(const QString &pythonCode)
 		// FIXME this will return 0 on non latin chars
 		//  we should do better
 		char c = iter->toLatin1();
-		if (c == 0)
+		if ( c == 0 )
 		{
 			outputDisplay()->addItem("Input contains non Latin1 chars");
 			return;
 		}
 		m_buf += c;
-		if (*iter == '\n')
+		if ( *iter == '\n' )
 		{
-			iter += continuationDots.size() + 1;
+			iter += continuationDots.size();
 		}
 		iter++;
 	}
+	ccLog::Print(m_buf.c_str());
 	outputDisplay()->addItem(pythonCode);
 	codeEdit()->clear();
 	codeEdit()->insertPlainText(replArrows);
@@ -190,7 +202,7 @@ void ui::History::add(const QString &&cmd)
 
 const QString &ui::History::older()
 {
-	if (m_current == m_commands.rend())
+	if ( m_current == m_commands.rend())
 	{
 		m_current = m_commands.rbegin();
 	}
@@ -201,13 +213,13 @@ const QString &ui::History::older()
 
 const QString &ui::History::newer()
 {
-	if (m_current == m_commands.rend())
+	if ( m_current == m_commands.rend())
 	{
 		return replArrows;
 	}
 
 	const QString &current = *m_current;
-	if (m_current == m_commands.rbegin())
+	if ( m_current == m_commands.rbegin())
 	{
 		m_current = m_commands.rend();
 	} else
