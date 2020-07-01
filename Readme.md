@@ -49,3 +49,4 @@ was launched.
 
 ## notes
 editor icon base on https://www.flaticon.com/free-icon/blank-page_18530
+python icon from https://python.org

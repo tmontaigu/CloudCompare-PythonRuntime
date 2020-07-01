@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/CC/plugin/PythonPlugin">
-        <file>images/icon.png</file>
+        <file>images/python-icon.png</file>
         <file>images/repl-icon.png</file>
         <file>images/python-editor-icon.png</file>
         <file>info.json</file>

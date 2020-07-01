@@ -1,7 +1,7 @@
 {
   "type": "Standard",
   "name": "Python Plugin",
-  "icon": ":/CC/plugin/PythonPlugin/images/icon.png",
+  "icon": ":/CC/plugin/PythonPlugin/images/python-icon.png",
   "description": "This is a description of the marvelous Example plugin. It does nothing.",
   "authors": [
     {
