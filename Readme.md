@@ -45,3 +45,7 @@ $env:pythonpath += ";C:\Users\Thomas\CMakeBuilds\CloudCompare-Release\build\plug
 Right now the only action the Plugin proposes is to run a python script named `script.py`.
 Right now the path is hard coded , and so the script can only be found in the current working dir of when CloudCompare
 was launched.
+
+
+## notes
+editor icon base on https://www.flaticon.com/free-icon/blank-page_18530

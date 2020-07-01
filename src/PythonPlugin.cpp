@@ -127,6 +127,7 @@ QList<QAction *> PythonPlugin::getActions()
 	{
 		m_show_editor = new QAction("Show Editor", this);
 		m_show_editor->setToolTip("Show the code editor window");
+		m_show_editor->setIcon(QIcon(":/CC/plugin/PythonPlugin/images/python-editor-icon.png"));
 		connect(m_show_editor, &QAction::triggered, this, &PythonPlugin::showEditor);
 		m_show_editor->setEnabled(true);
 	}
@@ -134,7 +135,7 @@ QList<QAction *> PythonPlugin::getActions()
 	if ( !m_repl_action )
 	{
 		m_repl_action = new QAction("Show REPL", this);
-		m_repl_action->setToolTip("Start Python REPL");
+		m_repl_action->setToolTip("Show the Python REPL");
 		m_repl_action->setIcon(QIcon(":/CC/plugin/PythonPlugin/images/repl-icon.png"));
 		connect(m_repl_action, &QAction::triggered, this, &PythonPlugin::showRepl);
 		m_repl_action->setEnabled(true);
