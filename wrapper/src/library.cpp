@@ -72,20 +72,33 @@ PYBIND11_MODULE(pycc, m)
 			});
 
 	py::class_<CCCoreLib::BoundingBox>(m, "BoundingBox")
-	        .def("minCorner", [](const CCCoreLib::BoundingBox& self) { return self.minCorner(); })
-			.def("maxCorner", [](const CCCoreLib::BoundingBox & self) { return self.maxCorner(); })
-	        .def("computeVolume", &CCCoreLib::BoundingBox::computeVolume);
+			.def(py::init<CCVector3, CCVector3>())
+			.def("minCorner", [](const CCCoreLib::BoundingBox &self)
+			{ return self.minCorner(); })
+			.def("maxCorner", [](const CCCoreLib::BoundingBox &self)
+			{ return self.maxCorner(); })
+			.def("getCenter", &CCCoreLib::BoundingBox::getCenter)
+			.def("getDiagVec", &CCCoreLib::BoundingBox::getDiagVec)
+			.def("computeVolume", &CCCoreLib::BoundingBox::computeVolume)
+			.def("isValid", &CCCoreLib::BoundingBox::isValid)
+			.def("contains", &CCCoreLib::BoundingBox::contains);
 
 	py::class_<ccGenericGLDisplay>(m, "ccGenericGLDisplay");
 
 	py::class_<CCCoreLib::ScalarField, observer_ptr<CCCoreLib::ScalarField>>(m, "ScalarField")
 			.def("getName", &CCCoreLib::ScalarField::getName)
 			.def("setName", &CCCoreLib::ScalarField::setName)
+			.def("computeMeanAndVariance", &CCCoreLib::ScalarField::computeMeanAndVariance)
 			.def("computeMinAndMax", &CCCoreLib::ScalarField::computeMinAndMax)
+			.def("getMin", &CCCoreLib::ScalarField::getMin)
+			.def("getMax", &CCCoreLib::ScalarField::getMax)
+			.def("fill", &CCCoreLib::ScalarField::fill)
 			.def("asArray", [](CCCoreLib::ScalarField &self)
 			{
 				return PyCC::VectorAsNumpyArray(self);
-			});
+			})
+			.def("__repr__", [](const CCCoreLib::ScalarField &self)
+			{ return std::string("<ScalarField(name=") + self.getName() + ")>"; });
 
 	py::class_<ccScalarField, CCCoreLib::ScalarField, observer_ptr<ccScalarField>>(m, "ccScalarField");
 
@@ -102,8 +115,8 @@ PYBIND11_MODULE(pycc, m)
 			.def("getChild", &ccHObject::getChild, py::return_value_policy::reference)
 			.def("toPointCloud", [](ccHObject *obj)
 			{
-				bool aya{false};
-				return ccHObjectCaster::ToPointCloud(obj, &aya);
+				bool unused{false};
+				return ccHObjectCaster::ToPointCloud(obj, &unused);
 			}, py::return_value_policy::reference);
 
 	py::class_<ccPointCloud, ccHObject>(m, "ccPointCloud")
@@ -114,14 +127,17 @@ PYBIND11_MODULE(pycc, m)
 			.def("getScalarFieldIndexByName", &ccPointCloud::getScalarFieldIndexByName)
 			.def("getCurrentDisplayedScalarField", &ccPointCloud::getCurrentDisplayedScalarField)
 			.def("getCurrentDisplayedScalarFieldIndex", &ccPointCloud::getCurrentDisplayedScalarFieldIndex)
-			.def("getScalarField", &ccPointCloud::getScalarField);
+			.def("getScalarField", &ccPointCloud::getScalarField)
+			.def("__repr__", [](const ccPointCloud& self) {
+				return std::string("<ccPointCloud(") + self.getName().toStdString() + ", " + std::to_string(self.size()) + " points)>";
+			});
 
 
 	py::class_<ccPythonInstance, observer_ptr<ccPythonInstance>>(m, "ccPythonInstance")
-		.def("haveSelection", &ccPythonInstance::haveSelection)
-		.def("haveOneSelection", &ccPythonInstance::haveOneSelection)
-		.def("getSelectedEntities", &ccPythonInstance::getSelectedEntities, py::return_value_policy::reference)
-		.def("loadFile", &ccPythonInstance::loadFile);
+			.def("haveSelection", &ccPythonInstance::haveSelection)
+			.def("haveOneSelection", &ccPythonInstance::haveOneSelection)
+			.def("getSelectedEntities", &ccPythonInstance::getSelectedEntities, py::return_value_policy::reference)
+			.def("loadFile", &ccPythonInstance::loadFile);
 
 	m.def("GetInstance", &GetInstance);
 }

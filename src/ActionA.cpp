@@ -24,7 +24,6 @@
 #include "exposed.h"
 #include <FileIOFilter.h>
 #include <QWidget>
-#include <utility>
 #include <Consoles.h>
 
 #include "QPythonREPL.h"
