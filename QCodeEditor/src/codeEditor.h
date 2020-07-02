@@ -54,7 +54,12 @@ private Q_SLOTS:
 
 private:
     void setupEditor();
-    QWidget* lineNumberArea;
+
+protected:
+	void keyPressEvent(QKeyEvent *e) override;
+
+private:
+	QWidget* lineNumberArea;
     bool maybeSave();
     void setCurrentFile(const QString& fileName);
     QString strippedName(const QString& fullFileName);

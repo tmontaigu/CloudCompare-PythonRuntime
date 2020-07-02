@@ -111,7 +111,6 @@ PYBIND11_EMBEDDED_MODULE(ccinternals, m)
 
 namespace Python
 {
-
 	void setMainAppInterfaceInstance(ccMainAppInterface *appInterface)
 	{
 		if (s_pythonInstance == nullptr)

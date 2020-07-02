@@ -542,3 +542,14 @@ int CodeEditor::getSelectedLineCount()
 		return 1;
 	}
 }
+
+void CodeEditor::keyPressEvent(QKeyEvent *e) {
+	 switch (e->key()) {
+	 	case Qt::Key_Tab:
+	 		insertPlainText("    ");
+			 break;
+	 	default:
+		    QPlainTextEdit::keyPressEvent(e);
+		    break;
+	 }
+}
