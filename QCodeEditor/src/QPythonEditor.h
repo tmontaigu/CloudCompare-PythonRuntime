@@ -53,7 +53,7 @@ public:
 protected:
 	void closeEvent(QCloseEvent* event) override;
 Q_SIGNALS:
-	void executionCalled(const std::string& evalFileName, const std::string &evalStatement);
+	void executionCalled(const std::string& evalFileName, const std::string &evalStatement, QListWidget* ouput);
 	void reset_Chai_to_initial_state();
 	void save_Chai_state();
 	void reset_chai_to_last_save();

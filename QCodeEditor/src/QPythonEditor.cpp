@@ -420,7 +420,6 @@ void QPythonEditor::createActions()
 	addAction(actionUncomment);
 	addAction(actionIndent_More);
 	addAction(actionIndent_Less);
-
 }
 
 
@@ -429,10 +428,6 @@ void QPythonEditor::createStatusBar()
 {
 	statusBar()->showMessage(tr("Ready"));
 }
-
-
-
-
 
 void QPythonEditor::updateMenus()
 {
@@ -572,7 +567,12 @@ void QPythonEditor::runExecute()
 {
 	if (activeChildCodeEditor())
 	{
-		Q_EMIT executionCalled(qPrintable(activeChildCodeEditor()->userFriendlyCurrentFile()), qPrintable(activeChildCodeEditor()->toPlainText()));
+		this->scriptOutputConsole->clear();
+		Q_EMIT executionCalled(
+				qPrintable(activeChildCodeEditor()->userFriendlyCurrentFile()),
+				qPrintable(activeChildCodeEditor()->toPlainText()),
+				this->scriptOutputConsole
+		);
 	}
 }
 

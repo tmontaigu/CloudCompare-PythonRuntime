@@ -22,7 +22,7 @@ namespace ui
 	class History
 	{
 	public:
-		explicit History();
+		explicit History() = default;
 
 		void add(const QString &&cmd);
 

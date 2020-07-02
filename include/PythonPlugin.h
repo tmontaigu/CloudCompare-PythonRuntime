@@ -22,6 +22,7 @@
 
 
 class QPythonEditor;
+class QListWidget;
 
 namespace ui {
 	class QPythonREPL;
@@ -38,7 +39,7 @@ Q_OBJECT
 public:
 	explicit PythonPlugin(QObject *parent = nullptr);
 
-	virtual ~PythonPlugin();
+	~PythonPlugin() override;
 
 	void onNewSelection(const ccHObject::Container &selectedEntities) override;
 
@@ -48,10 +49,10 @@ public:
 private:
 	void showRepl();
 	void showEditor();
-	void executeEditorCode(const std::string &evalFileName, const std::string &code);
+	void executeEditorCode(const std::string &evalFileName, const std::string &code, QListWidget *output);
 
-	std::unique_ptr<ui::QPythonREPL> m_repl{nullptr};
-	std::unique_ptr<QPythonEditor> m_editor{nullptr};
+	ui::QPythonREPL *m_repl{nullptr};
+	QPythonEditor *m_editor{nullptr};
 
 	/// These are used to correctly setup the Python interpreter
 	std::unique_ptr<wchar_t[]> m_pythonPath{nullptr};

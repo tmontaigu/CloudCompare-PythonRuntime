@@ -199,8 +199,6 @@ void ui::QPythonREPL::executeCode(const QString &pythonCode)
 	}
 }
 
-ui::History::History()
-{}
 
 void ui::History::add(const QString &&cmd)
 {

@@ -100,8 +100,9 @@ PythonPlugin::PythonPlugin(QObject *parent)
 
 	py::initialize_interpreter();
 
-	m_editor = std::make_unique<QPythonEditor>();
-	connect(m_editor.get(), &QPythonEditor::executionCalled, this, &PythonPlugin::executeEditorCode);
+	m_repl = new ui::QPythonREPL();
+	m_editor = new QPythonEditor();
+	connect(m_editor, &QPythonEditor::executionCalled, this, &PythonPlugin::executeEditorCode);
 }
 
 
@@ -132,14 +133,14 @@ QList<QAction *> PythonPlugin::getActions() {
 }
 
 void PythonPlugin::showRepl() {
-	if ( m_repl == nullptr )
+	if ( m_repl )
 	{
 		Python::setMainAppInterfaceInstance(m_app);
-		m_repl = std::make_unique<ui::QPythonREPL>();
+		m_repl->show();
+		m_repl->raise();
+		m_repl->activateWindow();
 	}
-	m_repl->show();
-	m_repl->raise();
-	m_repl->activateWindow();
+
 }
 
 void PythonPlugin::showEditor() {
@@ -152,14 +153,18 @@ void PythonPlugin::showEditor() {
 	}
 }
 
-void PythonPlugin::executeEditorCode(const std::string &evalFileName, const std::string &code) {
+void PythonPlugin::executeEditorCode(const std::string &evalFileName, const std::string &code, QListWidget *output) {
 	try
 	{
-		PyStdErrOutStreamRedirect redirect{};
+		py::object o = py::module::import("ccinternals")
+				.attr("ConsoleREPL")(output);
+		PyStdErrOutStreamRedirect redirect{o, o};
 		py::exec(code.c_str());
 	} catch (const std::exception &e)
 	{
-		m_app->dispToConsole(QString("[Python] %1").arg(e.what()), ccMainAppInterface::ERR_CONSOLE_MESSAGE);
+		auto message = new QListWidgetItem(e.what());
+		message->setTextColor(Qt::red);
+		output->addItem(message);
 	}
 }
 
