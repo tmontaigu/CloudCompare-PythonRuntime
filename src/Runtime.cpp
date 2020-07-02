@@ -21,7 +21,7 @@
 
 #include "ccMainAppInterface.h"
 
-#include "exposed.h"
+#include "Runtime.h"
 #include <FileIOFilter.h>
 #include <QWidget>
 #include <Consoles.h>
@@ -79,22 +79,6 @@ ccPythonInstance *GetInstance()
 {
 	return s_pythonInstance;
 }
-
-void PrintMessage(const char *message)
-{
-	ccLog::Print(message);
-}
-
-void PrintWarning(const char *message)
-{
-	ccLog::Warning(message);
-}
-
-void PrintError(const char *message)
-{
-	ccLog::Error(message);
-}
-
 
 PYBIND11_EMBEDDED_MODULE(ccinternals, m)
 {

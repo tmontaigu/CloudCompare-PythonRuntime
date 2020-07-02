@@ -23,7 +23,7 @@
 
 #include "PythonPlugin.h"
 #include "QPythonREPL.h"
-#include "ActionA.h"
+#include "PrivateRuntime.h"
 #include "QPythonEditor.h"
 
 #include <pybind11/embed.h>
@@ -43,26 +43,26 @@ wchar_t *qstring_to_wchar_array(const QString &string) {
 }
 
 
-// Useful link: https://docs.python.org/3/c-api/init.html#initialization-finalization-and-threads
-PythonPlugin::PythonPlugin(QObject *parent)
-		: QObject(parent), ccStdPluginInterface(":/CC/plugin/PythonPlugin/info.json") {
-	QDir pythonEnvDirPath(QApplication::applicationDirPath() + "/plugins/Python");
-	if ( pythonEnvDirPath.exists())
+void logPythonPath() {
+	const wchar_t *pythonPath = Py_GetPath();
+	if ( pythonPath != nullptr )
 	{
-		QString qPythonHome = pythonEnvDirPath.path();
-		m_pythonHome.reset(qstring_to_wchar_array(qPythonHome));
-		Py_SetPythonHome(m_pythonHome.get());
-
-		// FIXME:
-		//  ';' as separator is only for windows, linux & macos uses ':'
-		QString qPythonPath = QString("%1/DLLs;%1/lib;%1/Lib/site-packages").arg(qPythonHome);
-		m_pythonPath.reset(qstring_to_wchar_array(qPythonPath));
-		Py_SetPath(m_pythonPath.get());
+		size_t errPos{0};
+		char *cPythonPath = Py_EncodeLocale(pythonPath, &errPos);
+		if ( cPythonPath )
+		{
+			ccLog::Print("[PythonPlugin] PythonPath is set to: %s", cPythonPath);
+		} else
+		{
+			ccLog::Print("[PythonPlugin] Failed to convert the PythonPath\n");
+		}
 	} else
 	{
-		throw std::runtime_error("Python environment not found, plugin wasn't correctly installed");
+		ccLog::Print("[PythonPlugin] PythonPath is not set\n");
 	}
+}
 
+void logPythonHome() {
 	const wchar_t *pythonHome = Py_GetPythonHome();
 	if ( pythonHome != nullptr )
 	{
@@ -80,24 +80,34 @@ PythonPlugin::PythonPlugin(QObject *parent)
 	{
 		ccLog::Print("[PythonPlugin] PythonHome is not set\n");
 	}
+}
 
-	const wchar_t *pythonPath = Py_GetPath();
-	if ( pythonPath != nullptr )
+
+PythonConfigPaths::PythonConfigPaths() {
+	QDir pythonEnvDirPath(QApplication::applicationDirPath() + "/plugins/Python");
+	if ( pythonEnvDirPath.exists())
 	{
-		size_t errPos{0};
-		char *cPythonPath = Py_EncodeLocale(pythonPath, &errPos);
-		if ( cPythonPath )
-		{
-			ccLog::Print("[PythonPlugin] PythonPath is set to: %s", cPythonPath);
-		} else
-		{
-			ccLog::Print("[PythonPlugin] Failed to convert the PythonPath\n");
-		}
+		QString qPythonHome = pythonEnvDirPath.path();
+		m_pythonHome.reset(qstring_to_wchar_array(qPythonHome));
+
+		// FIXME:
+		//  ';' as separator is only for windows, linux & macos uses ':'
+		QString qPythonPath = QString("%1/DLLs;%1/lib;%1/Lib/site-packages").arg(qPythonHome);
+		m_pythonPath.reset(qstring_to_wchar_array(qPythonPath));
 	} else
 	{
-		ccLog::Print("[PythonPlugin] PythonPath is not set\n");
+		throw std::runtime_error("Python environment not found, plugin wasn't correctly installed");
 	}
+}
 
+
+// Useful link: https://docs.python.org/3/c-api/init.html#initialization-finalization-and-threads
+PythonPlugin::PythonPlugin(QObject *parent)
+		: QObject(parent), ccStdPluginInterface(":/CC/plugin/PythonPlugin/info.json") {
+
+
+	Py_SetPythonHome(m_pythonConfig.pythonHome());
+	Py_SetPath(m_pythonConfig.pythonPath());
 	py::initialize_interpreter();
 
 	m_repl = new ui::QPythonREPL();
@@ -140,7 +150,6 @@ void PythonPlugin::showRepl() {
 		m_repl->raise();
 		m_repl->activateWindow();
 	}
-
 }
 
 void PythonPlugin::showEditor() {

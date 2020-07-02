@@ -29,6 +29,25 @@ namespace ui {
 }
 
 
+class PythonConfigPaths {
+public:
+	PythonConfigPaths();
+
+
+	const wchar_t *pythonHome() const {
+		return m_pythonHome.get();
+	}
+
+	const wchar_t *pythonPath() const {
+		return m_pythonPath.get();
+	}
+
+private:
+	std::unique_ptr<wchar_t[]> m_pythonHome;
+	std::unique_ptr<wchar_t[]> m_pythonPath;
+};
+
+
 class PythonPlugin : public QObject, public ccStdPluginInterface
 {
 Q_OBJECT
@@ -54,9 +73,7 @@ private:
 	ui::QPythonREPL *m_repl{nullptr};
 	QPythonEditor *m_editor{nullptr};
 
-	/// These are used to correctly setup the Python interpreter
-	std::unique_ptr<wchar_t[]> m_pythonPath{nullptr};
-	std::unique_ptr<wchar_t[]> m_pythonHome{nullptr};
+	PythonConfigPaths m_pythonConfig{};
 
 	/// Actions
 	QAction *m_showEditor{nullptr};
