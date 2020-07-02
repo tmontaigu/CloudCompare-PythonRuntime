@@ -2,6 +2,8 @@
 
 Early step attempt at allowing to use Python to automate some stuff in CloudCompare.
 
+It is only tested on windows and thus only works on windows for now.
+
 # Dependencies
 
  - Python (ofc)
@@ -9,44 +11,42 @@ Early step attempt at allowing to use Python to automate some stuff in CloudComp
 
 # Building
 
-Clone this project, in CloudCompare/plugins/private
+1) Clone this project in CloudCompare/plugins/private
 
-In the cmake Invocation use:
-```shell script
--DPLUGIN_PYTHON=ON
--DPYTHON_INCLUDE_DIR=$(python-c"from distutils.sysconfig import get_python_inc; print(get_python_inc())")
--DPYTHON_LIBRARY=$(python-c"import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")
-```
+2) Create a Virtual env or a conda env
 
-It is very likely that you get an error like so when trying to run a script:
-```
-Fatal Python error: initfsencoding: unable to load the file system codec
-ModuleNotFoundError: No module named 'encodings'
-```
+    ```shell script
+    python3 -m venv pyccvenv 
+    # or
+    conda create -n pyccenv
+    ```
 
-The current solution is to set the PYTHONPATH and PYTHONHOME env vars.
-https://stackoverflow.com/questions/5694706/py-initialize-fails-unable-to-load-the-file-system-codec
+3) Activate the environment
+4) Start cmake or your IDE from this environment
 
-using and anaconda env
-```powershell
-conda activate pyccenv
-$env:pythonhome = "$env:CONDA_PREFIX" # (eg C:\Users\Yoshi\Miniconda3\envs\pyccenv)
-$env:pythonpath += ";$(Join-Path $env:pythonhome DLLs)"
-$env:pythonpath += ";$(Join-Path $env:pythonhome  Lib\site-packages)"
+    The option to build the plugin is 
+    ```shell script
+    -DPLUGIN_PYTHON=ON
+    ```
+    In the cmake Invocation you may also have to use:
+    ```shell script
+    -DPYTHON_INCLUDE_DIR=$(python-c"from distutils.sysconfig import get_python_inc; print(get_python_inc())")
+    -DPYTHON_LIBRARY=$(python-c"import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")
+    ```
+5) Build & Install
 
-# Currently, the PYTHONPATH must also be modified to have the path to the "PythonPlugin\wrapper" folder in the build dir
-# to be able to load the pycc python extension
-# eg:
-$env:pythonpath += ";C:\Users\Thomas\CMakeBuilds\CloudCompare-Release\build\plugins\private\PythonPlugin\wrapper" 
-```
+    During the installation step, the virtual environment will be copied to the installation folder
+    so launching CC from the install folder should just work.
 
 # Running
 
-Right now the only action the Plugin proposes is to run a python script named `script.py`.
-Right now the path is hard coded , and so the script can only be found in the current working dir of when CloudCompare
-was launched.
+The plugin exposes a Python REPL and a mini code editor to run Python Code.
+
+The Api available from Python is still limited (especially for creating / deleting entities) and
+tools available from the gui are not (yet?) callable from python scripts. 
 
 
 ## notes
 editor icon base on https://www.flaticon.com/free-icon/blank-page_18530
+
 python icon from https://python.org
