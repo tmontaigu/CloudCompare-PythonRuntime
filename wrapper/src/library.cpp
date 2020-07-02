@@ -137,7 +137,7 @@ PYBIND11_MODULE(pycc, m)
 			.def("haveSelection", &ccPythonInstance::haveSelection)
 			.def("haveOneSelection", &ccPythonInstance::haveOneSelection)
 			.def("getSelectedEntities", &ccPythonInstance::getSelectedEntities, py::return_value_policy::reference)
-			.def("loadFile", &ccPythonInstance::loadFile);
+			.def("loadFile", &ccPythonInstance::loadFile, py::return_value_policy::reference);
 
 	m.def("GetInstance", &GetInstance);
 }
