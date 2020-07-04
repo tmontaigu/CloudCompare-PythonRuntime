@@ -30,6 +30,9 @@
 #include <BoundingBox.h>
 #include <ccMainAppInterface.h>
 #include <AutoSegmentationTools.h>
+#include <GeometricalAnalysisTools.h>
+#include <GenericProgressCallback.h>
+#include <PointCloud.h>
 
 #include "wrappers.h"
 #include "casters.h"
@@ -37,6 +40,7 @@
 
 
 namespace py = pybind11;
+using namespace pybind11::literals;
 
 
 template<class T>
@@ -49,6 +53,8 @@ PYBIND11_MODULE(pycc, m)
 	m.doc() = R"pbdoc(
         Python module exposing some CloudCompare functions
     )pbdoc";
+
+	py::class_<CCVector2>(m, "Vector2");
 
 
 	py::class_<CCVector3>(m, "Vector3")
@@ -95,6 +101,8 @@ PYBIND11_MODULE(pycc, m)
 	py::class_<CCCoreLib::GenericIndexedCloud, CCCoreLib::GenericCloud>(m, "GenericIndexedCloud");
 	py::class_<CCCoreLib::GenericIndexedCloudPersist, CCCoreLib::GenericIndexedCloud>(m, "GenericIndexedCloudPersist");
 	py::class_<CCCoreLib::ReferenceCloud, CCCoreLib::GenericIndexedCloudPersist>(m, "ReferenceCloud");
+
+	py::class_<CCCoreLib::PointCloud, CCCoreLib::GenericIndexedCloudPersist>(m, "PointCloud");
 
 	py::bind_vector<CCCoreLib::ReferenceCloudContainer>(m, "ReferenceCloudContainer");
 
@@ -210,96 +218,188 @@ PYBIND11_MODULE(pycc, m)
 			.def("freezeUI", &ccPythonInstance::freezeUI)
 			.def("loadFile", &ccPythonInstance::loadFile, py::return_value_policy::reference);
 
+	/* CCCoreLib */
+
+	/* contants */
+	m.attr("SQRT_3") = CCCoreLib::SQRT_3;
+
+	/* Math */
+	m.def("LessThanEpsilon", [](const double x)
+	{ return CCCoreLib::LessThanEpsilon(x); });
+	m.def("GreaterThanEpsilon", [](const double x)
+	{ return CCCoreLib::GreaterThanEpsilon(x); });
+	m.def("RadiansToDegrees", [](const double radians)
+	{
+		return CCCoreLib::RadiansToDegrees(radians);
+	});
+	m.def("DegreesToRadians", [](const double degrees)
+	{
+		return CCCoreLib::DegreesToRadians(degrees);
+	});
 
 	/**
-	 * CLOUD SAMPLING TOOLS
+	 * MiscTools
 	 */
 
-	py::class_<CCCoreLib::CloudSamplingTools> cloudSamplingTools(m, "CloudSamplingTools");
+	py::class_<CCCoreLib::CCMiscTools> CCMiscTools(m, "CCMiscTools");
+	CCMiscTools.def_static("EnlargeBox", &CCCoreLib::CCMiscTools::EnlargeBox);
+	CCMiscTools.def_static("MakeMinAndMaxCubical", &CCCoreLib::CCMiscTools::MakeMinAndMaxCubical);
+//	CCMiscTools.def_static("ComputeBaseVectors", &CCCoreLib::CCMiscTools::ComputeBaseVectors);
+//	CCMiscTools.def_static("TriBoxOverlap", &CCCoreLib::CCMiscTools::TriBoxOverlap);
 
-	py::enum_<CCCoreLib::CloudSamplingTools::RESAMPLING_CELL_METHOD>(cloudSamplingTools, "RESAMPLING_CELL_METHOD")
+	/** GenericProgress CallBack
+	 *
+	 */
+	py::class_<CCCoreLib::GenericProgressCallback>(m, "GenericProgressCallback");
+	py::class_<CCCoreLib::NormalizedProgress>(m, "NormalizedProgress");
+
+
+	py::class_<CCCoreLib::GenericOctree>(m, "GenericOctree");
+	py::class_<CCCoreLib::DgmOctree, CCCoreLib::GenericOctree>(m, "DgmOctree");
+
+
+	/**
+	 * CloudSamplingTools
+	 */
+
+	py::class_<CCCoreLib::CloudSamplingTools> CloudSamplingTools(m, "CloudSamplingTools");
+
+	py::enum_<CCCoreLib::CloudSamplingTools::RESAMPLING_CELL_METHOD>(CloudSamplingTools, "RESAMPLING_CELL_METHOD")
 			.value("CELL_CENTER", CCCoreLib::CloudSamplingTools::RESAMPLING_CELL_METHOD::CELL_CENTER)
 			.value("CELL_GRAVITY_CENTER", CCCoreLib::CloudSamplingTools::RESAMPLING_CELL_METHOD::CELL_GRAVITY_CENTER)
 			.export_values();
 
-	py::enum_<CCCoreLib::CloudSamplingTools::SUBSAMPLING_CELL_METHOD>(cloudSamplingTools, "SUBSAMPLING_CELL_METHODS")
+	py::enum_<CCCoreLib::CloudSamplingTools::SUBSAMPLING_CELL_METHOD>(CloudSamplingTools, "SUBSAMPLING_CELL_METHODS")
 			.value("RANDOM_POINT", CCCoreLib::CloudSamplingTools::SUBSAMPLING_CELL_METHOD::RANDOM_POINT)
 			.value("NEAREST_POINT_TO_CELL_CENTER",
 			       CCCoreLib::CloudSamplingTools::SUBSAMPLING_CELL_METHOD::NEAREST_POINT_TO_CELL_CENTER)
 			.export_values();
 
-//	m.def("resampleCloudWithOctreeAtLevel", [](CCCoreLib::GenericIndexedCloudPersist *cloud,
-//	                                           unsigned char octreeLevel,
-//	                                           CCCoreLib::CloudSamplingTools::RESAMPLING_CELL_METHOD resamplingMethod)
-//	{
-//		return CCCoreLib::CloudSamplingTools::resampleCloudWithOctreeAtLevel(cloud, octreeLevel, resamplingMethod);
-//	});
+	CloudSamplingTools.def_static("resampleCloudWithOctreeAtLevel",
+	                              &CCCoreLib::CloudSamplingTools::resampleCloudWithOctreeAtLevel, "cloud"_a,
+	                              "octreeLevel"_a, "resamplingMethod"_a, "progressCb"_a = nullptr,
+	                              "inputOctree"_a = nullptr);
 
-	m.def("resampleCloudWithOctree", [](CCCoreLib::GenericIndexedCloudPersist *cloud,
-	                                    int newNumberOfPoints,
-	                                    CCCoreLib::CloudSamplingTools::RESAMPLING_CELL_METHOD resamplingMethod)
-	{
-		return CCCoreLib::CloudSamplingTools::resampleCloudWithOctree(cloud, newNumberOfPoints, resamplingMethod);
-	});
+	CloudSamplingTools.def_static("subsampleCloudWithOctreeAtLevel",
+	                              &CCCoreLib::CloudSamplingTools::subsampleCloudWithOctreeAtLevel, "cloud"_a,
+	                              "octreeLevel"_a, "subsamplingMethod"_a, "progressCb"_a = nullptr,
+	                              "inputOctree"_a = nullptr);
 
-	m.def("subsampleCloudWithOctreeAtLevel", [](CCCoreLib::GenericIndexedCloudPersist *cloud,
-	                                            unsigned char octreeLevel,
-	                                            CCCoreLib::CloudSamplingTools::SUBSAMPLING_CELL_METHOD subsamplingMethod)
-	{
-		return CCCoreLib::CloudSamplingTools::subsampleCloudWithOctreeAtLevel(cloud, octreeLevel, subsamplingMethod);
-	});
 
-	m.def("subsampleCloudWithOctree", [](CCCoreLib::GenericIndexedCloudPersist *cloud,
-	                                     int newNumberOfPoints,
-	                                     CCCoreLib::CloudSamplingTools::SUBSAMPLING_CELL_METHOD subsamplingMethod)
-	{
-		return CCCoreLib::CloudSamplingTools::subsampleCloudWithOctree(cloud, newNumberOfPoints, subsamplingMethod);
-	});
+	CloudSamplingTools.def_static("subsampleCloudWithOctree", &CCCoreLib::CloudSamplingTools::subsampleCloudWithOctree,
+	                              "cloud"_a,
+	                              "newNumberOfPoints"_a, "subsamplingMethod"_a, "progressCb"_a = nullptr,
+	                              "inputOctree"_a = nullptr);
 
-	m.def("subsampleCloudRandomly", [](CCCoreLib::GenericIndexedCloudPersist *cloud, int newNumPts)
-	{
-		return CCCoreLib::CloudSamplingTools::subsampleCloudRandomly(cloud, newNumPts);
-	});
+	CloudSamplingTools.def_static("subsampleCloudRandomly", &CCCoreLib::CloudSamplingTools::subsampleCloudRandomly,
+	                              "cloud"_a,
+	                              "newNumberOfPoints"_a, "progressCb"_a = nullptr);
 
-	py::class_<CCCoreLib::CloudSamplingTools::SFModulationParams>(cloudSamplingTools, "SFModulationParams")
+	py::class_<CCCoreLib::CloudSamplingTools::SFModulationParams>(CloudSamplingTools, "SFModulationParams")
 			.def(py::init<bool>())
 			.def_readwrite("enabled", &CCCoreLib::CloudSamplingTools::SFModulationParams::enabled)
 			.def_readwrite("a", &CCCoreLib::CloudSamplingTools::SFModulationParams::a)
 			.def_readwrite("b", &CCCoreLib::CloudSamplingTools::SFModulationParams::b);
 
-	m.def("resampleCloudSpatially", [](CCCoreLib::GenericIndexedCloudPersist *cloud, PointCoordinateType minDistance,
-	                                   const CCCoreLib::CloudSamplingTools::SFModulationParams &modParams)
+
+	CloudSamplingTools.def_static("resampleCloudSpatially", &CCCoreLib::CloudSamplingTools::resampleCloudSpatially,
+	                              "cloud"_a, "minDistance"_a,
+	                              "modParams"_a, "octree"_a = nullptr, "progressCb"_a = nullptr);
+
+	CloudSamplingTools.def_static("sorFilter", &CCCoreLib::CloudSamplingTools::sorFilter, "cloud"_a, "knn"_a = 6,
+	                              "nSigma"_a = 1.0,
+	                              "octree"_a = nullptr, "progressCb"_a = nullptr);
+
+
+	CloudSamplingTools.def_static("noiseFilter", &CCCoreLib::CloudSamplingTools::noiseFilter, "cloud"_a,
+	                              "kernelRadius"_a, "nSigma"_a,
+	                              "removeIsolatedPoints"_a = false,
+	                              "useKnn"_a = false, "knn"_a = 6, "useAbsoluteError"_a = true,
+	                              "absoluteError"_a = true, "octree"_a = nullptr,
+	                              "progressCb"_a = nullptr);
+
+	/**
+	 * GeometricalAnalysisTools
+	*/
+
+	py::class_<CCCoreLib::GeometricalAnalysisTools> GeometricalAnalysisTools(m, "GeometricalAnalysisTools");
+	GeometricalAnalysisTools.def_static("ComputeCharactersitic",
+	                                    [](CCCoreLib::GeometricalAnalysisTools::GeomCharacteristic c,
+	                                       int subOption,
+	                                       CCCoreLib::GenericIndexedCloudPersist *cloud,
+	                                       PointCoordinateType kernelRadius)
+	                                    {
+		                                    return CCCoreLib::GeometricalAnalysisTools::ComputeCharactersitic(c,
+		                                                                                                      subOption,
+		                                                                                                      cloud,
+		                                                                                                      kernelRadius);
+	                                    });
+
+	GeometricalAnalysisTools.def_static("ComputeLocalDensityApprox",
+	                                    [](
+			                                    CCCoreLib::GenericIndexedCloudPersist *cloud,
+			                                    CCCoreLib::GeometricalAnalysisTools::Density densityType)
+	                                    {
+		                                    return CCCoreLib::GeometricalAnalysisTools::ComputeLocalDensityApprox(cloud,
+		                                                                                                          densityType);
+	                                    });
+
+	GeometricalAnalysisTools.def_static("ComputeGravityCenter",
+	                                    &CCCoreLib::GeometricalAnalysisTools::ComputeGravityCenter);
+	GeometricalAnalysisTools.def_static("ComputeWeightedGravityCenter",
+	                                    &CCCoreLib::GeometricalAnalysisTools::ComputeWeightedGravityCenter);
+	GeometricalAnalysisTools.def_static("ComputeCrossCovarianceMatrix",
+	                                    &CCCoreLib::GeometricalAnalysisTools::ComputeCrossCovarianceMatrix);
+	GeometricalAnalysisTools.def_static("ComputeWeightedCrossCovarianceMatrix",
+	                                    &CCCoreLib::GeometricalAnalysisTools::ComputeWeightedCrossCovarianceMatrix);
+	GeometricalAnalysisTools.def_static("FlagDuplicatePoints", [](CCCoreLib::GenericIndexedCloudPersist *theCloud,
+	                                                              double minDistanceBetweenPoints = std::numeric_limits<double>::epsilon())
 	{
-		return CCCoreLib::CloudSamplingTools::resampleCloudSpatially(cloud, minDistance, modParams);
+		return CCCoreLib::GeometricalAnalysisTools::FlagDuplicatePoints(theCloud, minDistanceBetweenPoints);
 	});
 
-	m.def("sorFilter", [](CCCoreLib::GenericIndexedCloudPersist *cloud,
-	                      int knn = 6,
-	                      double nSigma = 1.0)
-	{
-		return CCCoreLib::CloudSamplingTools::sorFilter(cloud, knn, nSigma);
-	});
+//	GeometricalAnalysisTools.def_static("DetectSphereRobust",
+//	                                    &CCCoreLib::GeometricalAnalysisTools::DetectSphereRobust);
 
-	m.def("noiseFilter", [](CCCoreLib::GenericIndexedCloudPersist *cloud,
-	                        PointCoordinateType kernelRadius,
-	                        double nSigma,
-	                        bool removeIsolatedPoints = false,
-	                        bool useKnn = false,
-	                        int knn = 6,
-	                        bool useAbsoluteError = true,
-	                        double absoluteError = 0.0)
-	{
-		return CCCoreLib::CloudSamplingTools::noiseFilter(cloud, kernelRadius, nSigma, removeIsolatedPoints, useKnn,
-		                                                  knn,
-		                                                  useAbsoluteError, absoluteError);
-	});
+	GeometricalAnalysisTools.def_static("ComputeSphereFrom4",
+	                                    &CCCoreLib::GeometricalAnalysisTools::ComputeSphereFrom4);
 
 
-	m.def("labelConnectedComponents",
-	      [](CCCoreLib::GenericIndexedCloudPersist *cloud, unsigned char level, bool sixConnectivity = false)
-	      {
-		      return CCCoreLib::AutoSegmentationTools::labelConnectedComponents(cloud, level, sixConnectivity);
-	      });
+	py::enum_<CCCoreLib::GeometricalAnalysisTools::GeomCharacteristic>(GeometricalAnalysisTools, "GeomCharacteristic")
+			.value("Feature", CCCoreLib::GeometricalAnalysisTools::GeomCharacteristic::Feature)
+			.value("Curvature", CCCoreLib::GeometricalAnalysisTools::GeomCharacteristic::Curvature)
+			.value("LocalDensity", CCCoreLib::GeometricalAnalysisTools::GeomCharacteristic::LocalDensity)
+			.value("ApproxLocalDensity", CCCoreLib::GeometricalAnalysisTools::GeomCharacteristic::ApproxLocalDensity)
+			.value("Roughness", CCCoreLib::GeometricalAnalysisTools::GeomCharacteristic::Roughness)
+			.value("MomentOrder1", CCCoreLib::GeometricalAnalysisTools::GeomCharacteristic::MomentOrder1)
+			.export_values();
+
+	py::enum_<CCCoreLib::GeometricalAnalysisTools::Density>(GeometricalAnalysisTools, "Density")
+			.value("DENSITY_KNN", CCCoreLib::GeometricalAnalysisTools::Density::DENSITY_KNN)
+			.value("DENSITY_2D", CCCoreLib::GeometricalAnalysisTools::Density::DENSITY_2D)
+			.value("DENSITY_3D", CCCoreLib::GeometricalAnalysisTools::Density::DENSITY_3D)
+			.export_values();
+
+	py::enum_<CCCoreLib::GeometricalAnalysisTools::ErrorCode>(GeometricalAnalysisTools, "ErrorCode")
+			.value("NoError", CCCoreLib::GeometricalAnalysisTools::ErrorCode::NoError)
+			.value("InvalidInput", CCCoreLib::GeometricalAnalysisTools::ErrorCode::InvalidInput)
+			.value("NotEnoughPoints", CCCoreLib::GeometricalAnalysisTools::ErrorCode::NotEnoughPoints)
+			.value("OctreeComputationFailed", CCCoreLib::GeometricalAnalysisTools::ErrorCode::OctreeComputationFailed)
+			.value("ProcessFailed", CCCoreLib::GeometricalAnalysisTools::ErrorCode::ProcessFailed)
+			.value("UnhandledCharacteristic", CCCoreLib::GeometricalAnalysisTools::ErrorCode::UnhandledCharacteristic)
+			.value("NotEnoughMemory", CCCoreLib::GeometricalAnalysisTools::ErrorCode::NotEnoughMemory)
+			.value("ProcessCancelledByUser",
+			       CCCoreLib::GeometricalAnalysisTools::ErrorCode::ProcessCancelledByUser)
+			.export_values();
+
+
+	/**
+	 * AutoSegmentationTools
+	 */
+
+	m.def("labelConnectedComponents", &CCCoreLib::AutoSegmentationTools::labelConnectedComponents, "theCloud"_a,
+	      "level"_a,
+	      "sixConnexity"_a = false, "progressCb"_a = nullptr, "inputOctree"_a = nullptr);
 
 	m.def("extractConnectedComponents", &CCCoreLib::AutoSegmentationTools::extractConnectedComponents);
 
