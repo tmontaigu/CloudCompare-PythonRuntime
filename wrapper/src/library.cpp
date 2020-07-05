@@ -33,6 +33,7 @@
 #include <GeometricalAnalysisTools.h>
 #include <GenericProgressCallback.h>
 #include <PointCloud.h>
+#include <QCoreApplication>
 
 #include "wrappers.h"
 #include "casters.h"
@@ -404,4 +405,19 @@ PYBIND11_MODULE(pycc, m)
 	m.def("extractConnectedComponents", &CCCoreLib::AutoSegmentationTools::extractConnectedComponents);
 
 	m.def("GetInstance", &GetInstance);
+
+	m.def("ProcessEvents", []()
+	{
+		QCoreApplication::processEvents();
+	});
+
+	m.def("RunThread", [](py::object thread)
+	{
+		py::object isAliveMethod = thread.attr("is_alive");
+		thread.attr("start")();
+		while (isAliveMethod())
+		{
+			QCoreApplication::processEvents();
+		}
+	});
 }
