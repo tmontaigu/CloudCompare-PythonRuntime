@@ -17,6 +17,7 @@ def doSubSampling(pc):
     randomPc = pc.partialClone(refcloud, CC)
     randomPc.setName("Subsampled using octree (NEAREST_POINT_TO_CELL_CENTER)")
 
+
 def main():
     entities = CC.getSelectedEntities()
     print(entities)
@@ -30,11 +31,8 @@ def main():
     print(pc, pc.size())
 
     
-    thread = Thread(target=doSubSampling, args=(pc,))
-    pycc.RunThread(thread);
-    #thread.start()
-    #while thread.is_alive():
-    #    pycc.ProcessEvents()
+    pycc.RunInThread(doSubSampling, pc)
+
 
     CC.updateUI()
   

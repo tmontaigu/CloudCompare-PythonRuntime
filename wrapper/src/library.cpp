@@ -34,6 +34,8 @@
 #include <GenericProgressCallback.h>
 #include <PointCloud.h>
 #include <QCoreApplication>
+#include <QtConcurrent>
+#include <QException>
 
 #include "wrappers.h"
 #include "casters.h"
@@ -47,10 +49,68 @@ using namespace pybind11::literals;
 template<class T>
 using observer_ptr = std::unique_ptr<T, py::nodelete>;
 
+class PyThreadStateGuard {
+public:
+	explicit PyThreadStateGuard(PyInterpreterState *interpState) {
+		pCurrentState = PyThreadState_New(interpState);
+		PyEval_AcquireThread(pCurrentState);
+	}
+
+	virtual ~PyThreadStateGuard() {
+		PyThreadState_Clear(pCurrentState);
+		PyEval_ReleaseThread(pCurrentState);
+
+		PyThreadState_Delete(pCurrentState);
+	}
+
+private:
+	PyThreadState *pCurrentState{nullptr};
+};
+
+struct PyThreadStateReleaser {
+	explicit PyThreadStateReleaser() : state(PyEval_SaveThread()) {}
+
+	virtual ~PyThreadStateReleaser() {
+		PyEval_RestoreThread(state);
+	}
+
+
+	PyThreadState *state{nullptr};
+};
+
+class MyException : public QException {
+public:
+	explicit MyException(const std::exception &err) : e(err) {}
+
+	void raise() const override { throw *this; }
+
+	QException *clone() const override { return new MyException(*this); }
+
+	const char *what() const override {
+		return e.what();
+	}
+
+	std::exception error() const { return e; }
+
+private:
+	std::exception e;
+};
+
+void call_fn(PyThreadState *main_state, py::object callable, py::args args, py::kwargs kwargs) {
+	PyThreadStateGuard threadStateGuard{main_state->interp};
+	try
+	{
+		callable(*args, **kwargs);
+	} catch (const std::exception &e)
+	{
+		throw MyException(e);
+	}
+}
+
+
 PYBIND11_MAKE_OPAQUE(CCCoreLib::ReferenceCloudContainer);
 
-PYBIND11_MODULE(pycc, m)
-{
+PYBIND11_MODULE(pycc, m) {
 	m.doc() = R"pbdoc(
         Python module exposing some CloudCompare functions
     )pbdoc";
@@ -64,18 +124,15 @@ PYBIND11_MODULE(pycc, m)
 			.def_readwrite("x", &CCVector3::x)
 			.def_readwrite("y", &CCVector3::y)
 			.def_readwrite("z", &CCVector3::z)
-			.def("__mul__", [](const CCVector3 &self, PointCoordinateType val)
-			{
+			.def("__mul__", [](const CCVector3 &self, PointCoordinateType val) {
 				return self * val;
 			})
-			.def("__sub__", [](const CCVector3 &self, const CCVector3 &other)
-			{
+			.def("__sub__", [](const CCVector3 &self, const CCVector3 &other) {
 				return self - other;
 			})
 			.def("__div__", &CCVector3::operator/)
 			.def("__add__", &CCVector3::operator+)
-			.def("__repr__", [](const CCVector3 &self)
-			{
+			.def("__repr__", [](const CCVector3 &self) {
 				return "<Vector3(" + std::to_string(self.x) + ", " + std::to_string(self.y) + ", " +
 				       std::to_string(self.z) + ")>";
 			});
@@ -83,10 +140,8 @@ PYBIND11_MODULE(pycc, m)
 
 	py::class_<CCCoreLib::BoundingBox>(m, "BoundingBox")
 			.def(py::init<CCVector3, CCVector3>())
-			.def("minCorner", [](const CCCoreLib::BoundingBox &self)
-			{ return self.minCorner(); })
-			.def("maxCorner", [](const CCCoreLib::BoundingBox &self)
-			{ return self.maxCorner(); })
+			.def("minCorner", [](const CCCoreLib::BoundingBox &self) { return self.minCorner(); })
+			.def("maxCorner", [](const CCCoreLib::BoundingBox &self) { return self.maxCorner(); })
 			.def("getCenter", &CCCoreLib::BoundingBox::getCenter)
 			.def("getDiagVec", &CCCoreLib::BoundingBox::getDiagVec)
 			.def("computeVolume", &CCCoreLib::BoundingBox::computeVolume)
@@ -116,12 +171,10 @@ PYBIND11_MODULE(pycc, m)
 			.def("getMin", &CCCoreLib::ScalarField::getMin)
 			.def("getMax", &CCCoreLib::ScalarField::getMax)
 			.def("fill", &CCCoreLib::ScalarField::fill)
-			.def("asArray", [](CCCoreLib::ScalarField &self)
-			{
+			.def("asArray", [](CCCoreLib::ScalarField &self) {
 				return PyCC::VectorAsNumpyArray(self);
 			})
-			.def("__repr__", [](const CCCoreLib::ScalarField &self)
-			{
+			.def("__repr__", [](const CCCoreLib::ScalarField &self) {
 				return std::string("<ScalarField(name=") + self.getName() + ")>";
 			});
 
@@ -191,15 +244,13 @@ PYBIND11_MODULE(pycc, m)
 			.def("getScalarField", &ccPointCloud::getScalarField)
 			.def("setCurrentDisplayedScalarField", &ccPointCloud::setCurrentDisplayedScalarField)
 			.def("partialClone", [](const ccPointCloud *self, const CCCoreLib::ReferenceCloud *selection,
-			                        ccPythonInstance *pythonInstance)
-			{
+			                        ccPythonInstance *pythonInstance) {
 				// TODO use opt param to check errs
 				ccPointCloud *cloned = self->partialClone(selection);
 				pythonInstance->addToDB(cloned);
 				return cloned;
 			}, py::return_value_policy::reference)
-			.def("__repr__", [](const ccPointCloud &self)
-			{
+			.def("__repr__", [](const ccPointCloud &self) {
 				return std::string("<ccPointCloud(") + self.getName().toStdString() + ", " +
 				       std::to_string(self.size()) + " points)>";
 			});
@@ -225,16 +276,12 @@ PYBIND11_MODULE(pycc, m)
 	m.attr("SQRT_3") = CCCoreLib::SQRT_3;
 
 	/* Math */
-	m.def("LessThanEpsilon", [](const double x)
-	{ return CCCoreLib::LessThanEpsilon(x); });
-	m.def("GreaterThanEpsilon", [](const double x)
-	{ return CCCoreLib::GreaterThanEpsilon(x); });
-	m.def("RadiansToDegrees", [](const double radians)
-	{
+	m.def("LessThanEpsilon", [](const double x) { return CCCoreLib::LessThanEpsilon(x); });
+	m.def("GreaterThanEpsilon", [](const double x) { return CCCoreLib::GreaterThanEpsilon(x); });
+	m.def("RadiansToDegrees", [](const double radians) {
 		return CCCoreLib::RadiansToDegrees(radians);
 	});
-	m.def("DegreesToRadians", [](const double degrees)
-	{
+	m.def("DegreesToRadians", [](const double degrees) {
 		return CCCoreLib::DegreesToRadians(degrees);
 	});
 
@@ -328,8 +375,7 @@ PYBIND11_MODULE(pycc, m)
 	                                    [](CCCoreLib::GeometricalAnalysisTools::GeomCharacteristic c,
 	                                       int subOption,
 	                                       CCCoreLib::GenericIndexedCloudPersist *cloud,
-	                                       PointCoordinateType kernelRadius)
-	                                    {
+	                                       PointCoordinateType kernelRadius) {
 		                                    return CCCoreLib::GeometricalAnalysisTools::ComputeCharactersitic(c,
 		                                                                                                      subOption,
 		                                                                                                      cloud,
@@ -339,8 +385,7 @@ PYBIND11_MODULE(pycc, m)
 	GeometricalAnalysisTools.def_static("ComputeLocalDensityApprox",
 	                                    [](
 			                                    CCCoreLib::GenericIndexedCloudPersist *cloud,
-			                                    CCCoreLib::GeometricalAnalysisTools::Density densityType)
-	                                    {
+			                                    CCCoreLib::GeometricalAnalysisTools::Density densityType) {
 		                                    return CCCoreLib::GeometricalAnalysisTools::ComputeLocalDensityApprox(cloud,
 		                                                                                                          densityType);
 	                                    });
@@ -354,8 +399,7 @@ PYBIND11_MODULE(pycc, m)
 	GeometricalAnalysisTools.def_static("ComputeWeightedCrossCovarianceMatrix",
 	                                    &CCCoreLib::GeometricalAnalysisTools::ComputeWeightedCrossCovarianceMatrix);
 	GeometricalAnalysisTools.def_static("FlagDuplicatePoints", [](CCCoreLib::GenericIndexedCloudPersist *theCloud,
-	                                                              double minDistanceBetweenPoints = std::numeric_limits<double>::epsilon())
-	{
+	                                                              double minDistanceBetweenPoints = std::numeric_limits<double>::epsilon()) {
 		return CCCoreLib::GeometricalAnalysisTools::FlagDuplicatePoints(theCloud, minDistanceBetweenPoints);
 	});
 
@@ -406,13 +450,24 @@ PYBIND11_MODULE(pycc, m)
 
 	m.def("GetInstance", &GetInstance);
 
-	m.def("ProcessEvents", []()
-	{
+	m.def("ProcessEvents", []() {
 		QCoreApplication::processEvents();
 	});
 
-	m.def("RunThread", [](py::object thread)
-	{
+
+	m.def("RunInThread", [](py::object callable, py::args args, py::kwargs kwargs) {
+		PyThreadStateReleaser stateReleaser{};
+		QEventLoop loop;
+		QFutureWatcher<void> watcher;
+		QFuture<void> future = QtConcurrent::run(call_fn, stateReleaser.state, callable, args, kwargs);
+		watcher.setFuture(future);
+		QObject::connect(&watcher, &decltype(watcher)::finished, &loop, &decltype(loop)::quit);
+		loop.exec();
+
+		future.waitForFinished();
+	});
+
+	m.def("RunThread", [](py::object thread) {
 		py::object isAliveMethod = thread.attr("is_alive");
 		thread.attr("start")();
 		while (isAliveMethod())
