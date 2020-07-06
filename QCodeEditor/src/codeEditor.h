@@ -4,6 +4,10 @@
 #define CODEEDITOR_H
 
 
+static const char *const indentString = "    ";
+
+static const char *const PYTHON_COMMENT_STR = "# ";
+
 #include <QPlainTextEdit>
 #include <QObject>
 
@@ -25,7 +29,7 @@ public:
     CodeEditor(QWidget* parent = 0);
 
     void lineNumberAreaPaintEvent(QPaintEvent* event);
-    ~CodeEditor();
+    ~CodeEditor() = default;
     bool eventFilter(QObject* target, QEvent* event) override;
     int lineNumberAreaWidth();
     void newFile();

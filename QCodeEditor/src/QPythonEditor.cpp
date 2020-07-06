@@ -43,7 +43,6 @@ QPythonEditor::QPythonEditor() : Ui::QPythonEditor()
 	updateMenus();
 
 	readSettings();
-	newFile();
 	QCoreApplication::instance()->installEventFilter(this);
 }
 

@@ -21,8 +21,9 @@
 
 #include "codeEditor.h"
 #include "PythonHighlighter.h"
+#include <ccLog.h>
 
-CodeEditor::CodeEditor(QWidget* parent) : QPlainTextEdit(parent)
+CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent)
 {
 	lineNumberArea = new LineNumberArea(this);
 
@@ -38,24 +39,20 @@ CodeEditor::CodeEditor(QWidget* parent) : QPlainTextEdit(parent)
 	installEventFilter(this);
 }
 
-CodeEditor::~CodeEditor()
+
+
+bool CodeEditor::eventFilter(QObject *target, QEvent *event)
 {
 
-}
-
-bool CodeEditor::eventFilter(QObject* target, QEvent* event)
-{
-
-	if (target == this && event->type() == QEvent::Wheel)
+	if ( target == this && event->type() == QEvent::Wheel )
 	{
-		QWheelEvent* wheel = static_cast<QWheelEvent*>(event);
-		if (wheel->modifiers() == Qt::ControlModifier)
+		QWheelEvent *wheel = static_cast<QWheelEvent *>(event);
+		if ( wheel->modifiers() == Qt::ControlModifier )
 		{
-			if (wheel->delta() > 0)
+			if ( wheel->delta() > 0 )
 			{
 				zoomIn(1);
-			}
-			else
+			} else
 			{
 				zoomOut(1);
 			}
@@ -73,10 +70,10 @@ void CodeEditor::setupEditor()
 	font.setPointSize(20);
 
 	setFont(font);
-	/*QPalette p = palette();
-	p.setColor(QPalette::Base, Qt::black);
-	p.setColor(QPalette::Text, Qt::white);
-	setPalette(p);*/
+//	QPalette p = palette();
+//	p.setColor(QPalette::Base, Qt::black);
+//	p.setColor(QPalette::Text, Qt::white);
+//	setPalette(p);
 	setLineWrapMode(QPlainTextEdit::NoWrap);
 	highlighter = new PythonHighlighter(document());
 
@@ -96,7 +93,8 @@ int CodeEditor::lineNumberAreaWidth()
 {
 	int digits = 1;
 	int max = qMax(1, blockCount());
-	while (max >= 10) {
+	while (max >= 10)
+	{
 		max /= 10;
 		++digits;
 	}
@@ -107,28 +105,25 @@ int CodeEditor::lineNumberAreaWidth()
 }
 
 
-
 void CodeEditor::updateLineNumberAreaWidth(int /* newBlockCount */)
 {
 	setViewportMargins(lineNumberAreaWidth(), 0, 0, 0);
 }
 
 
-
-void CodeEditor::updateLineNumberArea(const QRect& rect, int dy)
+void CodeEditor::updateLineNumberArea(const QRect &rect, int dy)
 {
-	if (dy)
+	if ( dy )
 		lineNumberArea->scroll(0, dy);
 	else
 		lineNumberArea->update(0, rect.y(), lineNumberArea->width(), rect.height());
 
-	if (rect.contains(viewport()->rect()))
+	if ( rect.contains(viewport()->rect()))
 		updateLineNumberAreaWidth(0);
 }
 
 
-
-void CodeEditor::resizeEvent(QResizeEvent* e)
+void CodeEditor::resizeEvent(QResizeEvent *e)
 {
 	QPlainTextEdit::resizeEvent(e);
 
@@ -137,12 +132,12 @@ void CodeEditor::resizeEvent(QResizeEvent* e)
 }
 
 
-
 void CodeEditor::highlightCurrentLine()
 {
 	QList<QTextEdit::ExtraSelection> selections = extraSelections();
 
-	if (!isReadOnly()) {
+	if ( !isReadOnly())
+	{
 		QTextEdit::ExtraSelection selection;
 
 		QColor lineColor = QColor(Qt::yellow).lighter(160);
@@ -158,8 +153,7 @@ void CodeEditor::highlightCurrentLine()
 }
 
 
-
-void CodeEditor::lineNumberAreaPaintEvent(QPaintEvent* event)
+void CodeEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
 {
 	QPainter painter(lineNumberArea);
 	painter.fillRect(event->rect(), Qt::lightGray);
@@ -167,20 +161,22 @@ void CodeEditor::lineNumberAreaPaintEvent(QPaintEvent* event)
 
 	QTextBlock block = firstVisibleBlock();
 	int blockNumber = block.blockNumber();
-	int top = (int)blockBoundingGeometry(block).translated(contentOffset()).top();
-	int bottom = top + (int)blockBoundingRect(block).height();
+	int top = (int) blockBoundingGeometry(block).translated(contentOffset()).top();
+	int bottom = top + (int) blockBoundingRect(block).height();
 
-	while (block.isValid() && top <= event->rect().bottom()) {
-		if (block.isVisible() && bottom >= event->rect().top()) {
+	while (block.isValid() && top <= event->rect().bottom())
+	{
+		if ( block.isVisible() && bottom >= event->rect().top())
+		{
 			QString number = QString::number(blockNumber + 1);
 			painter.setPen(Qt::black);
 			painter.drawText(0, top, lineNumberArea->width(), fontMetrics().height(),
-				Qt::AlignRight, number);
+			                 Qt::AlignRight, number);
 		}
 
 		block = block.next();
 		top = bottom;
-		bottom = top + (int)blockBoundingRect(block).height();
+		bottom = top + (int) blockBoundingRect(block).height();
 		++blockNumber;
 	}
 }
@@ -194,17 +190,18 @@ void CodeEditor::newFile()
 	setWindowTitle(curFile + "[*]");
 
 	connect(document(), &QTextDocument::contentsChanged,
-		this, &CodeEditor::documentWasModified);
+	        this, &CodeEditor::documentWasModified);
 }
 
-bool CodeEditor::loadFile(const QString& fileName)
+bool CodeEditor::loadFile(const QString &fileName)
 {
 	QFile file(fileName);
-	if (!file.open(QFile::ReadOnly | QFile::Text)) {
+	if ( !file.open(QFile::ReadOnly | QFile::Text))
+	{
 		QMessageBox::warning(this, tr("MDI"),
-			tr("Cannot read file %1:\n%2.")
-			.arg(fileName)
-			.arg(file.errorString()));
+		                     tr("Cannot read file %1:\n%2.")
+				                     .arg(fileName)
+				                     .arg(file.errorString()));
 		return false;
 	}
 
@@ -216,17 +213,18 @@ bool CodeEditor::loadFile(const QString& fileName)
 	setCurrentFile(fileName);
 
 	connect(document(), &QTextDocument::contentsChanged,
-		this, &CodeEditor::documentWasModified);
+	        this, &CodeEditor::documentWasModified);
 
 	return true;
 }
 
 bool CodeEditor::save()
 {
-	if (isUntitled) {
+	if ( isUntitled )
+	{
 		return saveAs();
-	}
-	else {
+	} else
+	{
 		return saveFile(curFile);
 	}
 }
@@ -234,20 +232,21 @@ bool CodeEditor::save()
 bool CodeEditor::saveAs()
 {
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
-		curFile);
-	if (fileName.isEmpty())
+	                                                curFile);
+	if ( fileName.isEmpty())
 		return false;
 
 	return saveFile(fileName);
 }
 
-bool CodeEditor::saveFile(const QString& fileName)
+bool CodeEditor::saveFile(const QString &fileName)
 {
 	QFile file(fileName);
-	if (!file.open(QFile::WriteOnly | QFile::Text)) {
+	if ( !file.open(QFile::WriteOnly | QFile::Text))
+	{
 		QMessageBox::warning(this, tr("MDI"),
-			tr("Cannot write file %1:\n%2.")
-			.arg(QDir::toNativeSeparators(fileName), file.errorString()));
+		                     tr("Cannot write file %1:\n%2.")
+				                     .arg(QDir::toNativeSeparators(fileName), file.errorString()));
 		return false;
 	}
 
@@ -266,12 +265,13 @@ QString CodeEditor::userFriendlyCurrentFile()
 	return strippedName(curFile);
 }
 
-void CodeEditor::closeEvent(QCloseEvent* event)
+void CodeEditor::closeEvent(QCloseEvent *event)
 {
-	if (maybeSave()) {
+	if ( maybeSave())
+	{
 		event->accept();
-	}
-	else {
+	} else
+	{
 		event->ignore();
 	}
 }
@@ -283,27 +283,28 @@ void CodeEditor::documentWasModified()
 
 bool CodeEditor::maybeSave()
 {
-	if (!document()->isModified())
+	if ( !document()->isModified())
 		return true;
 	const QMessageBox::StandardButton ret
-		= QMessageBox::warning(this, tr("MDI"),
-			tr("'%1' has been modified.\n"
-				"Do you want to save your changes?")
-			.arg(userFriendlyCurrentFile()),
-			QMessageBox::Save | QMessageBox::Discard
-			| QMessageBox::Cancel);
-	switch (ret) {
-	case QMessageBox::Save:
-		return save();
-	case QMessageBox::Cancel:
-		return false;
-	default:
-		break;
+			= QMessageBox::warning(this, tr("MDI"),
+			                       tr("'%1' has been modified.\n"
+			                          "Do you want to save your changes?")
+					                       .arg(userFriendlyCurrentFile()),
+			                       QMessageBox::Save | QMessageBox::Discard
+			                       | QMessageBox::Cancel);
+	switch (ret)
+	{
+		case QMessageBox::Save:
+			return save();
+		case QMessageBox::Cancel:
+			return false;
+		default:
+			break;
 	}
 	return true;
 }
 
-void CodeEditor::setCurrentFile(const QString& fileName)
+void CodeEditor::setCurrentFile(const QString &fileName)
 {
 	curFile = QFileInfo(fileName).canonicalFilePath();
 	isUntitled = false;
@@ -312,7 +313,7 @@ void CodeEditor::setCurrentFile(const QString& fileName)
 	setWindowTitle(userFriendlyCurrentFile() + "[*]");
 }
 
-QString CodeEditor::strippedName(const QString& fullFileName)
+QString CodeEditor::strippedName(const QString &fullFileName)
 {
 	return QFileInfo(fullFileName).fileName();
 }
@@ -320,11 +321,11 @@ QString CodeEditor::strippedName(const QString& fullFileName)
 
 void CodeEditor::matchPairedChars()
 {
-	if (!matchPairedChars('(', ')'))
+	if ( !matchPairedChars('(', ')'))
 	{
-		if (!matchPairedChars('[', ']'))
+		if ( !matchPairedChars('[', ']'))
 		{
-			if (!matchPairedChars('{', '}'))
+			if ( !matchPairedChars('{', '}'))
 			{
 			}
 		}
@@ -450,11 +451,12 @@ void CodeEditor::comment()
 {
 	int lineCount = getSelectedLineCount();
 	QTextCursor cursor = textCursor();
-
+	cursor.setPosition(cursor.selectionEnd());
+	
 	for (int i = 0; i < lineCount; i++)
 	{
 		cursor.movePosition(QTextCursor::MoveOperation::StartOfLine);
-		cursor.insertText("# ");
+		cursor.insertText(PYTHON_COMMENT_STR);
 		cursor.movePosition(QTextCursor::MoveOperation::Up);
 	}
 }
@@ -463,12 +465,13 @@ void CodeEditor::uncomment()
 {
 	int lineCount = getSelectedLineCount();
 	QTextCursor cursor = textCursor();
+	cursor.setPosition(cursor.selectionEnd());
 
 	for (int i = 0; i < lineCount; i++)
 	{
 		cursor.movePosition(QTextCursor::MoveOperation::StartOfLine);
 		QString line = cursor.block().text();
-		if (line.startsWith("# "))
+		if ( line.startsWith(PYTHON_COMMENT_STR))
 		{
 			cursor.deleteChar();
 			cursor.deleteChar();
@@ -481,11 +484,12 @@ void CodeEditor::indentMore()
 {
 	int lineCount = getSelectedLineCount();
 	QTextCursor cursor = textCursor();
+	cursor.setPosition(cursor.selectionEnd());
 
 	for (int i = 0; i < lineCount; i++)
 	{
 		cursor.movePosition(QTextCursor::MoveOperation::StartOfLine);
-		cursor.insertText("\t");
+		cursor.insertText(indentString);
 		cursor.movePosition(QTextCursor::MoveOperation::Up);
 	}
 
@@ -495,40 +499,33 @@ void CodeEditor::indentLess()
 {
 	int lineCount = getSelectedLineCount();
 	QTextCursor cursor = textCursor();
+	cursor.setPosition(cursor.selectionEnd());
 
 	for (int i = 0; i < lineCount; i++)
 	{
 		cursor.movePosition(QTextCursor::MoveOperation::StartOfLine);
 		QString line = cursor.block().text();
-		if (line.startsWith("\t"))
+		if ( line.startsWith("\t"))
 		{
 			cursor.deleteChar();
-		}
-		else
+		} else if ( line.startsWith(indentString))
 		{
 			for (int i = 0; i < 4; i++)
 			{
-				if (line.startsWith(" "))
-				{
-					cursor.deleteChar();
-				}
-				else
-				{
-					break;
-				}
-				line = cursor.block().text();
+				cursor.deleteChar();
 			}
 		}
+		//line = cursor.block().text();
+
 		cursor.movePosition(QTextCursor::MoveOperation::Up);
 	}
 }
 
 
-
 int CodeEditor::getSelectedLineCount()
 {
 	QTextCursor cursor = textCursor();
-	if (cursor.hasSelection())
+	if ( cursor.hasSelection())
 	{
 		cursor.setPosition(cursor.selectionStart());
 		int temp = cursor.blockNumber();
@@ -536,20 +533,24 @@ int CodeEditor::getSelectedLineCount()
 		cursor.setPosition(cursor.selectionEnd());
 		int diff = cursor.blockNumber() - temp;
 		return diff + 1;
-	}
-	else 
+	} else
 	{
 		return 1;
 	}
 }
 
-void CodeEditor::keyPressEvent(QKeyEvent *e) {
-	 switch (e->key()) {
-	 	case Qt::Key_Tab:
-	 		insertPlainText("    ");
-			 break;
-	 	default:
-		    QPlainTextEdit::keyPressEvent(e);
-		    break;
-	 }
+void CodeEditor::keyPressEvent(QKeyEvent *e)
+{
+	switch (e->key())
+	{
+		case Qt::Key_Tab:
+			indentMore();
+			break;
+		case Qt::Key_Backtab:
+			indentLess();
+			break;
+		default:
+			QPlainTextEdit::keyPressEvent(e);
+			break;
+	}
 }
