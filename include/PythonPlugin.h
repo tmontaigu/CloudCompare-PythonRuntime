@@ -34,7 +34,7 @@ public:
 	PythonConfigPaths();
 
 
-	const wchar_t *pythonHome() const {
+	wchar_t *pythonHome() {
 		return m_pythonHome.get();
 	}
 
@@ -73,7 +73,7 @@ private:
 	ui::QPythonREPL *m_repl{nullptr};
 	QPythonEditor *m_editor{nullptr};
 
-	PythonConfigPaths m_pythonConfig{};
+	std::unique_ptr<PythonConfigPaths> m_pythonConfig{nullptr};
 
 	/// Actions
 	QAction *m_showEditor{nullptr};

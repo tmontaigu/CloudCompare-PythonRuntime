@@ -105,9 +105,16 @@ PythonConfigPaths::PythonConfigPaths() {
 PythonPlugin::PythonPlugin(QObject *parent)
 		: QObject(parent), ccStdPluginInterface(":/CC/plugin/PythonPlugin/info.json") {
 
+	try
+	{
+		m_pythonConfig = std::make_unique<PythonConfigPaths>();
+		Py_SetPythonHome(m_pythonConfig->pythonHome());
+		Py_SetPath(m_pythonConfig->pythonPath());
+	} catch (const std::exception&)
+	{
 
-	Py_SetPythonHome(m_pythonConfig.pythonHome());
-	Py_SetPath(m_pythonConfig.pythonPath());
+	}
+
 	py::initialize_interpreter();
 
 	m_repl = new ui::QPythonREPL();
