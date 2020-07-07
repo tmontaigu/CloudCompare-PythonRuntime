@@ -1,136 +1,45 @@
-//##########################################################################
-//#                                                                        #
-//#                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
-//#                                                                        #
-//#  This program is free software; you can redistribute it and/or modify  #
-//#  it under the terms of the GNU General Public License as published by  #
-//#  the Free Software Foundation; version 2 of the License.               #
-//#                                                                        #
-//#  This program is distributed in the hope that it will be useful,       #
-//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
-//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
-//#  GNU General Public License for more details.                          #
-//#                                                                        #
-//#                             COPYRIGHT: Thomas Montaigu                 #
-//#                                                                        #
-//##########################################################################
+#include <pybind11/pybind11.h>
+#include <CCGeom.h>
+#include <BoundingBox.h>
+#include <AutoSegmentationTools.h>
+#include <GenericProgressCallback.h>
+#include <GeometricalAnalysisTools.h>
+#include <PointCloud.h>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/numpy.h>
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
-
-#include <ccHObject.h>
-#include <ccHObjectCaster.h>
-#include <ccPointCloud.h>
-#include <ccScalarField.h>
-#include <ccDrawableObject.h>
+#include <CCMath.h>
 #include <CloudSamplingTools.h>
-
-#include <BoundingBox.h>
-#include <ccMainAppInterface.h>
-#include <AutoSegmentationTools.h>
-#include <GeometricalAnalysisTools.h>
-#include <GenericProgressCallback.h>
-#include <ccProgressDialog.h>
-#include <PointCloud.h>
-#include <QCoreApplication>
-#include <QtConcurrent>
-#include <QException>
+#include <ReferenceCloud.h>
 
 #include "wrappers.h"
-#include "casters.h"
-#include "Runtime.h"
-
 
 namespace py = pybind11;
 using namespace pybind11::literals;
-
-
-template<class T>
-using observer_ptr = std::unique_ptr<T, py::nodelete>;
-
-class PyThreadStateGuard
-{
-public:
-	explicit PyThreadStateGuard(PyInterpreterState *interpState)
-	{
-		pCurrentState = PyThreadState_New(interpState);
-		PyEval_AcquireThread(pCurrentState);
-	}
-
-	virtual ~PyThreadStateGuard()
-	{
-		PyThreadState_Clear(pCurrentState);
-		PyEval_ReleaseThread(pCurrentState);
-
-		PyThreadState_Delete(pCurrentState);
-	}
-
-private:
-	PyThreadState *pCurrentState{nullptr};
-};
-
-struct PyThreadStateReleaser
-{
-	explicit PyThreadStateReleaser() : state(PyEval_SaveThread())
-	{}
-
-	virtual ~PyThreadStateReleaser()
-	{
-		PyEval_RestoreThread(state);
-	}
-
-
-	PyThreadState *state{nullptr};
-};
-
-class MyException : public QException
-{
-public:
-	explicit MyException(const std::exception &err) : e(err)
-	{}
-
-	void raise() const override
-	{ throw *this; }
-
-	QException *clone() const override
-	{ return new MyException(*this); }
-
-	const char *what() const override
-	{
-		return e.what();
-	}
-
-	std::exception error() const
-	{ return e; }
-
-private:
-	std::exception e;
-};
-
-py::object call_fn(PyThreadState *main_state, py::object callable, py::args args, py::kwargs kwargs)
-{
-	PyThreadStateGuard threadStateGuard{main_state->interp};
-	try
-	{
-		return callable(*args, **kwargs);
-	} catch (const std::exception &e)
-	{
-		throw MyException(e);
-	}
-}
-
-
 PYBIND11_MAKE_OPAQUE(CCCoreLib::ReferenceCloudContainer);
 
-PYBIND11_MODULE(pycc, m)
+PYBIND11_MODULE(cccorelib, m)
 {
-	m.doc() = R"pbdoc(
-        Python module exposing some CloudCompare functions
-    )pbdoc";
+	/* constants */
+	m.attr("SQRT_3") = CCCoreLib::SQRT_3;
 
-//	py::class_<CCVector2>(m, "CCVector2");
+	/* Math */
+	m.def("LessThanEpsilon", [](const double x)
+	{ return CCCoreLib::LessThanEpsilon(x); });
+	m.def("GreaterThanEpsilon", [](const double x)
+	{ return CCCoreLib::GreaterThanEpsilon(x); });
+	m.def("RadiansToDegrees", [](const double radians)
+	{
+		return CCCoreLib::RadiansToDegrees(radians);
+	});
+	m.def("DegreesToRadians", [](const double degrees)
+	{
+		return CCCoreLib::DegreesToRadians(degrees);
+	});
+
+	py::class_<CCVector2>(m, "CCVector2");
 
 
 	py::class_<CCVector3>(m, "CCVector3")
@@ -157,7 +66,9 @@ PYBIND11_MODULE(pycc, m)
 
 
 	py::class_<CCCoreLib::BoundingBox>(m, "BoundingBox")
+			.def(py::init<>())
 			.def(py::init<CCVector3, CCVector3>())
+			.def("clear", &CCCoreLib::BoundingBox::clear)
 			.def("add", &CCCoreLib::BoundingBox::add)
 			.def("minCorner", [](const CCCoreLib::BoundingBox &self)
 			{ return self.minCorner(); })
@@ -178,20 +89,66 @@ PYBIND11_MODULE(pycc, m)
 
 	py::class_<CCCoreLib::GenericCloud>(m, "GenericCloud")
 			.def("size", &CCCoreLib::GenericCloud::size)
-			.def("getBoundingBox", &CCCoreLib::GenericCloud::getBoundingBox);
+			.def("getBoundingBox", &CCCoreLib::GenericCloud::getBoundingBox)
+			.def("testVisibility", &CCCoreLib::GenericCloud::testVisibility)
+			.def("placeIteratorAtBeginning", &CCCoreLib::GenericCloud::placeIteratorAtBeginning)
+			.def("getNextPoint", &CCCoreLib::GenericCloud::getNextPoint, py::return_value_policy::reference)
+			.def("enableScalarField", &CCCoreLib::GenericCloud::enableScalarField)
+			.def("isScalarFieldEnabled", &CCCoreLib::GenericCloud::enableScalarField)
+			.def("setPointScalarValue", &CCCoreLib::GenericCloud::getPointScalarValue)
+			.def("getPointScalarValue", &CCCoreLib::GenericCloud::getPointScalarValue);
 
 
-	py::class_<CCCoreLib::GenericIndexedCloud, CCCoreLib::GenericCloud>(m, "GenericIndexedCloud");
+	py::class_<CCCoreLib::GenericIndexedCloud, CCCoreLib::GenericCloud>(m, "GenericIndexedCloud")
+			.def("getPoint", [](CCCoreLib::GenericIndexedCloud &self, const unsigned index)
+			{
+				if ( index < self.size())
+				{
+					return *self.getPoint(index);
+				} else
+				{
+					throw std::out_of_range(std::string("index ") + std::to_string(index) + " is out of range");
+				}
+			})
+			.def("getPoint", [](CCCoreLib::GenericIndexedCloud &self, const unsigned index, CCVector3 &P)
+			{
+				if ( index < self.size())
+				{
+					self.getPoint(index, P);
+				} else
+				{
+					throw std::out_of_range(std::string("index ") + std::to_string(index) + " is out of range");
+				}
+			});
+
 	py::class_<CCCoreLib::GenericIndexedCloudPersist, CCCoreLib::GenericIndexedCloud>(m, "GenericIndexedCloudPersist");
 	py::class_<CCCoreLib::ReferenceCloud, CCCoreLib::GenericIndexedCloudPersist>(m, "ReferenceCloud")
-//			.def("getPointGlobalIndex", &CCCoreLib::ReferenceCloud::getPointGlobalIndex)
+			.def("getPointGlobalIndex", &CCCoreLib::ReferenceCloud::getPointGlobalIndex)
+			.def("getCurrentPointGlobalIndex", &CCCoreLib::ReferenceCloud::getCurrentPointGlobalIndex)
+			.def("getCurrentPointScalarValue", &CCCoreLib::ReferenceCloud::getCurrentPointScalarValue)
+			.def("setCurrentPointScalarValue", &CCCoreLib::ReferenceCloud::setCurrentPointScalarValue)
+			.def("forwardIterator", &CCCoreLib::ReferenceCloud::forwardIterator)
 			.def("addPointIndex", [](CCCoreLib::ReferenceCloud &self, unsigned firstIndex, unsigned lastIndex)
 			{
 				self.addPointIndex(firstIndex, lastIndex);
 			})
-			.def("addPointIndex", [](CCCoreLib::ReferenceCloud& self, unsigned globalIndex) {
+			.def("addPointIndex", [](CCCoreLib::ReferenceCloud &self, unsigned globalIndex)
+			{
 				self.addPointIndex(globalIndex);
-			});
+			})
+			.def("setPointIndex", &CCCoreLib::ReferenceCloud::setPointIndex)
+			.def("reserve", &CCCoreLib::ReferenceCloud::reserve)
+			.def("resize", &CCCoreLib::ReferenceCloud::resize)
+			.def("capacity", &CCCoreLib::ReferenceCloud::capacity)
+			.def("swap", &CCCoreLib::ReferenceCloud::swap)
+			.def("removeCurrentPointGlobalIndex", &CCCoreLib::ReferenceCloud::removeCurrentPointGlobalIndex)
+			.def("removePointGlobalIndex", &CCCoreLib::ReferenceCloud::removePointGlobalIndex)
+			.def("getAssociatedCloud", [](CCCoreLib::ReferenceCloud &self)
+			{ return self.getAssociatedCloud(); }, py::return_value_policy::reference)
+			.def("setAssociatedCloud", &CCCoreLib::ReferenceCloud::setAssociatedCloud)
+			.def("add", &CCCoreLib::ReferenceCloud::add)
+			.def("invalidateBoundingBox", &CCCoreLib::ReferenceCloud::invalidateBoundingBox);
+
 
 	py::class_<CCCoreLib::PointCloud, CCCoreLib::GenericIndexedCloudPersist>(m, "PointCloud");
 
@@ -202,11 +159,16 @@ PYBIND11_MODULE(pycc, m)
 	py::class_<CCCoreLib::ScalarField, observer_ptr<CCCoreLib::ScalarField>>(m, "ScalarField")
 			.def("getName", &CCCoreLib::ScalarField::getName)
 			.def("setName", &CCCoreLib::ScalarField::setName)
+			.def_static("NaN", &CCCoreLib::ScalarField::NaN)
 			.def("computeMeanAndVariance", &CCCoreLib::ScalarField::computeMeanAndVariance)
 			.def("computeMinAndMax", &CCCoreLib::ScalarField::computeMinAndMax)
+			.def_static("ValidValue", &CCCoreLib::ScalarField::ValidValue)
+			.def("flagValueAsInvalid", &CCCoreLib::ScalarField::flagValueAsInvalid)
 			.def("getMin", &CCCoreLib::ScalarField::getMin)
 			.def("getMax", &CCCoreLib::ScalarField::getMax)
 			.def("fill", &CCCoreLib::ScalarField::fill)
+			.def("reserveSafe", &CCCoreLib::ScalarField::reserveSafe)
+			.def("resizeSafe", &CCCoreLib::ScalarField::resizeSafe)
 			.def("asArray", [](CCCoreLib::ScalarField &self)
 			{
 				return PyCC::VectorAsNumpyArray(self);
@@ -217,25 +179,6 @@ PYBIND11_MODULE(pycc, m)
 			});
 
 
-	/* CCCoreLib */
-
-	/* contants */
-	m.attr("SQRT_3") = CCCoreLib::SQRT_3;
-
-	/* Math */
-	m.def("LessThanEpsilon", [](const double x)
-	{ return CCCoreLib::LessThanEpsilon(x); });
-	m.def("GreaterThanEpsilon", [](const double x)
-	{ return CCCoreLib::GreaterThanEpsilon(x); });
-	m.def("RadiansToDegrees", [](const double radians)
-	{
-		return CCCoreLib::RadiansToDegrees(radians);
-	});
-	m.def("DegreesToRadians", [](const double degrees)
-	{
-		return CCCoreLib::DegreesToRadians(degrees);
-	});
-
 	/**
 	 * MiscTools
 	 */
@@ -243,14 +186,31 @@ PYBIND11_MODULE(pycc, m)
 	py::class_<CCCoreLib::CCMiscTools> CCMiscTools(m, "CCMiscTools");
 	CCMiscTools.def_static("EnlargeBox", &CCCoreLib::CCMiscTools::EnlargeBox);
 	CCMiscTools.def_static("MakeMinAndMaxCubical", &CCCoreLib::CCMiscTools::MakeMinAndMaxCubical);
-//	CCMiscTools.def_static("ComputeBaseVectors", &CCCoreLib::CCMiscTools::ComputeBaseVectors);
+	CCMiscTools.def_static("ComputeBaseVectors", [](const CCVector3 &N,
+	                                                CCVector3 &X,
+	                                                CCVector3 &Y)
+	{ CCCoreLib::CCMiscTools::ComputeBaseVectors(N, X, Y); });
 //	CCMiscTools.def_static("TriBoxOverlap", &CCCoreLib::CCMiscTools::TriBoxOverlap);
 
 	/** GenericProgress CallBack
 	 *
 	 */
-	py::class_<CCCoreLib::GenericProgressCallback>(m, "GenericProgressCallback");
-	py::class_<CCCoreLib::NormalizedProgress>(m, "NormalizedProgress");
+	py::class_<CCCoreLib::GenericProgressCallback>(m, "GenericProgressCallback")
+			.def("update", &CCCoreLib::GenericProgressCallback::update)
+			.def("setMethodTitle", &CCCoreLib::GenericProgressCallback::setMethodTitle)
+			.def("setInfo", &CCCoreLib::GenericProgressCallback::setInfo)
+			.def("start", &CCCoreLib::GenericProgressCallback::start)
+			.def("stop", &CCCoreLib::GenericProgressCallback::stop)
+			.def("isCancelRequested", &CCCoreLib::GenericProgressCallback::isCancelRequested)
+			.def("textCanBeEdited", &CCCoreLib::GenericProgressCallback::textCanBeEdited);
+
+	py::class_<CCCoreLib::NormalizedProgress>(m, "NormalizedProgress")
+			//.def(py::init<CCCoreLib::GenericProgressCallback, unsigned, unsigned>(), "callback"_a, "totalSteps"_a, "totalPercentage"_a=100)
+			.def("scale", &CCCoreLib::NormalizedProgress::scale, "totalSteps"_a, "totalPercentage"_a = 100,
+			     "updateCurrentProgress"_a = false)
+			.def("reset", &CCCoreLib::NormalizedProgress::reset)
+			.def("oneStep", &CCCoreLib::NormalizedProgress::oneStep)
+			.def("steps", &CCCoreLib::NormalizedProgress::steps);
 
 
 	py::class_<CCCoreLib::GenericOctree>(m, "GenericOctree");
@@ -407,143 +367,4 @@ PYBIND11_MODULE(pycc, m)
 	      "inputOctree"_a = nullptr, "applyGaussianFilter"_a = false, "alpha"_a = 2.0f);
 
 
-	/**********************************
-	 * qCC_db
-	 **********************************/
-
-	py::class_<ccScalarField, CCCoreLib::ScalarField, observer_ptr<ccScalarField>>(m, "ccScalarField");
-
-	py::class_<ccGenericGLDisplay>(m, "ccGenericGLDisplay");
-
-	py::class_<ccDrawableObject>(m, "ccDrawableObject")
-			.def("isVisible", &ccDrawableObject::isVisible)
-			.def("setVisible", &ccDrawableObject::setVisible)
-			.def("toggleVisibility", &ccDrawableObject::toggleVisibility)
-			.def("isVisibilityLocked", &ccDrawableObject::isVisiblityLocked)
-			.def("lockVisibility", &ccDrawableObject::lockVisibility)
-			.def("isSelected", &ccDrawableObject::isSelected)
-			.def("setSelected", &ccDrawableObject::setSelected)
-			.def("hasColors", &ccDrawableObject::hasColors)
-			.def("colorsShown", &ccDrawableObject::colorsShown)
-			.def("showColors", &ccDrawableObject::showColors)
-			.def("toggleColors", &ccDrawableObject::toggleColors)
-			.def("hasNormals", &ccDrawableObject::hasNormals)
-			.def("normalsShown", &ccDrawableObject::normalsShown)
-			.def("showNormals", &ccDrawableObject::showNormals)
-			.def("toggleNormals", &ccDrawableObject::toggleNormals)
-			.def("hasDisplayedScalarField", &ccDrawableObject::hasDisplayedScalarField)
-			.def("hasScalarFields", &ccDrawableObject::hasScalarFields)
-			.def("showSF", &ccDrawableObject::showSF)
-			.def("toggleSF", &ccDrawableObject::toggleSF)
-			.def("sfShown", &ccDrawableObject::sfShown)
-			.def("showNameIn3D", &ccDrawableObject::showNameIn3D)
-			.def("nameShownIn3D", &ccDrawableObject::nameShownIn3D)
-			.def("toggleShowName", &ccDrawableObject::toggleShowName);
-
-	// TODO Metadata { get & set }
-	py::class_<ccObject>(m, "ccObject")
-			.def("getName", &ccObject::getName)
-			.def("setName", &ccObject::setName)
-//			.def("getClassID", &ccObject::getClassID)
-			.def("getUniqueID", &ccObject::getUniqueID)
-			.def("isEnabled", &ccObject::isEnabled)
-			.def("setEnabled", &ccObject::setEnabled)
-			.def("toggleActivation", &ccObject::toggleActivation)
-			.def("isLocked", &ccObject::isLocked)
-			.def("setLocked", &ccObject::setLocked)
-			.def("isLeaf", &ccObject::isLeaf)
-			.def("isCustom", &ccObject::isCustom)
-			.def("isHierarchy", &ccObject::isHierarchy);
-
-	py::class_<ccHObject, ccObject, ccDrawableObject>(m, "ccHObject")
-			.def("isGroup", &ccHObject::isGroup)
-			.def("getParent", &ccHObject::getParent, py::return_value_policy::reference)
-					// Children management
-			.def("getChildrenNumber", &ccHObject::getChildrenNumber)
-			.def("getChildCountRecursive", &ccHObject::getChildCountRecursive)
-			.def("getChild", &ccHObject::getChild, py::return_value_policy::reference)
-			.def("find", &ccHObject::find, py::return_value_policy::reference);
-
-
-	py::class_<ccGenericPointCloud, ccHObject, CCCoreLib::GenericIndexedCloudPersist>(m, "ccGenericPointCloud");
-
-	py::class_<ccPointCloud, ccGenericPointCloud>(m, "ccPointCloud")
-			// ScalarField management
-			.def("getNumberOfScalarField", &ccPointCloud::getNumberOfScalarFields)
-			.def("getScalarFieldName", &ccPointCloud::getScalarFieldName)
-			.def("getScalarFieldIndexByName", &ccPointCloud::getScalarFieldIndexByName)
-			.def("getCurrentDisplayedScalarField", &ccPointCloud::getCurrentDisplayedScalarField)
-			.def("getCurrentDisplayedScalarFieldIndex", &ccPointCloud::getCurrentDisplayedScalarFieldIndex)
-			.def("getScalarField", &ccPointCloud::getScalarField)
-			.def("setCurrentDisplayedScalarField", &ccPointCloud::setCurrentDisplayedScalarField)
-			.def("partialClone", [](const ccPointCloud *self, const CCCoreLib::ReferenceCloud *selection,
-			                        ccPythonInstance *pythonInstance)
-			{
-				// TODO use opt param to check errs
-				ccPointCloud *cloned = self->partialClone(selection);
-				pythonInstance->addToDB(cloned);
-				return cloned;
-			}, py::return_value_policy::reference)
-			.def("__repr__", [](const ccPointCloud &self)
-			{
-				return std::string("<ccPointCloud(") + self.getName().toStdString() + ", " +
-				       std::to_string(self.size()) + " points)>";
-			});
-
-	py::class_<QProgressDialog>(m, "QProgressDialog");
-
-	py::class_<ccProgressDialog, QProgressDialog, CCCoreLib::GenericProgressCallback>(m, "ccProgressDialog")
-			.def(py::init<bool>(), "cancelButton"_a = false)
-			.def("setMethodTitle", [](ccProgressDialog &self, const char *methodTitle)
-			{ self.setMethodTitle(methodTitle); })
-			.def("setInfo", [](ccProgressDialog &self, const char *infoStr)
-			{ self.setInfo(infoStr); })
-			.def("start", &ccProgressDialog::start)
-			.def("stop", &ccProgressDialog::stop);
-
-	py::class_<ccPythonInstance, observer_ptr<ccPythonInstance>>(m, "ccPythonInstance")
-			.def("haveSelection", &ccPythonInstance::haveSelection)
-			.def("haveOneSelection", &ccPythonInstance::haveOneSelection)
-			.def("getSelectedEntities", &ccPythonInstance::getSelectedEntities, py::return_value_policy::reference)
-			.def("setSelectedInDB", &ccPythonInstance::setSelectedInDB)
-			.def("dbRootObject", &ccPythonInstance::dbRootObject, py::return_value_policy::reference)
-			.def("redrawAll", &ccPythonInstance::redrawAll)
-			.def("refreshAll", &ccPythonInstance::refreshAll)
-			.def("enableAll", &ccPythonInstance::enableAll)
-			.def("disableAll", &ccPythonInstance::disableAll)
-			.def("updateUI", &ccPythonInstance::updateUI)
-			.def("freezeUI", &ccPythonInstance::freezeUI)
-			.def("loadFile", &ccPythonInstance::loadFile, py::return_value_policy::reference);
-
-
-	m.def("GetInstance", &GetInstance);
-
-	m.def("ProcessEvents", []()
-	{
-		QCoreApplication::processEvents();
-	});
-
-
-	m.def("RunInThread", [](py::object callable, py::args args, py::kwargs kwargs)
-	{
-		PyThreadStateReleaser stateReleaser{};
-		QEventLoop loop;
-		QFutureWatcher<py::object> watcher;
-		QFuture<py::object> future = QtConcurrent::run(call_fn, stateReleaser.state, callable, args, kwargs);
-		watcher.setFuture(future);
-		QObject::connect(&watcher, &decltype(watcher)::finished, &loop, &decltype(loop)::quit);
-		loop.exec();
-
-		return future.result();
-	});
-
-	m.def("RunThread", [](py::object thread)
-	{
-		py::object isAliveMethod = thread.attr("is_alive");
-		thread.attr("start")();
-		while (isAliveMethod())
-		{
-			QCoreApplication::processEvents();
-		}
-	});
 }

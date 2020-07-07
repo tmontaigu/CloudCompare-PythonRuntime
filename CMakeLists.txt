@@ -59,6 +59,9 @@ if (PLUGIN_PYTHON)
         else ()
             message(WARNING "No Python Home found")
         endif ()
-        INSTALL(TARGETS pycc DESTINATION "${CC_PYTHON_INSTALL_DIR}/Lib/site-packages")
+        INSTALL(
+                TARGETS pycc cccorelib
+                DESTINATION "${CC_PYTHON_INSTALL_DIR}/Lib/site-packages"
+        )
     endif()
 endif ()

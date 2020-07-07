@@ -10,6 +10,9 @@
 
 namespace py = pybind11;
 
+template<class T>
+using observer_ptr = std::unique_ptr<T, py::nodelete>;
+
 namespace PyCC
 {
 	void NoOpDelete(void *)

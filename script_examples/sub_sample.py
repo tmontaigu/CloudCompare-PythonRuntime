@@ -1,19 +1,21 @@
 import pycc
+import cccorelib
+
 import numpy as np
 
 CC = pycc.GetInstance()
 from threading import Thread
 
 def doSubSampling(pc):
-    refcloud = pycc.CloudSamplingTools.subsampleCloudRandomly(pc, pc.size() // 2);
+    refcloud = cccorelib.CloudSamplingTools.subsampleCloudRandomly(pc, pc.size() // 2);
     randomPc = pc.partialClone(refcloud, CC)
     randomPc.setName("Randomly subsampled")
 
-    refcloud = pycc.CloudSamplingTools.subsampleCloudWithOctree(pc, pc.size() // 4, pycc.CloudSamplingTools.RANDOM_POINT)
+    refcloud = cccorelib.CloudSamplingTools.subsampleCloudWithOctree(pc, pc.size() // 4, cccorelib.CloudSamplingTools.RANDOM_POINT)
     randomPc = pc.partialClone(refcloud, CC)
     randomPc.setName("Subsampled using octree (RANDOM_POINT)")
 
-    refcloud = pycc.CloudSamplingTools.subsampleCloudWithOctree(pc, pc.size() // 4, pycc.CloudSamplingTools.NEAREST_POINT_TO_CELL_CENTER)
+    refcloud = cccorelib.CloudSamplingTools.subsampleCloudWithOctree(pc, pc.size() // 4, cccorelib.CloudSamplingTools.NEAREST_POINT_TO_CELL_CENTER)
     randomPc = pc.partialClone(refcloud, CC)
     randomPc.setName("Subsampled using octree (NEAREST_POINT_TO_CELL_CENTER)")
 
