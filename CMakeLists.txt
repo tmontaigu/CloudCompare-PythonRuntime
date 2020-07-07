@@ -5,11 +5,6 @@ if (PLUGIN_PYTHON)
 
     AddPlugin(NAME ${PROJECT_NAME})
 
-    find_package(Python3 COMPONENTS Interpreter Development)
-    if (NOT Python3_FOUND)
-        message(ERROR "Python3 was no found")
-    endif ()
-
     # Qt's 'slots' conflicts with Python's 'slots'
     target_compile_definitions(PythonPlugin PRIVATE -DQT_NO_KEYWORDS)
 
@@ -30,7 +25,6 @@ if (PLUGIN_PYTHON)
     SET(CC_PLUGIN_INSTALL_DIR ${CLOUDCOMPARE_DEST_FOLDER}/plugins)
     set(CC_PYTHON_INSTALL_DIR "${CC_PLUGIN_INSTALL_DIR}/${CC_PYTHON_ENV_NAME}")
 
-    message(STATUS "Python Executable at: '${Python3_EXECUTABLE}'")
     if (WIN32 AND COPY_ENV)
         if (DEFINED ENV{CONDA_PREFIX})
             message(STATUS "Conda environment found")
@@ -43,7 +37,7 @@ if (PLUGIN_PYTHON)
         elseif(DEFINED ENV{VIRTUAL_ENV})
             message(STATUS "Python virtualenv found")
             execute_process(
-                    COMMAND "${Python3_EXECUTABLE}" -c "import sys; print(';'.join(p for p in sys.path if p.endswith('DLLs') or p.endswith('lib')), end='')"
+                    COMMAND "${PYTHON_EXECUTABLE}" -c "import sys; print(';'.join(p for p in sys.path if p.endswith('DLLs') or p.endswith('lib')), end='')"
                     RESUlT_VARIABLE PYTHON_RES
                     OUTPUT_VARIABLE PYTHON_OUT
             )
