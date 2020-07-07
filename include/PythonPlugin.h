@@ -64,6 +64,7 @@ public:
 
 	QList<QAction *> getActions() override;
 
+	void registerCommands(ccCommandLineInterface *cmd) override;
 
 private:
 	void showRepl();

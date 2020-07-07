@@ -29,9 +29,15 @@
 #include <pybind11/embed.h>
 #include <Python.h>
 
+#define slots Q_SLOTS
+#define signals Q_SIGNALS
+
+#include <ccCommandLineInterface.h>
+
 
 /// Returns a newly allocated array (null terminated) from a QString
-wchar_t *qstring_to_wchar_array(const QString &string) {
+wchar_t *qstring_to_wchar_array(const QString &string)
+{
 	auto *wcharArray = new wchar_t[string.size() + 1];
 	int len = string.toWCharArray(wcharArray);
 	if ( len > string.size())
@@ -43,7 +49,8 @@ wchar_t *qstring_to_wchar_array(const QString &string) {
 }
 
 
-void logPythonPath() {
+void logPythonPath()
+{
 	const wchar_t *pythonPath = Py_GetPath();
 	if ( pythonPath != nullptr )
 	{
@@ -62,7 +69,8 @@ void logPythonPath() {
 	}
 }
 
-void logPythonHome() {
+void logPythonHome()
+{
 	const wchar_t *pythonHome = Py_GetPythonHome();
 	if ( pythonHome != nullptr )
 	{
@@ -83,7 +91,8 @@ void logPythonHome() {
 }
 
 
-PythonConfigPaths::PythonConfigPaths() {
+PythonConfigPaths::PythonConfigPaths()
+{
 	QDir pythonEnvDirPath(QApplication::applicationDirPath() + "/plugins/Python");
 	if ( pythonEnvDirPath.exists())
 	{
@@ -103,14 +112,15 @@ PythonConfigPaths::PythonConfigPaths() {
 
 // Useful link: https://docs.python.org/3/c-api/init.html#initialization-finalization-and-threads
 PythonPlugin::PythonPlugin(QObject *parent)
-		: QObject(parent), ccStdPluginInterface(":/CC/plugin/PythonPlugin/info.json") {
+		: QObject(parent), ccStdPluginInterface(":/CC/plugin/PythonPlugin/info.json")
+{
 
 	try
 	{
 		m_pythonConfig = std::make_unique<PythonConfigPaths>();
 		Py_SetPythonHome(m_pythonConfig->pythonHome());
 		Py_SetPath(m_pythonConfig->pythonPath());
-	} catch (const std::exception&)
+	} catch (const std::exception &)
 	{
 
 	}
@@ -123,11 +133,13 @@ PythonPlugin::PythonPlugin(QObject *parent)
 }
 
 
-void PythonPlugin::onNewSelection(const ccHObject::Container &selectedEntities) {
+void PythonPlugin::onNewSelection(const ccHObject::Container &selectedEntities)
+{
 }
 
 
-QList<QAction *> PythonPlugin::getActions() {
+QList<QAction *> PythonPlugin::getActions()
+{
 	if ( !m_showEditor )
 	{
 		m_showEditor = new QAction("Show Editor", this);
@@ -149,7 +161,8 @@ QList<QAction *> PythonPlugin::getActions() {
 	return {m_showREPL, m_showEditor};
 }
 
-void PythonPlugin::showRepl() {
+void PythonPlugin::showRepl()
+{
 	if ( m_repl )
 	{
 		Python::setMainAppInterfaceInstance(m_app);
@@ -159,7 +172,8 @@ void PythonPlugin::showRepl() {
 	}
 }
 
-void PythonPlugin::showEditor() {
+void PythonPlugin::showEditor()
+{
 	if ( m_editor )
 	{
 		Python::setMainAppInterfaceInstance(m_app);
@@ -169,7 +183,8 @@ void PythonPlugin::showEditor() {
 	}
 }
 
-void PythonPlugin::executeEditorCode(const std::string &evalFileName, const std::string &code, QListWidget *output) {
+void PythonPlugin::executeEditorCode(const std::string &evalFileName, const std::string &code, QListWidget *output)
+{
 	try
 	{
 		py::object o = py::module::import("ccinternals")
@@ -184,7 +199,43 @@ void PythonPlugin::executeEditorCode(const std::string &evalFileName, const std:
 	}
 }
 
-PythonPlugin::~PythonPlugin() {
+PythonPlugin::~PythonPlugin()
+{
 	py::finalize_interpreter();
 	Python::unsetMainAppInterfaceInstance();
+}
+
+struct PythonPluginCommand : public ccCommandLineInterface::Command
+{
+	PythonPluginCommand() : Command("PYTHON", "PYTHON_SCRIPT")
+	{}
+
+	bool process(ccCommandLineInterface &cmd) override
+	{
+
+		cmd.print("[PythonPlugin] Stating");
+		if ( cmd.arguments().empty())
+		{
+			return cmd.error(QString("Missing parameter: parameters filename after \"-%1\"").arg("PYTHON_SCRIPT"));
+		}
+
+		//open specified file
+		QString paramFilename(cmd.arguments().takeFirst());
+		cmd.print(QString("[PythonPlugin] python file: '%1'").arg(paramFilename));
+		try
+		{
+			PyStdErrOutStreamRedirect r{};
+			py::eval_file(qPrintable(paramFilename));
+		} catch (const std::exception &e)
+		{
+			std::cout << e.what() << '\n';
+		}
+		return true;
+	}
+
+};
+
+void PythonPlugin::registerCommands(ccCommandLineInterface *cmd)
+{
+	cmd->registerCommand(ccCommandLineInterface::Command::Shared(new PythonPluginCommand()));
 }

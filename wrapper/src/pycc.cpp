@@ -42,6 +42,8 @@
 #include "casters.h"
 #include "Runtime.h"
 
+#include <FileIOFilter.h>
+
 
 namespace py = pybind11;
 using namespace pybind11::literals;
@@ -224,6 +226,7 @@ PYBIND11_MODULE(pycc, m)
 			.def("getSelectedEntities", &ccPythonInstance::getSelectedEntities, py::return_value_policy::reference)
 			.def("setSelectedInDB", &ccPythonInstance::setSelectedInDB)
 			.def("dbRootObject", &ccPythonInstance::dbRootObject, py::return_value_policy::reference)
+			.def("addToDB", &ccPythonInstance::addToDB, "obj"_a, "updateZoom"_a= false, "autoExpandDBTree"_a=true, "checkDimensions"_a = false, "autoRedraw"_a = true)
 			.def("redrawAll", &ccPythonInstance::redrawAll)
 			.def("refreshAll", &ccPythonInstance::refreshAll)
 			.def("enableAll", &ccPythonInstance::enableAll)
@@ -263,4 +266,33 @@ PYBIND11_MODULE(pycc, m)
 			QCoreApplication::processEvents();
 		}
 	});
+
+	py::class_<ccGlobalShiftManager> PyccGlobalShiftManager(m, "ccGlobalShiftManager");
+
+	py::enum_<ccGlobalShiftManager::Mode> (PyccGlobalShiftManager, "Mode")
+	        .value("NO_DIALOG", ccGlobalShiftManager::Mode::NO_DIALOG)
+			.value("NO_DIALOG_AUTO_SHIFT", ccGlobalShiftManager::Mode::NO_DIALOG_AUTO_SHIFT)
+			.value("DIALOG_IF_NECESSARY", ccGlobalShiftManager::Mode::DIALOG_IF_NECESSARY)
+			.value("ALWAYS_DISPLAY_DIALOG", ccGlobalShiftManager::Mode::ALWAYS_DISPLAY_DIALOG)
+			.export_values();
+
+
+	py::class_<FileIOFilter> PyFileIOFilter (m, "FileIOFilter");
+	PyFileIOFilter.def_static("LoadFromFile", [](const QString &filename,
+	                                             FileIOFilter::LoadParameters &parameters) {
+			CC_FILE_ERROR result = CC_FERR_NO_ERROR;
+			ccHObject *newGroup = FileIOFilter::LoadFromFile(filename, parameters, result);
+			return newGroup;
+		}, py::return_value_policy::reference);
+
+	py::class_<FileIOFilter::LoadParameters>(PyFileIOFilter, "LoadParameters")
+	        .def(py::init<>())
+			.def_readwrite("shiftHandlingMode", &FileIOFilter::LoadParameters::shiftHandlingMode)
+	        .def_readwrite("alwaysDisplayLoadDialog", &FileIOFilter::LoadParameters::alwaysDisplayLoadDialog)
+			.def_readwrite("coordinatesShiftEnabled", &FileIOFilter::LoadParameters::coordinatesShiftEnabled)
+			.def_readwrite("coordinatesShift", &FileIOFilter::LoadParameters::coordinatesShift)
+			.def_readwrite("preserveShiftOnSave", &FileIOFilter::LoadParameters::preserveShiftOnSave)
+			.def_readwrite("autoComputeNormals", &FileIOFilter::LoadParameters::autoComputeNormals)
+//			.def_readwrite("parentWidget", &FileIOFilter::LoadParameters::parentWidget)
+			.def_readwrite("sessionStart", &FileIOFilter::LoadParameters::sessionStart);
 }
