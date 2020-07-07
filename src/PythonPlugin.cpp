@@ -228,7 +228,8 @@ struct PythonPluginCommand : public ccCommandLineInterface::Command
 			py::eval_file(qPrintable(paramFilename));
 		} catch (const std::exception &e)
 		{
-			std::cout << e.what() << '\n';
+			ccLog::Warning(e.what());
+			return false;
 		}
 		return true;
 	}

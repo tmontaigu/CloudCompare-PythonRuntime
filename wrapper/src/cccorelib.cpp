@@ -20,10 +20,39 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 PYBIND11_MAKE_OPAQUE(CCCoreLib::ReferenceCloudContainer);
 
+//#define QUOTE(str) #str
+//#define EXPAND_AND_QUOTE(str) QUOTE(str)
+
+#define DEFINE_VECTOR2TPL_TYPE(cppname, pyname, type_) py::class_<cppname>(m, pyname) \
+                .def(py::init<>()) \
+                .def(py::init<type_, type_>()) \
+                .def_readwrite("x", &cppname::x) \
+                .def_readwrite("y", &cppname::y) \
+                .def("norm2", &cppname::norm2) \
+                .def("norm", &cppname::norm) \
+                .def("normalize", &cppname::normalize) \
+                .def("dot", &cppname::dot) \
+                .def("cross", &cppname::cross) \
+                .def("__getitem__", [](const cppname &self, unsigned index) \
+                { \
+                    return self[index]; \
+                }) \
+                .def("__repr__", [](const cppname &self) { \
+                    return std::string("<")+ pyname + "(" + std::to_string(self.x) + ", " + std::to_string(self.y) + ")>" ; \
+                });
+
+
 PYBIND11_MODULE(cccorelib, m)
 {
-	/* constants */
+	/* Constants */
 	m.attr("SQRT_3") = CCCoreLib::SQRT_3;
+
+	/* Geoms */
+
+	DEFINE_VECTOR2TPL_TYPE(CCVector2, "CCVector2", PointCoordinateType);
+	DEFINE_VECTOR2TPL_TYPE(CCVector2d, "CCVector2d", double);
+//	DEFINE_VECTOR2TPL_TYPE(CCVector2i, "CCVector2i", int);
+
 
 	/* Math */
 	m.def("LessThanEpsilon", [](const double x)
@@ -38,8 +67,6 @@ PYBIND11_MODULE(cccorelib, m)
 	{
 		return CCCoreLib::DegreesToRadians(degrees);
 	});
-
-	py::class_<CCVector2>(m, "CCVector2");
 
 
 	py::class_<CCVector3>(m, "CCVector3")
