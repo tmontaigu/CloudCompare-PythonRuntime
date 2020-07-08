@@ -184,7 +184,7 @@ void ui::QPythonREPL::executeCode(const QString &pythonCode)
 	try
 	{
 		PyStdErrOutStreamRedirect redir{m_output, m_output};
-		py::exec(m_buf.c_str(), py::globals(), m_locals);
+		py::exec(m_buf, py::globals(), m_locals);
 	} catch (const std::exception &e)
 	{
 		outputDisplay()->addItem(e.what());
@@ -222,7 +222,6 @@ const QString &ui::History::newer()
 		m_current = m_commands.rend();
 	} else
 	{
-
 		m_current--;
 	}
 	return current;

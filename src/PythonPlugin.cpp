@@ -189,7 +189,7 @@ void PythonPlugin::executeEditorCode(const std::string &evalFileName, const std:
 		py::object o = py::module::import("ccinternals")
 				.attr("ConsoleREPL")(output);
 		PyStdErrOutStreamRedirect redirect{o, o};
-		py::exec(code.c_str());
+		py::exec(code);
 	} catch (const std::exception &e)
 	{
 		auto message = new QListWidgetItem(e.what());
