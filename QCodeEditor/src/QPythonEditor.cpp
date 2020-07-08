@@ -16,7 +16,7 @@
 //##########################################################################
 
 #include "QPythonEditor.h"
-#include "codeEditor.h"
+#include "CodeEditor.h"
 
 //qCC
 #include "ccMainAppInterface.h"
@@ -38,6 +38,7 @@ QPythonEditor::QPythonEditor() : Ui::QPythonEditor()
 	connect(mdiArea, &QMdiArea::subWindowActivated,
 		this, &QPythonEditor::updateMenus);
 
+	this->settings = new QEditorSettings;
 	this->projectBrowser->hide();
 	createActions();
 	createStatusBar();
@@ -328,6 +329,7 @@ void QPythonEditor::createActions()
 	connect(actionSave_As, &QAction::triggered, this, &QPythonEditor::saveAs);
 	connect(actionRun, &QAction::triggered, this, &QPythonEditor::runExecute);
 	connect(actionClose, &QAction::triggered, this, [=]() {close(); });
+	connect(actionSettings, &QAction::triggered, this, [this](){this->settings->show();});
 	
 
 	
@@ -498,7 +500,7 @@ void QPythonEditor::updateWindowMenu()
 
 CodeEditor* QPythonEditor::createChildCodeEditor()
 {
-	CodeEditor* child = new CodeEditor;
+	CodeEditor* child = new CodeEditor(this->settings);
 	mdiArea->addSubWindow(child);
 
 #ifndef QT_NO_CLIPBOARD
