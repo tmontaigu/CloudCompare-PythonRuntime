@@ -10,6 +10,7 @@ static const char *const PYTHON_COMMENT_STR = "# ";
 
 #include <QPlainTextEdit>
 #include <QObject>
+#include "QEditorSettings.h"
 
 class QPaintEvent;
 class QResizeEvent;
@@ -26,7 +27,7 @@ class CodeEditor : public QPlainTextEdit
     Q_OBJECT
 
 public:
-    CodeEditor(QWidget* parent = 0);
+    CodeEditor(QEditorSettings *settings, QWidget* parent = 0);
 
     void lineNumberAreaPaintEvent(QPaintEvent* event);
     ~CodeEditor() = default;
@@ -57,7 +58,7 @@ private Q_SLOTS:
     void startAllHighlighting();
 
 private:
-    void setupEditor();
+    void updateUsingSettings();
 
 protected:
 	void keyPressEvent(QKeyEvent *e) override;
@@ -77,6 +78,8 @@ private:
 	PythonHighlighter* highlighter;
     QString curFile;
     bool isUntitled;
+
+    QEditorSettings *settings;
 };
 
 

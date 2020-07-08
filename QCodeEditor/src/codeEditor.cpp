@@ -23,10 +23,11 @@
 #include "PythonHighlighter.h"
 #include <ccLog.h>
 
-CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent)
+CodeEditor::CodeEditor(QEditorSettings *settings, QWidget *parent) : settings(settings), QPlainTextEdit(parent)
 {
-	lineNumberArea = new LineNumberArea(this);
+	connect(settings, &QEditorSettings::settingsChanged, this, &CodeEditor::updateUsingSettings);
 
+	lineNumberArea = new LineNumberArea(this);
 	connect(this, &QPlainTextEdit::blockCountChanged, this, &CodeEditor::updateLineNumberAreaWidth);
 	connect(this, &QPlainTextEdit::updateRequest, this, &CodeEditor::updateLineNumberArea);
 	connect(this, &QPlainTextEdit::cursorPositionChanged, this, &CodeEditor::startAllHighlighting);
@@ -35,8 +36,9 @@ CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent)
 	highlightCurrentLine();
 	setAttribute(Qt::WA_DeleteOnClose);
 	isUntitled = true;
-	setupEditor();
+	updateUsingSettings();
 	installEventFilter(this);
+	highlighter = new PythonHighlighter(document());
 }
 
 
@@ -62,12 +64,12 @@ bool CodeEditor::eventFilter(QObject *target, QEvent *event)
 	return QPlainTextEdit::eventFilter(target, event);
 }
 
-void CodeEditor::setupEditor()
+void CodeEditor::updateUsingSettings()
 {
 	QFont font;
 	font.setFamily("Courier");
 	font.setFixedPitch(true);
-	font.setPointSize(20);
+	font.setPointSize(settings->fontSize());
 
 	setFont(font);
 //	QPalette p = palette();
@@ -75,8 +77,8 @@ void CodeEditor::setupEditor()
 //	p.setColor(QPalette::Text, Qt::white);
 //	setPalette(p);
 	setLineWrapMode(QPlainTextEdit::NoWrap);
-	highlighter = new PythonHighlighter(document());
 
+	this->repaint();
 }
 
 

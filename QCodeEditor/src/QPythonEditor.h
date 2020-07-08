@@ -24,6 +24,7 @@
 //Qt
 #include <QMainWindow>
 #include <QSettings>
+#include "QEditorSettings.h"
 
 class CodeEditor;
 QT_BEGIN_NAMESPACE
@@ -96,6 +97,8 @@ private:
 	void setRecentFilesVisible(bool visible);
 	CodeEditor* activeChildCodeEditor() const;
 	QMdiSubWindow* findChildCodeEditor(const QString& fileName) const;
+
+	QEditorSettings *settings;
 
 	QMdiArea* mdiArea;
 
