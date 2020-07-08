@@ -16,7 +16,7 @@
 //##########################################################################
 
 #include "QPythonEditor.h"
-#include "codeEditor.h"
+#include "CodeEditor.h"
 
 //qCC
 #include "ccMainAppInterface.h"

@@ -19,7 +19,7 @@
 #include <QtWidgets>
 
 
-#include "codeEditor.h"
+#include "CodeEditor.h"
 #include "PythonHighlighter.h"
 #include <ccLog.h>
 
