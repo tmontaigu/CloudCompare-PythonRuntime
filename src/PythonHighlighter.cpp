@@ -46,7 +46,7 @@ static const QStringList operators = {
 
 // Python braces
 static const QStringList braces = {
-		"\\{", "\\}", "\\(", "\\)", "\[", "\]"
+		"\\{", "\\}", "\\(", "\\)", R"([)", R"(])"
 };
 
 /////
@@ -70,7 +70,7 @@ void PythonHighlighter::initialize()
 	// FIXME: The triple-quotes in these two lines will mess up the
 	// syntax highlighting from this point onward
 	_triSingle = HighlightingRule("'''", 1, STYLES["string2"]);
-	_triDouble = HighlightingRule("\"\"\"", 2, STYLES["string2"]);
+	_triDouble = HighlightingRule(R"(""")", 2, STYLES["string2"]);
 
 	// Keyword, operator, and brace rules
 	for (const QString &keyword : keywords)
@@ -91,9 +91,9 @@ void PythonHighlighter::initialize()
 	_pythonHighlightingRules += HighlightingRule("\\bself\\b", 0, STYLES["self"]);
 
 	// Double-quoted string, possibly containing escape sequences
-	_pythonHighlightingRules += HighlightingRule("\"[^\"\\\]*(\\\\.[^\"\\\]*)*\"", 0, STYLES["string"]);
+	_pythonHighlightingRules += HighlightingRule(R"("[^"\\]*(\\.[^"\\]*)*")", 0, STYLES["string"]);
 	// Single-quoted string, possibly containing escape sequences
-	_pythonHighlightingRules += HighlightingRule("\"[^'\\\]*(\\\\.[^'\\\]*)*\"", 0, STYLES["string"]);
+	_pythonHighlightingRules += HighlightingRule(R"("[^'\\]*(\\.[^'\\]*)*")", 0, STYLES["string"]);
 
 	// 'def' followed by an identifier
 	_pythonHighlightingRules += HighlightingRule("\\bdef\\b\\s*(\\w+)", 1, STYLES["defclass"]);
