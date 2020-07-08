@@ -1,4 +1,7 @@
+""" Demo of using a CloudSamplingTools with a ccProgressDialog
+"""
 import pycc
+import cccorelib
 import numpy as np
 
 CC = pycc.GetInstance()
@@ -15,7 +18,7 @@ def main():
 
     progress = pycc.ccProgressDialog()
     progress.start()
-    refcloud = pycc.RunInThread(pycc.CloudSamplingTools.subsampleCloudRandomly, pc, pc.size() // 2, progressCb=progress)
+    refcloud = cccorelib.CloudSamplingTools.subsampleCloudRandomly(pc, pc.size() // 2, progressCb=progress)
     randomPc = pc.partialClone(refcloud, CC)
     randomPc.setName("Randomly subsampled")
 

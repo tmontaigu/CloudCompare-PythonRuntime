@@ -1,4 +1,5 @@
 import pycc
+import cccorelib
 import numpy as np
 
 CC = pycc.GetInstance()
@@ -12,7 +13,7 @@ def main():
 
     print(pc, pc.size())
 
-    numLabels = pycc.labelConnectedComponents(pc, 11, False);
+    numLabels = pycc.RunInThread(cccorelib.AutoSegmentationTools.labelConnectedComponents, pc, 11, False)
     print("There are {} labels".format(numLabels))
 
     labelsSfIdx = pc.getScalarFieldIndexByName("Default");
@@ -23,7 +24,7 @@ def main():
     CC.redrawAll(False)
     
 
-    referenceClouds = pycc.ReferenceCloudContainer();
+    referenceClouds = cccorelib.ReferenceCloudContainer();
     if not pycc.extractConnectedComponents(pc, referenceClouds):
         print("Failed to extract the connected Components")
     else:

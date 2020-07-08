@@ -1,22 +1,22 @@
 import pycc
+import cccorelib
 import numpy as np
 
 CC = pycc.GetInstance()
 
 def main():
     entities = CC.getSelectedEntities()
-    print(entities)
 
     if not entities:
         raise RuntimeError("No entities selected")
 
 
     CC.freezeUI(True)
-    pc = entities[0]
-    print(pc, pc.size())
+    pointCloud = entities[0]
+    print(pointCloud)
 
-    gravityCenter = pycc.GeometricalAnalysisTools.ComputeGravityCenter(pc)
-    print("The gravity center of {} is {}".format(pc.getName(), gravityCenter))
+    gravityCenter = cccorelib.GeometricalAnalysisTools.ComputeGravityCenter(pointCloud)
+    print("The gravity center of {} is {}".format(pointCloud.getName(), gravityCenter))
 
     CC.freezeUI(False)
   

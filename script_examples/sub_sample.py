@@ -4,7 +4,6 @@ import cccorelib
 import numpy as np
 
 CC = pycc.GetInstance()
-from threading import Thread
 
 def doSubSampling(pc):
     refcloud = cccorelib.CloudSamplingTools.subsampleCloudRandomly(pc, pc.size() // 2);
@@ -26,11 +25,9 @@ def main():
 
     if not entities:
         raise RuntimeError("No entities selected")
-        return
 
-
-    pc = entities[0]
-    print(pc, pc.size())
+    pointCloud = entities[0]
+    print(pointCloud, pc.size())
 
     
     pycc.RunInThread(doSubSampling, pc)

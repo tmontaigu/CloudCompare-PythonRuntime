@@ -383,13 +383,16 @@ PYBIND11_MODULE(cccorelib, m)
 	 * AutoSegmentationTools
 	 */
 
-	m.def("labelConnectedComponents", &CCCoreLib::AutoSegmentationTools::labelConnectedComponents, "theCloud"_a,
+	py::class_<CCCoreLib::AutoSegmentationTools> AutoSegmentationTools(m, "AutoSegmentationTools");
+
+
+	AutoSegmentationTools.def_static("labelConnectedComponents", &CCCoreLib::AutoSegmentationTools::labelConnectedComponents, "theCloud"_a,
 	      "level"_a,
 	      "sixConnexity"_a = false, "progressCb"_a = nullptr, "inputOctree"_a = nullptr);
 
-	m.def("extractConnectedComponents", &CCCoreLib::AutoSegmentationTools::extractConnectedComponents);
+	AutoSegmentationTools.def_static("extractConnectedComponents", &CCCoreLib::AutoSegmentationTools::extractConnectedComponents);
 
-	m.def("frontPropagationBasedSegmentation", &CCCoreLib::AutoSegmentationTools::frontPropagationBasedSegmentation,
+	AutoSegmentationTools.def_static("frontPropagationBasedSegmentation", &CCCoreLib::AutoSegmentationTools::frontPropagationBasedSegmentation,
 	      "theCloud"_a, "radius"_a, "minSeeDist"_a, "octreeLevel"_a, "theSegmentedLists"_a, "progressCb"_a = nullptr,
 	      "inputOctree"_a = nullptr, "applyGaussianFilter"_a = false, "alpha"_a = 2.0f);
 
