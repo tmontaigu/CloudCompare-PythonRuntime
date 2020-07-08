@@ -36,7 +36,7 @@
 
 
 /// Returns a newly allocated array (null terminated) from a QString
-wchar_t *qstring_to_wchar_array(const QString &string)
+wchar_t *QStringToWcharArray(const QString &string)
 {
 	auto *wcharArray = new wchar_t[string.size() + 1];
 	int len = string.toWCharArray(wcharArray);
@@ -97,12 +97,12 @@ PythonConfigPaths::PythonConfigPaths()
 	if ( pythonEnvDirPath.exists())
 	{
 		QString qPythonHome = pythonEnvDirPath.path();
-		m_pythonHome.reset(qstring_to_wchar_array(qPythonHome));
+		m_pythonHome.reset(QStringToWcharArray(qPythonHome));
 
 		// FIXME:
 		//  ';' as separator is only for windows, linux & macos uses ':'
 		QString qPythonPath = QString("%1/DLLs;%1/lib;%1/Lib/site-packages").arg(qPythonHome);
-		m_pythonPath.reset(qstring_to_wchar_array(qPythonPath));
+		m_pythonPath.reset(QStringToWcharArray(qPythonPath));
 	} else
 	{
 		throw std::runtime_error("Python environment not found, plugin wasn't correctly installed");
@@ -121,13 +121,10 @@ PythonPlugin::PythonPlugin(QObject *parent)
 		Py_SetPythonHome(m_pythonConfig->pythonHome());
 		Py_SetPath(m_pythonConfig->pythonPath());
 	} catch (const std::exception &)
-	{
-
-	}
+	{}
 
 	py::initialize_interpreter();
 
-	m_repl = new ui::QPythonREPL();
 	m_editor = new QPythonEditor();
 	connect(m_editor, &QPythonEditor::executionCalled, this, &PythonPlugin::executeEditorCode);
 }
@@ -165,10 +162,12 @@ void PythonPlugin::showRepl()
 {
 	if ( m_repl )
 	{
-		Python::setMainAppInterfaceInstance(m_app);
-		m_repl->show();
 		m_repl->raise();
 		m_repl->activateWindow();
+	} else {
+		Python::setMainAppInterfaceInstance(m_app);
+		m_repl = new ui::QPythonREPL();
+		m_repl->show();
 	}
 }
 

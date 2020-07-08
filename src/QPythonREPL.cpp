@@ -178,7 +178,6 @@ void ui::QPythonREPL::executeCode(const QString &pythonCode)
 		}
 		iter++;
 	}
-	ccLog::Print(m_buf.c_str());
 	outputDisplay()->addItem(pythonCode);
 	codeEdit()->clear();
 	codeEdit()->insertPlainText(replArrows);
@@ -186,13 +185,6 @@ void ui::QPythonREPL::executeCode(const QString &pythonCode)
 	{
 		PyStdErrOutStreamRedirect redir{m_output, m_output};
 		py::exec(m_buf.c_str(), py::globals(), m_locals);
-//				 This part is only useful if we use py::eval
-//				 however py::eval does not work on assignent expr (eg: my_var = 1)
-//				const auto result = py::eval...
-//				if (!result.is_none()) {
-//					const std::string repr = result.attr("__repr__")().cast<std::string>();
-//					outputDisplay()->addItem(QString::fromStdString(repr));
-//				}
 	} catch (const std::exception &e)
 	{
 		outputDisplay()->addItem(e.what());
