@@ -38,6 +38,7 @@ QPythonEditor::QPythonEditor() : Ui::QPythonEditor()
 	connect(mdiArea, &QMdiArea::subWindowActivated,
 		this, &QPythonEditor::updateMenus);
 
+	this->projectBrowser->hide();
 	createActions();
 	createStatusBar();
 	updateMenus();
