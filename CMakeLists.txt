@@ -26,33 +26,33 @@ if (PLUGIN_PYTHON)
     set(CC_PYTHON_INSTALL_DIR "${CC_PLUGIN_INSTALL_DIR}/${CC_PYTHON_ENV_NAME}")
 
     if (WIN32 AND COPY_ENV)
-        if (DEFINED ENV{CONDA_PREFIX})
-            message(STATUS "Conda environment found")
-            string(REPLACE "\\" "/" CONDA_PREFIX $ENV{CONDA_PREFIX})
-            INSTALL(
-                    DIRECTORY "${CONDA_PREFIX}/"
-                    DESTINATION "${CC_PYTHON_INSTALL_DIR}"
-                    PATTERN "tests/*" EXCLUDE
-            )
-        elseif(DEFINED ENV{VIRTUAL_ENV})
-            message(STATUS "Python virtualenv found")
-            execute_process(
-                    COMMAND "${PYTHON_EXECUTABLE}" -c "import sys; print(';'.join(p for p in sys.path if p.endswith('DLLs') or p.endswith('lib')), end='')"
-                    RESUlT_VARIABLE PYTHON_RES
-                    OUTPUT_VARIABLE PYTHON_OUT
-            )
-            string(REPLACE "\\" "/" VIRTUAL_ENV $ENV{VIRTUAL_ENV})
-            INSTALL(DIRECTORY "$ENV{VIRTUAL_ENV}/" DESTINATION "${CC_PYTHON_INSTALL_DIR}")
-            foreach(path ${PYTHON_OUT})
-                INSTALL(
-                        DIRECTORY "${path}"
-                        DESTINATION "${CC_PYTHON_INSTALL_DIR}"
-                        PATTERN "tests/*" EXCLUDE
-                )
-            endforeach()
-        else ()
-            message(WARNING "No Python Home found")
-        endif ()
+#        if (DEFINED ENV{CONDA_PREFIX})
+#            message(STATUS "Conda environment found")
+#            string(REPLACE "\\" "/" CONDA_PREFIX $ENV{CONDA_PREFIX})
+#            INSTALL(
+#                    DIRECTORY "${CONDA_PREFIX}/"
+#                    DESTINATION "${CC_PYTHON_INSTALL_DIR}"
+#                    PATTERN "tests/*" EXCLUDE
+#            )
+#        elseif(DEFINED ENV{VIRTUAL_ENV})
+#            message(STATUS "Python virtualenv found")
+#            execute_process(
+#                    COMMAND "${PYTHON_EXECUTABLE}" -c "import sys; print(';'.join(p for p in sys.path if p.endswith('DLLs') or p.endswith('lib')), end='')"
+#                    RESUlT_VARIABLE PYTHON_RES
+#                    OUTPUT_VARIABLE PYTHON_OUT
+#            )
+#            string(REPLACE "\\" "/" VIRTUAL_ENV $ENV{VIRTUAL_ENV})
+#            INSTALL(DIRECTORY "$ENV{VIRTUAL_ENV}/" DESTINATION "${CC_PYTHON_INSTALL_DIR}")
+#            foreach(path ${PYTHON_OUT})
+#                INSTALL(
+#                        DIRECTORY "${path}"
+#                        DESTINATION "${CC_PYTHON_INSTALL_DIR}"
+#                        PATTERN "tests/*" EXCLUDE
+#                )
+#            endforeach()
+#        else ()
+#            message(WARNING "No Python Home found")
+#        endif ()
         INSTALL(
                 TARGETS pycc cccorelib
                 DESTINATION "${CC_PYTHON_INSTALL_DIR}/Lib/site-packages"
