@@ -11,7 +11,10 @@ Welcome to pycc's documentation!
    :caption: Contents:
 
 
-.. automodule:: pycc
+.. automodule:: cccorelib
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 
 Indices and tables
