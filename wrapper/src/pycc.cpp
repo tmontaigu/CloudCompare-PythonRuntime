@@ -96,7 +96,7 @@ public:
 	QException *clone() const override
 	{ return new MyException(*this); }
 
-	const char *what() const override
+	const char *what() const noexcept override
 	{
 		return e.what();
 	}
