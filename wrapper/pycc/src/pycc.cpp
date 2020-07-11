@@ -41,6 +41,7 @@
 
 #include "casters.h"
 #include "Runtime.h"
+#include "ccGUIPythonInstance.h"
 
 #include <FileIOFilter.h>
 #include <ccCommandLineInterface.h>

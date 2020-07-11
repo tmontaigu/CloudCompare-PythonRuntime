@@ -6,6 +6,7 @@ target_sources(${PROJECT_NAME}
         ${CMAKE_CURRENT_LIST_DIR}/QPythonREPL.h
         ${CMAKE_CURRENT_LIST_DIR}/PythonHighlighter.h
         ${CMAKE_CURRENT_LIST_DIR}/Consoles.h
+        ${CMAKE_CURRENT_LIST_DIR}/ccGUIPythonInstance.h
         )
 
 target_include_directories(${PROJECT_NAME}
