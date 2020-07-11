@@ -219,9 +219,20 @@ struct PythonPluginCommand : public ccCommandLineInterface::Command
 			return cmd.error(QString("Missing parameter: parameters filename after \"-%1\"").arg("PYTHON_SCRIPT"));
 		}
 
-		//open specified file
 		QString paramFilename(cmd.arguments().takeFirst());
 		cmd.print(QString("[PythonPlugin] python file: '%1'").arg(paramFilename));
+
+		std::vector<wchar_t*> argv;
+		argv.reserve(cmd.arguments().size() + 1);
+		argv.push_back(QStringToWcharArray(paramFilename));
+		while (!cmd.arguments().isEmpty())
+		{
+			argv.push_back(QStringToWcharArray(cmd.arguments().takeFirst()));
+		}
+		PySys_SetArgvEx(argv.size(), argv.data(), 1);
+
+
+		bool success{true};
 		try
 		{
 			PyStdErrOutStreamRedirect r{};
@@ -229,9 +240,13 @@ struct PythonPluginCommand : public ccCommandLineInterface::Command
 		} catch (const std::exception &e)
 		{
 			ccLog::Warning(e.what());
-			return false;
+			success = false;
 		}
-		return true;
+
+		for (wchar_t *arg : argv) {
+			delete[] arg;
+		}
+		return success;
 	}
 };
 
