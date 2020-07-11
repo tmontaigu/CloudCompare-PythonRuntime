@@ -229,6 +229,8 @@ struct PythonPluginCommand : public ccCommandLineInterface::Command
 		{
 			argv.push_back(QStringToWcharArray(cmd.arguments().takeFirst()));
 		}
+		//TODO see https://docs.python.org/3/c-api/init.html#c.PySys_SetArgvEx
+		//  to know if we should pass 0 or 1 as last arg
 		PySys_SetArgvEx(argv.size(), argv.data(), 1);
 
 

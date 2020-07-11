@@ -108,6 +108,9 @@ py::object call_fn(PyThreadState *main_state, py::object callable, py::args args
 	}
 }
 
+
+void define_ccCommandLine(py::module &m);
+
 template<class T>
 using observer_ptr = std::unique_ptr<T, py::nodelete>;
 
@@ -223,27 +226,7 @@ PYBIND11_MODULE(pycc, m) {
 			.def("freezeUI", &ccGUIPythonInstance::freezeUI)
 			.def("loadFile", &ccGUIPythonInstance::loadFile, py::return_value_policy::reference);
 
-	py::class_<CLEntityDesc>(m, "CLEntityDesc")
-			.def_readwrite("basename", &CLEntityDesc::basename)
-			.def_readwrite("path", &CLEntityDesc::path)
-//			.def_readwrite("indexInFile", &CLEntityDesc::indexInFile);
-			.def("getEntity", (ccHObject *(CLEntityDesc::*)()) (&CLEntityDesc::getEntity),
-			     py::return_value_policy::reference);
 
-	py::class_<CLGroupDesc, CLEntityDesc>(m, "CLGroupDesc")
-			.def_readwrite("groupEntity", &CLGroupDesc::groupEntity, py::return_value_policy::reference);
-
-	py::class_<CLCloudDesc, CLEntityDesc>(m, "CLCloudDesc")
-			.def_readwrite("pc", &CLCloudDesc::pc);
-
-	py::class_<CLMeshDesc, CLEntityDesc>(m, "CLMeshDesc")
-	        .def_readwrite("mesh", &CLMeshDesc::mesh, py::return_value_policy::reference);
-
-
-	py::class_<ccCommandLineInterface>(m, "ccCommandLineInterface")
-			.def("clouds",
-			     (std::vector<CLCloudDesc> &(ccCommandLineInterface::*)()) (&ccCommandLineInterface::clouds))
-			.def("meshes", (std::vector<CLMeshDesc> &(ccCommandLineInterface::*)()) (&ccCommandLineInterface::meshes));
 
 
 	py::class_<ccGlobalShiftManager> PyccGlobalShiftManager(m, "ccGlobalShiftManager");
@@ -275,6 +258,8 @@ PYBIND11_MODULE(pycc, m) {
 //			.def_readwrite("parentWidget", &FileIOFilter::LoadParameters::parentWidget)
 			.def_readwrite("sessionStart", &FileIOFilter::LoadParameters::sessionStart);
 
+
+	define_ccCommandLine(m);
 
 	m.def("GetInstance", &GetInstance);
 	m.def("GetCmdLineInstance", &GetCmdLineInstance, py::return_value_policy::reference);
