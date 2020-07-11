@@ -21,9 +21,13 @@
 
 #include <ccMainAppInterface.h>
 
-class Q_DECL_EXPORT ccPythonInstance {
+#define slots Q_SLOTS
+#define signals Q_SIGNALS
+#include <ccCommandLineInterface.h>
+
+class Q_DECL_EXPORT ccGUIPythonInstance {
 public:
-	explicit ccPythonInstance(ccMainAppInterface *app);
+	explicit ccGUIPythonInstance(ccMainAppInterface *app);
 
 	bool haveSelection() const { return m_app->haveSelection(); }
 
@@ -61,7 +65,8 @@ private:
 	ccMainAppInterface *m_app;
 };
 
-Q_DECL_EXPORT ccPythonInstance *GetInstance();
+Q_DECL_EXPORT ccGUIPythonInstance *GetInstance();
+Q_DECL_EXPORT ccCommandLineInterface* GetCmdLineInstance();
 
 #endif //CLOUDCOMPAREPROJECTS_RUNTIME_H
 

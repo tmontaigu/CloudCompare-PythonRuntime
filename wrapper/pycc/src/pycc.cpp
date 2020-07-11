@@ -37,28 +37,27 @@
 #include <QCoreApplication>
 #include <QtConcurrent>
 #include <QException>
+#include <ccGenericMesh.h>
 
 #include "casters.h"
 #include "Runtime.h"
 
 #include <FileIOFilter.h>
+#include <ccCommandLineInterface.h>
 
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 
 
-class PyThreadStateGuard
-{
+class PyThreadStateGuard {
 public:
-	explicit PyThreadStateGuard(PyInterpreterState *interpState)
-	{
+	explicit PyThreadStateGuard(PyInterpreterState *interpState) {
 		pCurrentState = PyThreadState_New(interpState);
 		PyEval_AcquireThread(pCurrentState);
 	}
 
-	virtual ~PyThreadStateGuard()
-	{
+	virtual ~PyThreadStateGuard() {
 		PyThreadState_Clear(pCurrentState);
 		PyEval_ReleaseThread(pCurrentState);
 
@@ -69,13 +68,10 @@ private:
 	PyThreadState *pCurrentState{nullptr};
 };
 
-struct PyThreadStateReleaser
-{
-	explicit PyThreadStateReleaser() : state(PyEval_SaveThread())
-	{}
+struct PyThreadStateReleaser {
+	explicit PyThreadStateReleaser() : state(PyEval_SaveThread()) {}
 
-	virtual ~PyThreadStateReleaser()
-	{
+	virtual ~PyThreadStateReleaser() {
 		PyEval_RestoreThread(state);
 	}
 
@@ -83,32 +79,25 @@ struct PyThreadStateReleaser
 	PyThreadState *state{nullptr};
 };
 
-class MyException : public QException
-{
+class MyException : public QException {
 public:
-	explicit MyException(const std::exception &err) : e(err)
-	{}
+	explicit MyException(const std::exception &err) : e(err) {}
 
-	void raise() const override
-	{ throw *this; }
+	void raise() const override { throw *this; }
 
-	QException *clone() const override
-	{ return new MyException(*this); }
+	QException *clone() const override { return new MyException(*this); }
 
-	const char *what() const noexcept override
-	{
+	const char *what() const noexcept override {
 		return e.what();
 	}
 
-	std::exception error() const
-	{ return e; }
+	std::exception error() const { return e; }
 
 private:
 	std::exception e;
 };
 
-py::object call_fn(PyThreadState *main_state, py::object callable, py::args args, py::kwargs kwargs)
-{
+py::object call_fn(PyThreadState *main_state, py::object callable, py::args args, py::kwargs kwargs) {
 	PyThreadStateGuard threadStateGuard{main_state->interp};
 	try
 	{
@@ -122,8 +111,7 @@ py::object call_fn(PyThreadState *main_state, py::object callable, py::args args
 template<class T>
 using observer_ptr = std::unique_ptr<T, py::nodelete>;
 
-PYBIND11_MODULE(pycc, m)
-{
+PYBIND11_MODULE(pycc, m) {
 	py::module::import("cccorelib");
 
 	m.doc() = R"pbdoc(
@@ -135,8 +123,8 @@ PYBIND11_MODULE(pycc, m)
 	 * qCC_db
 	 **********************************/
 
-	py::class_<ccScalarField, CCCoreLib::ScalarField, observer_ptr < ccScalarField>>
-	(m, "ccScalarField");
+	py::class_<ccScalarField, CCCoreLib::ScalarField, observer_ptr<ccScalarField>>
+			(m, "ccScalarField");
 
 	py::class_<ccGenericGLDisplay>(m, "ccGenericGLDisplay");
 
@@ -202,15 +190,13 @@ PYBIND11_MODULE(pycc, m)
 			.def("getScalarField", &ccPointCloud::getScalarField)
 			.def("setCurrentDisplayedScalarField", &ccPointCloud::setCurrentDisplayedScalarField)
 			.def("partialClone", [](const ccPointCloud *self, const CCCoreLib::ReferenceCloud *selection,
-			                        ccPythonInstance *pythonInstance)
-			{
+			                        ccGUIPythonInstance *pythonInstance) {
 				// TODO use opt param to check errs
 				ccPointCloud *cloned = self->partialClone(selection);
 				pythonInstance->addToDB(cloned);
 				return cloned;
 			}, py::return_value_policy::reference)
-			.def("__repr__", [](const ccPointCloud &self)
-			{
+			.def("__repr__", [](const ccPointCloud &self) {
 				return std::string("<ccPointCloud(") + self.getName().toStdString() + ", " +
 				       std::to_string(self.size()) + " points)>";
 			});
@@ -220,33 +206,85 @@ PYBIND11_MODULE(pycc, m)
 	py::class_<ccProgressDialog, QProgressDialog, CCCoreLib::GenericProgressCallback>(m, "ccProgressDialog")
 			.def(py::init<bool>(), "cancelButton"_a = false);
 
-	py::class_<ccPythonInstance, observer_ptr < ccPythonInstance>>
-	(m, "ccPythonInstance")
-			.def("haveSelection", &ccPythonInstance::haveSelection)
-			.def("haveOneSelection", &ccPythonInstance::haveOneSelection)
-			.def("getSelectedEntities", &ccPythonInstance::getSelectedEntities, py::return_value_policy::reference)
-			.def("setSelectedInDB", &ccPythonInstance::setSelectedInDB)
-			.def("dbRootObject", &ccPythonInstance::dbRootObject, py::return_value_policy::reference)
-			.def("addToDB", &ccPythonInstance::addToDB, "obj"_a, "updateZoom"_a= false, "autoExpandDBTree"_a=true, "checkDimensions"_a = false, "autoRedraw"_a = true)
-			.def("redrawAll", &ccPythonInstance::redrawAll)
-			.def("refreshAll", &ccPythonInstance::refreshAll)
-			.def("enableAll", &ccPythonInstance::enableAll)
-			.def("disableAll", &ccPythonInstance::disableAll)
-			.def("updateUI", &ccPythonInstance::updateUI)
-			.def("freezeUI", &ccPythonInstance::freezeUI)
-			.def("loadFile", &ccPythonInstance::loadFile, py::return_value_policy::reference);
+	py::class_<ccGUIPythonInstance>
+			(m, "ccPythonInstance")
+			.def("haveSelection", &ccGUIPythonInstance::haveSelection)
+			.def("haveOneSelection", &ccGUIPythonInstance::haveOneSelection)
+			.def("getSelectedEntities", &ccGUIPythonInstance::getSelectedEntities, py::return_value_policy::reference)
+			.def("setSelectedInDB", &ccGUIPythonInstance::setSelectedInDB)
+			.def("dbRootObject", &ccGUIPythonInstance::dbRootObject, py::return_value_policy::reference)
+			.def("addToDB", &ccGUIPythonInstance::addToDB, "obj"_a, "updateZoom"_a = false, "autoExpandDBTree"_a = true,
+			     "checkDimensions"_a = false, "autoRedraw"_a = true)
+			.def("redrawAll", &ccGUIPythonInstance::redrawAll)
+			.def("refreshAll", &ccGUIPythonInstance::refreshAll)
+			.def("enableAll", &ccGUIPythonInstance::enableAll)
+			.def("disableAll", &ccGUIPythonInstance::disableAll)
+			.def("updateUI", &ccGUIPythonInstance::updateUI)
+			.def("freezeUI", &ccGUIPythonInstance::freezeUI)
+			.def("loadFile", &ccGUIPythonInstance::loadFile, py::return_value_policy::reference);
+
+	py::class_<CLEntityDesc>(m, "CLEntityDesc")
+			.def_readwrite("basename", &CLEntityDesc::basename)
+			.def_readwrite("path", &CLEntityDesc::path)
+//			.def_readwrite("indexInFile", &CLEntityDesc::indexInFile);
+			.def("getEntity", (ccHObject *(CLEntityDesc::*)()) (&CLEntityDesc::getEntity),
+			     py::return_value_policy::reference);
+
+	py::class_<CLGroupDesc, CLEntityDesc>(m, "CLGroupDesc")
+			.def_readwrite("groupEntity", &CLGroupDesc::groupEntity, py::return_value_policy::reference);
+
+	py::class_<CLCloudDesc, CLEntityDesc>(m, "CLCloudDesc")
+			.def_readwrite("pc", &CLCloudDesc::pc);
+
+	py::class_<CLMeshDesc, CLEntityDesc>(m, "CLMeshDesc")
+	        .def_readwrite("mesh", &CLMeshDesc::mesh, py::return_value_policy::reference);
+
+
+	py::class_<ccCommandLineInterface>(m, "ccCommandLineInterface")
+			.def("clouds",
+			     (std::vector<CLCloudDesc> &(ccCommandLineInterface::*)()) (&ccCommandLineInterface::clouds))
+			.def("meshes", (std::vector<CLMeshDesc> &(ccCommandLineInterface::*)()) (&ccCommandLineInterface::meshes));
+
+
+	py::class_<ccGlobalShiftManager> PyccGlobalShiftManager(m, "ccGlobalShiftManager");
+
+	py::enum_<ccGlobalShiftManager::Mode>(PyccGlobalShiftManager, "Mode")
+			.value("NO_DIALOG", ccGlobalShiftManager::Mode::NO_DIALOG)
+			.value("NO_DIALOG_AUTO_SHIFT", ccGlobalShiftManager::Mode::NO_DIALOG_AUTO_SHIFT)
+			.value("DIALOG_IF_NECESSARY", ccGlobalShiftManager::Mode::DIALOG_IF_NECESSARY)
+			.value("ALWAYS_DISPLAY_DIALOG", ccGlobalShiftManager::Mode::ALWAYS_DISPLAY_DIALOG)
+			.export_values();
+
+
+	py::class_<FileIOFilter> PyFileIOFilter(m, "FileIOFilter");
+	PyFileIOFilter.def_static("LoadFromFile", [](const QString &filename,
+	                                             FileIOFilter::LoadParameters &parameters) {
+		CC_FILE_ERROR result = CC_FERR_NO_ERROR;
+		ccHObject * newGroup = FileIOFilter::LoadFromFile(filename, parameters, result);
+		return newGroup;
+	}, py::return_value_policy::reference);
+
+	py::class_<FileIOFilter::LoadParameters>(PyFileIOFilter, "LoadParameters")
+			.def(py::init<>())
+			.def_readwrite("shiftHandlingMode", &FileIOFilter::LoadParameters::shiftHandlingMode)
+			.def_readwrite("alwaysDisplayLoadDialog", &FileIOFilter::LoadParameters::alwaysDisplayLoadDialog)
+			.def_readwrite("coordinatesShiftEnabled", &FileIOFilter::LoadParameters::coordinatesShiftEnabled)
+			.def_readwrite("coordinatesShift", &FileIOFilter::LoadParameters::coordinatesShift)
+			.def_readwrite("preserveShiftOnSave", &FileIOFilter::LoadParameters::preserveShiftOnSave)
+			.def_readwrite("autoComputeNormals", &FileIOFilter::LoadParameters::autoComputeNormals)
+//			.def_readwrite("parentWidget", &FileIOFilter::LoadParameters::parentWidget)
+			.def_readwrite("sessionStart", &FileIOFilter::LoadParameters::sessionStart);
 
 
 	m.def("GetInstance", &GetInstance);
+	m.def("GetCmdLineInstance", &GetCmdLineInstance, py::return_value_policy::reference);
 
-	m.def("ProcessEvents", []()
-	{
+	m.def("ProcessEvents", []() {
 		QCoreApplication::processEvents();
 	});
 
 
-	m.def("RunInThread", [](py::object callable, py::args args, py::kwargs kwargs)
-	{
+	m.def("RunInThread", [](py::object callable, py::args args, py::kwargs kwargs) {
 		PyThreadStateReleaser stateReleaser{};
 		QEventLoop loop;
 		QFutureWatcher<py::object> watcher;
@@ -258,8 +296,7 @@ PYBIND11_MODULE(pycc, m)
 		return future.result();
 	});
 
-	m.def("RunThread", [](py::object thread)
-	{
+	m.def("RunThread", [](py::object thread) {
 		py::object isAliveMethod = thread.attr("is_alive");
 		thread.attr("start")();
 		while (isAliveMethod())
@@ -267,33 +304,4 @@ PYBIND11_MODULE(pycc, m)
 			QCoreApplication::processEvents();
 		}
 	});
-
-	py::class_<ccGlobalShiftManager> PyccGlobalShiftManager(m, "ccGlobalShiftManager");
-
-	py::enum_<ccGlobalShiftManager::Mode> (PyccGlobalShiftManager, "Mode")
-	        .value("NO_DIALOG", ccGlobalShiftManager::Mode::NO_DIALOG)
-			.value("NO_DIALOG_AUTO_SHIFT", ccGlobalShiftManager::Mode::NO_DIALOG_AUTO_SHIFT)
-			.value("DIALOG_IF_NECESSARY", ccGlobalShiftManager::Mode::DIALOG_IF_NECESSARY)
-			.value("ALWAYS_DISPLAY_DIALOG", ccGlobalShiftManager::Mode::ALWAYS_DISPLAY_DIALOG)
-			.export_values();
-
-
-	py::class_<FileIOFilter> PyFileIOFilter (m, "FileIOFilter");
-	PyFileIOFilter.def_static("LoadFromFile", [](const QString &filename,
-	                                             FileIOFilter::LoadParameters &parameters) {
-			CC_FILE_ERROR result = CC_FERR_NO_ERROR;
-			ccHObject *newGroup = FileIOFilter::LoadFromFile(filename, parameters, result);
-			return newGroup;
-		}, py::return_value_policy::reference);
-
-	py::class_<FileIOFilter::LoadParameters>(PyFileIOFilter, "LoadParameters")
-	        .def(py::init<>())
-			.def_readwrite("shiftHandlingMode", &FileIOFilter::LoadParameters::shiftHandlingMode)
-	        .def_readwrite("alwaysDisplayLoadDialog", &FileIOFilter::LoadParameters::alwaysDisplayLoadDialog)
-			.def_readwrite("coordinatesShiftEnabled", &FileIOFilter::LoadParameters::coordinatesShiftEnabled)
-			.def_readwrite("coordinatesShift", &FileIOFilter::LoadParameters::coordinatesShift)
-			.def_readwrite("preserveShiftOnSave", &FileIOFilter::LoadParameters::preserveShiftOnSave)
-			.def_readwrite("autoComputeNormals", &FileIOFilter::LoadParameters::autoComputeNormals)
-//			.def_readwrite("parentWidget", &FileIOFilter::LoadParameters::parentWidget)
-			.def_readwrite("sessionStart", &FileIOFilter::LoadParameters::sessionStart);
 }

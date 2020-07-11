@@ -1,7 +1,3 @@
-//
-// Created by Thomas on 08/06/2020.
-//
-
 #ifndef CLOUDCOMPAREPROJECTS_WRAPPERS_H
 #define CLOUDCOMPAREPROJECTS_WRAPPERS_H
 

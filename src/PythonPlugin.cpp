@@ -202,6 +202,7 @@ PythonPlugin::~PythonPlugin()
 {
 	py::finalize_interpreter();
 	Python::unsetMainAppInterfaceInstance();
+	Python::unsetCmdLineInterfaceInstance();
 }
 
 struct PythonPluginCommand : public ccCommandLineInterface::Command
@@ -232,10 +233,10 @@ struct PythonPluginCommand : public ccCommandLineInterface::Command
 		}
 		return true;
 	}
-
 };
 
 void PythonPlugin::registerCommands(ccCommandLineInterface *cmd)
 {
 	cmd->registerCommand(ccCommandLineInterface::Command::Shared(new PythonPluginCommand()));
+	Python::setCmdLineInterfaceInstance(cmd);
 }

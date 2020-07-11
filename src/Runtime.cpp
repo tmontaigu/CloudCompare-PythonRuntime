@@ -30,7 +30,8 @@
 
 namespace py = pybind11;
 
-ccPythonInstance *s_pythonInstance{nullptr};
+ccGUIPythonInstance *s_pythonInstance{nullptr};
+ccCommandLineInterface *s_cmdLineInstance{nullptr};
 
 static void ThrowForFileError(CC_FILE_ERROR error)
 {
@@ -75,9 +76,13 @@ static void ThrowForFileError(CC_FILE_ERROR error)
 	}
 }
 
-ccPythonInstance *GetInstance()
+ccGUIPythonInstance *GetInstance()
 {
 	return s_pythonInstance;
+}
+
+ccCommandLineInterface *GetCmdLineInstance() {
+	return s_cmdLineInstance;
 }
 
 PYBIND11_EMBEDDED_MODULE(ccinternals, m)
@@ -99,7 +104,7 @@ namespace Python
 	{
 		if (s_pythonInstance == nullptr)
 		{
-			s_pythonInstance = new ccPythonInstance(appInterface);
+			s_pythonInstance = new ccGUIPythonInstance(appInterface);
 		}
 	}
 
@@ -111,9 +116,23 @@ namespace Python
 			s_pythonInstance = nullptr;
 		}
 	}
+
+	void setCmdLineInterfaceInstance(ccCommandLineInterface* cmdLine) {
+		if (s_cmdLineInstance == nullptr)
+		{
+			s_cmdLineInstance = cmdLine;
+		}
+	}
+
+	void unsetCmdLineInterfaceInstance() {
+		if ( s_cmdLineInstance != nullptr )
+		{
+			s_cmdLineInstance = nullptr;
+		}
+	}
 }
 
-ccPythonInstance::ccPythonInstance(ccMainAppInterface *app) : m_app(app)
+ccGUIPythonInstance::ccGUIPythonInstance(ccMainAppInterface *app) : m_app(app)
 {
 	if (m_app == nullptr)
 	{
@@ -121,7 +140,7 @@ ccPythonInstance::ccPythonInstance(ccMainAppInterface *app) : m_app(app)
 	}
 }
 
-ccHObject *ccPythonInstance::loadFile(const char *filename)
+ccHObject *ccGUIPythonInstance::loadFile(const char *filename)
 {
 	CCVector3d loadCoordinatesShift(0, 0, 0);
 	bool loadCoordinatesTransEnabled = false;

@@ -24,4 +24,7 @@ namespace Python
 {
 	void setMainAppInterfaceInstance(ccMainAppInterface *appInterface);
 	void unsetMainAppInterfaceInstance();
+
+	void setCmdLineInterfaceInstance(ccCommandLineInterface *cmdLine);
+	void unsetCmdLineInterfaceInstance();
 }
