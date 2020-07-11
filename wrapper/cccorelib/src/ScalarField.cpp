@@ -1,7 +1,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl_bind.h>
 
-#include "../../src/wrappers.h"
+#include "wrappers.h"
 
 #include <ScalarField.h>
 

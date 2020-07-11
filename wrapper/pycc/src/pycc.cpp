@@ -38,7 +38,6 @@
 #include <QtConcurrent>
 #include <QException>
 
-#include "wrappers.h"
 #include "casters.h"
 #include "Runtime.h"
 
@@ -120,6 +119,8 @@ py::object call_fn(PyThreadState *main_state, py::object callable, py::args args
 	}
 }
 
+template<class T>
+using observer_ptr = std::unique_ptr<T, py::nodelete>;
 
 PYBIND11_MODULE(pycc, m)
 {
