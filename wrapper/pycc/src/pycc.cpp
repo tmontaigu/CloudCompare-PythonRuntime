@@ -262,7 +262,7 @@ PYBIND11_MODULE(pycc, m) {
 
 	define_ccCommandLine(m);
 
-	m.def("GetInstance", &GetInstance);
+	m.def("GetInstance", &GetInstance, py::return_value_policy::reference);
 	m.def("GetCmdLineInstance", &GetCmdLineInstance, py::return_value_policy::reference);
 
 	m.def("ProcessEvents", []() {
