@@ -33,7 +33,6 @@ void define_ccCommandLine(py::module &m) {
 			.def_readwrite("mesh", &CLMeshDesc::mesh, py::return_value_policy::reference);
 
 
-
 	py::class_<ccCommandLineInterface> PyccCommandLineInterface(m, "ccCommandLineInterface");
 
 	py::enum_<ccCommandLineInterface::ExportOption>(PyccCommandLineInterface, "ExportOption");

@@ -200,9 +200,13 @@ void PythonPlugin::executeEditorCode(const std::string &evalFileName, const std:
 
 PythonPlugin::~PythonPlugin()
 {
+	std::cout << "dtor\n";
 	py::finalize_interpreter();
+	std::cout << "finalized\n";
 	Python::unsetMainAppInterfaceInstance();
+	std::cout << "gui unset\n";
 	Python::unsetCmdLineInterfaceInstance();
+	std::cout << "dtor completed\n";
 }
 
 struct PythonPluginCommand : public ccCommandLineInterface::Command
