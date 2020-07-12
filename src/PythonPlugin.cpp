@@ -11,7 +11,7 @@
 //#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
 //#  GNU General Public License for more details.                          #
 //#                                                                        #
-//#                             COPYRIGHT: Thomas Montaigu                 #
+//#                   COPYRIGHT: Thomas Montaigu                           #
 //#                                                                        #
 //##########################################################################
 
@@ -200,13 +200,11 @@ void PythonPlugin::executeEditorCode(const std::string &evalFileName, const std:
 
 PythonPlugin::~PythonPlugin()
 {
-	std::cout << "dtor\n";
-	py::finalize_interpreter();
-	std::cout << "finalized\n";
 	Python::unsetMainAppInterfaceInstance();
-	std::cout << "gui unset\n";
 	Python::unsetCmdLineInterfaceInstance();
-	std::cout << "dtor completed\n";
+	if (Py_IsInitialized()) {
+		py::finalize_interpreter();
+	}
 }
 
 struct PythonPluginCommand : public ccCommandLineInterface::Command
@@ -216,8 +214,7 @@ struct PythonPluginCommand : public ccCommandLineInterface::Command
 
 	bool process(ccCommandLineInterface &cmd) override
 	{
-
-		cmd.print("[PythonPlugin] Stating");
+		cmd.print("[PythonPlugin] Starting");
 		if ( cmd.arguments().empty())
 		{
 			return cmd.error(QString("Missing parameter: parameters filename after \"-%1\"").arg("PYTHON_SCRIPT"));
@@ -233,10 +230,8 @@ struct PythonPluginCommand : public ccCommandLineInterface::Command
 		{
 			argv.push_back(QStringToWcharArray(cmd.arguments().takeFirst()));
 		}
-		//TODO see https://docs.python.org/3/c-api/init.html#c.PySys_SetArgvEx
-		//  to know if we should pass 0 or 1 as last arg
-		PySys_SetArgvEx(argv.size(), argv.data(), 1);
 
+		PySys_SetArgvEx(argv.size(), argv.data(), 1);
 
 		bool success{true};
 		try
@@ -249,9 +244,14 @@ struct PythonPluginCommand : public ccCommandLineInterface::Command
 			success = false;
 		}
 
-		for (wchar_t *arg : argv) {
+		for (wchar_t *arg : argv)
+		{
 			delete[] arg;
 		}
+
+		py::finalize_interpreter();
+
+		cmd.print(QString("[PythonPlugin] Script %1 executed").arg(success ? "successfully" : "unsuccessfully"));
 		return success;
 	}
 };

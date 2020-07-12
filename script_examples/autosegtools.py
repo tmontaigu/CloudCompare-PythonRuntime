@@ -1,8 +1,8 @@
-import pycc
 import cccorelib
-import numpy as np
+import pycc
 
 CC = pycc.GetInstance()
+
 
 def main():
     if not CC.haveSelection():
@@ -22,14 +22,12 @@ def main():
     pc.setCurrentDisplayedScalarField(labelsSfIdx)
     CC.updateUI()
     CC.redrawAll(False)
-    
 
     referenceClouds = cccorelib.ReferenceCloudContainer();
     if not pycc.extractConnectedComponents(pc, referenceClouds):
         print("Failed to extract the connected Components")
     else:
         assert len(referenceClouds) == numLabels
-  
 
 
 if __name__ == '__main__':
