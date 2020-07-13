@@ -91,10 +91,48 @@ void define_ManualSegmentationTools(py::module &);
 
 void define_CCMiscTools(py::module&);
 
+void define_NormalDistribution(py::module &);
+
+/* example of return a numpy float, in case we ever need this
+py::object return_npy_float()
+{
+
+    // #include <numpy/ndarrayobject.h> get path from numpy.get_include()
+    if (![]() { import_array() }()) // should be done in module init
+    {
+        throw std::runtime_error("init failed");
+    }
+
+    float a{1.1};
+    PyArray_Descr *descr = PyArray_DescrFromType(NPY_FLOAT32);
+
+    PyObject *ret1 = PyArray_Scalar(&a, descr, nullptr);
+    return py::object(py::handle(ret1), false);
+}
+*/
 PYBIND11_MODULE(cccorelib, m)
 {
 	/* Constants */
 	m.attr("SQRT_3") = CCCoreLib::SQRT_3;
+        // Python's float are doubles
+        m.attr("ZERO_TOLERANCE") = CCCoreLib::ZERO_TOLERANCE_D;
+        m.attr("POINT_VISIBLE") = CCCoreLib::POINT_VISIBLE;
+        m.attr("POINT_HIDDEN") = CCCoreLib::POINT_HIDDEN;
+        m.attr("POINT_OUT_OF_RANGE") = CCCoreLib::POINT_OUT_OF_RANGE;
+        m.attr("POINT_OUT_OF_FOV") = CCCoreLib::POINT_OUT_OF_FOV;
+
+        py::enum_<CCCoreLib::CHAMFER_DISTANCE_TYPE> (m, "CHAMFER_DISTANCE_TYPE")
+            .value("CHAMFER_111", CCCoreLib::CHAMFER_DISTANCE_TYPE::CHAMFER_111)
+            .value("CHAMFER_345", CCCoreLib::CHAMFER_DISTANCE_TYPE::CHAMFER_345);
+
+        py::enum_<CCCoreLib::LOCAL_MODEL_TYPES> (m, "LOCAL_MODEL_TYPES")
+            .value("NO_MODEL", CCCoreLib::LOCAL_MODEL_TYPES::NO_MODEL)
+            .value("LS", CCCoreLib::LOCAL_MODEL_TYPES::LS)
+            .value("TRI", CCCoreLib::LOCAL_MODEL_TYPES::TRI)
+            .value("QUADRIC", CCCoreLib::LOCAL_MODEL_TYPES::QUADRIC);
+
+        m.attr("CC_LOCAL_MODEL_MIN_SIZE") = CCCoreLib::CC_LOCAL_MODEL_MIN_SIZE;
+
 
 	define_CCGeom(m);
 	define_CCMath(m);
@@ -114,6 +152,7 @@ PYBIND11_MODULE(cccorelib, m)
 	define_Polyline(m);
 
 	define_GenericDistribution(m);
+        define_NormalDistribution(m);
 	define_WeibullDistribution(m);
 
 	define_GenericProgressCallback(m);

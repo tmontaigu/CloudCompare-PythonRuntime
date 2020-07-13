@@ -41,7 +41,7 @@ pybind11_add_module(cccorelib
         src/Polyline.cpp
         src/PointProjectionTools.cpp
         src/ManualSegmentationTools.cpp
+        src/NormalDistribution.cpp
         src/wrappers.h
 )
-
 target_link_libraries(cccorelib PRIVATE CCCoreLib)

@@ -23,7 +23,7 @@ def main():
     CC.updateUI()
     CC.redrawAll(False)
 
-    referenceClouds = cccorelib.ReferenceCloudContainer();
+    referenceClouds = cccorelib.ReferenceCloudContainer()
     if not pycc.extractConnectedComponents(pc, referenceClouds):
         print("Failed to extract the connected Components")
     else:

@@ -18,6 +18,7 @@
 #pragma once
 
 class ccMainAppInterface;
+class ccCommandLineInterface;
 
 
 namespace Python

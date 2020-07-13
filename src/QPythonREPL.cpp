@@ -137,6 +137,7 @@ ui::QPythonREPL::QPythonREPL(QWidget *parent) :
 			.attr("ConsoleREPL")(outputDisplay());
 
 	executeCode(replArrows + "import pycc");
+        executeCode(replArrows + "import cccorelib");
 	executeCode(replArrows + "cc = pycc.GetInstance()");
 }
 
