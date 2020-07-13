@@ -1,4 +1,5 @@
 #include <pybind11/pybind11.h>
+#include <pybind11/functional.h>
 
 #include <GenericCloud.h>
 
@@ -9,6 +10,7 @@ void define_GenericCloud(py::module &cccorelib)
 {
 	py::class_<CCCoreLib::GenericCloud>(cccorelib, "GenericCloud")
 			.def("size", &CCCoreLib::GenericCloud::size)
+			.def("forEach", &CCCoreLib::GenericCloud::forEach, "action"_a)
 			.def("getBoundingBox", &CCCoreLib::GenericCloud::getBoundingBox)
 			.def("testVisibility", &CCCoreLib::GenericCloud::testVisibility)
 			.def("placeIteratorAtBeginning", &CCCoreLib::GenericCloud::placeIteratorAtBeginning)

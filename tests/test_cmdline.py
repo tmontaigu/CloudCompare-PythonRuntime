@@ -32,3 +32,15 @@ def test_normal_distribution(cloudcompare_exe):
     assert_command_runs(
         cloudcompare_exe, "-SILENT", "-O", f"{abspath}/data/a_cloud.bin", "-PYTHON_SCRIPT",
         os.path.join(abspath, "scripts", "normal_distribution.py"))
+
+
+def test_normal_kdtree(cloudcompare_exe):
+    assert_command_runs(
+        cloudcompare_exe, "-SILENT", "-O", f"{abspath}/data/a_cloud.bin", "-PYTHON_SCRIPT",
+        os.path.join(abspath, "scripts", "kdtree.py"))
+
+
+def test_normal_cloud(cloudcompare_exe):
+    assert_command_runs(
+        cloudcompare_exe, "-SILENT", "-O", f"{abspath}/data/a_cloud.bin", "-PYTHON_SCRIPT",
+        os.path.join(abspath, "scripts", "cloud.py"))

@@ -10,7 +10,7 @@
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-PYBIND11_MAKE_OPAQUE(std::vector<int>);
+#include "cccorelib.h"
 
 void define_ScalarFieldTools(py::module &cccorelib)
 {

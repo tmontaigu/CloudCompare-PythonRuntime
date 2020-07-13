@@ -8,7 +8,7 @@
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-PYBIND11_MAKE_OPAQUE(CCCoreLib::TrueKdTree::LeafVector);
+#include "cccorelib.h"
 
 void define_TrueKdTree(py::module& cccorelib) {
 	py::class_<CCCoreLib::TrueKdTree> PyTrueKdTree(cccorelib, "TrueKdTree");

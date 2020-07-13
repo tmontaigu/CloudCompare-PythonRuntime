@@ -8,8 +8,7 @@
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-PYBIND11_MAKE_OPAQUE(CCCoreLib::DgmOctree::NeighbourCellsSet);
-PYBIND11_MAKE_OPAQUE(CCCoreLib::DgmOctree::NeighboursSet);
+#include "cccorelib.h"
 
 
 void define_DgmOctree(py::module &cccorelib)

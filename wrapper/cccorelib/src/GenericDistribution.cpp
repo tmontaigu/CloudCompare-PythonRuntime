@@ -8,7 +8,7 @@
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-PYBIND11_MAKE_OPAQUE(CCCoreLib::GenericDistribution::ScalarContainer);
+#include "cccorelib.h"
 
 void define_GenericDistribution(py::module &cccorelib)
 {

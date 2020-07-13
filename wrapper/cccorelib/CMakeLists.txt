@@ -7,6 +7,7 @@ find_package(pybind11 CONFIG REQUIRED)
 
 pybind11_add_module(cccorelib
         src/cccorelib.cpp
+        src/cccorelib.h
         src/AutoSegmentationTools.cpp
         src/BoundingBox.cpp
         src/CCGeom.cpp

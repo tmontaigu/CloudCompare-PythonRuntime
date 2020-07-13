@@ -16,7 +16,7 @@
 
 namespace py = pybind11;
 using namespace pybind11::literals;
-PYBIND11_MAKE_OPAQUE(CCCoreLib::ReferenceCloudContainer);
+#include "cccorelib.h"
 
 //#define QUOTE(str) #str
 //#define EXPAND_AND_QUOTE(str) QUOTE(str)
