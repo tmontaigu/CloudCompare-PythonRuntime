@@ -27,10 +27,10 @@ def main():
         raise RuntimeError("No entities selected")
 
     pointCloud = entities[0]
-    print(pointCloud, pc.size())
+    print(pointCloud)
 
     
-    pycc.RunInThread(doSubSampling, pc)
+    pycc.RunInThread(doSubSampling, pointCloud)
 
 
     CC.updateUI()

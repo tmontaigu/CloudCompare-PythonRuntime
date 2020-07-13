@@ -562,7 +562,7 @@ QMdiSubWindow* QPythonEditor::findChildCodeEditor(const QString& fileName) const
 QString QPythonEditor::settingsApplicationName()
 {
 
-	return QString(QCoreApplication::applicationName()).append(":ChaiScriptPlugin");
+	return QString(QCoreApplication::applicationName()).append(":PythonPlugin");
 }
 
 void QPythonEditor::runExecute()
