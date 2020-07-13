@@ -1,19 +1,18 @@
-#include <pybind11/pybind11.h>
 #include <pybind11/numpy.h>
+#include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
 
-#include <CCGeom.h>
-#include <BoundingBox.h>
 #include <AutoSegmentationTools.h>
+#include <BoundingBox.h>
+#include <CCGeom.h>
+#include <ChamferDistanceTransform.h>
 #include <GenericProgressCallback.h>
 #include <GeometricalAnalysisTools.h>
+#include <Grid3D.h>
 #include <PointCloud.h>
 #include <ReferenceCloud.h>
-#include <Grid3D.h>
-#include <ChamferDistanceTransform.h>
 #include <TrueKdTree.h>
-
 
 namespace py = pybind11;
 using namespace pybind11::literals;
@@ -29,7 +28,6 @@ void define_BoundingBox(py::module &);
 void define_CCGeom(py::module &);
 
 void define_CCMath(py::module &);
-
 
 void define_ChamferDistanceTransform(py::module &);
 
@@ -89,9 +87,15 @@ void define_LocalModel(py::module &cccorelib);
 
 void define_ManualSegmentationTools(py::module &);
 
-void define_CCMiscTools(py::module&);
+void define_CCMiscTools(py::module &);
 
 void define_NormalDistribution(py::module &);
+
+void define_Delaunay2dMesh(py::module &);
+
+void define_ErrorFunction(py::module &);
+
+void define_FastMarching(py::module &);
 
 /* example of return a numpy float, in case we ever need this
 py::object return_npy_float()
@@ -112,89 +116,87 @@ py::object return_npy_float()
 */
 PYBIND11_MODULE(cccorelib, m)
 {
-	/* Constants */
-	m.attr("SQRT_3") = CCCoreLib::SQRT_3;
-        // Python's float are doubles
-        m.attr("ZERO_TOLERANCE") = CCCoreLib::ZERO_TOLERANCE_D;
-        m.attr("POINT_VISIBLE") = CCCoreLib::POINT_VISIBLE;
-        m.attr("POINT_HIDDEN") = CCCoreLib::POINT_HIDDEN;
-        m.attr("POINT_OUT_OF_RANGE") = CCCoreLib::POINT_OUT_OF_RANGE;
-        m.attr("POINT_OUT_OF_FOV") = CCCoreLib::POINT_OUT_OF_FOV;
+    /* Constants */
+    m.attr("SQRT_3") = CCCoreLib::SQRT_3;
+    // Python's float are doubles
+    m.attr("ZERO_TOLERANCE") = CCCoreLib::ZERO_TOLERANCE_D;
+    m.attr("POINT_VISIBLE") = CCCoreLib::POINT_VISIBLE;
+    m.attr("POINT_HIDDEN") = CCCoreLib::POINT_HIDDEN;
+    m.attr("POINT_OUT_OF_RANGE") = CCCoreLib::POINT_OUT_OF_RANGE;
+    m.attr("POINT_OUT_OF_FOV") = CCCoreLib::POINT_OUT_OF_FOV;
 
-        py::enum_<CCCoreLib::CHAMFER_DISTANCE_TYPE> (m, "CHAMFER_DISTANCE_TYPE")
-            .value("CHAMFER_111", CCCoreLib::CHAMFER_DISTANCE_TYPE::CHAMFER_111)
-            .value("CHAMFER_345", CCCoreLib::CHAMFER_DISTANCE_TYPE::CHAMFER_345);
+    py::enum_<CCCoreLib::CHAMFER_DISTANCE_TYPE>(m, "CHAMFER_DISTANCE_TYPE")
+        .value("CHAMFER_111", CCCoreLib::CHAMFER_DISTANCE_TYPE::CHAMFER_111)
+        .value("CHAMFER_345", CCCoreLib::CHAMFER_DISTANCE_TYPE::CHAMFER_345);
 
-        py::enum_<CCCoreLib::LOCAL_MODEL_TYPES> (m, "LOCAL_MODEL_TYPES")
-            .value("NO_MODEL", CCCoreLib::LOCAL_MODEL_TYPES::NO_MODEL)
-            .value("LS", CCCoreLib::LOCAL_MODEL_TYPES::LS)
-            .value("TRI", CCCoreLib::LOCAL_MODEL_TYPES::TRI)
-            .value("QUADRIC", CCCoreLib::LOCAL_MODEL_TYPES::QUADRIC);
+    py::enum_<CCCoreLib::LOCAL_MODEL_TYPES>(m, "LOCAL_MODEL_TYPES")
+        .value("NO_MODEL", CCCoreLib::LOCAL_MODEL_TYPES::NO_MODEL)
+        .value("LS", CCCoreLib::LOCAL_MODEL_TYPES::LS)
+        .value("TRI", CCCoreLib::LOCAL_MODEL_TYPES::TRI)
+        .value("QUADRIC", CCCoreLib::LOCAL_MODEL_TYPES::QUADRIC);
 
-        m.attr("CC_LOCAL_MODEL_MIN_SIZE") = CCCoreLib::CC_LOCAL_MODEL_MIN_SIZE;
+    m.attr("CC_LOCAL_MODEL_MIN_SIZE") = CCCoreLib::CC_LOCAL_MODEL_MIN_SIZE;
 
+    define_CCGeom(m);
+    define_CCMath(m);
+    define_BoundingBox(m);
 
-	define_CCGeom(m);
-	define_CCMath(m);
-	define_BoundingBox(m);
+    define_GenericCloud(m);
+    define_GenericIndexedCloud(m);
+    define_GenericIndexedCloudPersist(m);
+    define_PointCloud(m);
 
+    define_GenericTriangle(m);
+    define_GenericMesh(m);
+    define_GenericIndexedMesh(m);
+    define_Delaunay2dMesh(m);
+    define_ReferenceCloud(m);
+    define_Polyline(m);
 
-	define_GenericCloud(m);
-	define_GenericIndexedCloud(m);
-	define_GenericIndexedCloudPersist(m);
-	define_PointCloud(m);
+    define_GenericDistribution(m);
+    define_NormalDistribution(m);
+    define_WeibullDistribution(m);
 
-	define_GenericTriangle(m);
-	define_GenericMesh(m);
-	define_GenericIndexedMesh(m);
+    define_GenericProgressCallback(m);
 
-	define_ReferenceCloud(m);
-	define_Polyline(m);
+    define_GenericOctree(m);
+    define_DgmOctree(m);
+    define_DgmOctreeReferenceCloud(m);
 
-	define_GenericDistribution(m);
-        define_NormalDistribution(m);
-	define_WeibullDistribution(m);
+    define_ScalarField(m);
+    define_SimpleMesh(m);
+    define_SimpleTriangle(m);
 
-	define_GenericProgressCallback(m);
+    define_ErrorFunction(m);
+    define_FastMarching(m);
 
-	define_GenericOctree(m);
-	define_DgmOctree(m);
-	define_DgmOctreeReferenceCloud(m);
+    define_CCMiscTools(m);
+    define_AutoSegmentationTools(m);
+    define_ManualSegmentationTools(m);
+    define_ScalarFieldTools(m);
+    define_ChamferDistanceTransform(m);
+    define_CloudSamplingTools(m);
+    define_GeometricalAnalysisTools(m);
+    define_StatisticalTestingTools(m);
+    define_PointProjectionTools(m);
+    define_RegistrationTools(m);
 
-	define_ScalarField(m);
-	define_SimpleMesh(m);
-	define_SimpleTriangle(m);
+    define_KdTree(m);
+    define_TrueKdTree(m);
 
-	define_CCMiscTools(m);
-	define_AutoSegmentationTools(m);
-	define_ManualSegmentationTools(m);
-	define_ScalarFieldTools(m);
-	define_ChamferDistanceTransform(m);
-	define_CloudSamplingTools(m);
-	define_GeometricalAnalysisTools(m);
-	define_StatisticalTestingTools(m);
-	define_PointProjectionTools(m);
-	define_RegistrationTools(m);
+    define_LocalModel(m);
 
-	define_KdTree(m);
-	define_TrueKdTree(m);
+    m.def("delete", [](CCCoreLib::ReferenceCloud *self) { delete self; });
 
-	define_LocalModel(m);
+    // Conjugate Gradient
+    // Delaunay2dMesh
+    // DistanceComputationTools
+    // Error function
+    // FastMarching
+    // FastMarchingFor...
+    // RayAndBox
+    // SaitoSquared...
+    // SquareMatrix
 
-	m.def("delete", [](CCCoreLib::ReferenceCloud *self) {
-		delete self;
-	});
-
-	// Conjugate Gradient
-	// Delaunay2dMesh
-	// DistanceComputationTools
-	// Error function
-	// FastMarching
-	// FastMarchingFor...
-	// RayAndBox
-	// SaitoSquared...
-	// SquareMatrix
-
-
-	py::bind_vector<CCCoreLib::ReferenceCloudContainer>(m, "ReferenceCloudContainer");
+    py::bind_vector<CCCoreLib::ReferenceCloudContainer>(m, "ReferenceCloudContainer");
 }

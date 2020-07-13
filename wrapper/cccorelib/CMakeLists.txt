@@ -42,6 +42,9 @@ pybind11_add_module(cccorelib
         src/PointProjectionTools.cpp
         src/ManualSegmentationTools.cpp
         src/NormalDistribution.cpp
+        src/Delaynay2dMesh.cpp
+        src/ErrorFunction.cpp
+        src/FastMarching.cpp
         src/wrappers.h
 )
 target_link_libraries(cccorelib PRIVATE CCCoreLib)

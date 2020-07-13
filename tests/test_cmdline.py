@@ -26,3 +26,9 @@ def test_argv(cloudcompare_exe):
 def test_auto_segmentation(cloudcompare_exe):
     assert_command_runs(cloudcompare_exe, "-SILENT", "-O", f"{abspath}/data/a_cloud.bin", "-PYTHON_SCRIPT",
                         f"{abspath}/scripts/auto_segmentation_tools.py")
+
+
+def test_normal_distribution(cloudcompare_exe):
+    assert_command_runs(
+        cloudcompare_exe, "-SILENT", "-O", f"{abspath}/data/a_cloud.bin", "-PYTHON_SCRIPT",
+        os.path.join(abspath, "scripts", "normal_distribution.py"))
