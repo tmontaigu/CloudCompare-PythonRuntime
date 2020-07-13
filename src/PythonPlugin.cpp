@@ -162,6 +162,7 @@ void PythonPlugin::showRepl()
 {
 	if ( m_repl )
 	{
+		m_repl->show();
 		m_repl->raise();
 		m_repl->activateWindow();
 	} else {
