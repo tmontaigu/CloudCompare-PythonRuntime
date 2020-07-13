@@ -87,6 +87,8 @@ void define_KdTree(py::module &cccorelib);
 
 void define_LocalModel(py::module &cccorelib);
 
+void define_ManualSegmentationTools(py::module &);
+
 void define_CCMiscTools(py::module&);
 
 PYBIND11_MODULE(cccorelib, m)
@@ -126,6 +128,7 @@ PYBIND11_MODULE(cccorelib, m)
 
 	define_CCMiscTools(m);
 	define_AutoSegmentationTools(m);
+	define_ManualSegmentationTools(m);
 	define_ScalarFieldTools(m);
 	define_ChamferDistanceTransform(m);
 	define_CloudSamplingTools(m);
@@ -137,7 +140,11 @@ PYBIND11_MODULE(cccorelib, m)
 	define_KdTree(m);
 	define_TrueKdTree(m);
 
-	 define_LocalModel(m);
+	define_LocalModel(m);
+
+	m.def("delete", [](CCCoreLib::ReferenceCloud *self) {
+		delete self;
+	});
 
 	// Conjugate Gradient
 	// Delaunay2dMesh

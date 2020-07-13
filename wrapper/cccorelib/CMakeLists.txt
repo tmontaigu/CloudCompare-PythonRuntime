@@ -40,6 +40,7 @@ pybind11_add_module(cccorelib
         src/ReferenceCloud.cpp
         src/Polyline.cpp
         src/PointProjectionTools.cpp
+        src/ManualSegmentationTools.cpp
         src/wrappers.h
 )
 
