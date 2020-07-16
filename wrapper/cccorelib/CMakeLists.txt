@@ -47,5 +47,6 @@ pybind11_add_module(cccorelib
         src/ErrorFunction.cpp
         src/FastMarching.cpp
         src/wrappers.h
+        src/casters.h
 )
 target_link_libraries(cccorelib PRIVATE CCCoreLib)
