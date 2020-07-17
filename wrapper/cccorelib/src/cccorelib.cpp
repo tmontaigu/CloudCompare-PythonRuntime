@@ -101,6 +101,8 @@ void define_ErrorFunction(py::module &);
 
 void define_FastMarching(py::module &);
 
+void define_DistanceComputationTools(py::module &);
+
 /* example of return a numpy float, in case we ever need this
 py::object return_npy_float()
 {
@@ -233,6 +235,7 @@ PYBIND11_MODULE(cccorelib, m)
     define_CCMath(m);
     define_BoundingBox(m);
 
+
     define_GenericCloud(m);
     define_GenericIndexedCloud(m);
     define_GenericIndexedCloudPersist(m);
@@ -264,6 +267,7 @@ PYBIND11_MODULE(cccorelib, m)
 
     define_CCMiscTools(m);
     define_AutoSegmentationTools(m);
+    define_DistanceComputationTools(m);
     define_ManualSegmentationTools(m);
     define_ScalarFieldTools(m);
     define_ChamferDistanceTransform(m);

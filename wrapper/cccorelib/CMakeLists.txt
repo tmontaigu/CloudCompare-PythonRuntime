@@ -46,6 +46,7 @@ pybind11_add_module(cccorelib
         src/Delaynay2dMesh.cpp
         src/ErrorFunction.cpp
         src/FastMarching.cpp
+        src/DistanceComputationTools.cpp
         src/wrappers.h
         src/casters.h
 )

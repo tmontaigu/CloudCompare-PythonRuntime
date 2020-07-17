@@ -40,6 +40,12 @@ def test_normal_kdtree(cloudcompare_exe):
         os.path.join(abspath, "scripts", "kdtree.py"))
 
 
+def test_normal_kdtree(cloudcompare_exe):
+    assert_command_runs(
+        cloudcompare_exe, "-SILENT", "-O", f"{abspath}/data/a_cloud.bin", "-PYTHON_SCRIPT",
+        os.path.join(abspath, "scripts", "true_kdtree.py"))
+
+
 def test_cloud_for_each(cloudcompare_exe):
     assert_command_runs(
         cloudcompare_exe, "-SILENT", "-O", f"{abspath}/data/a_cloud.bin", "-PYTHON_SCRIPT",
