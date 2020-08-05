@@ -1,6 +1,7 @@
 #include "ccGUIPythonInstance.h"
 
 #include <FileIOFilter.h>
+#include <stdexcept>
 
 static void ThrowForFileError(CC_FILE_ERROR error) {
 	switch (error)
