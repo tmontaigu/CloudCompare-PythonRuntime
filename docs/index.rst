@@ -10,11 +10,10 @@ Welcome to CloudCompare's Python plugin
    :maxdepth: 2
    :caption: Contents:
 
+   tools
+   data_structures
 
-.. automodule:: cccorelib
-   :members:
-   :undoc-members:
-   :show-inheritance:
+
 
 
 Indices and tables
