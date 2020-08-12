@@ -22,9 +22,6 @@ using namespace pybind11::literals;
 
 #include "cccorelib.h"
 
-//#define QUOTE(str) #str
-//#define EXPAND_AND_QUOTE(str) QUOTE(str)
-
 void define_AutoSegmentationTools(py::module &);
 
 void define_BoundingBox(py::module &);

@@ -19,7 +19,7 @@ if (PLUGIN_PYTHON)
     find_package(pybind11 CONFIG REQUIRED)
     target_link_libraries(PythonPlugin pybind11::embed)
 
-    set(COPY_ENV FALSE)
+    set(COPY_ENV TRUE)
 
     set(CC_PYTHON_ENV_NAME "Python")
     SET(CC_PLUGIN_INSTALL_DIR ${CLOUDCOMPARE_DEST_FOLDER}/plugins)

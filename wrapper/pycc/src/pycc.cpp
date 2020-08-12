@@ -112,6 +112,13 @@ py::object call_fn(PyThreadState *main_state, py::object callable, py::args args
 
 void define_ccCommandLine(py::module &m);
 
+void define_ccDrawableObject(py::module &m);
+
+void define_ccScalarField(py::module &m);
+
+void define_ccGenericPointCloud(py::module &m);
+void define_ccPointCloud(py::module &m);
+
 template<class T>
 using observer_ptr = std::unique_ptr<T, py::nodelete>;
 
@@ -127,35 +134,11 @@ PYBIND11_MODULE(pycc, m) {
 	 * qCC_db
 	 **********************************/
 
-	py::class_<ccScalarField, CCCoreLib::ScalarField, observer_ptr<ccScalarField>>
-			(m, "ccScalarField");
-
 	py::class_<ccGenericGLDisplay>(m, "ccGenericGLDisplay");
 
-	py::class_<ccDrawableObject>(m, "ccDrawableObject")
-			.def("isVisible", &ccDrawableObject::isVisible)
-			.def("setVisible", &ccDrawableObject::setVisible)
-			.def("toggleVisibility", &ccDrawableObject::toggleVisibility)
-			.def("isVisibilityLocked", &ccDrawableObject::isVisiblityLocked)
-			.def("lockVisibility", &ccDrawableObject::lockVisibility)
-			.def("isSelected", &ccDrawableObject::isSelected)
-			.def("setSelected", &ccDrawableObject::setSelected)
-			.def("hasColors", &ccDrawableObject::hasColors)
-			.def("colorsShown", &ccDrawableObject::colorsShown)
-			.def("showColors", &ccDrawableObject::showColors)
-			.def("toggleColors", &ccDrawableObject::toggleColors)
-			.def("hasNormals", &ccDrawableObject::hasNormals)
-			.def("normalsShown", &ccDrawableObject::normalsShown)
-			.def("showNormals", &ccDrawableObject::showNormals)
-			.def("toggleNormals", &ccDrawableObject::toggleNormals)
-			.def("hasDisplayedScalarField", &ccDrawableObject::hasDisplayedScalarField)
-			.def("hasScalarFields", &ccDrawableObject::hasScalarFields)
-			.def("showSF", &ccDrawableObject::showSF)
-			.def("toggleSF", &ccDrawableObject::toggleSF)
-			.def("sfShown", &ccDrawableObject::sfShown)
-			.def("showNameIn3D", &ccDrawableObject::showNameIn3D)
-			.def("nameShownIn3D", &ccDrawableObject::nameShownIn3D)
-			.def("toggleShowName", &ccDrawableObject::toggleShowName);
+	define_ccScalarField(m);
+
+	define_ccDrawableObject(m);
 
 	// TODO Metadata { get & set }
 	py::class_<ccObject>(m, "ccObject")
@@ -181,29 +164,8 @@ PYBIND11_MODULE(pycc, m) {
 			.def("getChild", &ccHObject::getChild, py::return_value_policy::reference)
 			.def("find", &ccHObject::find, py::return_value_policy::reference);
 
-
-	py::class_<ccGenericPointCloud, ccHObject, CCCoreLib::GenericIndexedCloudPersist>(m, "ccGenericPointCloud");
-
-	py::class_<ccPointCloud, ccGenericPointCloud>(m, "ccPointCloud")
-			// ScalarField management
-			.def("getNumberOfScalarField", &ccPointCloud::getNumberOfScalarFields)
-			.def("getScalarFieldName", &ccPointCloud::getScalarFieldName)
-			.def("getScalarFieldIndexByName", &ccPointCloud::getScalarFieldIndexByName)
-			.def("getCurrentDisplayedScalarField", &ccPointCloud::getCurrentDisplayedScalarField)
-			.def("getCurrentDisplayedScalarFieldIndex", &ccPointCloud::getCurrentDisplayedScalarFieldIndex)
-			.def("getScalarField", &ccPointCloud::getScalarField)
-			.def("setCurrentDisplayedScalarField", &ccPointCloud::setCurrentDisplayedScalarField)
-			.def("partialClone", [](const ccPointCloud *self, const CCCoreLib::ReferenceCloud *selection,
-			                        ccGUIPythonInstance *pythonInstance) {
-				// TODO use opt param to check errs
-				ccPointCloud *cloned = self->partialClone(selection);
-				pythonInstance->addToDB(cloned);
-				return cloned;
-			}, py::return_value_policy::reference)
-			.def("__repr__", [](const ccPointCloud &self) {
-				return std::string("<ccPointCloud(") + self.getName().toStdString() + ", " +
-				       std::to_string(self.size()) + " points)>";
-			});
+	define_ccGenericPointCloud(m);
+	define_ccPointCloud(m);
 
 	py::class_<QProgressDialog>(m, "QProgressDialog");
 
@@ -226,9 +188,6 @@ PYBIND11_MODULE(pycc, m) {
 			.def("updateUI", &ccGUIPythonInstance::updateUI)
 			.def("freezeUI", &ccGUIPythonInstance::freezeUI)
 			.def("loadFile", &ccGUIPythonInstance::loadFile, py::return_value_policy::reference);
-
-
-
 
 	py::class_<ccGlobalShiftManager> PyccGlobalShiftManager(m, "ccGlobalShiftManager");
 
@@ -268,7 +227,6 @@ PYBIND11_MODULE(pycc, m) {
 	m.def("ProcessEvents", []() {
 		QCoreApplication::processEvents();
 	});
-
 
 	m.def("RunInThread", [](py::object callable, py::args args, py::kwargs kwargs) {
 		PyThreadStateReleaser stateReleaser{};

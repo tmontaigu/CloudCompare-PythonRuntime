@@ -16,6 +16,7 @@ void define_ScalarField(py::module &cccorelib)
 			.def("setName", &CCCoreLib::ScalarField::setName)
 			.def("getName", &CCCoreLib::ScalarField::getName)
 			.def_static("NaN", &CCCoreLib::ScalarField::NaN)
+			.def("size", &CCCoreLib::ScalarField::size)
 			.def("computeMeanAndVariance", &CCCoreLib::ScalarField::computeMeanAndVariance, "mean"_a,
 			     "variance"_a = nullptr)
 			.def("computeMinAndMax", &CCCoreLib::ScalarField::computeMinAndMax)
@@ -30,6 +31,12 @@ void define_ScalarField(py::module &cccorelib)
 			.def("asArray", [](CCCoreLib::ScalarField &self)
 			{
 				return PyCC::VectorAsNumpyArray(self);
+			})
+			.def("__getitem__", [](const CCCoreLib::ScalarField& self, ssize_t index) {
+				return self.at(index % self.size());
+			})
+			.def("__setitem__", [](CCCoreLib::ScalarField &self, ssize_t index, ScalarType value) {
+				self.at(index % self.size()) = value;
 			})
 			.def("__repr__", [](const CCCoreLib::ScalarField &self)
 			{

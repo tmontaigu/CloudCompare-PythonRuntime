@@ -8,12 +8,6 @@
 #include <GenericIndexedCloud.h>
 #include <iostream>
 
-// namespace pybind11 {
-//    namespace detail {
-//        template<>
-//        struct type_caster<CCCoreLib>
-//    }
-//}
 
 namespace py = pybind11;
 
