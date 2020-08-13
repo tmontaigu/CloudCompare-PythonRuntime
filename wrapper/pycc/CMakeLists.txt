@@ -12,8 +12,8 @@ pybind11_add_module(
         src/casters.h
         src/ccDrawableObject.cpp
         src/ccScalarField.cpp
+        src/ccObject.cpp
         src/ccGenericPointCloud.cpp
-        src/ccPointCloud.cpp
         src/ccPointCloud.cpp
 )
 target_link_libraries(pycc PRIVATE QCC_DB_LIB PythonPlugin)

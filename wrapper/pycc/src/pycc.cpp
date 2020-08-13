@@ -110,14 +110,14 @@ py::object call_fn(PyThreadState *main_state, py::object callable, py::args args
 }
 
 
-void define_ccCommandLine(py::module &m);
+void define_ccCommandLine(py::module&);
+void define_ccDrawableObject(py::module&);
+void define_ccScalarField(py::module&);
+void define_ccObject(py::module&);
+void define_ccGenericPointCloud(py::module&);
+void define_ccPointCloud(py::module&);
 
-void define_ccDrawableObject(py::module &m);
 
-void define_ccScalarField(py::module &m);
-
-void define_ccGenericPointCloud(py::module &m);
-void define_ccPointCloud(py::module &m);
 
 template<class T>
 using observer_ptr = std::unique_ptr<T, py::nodelete>;
@@ -139,30 +139,7 @@ PYBIND11_MODULE(pycc, m) {
 	define_ccScalarField(m);
 
 	define_ccDrawableObject(m);
-
-	// TODO Metadata { get & set }
-	py::class_<ccObject>(m, "ccObject")
-			.def("getName", &ccObject::getName)
-			.def("setName", &ccObject::setName)
-//			.def("getClassID", &ccObject::getClassID)
-			.def("getUniqueID", &ccObject::getUniqueID)
-			.def("isEnabled", &ccObject::isEnabled)
-			.def("setEnabled", &ccObject::setEnabled)
-			.def("toggleActivation", &ccObject::toggleActivation)
-			.def("isLocked", &ccObject::isLocked)
-			.def("setLocked", &ccObject::setLocked)
-			.def("isLeaf", &ccObject::isLeaf)
-			.def("isCustom", &ccObject::isCustom)
-			.def("isHierarchy", &ccObject::isHierarchy);
-
-	py::class_<ccHObject, ccObject, ccDrawableObject>(m, "ccHObject")
-			.def("isGroup", &ccHObject::isGroup)
-			.def("getParent", &ccHObject::getParent, py::return_value_policy::reference)
-					// Children management
-			.def("getChildrenNumber", &ccHObject::getChildrenNumber)
-			.def("getChildCountRecursive", &ccHObject::getChildCountRecursive)
-			.def("getChild", &ccHObject::getChild, py::return_value_policy::reference)
-			.def("find", &ccHObject::find, py::return_value_policy::reference);
+	define_ccObject(m);
 
 	define_ccGenericPointCloud(m);
 	define_ccPointCloud(m);

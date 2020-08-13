@@ -9,6 +9,6 @@ using namespace pybind11::literals;
 
 
 void define_ccGenericPointCloud(py::module &m) {
-	py::class_<ccGenericPointCloud, ccHObject, CCCoreLib::GenericIndexedCloudPersist>
+	py::class_<ccGenericPointCloud, ccShiftedObject, CCCoreLib::GenericIndexedCloudPersist>
 	        (m, "ccGenericPointCloud");
 }
