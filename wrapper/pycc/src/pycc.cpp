@@ -118,6 +118,7 @@ void define_ccGenericPointCloud(py::module&);
 void define_ccPointCloud(py::module&);
 
 
+void define_ccGUIPythonInstance(py::module&);
 
 template<class T>
 using observer_ptr = std::unique_ptr<T, py::nodelete>;
@@ -149,22 +150,6 @@ PYBIND11_MODULE(pycc, m) {
 	py::class_<ccProgressDialog, QProgressDialog, CCCoreLib::GenericProgressCallback>(m, "ccProgressDialog")
 			.def(py::init<bool>(), "cancelButton"_a = false);
 
-	py::class_<ccGUIPythonInstance>
-			(m, "ccPythonInstance")
-			.def("haveSelection", &ccGUIPythonInstance::haveSelection)
-			.def("haveOneSelection", &ccGUIPythonInstance::haveOneSelection)
-			.def("getSelectedEntities", &ccGUIPythonInstance::getSelectedEntities, py::return_value_policy::reference)
-			.def("setSelectedInDB", &ccGUIPythonInstance::setSelectedInDB)
-			.def("dbRootObject", &ccGUIPythonInstance::dbRootObject, py::return_value_policy::reference)
-			.def("addToDB", &ccGUIPythonInstance::addToDB, "obj"_a, "updateZoom"_a = false, "autoExpandDBTree"_a = true,
-			     "checkDimensions"_a = false, "autoRedraw"_a = true)
-			.def("redrawAll", &ccGUIPythonInstance::redrawAll)
-			.def("refreshAll", &ccGUIPythonInstance::refreshAll)
-			.def("enableAll", &ccGUIPythonInstance::enableAll)
-			.def("disableAll", &ccGUIPythonInstance::disableAll)
-			.def("updateUI", &ccGUIPythonInstance::updateUI)
-			.def("freezeUI", &ccGUIPythonInstance::freezeUI)
-			.def("loadFile", &ccGUIPythonInstance::loadFile, py::return_value_policy::reference);
 
 	py::class_<ccGlobalShiftManager> PyccGlobalShiftManager(m, "ccGlobalShiftManager");
 
@@ -196,6 +181,7 @@ PYBIND11_MODULE(pycc, m) {
 			.def_readwrite("sessionStart", &FileIOFilter::LoadParameters::sessionStart);
 
 
+	define_ccGUIPythonInstance(m);
 	define_ccCommandLine(m);
 
 	m.def("GetInstance", &GetInstance, py::return_value_policy::reference);

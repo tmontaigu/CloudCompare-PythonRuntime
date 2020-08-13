@@ -8,6 +8,7 @@ find_package(pybind11 CONFIG REQUIRED)
 pybind11_add_module(
         pycc
         src/pycc.cpp
+        src/ccGUIPythonInstance.cpp
         src/ccCommandLine.cpp
         src/casters.h
         src/ccDrawableObject.cpp
