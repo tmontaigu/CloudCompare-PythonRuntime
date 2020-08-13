@@ -191,7 +191,11 @@ void PythonPlugin::executeEditorCode(const std::string &evalFileName,
     {
         py::object o = py::module::import("ccinternals").attr("ConsoleREPL")(output);
         PyStdErrOutStreamRedirect redirect{o, o};
-        py::exec(code);
+        // We give the locals dict & global dict ourselves
+        // as letting pybind create them seems to cause some weird crash (probably double delete)
+        // when closing the CC apps
+        py::dict locals;
+        py::exec(code, py::globals(), locals);
     }
     catch (const std::exception &e)
     {
