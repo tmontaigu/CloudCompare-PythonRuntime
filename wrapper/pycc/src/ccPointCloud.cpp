@@ -9,8 +9,6 @@
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-using ccGenericPointCloudTpl = CCCoreLib::PointCloudTpl<ccGenericPointCloud, QString>;
-
 #define DEFINE_POINTCLOUDTPL(T, StringType, module, name) py::class_<CCCoreLib::PointCloudTpl<T, StringType>, T>(module, name) \
     .def("size", &CCCoreLib::PointCloudTpl<T, StringType>::size)                                                               \
     .def("forEach", &CCCoreLib::PointCloudTpl<T, StringType>::forEach, "action"_a)                                             \
@@ -44,18 +42,22 @@ using ccGenericPointCloudTpl = CCCoreLib::PointCloudTpl<ccGenericPointCloud, QSt
 void define_ccPointCloud(py::module &m) {
 	DEFINE_POINTCLOUDTPL(ccGenericPointCloud, QString, m, "__ccGenericPointCloudTpl");
 
-	py::class_<ccPointCloud, CCCoreLib::PointCloudTpl<ccGenericPointCloud, QString>>(m, "ccPointCloud")
+	py::class_<
+			ccPointCloud,
+			CCCoreLib::PointCloudTpl<ccGenericPointCloud, QString>,
+			std::unique_ptr<ccPointCloud, py::nodelete>
+	>(m, "ccPointCloud")
 			.def(py::init<QString, unsigned>(), "name"_a = QString(),
 			     "uniqueID"_a = ccUniqueIDGenerator::InvalidUniqueID)
 					//features deletion/clearing
-			//features allocation/resize
+					//features allocation/resize
 			.def("reserveThePointsTable", &ccPointCloud::reserveThePointsTable, "_numberOfPoints"_a)
 			.def("reserveTheRGBTable", &ccPointCloud::reserveThePointsTable)
-			.def("reserveTheRGBTable", &ccPointCloud::reserveThePointsTable, "fillWithWhite"_a=false)
+			.def("reserveTheRGBTable", &ccPointCloud::reserveThePointsTable, "fillWithWhite"_a = false)
 			.def("reserveTheNormsTable", &ccPointCloud::reserveTheNormsTable)
 			.def("resizeTheNormsTable", &ccPointCloud::resizeTheNormsTable)
 			.def("shrinkToFit", &ccPointCloud::shrinkToFit)
-			// ScalarField management
+					// ScalarField management
 			.def("getCurrentDisplayedScalarField", &ccPointCloud::getCurrentDisplayedScalarField)
 			.def("getCurrentDisplayedScalarFieldIndex", &ccPointCloud::getCurrentDisplayedScalarFieldIndex)
 			.def("setCurrentDisplayedScalarField", &ccPointCloud::setCurrentDisplayedScalarField, "index"_a)
