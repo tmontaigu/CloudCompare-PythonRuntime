@@ -2,6 +2,7 @@
 #define CLOUDCOMPAREPROJECTS_CCGUIPYTHONINSTANCE_H
 
 #include <ccMainAppInterface.h>
+#include <FileIOFilter.h>
 
 
 class Q_DECL_EXPORT ccGUIPythonInstance {
@@ -38,7 +39,7 @@ public:
 
 	void freezeUI(bool state) { return m_app->freezeUI(state); }
 
-	ccHObject *loadFile(const char *filename);
+	ccHObject *loadFile(const char *filename, FileIOFilter::LoadParameters &parameters);
 
 private:
 	ccMainAppInterface *m_app;
