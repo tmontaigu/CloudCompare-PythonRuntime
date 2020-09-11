@@ -3,9 +3,11 @@ import pycc
 def merge(clouds):
     total_num_points = sum(cloud.size() for cloud in clouds)
     
-    merge_result = pycc.ccPointCloud()
+    merge_result = pycc.CreateObject('ccPointCloud')
+
     merge_result.setName("MergeResult")
     merge_result.reserve(total_num_points)
+
 
 
     for cloud_idx, cloud in enumerate(clouds):
@@ -32,9 +34,8 @@ def merge(clouds):
 
     return merge_result
 
-def main():
-    CC = pycc.GetInstance()
-    
+def main(): 
+    CC = pycc.GetInstance() 
     clouds = CC.getSelectedEntities()
     
     merged_cloud = merge(clouds)

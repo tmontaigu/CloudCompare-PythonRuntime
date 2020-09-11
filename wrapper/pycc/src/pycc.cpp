@@ -211,4 +211,8 @@ PYBIND11_MODULE(pycc, m) {
 			QCoreApplication::processEvents();
 		}
 	});
+
+        m.def("CreateObject", [](const char* type_name) {
+                return GetInstance()->createObject(type_name);
+        });
 }

@@ -199,6 +199,9 @@ void PythonPlugin::executeEditorCode(const std::string &evalFileName,
         message->setTextColor(Qt::red);
         output->addItem(message);
     }
+
+    size_t n = Python::clearDB();
+    ccLog::Print("Python items garbaged: %d", n);
 }
 
 PythonPlugin::~PythonPlugin()

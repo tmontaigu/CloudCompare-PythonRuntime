@@ -23,9 +23,7 @@ public:
 	             bool updateZoom = false,
 	             bool autoExpandDBTree = true,
 	             bool checkDimensions = false,
-	             bool autoRedraw = true) {
-		m_app->addToDB(obj, updateZoom, autoExpandDBTree, checkDimensions, autoRedraw);
-	}
+	             bool autoRedraw = true);
 
 	void redrawAll(bool only2D = false) { return m_app->redrawAll(only2D); }
 
@@ -39,10 +37,16 @@ public:
 
 	void freezeUI(bool state) { return m_app->freezeUI(state); }
 
+        ccHObject *createObject(const char *type_name);
+
 	ccHObject *loadFile(const char *filename, FileIOFilter::LoadParameters &parameters);
+
+        size_t clearDB();
+
 
 private:
 	ccMainAppInterface *m_app;
+        std::vector<ccHObject*> m_pythonDB;
 };
 
 #endif //CLOUDCOMPAREPROJECTS_CCGUIPYTHONINSTANCE_H

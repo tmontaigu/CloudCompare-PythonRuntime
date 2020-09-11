@@ -24,5 +24,6 @@ void define_ccGUIPythonInstance(py::module &m) {
 			.def("disableAll", &ccGUIPythonInstance::disableAll)
 			.def("updateUI", &ccGUIPythonInstance::updateUI)
 			.def("freezeUI", &ccGUIPythonInstance::freezeUI)
-			.def("loadFile", &ccGUIPythonInstance::loadFile, py::return_value_policy::reference);
+			.def("loadFile", &ccGUIPythonInstance::loadFile, py::return_value_policy::reference)
+                        .def("createObject", &ccGUIPythonInstance::createObject, py::return_value_policy::reference, "type_name"_a);
 }

@@ -1,6 +1,12 @@
 #include "ccGUIPythonInstance.h"
 
 #include <FileIOFilter.h>
+
+#define slots Q_SLOTS
+#define signals Q_SIGNALS
+#include <ccPointCloud.h>
+
+
 #include <stdexcept>
 
 static void ThrowForFileError(CC_FILE_ERROR error) {
@@ -69,4 +75,34 @@ ccHObject *ccGUIPythonInstance::loadFile(const char *filename, FileIOFilter::Loa
 	return newGroup;
 }
 
+ccHObject *ccGUIPythonInstance::createObject(const char *type_name) {
+    if (strcmp(type_name, "ccPointCloud") == 0) {
+        auto obj = new ccPointCloud();
+        m_pythonDB.push_back(obj);
+        return obj;
+    } else {
+        throw std::invalid_argument("Unknown type");
+    }
+}
 
+void ccGUIPythonInstance::addToDB(
+    ccHObject *obj, bool updateZoom, bool autoExpandDBTree, bool checkDimensions, bool autoRedraw)
+{
+    auto pos = std::find(std::begin(m_pythonDB), std::end(m_pythonDB), obj);
+
+    if (pos != std::end(m_pythonDB))
+    {
+        ccLog::Print("[Python] addToDB, obj erased from internal db");
+        m_pythonDB.erase(pos);
+    }
+
+    m_app->addToDB(obj, updateZoom, autoExpandDBTree, checkDimensions, autoRedraw);
+}
+size_t ccGUIPythonInstance::clearDB() {
+    size_t n = m_pythonDB.size();
+    for (ccHObject *obj : m_pythonDB) {
+        delete obj;
+    }
+    m_pythonDB.clear();
+    return n;
+}

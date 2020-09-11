@@ -22,11 +22,10 @@
 #include "ccGUIPythonInstance.h"
 #include "ccMainAppInterface.h"
 
-
 #include "Runtime.h"
 
-#include <QWidget>
 #include <Consoles.h>
+#include <PrivateRuntime.h>
 
 #include "QPythonREPL.h"
 
@@ -37,54 +36,62 @@ namespace py = pybind11;
 ccGUIPythonInstance *s_pythonInstance{nullptr};
 ccCommandLineInterface *s_cmdLineInstance{nullptr};
 
+ccGUIPythonInstance *GetInstance() { return s_pythonInstance; }
 
-ccGUIPythonInstance *GetInstance() {
-	return s_pythonInstance;
+ccCommandLineInterface *GetCmdLineInstance() { return s_cmdLineInstance; }
+
+namespace Python
+{
+void setMainAppInterfaceInstance(ccMainAppInterface *appInterface)
+{
+    if (s_pythonInstance == nullptr)
+    {
+        s_pythonInstance = new ccGUIPythonInstance(appInterface);
+    }
 }
 
-ccCommandLineInterface *GetCmdLineInstance() {
-	return s_cmdLineInstance;
+void unsetMainAppInterfaceInstance()
+{
+    if (s_pythonInstance != nullptr)
+    {
+        delete s_pythonInstance;
+        s_pythonInstance = nullptr;
+    }
 }
 
-namespace Python {
-	void setMainAppInterfaceInstance(ccMainAppInterface *appInterface) {
-		if ( s_pythonInstance == nullptr )
-		{
-			s_pythonInstance = new ccGUIPythonInstance(appInterface);
-		}
-	}
-
-	void unsetMainAppInterfaceInstance() {
-		if ( s_pythonInstance != nullptr )
-		{
-			delete s_pythonInstance;
-			s_pythonInstance = nullptr;
-		}
-	}
-
-	void setCmdLineInterfaceInstance(ccCommandLineInterface *cmdLine) {
-		if ( s_cmdLineInstance == nullptr )
-		{
-			s_cmdLineInstance = cmdLine;
-		}
-	}
-
-	void unsetCmdLineInterfaceInstance() {
-		if ( s_cmdLineInstance != nullptr )
-		{
-			s_cmdLineInstance = nullptr;
-		}
-	}
+void setCmdLineInterfaceInstance(ccCommandLineInterface *cmdLine)
+{
+    if (s_cmdLineInstance == nullptr)
+    {
+        s_cmdLineInstance = cmdLine;
+    }
 }
 
-PYBIND11_EMBEDDED_MODULE(ccinternals, m) {
-	py::class_<ccConsoleOutput>(m, "ccConsoleOutput")
-			.def(py::init<>())
-			.def("write", &ccConsoleOutput::write);
+void unsetCmdLineInterfaceInstance()
+{
+    if (s_cmdLineInstance != nullptr)
+    {
+        s_cmdLineInstance = nullptr;
+    }
+}
 
-	py::class_<QListWidget, std::unique_ptr<QListWidget, py::nodelete>>(m, "QListWidget");
+size_t clearDB()
+{
+    if (s_pythonInstance)
+    {
+        return s_pythonInstance->clearDB();
+    }
+    return 0;
+}
+} // namespace Python
 
-	py::class_<ConsoleREPL>(m, "ConsoleREPL")
-			.def(py::init<QListWidget *>())
-			.def("write", &ConsoleREPL::write);
+PYBIND11_EMBEDDED_MODULE(ccinternals, m)
+{
+    py::class_<ccConsoleOutput>(m, "ccConsoleOutput").def(py::init<>()).def("write", &ccConsoleOutput::write);
+
+    py::class_<QListWidget, std::unique_ptr<QListWidget, py::nodelete>>(m, "QListWidget");
+
+    py::class_<ConsoleREPL>(m, "ConsoleREPL")
+        .def(py::init<QListWidget *>())
+        .def("write", &ConsoleREPL::write);
 }
