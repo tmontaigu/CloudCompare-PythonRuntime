@@ -131,8 +131,6 @@ PythonPlugin::PythonPlugin(QObject *parent)
     connect(m_editor, &QPythonEditor::executionCalled, this, &PythonPlugin::executeEditorCode);
 }
 
-void PythonPlugin::onNewSelection(const ccHObject::Container &selectedEntities) {}
-
 QList<QAction *> PythonPlugin::getActions()
 {
     if (!m_showEditor)

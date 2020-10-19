@@ -9,9 +9,18 @@
 
 namespace py = pybind11;
 
+/// REPL special starting characters
+/// The first line of the REPL codeEdit shall start with the arrows
+/// subsequent lines shall start with the dots
 const static QString replArrows = ">>> ";
 const static QString continuationDots = "... ";
 
+/// Handles key presses on the REPL window.
+///
+/// It does a few things:
+///    - maps up/down arrow keys to history navigation
+///    - blocks movements/deletions/edits of the cursor when it would erase
+///      the REPL special characters
 bool ui::KeyPressEater::eventFilter(QObject *obj, QEvent *event)
 {
 	if ( event->type() == QEvent::KeyPress )

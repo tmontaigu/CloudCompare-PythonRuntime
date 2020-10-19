@@ -19,6 +19,7 @@ namespace ui
 {
 	class QPythonREPL;
 
+	/// Simple history system for the REPL.
 	class History
 	{
 	public:
@@ -40,6 +41,7 @@ namespace ui
 	};
 
 
+	/// Class used by the REPL to handle key presses
 	class KeyPressEater : public QObject
 	{
 	Q_OBJECT
@@ -54,6 +56,7 @@ namespace ui
 	};
 
 
+	/// Homemade REPL (Read Print Eval Loop)
 	class QPythonREPL : public QWidget
 	{
 		friend KeyPressEater;

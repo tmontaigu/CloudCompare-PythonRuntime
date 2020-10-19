@@ -5,6 +5,10 @@
 #include <FileIOFilter.h>
 
 
+/// This class provide methods that are made available Python scripts
+/// kind of like C++ plugins have access to a `ccMainAppInterface`.
+/// Thus this class is mostly a ccMainAppInterface with some accommodations
+/// to handle the fact that it is made to interact with python.
 class Q_DECL_EXPORT ccGUIPythonInstance {
 public:
 	explicit ccGUIPythonInstance(ccMainAppInterface *app);
@@ -37,16 +41,22 @@ public:
 
 	void freezeUI(bool state) { return m_app->freezeUI(state); }
 
-        ccHObject *createObject(const char *type_name);
+	ccHObject *createObject(const char *type_name);
 
 	ccHObject *loadFile(const char *filename, FileIOFilter::LoadParameters &parameters);
 
-        size_t clearDB();
+	/// Clears the internal database of objects that were allocated on the python side
+	/// but were not added to the DB tree via `addToDB`
+    size_t clearDB();
 
 
 private:
 	ccMainAppInterface *m_app;
-        std::vector<ccHObject*> m_pythonDB;
+	// This holds pointer to objects that were created by a Python script.
+	// They are kept in this vector until they are either moved to the true ccDB (using `addToDB`)
+	// or when `clearDB` is called (which is a method not exposed to the python side
+	// and the c++ takes care of calling the `clearDB` fn when appropriate).
+	std::vector<ccHObject*> m_pythonDB;
 };
 
 #endif //CLOUDCOMPAREPROJECTS_CCGUIPYTHONINSTANCE_H

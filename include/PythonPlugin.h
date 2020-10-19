@@ -29,12 +29,15 @@ namespace ui {
 }
 
 
+/// Holds strings of the PythonHome & PythonPath
+/// Which are variables that needs to be properly set
+/// in order to have a functioning Python environment
 class PythonConfigPaths {
 public:
 	PythonConfigPaths();
 
 
-	wchar_t *pythonHome() {
+	const wchar_t *pythonHome() const {
 		return m_pythonHome.get();
 	}
 
@@ -48,6 +51,7 @@ private:
 };
 
 
+/// "Entry point" of the plugin
 class PythonPlugin : public QObject, public ccStdPluginInterface
 {
 Q_OBJECT
@@ -60,10 +64,10 @@ public:
 
 	~PythonPlugin() override;
 
-	void onNewSelection(const ccHObject::Container &selectedEntities) override;
-
 	QList<QAction *> getActions() override;
 
+	/// Registers the -PYTHON_SCRIPT command to run Python scripts in
+	/// CloudCompare's commandline mode
 	void registerCommands(ccCommandLineInterface *cmd) override;
 
 private:
