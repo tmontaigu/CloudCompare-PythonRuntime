@@ -186,6 +186,7 @@ void ui::QPythonREPL::executeCode(const QString &pythonCode)
     {
         outputDisplay()->addItem(e.what());
     }
+    outputDisplay()->scrollToBottom();
 }
 
 void ui::History::add(const QString &&cmd)
