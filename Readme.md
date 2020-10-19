@@ -46,6 +46,18 @@ The Api available from Python is still limited (especially for creating / deleti
 tools available from the gui are not (yet?) callable from python scripts. 
 
 
+# Running tests
+
+Tests works by running CloudCompare in command line mode.
+To run them, you need pytest, and you need to provide to pytest the path the where CloudCompare is installed
+
+```shell
+# in CloudCompare/plugins/private/CloudCompare-PythonPlugin:
+
+pytest --cloudcompare_exe "C:\CMakeBuilds\CloudCompare\Release\install\CloudCompare\CloudCompare.exe" tests
+```
+
+
 ## notes
 editor icon base on https://www.flaticon.com/free-icon/blank-page_18530
 
