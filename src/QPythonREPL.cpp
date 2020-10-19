@@ -184,7 +184,9 @@ void ui::QPythonREPL::executeCode(const QString &pythonCode)
     }
     catch (const std::exception &e)
     {
-        outputDisplay()->addItem(e.what());
+        auto *errorMessage = new QListWidgetItem(e.what());
+        errorMessage->setTextColor(Qt::red);
+        outputDisplay()->addItem(errorMessage);
     }
     outputDisplay()->scrollToBottom();
 }
