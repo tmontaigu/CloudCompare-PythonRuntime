@@ -1,5 +1,4 @@
 import cccorelib
-import pycc
 
 cloud = cccorelib.PointCloud()
 assert cloud.size() == 0
@@ -23,5 +22,3 @@ except IndexError:
     assert True
 else:
     assert False
-
-

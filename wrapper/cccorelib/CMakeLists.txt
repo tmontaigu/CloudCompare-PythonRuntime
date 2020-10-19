@@ -49,5 +49,5 @@ pybind11_add_module(cccorelib
         src/DistanceComputationTools.cpp
         src/wrappers.h
         src/casters.h
-)
+        )
 target_link_libraries(cccorelib PRIVATE CCCoreLib)

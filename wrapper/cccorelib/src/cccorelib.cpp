@@ -126,7 +126,6 @@ class NumpyCloud : public CCCoreLib::GenericIndexedCloud
         py::detail::PyArrayDescr_Proxy *descr =
             py::detail::array_descriptor_proxy(py::detail::array_proxy(array.ptr())->descr);
 
-
         py::list names = py::cast<py::list>(descr->names);
         if (names.size() >= 3)
         {
@@ -231,7 +230,6 @@ PYBIND11_MODULE(cccorelib, m)
     define_CCGeom(m);
     define_CCMath(m);
     define_BoundingBox(m);
-
 
     define_GenericCloud(m);
     define_GenericIndexedCloud(m);

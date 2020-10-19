@@ -1,7 +1,8 @@
-import pycc
-import cccorelib
-import sys
 import math
+import sys
+
+import cccorelib
+import pycc
 
 
 def main():

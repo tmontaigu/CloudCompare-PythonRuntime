@@ -10,7 +10,6 @@
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-
 void define_TrueKdTree(py::module &cccorelib)
 {
     py::class_<CCCoreLib::TrueKdTree> PyTrueKdTree(cccorelib, "TrueKdTree");
@@ -34,10 +33,11 @@ void define_TrueKdTree(py::module &cccorelib)
         .def("clear", &CCCoreLib::TrueKdTree::clear)
         .def("getMaxErrorType", &CCCoreLib::TrueKdTree::getMaxErrorType)
         .def("getLeaves", &CCCoreLib::TrueKdTree::getLeaves, "leaves"_a);
-//        .def("getLeaves", [](const CCCoreLib::TrueKdTree&self, CCCoreLib::TrueKdTree::LeafVector& leaves) {
-//                    self.getLeaves(leaves);
-//            }, "leaves"_a);
-;
+    //        .def("getLeaves", [](const CCCoreLib::TrueKdTree&self, CCCoreLib::TrueKdTree::LeafVector&
+    //        leaves) {
+    //                    self.getLeaves(leaves);
+    //            }, "leaves"_a);
+    ;
     py::class_<CCCoreLib::TrueKdTree::BaseNode>(PyTrueKdTree, "BaseNode")
         .def(py::init<uint8_t>(), "nodeType"_a)
         .def("isNode", &CCCoreLib::TrueKdTree::BaseNode::isNode)

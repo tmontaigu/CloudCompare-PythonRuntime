@@ -2,8 +2,8 @@
 
 #include <Delaunay2dMesh.h>
 #include <GenericIndexedCloud.h>
-#include <GenericIndexedMesh.h>
 #include <GenericIndexedCloudPersist.h>
+#include <GenericIndexedMesh.h>
 
 namespace py = pybind11;
 using namespace pybind11::literals;
@@ -45,12 +45,13 @@ void define_Delaunay2dMesh(py::module &cccorelib)
         .def("getAssociatedCloud",
              &CCCoreLib::Delaunay2dMesh::getAssociatedCloud,
              py::return_value_policy::reference)
-        .def_static(
-            "TesselateContour",
-            (CCCoreLib::Delaunay2dMesh * (*)(const std::vector<CCVector2> &))(
-                &CCCoreLib::Delaunay2dMesh::TesselateContour), "contourPoints"_a)
         .def_static("TesselateContour",
                     (CCCoreLib::Delaunay2dMesh *
-                     (*)(CCCoreLib::GenericIndexedCloudPersist* , int))(&CCCoreLib::Delaunay2dMesh::TesselateContour),
-                    "contourPoints"_a, "flatDimension"_a = -1);
+                     (*)(const std::vector<CCVector2> &))(&CCCoreLib::Delaunay2dMesh::TesselateContour),
+                    "contourPoints"_a)
+        .def_static("TesselateContour",
+                    (CCCoreLib::Delaunay2dMesh * (*)(CCCoreLib::GenericIndexedCloudPersist *, int))(
+                        &CCCoreLib::Delaunay2dMesh::TesselateContour),
+                    "contourPoints"_a,
+                    "flatDimension"_a = -1);
 }

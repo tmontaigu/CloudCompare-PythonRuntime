@@ -1,5 +1,6 @@
-import pycc
 import sys
+
+import pycc
 
 CC = pycc.GetCmdLineInstance()
 

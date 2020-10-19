@@ -1,8 +1,7 @@
 """ Demo of using a CloudSamplingTools with a ccProgressDialog
 """
-import pycc
 import cccorelib
-import numpy as np
+import pycc
 
 CC = pycc.GetInstance()
 

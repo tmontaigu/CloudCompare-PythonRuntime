@@ -5,85 +5,77 @@
 
 #include <string>
 
-
 #include "PythonStdErrOutRedirect.h"
 #include <pybind11/pybind11.h>
-
 
 namespace py = pybind11;
 
 class Ui_PythonREPLQt;
 
-
 namespace ui
 {
-	class QPythonREPL;
+class QPythonREPL;
 
-	/// Simple history system for the REPL.
-	class History
-	{
-	public:
-		explicit History() = default;
+/// Simple history system for the REPL.
+class History
+{
+  public:
+    explicit History() = default;
 
-		void add(const QString &&cmd);
+    void add(const QString &&cmd);
 
-		size_t size() const;
+    size_t size() const;
 
-		bool empty() const;
+    bool empty() const;
 
-		const QString &older();
+    const QString &older();
 
-		const QString &newer();
+    const QString &newer();
 
-	private:
-		QVector<QString> m_commands;
-		QVector<QString>::const_reverse_iterator m_current;
-	};
+  private:
+    QVector<QString> m_commands;
+    QVector<QString>::const_reverse_iterator m_current;
+};
 
+/// Class used by the REPL to handle key presses
+class KeyPressEater : public QObject
+{
+    Q_OBJECT
+  public:
+    explicit KeyPressEater(QPythonREPL *repl, QObject *parent = nullptr);
 
-	/// Class used by the REPL to handle key presses
-	class KeyPressEater : public QObject
-	{
-	Q_OBJECT
-	public:
-		explicit KeyPressEater(QPythonREPL *repl, QObject *parent = nullptr);
+  protected:
+    bool eventFilter(QObject *obj, QEvent *event) override;
 
-	protected:
-		bool eventFilter(QObject *obj, QEvent *event) override;
+  private:
+    QPythonREPL *m_repl{nullptr};
+};
 
-	private:
-		QPythonREPL *m_repl{nullptr};
-	};
+/// Homemade REPL (Read Print Eval Loop)
+class QPythonREPL : public QWidget
+{
+    friend KeyPressEater;
+    Q_OBJECT
 
+  public:
+    explicit QPythonREPL(QWidget *parent = nullptr);
 
-	/// Homemade REPL (Read Print Eval Loop)
-	class QPythonREPL : public QWidget
-	{
-		friend KeyPressEater;
-	Q_OBJECT
+    void executeCode(const QString &pythonCode);
+    ~QPythonREPL() override;
 
-	public:
-		explicit QPythonREPL(QWidget *parent = nullptr);
+  protected:
+    QPlainTextEdit *codeEdit();
 
-		void executeCode(const QString &pythonCode);
-		~QPythonREPL() override;
+    QListWidget *outputDisplay();
 
-	protected:
+  private:
+    History m_history{};
+    std::string m_buf;
+    py::object m_output;
+    py::dict m_locals;
+    Ui_PythonREPLQt *m_ui;
+};
 
+} // namespace ui
 
-		QPlainTextEdit *codeEdit();
-
-		QListWidget *outputDisplay();
-
-	private:
-		History m_history{};
-		std::string m_buf;
-		py::object m_output;
-		py::dict m_locals;
-		Ui_PythonREPLQt *m_ui;
-	};
-
-
-}
-
-#endif //CLOUDCOMPAREPROJECTS_QPYTHONREPL_H
+#endif // CLOUDCOMPAREPROJECTS_QPYTHONREPL_H

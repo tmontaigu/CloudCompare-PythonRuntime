@@ -1,5 +1,5 @@
-import pycc
 import cccorelib
+import pycc
 
 
 def main():

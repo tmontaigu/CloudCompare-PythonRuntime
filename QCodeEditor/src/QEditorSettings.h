@@ -9,19 +9,18 @@
 
 class QEditorSettings : public QWidget, public Ui::QEditorSettings
 {
-	Q_OBJECT
-public:
-	QEditorSettings();
+    Q_OBJECT
+  public:
+    QEditorSettings();
 
-	int fontSize() const;
+    int fontSize() const;
 
-public :
-	Q_SIGNALS:
-			void settingsChanged();
+  public:
+  Q_SIGNALS:
+    void settingsChanged();
 
-protected:
-	void connectSignals();
+  protected:
+    void connectSignals();
 };
 
-
-#endif //CLOUDCOMPAREPROJECTS_QEDITORSETTINGS_H
+#endif // CLOUDCOMPAREPROJECTS_QEDITORSETTINGS_H

@@ -21,22 +21,22 @@ void define_FastMarching(py::module &cccorelib)
     // FIX commented def create link errors
     py::class_<CCCoreLib::FastMarchingForPropagation, CCCoreLib::FastMarching>(cccorelib,
                                                                                "FastMarchingForPropagation")
-//        .def(py::init<>())
-//        .def("init",
-//             &CCCoreLib::FastMarchingForPropagation::init,
-//             "theCloud"_a,
-//             "theOctree"_a,
-//             "gridLevel"_a,
-//             "constantAcceleration"_a = false)
-//        .def("extractPropagatedPoints",
-//             &CCCoreLib::FastMarchingForPropagation::extractPropagatedPoints,
-//             "Zk"_a)
-//        .def("setPropagationTimingsAsDistances",
-//             &CCCoreLib::FastMarchingForPropagation::setPropagationTimingsAsDistances)
+        //        .def(py::init<>())
+        //        .def("init",
+        //             &CCCoreLib::FastMarchingForPropagation::init,
+        //             "theCloud"_a,
+        //             "theOctree"_a,
+        //             "gridLevel"_a,
+        //             "constantAcceleration"_a = false)
+        //        .def("extractPropagatedPoints",
+        //             &CCCoreLib::FastMarchingForPropagation::extractPropagatedPoints,
+        //             "Zk"_a)
+        //        .def("setPropagationTimingsAsDistances",
+        //             &CCCoreLib::FastMarchingForPropagation::setPropagationTimingsAsDistances)
         .def(
             "setDetectionThreshold", &CCCoreLib::FastMarchingForPropagation::setDetectionThreshold, "value"_a)
         .def("setJumpCoef", &CCCoreLib::FastMarchingForPropagation::setJumpCoef, "value"_a)
 
-//        .def("findPeaks", &CCCoreLib::FastMarchingForPropagation::findPeaks);
+        //        .def("findPeaks", &CCCoreLib::FastMarchingForPropagation::findPeaks);
         ;
 }

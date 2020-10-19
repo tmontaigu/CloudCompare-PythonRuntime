@@ -6,7 +6,7 @@
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-
-void define_GenericOctree(py::module &cccorelib) {
-	py::class_<CCCoreLib::GenericOctree>(cccorelib, "GenericOctree");
+void define_GenericOctree(py::module &cccorelib)
+{
+    py::class_<CCCoreLib::GenericOctree>(cccorelib, "GenericOctree");
 }

@@ -20,11 +20,10 @@
 
 #include <ui_QPythonEditor.h>
 
-
-//Qt
+// Qt
+#include "QEditorSettings.h"
 #include <QMainWindow>
 #include <QSettings>
-#include "QEditorSettings.h"
 
 class CodeEditor;
 QT_BEGIN_NAMESPACE
@@ -34,88 +33,86 @@ class QMdiArea;
 class QMdiSubWindow;
 QT_END_NAMESPACE
 
-
-
 class ccMainAppInterface;
-
 
 class QPythonEditor : public QMainWindow, public Ui::QPythonEditor
 {
-	Q_OBJECT
+    Q_OBJECT
 
-public:
+  public:
+    QPythonEditor();
+    void changeEvent(QEvent *e) override;
+    static QPythonEditor *TheInstance();
+    bool openFile(const QString &fileName);
+    static QString settingsApplicationName();
 
-	QPythonEditor();
-	void changeEvent(QEvent* e) override;
-	static QPythonEditor* TheInstance();
-	bool openFile(const QString& fileName);
-	static QString settingsApplicationName();
+  protected:
+    void closeEvent(QCloseEvent *event) override;
+  Q_SIGNALS:
+    void
+    executionCalled(const std::string &evalFileName, const std::string &evalStatement, QListWidget *ouput);
+    void reset_Chai_to_initial_state();
+    void save_Chai_state();
+    void reset_chai_to_last_save();
+    void destroy_chai();
 
-protected:
-	void closeEvent(QCloseEvent* event) override;
-Q_SIGNALS:
-	void executionCalled(const std::string& evalFileName, const std::string &evalStatement, QListWidget* ouput);
-	void reset_Chai_to_initial_state();
-	void save_Chai_state();
-	void reset_chai_to_last_save();
-	void destroy_chai();
-
-
-protected Q_SLOTS:
-	void newFile();
-	void open();
-	void save();
-	void saveAs();
-	void updateRecentFileActions();
-	void openRecentFile();
-	bool eventFilter(QObject* obj, QEvent* e) override;
+  protected Q_SLOTS:
+    void newFile();
+    void open();
+    void save();
+    void saveAs();
+    void updateRecentFileActions();
+    void openRecentFile();
+    bool eventFilter(QObject *obj, QEvent *e) override;
 #ifndef QT_NO_CLIPBOARD
-	void cut();
-	void copy();
-	void paste();
+    void cut();
+    void copy();
+    void paste();
 #endif
-	void comment();
-	void uncomment();
-	void indentMore();
-	void indentLess();
-	void about();
-	void updateMenus();
-	void updateWindowMenu();
-	CodeEditor* createChildCodeEditor();
+    void comment();
+    void uncomment();
+    void indentMore();
+    void indentLess();
+    void about();
+    void updateMenus();
+    void updateWindowMenu();
+    CodeEditor *createChildCodeEditor();
 
-private:
-	enum { MaxRecentFiles = 10 };
+  private:
+    enum
+    {
+        MaxRecentFiles = 10
+    };
 
-	void createActions();
-	void runExecute();
-	void createStatusBar();
-	void readSettings();
-	void writeSettings();
-	bool loadFile(const QString& fileName);
-	static bool hasRecentFiles();
-	void prependToRecentFiles(const QString& fileName);
-	void setRecentFilesVisible(bool visible);
-	CodeEditor* activeChildCodeEditor() const;
-	QMdiSubWindow* findChildCodeEditor(const QString& fileName) const;
+    void createActions();
+    void runExecute();
+    void createStatusBar();
+    void readSettings();
+    void writeSettings();
+    bool loadFile(const QString &fileName);
+    static bool hasRecentFiles();
+    void prependToRecentFiles(const QString &fileName);
+    void setRecentFilesVisible(bool visible);
+    CodeEditor *activeChildCodeEditor() const;
+    QMdiSubWindow *findChildCodeEditor(const QString &fileName) const;
 
-	QEditorSettings *settings;
+    QEditorSettings *settings;
 
-	QMdiArea* mdiArea;
+    QMdiArea *mdiArea;
 
-	QMenu* windowMenu;
+    QMenu *windowMenu;
 
-	QAction* recentFileActs[MaxRecentFiles];
-	QAction* recentFileSeparator;
-	QAction* recentFileSubMenuAct;
+    QAction *recentFileActs[MaxRecentFiles];
+    QAction *recentFileSeparator;
+    QAction *recentFileSubMenuAct;
 
-	QAction* closeAct;
-	QAction* closeAllAct;
-	QAction* tileAct;
-	QAction* cascadeAct;
-	QAction* nextAct;
-	QAction* previousAct;
-	QAction* windowMenuSeparatorAct;
-
+    QAction *closeAct;
+    QAction *closeAllAct;
+    QAction *tileAct;
+    QAction *cascadeAct;
+    QAction *nextAct;
+    QAction *previousAct;
+    QAction *windowMenuSeparatorAct;
 };
 
 #endif // CHAISCRIPT_CODE_EDITOR_MAIN_WINDOW

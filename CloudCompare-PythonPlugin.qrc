@@ -12,7 +12,7 @@
         <file>images/editor/ccPencil.png</file>
         <file>images/editor/ccSave.png</file>
         <file>images/editor/dbHObjectSymbol.png</file>
-<!--        <file>images/editor/dbHObjectSymbolLocked.png</file>-->
+        <!--        <file>images/editor/dbHObjectSymbolLocked.png</file>-->
         <file>images/editor/dbLockSymbol.png</file>
         <file>images/editor/smallTrash.png</file>
         <file>images/editor/smallValidate.png</file>

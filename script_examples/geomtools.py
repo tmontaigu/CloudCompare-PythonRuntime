@@ -1,15 +1,14 @@
-import pycc
 import cccorelib
-import numpy as np
+import pycc
 
 CC = pycc.GetInstance()
+
 
 def main():
     entities = CC.getSelectedEntities()
 
     if not entities:
         raise RuntimeError("No entities selected")
-
 
     CC.freezeUI(True)
     pointCloud = entities[0]
@@ -19,7 +18,6 @@ def main():
     print("The gravity center of {} is {}".format(pointCloud.getName(), gravityCenter))
 
     CC.freezeUI(False)
-  
 
 
 if __name__ == '__main__':

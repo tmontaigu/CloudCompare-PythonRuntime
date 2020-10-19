@@ -30,4 +30,3 @@ void define_NormalDistribution(py::module &cccorelib)
              "values"_a,
              "nSigma"_a);
 }
-

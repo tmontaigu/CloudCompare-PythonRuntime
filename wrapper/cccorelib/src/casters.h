@@ -8,9 +8,6 @@
 #include <GenericIndexedCloud.h>
 #include <iostream>
 
-
 namespace py = pybind11;
-
-
 
 #endif // CLOUDCOMPAREPROJECTS_CASTERS_H

@@ -1,62 +1,61 @@
 #ifndef CLOUDCOMPAREPROJECTS_CCGUIPYTHONINSTANCE_H
 #define CLOUDCOMPAREPROJECTS_CCGUIPYTHONINSTANCE_H
 
-#include <ccMainAppInterface.h>
 #include <FileIOFilter.h>
-
+#include <ccMainAppInterface.h>
 
 /// This class provide methods that are made available Python scripts
 /// kind of like C++ plugins have access to a `ccMainAppInterface`.
 /// Thus this class is mostly a ccMainAppInterface with some accommodations
 /// to handle the fact that it is made to interact with python.
-class Q_DECL_EXPORT ccGUIPythonInstance {
-public:
-	explicit ccGUIPythonInstance(ccMainAppInterface *app);
+class Q_DECL_EXPORT ccGUIPythonInstance
+{
+  public:
+    explicit ccGUIPythonInstance(ccMainAppInterface *app);
 
-	bool haveSelection() const { return m_app->haveSelection(); }
+    bool haveSelection() const { return m_app->haveSelection(); }
 
-	bool haveOneSelection() const { return m_app->haveOneSelection(); }
+    bool haveOneSelection() const { return m_app->haveOneSelection(); }
 
-	const ccHObject::Container &getSelectedEntities() const { return m_app->getSelectedEntities(); }
+    const ccHObject::Container &getSelectedEntities() const { return m_app->getSelectedEntities(); }
 
-	void setSelectedInDB(ccHObject *obj, bool selected) { m_app->setSelectedInDB(obj, selected); }
+    void setSelectedInDB(ccHObject *obj, bool selected) { m_app->setSelectedInDB(obj, selected); }
 
-	ccHObject *dbRootObject() { return m_app->dbRootObject(); }
+    ccHObject *dbRootObject() { return m_app->dbRootObject(); }
 
-	void addToDB(ccHObject *obj,
-	             bool updateZoom = false,
-	             bool autoExpandDBTree = true,
-	             bool checkDimensions = false,
-	             bool autoRedraw = true);
+    void addToDB(ccHObject *obj,
+                 bool updateZoom = false,
+                 bool autoExpandDBTree = true,
+                 bool checkDimensions = false,
+                 bool autoRedraw = true);
 
-	void redrawAll(bool only2D = false) { return m_app->redrawAll(only2D); }
+    void redrawAll(bool only2D = false) { return m_app->redrawAll(only2D); }
 
-	void refreshAll(bool only2D = false) { return m_app->refreshAll(only2D); }
+    void refreshAll(bool only2D = false) { return m_app->refreshAll(only2D); }
 
-	void enableAll() { return m_app->enableAll(); }
+    void enableAll() { return m_app->enableAll(); }
 
-	void disableAll() { return m_app->disableAll(); }
+    void disableAll() { return m_app->disableAll(); }
 
-	void updateUI() { return m_app->updateUI(); }
+    void updateUI() { return m_app->updateUI(); }
 
-	void freezeUI(bool state) { return m_app->freezeUI(state); }
+    void freezeUI(bool state) { return m_app->freezeUI(state); }
 
-	ccHObject *createObject(const char *type_name);
+    ccHObject *createObject(const char *type_name);
 
-	ccHObject *loadFile(const char *filename, FileIOFilter::LoadParameters &parameters);
+    ccHObject *loadFile(const char *filename, FileIOFilter::LoadParameters &parameters);
 
-	/// Clears the internal database of objects that were allocated on the python side
-	/// but were not added to the DB tree via `addToDB`
+    /// Clears the internal database of objects that were allocated on the python side
+    /// but were not added to the DB tree via `addToDB`
     size_t clearDB();
 
-
-private:
-	ccMainAppInterface *m_app;
-	// This holds pointer to objects that were created by a Python script.
-	// They are kept in this vector until they are either moved to the true ccDB (using `addToDB`)
-	// or when `clearDB` is called (which is a method not exposed to the python side
-	// and the c++ takes care of calling the `clearDB` fn when appropriate).
-	std::vector<ccHObject*> m_pythonDB;
+  private:
+    ccMainAppInterface *m_app;
+    // This holds pointer to objects that were created by a Python script.
+    // They are kept in this vector until they are either moved to the true ccDB (using `addToDB`)
+    // or when `clearDB` is called (which is a method not exposed to the python side
+    // and the c++ takes care of calling the `clearDB` fn when appropriate).
+    std::vector<ccHObject *> m_pythonDB;
 };
 
-#endif //CLOUDCOMPAREPROJECTS_CCGUIPYTHONINSTANCE_H
+#endif // CLOUDCOMPAREPROJECTS_CCGUIPYTHONINSTANCE_H

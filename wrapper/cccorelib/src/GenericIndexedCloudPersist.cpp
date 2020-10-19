@@ -6,8 +6,11 @@
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-
-void define_GenericIndexedCloudPersist(py::module &cccorelib) {
-	py::class_<CCCoreLib::GenericIndexedCloudPersist, CCCoreLib::GenericIndexedCloud>(cccorelib, "GenericIndexedCloudPersist")
-	        .def("getPointPersistentPtr", &CCCoreLib::GenericIndexedCloudPersist::getPointPersistentPtr, py::return_value_policy::reference);
+void define_GenericIndexedCloudPersist(py::module &cccorelib)
+{
+    py::class_<CCCoreLib::GenericIndexedCloudPersist, CCCoreLib::GenericIndexedCloud>(
+        cccorelib, "GenericIndexedCloudPersist")
+        .def("getPointPersistentPtr",
+             &CCCoreLib::GenericIndexedCloudPersist::getPointPersistentPtr,
+             py::return_value_policy::reference);
 }

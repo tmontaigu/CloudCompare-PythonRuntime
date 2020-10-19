@@ -185,7 +185,7 @@ void PythonPlugin::executeEditorCode(const std::string &evalFileName,
                                      const std::string &code,
                                      QListWidget *output)
 {
-	try
+    try
     {
         py::object o = py::module::import("ccinternals").attr("ConsoleREPL")(output);
         PyStdErrOutStreamRedirect redirect{o, o};

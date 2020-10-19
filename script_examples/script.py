@@ -1,14 +1,15 @@
-import pycc
 import numpy as np
+import pycc
 
 CC = pycc.GetInstance()
 
+
 def main():
     print("hello world")
-   
+
     hierObj = CC.loadFile(r"C:\Users\Thomas\Desktop\building_01_door_01.shp")
     print(hierObj, "is hierarchy obj:", hierObj.isHierarchy(), "is enabled ?:", hierObj.isEnabled())
-    
+
     obj = hierObj.getChild(0)
     obj.setEnabled(False)
     assert obj.isEnabled() == False
@@ -26,7 +27,6 @@ def main():
     if not entities:
         raise RuntimeError("No entities selected")
         return
-
 
     pc = entities[0]
     print(f"The point cloud has {pc.size()} points")
@@ -46,6 +46,7 @@ def main():
     else:
         assert False
 
+
 def main2():
     point = pycc.Vector3(1.0, 2.0, 3.0)
     print(f"First Point: {point}")
@@ -61,8 +62,6 @@ def main2():
     point2 = pycc.Vector3(5.0, 5.0, 5.0)
 
     p = point - point2
-
-
 
 
 if __name__ == '__main__':

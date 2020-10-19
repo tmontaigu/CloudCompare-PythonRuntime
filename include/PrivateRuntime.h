@@ -20,14 +20,13 @@
 class ccMainAppInterface;
 class ccCommandLineInterface;
 
-
 namespace Python
 {
-	void setMainAppInterfaceInstance(ccMainAppInterface *appInterface);
-	void unsetMainAppInterfaceInstance();
+void setMainAppInterfaceInstance(ccMainAppInterface *appInterface);
+void unsetMainAppInterfaceInstance();
 
-        size_t clearDB();
+size_t clearDB();
 
-	void setCmdLineInterfaceInstance(ccCommandLineInterface *cmdLine);
-	void unsetCmdLineInterfaceInstance();
-}
+void setCmdLineInterfaceInstance(ccCommandLineInterface *cmdLine);
+void unsetCmdLineInterfaceInstance();
+} // namespace Python

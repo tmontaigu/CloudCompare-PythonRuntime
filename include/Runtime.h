@@ -15,16 +15,13 @@
 //#                                                                        #
 //##########################################################################
 
-
 #ifndef CLOUDCOMPAREPROJECTS_RUNTIME_H
 #define CLOUDCOMPAREPROJECTS_RUNTIME_H
-
 
 class ccGUIPythonInstance;
 class ccCommandLineInterface;
 
 Q_DECL_EXPORT ccGUIPythonInstance *GetInstance();
-Q_DECL_EXPORT ccCommandLineInterface* GetCmdLineInstance();
+Q_DECL_EXPORT ccCommandLineInterface *GetCmdLineInstance();
 
-#endif //CLOUDCOMPAREPROJECTS_RUNTIME_H
-
+#endif // CLOUDCOMPAREPROJECTS_RUNTIME_H
