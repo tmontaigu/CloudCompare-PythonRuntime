@@ -129,7 +129,6 @@ ui::QPythonREPL::QPythonREPL(QWidget *parent) : QWidget(parent), m_ui(new Ui_Pyt
     codeEdit()->installEventFilter(keyPressEater);
     codeEdit()->resize(codeEdit()->width(), 20);
 
-    auto highlighter = new PythonHighlighter(codeEdit()->document());
     codeEdit()->setTabStopWidth(codeEdit()->fontMetrics().width(' ') * 8);
 
     QFont font("Monospace");

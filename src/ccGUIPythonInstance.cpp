@@ -61,9 +61,6 @@ ccGUIPythonInstance::ccGUIPythonInstance(ccMainAppInterface *app) : m_app(app)
 
 ccHObject *ccGUIPythonInstance::loadFile(const char *filename, FileIOFilter::LoadParameters &parameters)
 {
-    CCVector3d loadCoordinatesShift(0, 0, 0);
-    bool loadCoordinatesTransEnabled = false;
-
     CC_FILE_ERROR result = CC_FERR_NO_ERROR;
     ccHObject *newGroup = FileIOFilter::LoadFromFile(filename, parameters, result);
     ThrowForFileError(result);
