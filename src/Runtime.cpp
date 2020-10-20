@@ -87,11 +87,15 @@ size_t clearDB()
 
 PYBIND11_EMBEDDED_MODULE(ccinternals, m)
 {
-    py::class_<ccConsoleOutput>(m, "ccConsoleOutput").def(py::init<>()).def("write", &ccConsoleOutput::write);
+    py::class_<ccConsoleOutput>(m, "ccConsoleOutput")
+        .def(py::init<>())
+        .def("write", &ccConsoleOutput::write)
+        .def("flush", &ccConsoleOutput::flush);
 
     py::class_<QListWidget, std::unique_ptr<QListWidget, py::nodelete>>(m, "QListWidget");
 
     py::class_<ConsoleREPL>(m, "ConsoleREPL")
         .def(py::init<QListWidget *>())
-        .def("write", &ConsoleREPL::write);
+        .def("write", &ConsoleREPL::write)
+        .def("flush", &ConsoleREPL::flush);
 }

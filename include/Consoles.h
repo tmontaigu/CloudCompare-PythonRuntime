@@ -54,6 +54,11 @@ class ConsoleWrapper
         }
     }
 
+    void flush()
+    {
+        m_printFn(m_currentMessage);
+    }
+
   private:
     QString m_currentMessage{};
     std::function<void(const QString &)> m_printFn;
@@ -66,6 +71,7 @@ class ccConsoleOutput
     ccConsoleOutput() = default;
 
     void write(const char *messagePart) { m_output.write(messagePart); }
+    void flush() { m_output.flush(); }
 
   private:
     ConsoleWrapper m_output{[](const QString &message) { ccLog::Print(message); }};
@@ -78,6 +84,7 @@ class ConsoleREPL
     explicit ConsoleREPL(QListWidget *view) : view(view) {}
 
     void write(const char *messagePart) { m_output.write(messagePart); }
+    void flush() { m_output.flush(); }
 
   private:
     QListWidget *view;
