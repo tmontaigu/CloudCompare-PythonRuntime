@@ -33,10 +33,23 @@ PointClouds
    :show-inheritance:
 
 
+KdTrees
+-------
+
+.. autoclass:: cccorelib.KDTree
+    :members:
+    :undoc-members:
+
+
+.. autoclass:: cccorelib.TrueKdTree
+    :members:
+    :undoc-members:
+
 Others
 ------
 
 .. autoclass:: cccorelib.BoundingBox
    :members:
    :undoc-members:
+
 

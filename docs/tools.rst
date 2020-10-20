@@ -19,14 +19,12 @@ AutoSegmentationTools
    :undoc-members:
 
 
-CloudSamplingTools
--------------------
+DistanceComputationTools
+------------------------
 
-
-.. autoclass:: cccorelib.CloudSamplingTools
+.. autoclass:: cccorelib.DistanceComputationTools
    :members:
    :undoc-members:
-
 
 ManualSegmentationTools
 -----------------------
@@ -35,3 +33,56 @@ ManualSegmentationTools
    :members:
    :undoc-members:
 
+ScalarFieldTools
+----------------
+
+.. autoclass:: cccorelib.ScalarFieldTools
+   :members:
+   :undoc-members:
+
+
+ChamferDistanceTools
+---------------------
+
+.. autoclass:: cccorelib.ChamferDistanceTransform
+   :members:
+   :undoc-members:
+
+
+CloudSamplingTools
+-------------------
+
+.. autoclass:: cccorelib.CloudSamplingTools
+   :members:
+   :undoc-members:
+
+
+GeometricalAnalysisTools
+------------------------
+
+.. autoclass:: cccorelib.GeometricalAnalysisTools
+   :members:
+   :undoc-members:
+
+StatisticalTestingTools
+-----------------------
+
+.. autoclass:: cccorelib.StatisticalTestingTools
+   :members:
+   :undoc-members:
+
+
+PointProjectionTools
+--------------------
+
+.. autoclass:: cccorelib.PointProjectionTools
+   :members:
+   :undoc-members:
+
+
+RegistrationTools
+-----------------
+
+.. autoclass:: cccorelib.RegistrationTools
+   :members:
+   :undoc-members:
