@@ -44,8 +44,10 @@ functions and data-structures of cloudcompare:
     CC = pycc.GetInstance()
 
 
+
 Command Line
-____________
+------------
+
 
 To run in command line mode pass following option: `-PYTHON_SCRIPT`
 
@@ -65,3 +67,13 @@ Example:
 
 Python's sys.argv will be equal to:
 ['/path/to/cloudcompare', 'some_positional_arg', '--size', '50']
+
+
+Similarly a commandline script will start with the following lines:
+
+.. code:: Python
+
+    import cccorelib
+    import pycc
+
+    CC = pycc.GetCmdLineInstance()
