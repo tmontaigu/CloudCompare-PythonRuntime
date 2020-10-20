@@ -180,8 +180,16 @@ PYBIND11_MODULE(pycc, m)
     define_ccGUIPythonInstance(m);
     define_ccCommandLine(m);
 
-    m.def("GetInstance", &GetInstance, py::return_value_policy::reference);
+    m.def("GetGUIInstance", &GetInstance, py::return_value_policy::reference);
     m.def("GetCmdLineInstance", &GetCmdLineInstance, py::return_value_policy::reference);
+    m.def("GetInstance", []() -> py::object {
+           auto guiInstance = GetInstance();
+           if (guiInstance) {
+               return py::cast(guiInstance);
+           } else {
+               return py::cast(GetCmdLineInstance());
+           }
+        }, py::return_value_policy::reference);
 
     m.def("ProcessEvents", []() { QCoreApplication::processEvents(); });
 
