@@ -9,7 +9,7 @@ It is only tested on windows and thus only works on windows for now.
  - Python (ofc)
  - pybind11
 
-# Building
+# Building & Installing
 
 1) Clone this project in CloudCompare/plugins/private
 
@@ -56,6 +56,19 @@ To run them, you need pytest, and you need to provide to pytest the path the whe
 
 pytest --cloudcompare_exe "C:\CMakeBuilds\CloudCompare\Release\install\CloudCompare\CloudCompare.exe" tests
 ```
+
+# Building the documentation
+
+Building the documentation also works by running CloudCompare in command line mode.
+To build the documention:
+
+``` powershell
+cd docs
+.\make-docs.ps1 "C:\CMakeBuilds\CloudCompare\Release\install\CloudCompare\CloudCompare.exe"
+```
+
+Which by default will build the docs in HTML in docs/_build. Open docs/_build/index.html to view it.
+(The output dir can be changed using the `-OutputDir` option)
 
 
 ## notes

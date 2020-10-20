@@ -10,6 +10,8 @@ Welcome to CloudCompare's Python plugin
    :maxdepth: 2
    :caption: Contents:
 
+   getting_started
+   pycc_important_classes
    tools
    data_structures
 
