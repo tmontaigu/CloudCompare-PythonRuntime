@@ -11,9 +11,8 @@ Welcome to CloudCompare's Python plugin
    :caption: Contents:
 
    getting_started
-   pycc_important_classes
-   tools
-   data_structures
+   cccorelib/index
+   pycc/index
 
 
 
