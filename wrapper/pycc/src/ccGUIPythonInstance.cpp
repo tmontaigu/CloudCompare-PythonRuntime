@@ -30,7 +30,19 @@ void define_ccGUIPythonInstance(py::module &m)
         .def("disableAll", &ccGUIPythonInstance::disableAll)
         .def("updateUI", &ccGUIPythonInstance::updateUI)
         .def("freezeUI", &ccGUIPythonInstance::freezeUI)
-        .def("loadFile", &ccGUIPythonInstance::loadFile, py::return_value_policy::reference)
+        .def("loadFile",
+             &ccGUIPythonInstance::loadFile,
+             py::return_value_policy::reference,
+             "filepath"_a,
+             "loadParameters"_a,
+             R"(
+    Loads the file located at the filepath.
+
+    Adds the file content of the file into the DBTree
+    and then returns loaded object handle.
+
+    raises RuntimeError in case of error
+)")
         .def("createObject",
              &ccGUIPythonInstance::createObject,
              py::return_value_policy::reference,

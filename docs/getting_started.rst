@@ -44,6 +44,8 @@ functions and data-structures of cloudcompare:
     CC = pycc.GetInstance()
 
 
+CC will be an object of type :class:`pycc.ccPythonInstance`.
+
 
 Command Line
 ------------
@@ -77,3 +79,5 @@ Similarly a commandline script will start with the following lines:
     import pycc
 
     CC = pycc.GetCmdLineInstance()
+
+CC will be an object of type :class:`pycc.ccCommandLineInterface`.
