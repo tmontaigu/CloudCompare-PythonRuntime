@@ -46,14 +46,15 @@ bool ui::KeyPressEater::eventFilter(QObject *obj, QEvent *event)
             }
 
             // Try to be smart, create a new line if the python code will need one
-            if (m_repl->codeEdit()->document()->characterAt(m_repl->codeEdit()->document()->characterCount() -
-                                                            2) == ":")
+
+            int lastCharPos = m_repl->codeEdit()->document()->characterCount() - 2;
+            if (m_repl->codeEdit()->document()->characterAt(lastCharPos) == ":")
             {
                 m_repl->codeEdit()->appendPlainText(continuationDots);
                 return true;
             }
 
-            const QString pythonCode = m_repl->codeEdit()->toPlainText();
+            QString pythonCode = m_repl->codeEdit()->toPlainText();
             m_repl->executeCode(pythonCode);
             m_repl->m_history.add(std::move(pythonCode));
             return true;
@@ -190,7 +191,7 @@ void ui::QPythonREPL::executeCode(const QString &pythonCode)
     outputDisplay()->scrollToBottom();
 }
 
-void ui::History::add(const QString &&cmd)
+void ui::History::add(QString &&cmd)
 {
     m_commands.push_back(cmd);
     m_current = m_commands.rbegin();

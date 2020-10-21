@@ -22,7 +22,7 @@ class History
   public:
     explicit History() = default;
 
-    void add(const QString &&cmd);
+    void add(QString &&cmd);
 
     size_t size() const;
 
