@@ -19,14 +19,15 @@ if (PLUGIN_PYTHON)
     find_package(pybind11 CONFIG REQUIRED)
     target_link_libraries(PythonPlugin pybind11::embed)
 
-    set(COPY_ENV FALSE)
+    option(PLUGIN_PYTHON_COPY_ENV "Should the content of the current python venv be copied on install" ON)
+    mark_as_advanced(PLUGIN_PYTHON_COPY_ENV)
 
     set(CC_PYTHON_ENV_NAME "Python")
     SET(CC_PLUGIN_INSTALL_DIR ${CLOUDCOMPARE_DEST_FOLDER}/plugins)
     set(CC_PYTHON_INSTALL_DIR "${CC_PLUGIN_INSTALL_DIR}/${CC_PYTHON_ENV_NAME}")
 
     if (WIN32)
-        if (COPY_ENV)
+        if (PLUGIN_PYTHON_COPY_ENV)
             if (DEFINED ENV{CONDA_PREFIX})
                 message(STATUS "Conda environment found")
                 string(REPLACE "\\" "/" CONDA_PREFIX $ENV{CONDA_PREFIX})
