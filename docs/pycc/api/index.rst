@@ -7,13 +7,10 @@ pycc API
     :undoc-members:
     :show-inheritance:
 
-
-
 .. autoclass:: pycc.ccHObject
     :members:
     :undoc-members:
     :show-inheritance:
-
 
 .. autoclass:: pycc.ccGenericPointCloud
     :members:

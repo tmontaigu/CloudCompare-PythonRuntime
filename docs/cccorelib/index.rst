@@ -1,5 +1,5 @@
 CCCoreLib
-========
+=========
 
 CCCoreLib defines some data structures and interfaces/methods
 of these data structures.
@@ -12,3 +12,4 @@ But the things that will probably interest you are the tools.
 
     tools
     data_structures
+    others
