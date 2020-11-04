@@ -67,6 +67,7 @@ class PythonPlugin : public QObject, public ccStdPluginInterface
   private:
     void showRepl();
     void showEditor();
+    void showAboutDialog();
     void executeEditorCode(const std::string &evalFileName, const std::string &code, QListWidget *output);
 
     ui::QPythonREPL *m_repl{nullptr};
@@ -77,4 +78,5 @@ class PythonPlugin : public QObject, public ccStdPluginInterface
     /// Actions
     QAction *m_showEditor{nullptr};
     QAction *m_showREPL{nullptr};
+    QAction *m_showAboutDialog{nullptr};
 };

@@ -23,20 +23,21 @@
 #include "PythonPlugin.h"
 #include "QPythonEditor.h"
 #include "QPythonREPL.h"
+#include "AboutDialog.h"
+
 
 #include <Python.h>
 #include <pybind11/embed.h>
 
 #define slots Q_SLOTS
 #define signals Q_SIGNALS
-
 #include <ccCommandLineInterface.h>
 
 /// Returns a newly allocated array (null terminated) from a QString
 wchar_t *QStringToWcharArray(const QString &string)
 {
     auto *wcharArray = new wchar_t[string.size() + 1];
-    int len = string.toWCharArray(wcharArray);
+    int len          = string.toWCharArray(wcharArray);
     if (len > string.size())
     {
         throw std::logic_error("len mismatch");
@@ -151,7 +152,17 @@ QList<QAction *> PythonPlugin::getActions()
         m_showREPL->setEnabled(true);
     }
 
-    return {m_showREPL, m_showEditor};
+    if (!m_showAboutDialog)
+    {
+
+        m_showAboutDialog = new QAction("About", this);
+        m_showAboutDialog->setToolTip("Show the Python REPL");
+        m_showAboutDialog->setIcon(m_app->getMainWindow()->style()->standardIcon(QStyle::SP_MessageBoxQuestion));
+        connect(m_showAboutDialog, &QAction::triggered, this, &PythonPlugin::showAboutDialog);
+        m_showAboutDialog->setEnabled(true);
+    }
+
+    return {m_showREPL, m_showEditor, m_showAboutDialog};
 }
 
 void PythonPlugin::showRepl()
@@ -179,6 +190,13 @@ void PythonPlugin::showEditor()
         m_editor->raise();
         m_editor->activateWindow();
     }
+}
+
+
+void PythonPlugin::showAboutDialog()
+{
+    AboutDialog dlg(m_app->getMainWindow());
+    dlg.exec();
 }
 
 void PythonPlugin::executeEditorCode(const std::string &evalFileName,
