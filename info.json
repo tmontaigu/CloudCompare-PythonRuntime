@@ -17,11 +17,16 @@
   ],
   "references": [
     {
-      "text": "Sword swallowing and its side effects",
-      "url": "http://www.bmj.com/content/333/7582/1285"
+      "text": "Made in Geosat",
+      "url": "https://www.geo-sat.com/fr/"
     },
     {
-      "text": "I thought of creating this wonderful plugin while I was hiking up &#x26f0; Mont Blanc"
+      "text": "Python",
+      "url": "https://www.python.org/"
+    },
+    {
+      "text": "pybind11",
+      "url": "https://github.com/pybind/pybind11/"
     }
   ]
 }

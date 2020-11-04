@@ -6,7 +6,7 @@ It is only tested on windows and thus only works on windows for now.
 
 # Dependencies
 
- - Python (ofc)
+ - Python
  - pybind11
 
 # Building & Installing
