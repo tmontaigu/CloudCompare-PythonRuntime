@@ -37,6 +37,8 @@ It is only tested on windows and thus only works on windows for now.
 
     During the installation step, the virtual environment will be copied to the installation folder
     so launching CC from the install folder should just work.
+    
+    Use `-DPLUGIN_PYTHON_COPY_ENV=OFF` after the plugin has been installed once to gain time.
 
 # Running
 
