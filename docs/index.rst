@@ -13,6 +13,7 @@ Welcome to CloudCompare's Python plugin
    getting_started
    cccorelib/index
    pycc/index
+   examples
 
 
 
