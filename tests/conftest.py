@@ -1,4 +1,5 @@
 # from https://icetutor.com/question/how-to-pass-arguments-in-pytest-by-command-line/
+# https://stackoverflow.com/questions/40880259/how-to-pass-arguments-in-pytest-by-command-line
 
 def pytest_addoption(parser):
     parser.addoption("--cloudcompare_exe", action="store")
