@@ -19,7 +19,9 @@ if (PLUGIN_PYTHON)
     add_subdirectory(QCodeEditor)
 
     find_package(pybind11 CONFIG REQUIRED)
-    target_link_libraries(PythonPlugin pybind11::embed)
+    find_package(Qt5 COMPONENTS WebEngineWidgets REQUIRED)
+
+    target_link_libraries(PythonPlugin pybind11::embed Qt5::WebEngineWidgets)
 
     option(PLUGIN_PYTHON_COPY_ENV "Should the content of the current python venv be copied on install" ON)
     mark_as_advanced(PLUGIN_PYTHON_COPY_ENV)

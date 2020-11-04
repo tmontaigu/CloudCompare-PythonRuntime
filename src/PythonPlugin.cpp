@@ -19,25 +19,60 @@
 #include <iostream>
 #include <memory>
 
+#include "AboutDialog.h"
 #include "PrivateRuntime.h"
 #include "PythonPlugin.h"
 #include "QPythonEditor.h"
 #include "QPythonREPL.h"
-#include "AboutDialog.h"
-
 
 #include <Python.h>
 #include <pybind11/embed.h>
+
+#include <QWebEngineSettings>
+#include <QWebEngineView>
 
 #define slots Q_SLOTS
 #define signals Q_SIGNALS
 #include <ccCommandLineInterface.h>
 
+class QDocViewer
+{
+  public:
+    explicit QDocViewer(QWidget *parent = nullptr) : m_widget(parent)
+    {
+        m_widget.setMinimumSize(1280, 800);
+
+        auto *layout = new QVBoxLayout;
+        auto viewEngine = new QWebEngineView(&m_widget);
+
+        layout->setSpacing(0);
+        layout->setMargin(0);
+
+        m_widget.setLayout(layout);
+        layout->addWidget(viewEngine);
+
+        QWebEngineSettings *settings = viewEngine->settings();
+        settings->setAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls, true);
+        settings->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, false);
+
+        QUrl url(QString("file:///%1/%2")
+                     .arg(QApplication::applicationDirPath())
+                     .arg("plugins/Python/docs/index.html"));
+        ccLog::Print(url.path());
+        viewEngine->load(QUrl(url));
+    }
+
+    void show() { m_widget.show(); }
+
+  private:
+    QWidget m_widget;
+};
+
 /// Returns a newly allocated array (null terminated) from a QString
 wchar_t *QStringToWcharArray(const QString &string)
 {
     auto *wcharArray = new wchar_t[string.size() + 1];
-    int len          = string.toWCharArray(wcharArray);
+    int len = string.toWCharArray(wcharArray);
     if (len > string.size())
     {
         throw std::logic_error("len mismatch");
@@ -152,17 +187,27 @@ QList<QAction *> PythonPlugin::getActions()
         m_showREPL->setEnabled(true);
     }
 
+    if (!m_showDoc)
+    {
+        m_showDoc = new QAction("Show Documentation", this);
+        m_showDoc->setToolTip("Show local documentation");
+        m_showDoc->setIcon(m_app->getMainWindow()->style()->standardIcon(QStyle::SP_FileDialogInfoView));
+        connect(m_showDoc, &QAction::triggered, this, &PythonPlugin::showDocumentation);
+        m_showDoc->setEnabled(true);
+    }
+
     if (!m_showAboutDialog)
     {
 
         m_showAboutDialog = new QAction("About", this);
         m_showAboutDialog->setToolTip("Show the Python REPL");
-        m_showAboutDialog->setIcon(m_app->getMainWindow()->style()->standardIcon(QStyle::SP_MessageBoxQuestion));
+        m_showAboutDialog->setIcon(
+            m_app->getMainWindow()->style()->standardIcon(QStyle::SP_MessageBoxQuestion));
         connect(m_showAboutDialog, &QAction::triggered, this, &PythonPlugin::showAboutDialog);
         m_showAboutDialog->setEnabled(true);
     }
 
-    return {m_showREPL, m_showEditor, m_showAboutDialog};
+    return {m_showREPL, m_showEditor, m_showAboutDialog, m_showDoc};
 }
 
 void PythonPlugin::showRepl()
@@ -192,6 +237,14 @@ void PythonPlugin::showEditor()
     }
 }
 
+void PythonPlugin::showDocumentation()
+{
+    if (!m_docView)
+    {
+        m_docView = new QDocViewer;
+    }
+    m_docView->show();
+}
 
 void PythonPlugin::showAboutDialog()
 {
