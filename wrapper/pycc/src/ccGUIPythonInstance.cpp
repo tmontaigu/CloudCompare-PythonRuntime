@@ -2,6 +2,8 @@
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
 
+#include <QMainWindow>
+
 #include "ccGUIPythonInstance.h"
 
 namespace py = pybind11;
@@ -10,6 +12,7 @@ using namespace pybind11::literals;
 void define_ccGUIPythonInstance(py::module &m)
 {
     py::class_<ccGUIPythonInstance>(m, "ccPythonInstance")
+        .def("getMainWindow", &ccGUIPythonInstance::getMainWindow, py::return_value_policy::reference)
         .def("haveSelection", &ccGUIPythonInstance::haveSelection)
         .def("haveOneSelection", &ccGUIPythonInstance::haveOneSelection)
         .def("getSelectedEntities",

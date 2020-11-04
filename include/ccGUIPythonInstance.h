@@ -13,6 +13,10 @@ class Q_DECL_EXPORT ccGUIPythonInstance
   public:
     explicit ccGUIPythonInstance(ccMainAppInterface *app);
 
+    QMainWindow * getMainWindow() {
+        return m_app->getMainWindow();
+    }
+
     bool haveSelection() const { return m_app->haveSelection(); }
 
     bool haveOneSelection() const { return m_app->haveOneSelection(); }

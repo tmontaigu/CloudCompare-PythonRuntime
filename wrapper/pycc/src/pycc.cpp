@@ -35,6 +35,7 @@
 #include <QCoreApplication>
 #include <QException>
 #include <QtConcurrent>
+#include <QMainWindow>
 #include <ccGenericMesh.h>
 #include <ccMainAppInterface.h>
 #include <ccProgressDialog.h>
@@ -124,6 +125,10 @@ PYBIND11_MODULE(pycc, m)
 {
     py::module::import("cccorelib");
 
+    py::class_<QProgressDialog>(m, "QProgressDialog");
+    py::class_<QWidget>(m, "QWidget");
+    py::class_<QMainWindow, QWidget>(m, "QMainWindow");
+
     m.doc() = R"pbdoc(
         Python module exposing some CloudCompare functions
     )pbdoc";
@@ -142,7 +147,6 @@ PYBIND11_MODULE(pycc, m)
     define_ccGenericPointCloud(m);
     define_ccPointCloud(m);
 
-    py::class_<QProgressDialog>(m, "QProgressDialog");
 
     py::class_<ccProgressDialog, QProgressDialog, CCCoreLib::GenericProgressCallback>(m, "ccProgressDialog")
         .def(py::init<bool>(), "cancelButton"_a = false);
@@ -174,7 +178,7 @@ PYBIND11_MODULE(pycc, m)
         .def_readwrite("coordinatesShift", &FileIOFilter::LoadParameters::coordinatesShift)
         .def_readwrite("preserveShiftOnSave", &FileIOFilter::LoadParameters::preserveShiftOnSave)
         .def_readwrite("autoComputeNormals", &FileIOFilter::LoadParameters::autoComputeNormals)
-        //			.def_readwrite("parentWidget", &FileIOFilter::LoadParameters::parentWidget)
+        .def_readwrite("parentWidget", &FileIOFilter::LoadParameters::parentWidget, py::return_value_policy::reference)
         .def_readwrite("sessionStart", &FileIOFilter::LoadParameters::sessionStart);
 
     define_ccGUIPythonInstance(m);
