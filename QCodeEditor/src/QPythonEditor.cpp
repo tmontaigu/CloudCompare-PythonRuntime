@@ -122,11 +122,14 @@ bool QPythonEditor::loadFile(const QString &fileName)
     const bool succeeded = child->loadFile(fileName);
     if (succeeded)
     {
+        mdiArea->addSubWindow(child);
         child->show();
     }
     else
     {
+        mdiArea->removeSubWindow(child);
         child->close();
+        delete child;
     }
     QPythonEditor::prependToRecentFiles(fileName);
     return succeeded;
@@ -489,7 +492,6 @@ void QPythonEditor::updateWindowMenu()
 CodeEditor *QPythonEditor::createChildCodeEditor()
 {
     CodeEditor *child = new CodeEditor(this->settings);
-    mdiArea->addSubWindow(child);
 
 #ifndef QT_NO_CLIPBOARD
     connect(child, &QPlainTextEdit::copyAvailable, actionCu_t, &QAction::setEnabled);
