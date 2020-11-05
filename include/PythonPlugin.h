@@ -22,6 +22,7 @@
 
 class QPythonEditor;
 class QListWidget;
+class QDocViewer;
 
 namespace ui
 {
@@ -67,16 +68,20 @@ class PythonPlugin : public QObject, public ccStdPluginInterface
   private:
     void showRepl();
     void showEditor();
+    void showDocumentation();
     void showAboutDialog();
     void executeEditorCode(const std::string &evalFileName, const std::string &code, QListWidget *output);
 
     ui::QPythonREPL *m_repl{nullptr};
     QPythonEditor *m_editor{nullptr};
+    QDocViewer *m_docView{nullptr};
+
 
     std::unique_ptr<PythonConfigPaths> m_pythonConfig{nullptr};
 
     /// Actions
     QAction *m_showEditor{nullptr};
     QAction *m_showREPL{nullptr};
+    QAction *m_showDoc{nullptr};
     QAction *m_showAboutDialog{nullptr};
 };
