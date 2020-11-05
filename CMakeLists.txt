@@ -7,6 +7,9 @@ if (PLUGIN_PYTHON)
 
     AddPlugin(NAME ${PROJECT_NAME})
 
+    option(PLUGIN_PYTHON_COPY_ENV "Should the content of the current python venv be copied on install" ON)
+    mark_as_advanced(PLUGIN_PYTHON_COPY_ENV)
+
     # Qt's 'slots' conflicts with Python's 'slots'
     target_compile_definitions(PythonPlugin PRIVATE -DQT_NO_KEYWORDS)
 
@@ -21,10 +24,9 @@ if (PLUGIN_PYTHON)
     find_package(pybind11 CONFIG REQUIRED)
     find_package(Qt5 COMPONENTS WebEngineWidgets REQUIRED)
 
-    target_link_libraries(PythonPlugin pybind11::embed Qt5::WebEngineWidgets)
+    deploy_qt_copy(${PROJECT_NAME} ${CLOUDCOMPARE_DEST_FOLDER})
 
-    option(PLUGIN_PYTHON_COPY_ENV "Should the content of the current python venv be copied on install" ON)
-    mark_as_advanced(PLUGIN_PYTHON_COPY_ENV)
+    target_link_libraries(PythonPlugin pybind11::embed Qt5::WebEngineWidgets)
 
     set(CC_PYTHON_ENV_NAME "Python")
     set(CC_PLUGIN_INSTALL_DIR ${CLOUDCOMPARE_DEST_FOLDER}/plugins)
@@ -38,6 +40,14 @@ if (PLUGIN_PYTHON)
                 TARGETS pycc cccorelib
                 DESTINATION "${CC_PYTHON_INSTALL_DIR}/Lib/site-packages"
         )
+        #If the docs have benn buit we copy them in the install folder
+        if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/docs/_build/index.html")
+            install(
+                    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/docs/_build/
+                    DESTINATION ${CC_PYTHON_INSTALL_DIR}/docs
+            )
+        endif()
+
     endif ()
 endif ()
 

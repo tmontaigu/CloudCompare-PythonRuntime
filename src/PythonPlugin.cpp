@@ -41,6 +41,7 @@ class QDocViewer
     explicit QDocViewer(QWidget *parent = nullptr) : m_widget(parent)
     {
         m_widget.setMinimumSize(1280, 800);
+        m_widget.setWindowTitle(QStringLiteral("Python Plugin Documentation"));
 
         auto *layout = new QVBoxLayout;
         auto viewEngine = new QWebEngineView(&m_widget);
@@ -54,6 +55,7 @@ class QDocViewer
         QWebEngineSettings *settings = viewEngine->settings();
         settings->setAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls, true);
         settings->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, false);
+
 
         QUrl url(QString("file:///%1/%2")
                      .arg(QApplication::applicationDirPath())
