@@ -23,7 +23,6 @@
 // Qt
 #include "QEditorSettings.h"
 #include <QMainWindow>
-#include <QSettings>
 
 class CodeEditor;
 QT_BEGIN_NAMESPACE
@@ -50,11 +49,7 @@ class QPythonEditor : public QMainWindow, public Ui::QPythonEditor
     void closeEvent(QCloseEvent *event) override;
   Q_SIGNALS:
     void
-    executionCalled(const std::string &evalFileName, const std::string &evalStatement, QListWidget *ouput);
-    void reset_Chai_to_initial_state();
-    void save_Chai_state();
-    void reset_chai_to_last_save();
-    void destroy_chai();
+    executionCalled(const std::string &evalFileName, const std::string &evalStatement, QListWidget *output);
 
   protected Q_SLOTS:
     void newFile();
@@ -96,23 +91,23 @@ class QPythonEditor : public QMainWindow, public Ui::QPythonEditor
     CodeEditor *activeChildCodeEditor() const;
     QMdiSubWindow *findChildCodeEditor(const QString &fileName) const;
 
-    QEditorSettings *settings;
+    QEditorSettings *settings{nullptr};
 
-    QMdiArea *mdiArea;
+    QMdiArea *mdiArea{nullptr};
 
-    QMenu *windowMenu;
+    QMenu *windowMenu{nullptr};
 
-    QAction *recentFileActs[MaxRecentFiles];
-    QAction *recentFileSeparator;
-    QAction *recentFileSubMenuAct;
+    QAction *recentFileActs[MaxRecentFiles] = {nullptr};
+    QAction *recentFileSeparator{nullptr};
+    QAction *recentFileSubMenuAct{nullptr};
 
-    QAction *closeAct;
-    QAction *closeAllAct;
-    QAction *tileAct;
-    QAction *cascadeAct;
-    QAction *nextAct;
-    QAction *previousAct;
-    QAction *windowMenuSeparatorAct;
+    QAction *closeAct{nullptr};
+    QAction *closeAllAct{nullptr};
+    QAction *tileAct{nullptr};
+    QAction *cascadeAct{nullptr};
+    QAction *nextAct{nullptr};
+    QAction *previousAct{nullptr};
+    QAction *windowMenuSeparatorAct{nullptr};
 };
 
 #endif // CHAISCRIPT_CODE_EDITOR_MAIN_WINDOW
