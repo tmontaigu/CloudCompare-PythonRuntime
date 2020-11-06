@@ -34,10 +34,9 @@ CodeEditor::CodeEditor(QEditorSettings *settings, QWidget *parent)
     updateLineNumberAreaWidth(0);
     highlightCurrentLine();
     setAttribute(Qt::WA_DeleteOnClose);
-    isUntitled = true;
     updateUsingSettings();
     installEventFilter(this);
-    highlighter = new PythonHighlighter(document());
+    new PythonHighlighter(document());
 }
 
 bool CodeEditor::eventFilter(QObject *target, QEvent *event)
@@ -45,7 +44,7 @@ bool CodeEditor::eventFilter(QObject *target, QEvent *event)
 
     if (target == this && event->type() == QEvent::Wheel)
     {
-        QWheelEvent *wheel = static_cast<QWheelEvent *>(event);
+        auto *wheel = static_cast<QWheelEvent *>(event);
         if (wheel->modifiers() == Qt::ControlModifier)
         {
             if (wheel->delta() > 0)
@@ -81,10 +80,9 @@ void CodeEditor::updateUsingSettings()
 
 void CodeEditor::startAllHighlighting()
 {
-    QList<QTextEdit::ExtraSelection> selections;
+    const QList<QTextEdit::ExtraSelection> selections;
     setExtraSelections(selections);
     highlightCurrentLine();
-    matchPairedChars();
 }
 
 int CodeEditor::lineNumberAreaWidth()
@@ -297,114 +295,6 @@ void CodeEditor::setCurrentFile(const QString &fileName)
 
 QString CodeEditor::strippedName(const QString &fullFileName) { return QFileInfo(fullFileName).fileName(); }
 
-void CodeEditor::matchPairedChars()
-{
-    if (!matchPairedChars('(', ')'))
-    {
-        if (!matchPairedChars('[', ']'))
-        {
-            if (!matchPairedChars('{', '}'))
-            {
-            }
-        }
-    }
-}
-
-bool CodeEditor::matchPairedChars(char lhs, char rhs)
-{
-    bool match = false;
-
-    //
-    //	TextBlockData* data = static_cast<TextBlockData*>(textCursor().block().userData());
-    //
-    //	if (data) {
-    //		QVector<ParenthesisInfo*> infos = data->parentheses();
-    //
-    //		int pos = textCursor().block().position();
-    //		for (int i = 0; i < infos.size(); ++i) {
-    //			ParenthesisInfo* info = infos.at(i);
-    //
-    //			int curPos = textCursor().position() - textCursor().block().position();
-    //			if (info->position == curPos - 1 && info->character == lhs) {
-    //				if (matchLeftPairedChars(textCursor().block(), i + 1, 0, lhs, rhs))
-    //				{
-    //					createPairedCharsSelection(pos + info->position);
-    //					match = true;
-    //				}
-    //			}
-    //			else if (info->position == curPos && info->character == rhs) {
-    //				if (matchRightPairedChars(textCursor().block(), i - 1, 0, lhs, rhs))
-    //				{
-    //					createPairedCharsSelection(pos + info->position);
-    //					match = true;
-    //				}
-    //			}
-    //		}
-    //	}
-    return match;
-}
-
-bool CodeEditor::matchLeftPairedChars(
-    QTextBlock currentBlock, int i, int numLeftPairedChars, char lhs, char rhs)
-{
-    //	TextBlockData* data = static_cast<TextBlockData*>(currentBlock.userData());
-    //	QVector<ParenthesisInfo*> infos = data->parentheses();
-    //
-    //	int docPos = currentBlock.position();
-    //	for (; i < infos.size(); ++i) {
-    //		ParenthesisInfo* info = infos.at(i);
-    //
-    //		if (info->character == lhs) {
-    //			++numLeftPairedChars;
-    //			continue;
-    //		}
-    //
-    //		if (info->character == rhs && numLeftPairedChars == 0) {
-    //			createPairedCharsSelection(docPos + info->position);
-    //			return true;
-    //		}
-    //		else if (info->character == rhs)
-    //		{
-    //			--numLeftPairedChars;
-    //		}
-    //	}
-    //
-    //	currentBlock = currentBlock.next();
-    //	if (currentBlock.isValid())
-    //		return matchLeftPairedChars(currentBlock, 0, numLeftPairedChars, lhs, rhs);
-
-    return false;
-}
-
-bool CodeEditor::matchRightPairedChars(
-    QTextBlock currentBlock, int i, int numRightPairedChars, char lhs, char rhs)
-{
-    //	TextBlockData* data = static_cast<TextBlockData*>(currentBlock.userData());
-    //	QVector<ParenthesisInfo*> parentheses = data->parentheses();
-    //
-    //	int docPos = currentBlock.position();
-    //	for (; i > -1 && parentheses.size() > 0; --i) {
-    //		ParenthesisInfo* info = parentheses.at(i);
-    //		if (info->character == rhs) {
-    //			++numRightPairedChars;
-    //			continue;
-    //		}
-    //		if (info->character == lhs && numRightPairedChars == 0) {
-    //			createPairedCharsSelection(docPos + info->position);
-    //			return true;
-    //		}
-    //		else if (info->character == lhs)
-    //		{
-    //			--numRightPairedChars;
-    //		}
-    //	}
-    //
-    //	currentBlock = currentBlock.previous();
-    //	if (currentBlock.isValid())
-    //		return matchRightPairedChars(currentBlock, 0, numRightPairedChars, lhs, rhs);
-
-    return false;
-}
 
 void CodeEditor::createPairedCharsSelection(int pos)
 {

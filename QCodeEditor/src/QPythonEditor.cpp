@@ -22,10 +22,9 @@
 #include "ccMainAppInterface.h"
 
 // Qt
-#include <QMainWindow>
 #include <QtWidgets>
 
-// global static pointer (as there should only be one instance of chaiScriptCodeEditorMainWindow!)
+// global static pointer (as there should only be one instance of the editor
 static QPythonEditor *s_instance = nullptr;
 
 QPythonEditor::QPythonEditor() : Ui::QPythonEditor()
@@ -34,7 +33,6 @@ QPythonEditor::QPythonEditor() : Ui::QPythonEditor()
     mdiArea = new QMdiArea(this);
     setCentralWidget(mdiArea);
     mdiArea->showMaximized();
-    // PBtreeView->showMaximized();
     connect(mdiArea, &QMdiArea::subWindowActivated, this, &QPythonEditor::updateMenus);
 
     this->settings = new QEditorSettings;
@@ -56,7 +54,6 @@ void QPythonEditor::closeEvent(QCloseEvent *event)
     }
     else
     {
-        Q_EMIT destroy_chai();
         writeSettings();
         event->accept();
         QCoreApplication::instance()->removeEventFilter(this);
@@ -131,7 +128,6 @@ bool QPythonEditor::loadFile(const QString &fileName)
         mdiArea->removeSubWindow(child);
         child->close();
         delete child;
-        ccLog::Print("Removed");
     }
     QPythonEditor::prependToRecentFiles(fileName);
     return succeeded;
@@ -215,7 +211,7 @@ void QPythonEditor::updateRecentFileActions()
 
 void QPythonEditor::openRecentFile()
 {
-    if (const QAction *action = qobject_cast<const QAction *>(sender()))
+    if (const auto *action = qobject_cast<const QAction *>(sender()))
     {
         openFile(action->data().toString());
     }
@@ -227,14 +223,14 @@ bool QPythonEditor::eventFilter(QObject *obj, QEvent *e)
     {
     case QEvent::Shortcut:
     {
-        QShortcutEvent *sev = static_cast<QShortcutEvent *>(e);
+        auto *sev = static_cast<QShortcutEvent *>(e);
         if (sev->isAmbiguous())
         {
             for (const auto &action : actions())
             {
                 if (action->shortcut() == sev->key())
                 {
-                    action->trigger(); // Trigger the action that matches the ambigous shortcut event.
+                    action->trigger(); // Trigger the action that matches the ambiguous shortcut event.
                     return true;
                 }
             }
@@ -331,25 +327,17 @@ void QPythonEditor::createActions()
     connect(actionClose, &QAction::triggered, this, [=]() { close(); });
     connect(actionSettings, &QAction::triggered, this, [this]() { this->settings->show(); });
 
-    connect(actionSave_Chai_state, &QAction::triggered, this, [=]() { Q_EMIT save_Chai_state(); });
-    connect(actionReset_Chai_to_initial_state, &QAction::triggered, this, [=]() {
-        Q_EMIT reset_Chai_to_initial_state();
-    });
-    connect(actionReset_chai_to_last_save, &QAction::triggered, this, [=]() {
-        Q_EMIT reset_chai_to_last_save();
-    });
-
     menuFile->addSeparator();
 
     QMenu *recentMenu = menuFile->addMenu(tr("Recent..."));
     connect(recentMenu, &QMenu::aboutToShow, this, &QPythonEditor::updateRecentFileActions);
     recentFileSubMenuAct = recentMenu->menuAction();
 
-    for (int i = 0; i < MaxRecentFiles; ++i)
+    for (auto& recentFileAct : recentFileActs)
     {
-        recentFileActs[i] = recentMenu->addAction(QString());
-        connect(recentFileActs[i], &QAction::triggered, this, &QPythonEditor::openRecentFile);
-        recentFileActs[i]->setVisible(false);
+        recentFileAct = recentMenu->addAction(QString());
+        connect(recentFileAct, &QAction::triggered, this, &QPythonEditor::openRecentFile);
+        recentFileAct->setVisible(false);
     }
 
     recentFileSeparator = menuFile->addSeparator();
@@ -428,7 +416,7 @@ void QPythonEditor::createStatusBar() { statusBar()->showMessage(tr("Ready")); }
 
 void QPythonEditor::updateMenus()
 {
-    bool hasChildCodeEditor = (activeChildCodeEditor() != 0);
+    bool hasChildCodeEditor = (activeChildCodeEditor() != nullptr);
     actionSave->setEnabled(hasChildCodeEditor);
     actionSave_As->setEnabled(hasChildCodeEditor);
     actionRun->setEnabled(hasChildCodeEditor);
@@ -471,7 +459,7 @@ void QPythonEditor::updateWindowMenu()
     for (int i = 0; i < windows.size(); ++i)
     {
         QMdiSubWindow *mdiSubWindow = windows.at(i);
-        CodeEditor *child = qobject_cast<CodeEditor *>(mdiSubWindow->widget());
+        auto *child = qobject_cast<CodeEditor *>(mdiSubWindow->widget());
 
         QString text;
         if (i < 9)
@@ -493,7 +481,7 @@ void QPythonEditor::updateWindowMenu()
 
 CodeEditor *QPythonEditor::createChildCodeEditor()
 {
-    CodeEditor *child = new CodeEditor(this->settings);
+    auto *child = new CodeEditor(this->settings);
 
 #ifndef QT_NO_CLIPBOARD
     connect(child, &QPlainTextEdit::copyAvailable, actionCu_t, &QAction::setEnabled);
@@ -540,7 +528,7 @@ QMdiSubWindow *QPythonEditor::findChildCodeEditor(const QString &fileName) const
 
     for (QMdiSubWindow *window : mdiArea->subWindowList())
     {
-        CodeEditor *mdiChild = qobject_cast<CodeEditor *>(window->widget());
+        auto *mdiChild = qobject_cast<CodeEditor *>(window->widget());
         if (mdiChild->currentFile() == canonicalFilePath)
         {
             return window;

@@ -25,10 +25,10 @@ class CodeEditor : public QPlainTextEdit
     Q_OBJECT
 
   public:
-    CodeEditor(QEditorSettings *settings, QWidget *parent = 0);
+    explicit CodeEditor(QEditorSettings *settings, QWidget *parent = nullptr);
 
     void lineNumberAreaPaintEvent(QPaintEvent *event);
-    ~CodeEditor() = default;
+    ~CodeEditor() override = default;
     bool eventFilter(QObject *target, QEvent *event) override;
     int lineNumberAreaWidth();
     void newFile();
@@ -61,28 +61,22 @@ class CodeEditor : public QPlainTextEdit
     void keyPressEvent(QKeyEvent *e) override;
 
   private:
-    QWidget *lineNumberArea;
     bool maybeSave();
     void setCurrentFile(const QString &fileName);
     QString strippedName(const QString &fullFileName);
-    void matchPairedChars();
-    bool matchPairedChars(char lhs, char rhs);
-    bool matchLeftPairedChars(QTextBlock currentBlock, int i, int numLeftPairedChars, char lhs, char rhs);
-    bool matchRightPairedChars(QTextBlock currentBlock, int i, int numRightPairedChars, char lhs, char rhs);
     void createPairedCharsSelection(int pos);
     int getSelectedLineCount();
 
-    PythonHighlighter *highlighter;
     QString curFile;
-    bool isUntitled;
-
-    QEditorSettings *settings;
+    bool isUntitled{true};
+    QWidget *lineNumberArea{nullptr};
+    QEditorSettings *settings{nullptr};
 };
 
 class LineNumberArea : public QWidget
 {
   public:
-    LineNumberArea(CodeEditor *editor) : QWidget(editor) { codeEditor = editor; }
+    explicit LineNumberArea(CodeEditor *editor) : QWidget(editor) { codeEditor = editor; }
 
     QSize sizeHint() const override { return QSize(codeEditor->lineNumberAreaWidth(), 0); }
 
