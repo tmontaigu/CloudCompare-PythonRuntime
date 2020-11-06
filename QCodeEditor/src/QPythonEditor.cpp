@@ -66,6 +66,7 @@ void QPythonEditor::closeEvent(QCloseEvent *event)
 void QPythonEditor::newFile()
 {
     CodeEditor *child = createChildCodeEditor();
+    mdiArea->addSubWindow(child);
     child->newFile();
     child->show();
 }
@@ -130,6 +131,7 @@ bool QPythonEditor::loadFile(const QString &fileName)
         mdiArea->removeSubWindow(child);
         child->close();
         delete child;
+        ccLog::Print("Removed");
     }
     QPythonEditor::prependToRecentFiles(fileName);
     return succeeded;
