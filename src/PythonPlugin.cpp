@@ -28,6 +28,7 @@
 #include <Python.h>
 #include <pybind11/embed.h>
 
+#include <QWebEngineHistory>
 #include <QWebEngineSettings>
 #include <QWebEngineView>
 
@@ -35,39 +36,73 @@
 #define signals Q_SIGNALS
 #include <ccCommandLineInterface.h>
 
-class QDocViewer
+class QDocViewer : public QWidget
 {
+    Q_OBJECT
+
   public:
-    explicit QDocViewer(QWidget *parent = nullptr) : m_widget(parent)
+    explicit QDocViewer(QWidget *parent = nullptr) : QWidget(parent, Qt::Window)
     {
-        m_widget.setMinimumSize(1280, 800);
-        m_widget.setWindowTitle(QStringLiteral("Python Plugin Documentation"));
+        setMinimumSize(1280, 800);
+        setWindowTitle("Python Plugin Documentation");
 
-        auto *layout = new QVBoxLayout;
-        auto viewEngine = new QWebEngineView(&m_widget);
+        m_viewEngine = new QWebEngineView;
+        setupWebEngine();
 
+        auto toolbar = new QToolBar;
+        setupToolBarActions(toolbar);
+
+        auto layout = new QVBoxLayout;
         layout->setSpacing(0);
         layout->setMargin(0);
+        layout->addWidget(toolbar);
+        layout->addWidget(m_viewEngine);
+        setLayout(layout);
 
-        m_widget.setLayout(layout);
-        layout->addWidget(viewEngine);
+        loadHomePage();
+    }
 
-        QWebEngineSettings *settings = viewEngine->settings();
-        settings->setAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls, true);
-        settings->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, false);
-
-
+    void loadHomePage()
+    {
         QUrl url(QString("file:///%1/%2")
                      .arg(QApplication::applicationDirPath())
                      .arg("plugins/Python/docs/index.html"));
-        ccLog::Print(url.path());
-        viewEngine->load(QUrl(url));
+        m_viewEngine->load(QUrl(url));
     }
 
-    void show() { m_widget.show(); }
+    void loadPreviousPage() { m_viewEngine->history()->back(); }
+    void loadNextPage() { m_viewEngine->history()->forward(); }
+
+  protected:
+    void setupWebEngine()
+    {
+        QWebEngineSettings *settings = m_viewEngine->settings();
+        settings->setAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls, true);
+        settings->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, false);
+    }
+
+    void setupToolBarActions(QToolBar *toolbar)
+    {
+
+        auto homePageAction = new QAction("Home Page");
+        homePageAction->setIcon(this->style()->standardIcon(QStyle::SP_DirHomeIcon));
+        connect(homePageAction, &QAction::triggered, this, &QDocViewer::loadHomePage);
+
+        auto previousPageAction = new QAction("Previous Page");
+        previousPageAction->setIcon(this->style()->standardIcon(QStyle::SP_ArrowLeft));
+        connect(previousPageAction, &QAction::triggered, this, &QDocViewer::loadPreviousPage);
+
+        auto nextPageAction = new QAction("Next Page");
+        nextPageAction->setIcon(this->style()->standardIcon(QStyle::SP_ArrowRight));
+        connect(nextPageAction, &QAction::triggered, this, &QDocViewer::loadNextPage);
+
+        toolbar->addAction(previousPageAction);
+        toolbar->addAction(nextPageAction);
+        toolbar->addAction(homePageAction);
+    }
 
   private:
-    QWidget m_widget;
+    QWebEngineView *m_viewEngine{nullptr};
 };
 
 /// Returns a newly allocated array (null terminated) from a QString
@@ -243,7 +278,7 @@ void PythonPlugin::showDocumentation()
 {
     if (!m_docView)
     {
-        m_docView = new QDocViewer;
+        m_docView = new QDocViewer(m_app->getMainWindow());
     }
     m_docView->show();
 }
@@ -341,3 +376,5 @@ void PythonPlugin::registerCommands(ccCommandLineInterface *cmd)
     cmd->registerCommand(ccCommandLineInterface::Command::Shared(new PythonPluginCommand()));
     Python::setCmdLineInterfaceInstance(cmd);
 }
+
+#include "PythonPlugin.moc"
