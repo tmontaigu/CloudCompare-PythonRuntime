@@ -35,39 +35,41 @@
 #define signals Q_SIGNALS
 #include <ccCommandLineInterface.h>
 
-class QDocViewer
+class QDocViewer: public QWidget
 {
+    Q_OBJECT
+
   public:
-    explicit QDocViewer(QWidget *parent = nullptr) : m_widget(parent)
+    explicit QDocViewer(QWidget *parent = nullptr): QWidget(parent, Qt::Window)
     {
-        m_widget.setMinimumSize(1280, 800);
-        m_widget.setWindowTitle(QStringLiteral("Python Plugin Documentation"));
+        setMinimumSize(1280, 800);
+        setWindowTitle("Python Plugin Documentation");
 
         auto *layout = new QVBoxLayout;
-        auto viewEngine = new QWebEngineView(&m_widget);
+        m_viewEngine = new QWebEngineView;
 
         layout->setSpacing(0);
         layout->setMargin(0);
 
-        m_widget.setLayout(layout);
-        layout->addWidget(viewEngine);
+        layout->addWidget(m_viewEngine);
+        setLayout(layout);
 
-        QWebEngineSettings *settings = viewEngine->settings();
+        QWebEngineSettings *settings = m_viewEngine->settings();
         settings->setAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls, true);
         settings->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, false);
 
+        loadHomePage();
+    }
 
+    void loadHomePage() {
         QUrl url(QString("file:///%1/%2")
                      .arg(QApplication::applicationDirPath())
                      .arg("plugins/Python/docs/index.html"));
-        ccLog::Print(url.path());
-        viewEngine->load(QUrl(url));
+        m_viewEngine->load(QUrl(url));
     }
 
-    void show() { m_widget.show(); }
-
   private:
-    QWidget m_widget;
+    QWebEngineView *m_viewEngine{nullptr};
 };
 
 /// Returns a newly allocated array (null terminated) from a QString
@@ -243,7 +245,7 @@ void PythonPlugin::showDocumentation()
 {
     if (!m_docView)
     {
-        m_docView = new QDocViewer;
+        m_docView = new QDocViewer(m_app->getMainWindow());
     }
     m_docView->show();
 }
@@ -341,3 +343,6 @@ void PythonPlugin::registerCommands(ccCommandLineInterface *cmd)
     cmd->registerCommand(ccCommandLineInterface::Command::Shared(new PythonPluginCommand()));
     Python::setCmdLineInterfaceInstance(cmd);
 }
+
+
+#include "PythonPlugin.moc"
