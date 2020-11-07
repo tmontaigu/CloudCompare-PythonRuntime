@@ -29,43 +29,67 @@ void define_GeometricalAnalysisTools(py::module &cccorelib)
     py::class_<CCCoreLib::GeometricalAnalysisTools> GeometricalAnalysisTools(cccorelib,
                                                                              "GeometricalAnalysisTools");
     GeometricalAnalysisTools.def_static("ComputeCharactersitic",
-                                        [](CCCoreLib::GeometricalAnalysisTools::GeomCharacteristic c,
-                                           int subOption,
-                                           CCCoreLib::GenericIndexedCloudPersist *cloud,
-                                           PointCoordinateType kernelRadius) {
-                                            return CCCoreLib::GeometricalAnalysisTools::ComputeCharactersitic(
-                                                c, subOption, cloud, kernelRadius);
-                                        });
+                                        &CCCoreLib::GeometricalAnalysisTools::ComputeCharactersitic,
+                                        "c"_a,
+                                        "subOptions"_a,
+                                        "cloud"_a,
+                                        "kernelRadius"_a,
+                                        "progressCb"_a = nullptr,
+                                        "inputOctree"_a = nullptr);
+
+    GeometricalAnalysisTools.def_static("ComputeLocalDensityApprox",
+                                        &CCCoreLib::GeometricalAnalysisTools::ComputeLocalDensityApprox,
+                                        "cloud"_a,
+                                        "densityType"_a,
+                                        "progressCb"_a = nullptr,
+                                        "DgmOctree"_a = nullptr);
 
     GeometricalAnalysisTools.def_static(
-        "ComputeLocalDensityApprox",
-        [](CCCoreLib::GenericIndexedCloudPersist *cloud,
-           CCCoreLib::GeometricalAnalysisTools::Density densityType) {
-            return CCCoreLib::GeometricalAnalysisTools::ComputeLocalDensityApprox(cloud, densityType);
-        });
-
-    GeometricalAnalysisTools.def_static("ComputeGravityCenter",
-                                        &CCCoreLib::GeometricalAnalysisTools::ComputeGravityCenter);
+        "ComputeGravityCenter", &CCCoreLib::GeometricalAnalysisTools::ComputeGravityCenter, "theCloud"_a);
     GeometricalAnalysisTools.def_static("ComputeWeightedGravityCenter",
-                                        &CCCoreLib::GeometricalAnalysisTools::ComputeWeightedGravityCenter);
+                                        &CCCoreLib::GeometricalAnalysisTools::ComputeWeightedGravityCenter,
+                                        "theCloud"_a,
+                                        "weights"_a);
     GeometricalAnalysisTools.def_static("ComputeCrossCovarianceMatrix",
-                                        &CCCoreLib::GeometricalAnalysisTools::ComputeCrossCovarianceMatrix);
+                                        &CCCoreLib::GeometricalAnalysisTools::ComputeCrossCovarianceMatrix,
+                                        "P"_a,
+                                        "Q"_a,
+                                        "pGravityCenter"_a,
+                                        "qGravityCenter"_a);
     GeometricalAnalysisTools.def_static(
         "ComputeWeightedCrossCovarianceMatrix",
-        &CCCoreLib::GeometricalAnalysisTools::ComputeWeightedCrossCovarianceMatrix);
-    GeometricalAnalysisTools.def_static(
-        "FlagDuplicatePoints",
-        [](CCCoreLib::GenericIndexedCloudPersist *theCloud,
-           double minDistanceBetweenPoints = std::numeric_limits<double>::epsilon()) {
-            return CCCoreLib::GeometricalAnalysisTools::FlagDuplicatePoints(theCloud,
-                                                                            minDistanceBetweenPoints);
-        });
+        &CCCoreLib::GeometricalAnalysisTools::ComputeWeightedCrossCovarianceMatrix,
+        "P"_a,
+        "Q"_a,
+        "pGravityCenter"_a,
+        "qGravityCenter"_a,
+        "coupleWeights"_a = nullptr);
+    GeometricalAnalysisTools.def_static("FlagDuplicatePoints",
+                                        &CCCoreLib::GeometricalAnalysisTools::FlagDuplicatePoints,
+                                        "theCloud"_a,
+                                        "minDistanceBetweenPoints"_a,
+                                        "progressCb"_a = nullptr,
+                                        "inputOctree"_a = nullptr);
 
     GeometricalAnalysisTools.def_static("DetectSphereRobust",
-                                        &CCCoreLib::GeometricalAnalysisTools::DetectSphereRobust);
+                                        &CCCoreLib::GeometricalAnalysisTools::DetectSphereRobust,
+                                        "cloud"_a,
+                                        "outlierRatio"_a,
+                                        "center"_a,
+                                        "radius"_a,
+                                        "rms"_a,
+                                        "progressCb"_a = nullptr,
+                                        "confidence"_a = 0.99,
+                                        "seed"_a = 0);
 
     GeometricalAnalysisTools.def_static("ComputeSphereFrom4",
-                                        &CCCoreLib::GeometricalAnalysisTools::ComputeSphereFrom4);
+                                        &CCCoreLib::GeometricalAnalysisTools::ComputeSphereFrom4,
+                                        "A"_a,
+                                        "B"_a,
+                                        "C"_a,
+                                        "D"_a,
+                                        "center"_a,
+                                        "radius"_a);
 
     py::enum_<CCCoreLib::GeometricalAnalysisTools::GeomCharacteristic>(GeometricalAnalysisTools,
                                                                        "GeomCharacteristic")

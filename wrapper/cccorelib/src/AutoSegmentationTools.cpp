@@ -38,7 +38,9 @@ void define_AutoSegmentationTools(py::module &cccorelib)
                                      "inputOctree"_a = nullptr);
 
     AutoSegmentationTools.def_static("extractConnectedComponents",
-                                     &CCCoreLib::AutoSegmentationTools::extractConnectedComponents);
+                                     &CCCoreLib::AutoSegmentationTools::extractConnectedComponents,
+                                     "theCloud"_a,
+                                     "ccc"_a);
 
     AutoSegmentationTools.def_static("frontPropagationBasedSegmentation",
                                      &CCCoreLib::AutoSegmentationTools::frontPropagationBasedSegmentation,
