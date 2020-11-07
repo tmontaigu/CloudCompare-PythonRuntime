@@ -70,7 +70,8 @@ void QPythonEditor::newFile()
 
 void QPythonEditor::open()
 {
-    const QString fileName = QFileDialog::getOpenFileName(this);
+    const QString fileName =
+        QFileDialog::getOpenFileName(this, "Open Python Script", QString(), "Python Script (*.py)");
     if (!fileName.isEmpty())
     {
         openFile(fileName);
