@@ -28,6 +28,7 @@
 #include <Python.h>
 #include <pybind11/embed.h>
 
+#include <QWebEngineHistory>
 #include <QWebEngineSettings>
 #include <QWebEngineView>
 
@@ -35,37 +36,69 @@
 #define signals Q_SIGNALS
 #include <ccCommandLineInterface.h>
 
-class QDocViewer: public QWidget
+class QDocViewer : public QWidget
 {
     Q_OBJECT
 
   public:
-    explicit QDocViewer(QWidget *parent = nullptr): QWidget(parent, Qt::Window)
+    explicit QDocViewer(QWidget *parent = nullptr) : QWidget(parent, Qt::Window)
     {
         setMinimumSize(1280, 800);
         setWindowTitle("Python Plugin Documentation");
 
-        auto *layout = new QVBoxLayout;
         m_viewEngine = new QWebEngineView;
+        setupWebEngine();
 
+        auto toolbar = new QToolBar;
+        setupToolBarActions(toolbar);
+
+        auto layout = new QVBoxLayout;
         layout->setSpacing(0);
         layout->setMargin(0);
-
+        layout->addWidget(toolbar);
         layout->addWidget(m_viewEngine);
         setLayout(layout);
-
-        QWebEngineSettings *settings = m_viewEngine->settings();
-        settings->setAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls, true);
-        settings->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, false);
 
         loadHomePage();
     }
 
-    void loadHomePage() {
+    void loadHomePage()
+    {
         QUrl url(QString("file:///%1/%2")
                      .arg(QApplication::applicationDirPath())
                      .arg("plugins/Python/docs/index.html"));
         m_viewEngine->load(QUrl(url));
+    }
+
+    void loadPreviousPage() { m_viewEngine->history()->back(); }
+    void loadNextPage() { m_viewEngine->history()->forward(); }
+
+  protected:
+    void setupWebEngine()
+    {
+        QWebEngineSettings *settings = m_viewEngine->settings();
+        settings->setAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls, true);
+        settings->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, false);
+    }
+
+    void setupToolBarActions(QToolBar *toolbar)
+    {
+
+        auto homePageAction = new QAction("Home Page");
+        homePageAction->setIcon(this->style()->standardIcon(QStyle::SP_DirHomeIcon));
+        connect(homePageAction, &QAction::triggered, this, &QDocViewer::loadHomePage);
+
+        auto previousPageAction = new QAction("Previous Page");
+        previousPageAction->setIcon(this->style()->standardIcon(QStyle::SP_ArrowLeft));
+        connect(previousPageAction, &QAction::triggered, this, &QDocViewer::loadPreviousPage);
+
+        auto nextPageAction = new QAction("Next Page");
+        nextPageAction->setIcon(this->style()->standardIcon(QStyle::SP_ArrowRight));
+        connect(nextPageAction, &QAction::triggered, this, &QDocViewer::loadNextPage);
+
+        toolbar->addAction(previousPageAction);
+        toolbar->addAction(nextPageAction);
+        toolbar->addAction(homePageAction);
     }
 
   private:
@@ -343,6 +376,5 @@ void PythonPlugin::registerCommands(ccCommandLineInterface *cmd)
     cmd->registerCommand(ccCommandLineInterface::Command::Shared(new PythonPluginCommand()));
     Python::setCmdLineInterfaceInstance(cmd);
 }
-
 
 #include "PythonPlugin.moc"
