@@ -144,6 +144,10 @@ ui::QPythonREPL::QPythonREPL(QWidget *parent) : QWidget(parent), m_ui(new Ui_Pyt
 
     m_ui->setupUi(this);
     auto keyPressEater = new KeyPressEater(this);
+
+    auto codeEditorHeight = static_cast<int>(height() * 0.25);
+    m_ui->splitter->setSizes({height() - codeEditorHeight, codeEditorHeight});
+
     codeEdit()->installEventFilter(keyPressEater);
     codeEdit()->resize(codeEdit()->width(), 20);
 
