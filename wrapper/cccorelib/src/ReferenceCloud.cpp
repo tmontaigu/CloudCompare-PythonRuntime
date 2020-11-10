@@ -33,6 +33,7 @@ void define_ReferenceCloud(py::module &cccorelib)
         .def("getCurrentPointScalarValue", &CCCoreLib::ReferenceCloud::getCurrentPointScalarValue)
         .def("setCurrentPointScalarValue", &CCCoreLib::ReferenceCloud::setCurrentPointScalarValue)
         .def("forwardIterator", &CCCoreLib::ReferenceCloud::forwardIterator)
+        .def("clear", &CCCoreLib::ReferenceCloud::clear, "releaseMemory"_a = false)
         .def("addPointIndex",
              [](CCCoreLib::ReferenceCloud &self, unsigned firstIndex, unsigned lastIndex) {
                  self.addPointIndex(firstIndex, lastIndex);

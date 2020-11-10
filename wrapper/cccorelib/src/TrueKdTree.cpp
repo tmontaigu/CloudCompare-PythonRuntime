@@ -50,11 +50,7 @@ void define_TrueKdTree(py::module &cccorelib)
         .def("clear", &CCCoreLib::TrueKdTree::clear)
         .def("getMaxErrorType", &CCCoreLib::TrueKdTree::getMaxErrorType)
         .def("getLeaves", &CCCoreLib::TrueKdTree::getLeaves, "leaves"_a);
-    //        .def("getLeaves", [](const CCCoreLib::TrueKdTree&self, CCCoreLib::TrueKdTree::LeafVector&
-    //        leaves) {
-    //                    self.getLeaves(leaves);
-    //            }, "leaves"_a);
-    ;
+
     py::class_<CCCoreLib::TrueKdTree::BaseNode>(PyTrueKdTree, "BaseNode")
         .def(py::init<uint8_t>(), "nodeType"_a)
         .def("isNode", &CCCoreLib::TrueKdTree::BaseNode::isNode)
@@ -72,7 +68,7 @@ void define_TrueKdTree(py::module &cccorelib)
         .def_readwrite("splitDim", &CCCoreLib::TrueKdTree::Node::splitDim)
         .def(py::init<>());
 
-    py::class_<CCCoreLib::TrueKdTree::Leaf>(PyTrueKdTree, "Leaf")
+    py::class_<CCCoreLib::TrueKdTree::Leaf, CCCoreLib::TrueKdTree::BaseNode>(PyTrueKdTree, "Leaf")
         .def_readwrite("points", &CCCoreLib::TrueKdTree::Leaf::points, py::return_value_policy::reference)
         //			.def_readwrite("planeEq",
         //			               &CCCoreLib::TrueKdTree::Leaf::planeEq) // FIXME

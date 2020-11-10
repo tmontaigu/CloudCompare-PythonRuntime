@@ -32,7 +32,7 @@ void define_SimpleMesh(py::module &cccorelib)
              "theVertices"_a,
              "linkVerticesWithMesh"_a = false)
         .def("capacity", &CCCoreLib::SimpleMesh::capacity)
-        .def("vertices", &CCCoreLib::SimpleMesh::vertices)
+        .def("vertices", &CCCoreLib::SimpleMesh::vertices, py::return_value_policy::reference)
         .def("clear", &CCCoreLib::SimpleMesh::clear)
         .def("addTriangle", &CCCoreLib::SimpleMesh::addTriangle, "i1"_a, "i2"_a, "i3"_a)
         .def("reserve", &CCCoreLib::SimpleMesh::reserve, "n"_a)

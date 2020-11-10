@@ -27,7 +27,7 @@ using namespace pybind11::literals;
 
 void define_ScalarField(py::module &cccorelib)
 {
-    py::class_<CCCoreLib::ScalarField, observer_ptr<CCCoreLib::ScalarField>>(cccorelib, "ScalarField")
+    py::class_<CCCoreLib::ScalarField, CCShareable, observer_ptr<CCCoreLib::ScalarField>>(cccorelib, "ScalarField")
         .def(py::init<const char *>(), "name"_a)
         .def("setName", &CCCoreLib::ScalarField::setName)
         .def("getName", &CCCoreLib::ScalarField::getName)

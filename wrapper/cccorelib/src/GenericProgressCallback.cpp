@@ -34,8 +34,8 @@ void define_GenericProgressCallback(py::module &cccorelib)
         .def("textCanBeEdited", &CCCoreLib::GenericProgressCallback::textCanBeEdited);
 
     py::class_<CCCoreLib::NormalizedProgress>(cccorelib, "NormalizedProgress")
-        //.def(py::init<CCCoreLib::GenericProgressCallback, unsigned, unsigned>(), "callback"_a,
-        //"totalSteps"_a, "totalPercentage"_a=100)
+        .def(py::init<CCCoreLib::GenericProgressCallback*, unsigned, unsigned>(), "callback"_a,
+        "totalSteps"_a, "totalPercentage"_a=100)
         .def("scale",
              &CCCoreLib::NormalizedProgress::scale,
              "totalSteps"_a,

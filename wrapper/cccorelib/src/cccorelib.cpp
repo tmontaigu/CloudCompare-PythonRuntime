@@ -47,6 +47,10 @@ void define_CCGeom(py::module &);
 
 void define_CCMath(py::module &);
 
+void define_CCConst(py::module &);
+
+void define_CCShareable(py::module &);
+
 void define_ChamferDistanceTransform(py::module &);
 
 void define_CloudSamplingTools(py::module &);
@@ -223,29 +227,11 @@ PYBIND11_MODULE(cccorelib, m)
 {
     py::bind_vector<CCCoreLib::ReferenceCloudContainer>(m, "ReferenceCloudContainer");
 
-    /* Constants */
-    m.attr("SQRT_3") = CCCoreLib::SQRT_3;
-    // Python's float are doubles
-    m.attr("ZERO_TOLERANCE") = CCCoreLib::ZERO_TOLERANCE_D;
-    m.attr("POINT_VISIBLE") = CCCoreLib::POINT_VISIBLE;
-    m.attr("POINT_HIDDEN") = CCCoreLib::POINT_HIDDEN;
-    m.attr("POINT_OUT_OF_RANGE") = CCCoreLib::POINT_OUT_OF_RANGE;
-    m.attr("POINT_OUT_OF_FOV") = CCCoreLib::POINT_OUT_OF_FOV;
-
-    py::enum_<CCCoreLib::CHAMFER_DISTANCE_TYPE>(m, "CHAMFER_DISTANCE_TYPE")
-        .value("CHAMFER_111", CCCoreLib::CHAMFER_DISTANCE_TYPE::CHAMFER_111)
-        .value("CHAMFER_345", CCCoreLib::CHAMFER_DISTANCE_TYPE::CHAMFER_345);
-
-    py::enum_<CCCoreLib::LOCAL_MODEL_TYPES>(m, "LOCAL_MODEL_TYPES")
-        .value("NO_MODEL", CCCoreLib::LOCAL_MODEL_TYPES::NO_MODEL)
-        .value("LS", CCCoreLib::LOCAL_MODEL_TYPES::LS)
-        .value("TRI", CCCoreLib::LOCAL_MODEL_TYPES::TRI)
-        .value("QUADRIC", CCCoreLib::LOCAL_MODEL_TYPES::QUADRIC);
-
-    m.attr("CC_LOCAL_MODEL_MIN_SIZE") = CCCoreLib::CC_LOCAL_MODEL_MIN_SIZE;
+    define_CCShareable(m);
 
     define_CCGeom(m);
     define_CCMath(m);
+    define_CCConst(m);
     define_BoundingBox(m);
 
     define_GenericCloud(m);

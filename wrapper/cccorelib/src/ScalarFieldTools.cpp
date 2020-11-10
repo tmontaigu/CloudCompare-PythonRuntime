@@ -87,5 +87,9 @@ void define_ScalarFieldTools(py::module &cccorelib)
         .def_static("SetScalarValueInverted",
                     &CCCoreLib::ScalarFieldTools::SetScalarValueInverted,
                     "P"_a,
+                    "scalarValue"_a)
+        .def_static("SetScalarValueInverted",
+                    &CCCoreLib::ScalarFieldTools::SetScalarValueInverted,
+                    "P"_a,
                     "scalarValue"_a);
 }

@@ -12,7 +12,9 @@ pybind11_add_module(cccorelib
         src/BoundingBox.cpp
         src/CCGeom.cpp
         src/CCMath.cpp
+        src/CCConst.cpp
         src/CCMiscTools.cpp
+        src/CCShareable.cpp
         src/CloudSamplingTools.cpp
         src/GenericIndexedCloudPersist.cpp
         src/PointCloud.cpp

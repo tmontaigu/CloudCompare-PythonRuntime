@@ -27,5 +27,6 @@ void define_Polyline(py::module &cccorelib)
     py::class_<CCCoreLib::Polyline, CCCoreLib::ReferenceCloud>(cccorelib, "Polyline")
         .def(py::init<CCCoreLib::GenericIndexedCloudPersist *>(), "associatedCloud"_a)
         .def("isClosed", &CCCoreLib::Polyline::isClosed)
-        .def("setClosed", &CCCoreLib::Polyline::setClosed, "state"_a);
+        .def("setClosed", &CCCoreLib::Polyline::setClosed, "state"_a)
+        .def("clear", &CCCoreLib::Polyline::clear, "unusedParam"_a = true);
 }
