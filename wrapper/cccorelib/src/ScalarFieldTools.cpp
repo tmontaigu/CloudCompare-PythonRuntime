@@ -69,10 +69,13 @@ void define_ScalarFieldTools(py::module &cccorelib)
                     "numberOfClasses"_a,
                     "histo"_a)
         .def_static("computeScalarFieldExtremas",
-                    &CCCoreLib::ScalarFieldTools::computeScalarFieldExtremas,
-                    "theCloud"_a,
-                    "minV"_a,
-                    "minV"_a)
+                    [](const CCCoreLib::GenericCloud *theCloud) {
+                        ScalarType minV{};
+                        ScalarType maxV{};
+                        CCCoreLib::ScalarFieldTools::computeScalarFieldExtremas(theCloud, minV, maxV);
+                        return py::make_tuple(minV, maxV);
+                    },
+                    "theCloud"_a)
         .def_static("countScalarFieldValidValues",
                     &CCCoreLib::ScalarFieldTools::countScalarFieldValidValues,
                     "theCloud"_a)
