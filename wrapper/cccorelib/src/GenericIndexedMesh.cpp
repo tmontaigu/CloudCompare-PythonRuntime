@@ -47,15 +47,21 @@ void define_GenericIndexedMesh(py::module &cccorelib)
         });
 
     py::class_<CCCoreLib::GenericIndexedMesh, CCCoreLib::GenericMesh>(cccorelib, "GenericIndexedMesh")
-        .def("_getTriangle", &CCCoreLib::GenericIndexedMesh::_getTriangle, "triangleIndex"_a)
+        .def("_getTriangle",
+             &CCCoreLib::GenericIndexedMesh::_getTriangle,
+             "triangleIndex"_a,
+             py::return_value_policy::reference)
         .def("getTriangleVertIndexes",
              &CCCoreLib::GenericIndexedMesh::getTriangleVertIndexes,
-             "triangleIndex"_a)
+             "triangleIndex"_a,
+             py::return_value_policy::reference)
         .def("getTriangleVertices",
              &CCCoreLib::GenericIndexedMesh::getTriangleVertices,
              "triangleIndex"_a,
              "A"_a,
              "B"_a,
              "C"_a)
-        .def("getNextTriangleVertIndexes", &CCCoreLib::GenericIndexedMesh::getNextTriangleVertIndexes);
+        .def("getNextTriangleVertIndexes",
+             &CCCoreLib::GenericIndexedMesh::getNextTriangleVertIndexes,
+             py::return_value_policy::reference);
 }

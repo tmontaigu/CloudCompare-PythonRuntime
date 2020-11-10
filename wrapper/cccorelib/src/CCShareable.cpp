@@ -16,27 +16,25 @@
 //##########################################################################
 
 #include <pybind11/pybind11.h>
-#include <pybind11/stl_bind.h>
 
-#include <GenericTriangle.h>
-#include <SimpleTriangle.h>
+#include <CCShareable.h>
+
+
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-void define_SimpleTriangle(py::module &cccorelib)
-{
-    py::class_<CCCoreLib::SimpleRefTriangle, CCCoreLib::GenericTriangle>(cccorelib, "SimpleRefTriangle")
-        .def(py::init<>())
-        .def(py::init<const CCVector3 *, const CCVector3 *, const CCVector3 *>(), "_A"_a, "_B"_a, "_C"_a)
-        .def_readonly("A", &CCCoreLib::SimpleRefTriangle::A, py::return_value_policy::reference)
-        .def_readonly("B", &CCCoreLib::SimpleRefTriangle::B, py::return_value_policy::reference)
-        .def_readonly("C", &CCCoreLib::SimpleRefTriangle::C, py::return_value_policy::reference);
 
-    py::class_<CCCoreLib::SimpleTriangle, CCCoreLib::GenericTriangle>(cccorelib, "SimpleTriangle")
+void define_CCShareable(py::module& cccorelib)
+{
+    py::class_<CCShareable, std::unique_ptr<CCShareable, py::nodelete>>(cccorelib, "CCShareable")
         .def(py::init<>())
-        .def(py::init<const CCVector3 &, const CCVector3 &, const CCVector3 &>())
-        .def_readonly("A", &CCCoreLib::SimpleTriangle::A, py::return_value_policy::reference)
-        .def_readonly("B", &CCCoreLib::SimpleTriangle::B, py::return_value_policy::reference)
-        .def_readonly("C", &CCCoreLib::SimpleTriangle::C, py::return_value_policy::reference);
+    .def("link", &CCShareable::link)
+    .def("release", &CCShareable::release)
+    .def("getLinkCount", &CCShareable::getLinkCount)
+#ifdef CC_TRACK_ALIVE_SHARED_OBJECTS
+        .def_static("GetAliveCount", &CCShareable::GetAliveCount);
+#else
+        ;
+#endif
 }

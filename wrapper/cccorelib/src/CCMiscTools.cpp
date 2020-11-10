@@ -47,15 +47,24 @@ void define_CCMiscTools(py::module &cccorelib)
                            "X"_a,
                            "Y"_a);
 
-    //    CCMiscTools.def_static("TriBoxOverlap",
-    //                           &CCCoreLib::CCMiscTools::TriBoxOverlap,
-    //                           "boxcenter"_a,
-    //                           "boxhalfsize"_a,
-    //                           "triverts"_a);
+    CCMiscTools.def_static(
+        "TriBoxOverlap",
+        [](const CCVector3 &boxCenter, const CCVector3 boxhalfsize, py::list &triverts) {
+            const CCVector3 *trueTrivers[3] = {
+                triverts[0].cast<CCVector3 *>(),
+                triverts[1].cast<CCVector3 *>(),
+                triverts[2].cast<CCVector3 *>(),
+            };
 
-    //    CCMiscTools.def_static("TriBoxOverlapd",
-    //                           CCCoreLib::CCMiscTools::TriBoxOverlapd,
-    //                           "boxcenter"_a,
-    //                           "boxhalfsize"_a,
-    //                           "triverts"_a);
+            return CCCoreLib::CCMiscTools::TriBoxOverlap(boxCenter, boxhalfsize, trueTrivers);
+        },
+        "boxcenter"_a,
+        "boxhalfsize"_a,
+        "triverts"_a);
+
+    CCMiscTools.def_static("TriBoxOverlapd",
+                           CCCoreLib::CCMiscTools::TriBoxOverlapd,
+                           "boxcenter"_a,
+                           "boxhalfsize"_a,
+                           "triverts"_a);
 }

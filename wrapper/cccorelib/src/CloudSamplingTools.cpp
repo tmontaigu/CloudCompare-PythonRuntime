@@ -54,6 +54,14 @@ void define_CloudSamplingTools(py::module &cccorelib)
                                   "progressCb"_a = nullptr,
                                   "inputOctree"_a = nullptr);
 
+    CloudSamplingTools.def_static("resampleCloudWithOctree",
+                                  &CCCoreLib::CloudSamplingTools::resampleCloudWithOctree,
+                                  "cloud"_a,
+                                  "newNumberOfPoints"_a,
+                                  "resamplingMethod"_a,
+                                  "progressCb"_a = nullptr,
+                                  "inputOctree"_a = nullptr);
+
     CloudSamplingTools.def_static("subsampleCloudWithOctreeAtLevel",
                                   &CCCoreLib::CloudSamplingTools::subsampleCloudWithOctreeAtLevel,
                                   "cloud"_a,

@@ -35,16 +35,22 @@ void define_GenericDistribution(py::module &cccorelib)
         .def("getName", &CCCoreLib::GenericDistribution::getName, py::return_value_policy::reference)
         .def("isValid", &CCCoreLib::GenericDistribution::isValid)
         .def("computeParameters", &CCCoreLib::GenericDistribution::computeParameters, "values"_a)
-        //			.def("computeP", &CCCoreLib::GenericDistribution::computeP, "x"_a)
+        .def("computeP",
+             (double (CCCoreLib::GenericDistribution::*)(ScalarType)
+                  const)(&CCCoreLib::GenericDistribution::computeP),
+             "x"_a)
+        .def("computeP",
+             (double (CCCoreLib::GenericDistribution::*)(ScalarType, ScalarType)
+                  const)(&CCCoreLib::GenericDistribution::computeP),
+             "x1"_a,
+             "x2"_a)
         .def("computePfromZero", &CCCoreLib::GenericDistribution::computePfromZero, "x"_a)
-        //			.def("computeP", &CCCoreLib::GenericDistribution::computeP, "x1"_a, "x2"_a)
         .def("computeChi2Dist",
              &CCCoreLib::GenericDistribution::computeChi2Dist,
              "GenericDistribution",
              "Yk"_a,
              "numberOfClasses"_a,
              "histo"_a = nullptr);
-    //			.def(py::init<>());
 
     py::bind_vector<CCCoreLib::GenericDistribution::ScalarContainer>(GenericDistribution, "ScalarContainer");
 }

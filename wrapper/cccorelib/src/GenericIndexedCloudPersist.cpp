@@ -29,5 +29,6 @@ void define_GenericIndexedCloudPersist(py::module &cccorelib)
         cccorelib, "GenericIndexedCloudPersist")
         .def("getPointPersistentPtr",
              &CCCoreLib::GenericIndexedCloudPersist::getPointPersistentPtr,
+             "index"_a,
              py::return_value_policy::reference);
 }

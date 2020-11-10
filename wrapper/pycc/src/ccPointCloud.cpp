@@ -35,7 +35,9 @@ using namespace pybind11::literals;
              &CCCoreLib::PointCloudTpl<T, StringType>::getBoundingBox,                                       \
              "bbMin"_a,                                                                                      \
              "bbMax"_a)                                                                                      \
-        .def("getNextPoint", &CCCoreLib::PointCloudTpl<T, StringType>::getNextPoint)                         \
+        .def("getNextPoint",                                                                                 \
+             &CCCoreLib::PointCloudTpl<T, StringType>::getNextPoint,                                         \
+             py::return_value_policy::reference)                                                             \
         .def("enableScalarField", &CCCoreLib::PointCloudTpl<T, StringType>::enableScalarField)               \
         .def("isScalarFieldEnabled", &CCCoreLib::PointCloudTpl<T, StringType>::isScalarFieldEnabled)         \
         .def("setPointScalarValue",                                                                          \
