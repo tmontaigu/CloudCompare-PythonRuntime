@@ -7,6 +7,7 @@ abspath = os.path.dirname(os.path.abspath(__file__))
 def assert_command_runs(*cmd):
     completed_proc = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     if not completed_proc.returncode == 0:
+        print(f"CloudCompare exited with return code: {completed_proc.returncode}")
         print(completed_proc.stdout.decode())
         assert False, "CloudCompare did not execute successfully"
 
@@ -56,3 +57,9 @@ def test_cloud_creation(cloudcompare_exe):
     assert_command_runs(
         cloudcompare_exe, "-SILENT", "-O", f"{abspath}/data/a_cloud.bin", "-PYTHON_SCRIPT",
         os.path.join(abspath, "scripts", "point_cloud.py"))
+
+
+def test_scalarfield_tools(cloudcompare_exe):
+    assert_command_runs(
+        cloudcompare_exe, "-SILENT", "-O", f"{abspath}/data/a_cloud.bin", "-PYTHON_SCRIPT",
+        os.path.join(abspath, "scripts", "scalarfield.py"))
