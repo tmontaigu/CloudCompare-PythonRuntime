@@ -163,56 +163,246 @@ void logPythonHome()
     }
 }
 
-PythonConfigPaths::PythonConfigPaths()
+
+constexpr Version::Version(uint16_t major_, uint16_t minor_, uint16_t patch_)
+    :  major(major_), minor(minor_), patch(patch_)
 {
+}
+
+Version::Version(const QStringRef& versionStr) : Version() {
+
+    QVector<QStringRef> parts = versionStr.split('.');
+    if (parts.size() == 3)
+    {
+        major = parts[0].toUInt();
+        minor = parts[1].toUInt();
+        patch = parts[2].toUInt();
+    }
+}
+
+bool Version::operator==(const Version& other) const {
+    return major == other.major && minor == other.minor && patch == other.patch;
+}
+
+constexpr Version PythonVersion(PY_MAJOR_VERSION, PY_MINOR_VERSION, PY_MICRO_VERSION);
+
+PyVenvCfg PyVenvCfg::FromFile(const QString &path)
+{
+    PyVenvCfg cfg{};
+
+    QFile cfgFile(path);
+    if (cfgFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        while (!cfgFile.atEnd())
+        {
+            QString line = cfgFile.readLine();
+            QStringList v = line.split("=");
+
+            if (v.size() == 2)
+            {
+                QString name = v[0].simplified();
+                QString value = v[1].simplified();
+
+                if (name == "home")
+                {
+                    cfg.home = value;
+                }
+                else if (name == "include-system-site-packages")
+                {
+                    cfg.includeSystemSitesPackages = (value == "true");
+                } else if (name == "version") {
+                     cfg.version = Version(QStringRef(&value));
+                }
+            }
+        }
+    }
+
+    return cfg;
+}
+
+Version GetPythonExeVersion(const QString& pythonExePath)
+{
+    QProcess pythonProcess;
+    pythonProcess.start(pythonExePath, {"--version"});
+    pythonProcess.waitForFinished();
+
+    QString versionStr = QTextCodec::codecForName("utf-8")->toUnicode(pythonProcess.readAllStandardOutput());
+
+    QVector<QStringRef> splits = versionStr.splitRef(" ");
+    if (splits.size() == 2 && splits[0].contains("Python"))
+    {
+        return Version(splits[1]);
+    }
+    return Version{};
+}
+
+PythonConfigPaths PythonConfigPaths::WindowsBundled()
+{
+    PythonConfigPaths config{};
+
     QDir pythonEnvDirPath(QApplication::applicationDirPath() + "/plugins/Python");
     if (pythonEnvDirPath.exists())
     {
         QString qPythonHome = pythonEnvDirPath.path();
-        m_pythonHome.reset(QStringToWcharArray(qPythonHome));
+        config.m_pythonHome.reset(QStringToWcharArray(qPythonHome));
 
-        // FIXME:
-        //  ';' as separator is only for windows, linux & macos uses ':'
-        QString qPythonPath = QString("%1/DLLs;%1/lib;%1/Lib/site-packages").arg(qPythonHome);
-        m_pythonPath.reset(QStringToWcharArray(qPythonPath));
+        QString qPythonPath = QString("%1/DLLs;%1/lib;%1/Lib/site-packages;").arg(qPythonHome);
+        config.m_pythonPath.reset(QStringToWcharArray(qPythonPath));
     }
     else
     {
         throw std::runtime_error("Python environment not found, plugin wasn't correctly installed");
     }
+    return config;
+}
+
+PythonConfigPaths PythonConfigPaths::WindowsCondaEnv(const char * condaPrefix)  {
+    PythonConfigPaths config{};
+
+    QDir pythonEnvDirPath(condaPrefix);
+    if (pythonEnvDirPath.exists())
+    {
+        QString qPythonHome = pythonEnvDirPath.path();
+        config.m_pythonHome.reset(QStringToWcharArray(qPythonHome));
+
+        QString qPythonPath =
+            QString("%1/DLLs;%1/lib;%1/Lib/site-packages;%2/plugins/Python/Lib/site-packages")
+                .arg(qPythonHome)
+                .arg(QApplication::applicationDirPath());
+        config.m_pythonPath.reset(QStringToWcharArray(qPythonPath));
+    }
+    else
+    {
+        throw std::runtime_error("Python environment not found, plugin wasn't correctly installed");
+    }
+    return config;
+}
+
+PythonConfigPaths PythonConfigPaths::WindowsVenv(const char *venvPrefix, const PyVenvCfg& cfg)
+{
+    PythonConfigPaths config{};
+
+    QDir pythonEnvDirPath(venvPrefix);
+    if (pythonEnvDirPath.exists())
+    {
+        QString qPythonHome = pythonEnvDirPath.path();
+        config.m_pythonHome.reset(QStringToWcharArray(qPythonHome));
+
+        QString qPythonPath =
+            QString("%1/Lib/site-packages;%2/plugins/Python/Lib/site-packages;%3/DLLS;%3/lib")
+                .arg(qPythonHome)
+                .arg(QApplication::applicationDirPath())
+                .arg(cfg.home);
+
+        if (cfg.includeSystemSitesPackages) {
+            qPythonPath.append(QString("%1/Lib/site-packages").arg(cfg.home));
+        }
+        config.m_pythonPath.reset(QStringToWcharArray(qPythonPath));
+    }
+    else
+    {
+        throw std::runtime_error("Python environment not found, plugin wasn't correctly installed");
+    }
+    return config;
 }
 
 // Useful link:
 // https://docs.python.org/3/c-api/init.html#initialization-finalization-and-threads
 PythonPlugin::PythonPlugin(QObject *parent)
-    : QObject(parent), ccStdPluginInterface(":/CC/plugin/PythonPlugin/info.json")
+    : QObject(parent), ccStdPluginInterface(":/CC/plugin/PythonPlugin/info.json"), m_editor(new QPythonEditor())
 {
 
     try
     {
-        m_pythonConfig = std::make_unique<PythonConfigPaths>();
-        Py_SetPythonHome(m_pythonConfig->pythonHome());
-        Py_SetPath(m_pythonConfig->pythonPath());
+        configurePython();
     }
-    catch (const std::exception &)
+    catch (const std::exception &e)
     {
+        ccLog::Warning("[PythonPlugin] Failed to configure Python: %s", e.what());
+        return;
     }
+
+    Py_SetPythonHome(m_pythonConfig.pythonHome());
+    Py_SetPath(m_pythonConfig.pythonPath());
+
+    logPythonHome();
+    logPythonPath();
 
     py::initialize_interpreter();
 
-    m_editor = new QPythonEditor();
     connect(m_editor, &QPythonEditor::executionCalled, this, &PythonPlugin::executeEditorCode);
+}
+
+
+void PythonPlugin::configurePython() {
+    const char *condaPrefix = std::getenv("CONDA_PREFIX");
+    const char *venvPrefix = std::getenv("VIRTUAL_ENV");
+    if (condaPrefix)
+    {
+        ccLog::Print("[PythonPlugin] Conda environment detected (%s)", std::getenv("CONDA_DEFAULT_ENV"));
+        QString pythonExePath = QString(condaPrefix) + "/python.exe";
+        if (!QFile::exists(pythonExePath))
+        {
+            pythonExePath = "python";
+        }
+
+        Version condaPythonVersion = GetPythonExeVersion(pythonExePath);
+        if (condaPythonVersion == PythonVersion) {
+            m_pythonConfig = PythonConfigPaths::WindowsCondaEnv(condaPrefix);
+        } else {
+            ccLog::Warning("[PythonPlugin] Conda environment's Python version (%u.%u.%u)"
+                           " does not match the plugin expected version (%u.%u.%u)",
+                           condaPythonVersion.major,
+                           condaPythonVersion.minor,
+                           condaPythonVersion.patch,
+                           PythonVersion.major,
+                           PythonVersion.minor,
+                           PythonVersion.patch);
+        }
+    }
+    else if (venvPrefix)
+    {
+        ccLog::Print("[PythonPlugin] Virtual environment detected");
+        PyVenvCfg cfg = PyVenvCfg::FromFile(QString("%1/pyvenv.cfg").arg(venvPrefix));
+        if (cfg.version == PythonVersion)
+        {
+            m_pythonConfig = PythonConfigPaths::WindowsVenv(venvPrefix, cfg);
+        }
+        else
+        {
+            ccLog::Warning("[PythonPlugin] venv's Python version (%u.%u.%u)"
+                           " does not match the plugin expected version (%u.%u.%u)",
+                           cfg.version.major,
+                           cfg.version.minor,
+                           cfg.version.patch,
+                           PythonVersion.major,
+                           PythonVersion.minor,
+                           PythonVersion.patch);
+        }
+    }
+
+    if (!m_pythonConfig.isSet())
+    {
+        if (condaPrefix || venvPrefix)
+        {
+            ccLog::Warning("Something went wrong using custom environment configuration"
+                           " falling back to bundled Python environment");
+        }
+        m_pythonConfig = PythonConfigPaths::WindowsBundled();
+    }
 }
 
 QList<QAction *> PythonPlugin::getActions()
 {
+    bool enableActions = Py_IsInitialized();
+
     if (!m_showEditor)
     {
         m_showEditor = new QAction("Show Editor", this);
         m_showEditor->setToolTip("Show the code editor window");
         m_showEditor->setIcon(QIcon(":/CC/plugin/PythonPlugin/images/python-editor-icon.png"));
         connect(m_showEditor, &QAction::triggered, this, &PythonPlugin::showEditor);
-        m_showEditor->setEnabled(true);
+        m_showEditor->setEnabled(enableActions);
     }
 
     if (!m_showREPL)
@@ -221,7 +411,7 @@ QList<QAction *> PythonPlugin::getActions()
         m_showREPL->setToolTip("Show the Python REPL");
         m_showREPL->setIcon(QIcon(":/CC/plugin/PythonPlugin/images/repl-icon.png"));
         connect(m_showREPL, &QAction::triggered, this, &PythonPlugin::showRepl);
-        m_showREPL->setEnabled(true);
+        m_showREPL->setEnabled(enableActions);
     }
 
     if (!m_showDoc)
@@ -230,7 +420,7 @@ QList<QAction *> PythonPlugin::getActions()
         m_showDoc->setToolTip("Show local documentation");
         m_showDoc->setIcon(m_app->getMainWindow()->style()->standardIcon(QStyle::SP_FileDialogInfoView));
         connect(m_showDoc, &QAction::triggered, this, &PythonPlugin::showDocumentation);
-        m_showDoc->setEnabled(true);
+        m_showDoc->setEnabled(enableActions);
     }
 
     if (!m_showAboutDialog)
@@ -241,7 +431,7 @@ QList<QAction *> PythonPlugin::getActions()
         m_showAboutDialog->setIcon(
             m_app->getMainWindow()->style()->standardIcon(QStyle::SP_MessageBoxQuestion));
         connect(m_showAboutDialog, &QAction::triggered, this, &PythonPlugin::showAboutDialog);
-        m_showAboutDialog->setEnabled(true);
+        m_showAboutDialog->setEnabled(enableActions);
     }
 
     return {m_showREPL, m_showEditor, m_showAboutDialog, m_showDoc};

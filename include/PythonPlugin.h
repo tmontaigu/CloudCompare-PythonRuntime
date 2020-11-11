@@ -29,21 +29,54 @@ namespace ui
 class QPythonREPL;
 }
 
+struct Version {
+    constexpr Version() = default;
+
+    constexpr Version(uint16_t major, uint16_t minor, uint16_t patch);
+
+    explicit Version(const QStringRef& versionStr);
+
+    bool operator==(const Version& other) const;
+
+    uint16_t major{0};
+    uint16_t minor{0};
+    uint16_t patch{0};
+};
+
+struct PyVenvCfg
+{
+    PyVenvCfg() = default;
+
+    static PyVenvCfg FromFile(const QString &path);
+
+    QString home{};
+    bool includeSystemSitesPackages{};
+    Version version;
+};
+
 /// Holds strings of the PythonHome & PythonPath
 /// Which are variables that needs to be properly set
 /// in order to have a functioning Python environment
 class PythonConfigPaths
 {
   public:
-    PythonConfigPaths();
+    PythonConfigPaths() = default;
+
+    static PythonConfigPaths WindowsBundled();
+
+    static PythonConfigPaths WindowsCondaEnv(const char * condaPrefix);
+
+    static PythonConfigPaths WindowsVenv(const char *venvPrefix, const PyVenvCfg& cfg);
+
+    bool isSet() const { return m_pythonHome != nullptr && m_pythonPath != nullptr; }
 
     const wchar_t *pythonHome() const { return m_pythonHome.get(); }
 
     const wchar_t *pythonPath() const { return m_pythonPath.get(); }
 
   private:
-    std::unique_ptr<wchar_t[]> m_pythonHome;
-    std::unique_ptr<wchar_t[]> m_pythonPath;
+    std::unique_ptr<wchar_t[]> m_pythonHome{};
+    std::unique_ptr<wchar_t[]> m_pythonPath{};
 };
 
 /// "Entry point" of the plugin
@@ -71,13 +104,16 @@ class PythonPlugin : public QObject, public ccStdPluginInterface
     void showDocumentation();
     void showAboutDialog();
     void executeEditorCode(const std::string &evalFileName, const std::string &code, QListWidget *output);
+    void configurePython();
+
+
 
     ui::QPythonREPL *m_repl{nullptr};
     QPythonEditor *m_editor{nullptr};
     QDocViewer *m_docView{nullptr};
 
 
-    std::unique_ptr<PythonConfigPaths> m_pythonConfig{nullptr};
+    PythonConfigPaths m_pythonConfig{};
 
     /// Actions
     QAction *m_showEditor{nullptr};
