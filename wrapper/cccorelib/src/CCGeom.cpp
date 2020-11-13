@@ -60,6 +60,21 @@ using namespace pybind11::literals;
             }                                                                                                \
         });
 
+#define DEFINE_CCVECTOR3(cppname, pyname)                                                                    \
+    py::class_<cppname>(cccorelib, pyname)                                                                   \
+        .def(py::init<>())                                                                                   \
+        .def(py::init<PointCoordinateType, PointCoordinateType, PointCoordinateType>())                      \
+        .def_readwrite("x", &cppname::x)                                                                     \
+        .def_readwrite("y", &cppname::y)                                                                     \
+        .def_readwrite("z", &cppname::z)                                                                     \
+        .def("__mul__", [](const cppname &self, PointCoordinateType val) { return self * val; })             \
+        .def("__sub__", [](const cppname &self, const cppname &other) { return self - other; })              \
+        .def("__div__", &cppname::operator/)                                                                 \
+        .def("__add__", &cppname::operator+)                                                                 \
+        .def("__repr__", [](const cppname &self) {                                                           \
+            return std::string("<") + pyname + "(" + std::to_string(self.x) + ", " + std::to_string(self.y) + ", " +      \
+                   std::to_string(self.z) + ")>";                                                            \
+        });
 void define_CCGeom(py::module &cccorelib)
 {
     DEFINE_VECTOR2TPL_TYPE(CCVector2, "CCVector2", PointCoordinateType);
@@ -71,18 +86,6 @@ void define_CCGeom(py::module &cccorelib)
     DEFINE_TUPLE3TPL(Tuple3i, "Tuple3i", int);
     DEFINE_TUPLE3TPL(Tuple3ui, "Tuple3ui", unsigned int);
 
-    py::class_<CCVector3>(cccorelib, "CCVector3")
-        .def(py::init<>())
-        .def(py::init<PointCoordinateType, PointCoordinateType, PointCoordinateType>())
-        .def_readwrite("x", &CCVector3::x)
-        .def_readwrite("y", &CCVector3::y)
-        .def_readwrite("z", &CCVector3::z)
-        .def("__mul__", [](const CCVector3 &self, PointCoordinateType val) { return self * val; })
-        .def("__sub__", [](const CCVector3 &self, const CCVector3 &other) { return self - other; })
-        .def("__div__", &CCVector3::operator/)
-        .def("__add__", &CCVector3::operator+)
-        .def("__repr__", [](const CCVector3 &self) {
-            return "<Vector3(" + std::to_string(self.x) + ", " + std::to_string(self.y) + ", " +
-                   std::to_string(self.z) + ")>";
-        });
+    DEFINE_CCVECTOR3(CCVector3, "CCVector3");
+    DEFINE_CCVECTOR3(CCVector3d, "CCVector3d");
 }
