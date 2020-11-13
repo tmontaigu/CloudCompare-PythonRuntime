@@ -40,7 +40,7 @@ if (PLUGIN_PYTHON)
                 TARGETS pycc cccorelib
                 DESTINATION "${CC_PYTHON_INSTALL_DIR}/Lib/site-packages"
         )
-        #If the docs have benn buit we copy them in the install folder
+        # If the docs have been built, we copy them in the install folder
         if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/docs/_build/index.html")
             install(
                     DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/docs/_build/
