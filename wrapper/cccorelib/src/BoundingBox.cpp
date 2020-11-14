@@ -41,5 +41,33 @@ void define_BoundingBox(py::module &cccorelib)
         .def("setValidity", &CCCoreLib::BoundingBox::setValidity, "state"_a)
         .def("isValid", &CCCoreLib::BoundingBox::isValid)
         .def("minDistTo", &CCCoreLib::BoundingBox::minDistTo, "box"_a)
-        .def("contains", &CCCoreLib::BoundingBox::contains, "P"_a);
+        .def("contains", &CCCoreLib::BoundingBox::contains, "P"_a)
+        .def("__add__", &CCCoreLib::BoundingBox::operator+)
+        .def("__iadd__",
+             [](CCCoreLib::BoundingBox &self, const CCCoreLib::BoundingBox &other) {
+                self += other;
+                return self;
+             }, "aBBox"_a)
+        .def(
+            "__iadd__",
+            [](CCCoreLib::BoundingBox &self, const CCVector3 &other) {
+              self += other;
+              return self;
+            },
+            "aVector"_a)
+        .def(
+            "__imul__",
+            [](CCCoreLib::BoundingBox &self, PointCoordinateType scaleFactor) {
+              self *= scaleFactor;
+              return self;
+            },
+            "scaleFactor"_a)
+        .def(
+            "__imul__",
+            [](CCCoreLib::BoundingBox &self, const CCCoreLib::SquareMatrix &aMatrix) {
+              self *= aMatrix;
+              return self;
+            },
+            "aMatrix"_a)
+        .def("__isub__", &CCCoreLib::BoundingBox::operator-=);
 }
