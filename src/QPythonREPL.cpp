@@ -19,7 +19,7 @@
 #include "PythonHighlighter.h"
 
 #include <ccLog.h>
-#include <ui_PythonREPLQt.h>
+#include <ui_QPythonREPL.h>
 
 #include "PythonStdErrOutRedirect.h"
 #include <pybind11/embed.h>
@@ -29,8 +29,8 @@ namespace py = pybind11;
 /// REPL special starting characters
 /// The first line of the REPL codeEdit shall start with the arrows
 /// subsequent lines shall start with the dots
-const static QString replArrows = ">>> ";
-const static QString continuationDots = "... ";
+const static QString replArrows(QStringLiteral(">>> "));
+const static QString continuationDots(QStringLiteral("... "));
 
 /// Handles key presses on the REPL window.
 ///
@@ -139,31 +139,12 @@ bool ui::KeyPressEater::eventFilter(QObject *obj, QEvent *event)
 
 ui::KeyPressEater::KeyPressEater(QPythonREPL *repl, QObject *parent) : QObject(parent), m_repl(repl) {}
 
-ui::QPythonREPL::QPythonREPL(QWidget *parent) : QWidget(parent), m_ui(new Ui_PythonREPLQt)
+ui::QPythonREPL::QPythonREPL(QMainWindow *parent) : QMainWindow(parent), m_ui(new Ui_QPythonREPL)
 {
-
-    m_ui->setupUi(this);
-    auto keyPressEater = new KeyPressEater(this);
-
-    auto codeEditorHeight = static_cast<int>(height() * 0.25);
-    m_ui->splitter->setSizes({height() - codeEditorHeight, codeEditorHeight});
-
-    codeEdit()->installEventFilter(keyPressEater);
-    codeEdit()->resize(codeEdit()->width(), 20);
-
-    codeEdit()->setTabStopWidth(codeEdit()->fontMetrics().width(' ') * 8);
-
-    QFont font("Monospace");
-    font.setStyleHint(QFont::TypeWriter);
-
-    codeEdit()->setFont(font);
-
     m_buf.reserve(255);
-    m_output = py::module::import("ccinternals").attr("ConsoleREPL")(outputDisplay());
 
-    executeCode(replArrows + "import pycc");
-    executeCode(replArrows + "import cccorelib");
-    executeCode(replArrows + "cc = pycc.GetInstance()");
+    setupUI();
+    importNeededPackages();
 }
 
 ui::QPythonREPL::~QPythonREPL() { delete m_ui; }
@@ -171,6 +152,42 @@ ui::QPythonREPL::~QPythonREPL() { delete m_ui; }
 QPlainTextEdit *ui::QPythonREPL::codeEdit() { return m_ui->codeEdit; }
 
 QListWidget *ui::QPythonREPL::outputDisplay() { return m_ui->outputDisplay; }
+
+void ui::QPythonREPL::setupUI() {
+    m_ui->setupUi(this);
+    auto keyPressEater = new KeyPressEater(this);
+
+    auto codeEditorHeight = static_cast<int>(height() * 0.25);
+    m_ui->splitter->setSizes({height() - codeEditorHeight, codeEditorHeight});
+    new PythonHighlighter(codeEdit()->document());
+
+    codeEdit()->installEventFilter(keyPressEater);
+    codeEdit()->resize(codeEdit()->width(), 20);
+    codeEdit()->setTabStopWidth(codeEdit()->fontMetrics().width(' ') * 8);
+
+    QFont font("Monospace");
+    font.setStyleHint(QFont::TypeWriter);
+
+    codeEdit()->setFont(font);
+
+    m_output = py::module::import("ccinternals").attr("ConsoleREPL")(outputDisplay());
+
+    connect(m_ui->toolBar->actions().at(0), &QAction::triggered, this, &QPythonREPL::reset);
+}
+
+void ui::QPythonREPL::reset()
+{
+    m_locals = py::dict();
+    m_ui->outputDisplay->clear();
+    importNeededPackages();
+}
+
+void ui::QPythonREPL::importNeededPackages()
+{
+    executeCode(replArrows + "import pycc");
+    executeCode(replArrows + "import cccorelib");
+    executeCode(replArrows + "cc = pycc.GetInstance()");
+}
 
 void ui::QPythonREPL::executeCode(const QString &pythonCode)
 {

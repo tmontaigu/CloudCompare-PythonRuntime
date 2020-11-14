@@ -2,9 +2,9 @@
 target_sources(${PROJECT_NAME}
         PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}/AboutDialog.ui
-        ${CMAKE_CURRENT_LIST_DIR}/PythonREPLQt.ui
         ${CMAKE_CURRENT_LIST_DIR}/QPythonEditor.ui
         ${CMAKE_CURRENT_LIST_DIR}/QEditorSettings.ui
+        ${CMAKE_CURRENT_LIST_DIR}/QPythonREPL.ui
         )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES

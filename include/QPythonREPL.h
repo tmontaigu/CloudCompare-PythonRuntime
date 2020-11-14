@@ -19,6 +19,7 @@
 #define CLOUDCOMPAREPROJECTS_QPYTHONREPL_H
 
 #include <QtWidgets>
+#include <QMainWindow>
 
 #include <string>
 
@@ -27,7 +28,7 @@
 
 namespace py = pybind11;
 
-class Ui_PythonREPLQt;
+class Ui_QPythonREPL;
 
 namespace ui
 {
@@ -69,13 +70,13 @@ class KeyPressEater : public QObject
 };
 
 /// Homemade REPL (Read Print Eval Loop)
-class QPythonREPL : public QWidget
+class QPythonREPL : public QMainWindow
 {
     friend KeyPressEater;
     Q_OBJECT
 
   public:
-    explicit QPythonREPL(QWidget *parent = nullptr);
+    explicit QPythonREPL(QMainWindow *parent = nullptr);
 
     void executeCode(const QString &pythonCode);
     ~QPythonREPL() override;
@@ -85,12 +86,16 @@ class QPythonREPL : public QWidget
 
     QListWidget *outputDisplay();
 
+    void reset();
+    void importNeededPackages();
+    void setupUI();
+
   private:
     History m_history{};
     std::string m_buf;
     py::object m_output;
     py::dict m_locals;
-    Ui_PythonREPLQt *m_ui;
+    Ui_QPythonREPL *m_ui;
 };
 
 } // namespace ui
