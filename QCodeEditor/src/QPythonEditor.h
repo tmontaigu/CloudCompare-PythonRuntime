@@ -33,15 +33,15 @@ class QMdiSubWindow;
 QT_END_NAMESPACE
 
 class ccMainAppInterface;
+class PythonInterpreter;
 
 class QPythonEditor : public QMainWindow, public Ui::QPythonEditor
 {
     Q_OBJECT
 
   public:
-    QPythonEditor();
+    QPythonEditor(PythonInterpreter *interpreter);
     void changeEvent(QEvent *e) override;
-    static QPythonEditor *TheInstance();
     bool openFile(const QString &fileName);
     static QString settingsApplicationName();
 
@@ -49,7 +49,7 @@ class QPythonEditor : public QMainWindow, public Ui::QPythonEditor
     void closeEvent(QCloseEvent *event) override;
   Q_SIGNALS:
     void
-    executionCalled(const std::string &evalFileName, const std::string &evalStatement, QListWidget *output);
+    executionCalled(const std::string &evalStatement, QListWidget *output);
 
   protected Q_SLOTS:
     void newFile();
@@ -71,6 +71,8 @@ class QPythonEditor : public QMainWindow, public Ui::QPythonEditor
     void about();
     void updateMenus();
     void updateWindowMenu();
+    void executionStarted();
+    void executionFinished();
     CodeEditor *createChildCodeEditor();
 
   private:

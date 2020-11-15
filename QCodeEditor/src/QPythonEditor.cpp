@@ -17,6 +17,7 @@
 
 #include "QPythonEditor.h"
 #include "CodeEditor.h"
+#include <PythonInterpreter.h>
 
 // qCC
 #include "ccMainAppInterface.h"
@@ -24,10 +25,7 @@
 // Qt
 #include <QtWidgets>
 
-// global static pointer (as there should only be one instance of the editor
-static QPythonEditor *s_instance = nullptr;
-
-QPythonEditor::QPythonEditor() : Ui::QPythonEditor()
+QPythonEditor::QPythonEditor(PythonInterpreter *interpreter) : Ui::QPythonEditor()
 {
     setupUi(this);
     mdiArea = new QMdiArea(this);
@@ -43,6 +41,10 @@ QPythonEditor::QPythonEditor() : Ui::QPythonEditor()
 
     readSettings();
     QCoreApplication::instance()->installEventFilter(this);
+
+    connect(this, &QPythonEditor::executionCalled, interpreter, &PythonInterpreter::executeCode);
+    connect(interpreter, &PythonInterpreter::executionStarted, this, &QPythonEditor::executionStarted);
+    connect(interpreter, &PythonInterpreter::executionFinished, this, &QPythonEditor::executionFinished);
 }
 
 void QPythonEditor::closeEvent(QCloseEvent *event)
@@ -91,15 +93,6 @@ void QPythonEditor::changeEvent(QEvent *e)
     }
 }
 
-QPythonEditor *QPythonEditor::TheInstance()
-{
-    if (!s_instance)
-    {
-        s_instance = new QPythonEditor();
-    }
-    return s_instance;
-}
-
 bool QPythonEditor::openFile(const QString &fileName)
 {
     if (QMdiSubWindow *existing = findChildCodeEditor(fileName))
@@ -134,8 +127,14 @@ bool QPythonEditor::loadFile(const QString &fileName)
     return succeeded;
 }
 
-static inline QString recentFilesKey() { return QStringLiteral("recentFileList"); }
-static inline QString fileKey() { return QStringLiteral("file"); }
+static inline QString recentFilesKey()
+{
+    return QStringLiteral("recentFileList");
+}
+static inline QString fileKey()
+{
+    return QStringLiteral("file");
+}
 
 static QStringList readRecentFiles(QSettings &settings)
 {
@@ -318,6 +317,21 @@ void QPythonEditor::indentLess()
 
 void QPythonEditor::about() {}
 
+void QPythonEditor::executionStarted()
+{
+    actionRun->setEnabled(false);
+    if (activeChildCodeEditor())
+    {
+        statusbar->showMessage(QString("Executing %1").arg(activeChildCodeEditor()->windowTitle()));
+    }
+}
+
+void QPythonEditor::executionFinished()
+{
+    actionRun->setEnabled(true);
+    statusbar->clearMessage();
+}
+
 void QPythonEditor::createActions()
 {
     connect(actionNew, &QAction::triggered, this, &QPythonEditor::newFile);
@@ -334,7 +348,7 @@ void QPythonEditor::createActions()
     connect(recentMenu, &QMenu::aboutToShow, this, &QPythonEditor::updateRecentFileActions);
     recentFileSubMenuAct = recentMenu->menuAction();
 
-    for (auto& recentFileAct : recentFileActs)
+    for (auto &recentFileAct : recentFileActs)
     {
         recentFileAct = recentMenu->addAction(QString());
         connect(recentFileAct, &QAction::triggered, this, &QPythonEditor::openRecentFile);
@@ -413,7 +427,10 @@ void QPythonEditor::createActions()
     addAction(actionIndent_Less);
 }
 
-void QPythonEditor::createStatusBar() { statusBar()->showMessage(tr("Ready")); }
+void QPythonEditor::createStatusBar()
+{
+    statusBar()->showMessage(tr("Ready"));
+}
 
 void QPythonEditor::updateMenus()
 {
@@ -540,7 +557,6 @@ QMdiSubWindow *QPythonEditor::findChildCodeEditor(const QString &fileName) const
 
 QString QPythonEditor::settingsApplicationName()
 {
-
     return QString(QCoreApplication::applicationName()).append(":PythonPlugin");
 }
 
@@ -549,8 +565,6 @@ void QPythonEditor::runExecute()
     if (activeChildCodeEditor())
     {
         this->scriptOutputConsole->clear();
-        Q_EMIT executionCalled(qPrintable(activeChildCodeEditor()->userFriendlyCurrentFile()),
-                               qPrintable(activeChildCodeEditor()->toPlainText()),
-                               this->scriptOutputConsole);
+        Q_EMIT executionCalled(qPrintable(activeChildCodeEditor()->toPlainText()), this->scriptOutputConsole);
     }
 }

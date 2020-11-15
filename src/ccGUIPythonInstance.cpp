@@ -17,7 +17,6 @@
 
 #include "ccGUIPythonInstance.h"
 
-#include <FileIOFilter.h>
 
 #define slots Q_SLOTS
 #define signals Q_SIGNALS
