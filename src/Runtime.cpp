@@ -36,9 +36,15 @@ namespace py = pybind11;
 ccGUIPythonInstance *s_pythonInstance{nullptr};
 ccCommandLineInterface *s_cmdLineInstance{nullptr};
 
-ccGUIPythonInstance *GetInstance() { return s_pythonInstance; }
+ccGUIPythonInstance *GetInstance()
+{
+    return s_pythonInstance;
+}
 
-ccCommandLineInterface *GetCmdLineInstance() { return s_cmdLineInstance; }
+ccCommandLineInterface *GetCmdLineInstance()
+{
+    return s_cmdLineInstance;
+}
 
 namespace Python
 {
@@ -87,15 +93,21 @@ size_t clearDB()
 
 PYBIND11_EMBEDDED_MODULE(ccinternals, m)
 {
+    py::enum_<Qt::GlobalColor>(m, "GlobalColor");
+
+    py::class_<QColor>(m, "QColor");
+
+    py::class_<QListWidget, std::unique_ptr<QListWidget, py::nodelete>>(m, "QListWidget");
+
+
     py::class_<ccConsoleOutput>(m, "ccConsoleOutput")
         .def(py::init<>())
         .def("write", &ccConsoleOutput::write)
         .def("flush", &ccConsoleOutput::flush);
 
-    py::class_<QListWidget, std::unique_ptr<QListWidget, py::nodelete>>(m, "QListWidget");
-
     py::class_<ConsoleREPL>(m, "ConsoleREPL")
-        .def(py::init<QListWidget *>())
+        .def(py::init<QListWidget *, Qt::GlobalColor>())
+        .def(py::init<QListWidget *, QColor>())
         .def("write", &ConsoleREPL::write)
         .def("flush", &ConsoleREPL::flush);
 }

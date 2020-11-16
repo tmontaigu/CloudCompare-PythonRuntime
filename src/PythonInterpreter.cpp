@@ -264,11 +264,13 @@ void PythonInterpreter::executeCodeWithState(const std::string &code, QListWidge
 
     Q_EMIT executionStarted();
     m_isExecuting = true;
+    const QColor orange(255, 100, 0);
 
     try
     {
-        py::object o = py::module::import("ccinternals").attr("ConsoleREPL")(output);
-        PyStdErrOutStreamRedirect redirect{o, o};
+        py::object newStdout = py::module::import("ccinternals").attr("ConsoleREPL")(output, Qt::black);
+        py::object newStderr = py::module::import("ccinternals").attr("ConsoleREPL")(output, orange);
+        PyStdErrOutStreamRedirect redirect{newStdout, newStderr};
         py::exec(code);
     }
     catch (const std::exception &e)

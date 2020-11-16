@@ -83,8 +83,14 @@ class ccConsoleOutput
   public:
     ccConsoleOutput() = default;
 
-    void write(const char *messagePart) { m_output.write(messagePart); }
-    void flush() { m_output.flush(); }
+    void write(const char *messagePart)
+    {
+        m_output.write(messagePart);
+    }
+    void flush()
+    {
+        m_output.flush();
+    }
 
   private:
     ConsoleWrapper m_output{[](const QString &message) { ccLog::Print(message); }};
@@ -94,13 +100,25 @@ class ccConsoleOutput
 class ConsoleREPL
 {
   public:
-    explicit ConsoleREPL(QListWidget *view) : view(view) {}
+    explicit ConsoleREPL(QListWidget *view, Qt::GlobalColor color) : view(view), brush(color) {}
+    explicit ConsoleREPL(QListWidget *view, const QColor& color) : view(view), brush(color) {}
 
-    void write(const char *messagePart) { m_output.write(messagePart); }
-    void flush() { m_output.flush(); }
+    void write(const char *messagePart)
+    {
+        m_output.write(messagePart);
+    }
+    void flush()
+    {
+        m_output.flush();
+    }
 
   private:
     QListWidget *view;
-    ConsoleWrapper m_output{[this](const QString &message) { view->addItem(message); }};
+    QBrush brush;
+    ConsoleWrapper m_output{[this](const QString &message) {
+        auto *messageItem = new QListWidgetItem(message);
+        messageItem->setForeground(brush);
+        view->addItem(messageItem);
+    }};
 };
 #endif // CLOUDCOMPAREPROJECTS_CONSOLES_H
