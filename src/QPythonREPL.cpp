@@ -23,7 +23,6 @@
 #include <ui_QPythonREPL.h>
 
 #include "PythonStdErrOutRedirect.h"
-#include <pybind11/embed.h>
 
 namespace py = pybind11;
 
@@ -39,7 +38,7 @@ const static QString continuationDots(QStringLiteral("... "));
 ///    - maps up/down arrow keys to history navigation
 ///    - blocks movements/deletions/edits of the cursor when it would erase
 ///      the REPL special characters
-bool ui::KeyPressEater::eventFilter(QObject *obj, QEvent *event)
+bool KeyPressEater::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::KeyPress)
     {
@@ -141,9 +140,9 @@ bool ui::KeyPressEater::eventFilter(QObject *obj, QEvent *event)
     }
 }
 
-ui::KeyPressEater::KeyPressEater(QPythonREPL *repl, QObject *parent) : QObject(parent), m_repl(repl) {}
+KeyPressEater::KeyPressEater(QPythonREPL *repl, QObject *parent) : QObject(parent), m_repl(repl) {}
 
-ui::QPythonREPL::QPythonREPL(PythonInterpreter *interpreter, QMainWindow *parent)
+QPythonREPL::QPythonREPL(PythonInterpreter *interpreter, QMainWindow *parent)
     : m_interpreter(interpreter), QMainWindow(parent), m_ui(new Ui_QPythonREPL), m_state()
 {
     m_buf.reserve(255);
@@ -152,22 +151,22 @@ ui::QPythonREPL::QPythonREPL(PythonInterpreter *interpreter, QMainWindow *parent
     importNeededPackages();
 }
 
-ui::QPythonREPL::~QPythonREPL()
+QPythonREPL::~QPythonREPL()
 {
     delete m_ui;
 }
 
-QPlainTextEdit *ui::QPythonREPL::codeEdit()
+QPlainTextEdit *QPythonREPL::codeEdit()
 {
     return m_ui->codeEdit;
 }
 
-QListWidget *ui::QPythonREPL::outputDisplay()
+QListWidget *QPythonREPL::outputDisplay()
 {
     return m_ui->outputDisplay;
 }
 
-void ui::QPythonREPL::setupUI()
+void QPythonREPL::setupUI()
 {
     m_ui->setupUi(this);
     auto keyPressEater = new KeyPressEater(this);
@@ -188,21 +187,21 @@ void ui::QPythonREPL::setupUI()
     connect(m_ui->toolBar->actions().at(0), &QAction::triggered, this, &QPythonREPL::reset);
 }
 
-void ui::QPythonREPL::reset()
+void QPythonREPL::reset()
 {
     m_state = PythonInterpreter::State();
     m_ui->outputDisplay->clear();
     importNeededPackages();
 }
 
-void ui::QPythonREPL::importNeededPackages()
+void QPythonREPL::importNeededPackages()
 {
     executeCode(replArrows + "import pycc");
     executeCode(replArrows + "import cccorelib");
     executeCode(replArrows + "cc = pycc.GetInstance()");
 }
 
-void ui::QPythonREPL::executeCode(const QString &pythonCode)
+void QPythonREPL::executeCode(const QString &pythonCode)
 {
     /// Our raw input contains the ">>> " and "... " and is a QString
     /// convert it to std::string while filtering out non needed chars
@@ -232,13 +231,13 @@ void ui::QPythonREPL::executeCode(const QString &pythonCode)
     outputDisplay()->scrollToBottom();
 }
 
-void ui::History::add(QString &&cmd)
+void History::add(QString &&cmd)
 {
     m_commands.push_back(cmd);
     m_current = m_commands.rbegin();
 }
 
-const QString &ui::History::older()
+const QString &History::older()
 {
     if (m_current == m_commands.rend())
     {
@@ -249,7 +248,7 @@ const QString &ui::History::older()
     return current;
 }
 
-const QString &ui::History::newer()
+const QString &History::newer()
 {
     if (m_current == m_commands.rend())
     {
@@ -268,12 +267,12 @@ const QString &ui::History::newer()
     return current;
 }
 
-bool ui::History::empty() const
+bool History::empty() const
 {
     return m_commands.empty();
 }
 
-size_t ui::History::size() const
+size_t History::size() const
 {
     return m_commands.size();
 }

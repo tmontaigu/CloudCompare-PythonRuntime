@@ -19,19 +19,16 @@
 #define CLOUDCOMPAREPROJECTS_QPYTHONREPL_H
 
 #include <QMainWindow>
-#include <QtWidgets>
 
 #include <string>
 
 #include "PythonInterpreter.h"
 
-namespace py = pybind11;
 
 class PythonInterpreter;
 class Ui_QPythonREPL;
+class QPlainTextEdit;
 
-namespace ui
-{
 class QPythonREPL;
 
 /// Simple history system for the REPL.
@@ -98,6 +95,5 @@ class QPythonREPL : public QMainWindow
     PythonInterpreter::State m_state;
 };
 
-} // namespace ui
 
 #endif // CLOUDCOMPAREPROJECTS_QPYTHONREPL_H

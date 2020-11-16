@@ -18,18 +18,13 @@
 #pragma once
 
 #include "ccStdPluginInterface.h"
-#include <memory>
 
 #include "PythonInterpreter.h"
 
-class QPythonEditor;
 class QListWidget;
+class QPythonEditor;
 class QDocViewer;
-
-namespace ui
-{
 class QPythonREPL;
-}
 
 
 /// "Entry point" of the plugin
@@ -61,7 +56,7 @@ class PythonPlugin : public QObject, public ccStdPluginInterface
 
     PythonInterpreter m_interp;
 
-    ui::QPythonREPL *m_repl{nullptr};
+    QPythonREPL *m_repl{nullptr};
     QPythonEditor *m_editor{nullptr};
     QDocViewer *m_docView{nullptr};
 

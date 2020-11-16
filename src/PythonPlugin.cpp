@@ -223,7 +223,7 @@ void PythonPlugin::showRepl()
     }
     else
     {
-        m_repl = new ui::QPythonREPL(&m_interp);
+        m_repl = new QPythonREPL(&m_interp);
         m_repl->show();
     }
 }

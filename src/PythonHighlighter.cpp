@@ -17,7 +17,6 @@
 
 #include "PythonHighlighter.h"
 
-/////
 
 // Syntax styles that can be shared by all languages
 typedef QMap<QString, QTextCharFormat> FormatMap;

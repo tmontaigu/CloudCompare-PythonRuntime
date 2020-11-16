@@ -19,30 +19,29 @@
 #define CLOUDCOMPAREPROJECTS_CCGUIPYTHONINSTANCE_H
 
 #include <FileIOFilter.h>
-#include <ccMainAppInterface.h>
+
+class ccMainAppInterface;
+class QMainWindow;
 
 /// This class provide methods that are made available Python scripts
 /// kind of like C++ plugins have access to a `ccMainAppInterface`.
 /// Thus this class is mostly a ccMainAppInterface with some accommodations
 /// to handle the fact that it is made to interact with python.
-class Q_DECL_EXPORT ccGUIPythonInstance
-{
-  public:
+class Q_DECL_EXPORT ccGUIPythonInstance {
+public:
     explicit ccGUIPythonInstance(ccMainAppInterface *app);
 
-    QMainWindow * getMainWindow() {
-        return m_app->getMainWindow();
-    }
+    QMainWindow *getMainWindow();
 
-    bool haveSelection() const { return m_app->haveSelection(); }
+    bool haveSelection() const;
 
-    bool haveOneSelection() const { return m_app->haveOneSelection(); }
+    bool haveOneSelection() const;
 
-    const ccHObject::Container &getSelectedEntities() const { return m_app->getSelectedEntities(); }
+    const ccHObject::Container &getSelectedEntities() const;
 
-    void setSelectedInDB(ccHObject *obj, bool selected) { m_app->setSelectedInDB(obj, selected); }
+    void setSelectedInDB(ccHObject *obj, bool selected);
 
-    ccHObject *dbRootObject() { return m_app->dbRootObject(); }
+    ccHObject *dbRootObject();
 
     void addToDB(ccHObject *obj,
                  bool updateZoom = false,
@@ -50,17 +49,17 @@ class Q_DECL_EXPORT ccGUIPythonInstance
                  bool checkDimensions = false,
                  bool autoRedraw = true);
 
-    void redrawAll(bool only2D = false) { return m_app->redrawAll(only2D); }
+    void redrawAll(bool only2D = false);
 
-    void refreshAll(bool only2D = false) { return m_app->refreshAll(only2D); }
+    void refreshAll(bool only2D = false);
 
-    void enableAll() { return m_app->enableAll(); }
+    void enableAll();
 
-    void disableAll() { return m_app->disableAll(); }
+    void disableAll();
 
-    void updateUI() { return m_app->updateUI(); }
+    void updateUI();
 
-    void freezeUI(bool state) { return m_app->freezeUI(state); }
+    void freezeUI(bool state);
 
     ccHObject *createObject(const char *type_name);
 
@@ -70,7 +69,7 @@ class Q_DECL_EXPORT ccGUIPythonInstance
     /// but were not added to the DB tree via `addToDB`
     size_t clearDB();
 
-  private:
+private:
     ccMainAppInterface *m_app;
     // This holds pointer to objects that were created by a Python script.
     // They are kept in this vector until they are either moved to the true ccDB (using `addToDB`)
