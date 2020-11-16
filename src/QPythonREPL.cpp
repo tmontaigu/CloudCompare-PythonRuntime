@@ -17,6 +17,7 @@
 
 #include "QPythonREPL.h"
 #include "PythonHighlighter.h"
+#include "PythonInterpreter.h"
 
 #include <ccLog.h>
 #include <ui_QPythonREPL.h>
@@ -72,8 +73,11 @@ bool ui::KeyPressEater::eventFilter(QObject *obj, QEvent *event)
             }
 
             QString pythonCode = m_repl->codeEdit()->toPlainText();
-            m_repl->executeCode(pythonCode);
-            m_repl->m_history.add(std::move(pythonCode));
+            if (!m_repl->m_interpreter->isExecuting())
+            {
+                m_repl->executeCode(pythonCode);
+                m_repl->m_history.add(std::move(pythonCode));
+            }
             return true;
         }
         case Qt::Key_Backspace:
@@ -139,7 +143,8 @@ bool ui::KeyPressEater::eventFilter(QObject *obj, QEvent *event)
 
 ui::KeyPressEater::KeyPressEater(QPythonREPL *repl, QObject *parent) : QObject(parent), m_repl(repl) {}
 
-ui::QPythonREPL::QPythonREPL(QMainWindow *parent) : QMainWindow(parent), m_ui(new Ui_QPythonREPL)
+ui::QPythonREPL::QPythonREPL(PythonInterpreter *interpreter, QMainWindow *parent)
+    : m_interpreter(interpreter), QMainWindow(parent), m_ui(new Ui_QPythonREPL), m_state()
 {
     m_buf.reserve(255);
 
@@ -147,13 +152,23 @@ ui::QPythonREPL::QPythonREPL(QMainWindow *parent) : QMainWindow(parent), m_ui(ne
     importNeededPackages();
 }
 
-ui::QPythonREPL::~QPythonREPL() { delete m_ui; }
+ui::QPythonREPL::~QPythonREPL()
+{
+    delete m_ui;
+}
 
-QPlainTextEdit *ui::QPythonREPL::codeEdit() { return m_ui->codeEdit; }
+QPlainTextEdit *ui::QPythonREPL::codeEdit()
+{
+    return m_ui->codeEdit;
+}
 
-QListWidget *ui::QPythonREPL::outputDisplay() { return m_ui->outputDisplay; }
+QListWidget *ui::QPythonREPL::outputDisplay()
+{
+    return m_ui->outputDisplay;
+}
 
-void ui::QPythonREPL::setupUI() {
+void ui::QPythonREPL::setupUI()
+{
     m_ui->setupUi(this);
     auto keyPressEater = new KeyPressEater(this);
 
@@ -170,14 +185,12 @@ void ui::QPythonREPL::setupUI() {
 
     codeEdit()->setFont(font);
 
-    m_output = py::module::import("ccinternals").attr("ConsoleREPL")(outputDisplay());
-
     connect(m_ui->toolBar->actions().at(0), &QAction::triggered, this, &QPythonREPL::reset);
 }
 
 void ui::QPythonREPL::reset()
 {
-    m_locals = py::dict();
+    m_state = PythonInterpreter::State();
     m_ui->outputDisplay->clear();
     importNeededPackages();
 }
@@ -215,17 +228,7 @@ void ui::QPythonREPL::executeCode(const QString &pythonCode)
     outputDisplay()->addItem(pythonCode);
     codeEdit()->clear();
     codeEdit()->insertPlainText(replArrows);
-    try
-    {
-        PyStdErrOutStreamRedirect redir{m_output, m_output};
-        py::exec(m_buf, py::globals(), m_locals);
-    }
-    catch (const std::exception &e)
-    {
-        auto *errorMessage = new QListWidgetItem(e.what());
-        errorMessage->setTextColor(Qt::red);
-        outputDisplay()->addItem(errorMessage);
-    }
+    m_interpreter->executeCodeWithState(m_buf, outputDisplay(), m_state);
     outputDisplay()->scrollToBottom();
 }
 
@@ -265,6 +268,12 @@ const QString &ui::History::newer()
     return current;
 }
 
-bool ui::History::empty() const { return m_commands.empty(); }
+bool ui::History::empty() const
+{
+    return m_commands.empty();
+}
 
-size_t ui::History::size() const { return m_commands.size(); }
+size_t ui::History::size() const
+{
+    return m_commands.size();
+}

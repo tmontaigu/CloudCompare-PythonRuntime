@@ -15,22 +15,19 @@
 //#                                                                        #
 //##########################################################################
 
-#include <QtGui>
-#include <iostream>
-#include <memory>
-
 #include "AboutDialog.h"
 #include "PrivateRuntime.h"
 #include "PythonPlugin.h"
+#include "PythonStdErrOutRedirect.h"
 #include "QPythonEditor.h"
 #include "QPythonREPL.h"
-
-#include <Python.h>
-#include <pybind11/embed.h>
+#include "Utilities.h"
 
 #include <QWebEngineHistory>
 #include <QWebEngineSettings>
 #include <QWebEngineView>
+
+#include <memory>
 
 #define slots Q_SLOTS
 #define signals Q_SIGNALS
@@ -70,8 +67,15 @@ class QDocViewer : public QWidget
         m_viewEngine->load(QUrl(url));
     }
 
-    void loadPreviousPage() { m_viewEngine->history()->back(); }
-    void loadNextPage() { m_viewEngine->history()->forward(); }
+    void loadPreviousPage()
+    {
+        m_viewEngine->history()->back();
+    }
+
+    void loadNextPage()
+    {
+        m_viewEngine->history()->forward();
+    }
 
   protected:
     void setupWebEngine()
@@ -104,19 +108,6 @@ class QDocViewer : public QWidget
   private:
     QWebEngineView *m_viewEngine{nullptr};
 };
-
-/// Returns a newly allocated array (null terminated) from a QString
-wchar_t *QStringToWcharArray(const QString &string)
-{
-    auto *wcharArray = new wchar_t[string.size() + 1];
-    int len = string.toWCharArray(wcharArray);
-    if (len > string.size())
-    {
-        throw std::logic_error("len mismatch");
-    }
-    wcharArray[len] = '\0';
-    return wcharArray;
-}
 
 void logPythonPath()
 {
@@ -163,238 +154,23 @@ void logPythonHome()
     }
 }
 
-
-constexpr Version::Version(uint16_t major_, uint16_t minor_, uint16_t patch_)
-    :  major(major_), minor(minor_), patch(patch_)
-{
-}
-
-Version::Version(const QStringRef& versionStr) : Version() {
-
-    QVector<QStringRef> parts = versionStr.split('.');
-    if (parts.size() == 3)
-    {
-        major = parts[0].toUInt();
-        minor = parts[1].toUInt();
-        patch = parts[2].toUInt();
-    }
-}
-
-bool Version::operator==(const Version& other) const {
-    return major == other.major && minor == other.minor && patch == other.patch;
-}
-
-constexpr Version PythonVersion(PY_MAJOR_VERSION, PY_MINOR_VERSION, PY_MICRO_VERSION);
-
-PyVenvCfg PyVenvCfg::FromFile(const QString &path)
-{
-    PyVenvCfg cfg{};
-
-    QFile cfgFile(path);
-    if (cfgFile.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        while (!cfgFile.atEnd())
-        {
-            QString line = cfgFile.readLine();
-            QStringList v = line.split("=");
-
-            if (v.size() == 2)
-            {
-                QString name = v[0].simplified();
-                QString value = v[1].simplified();
-
-                if (name == "home")
-                {
-                    cfg.home = value;
-                }
-                else if (name == "include-system-site-packages")
-                {
-                    cfg.includeSystemSitesPackages = (value == "true");
-                } else if (name == "version") {
-                     cfg.version = Version(QStringRef(&value));
-                }
-            }
-        }
-    }
-
-    return cfg;
-}
-
-Version GetPythonExeVersion(const QString& pythonExePath)
-{
-    QProcess pythonProcess;
-    pythonProcess.start(pythonExePath, {"--version"});
-    pythonProcess.waitForFinished();
-
-    QString versionStr = QTextCodec::codecForName("utf-8")->toUnicode(pythonProcess.readAllStandardOutput());
-
-    QVector<QStringRef> splits = versionStr.splitRef(" ");
-    if (splits.size() == 2 && splits[0].contains("Python"))
-    {
-        return Version(splits[1]);
-    }
-    return Version{};
-}
-
-PythonConfigPaths PythonConfigPaths::WindowsBundled()
-{
-    PythonConfigPaths config{};
-
-    QDir pythonEnvDirPath(QApplication::applicationDirPath() + "/plugins/Python");
-    if (pythonEnvDirPath.exists())
-    {
-        QString qPythonHome = pythonEnvDirPath.path();
-        config.m_pythonHome.reset(QStringToWcharArray(qPythonHome));
-
-        QString qPythonPath = QString("%1/DLLs;%1/lib;%1/Lib/site-packages;").arg(qPythonHome);
-        config.m_pythonPath.reset(QStringToWcharArray(qPythonPath));
-    }
-    else
-    {
-        throw std::runtime_error("Python environment not found, plugin wasn't correctly installed");
-    }
-    return config;
-}
-
-PythonConfigPaths PythonConfigPaths::WindowsCondaEnv(const char * condaPrefix)  {
-    PythonConfigPaths config{};
-
-    QDir pythonEnvDirPath(condaPrefix);
-    if (pythonEnvDirPath.exists())
-    {
-        QString qPythonHome = pythonEnvDirPath.path();
-        config.m_pythonHome.reset(QStringToWcharArray(qPythonHome));
-
-        QString qPythonPath =
-            QString("%1/DLLs;%1/lib;%1/Lib/site-packages;%2/plugins/Python/Lib/site-packages")
-                .arg(qPythonHome)
-                .arg(QApplication::applicationDirPath());
-        config.m_pythonPath.reset(QStringToWcharArray(qPythonPath));
-    }
-    else
-    {
-        throw std::runtime_error("Python environment not found, plugin wasn't correctly installed");
-    }
-    return config;
-}
-
-PythonConfigPaths PythonConfigPaths::WindowsVenv(const char *venvPrefix, const PyVenvCfg& cfg)
-{
-    PythonConfigPaths config{};
-
-    QDir pythonEnvDirPath(venvPrefix);
-    if (pythonEnvDirPath.exists())
-    {
-        QString qPythonHome = pythonEnvDirPath.path();
-        config.m_pythonHome.reset(QStringToWcharArray(qPythonHome));
-
-        QString qPythonPath =
-            QString("%1/Lib/site-packages;%2/plugins/Python/Lib/site-packages;%3/DLLS;%3/lib")
-                .arg(qPythonHome)
-                .arg(QApplication::applicationDirPath())
-                .arg(cfg.home);
-
-        if (cfg.includeSystemSitesPackages) {
-            qPythonPath.append(QString("%1/Lib/site-packages").arg(cfg.home));
-        }
-        config.m_pythonPath.reset(QStringToWcharArray(qPythonPath));
-    }
-    else
-    {
-        throw std::runtime_error("Python environment not found, plugin wasn't correctly installed");
-    }
-    return config;
-}
-
 // Useful link:
 // https://docs.python.org/3/c-api/init.html#initialization-finalization-and-threads
 PythonPlugin::PythonPlugin(QObject *parent)
-    : QObject(parent), ccStdPluginInterface(":/CC/plugin/PythonPlugin/info.json"), m_editor(new QPythonEditor())
+    : QObject(parent), ccStdPluginInterface(":/CC/plugin/PythonPlugin/info.json"),
+      m_editor(new QPythonEditor(&m_interp)), m_interp(nullptr)
 {
-
-    try
-    {
-        configurePython();
-    }
-    catch (const std::exception &e)
-    {
-        ccLog::Warning("[PythonPlugin] Failed to configure Python: %s", e.what());
-        return;
-    }
-
-    Py_SetPythonHome(m_pythonConfig.pythonHome());
-    Py_SetPath(m_pythonConfig.pythonPath());
+    m_interp.initialize();
 
     logPythonHome();
     logPythonPath();
 
-    py::initialize_interpreter();
-
-    connect(m_editor, &QPythonEditor::executionCalled, this, &PythonPlugin::executeEditorCode);
-}
-
-
-void PythonPlugin::configurePython() {
-    const char *condaPrefix = std::getenv("CONDA_PREFIX");
-    const char *venvPrefix = std::getenv("VIRTUAL_ENV");
-    if (condaPrefix)
-    {
-        ccLog::Print("[PythonPlugin] Conda environment detected (%s)", std::getenv("CONDA_DEFAULT_ENV"));
-        QString pythonExePath = QString(condaPrefix) + "/python.exe";
-        if (!QFile::exists(pythonExePath))
-        {
-            pythonExePath = "python";
-        }
-
-        Version condaPythonVersion = GetPythonExeVersion(pythonExePath);
-        if (condaPythonVersion == PythonVersion) {
-            m_pythonConfig = PythonConfigPaths::WindowsCondaEnv(condaPrefix);
-        } else {
-            ccLog::Warning("[PythonPlugin] Conda environment's Python version (%u.%u.%u)"
-                           " does not match the plugin expected version (%u.%u.%u)",
-                           condaPythonVersion.major,
-                           condaPythonVersion.minor,
-                           condaPythonVersion.patch,
-                           PythonVersion.major,
-                           PythonVersion.minor,
-                           PythonVersion.patch);
-        }
-    }
-    else if (venvPrefix)
-    {
-        ccLog::Print("[PythonPlugin] Virtual environment detected");
-        PyVenvCfg cfg = PyVenvCfg::FromFile(QString("%1/pyvenv.cfg").arg(venvPrefix));
-        if (cfg.version == PythonVersion)
-        {
-            m_pythonConfig = PythonConfigPaths::WindowsVenv(venvPrefix, cfg);
-        }
-        else
-        {
-            ccLog::Warning("[PythonPlugin] venv's Python version (%u.%u.%u)"
-                           " does not match the plugin expected version (%u.%u.%u)",
-                           cfg.version.major,
-                           cfg.version.minor,
-                           cfg.version.patch,
-                           PythonVersion.major,
-                           PythonVersion.minor,
-                           PythonVersion.patch);
-        }
-    }
-
-    if (!m_pythonConfig.isSet())
-    {
-        if (condaPrefix || venvPrefix)
-        {
-            ccLog::Warning("Something went wrong using custom environment configuration"
-                           " falling back to bundled Python environment");
-        }
-        m_pythonConfig = PythonConfigPaths::WindowsBundled();
-    }
+    connect(&m_interp, &PythonInterpreter::executionFinished, Python::clearDB);
 }
 
 QList<QAction *> PythonPlugin::getActions()
 {
-    bool enableActions = Py_IsInitialized();
+    bool enableActions = PythonInterpreter::isInitialized();
 
     if (!m_showEditor)
     {
@@ -447,8 +223,7 @@ void PythonPlugin::showRepl()
     }
     else
     {
-        Python::setMainAppInterfaceInstance(m_app);
-        m_repl = new ui::QPythonREPL();
+        m_repl = new ui::QPythonREPL(&m_interp);
         m_repl->show();
     }
 }
@@ -457,7 +232,6 @@ void PythonPlugin::showEditor()
 {
     if (m_editor)
     {
-        Python::setMainAppInterfaceInstance(m_app);
         m_editor->show();
         m_editor->raise();
         m_editor->activateWindow();
@@ -479,92 +253,91 @@ void PythonPlugin::showAboutDialog()
     dlg.exec();
 }
 
-void PythonPlugin::executeEditorCode(const std::string &evalFileName,
-                                     const std::string &code,
-                                     QListWidget *output)
-{
-    try
-    {
-        py::object o = py::module::import("ccinternals").attr("ConsoleREPL")(output);
-        PyStdErrOutStreamRedirect redirect{o, o};
-        py::exec(code);
-    }
-    catch (const std::exception &e)
-    {
-        auto message = new QListWidgetItem(e.what());
-        message->setTextColor(Qt::red);
-        output->addItem(message);
-    }
-
-    size_t n = Python::clearDB();
-    ccLog::Print("Python items garbaged: %d", n);
-}
-
 PythonPlugin::~PythonPlugin()
 {
     Python::unsetMainAppInterfaceInstance();
     Python::unsetCmdLineInterfaceInstance();
-    if (Py_IsInitialized())
-    {
-        py::finalize_interpreter();
-    }
+    PythonInterpreter::finalize();
 }
 
 struct PythonPluginCommand : public ccCommandLineInterface::Command
 {
-    PythonPluginCommand() : Command("PYTHON", "PYTHON_SCRIPT") {}
+    explicit PythonPluginCommand(PythonInterpreter *interpreter_)
+        : Command("PYTHON", "PYTHON_SCRIPT"), interpreter(interpreter_)
+    {
+    }
 
     bool process(ccCommandLineInterface &cmd) override
     {
+        Q_ASSERT(interpreter);
         cmd.print("[PythonPlugin] Starting");
-        if (cmd.arguments().empty())
+        Args args;
+        if (!args.parseFrom(cmd))
         {
-            return cmd.error(
-                QString("Missing parameter: parameters filename after \"-%1\"").arg("PYTHON_SCRIPT"));
+            return false;
         }
 
-        QString paramFilename(cmd.arguments().takeFirst());
-        cmd.print(QString("[PythonPlugin] python file: '%1'").arg(paramFilename));
+        PySys_SetArgvEx(static_cast<int>(args.pythonArgv.size()), args.pythonArgv.data(), 1);
+        bool success = interpreter->executeFile(qPrintable(args.filepath));
 
-        std::vector<wchar_t *> argv;
-        argv.reserve(cmd.arguments().size() + 1);
-        argv.push_back(QStringToWcharArray(paramFilename));
-        while (!cmd.arguments().isEmpty())
-        {
-            argv.push_back(QStringToWcharArray(cmd.arguments().takeFirst()));
-        }
 
-        PySys_SetArgvEx(static_cast<int>(argv.size()), argv.data(), 1);
-
-        bool success{true};
-        try
-        {
-            PyStdErrOutStreamRedirect r{};
-            py::eval_file(qPrintable(paramFilename));
-        }
-        catch (const std::exception &e)
-        {
-            ccLog::Warning(e.what());
-            success = false;
-        }
-
-        for (wchar_t *arg : argv)
-        {
-            delete[] arg;
-        }
-
-        py::finalize_interpreter();
+        // We have to finalize the interpreter here, as it relies
+        // on the argv we set earlier, and these argv will be deleted at the
+        // end of this function
+        PythonInterpreter::finalize();
 
         cmd.print(
             QString("[PythonPlugin] Script %1 executed").arg(success ? "successfully" : "unsuccessfully"));
         return success;
     }
+
+    struct Args
+    {
+        QString filepath;
+        std::vector<wchar_t *> pythonArgv{};
+
+        Args() = default;
+
+        bool parseFrom(ccCommandLineInterface &cmd)
+        {
+            if (cmd.arguments().empty())
+            {
+                return cmd.error(
+                    QString("Missing parameter: parameters filename after \"-%1\"").arg("PYTHON_SCRIPT"));
+            }
+            filepath = cmd.arguments().takeFirst();
+
+            pythonArgv.reserve(cmd.arguments().size() + 1);
+            pythonArgv.push_back(QStringToWcharArray(filepath));
+            while (!cmd.arguments().isEmpty())
+            {
+                pythonArgv.push_back(QStringToWcharArray(cmd.arguments().takeFirst()));
+            }
+            return true;
+        }
+
+        virtual ~Args()
+        {
+            for (wchar_t *arg : pythonArgv)
+            {
+                delete[] arg;
+            }
+        }
+    };
+
+    PythonInterpreter *interpreter{nullptr};
 };
 
 void PythonPlugin::registerCommands(ccCommandLineInterface *cmd)
 {
-    cmd->registerCommand(ccCommandLineInterface::Command::Shared(new PythonPluginCommand()));
+    cmd->registerCommand(ccCommandLineInterface::Command::Shared(new PythonPluginCommand(&m_interp)));
     Python::setCmdLineInterfaceInstance(cmd);
+}
+
+void PythonPlugin::setMainAppInterface(ccMainAppInterface *app)
+{
+    ccStdPluginInterface::setMainAppInterface(app);
+    Python::setMainAppInterfaceInstance(m_app);
 }
 
 #include "PythonPlugin.moc"

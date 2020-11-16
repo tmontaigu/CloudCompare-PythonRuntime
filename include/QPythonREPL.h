@@ -18,16 +18,16 @@
 #ifndef CLOUDCOMPAREPROJECTS_QPYTHONREPL_H
 #define CLOUDCOMPAREPROJECTS_QPYTHONREPL_H
 
-#include <QtWidgets>
 #include <QMainWindow>
+#include <QtWidgets>
 
 #include <string>
 
-#include "PythonStdErrOutRedirect.h"
-#include <pybind11/pybind11.h>
+#include "PythonInterpreter.h"
 
 namespace py = pybind11;
 
+class PythonInterpreter;
 class Ui_QPythonREPL;
 
 namespace ui
@@ -76,14 +76,14 @@ class QPythonREPL : public QMainWindow
     Q_OBJECT
 
   public:
-    explicit QPythonREPL(QMainWindow *parent = nullptr);
+    explicit QPythonREPL(PythonInterpreter *interpreter, QMainWindow *parent = nullptr);
 
     void executeCode(const QString &pythonCode);
+
     ~QPythonREPL() override;
 
   protected:
     QPlainTextEdit *codeEdit();
-
     QListWidget *outputDisplay();
 
     void reset();
@@ -93,9 +93,9 @@ class QPythonREPL : public QMainWindow
   private:
     History m_history{};
     std::string m_buf;
-    py::object m_output;
-    py::dict m_locals;
-    Ui_QPythonREPL *m_ui;
+    Ui_QPythonREPL *m_ui{nullptr};
+    PythonInterpreter *m_interpreter{nullptr};
+    PythonInterpreter::State m_state;
 };
 
 } // namespace ui
