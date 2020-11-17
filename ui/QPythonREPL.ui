@@ -10,6 +10,9 @@
     <height>600</height>
    </rect>
   </property>
+  <property name="windowTitle">
+   <string>CloudCompare - Python REPL</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
