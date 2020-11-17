@@ -22,7 +22,7 @@ jobs:
           path: 'plugins/private/CloudCompare-PythonPlugin'
 
       - name: Install Miniconda
-        uses: conda-incubator/setup-miniconda@v1
+        uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: CloudCompareDev
           auto-activate-base: false
