@@ -23,12 +23,20 @@
 class ccMainAppInterface;
 class QMainWindow;
 
+namespace pybind11
+{
+class args;
+class kwargs;
+class object;
+} // namespace pybind11
+
 /// This class provide methods that are made available Python scripts
 /// kind of like C++ plugins have access to a `ccMainAppInterface`.
 /// Thus this class is mostly a ccMainAppInterface with some accommodations
 /// to handle the fact that it is made to interact with python.
-class Q_DECL_EXPORT ccGUIPythonInstance {
-public:
+class Q_DECL_EXPORT ccGUIPythonInstance
+{
+  public:
     explicit ccGUIPythonInstance(ccMainAppInterface *app);
 
     QMainWindow *getMainWindow();
@@ -61,7 +69,11 @@ public:
 
     void freezeUI(bool state);
 
-    ccHObject *createObject(const char *type_name);
+    ccHObject *
+    createObject(const char *type_name, const pybind11::args &args, const pybind11::kwargs &kwargs);
+
+    ccHObject *
+    createObject(const pybind11::object& class_, const pybind11::args &args, const pybind11::kwargs &kwargs);
 
     ccHObject *loadFile(const char *filename, FileIOFilter::LoadParameters &parameters);
 
@@ -69,7 +81,7 @@ public:
     /// but were not added to the DB tree via `addToDB`
     size_t clearDB();
 
-private:
+  private:
     ccMainAppInterface *m_app;
     // This holds pointer to objects that were created by a Python script.
     // They are kept in this vector until they are either moved to the true ccDB (using `addToDB`)

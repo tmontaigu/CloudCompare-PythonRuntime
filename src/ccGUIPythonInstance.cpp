@@ -19,6 +19,7 @@
 
 #include <ccMainAppInterface.h>
 
+#include <pybind11/pybind11.h>
 
 #define slots Q_SLOTS
 #define signals Q_SIGNALS
@@ -109,14 +110,21 @@ ccHObject *ccGUIPythonInstance::loadFile(const char *filename, FileIOFilter::Loa
     return newGroup;
 }
 
-ccHObject *ccGUIPythonInstance::createObject(const char *type_name) {
-    if (strcmp(type_name, "ccPointCloud") == 0) {
-        auto obj = new ccPointCloud();
-        m_pythonDB.push_back(obj);
-        return obj;
-    } else {
-        throw std::invalid_argument("Unknown type");
-    }
+ccHObject *ccGUIPythonInstance::createObject(const char *type_name,
+                                             const pybind11::args &args,
+                                             const pybind11::kwargs &kwargs) {
+    pybind11::object class_ = pybind11::module::import("pycc").attr(type_name);
+    return createObject(class_, args, kwargs);
+}
+
+ccHObject *ccGUIPythonInstance::createObject(const pybind11::object& class_,
+                                             const pybind11::args &args,
+                                             const pybind11::kwargs &kwargs)
+{
+    pybind11::object instance = class_(*args, **kwargs);
+    auto *ptr = instance.cast<ccHObject*>();
+    m_pythonDB.push_back(ptr);
+    return ptr;
 }
 
 void ccGUIPythonInstance::addToDB(
