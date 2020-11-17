@@ -1,5 +1,6 @@
 import math
 import sys
+import numpy as np
 
 import cccorelib
 import pycc
@@ -46,10 +47,11 @@ def main():
 
     assert cloud.enableScalarField() is True
     assert cloud.isScalarFieldEnabled() is True
+    cloud.setCurrentScalarField(cloud.getScalarFieldIndexByName("Intensity"))
 
-    # FIXME This is bugged, the value does not change
-    # cloud.setPointScalarValue(17, 42.1337)
-    # assert cloud.getPointScalarValue(17) == 42.1337
+    cloud.setPointScalarValue(17, 42.1337)
+    print(cloud.getPointScalarValue(17))
+    assert cloud.getPointScalarValue(17) == float(np.float32(42.1337))
 
     p = cloud.getNextPoint()
     assert p.x == point1.x

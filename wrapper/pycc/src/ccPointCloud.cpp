@@ -69,6 +69,9 @@ using namespace pybind11::literals;
              "index"_a)                                                                                      \
         .def("getCurrentOutScalarFieldIndex",                                                                \
              &CCCoreLib::PointCloudTpl<T, StringType>::getCurrentOutScalarFieldIndex)                        \
+        .def("setCurrentScalarField",                                                                        \
+             &CCCoreLib::PointCloudTpl<T, StringType>::setCurrentScalarField,                                \
+             "index"_a)                                                                                      \
         .def("addScalarField", &CCCoreLib::PointCloudTpl<T, StringType>::addScalarField, "uniqueName"_a)     \
         .def("renameScalarField",                                                                            \
              &CCCoreLib::PointCloudTpl<T, StringType>::renameScalarField,                                    \
