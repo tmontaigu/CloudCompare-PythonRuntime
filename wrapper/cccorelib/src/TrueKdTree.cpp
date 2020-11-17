@@ -70,10 +70,21 @@ void define_TrueKdTree(py::module &cccorelib)
 
     py::class_<CCCoreLib::TrueKdTree::Leaf, CCCoreLib::TrueKdTree::BaseNode>(PyTrueKdTree, "Leaf")
         .def_readwrite("points", &CCCoreLib::TrueKdTree::Leaf::points, py::return_value_policy::reference)
-        //			.def_readwrite("planeEq",
-        //			               &CCCoreLib::TrueKdTree::Leaf::planeEq) // FIXME
+//        .def_readwrite("planeEq",
+//                       &CCCoreLib::TrueKdTree::Leaf::planeEq) // FIXME
         .def_readwrite("error", &CCCoreLib::TrueKdTree::Leaf::error)
-        .def_readwrite("userData", &CCCoreLib::TrueKdTree::Leaf::userData);
-    //			.def(py::init<CCCoreLib::ReferenceCloud *, const PointCoordinateType[], ScalarType>(),
-    //"set"_a, 			     "planeEquation"_a, "_error"_a);
+        .def_readwrite("userData", &CCCoreLib::TrueKdTree::Leaf::userData)
+        .def(
+            py::init([](CCCoreLib::ReferenceCloud *set, const py::sequence &planeEquation, ScalarType error) {
+                PointCoordinateType planeEq[4] = {0};
+                planeEq[0] = planeEquation[0].cast<PointCoordinateType>();
+                planeEq[1] = planeEquation[1].cast<PointCoordinateType>();
+                planeEq[2] = planeEquation[2].cast<PointCoordinateType>();
+                planeEq[3] = planeEquation[3].cast<PointCoordinateType>();
+
+                return CCCoreLib::TrueKdTree::Leaf(set, nullptr, error);
+            }),
+            "set"_a,
+            "planeEquation"_a,
+            "_error"_a);
 }

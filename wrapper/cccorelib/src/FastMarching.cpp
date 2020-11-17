@@ -35,7 +35,7 @@ void define_FastMarching(py::module &cccorelib)
         .def("getTime", &CCCoreLib::FastMarching::getTime, "pos"_a, "absoluteCoordinates"_a = false)
         .def("setExtendedConnectivity", &CCCoreLib::FastMarching::setExtendedConnectivity, "state"_a);
 
-    // FIX commented def create link errors
+    // FIXME: the commented lines ceates errors at link time
     py::class_<CCCoreLib::FastMarchingForPropagation, CCCoreLib::FastMarching>(cccorelib,
                                                                                "FastMarchingForPropagation")
         //        .def(py::init<>())
