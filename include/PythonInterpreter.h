@@ -22,6 +22,7 @@
 
 #include <memory>
 
+#undef slots
 #include <pybind11/pybind11.h>
 
 class QListWidget;

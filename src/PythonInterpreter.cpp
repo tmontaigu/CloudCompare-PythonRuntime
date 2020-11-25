@@ -170,9 +170,8 @@ PythonConfigPaths PythonConfigPaths::WindowsCondaEnv(const char *condaPrefix)
         config.m_pythonHome.reset(QStringToWcharArray(qPythonHome));
 
         QString qPythonPath =
-            QString("%1/DLLs;%1/lib;%1/Lib/site-packages;%2/plugins/Python/Lib/site-packages")
-                .arg(qPythonHome)
-                .arg(QApplication::applicationDirPath());
+            QString("%1/DLLs;%1/lib;%1/Lib/site-packages")
+                .arg(qPythonHome);
         config.m_pythonPath.reset(QStringToWcharArray(qPythonPath));
     }
     else
@@ -193,9 +192,8 @@ PythonConfigPaths PythonConfigPaths::WindowsVenv(const char *venvPrefix, const P
         config.m_pythonHome.reset(QStringToWcharArray(qPythonHome));
 
         QString qPythonPath =
-            QString("%1/Lib/site-packages;%2/plugins/Python/Lib/site-packages;%3/DLLS;%3/lib")
+            QString("%1/Lib/site-packages;%3/DLLS;%3/lib")
                 .arg(qPythonHome)
-                .arg(QApplication::applicationDirPath())
                 .arg(cfg.home);
 
         if (cfg.includeSystemSitesPackages)

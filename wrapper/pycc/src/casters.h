@@ -18,9 +18,11 @@
 #ifndef CLOUDCOMPAREPROJECTS_CASTERS_H
 #define CLOUDCOMPAREPROJECTS_CASTERS_H
 
-#include <Python.h>
 #include <QString>
+
+#undef slots
 #include <pybind11/pybind11.h>
+#include <Python.h>
 
 namespace pybind11
 {

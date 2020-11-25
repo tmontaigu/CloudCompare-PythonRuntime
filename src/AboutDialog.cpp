@@ -19,6 +19,7 @@
 
 #include <ui_AboutDialog.h>
 
+#undef slots
 #include <pybind11/pybind11.h>
 
 

@@ -15,14 +15,16 @@
 //#                                                                        #
 //##########################################################################
 
-#include <pybind11/functional.h>
-#include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
-#include <pybind11/stl_bind.h>
 
 #include "casters.h"
 #include <ccPointCloud.h>
 #include <ccScalarField.h>
+
+#undef slots
+#include <pybind11/functional.h>
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+#include <pybind11/stl_bind.h>
 
 namespace py = pybind11;
 using namespace pybind11::literals;
