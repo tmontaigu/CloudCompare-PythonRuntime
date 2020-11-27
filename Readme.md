@@ -2,14 +2,14 @@
 
 Early step attempt at allowing to use Python to automate some stuff in CloudCompare.
 
-It is only tested on windows and thus only works on windows for now.
-
 # Dependencies
 
  - Python
  - pybind11
 
 # Building & Installing
+
+## Windows
 
 1) Clone this project in CloudCompare/plugins/private
 
@@ -39,6 +39,19 @@ It is only tested on windows and thus only works on windows for now.
     so launching CC from the install folder should just work.
     
     Use `-DPLUGIN_PYTHON_COPY_ENV=OFF` after the plugin has been installed once to gain time.
+
+## Linux
+
+1) Install additional dependencies (package name for debian/ubuntu)
+
+    `libpython3-dev qtwebengine5-dev`
+    if you are using Ubuntu 20.04 or later you can install pybind via the  `pybind11-dev` package
+    on older version you have to compile and install pybind11 yourself as the version in the repo
+    are too old
+
+2) Run cmake with `-DPLUGIN_PYTHON=ON`
+3) Build
+4) Install
 
 # Running
 

@@ -122,12 +122,12 @@ void logPythonPath()
         }
         else
         {
-            ccLog::Print("[PythonPlugin] Failed to convert the PythonPath\n");
+            ccLog::Print("[PythonPlugin] Failed to convert the PythonPath");
         }
     }
     else
     {
-        ccLog::Print("[PythonPlugin] PythonPath is not set\n");
+        ccLog::Print("[PythonPlugin] PythonPath is not set");
     }
 }
 
@@ -145,12 +145,12 @@ void logPythonHome()
         }
         else
         {
-            ccLog::Print("[PythonPlugin]Failed to convert the PythonHome path\n");
+            ccLog::Print("[PythonPlugin]Failed to convert the PythonHome path");
         }
     }
     else
     {
-        ccLog::Print("[PythonPlugin] PythonHome is not set\n");
+        ccLog::Print("[PythonPlugin] PythonHome is not set");
     }
 }
 
@@ -257,7 +257,7 @@ PythonPlugin::~PythonPlugin()
 {
     Python::unsetMainAppInterfaceInstance();
     Python::unsetCmdLineInterfaceInstance();
-    PythonInterpreter::finalize();
+    m_interp.finalize();
 }
 
 struct PythonPluginCommand : public ccCommandLineInterface::Command
@@ -284,7 +284,7 @@ struct PythonPluginCommand : public ccCommandLineInterface::Command
         // We have to finalize the interpreter here, as it relies
         // on the argv we set earlier, and these argv will be deleted at the
         // end of this function
-        PythonInterpreter::finalize();
+        interpreter->finalize();
 
         cmd.print(
             QString("[PythonPlugin] Script %1 executed").arg(success ? "successfully" : "unsuccessfully"));

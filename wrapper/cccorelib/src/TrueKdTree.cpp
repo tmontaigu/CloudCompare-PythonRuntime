@@ -33,11 +33,11 @@ void define_TrueKdTree(py::module &cccorelib)
 
     py::bind_vector<CCCoreLib::TrueKdTree::LeafVector>(PyTrueKdTree, "LeafVector");
 
-    PyTrueKdTree.def_readonly_static("X_DIM", &CCCoreLib::TrueKdTree::X_DIM)
-        .def_readonly_static("Y_DIM", &CCCoreLib::TrueKdTree::Y_DIM)
-        .def_readonly_static("Z_DIM", &CCCoreLib::TrueKdTree::Z_DIM)
-        .def_readonly_static("NODE_TYPE", &CCCoreLib::TrueKdTree::NODE_TYPE)
-        .def_readonly_static("LEAF_TYPE", &CCCoreLib::TrueKdTree::LEAF_TYPE)
+    PyTrueKdTree.def_property_readonly_static("X_DIM", [](){ return CCCoreLib::TrueKdTree::X_DIM; })
+        .def_property_readonly_static("Y_DIM", [](){ return CCCoreLib::TrueKdTree::Y_DIM; })
+        .def_property_readonly_static("Z_DIM", [](){ return CCCoreLib::TrueKdTree::Z_DIM; } )
+        .def_property_readonly_static("NODE_TYPE", [](){ return CCCoreLib::TrueKdTree::NODE_TYPE; })
+        .def_property_readonly_static("LEAF_TYPE", [](){ return CCCoreLib::TrueKdTree::LEAF_TYPE;})
         .def(py::init<CCCoreLib::GenericIndexedCloudPersist *>(), "cloud"_a)
         .def("associatedCloud", &CCCoreLib::TrueKdTree::associatedCloud, py::return_value_policy::reference)
         .def("build",

@@ -37,6 +37,7 @@ class PythonConfigPaths
     /// Default ctor, does not initialize pythonHome & pythonPath
     PythonConfigPaths() = default;
 
+#ifdef Q_OS_WIN32
     /// Initialize the paths to point to where the Python
     /// environment was bundled on a Windows installation
     static PythonConfigPaths WindowsBundled();
@@ -50,7 +51,7 @@ class PythonConfigPaths
     /// \param cfg options that were read from the pyvenv.cfg file
     /// \return the configured paths
     static PythonConfigPaths WindowsVenv(const char *venvPrefix, const PyVenvCfg &cfg);
-
+#endif
     /// returns true if both paths are non empty
     bool isSet() const;
 
@@ -81,8 +82,9 @@ class PythonInterpreter : public QObject
     explicit PythonInterpreter(QObject *parent = nullptr);
     bool isExecuting() const;
     void initialize();
+    void finalize();
     static bool isInitialized();
-    static void finalize();
+
 
     bool executeFile(const std::string& filePath);
 
@@ -93,14 +95,21 @@ class PythonInterpreter : public QObject
   Q_SIGNALS:
     void executionStarted();
     void executionFinished();
-
+    
+#ifdef Q_OS_WIN32
   private:
     void configureEnvironment();
+#endif
 
+    
   private:
     bool m_isExecuting{false};
 
     PythonConfigPaths m_config;
+    
+#ifdef Q_OS_UNIX
+    void *m_libPythonHandle{nullptr};
+#endif
 };
 
 #endif // CLOUDCOMPAREPROJECTS_PYTHONINTERPRETER_H

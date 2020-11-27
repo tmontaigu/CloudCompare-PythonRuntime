@@ -1,11 +1,11 @@
 name: Build
 
-on: [push, pull_request]
+on: [ push, pull_request ]
 
 
 jobs:
-  build:
-    name: Windows-Build
+  Windows-Build:
+    name: Windows
     runs-on: windows-latest
 
     steps:
@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: '67d2beb5eb18a826efad55b4d863fb905a2353bb'
+          ref: 'ad12a8f8441cf01ec8c7abdffb0b5acceda570ac'
           submodules: true
 
       - name: Clone PythonPlugin
@@ -46,8 +46,7 @@ jobs:
 
       - name: Build
         run: cmake --build build --parallel --config Release
-#
-#
+
       - name: Install
         run: cmake --install build
 
@@ -56,3 +55,62 @@ jobs:
           pip install pytest
           cd plugins/private/CloudCompare-PythonPlugin
           pytest --cloudcompare_exe ${{ github.workspace }}/install/CloudCompare/CloudCompare.exe tests
+
+
+  Ubuntu-Build:
+    name: Ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt install build-essential cmake libqt5svg5-dev libqt5opengl5-dev qt5-default qttools5-dev qttools5-dev-tools qtwebengine5-dev xvfb
+          python3 -m pip install pytest numpy
+
+      - name: Checkout pybind11
+        uses: actions/checkout@v2
+        with:
+          repository: 'pybind/pybind11'
+          ref: 'v2.4.3'
+
+      - name: Build & Install pybind11
+        run: |
+          mkdir build-pybind11
+          cd build-pybind11
+          cmake -DCMAKE_BUILD_TYPE=ON ..
+          sudo make install
+
+      - name: Clone CloudCompare
+        uses: actions/checkout@v2
+        with:
+          repository: 'CloudCompare/CloudCompare'
+          ref: 'ad12a8f8441cf01ec8c7abdffb0b5acceda570ac'
+          submodules: true
+
+      - name: Clone PythonPlugin
+        uses: actions/checkout@v2
+        with:
+          path: 'plugins/private/CloudCompare-PythonPlugin'
+
+      - name: Configure CMake
+        shell: pwsh
+        run: |
+          mkdir build
+          cmake  `
+            -B build `
+            -DPLUGIN_PYTHON=ON `
+            -DCMAKE_BUILD_TYPE=Release `
+            .
+
+      - name: Build
+        run: cmake --build build
+
+      - name: Install
+        run: sudo cmake --install build
+
+      - name: Run Tests
+        run: |
+          cd plugins/private/CloudCompare-PythonPlugin
+          export LD_LIBRARY_PATH=/usr/local/lib
+          xvfb-run python3 -m pytest --cloudcompare_exe /usr/local/bin/CloudCompare tests

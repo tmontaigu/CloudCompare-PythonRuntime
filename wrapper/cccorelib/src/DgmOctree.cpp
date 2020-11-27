@@ -32,9 +32,9 @@ void define_DgmOctree(py::module &cccorelib)
     py::class_<CCCoreLib::DgmOctree, CCCoreLib::GenericOctree> PyDgmOctree(cccorelib, "DgmOctree");
     PyDgmOctree.def_static("GET_BIT_SHIFT", &CCCoreLib::DgmOctree::GET_BIT_SHIFT, "level"_a)
         .def_static("OCTREE_LENGTH", &CCCoreLib::DgmOctree::OCTREE_LENGTH, "level"_a)
-        .def_readonly_static("MAX_OCTREE_LEVEL", &CCCoreLib::DgmOctree::MAX_OCTREE_LEVEL)
-        .def_readonly_static("MAX_OCTREE_LENGTH", &CCCoreLib::DgmOctree::MAX_OCTREE_LENGTH)
-        .def_readonly_static("INVALID_CELL_CODE", &CCCoreLib::DgmOctree::INVALID_CELL_CODE)
+        .def_property_readonly_static("MAX_OCTREE_LEVEL", []() { return  CCCoreLib::DgmOctree::MAX_OCTREE_LEVEL; })
+        .def_property_readonly_static("MAX_OCTREE_LENGTH",  []() { return CCCoreLib::DgmOctree::MAX_OCTREE_LENGTH; })
+        .def_property_readonly_static("INVALID_CELL_CODE",  []() { return CCCoreLib::DgmOctree::INVALID_CELL_CODE; })
         .def("clear", &CCCoreLib::DgmOctree::clear)
         .def(
             "build",

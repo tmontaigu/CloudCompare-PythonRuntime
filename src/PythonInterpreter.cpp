@@ -29,6 +29,15 @@
 
 #include <ccLog.h>
 
+#ifdef Q_OS_UNIX
+#include <dlfcn.h>
+#include <cstdio>
+#endif
+
+// seems like gcc defines macro with these names
+#undef major
+#undef minor
+
 namespace py = pybind11;
 
 //================================================================================
@@ -138,7 +147,7 @@ Version GetPythonExeVersion(const QString &pythonExePath)
 }
 
 //================================================================================
-
+#ifdef Q_OS_WIN32
 PythonConfigPaths PythonConfigPaths::WindowsBundled()
 {
     PythonConfigPaths config{};
@@ -208,6 +217,7 @@ PythonConfigPaths PythonConfigPaths::WindowsVenv(const char *venvPrefix, const P
     }
     return config;
 }
+#endif
 
 bool PythonConfigPaths::isSet() const
 {
@@ -290,10 +300,41 @@ void PythonInterpreter::executeCode(const std::string &code, QListWidget *output
 
 void PythonInterpreter::initialize()
 {
+#ifdef Q_OS_WIN32
     configureEnvironment();
     Py_SetPythonHome(m_config.pythonHome());
     Py_SetPath(m_config.pythonPath());
+#endif
+#ifdef Q_OS_UNIX
+    // Work-around issue: undefined symbol: PyExc_RecursionError 
+    // when trying to import numpy in the intepreter
+    // e.g: https://github.com/numpy/numpy/issues/14946
+    // https://stackoverflow.com/questions/49784583/numpy-import-fails-on-multiarray-extension-library-when-called-from-embedded-pyt
+    // This workaround is weak
 
+    const auto displaydlopenError = [](){
+        char *error = dlerror();
+        if (error)
+        {
+            ccLog::Warning("[PythonPlugin] dlopen error:", error);
+        }
+    };
+
+    char soName[25];
+    snprintf(soName, 24, "libpython%d.%d.so", PythonVersion.major, PythonVersion.minor);
+    m_libPythonHandle = dlopen(soName, RTLD_LAZY | RTLD_GLOBAL);
+    if (!m_libPythonHandle)
+    {
+        displaydlopenError();
+        snprintf(soName, 24, "libpython%d.%dm.so", PythonVersion.major, PythonVersion.minor);
+        m_libPythonHandle = dlopen(soName, RTLD_LAZY | RTLD_GLOBAL);
+        if (!m_libPythonHandle)
+        {
+            displaydlopenError();
+        }
+    }
+#endif
+    
     py::initialize_interpreter();
 }
 
@@ -307,9 +348,19 @@ void PythonInterpreter::finalize()
     if (Py_IsInitialized())
     {
         py::finalize_interpreter();
+#ifdef Q_OS_UNIX
+        if (m_libPythonHandle) {
+            dlclose(m_libPythonHandle);
+            m_libPythonHandle = nullptr;
+        }
+#else
+            Q_UNUSED(this);
+#endif
+
     }
 }
 
+#ifdef Q_OS_WIN32
 void PythonInterpreter::configureEnvironment()
 {
     const char *condaPrefix = std::getenv("CONDA_PREFIX");
@@ -371,6 +422,7 @@ void PythonInterpreter::configureEnvironment()
         m_config = PythonConfigPaths::WindowsBundled();
     }
 }
+#endif
 
 bool PythonInterpreter::isExecuting() const
 {
