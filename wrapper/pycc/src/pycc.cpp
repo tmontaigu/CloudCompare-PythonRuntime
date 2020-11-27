@@ -15,10 +15,6 @@
 //#                                                                        #
 //##########################################################################
 
-#include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
-#include <pybind11/stl_bind.h>
 
 #include <CloudSamplingTools.h>
 #include <ccDrawableObject.h>
@@ -34,8 +30,8 @@
 #include <PointCloud.h>
 #include <QCoreApplication>
 #include <QException>
-#include <QtConcurrent>
 #include <QMainWindow>
+#include <QtConcurrent>
 #include <ccGenericMesh.h>
 #include <ccMainAppInterface.h>
 #include <ccProgressDialog.h>
@@ -46,6 +42,12 @@
 
 #include <FileIOFilter.h>
 #include <ccCommandLineInterface.h>
+
+#undef slots
+#include <pybind11/numpy.h>
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+#include <pybind11/stl_bind.h>
 
 namespace py = pybind11;
 using namespace pybind11::literals;
@@ -75,7 +77,10 @@ struct PyThreadStateReleaser
 {
     explicit PyThreadStateReleaser() : state(PyEval_SaveThread()) {}
 
-    virtual ~PyThreadStateReleaser() { PyEval_RestoreThread(state); }
+    virtual ~PyThreadStateReleaser()
+    {
+        PyEval_RestoreThread(state);
+    }
 
     PyThreadState *state{nullptr};
 };
@@ -85,13 +90,25 @@ class MyException : public QException
   public:
     explicit MyException(const std::exception &err) : e(err) {}
 
-    void raise() const override { throw *this; }
+    void raise() const override
+    {
+        throw *this;
+    }
 
-    QException *clone() const override { return new MyException(*this); }
+    QException *clone() const override
+    {
+        return new MyException(*this);
+    }
 
-    const char *what() const noexcept override { return e.what(); }
+    const char *what() const noexcept override
+    {
+        return e.what();
+    }
 
-    std::exception error() const { return e; }
+    std::exception error() const
+    {
+        return e;
+    }
 
   private:
     std::exception e;
@@ -121,7 +138,7 @@ void define_ccGUIPythonInstance(py::module &);
 
 template <class T> using observer_ptr = std::unique_ptr<T, py::nodelete>;
 
-PYBIND11_MODULE(pycc, m)
+void define_pycc(py::module &m)
 {
     py::module::import("cccorelib");
 
@@ -146,7 +163,6 @@ PYBIND11_MODULE(pycc, m)
 
     define_ccGenericPointCloud(m);
     define_ccPointCloud(m);
-
 
     py::class_<ccProgressDialog, QProgressDialog, CCCoreLib::GenericProgressCallback>(m, "ccProgressDialog")
         .def(py::init<bool>(), "cancelButton"_a = false);
@@ -175,10 +191,13 @@ PYBIND11_MODULE(pycc, m)
         .def_readwrite("shiftHandlingMode", &FileIOFilter::LoadParameters::shiftHandlingMode)
         .def_readwrite("alwaysDisplayLoadDialog", &FileIOFilter::LoadParameters::alwaysDisplayLoadDialog)
         .def_readwrite("coordinatesShiftEnabled", &FileIOFilter::LoadParameters::coordinatesShiftEnabled)
-        .def_readwrite("coordinatesShift", &FileIOFilter::LoadParameters::coordinatesShift, py::return_value_policy::reference)
+        .def_readwrite("coordinatesShift",
+                       &FileIOFilter::LoadParameters::coordinatesShift,
+                       py::return_value_policy::reference)
         .def_readwrite("preserveShiftOnSave", &FileIOFilter::LoadParameters::preserveShiftOnSave)
         .def_readwrite("autoComputeNormals", &FileIOFilter::LoadParameters::autoComputeNormals)
-        .def_readwrite("parentWidget", &FileIOFilter::LoadParameters::parentWidget, py::return_value_policy::reference)
+        .def_readwrite(
+            "parentWidget", &FileIOFilter::LoadParameters::parentWidget, py::return_value_policy::reference)
         .def_readwrite("sessionStart", &FileIOFilter::LoadParameters::sessionStart);
 
     define_ccGUIPythonInstance(m);
@@ -186,14 +205,20 @@ PYBIND11_MODULE(pycc, m)
 
     m.def("GetGUIInstance", &GetInstance, py::return_value_policy::reference);
     m.def("GetCmdLineInstance", &GetCmdLineInstance, py::return_value_policy::reference);
-    m.def("GetInstance", []() -> py::object {
-           auto guiInstance = GetInstance();
-           if (guiInstance) {
-               return py::cast(guiInstance);
-           } else {
-               return py::cast(GetCmdLineInstance());
-           }
-        }, py::return_value_policy::reference);
+    m.def(
+        "GetInstance",
+        []() -> py::object {
+            auto guiInstance = GetInstance();
+            if (guiInstance)
+            {
+                return py::cast(guiInstance);
+            }
+            else
+            {
+                return py::cast(GetCmdLineInstance());
+            }
+        },
+        py::return_value_policy::reference);
 
     m.def("ProcessEvents", []() { QCoreApplication::processEvents(); });
 
@@ -220,3 +245,16 @@ PYBIND11_MODULE(pycc, m)
 
     m.def("CreateObject", [](const char *type_name) { return GetInstance()->createObject(type_name); });
 }
+
+#ifdef USE_EMBEDDED_MODULES
+#include <pybind11/embed.h>
+PYBIND11_EMBEDDED_MODULE(pycc, m)
+{
+    define_pycc(m);
+}
+#else
+PYBIND11_MODULE(pycc, m)
+{
+    define_pycc(m);
+}
+#endif

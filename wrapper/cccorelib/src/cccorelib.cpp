@@ -223,8 +223,7 @@ class NumpyCloud : public CCCoreLib::GenericIndexedCloud
     py::array_t<PointCoordinateType> m_zs;
 };
 
-PYBIND11_MODULE(cccorelib, m)
-{
+void define_cccorelib(py::module& m) {
     py::bind_vector<CCCoreLib::ReferenceCloudContainer>(m, "ReferenceCloudContainer");
 
     define_CCShareable(m);
@@ -297,3 +296,16 @@ PYBIND11_MODULE(cccorelib, m)
     // SaitoSquared...
     // SquareMatrix
 }
+
+#ifdef USE_EMBEDDED_MODULES
+#include <pybind11/embed.h>
+PYBIND11_EMBEDDED_MODULE(cccorelib, m)
+{
+    define_cccorelib(m);
+}
+#else
+PYBIND11_MODULE(cccorelib, m)
+{
+    define_cccorelib(m);
+}
+#endif

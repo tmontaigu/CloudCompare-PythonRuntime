@@ -10,14 +10,17 @@ if (PLUGIN_PYTHON)
     option(PLUGIN_PYTHON_COPY_ENV "Should the content of the current python venv be copied on install" ON)
     mark_as_advanced(PLUGIN_PYTHON_COPY_ENV)
 
-    # Qt's 'slots' conflicts with Python's 'slots'
-    target_compile_definitions(PythonPlugin PRIVATE -DQT_NO_KEYWORDS)
-
-    add_subdirectory(wrapper)
+    set(USE_EMBEDDED_MODULES ON)
+    target_compile_definitions(PythonPlugin PRIVATE  -DUSE_EMBEDDED_MODULES)
+    include(wrapper/cccorelib/CMakeLists.txt)
+    include(wrapper/pycc/CMakeLists.txt)
 
     add_subdirectory(include)
     add_subdirectory(src)
     add_subdirectory(ui)
+
+    embed_cccorelib_in(${PROJECT_NAME})
+    embed_pycc_in(${PROJECT_NAME})
 
     add_subdirectory(QCodeEditor)
 
@@ -36,10 +39,6 @@ if (PLUGIN_PYTHON)
         if (PLUGIN_PYTHON_COPY_ENV)
             copy_python_venv(${CC_PYTHON_INSTALL_DIR})
         endif()
-        INSTALL(
-                TARGETS pycc cccorelib
-                DESTINATION "${CC_PYTHON_INSTALL_DIR}/Lib/site-packages"
-        )
         # If the docs have been built, we copy them in the install folder
         if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/docs/_build/index.html")
             install(
@@ -47,7 +46,6 @@ if (PLUGIN_PYTHON)
                     DESTINATION ${CC_PYTHON_INSTALL_DIR}/docs
             )
         endif()
-
     endif ()
 endif ()
 
