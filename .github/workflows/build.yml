@@ -45,7 +45,7 @@ jobs:
             .
 
       - name: Build
-        run: cmake --build build --config Release
+        run: cmake --build build --parallel --config Release
 #
 #
       - name: Install
