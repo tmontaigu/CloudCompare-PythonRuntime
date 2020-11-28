@@ -1,14 +1,27 @@
 set(pycc_sources
+        ${CMAKE_CURRENT_LIST_DIR}/src/casters.h
         ${CMAKE_CURRENT_LIST_DIR}/src/pycc.cpp
         ${CMAKE_CURRENT_LIST_DIR}/src/ccGUIPythonInstance.cpp
         ${CMAKE_CURRENT_LIST_DIR}/src/ccCommandLine.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/src/casters.h
+        ${CMAKE_CURRENT_LIST_DIR}/src/ccGenericGLDisplay.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/src/ccGLWindow.cpp
         ${CMAKE_CURRENT_LIST_DIR}/src/ccDrawableObject.cpp
         ${CMAKE_CURRENT_LIST_DIR}/src/ccScalarField.cpp
         ${CMAKE_CURRENT_LIST_DIR}/src/ccObject.cpp
         ${CMAKE_CURRENT_LIST_DIR}/src/ccGenericPointCloud.cpp
         ${CMAKE_CURRENT_LIST_DIR}/src/ccPointCloud.cpp
-)
+        ${CMAKE_CURRENT_LIST_DIR}/src/ccSphere.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/src/ccPlane.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/src/ccTorus.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/src/ccBox.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/src/ccDish.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/src/ccCone.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/src/ccCylinder.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/src/ccGLMatrix.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/src/ccGenericMesh.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/src/ccGenericPrimitive.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/src/ccMesh.cpp
+        )
 
 if (NOT USE_EMBEDDED_MODULES)
     cmake_minimum_required(VERSION 3.12)

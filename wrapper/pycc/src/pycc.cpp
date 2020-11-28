@@ -32,9 +32,12 @@
 #include <QException>
 #include <QMainWindow>
 #include <QtConcurrent>
+#include <QMainWindow>
+#include <QOpenGLWidget>
 #include <ccGenericMesh.h>
 #include <ccMainAppInterface.h>
 #include <ccProgressDialog.h>
+#include <ccColorTypes.h>
 
 #include "Runtime.h"
 #include "casters.h"
@@ -133,18 +136,50 @@ void define_ccScalarField(py::module &);
 void define_ccObject(py::module &);
 void define_ccGenericPointCloud(py::module &);
 void define_ccPointCloud(py::module &);
-
+void define_ccGenericGLDisplay(py::module &);
+void define_ccGLWindow(py::module &);
+void define_ccGenericMesh(py::module &);
+void define_ccMesh(py::module &);
+void define_ccGenericPrimitive(py::module &);
+void define_ccSphere(py::module &);
+void define_ccGLMatrix(py::module &);
 void define_ccGUIPythonInstance(py::module &);
+void define_ccPlane(py::module &);
+void define_ccTorus(py::module &);
+void define_ccBox(py::module &);
+void define_ccDish(py::module &);
+void define_ccCone(py::module &);
+void define_ccCylinder(py::module& );
 
 template <class T> using observer_ptr = std::unique_ptr<T, py::nodelete>;
+
+
 
 void define_pycc(py::module &m)
 {
     py::module::import("cccorelib");
 
-    py::class_<QProgressDialog>(m, "QProgressDialog");
     py::class_<QWidget>(m, "QWidget");
+    py::class_<QOpenGLWidget>(m, "QOpenGLWidget");
+    py::class_<QProgressDialog>(m, "QProgressDialog");
     py::class_<QMainWindow, QWidget>(m, "QMainWindow");
+    py::class_<QFont>(m, "QFont")
+        .def("__repr__", [](const QFont& self)
+        {
+            return std::string("<QFont(") + self.toString().toStdString() + ")>";
+         });
+    py::class_<QSize>(m, "QSize")
+        .def(py::init<>())
+        .def(py::init<int, int>(), "width"_a, "height"_a)
+        .def("height", &QSize::height)
+        .def("width", &QSize::width)
+        .def("isEmpty", &QSize::isEmpty)
+        .def("isValid", &QSize::isValid)
+        .def("__repr__", [](const QSize& self) {
+            return std::string("<QSize(") + std::to_string(self.width()) + ", " + std::to_string(self.height()) + ")>";
+        });
+
+    py::class_<QPointF>(m, "QPointF");
 
     m.doc() = R"pbdoc(
         Python module exposing some CloudCompare functions
@@ -154,12 +189,26 @@ void define_pycc(py::module &m)
      * qCC_db
      **********************************/
 
-    py::class_<ccGenericGLDisplay>(m, "ccGenericGLDisplay");
+    py::class_<ccColor::Rgba>(m, "Rgba");
 
+
+    define_ccGenericGLDisplay(m);
+    define_ccGLWindow(m);
     define_ccScalarField(m);
+    define_ccGLMatrix(m);
 
     define_ccDrawableObject(m);
     define_ccObject(m);
+    define_ccGenericMesh(m);
+    define_ccMesh(m);
+    define_ccGenericPrimitive(m);
+    define_ccSphere(m);
+    define_ccPlane(m);
+    define_ccTorus(m);
+    define_ccBox(m);
+    define_ccDish(m);
+    define_ccCone(m);
+    define_ccCylinder(m);
 
     define_ccGenericPointCloud(m);
     define_ccPointCloud(m);

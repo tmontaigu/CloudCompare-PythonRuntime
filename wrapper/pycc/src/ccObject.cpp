@@ -54,5 +54,17 @@ void define_ccObject(py::module &m)
         .def("getChild", &ccHObject::getChild, py::return_value_policy::reference)
         .def("find", &ccHObject::find, py::return_value_policy::reference);
 
-    py::class_<ccShiftedObject, ccHObject>(m, "ccShiftedObject");
+    py::class_<ccShiftedObject, ccHObject>(m, "ccShiftedObject")
+        .def("setGlobalShift",
+             (void (ccShiftedObject::*)(double, double, double))(&ccShiftedObject::setGlobalShift),
+             "x_"_a,
+             "y"_a,
+             "z"_a)
+        .def("setGlobalShift",
+             (void (ccShiftedObject::*)(const CCVector3d &))(&ccShiftedObject::setGlobalShift),
+             "shift"_a)
+        .def("getGlobalShift", &ccShiftedObject::getGlobalShift)
+        .def("setGlobalScale", &ccShiftedObject::setGlobalScale, "scale"_a)
+        .def("isShifted", &ccShiftedObject::isShifted)
+        .def("getGlobalScale", &ccShiftedObject::setGlobalScale);
 }
