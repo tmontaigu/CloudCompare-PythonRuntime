@@ -33,7 +33,7 @@ void define_ChamferDistanceTransform(py::module &cccorelib)
     PyGrid3Dus.def("init", &GRID3Dus::init);
 
     py::class_<CCCoreLib::ChamferDistanceTransform, GRID3Dus>(cccorelib, "ChamferDistanceTransform")
-        .def_readonly_static("MAX_DIST", &CCCoreLib::ChamferDistanceTransform::MAX_DIST)
+        .def_property_readonly_static("MAX_DIST", []() { return CCCoreLib::ChamferDistanceTransform::MAX_DIST; })
         .def("init", &CCCoreLib::ChamferDistanceTransform::init, "gridSize"_a)
         .def("propagateDistance",
              &CCCoreLib::ChamferDistanceTransform::propagateDistance,

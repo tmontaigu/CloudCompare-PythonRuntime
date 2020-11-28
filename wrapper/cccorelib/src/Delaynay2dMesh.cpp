@@ -28,7 +28,7 @@ using namespace pybind11::literals;
 void define_Delaunay2dMesh(py::module &cccorelib)
 {
     py::class_<CCCoreLib::Delaunay2dMesh, CCCoreLib::GenericIndexedMesh>(cccorelib, "Delaunay2dMesh")
-        .def_readonly_static("USE_ALL_POINTS", &CCCoreLib::Delaunay2dMesh::USE_ALL_POINTS)
+        .def_property_readonly_static("USE_ALL_POINTS", [](){ return CCCoreLib::Delaunay2dMesh::USE_ALL_POINTS; })
         .def(py::init<>())
         .def_static("Available", &CCCoreLib::Delaunay2dMesh::Available)
         .def("linkMeshWith", &CCCoreLib::Delaunay2dMesh::linkMeshWith, "aCloud"_a, "passOwnership"_a = false)

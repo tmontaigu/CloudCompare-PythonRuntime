@@ -11,7 +11,7 @@ if (PLUGIN_PYTHON)
     mark_as_advanced(PLUGIN_PYTHON_COPY_ENV)
 
     set(USE_EMBEDDED_MODULES ON)
-    target_compile_definitions(PythonPlugin PRIVATE  -DUSE_EMBEDDED_MODULES)
+    target_compile_definitions(PythonPlugin PRIVATE  -DUSE_EMBEDDED_MODULES -DQ_OS_WINDOWS)
     include(wrapper/cccorelib/CMakeLists.txt)
     include(wrapper/pycc/CMakeLists.txt)
 
@@ -27,8 +27,6 @@ if (PLUGIN_PYTHON)
     find_package(pybind11 CONFIG REQUIRED)
     find_package(Qt5 COMPONENTS WebEngineWidgets REQUIRED)
 
-    deploy_qt_copy(${PROJECT_NAME} ${CLOUDCOMPARE_DEST_FOLDER})
-
     target_link_libraries(PythonPlugin pybind11::embed Qt5::WebEngineWidgets)
 
     set(CC_PYTHON_ENV_NAME "Python")
@@ -36,6 +34,7 @@ if (PLUGIN_PYTHON)
     set(CC_PYTHON_INSTALL_DIR "${CC_PLUGIN_INSTALL_DIR}/${CC_PYTHON_ENV_NAME}")
 
     if (WIN32)
+        deploy_qt_copy(${PROJECT_NAME} ${CLOUDCOMPARE_DEST_FOLDER})
         if (PLUGIN_PYTHON_COPY_ENV)
             copy_python_venv(${CC_PYTHON_INSTALL_DIR})
         endif()
