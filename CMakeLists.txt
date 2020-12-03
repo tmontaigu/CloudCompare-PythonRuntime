@@ -10,6 +10,23 @@ if (PLUGIN_PYTHON)
     option(PLUGIN_PYTHON_COPY_ENV "Should the content of the current python venv be copied on install" ON)
     mark_as_advanced(PLUGIN_PYTHON_COPY_ENV)
 
+    # If we detect that we are running inside a virtualenv
+    # we try to find pybind11 in the site-packages
+    # because it bundles the .cmake files the
+    # find_package command needs
+    if (DEFINED ENV{VIRTUAL_ENV})
+        set(PYTHON_SITE_PACKAGES "")
+        get_python_sites_packages(PYTHON_SITE_PACKAGES)
+        set(PYBIND11_CMAKE_MODULES_PATH "${PYTHON_SITE_PACKAGES}/pybind11/share/cmake/pybind11")
+        if (NOT EXISTS "${PYBIND11_CMAKE_MODULES_PATH}")
+            message(STATUS "pybind11 cmake modules not found at ${PYBIND11_CMAKE_MODULES_PATH}, is pybind11 installed ?")
+        else ()
+            message(STATUS "${PYBIND11_CMAKE_MODULES_PATH} added to CMAKE_PREFIX_PATH")
+        endif ()
+
+        list(APPEND CMAKE_PREFIX_PATH ${PYBIND11_CMAKE_MODULES_PATH})
+    endif ()
+
     set(USE_EMBEDDED_MODULES ON)
     target_compile_definitions(PythonPlugin PRIVATE  -DUSE_EMBEDDED_MODULES -DQ_OS_WINDOWS)
     include(wrapper/cccorelib/CMakeLists.txt)
