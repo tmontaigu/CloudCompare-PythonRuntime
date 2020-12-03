@@ -177,7 +177,10 @@ class NumpyCloud : public CCCoreLib::GenericIndexedCloud
         P.y = m_ys.at(index);
         P.z = m_zs.at(index);
     }
-    unsigned int size() const override { return m_xs.size(); }
+    unsigned int size() const override {
+        assert(m_xs.size() <= std::numeric_limits<unsigned int>::max());
+        return m_xs.size();
+    }
 
     void forEach(genericPointAction action) override
     {

@@ -212,7 +212,6 @@ QList<QAction *> PythonPlugin::getActions()
 
     return {m_showREPL, m_showEditor, m_showAboutDialog, m_showDoc};
 }
-
 void PythonPlugin::showRepl()
 {
     if (m_repl)

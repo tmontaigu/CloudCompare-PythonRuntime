@@ -242,8 +242,6 @@ void define_pycc(py::module &m)
             QCoreApplication::processEvents();
         }
     });
-
-    m.def("CreateObject", [](const char *type_name) { return GetInstance()->createObject(type_name); });
 }
 
 #ifdef USE_EMBEDDED_MODULES

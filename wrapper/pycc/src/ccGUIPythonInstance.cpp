@@ -84,7 +84,14 @@ void define_ccGUIPythonInstance(py::module &m)
     raises RuntimeError in case of error
 )")
         .def("createObject",
-             &ccGUIPythonInstance::createObject,
-             py::return_value_policy::reference,
-             "type_name"_a);
+             (ccHObject *
+              (ccGUIPythonInstance::*)(const char *, const pybind11::args &, const pybind11::kwargs &))(
+                 &ccGUIPythonInstance::createObject),
+             py::return_value_policy::reference)
+        .def("createObject",
+             (ccHObject *
+              (ccGUIPythonInstance::*)(const pybind11::object &,
+                                       const pybind11::args &,
+                                       const pybind11::kwargs &))(&ccGUIPythonInstance::createObject),
+             py::return_value_policy::reference);
 }
