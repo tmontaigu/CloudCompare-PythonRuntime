@@ -13,16 +13,39 @@ Early step attempt at allowing to use Python to automate some stuff in CloudComp
 
 1) Clone this project in CloudCompare/plugins/private
 
+
 2) Create a Virtual env or a conda env
 
     ```shell script
-    python3 -m venv pyccvenv 
-    # or
+    # Python's venv
+    python -m venv --system-site-packages .\pyccvenv 
+   
+    # Conda environment
     conda create -n pyccenv
     ```
 
 3) Activate the environment
-4) Start cmake or your IDE from this environment
+
+    ```shell script
+    # Python's venv (PowerShell)
+   cd .\pyccenv
+   .\Scripts\Activate.ps1
+    
+    # Conda environment
+    conda create -n pyccenv
+    ```
+   
+4) Install dependencies
+
+    ```shell script
+    # Python's venv (PowerShell)
+   pip install pybind11
+    
+    # Conda environment
+   conda install pybind11
+    ```
+   
+5) Start cmake or your IDE from within then environment
 
     The option to build the plugin is 
     ```shell script
@@ -75,7 +98,7 @@ pytest --cloudcompare_exe "C:\CMakeBuilds\CloudCompare\Release\install\CloudComp
 # Building the documentation
 
 Building the documentation also works by running CloudCompare in command line mode.
-To build the documention:
+To build the documentation:
 
 ``` powershell
 cd docs

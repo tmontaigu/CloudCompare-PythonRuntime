@@ -1,0 +1,7 @@
+*.wixobj
+*.wixpdb
+*.msi
+
+QtResources.wxs
+PythonEnvironment.wxs
+
