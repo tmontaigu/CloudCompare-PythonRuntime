@@ -22,6 +22,7 @@ class ccGUIPythonInstance;
 class ccCommandLineInterface;
 
 Q_DECL_EXPORT ccGUIPythonInstance *GetInstance();
+Q_DECL_EXPORT ccGUIPythonInstance *GetREPLInstance();
 Q_DECL_EXPORT ccCommandLineInterface *GetCmdLineInstance();
 
 #endif // CLOUDCOMPAREPROJECTS_RUNTIME_H
