@@ -97,6 +97,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../CloudCompare-PythonPlugin.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -20,8 +20,8 @@
    <string>Cloud Compare - Python Editor</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/CC/plugin/PythonPlugin/images/editor/icon.png</normaloff>:/CC/plugin/PythonPlugin/images/editor/icon.png</iconset>
+   <iconset resource="../CloudCompare-PythonPlugin.qrc">
+    <normaloff>:/CC/plugin/PythonPlugin/images/python-editor-icon.png</normaloff>:/CC/plugin/PythonPlugin/images/python-editor-icon.png</iconset>
   </property>
   <property name="documentMode">
    <bool>true</bool>

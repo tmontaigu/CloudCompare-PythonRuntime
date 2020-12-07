@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>CloudCompare - Python REPL</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../CloudCompare-PythonPlugin.qrc">
+    <normaloff>:/CC/plugin/PythonPlugin/images/repl-icon.png</normaloff>:/CC/plugin/PythonPlugin/images/repl-icon.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
@@ -72,6 +76,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../CloudCompare-PythonPlugin.qrc"/>
+ </resources>
  <connections/>
 </ui>
