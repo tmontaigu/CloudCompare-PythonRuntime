@@ -7,8 +7,10 @@ if (PLUGIN_PYTHON)
 
     AddPlugin(NAME ${PROJECT_NAME})
 
-    option(PLUGIN_PYTHON_COPY_ENV "Should the content of the current python venv be copied on install" ON)
-    mark_as_advanced(PLUGIN_PYTHON_COPY_ENV)
+    if (WIN32)
+        option(PLUGIN_PYTHON_COPY_ENV "Should the content of the current python venv be copied on install" ON)
+        mark_as_advanced(PLUGIN_PYTHON_COPY_ENV)
+    endif()
 
     # If we detect that we are running inside a virtualenv
     # we try to find pybind11 in the site-packages
@@ -28,7 +30,7 @@ if (PLUGIN_PYTHON)
     endif ()
 
     set(USE_EMBEDDED_MODULES ON)
-    target_compile_definitions(PythonPlugin PRIVATE  -DUSE_EMBEDDED_MODULES -DQ_OS_WINDOWS)
+    target_compile_definitions(PythonPlugin PRIVATE -DUSE_EMBEDDED_MODULES)
     include(wrapper/cccorelib/CMakeLists.txt)
     include(wrapper/pycc/CMakeLists.txt)
 
@@ -46,15 +48,16 @@ if (PLUGIN_PYTHON)
 
     target_link_libraries(PythonPlugin pybind11::embed Qt5::WebEngineWidgets)
 
-    set(CC_PYTHON_ENV_NAME "Python")
-    set(CC_PLUGIN_INSTALL_DIR ${CLOUDCOMPARE_DEST_FOLDER}/plugins)
-    set(CC_PYTHON_INSTALL_DIR "${CC_PLUGIN_INSTALL_DIR}/${CC_PYTHON_ENV_NAME}")
-
     if (WIN32)
+        set(CC_PYTHON_ENV_NAME "Python")
+        set(CC_PLUGIN_INSTALL_DIR ${CLOUDCOMPARE_DEST_FOLDER}/plugins)
+        set(CC_PYTHON_INSTALL_DIR "${CC_PLUGIN_INSTALL_DIR}/${CC_PYTHON_ENV_NAME}")
+
         deploy_qt_copy(${PROJECT_NAME} ${CLOUDCOMPARE_DEST_FOLDER})
         if (PLUGIN_PYTHON_COPY_ENV)
             copy_python_venv(${CC_PYTHON_INSTALL_DIR})
         endif()
+
         # If the docs have been built, we copy them in the install folder
         if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/docs/_build/index.html")
             install(
