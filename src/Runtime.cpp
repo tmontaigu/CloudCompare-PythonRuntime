@@ -34,11 +34,23 @@ class ccCommandLineInterface;
 namespace py = pybind11;
 
 ccGUIPythonInstance *s_pythonInstance{nullptr};
+
+// The REPL needs its own instance so that
+// objects create using the REPL's instance are separated
+// so that when the clear method of the script instance is called
+// REPL Created objects are not destroyed
+ccGUIPythonInstance *s_pythonREPLInstance{nullptr};
+
 ccCommandLineInterface *s_cmdLineInstance{nullptr};
 
 ccGUIPythonInstance *GetInstance()
 {
     return s_pythonInstance;
+}
+
+ccGUIPythonInstance *GetREPLInstance()
+{
+    return s_pythonREPLInstance;
 }
 
 ccCommandLineInterface *GetCmdLineInstance()
@@ -54,6 +66,11 @@ void setMainAppInterfaceInstance(ccMainAppInterface *appInterface)
     {
         s_pythonInstance = new ccGUIPythonInstance(appInterface);
     }
+
+    if (s_pythonREPLInstance == nullptr)
+    {
+        s_pythonREPLInstance = new ccGUIPythonInstance(appInterface);
+    }
 }
 
 void unsetMainAppInterfaceInstance()
@@ -62,6 +79,12 @@ void unsetMainAppInterfaceInstance()
     {
         delete s_pythonInstance;
         s_pythonInstance = nullptr;
+    }
+
+    if (s_pythonREPLInstance != nullptr)
+    {
+        delete s_pythonREPLInstance;
+        s_pythonREPLInstance = nullptr;
     }
 }
 

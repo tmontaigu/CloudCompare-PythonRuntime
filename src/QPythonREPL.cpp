@@ -18,6 +18,8 @@
 #include "QPythonREPL.h"
 #include "PythonHighlighter.h"
 #include "PythonInterpreter.h"
+#include <Runtime.h>
+#include <ccGUIPythonInstance.h>
 
 #include <ccLog.h>
 #include <ui_QPythonREPL.h>
@@ -192,13 +194,17 @@ void QPythonREPL::reset()
     m_state = PythonInterpreter::State();
     m_ui->outputDisplay->clear();
     importNeededPackages();
+    auto *replInstance = GetREPLInstance();
+    if (replInstance) {
+        replInstance->clearDB();
+    }
 }
 
 void QPythonREPL::importNeededPackages()
 {
     executeCode(replArrows + "import pycc");
     executeCode(replArrows + "import cccorelib");
-    executeCode(replArrows + "cc = pycc.GetInstance()");
+    executeCode(replArrows + "cc = pycc.__GetREPLInstance()");
 }
 
 void QPythonREPL::executeCode(const QString &pythonCode)
