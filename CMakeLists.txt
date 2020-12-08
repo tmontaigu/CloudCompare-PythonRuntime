@@ -58,6 +58,11 @@ if (PLUGIN_PYTHON)
             copy_python_venv(${CC_PYTHON_INSTALL_DIR})
         endif()
 
+        set(PYTHON_DLL "${PYTHON_PREFIX}/python${PYTHON_LIBRARY_SUFFIX}.dll")
+        if (EXISTS "${PYTHON_DLL}")
+            install(FILES ${PYTHON_DLL} DESTINATION ${CLOUDCOMPARE_DEST_FOLDER})
+        endif()
+
         # If the docs have been built, we copy them in the install folder
         if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/docs/_build/index.html")
             install(
