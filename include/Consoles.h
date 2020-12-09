@@ -22,6 +22,7 @@
 #include <QString>
 #include <ccLog.h>
 #include <functional>
+#include <utility>
 
 /// Class implementing 'write' to be able to act like
 /// a Python file object in order to be able to
@@ -82,18 +83,28 @@ class ccConsoleOutput
 {
   public:
     ccConsoleOutput() = default;
+    explicit ccConsoleOutput(const char*  prefix) : prefix(prefix) {}
 
     void write(const char *messagePart)
     {
         m_output.write(messagePart);
     }
+
     void flush()
     {
         m_output.flush();
     }
 
   private:
-    ConsoleWrapper m_output{[](const QString &message) { ccLog::Print(message); }};
+    const QString prefix;
+    ConsoleWrapper m_output{[this](const QString &message) {
+        if (prefix.isEmpty())
+        {
+            ccLog::Print(message);
+        } else {
+            ccLog::Print(prefix + message);
+        }
+    }};
 };
 
 /// Redirects messages to the console output of the Python plugin's REPL
@@ -115,6 +126,7 @@ class ConsoleREPL
   private:
     QListWidget *view;
     QBrush brush;
+    QString prefix;
     ConsoleWrapper m_output{[this](const QString &message) {
         auto *messageItem = new QListWidgetItem(message);
         messageItem->setForeground(brush);

@@ -18,6 +18,7 @@
 #undef slots
 
 #include <pybind11/embed.h>
+#include <pybind11/pybind11.h>
 
 #include "ccGUIPythonInstance.h"
 #include "ccMainAppInterface.h"
@@ -32,6 +33,7 @@
 class ccCommandLineInterface;
 
 namespace py = pybind11;
+using namespace pybind11::literals;
 
 ccGUIPythonInstance *s_pythonInstance{nullptr};
 
@@ -125,6 +127,7 @@ PYBIND11_EMBEDDED_MODULE(ccinternals, m)
 
     py::class_<ccConsoleOutput>(m, "ccConsoleOutput")
         .def(py::init<>())
+        .def(py::init<const char*>(), "prefix"_a)
         .def("write", &ccConsoleOutput::write)
         .def("flush", &ccConsoleOutput::flush);
 

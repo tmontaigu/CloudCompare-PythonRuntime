@@ -87,7 +87,6 @@ class QDocViewer : public QWidget
 
     void setupToolBarActions(QToolBar *toolbar)
     {
-
         auto homePageAction = new QAction("Home Page");
         homePageAction->setIcon(this->style()->standardIcon(QStyle::SP_DirHomeIcon));
         connect(homePageAction, &QAction::triggered, this, &QDocViewer::loadHomePage);

@@ -249,7 +249,9 @@ bool PythonInterpreter::executeFile(const std::string& filepath)
     bool success{true};
     try
     {
-        PyStdErrOutStreamRedirect r{};
+        py::object pyStdout = py::module::import("ccinternals").attr("ccConsoleOutput")("[PythonStdout] ");
+        py::object pyStderr = py::module::import("ccinternals").attr("ccConsoleOutput")("[PythonStderr] ");
+        PyStdErrOutStreamRedirect r{pyStdout, pyStderr};
         py::eval_file(filepath);
     }
     catch (const std::exception &e)
