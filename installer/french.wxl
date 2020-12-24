@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<WixLocalization Culture="fr-FR" Codepage="1252" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+    <String Id="InstallDirDlg_Title" Overridable="yes">Installation de [ProductName]</String>
+    <String Id="InstallDirDlgChange" Overridable="yes">&amp;Changer...</String>
+    <String Id="InstallDirDlgTitle" Overridable="yes">{\WixUI_Font_Title}Dossier de destination</String>
+    <String Id="InstallDirDlgDescription" Overridable="yes">Click Next to install to the default folder or click Change to choose another.</String>
+    <String Id="InstallDirDlgDescription" Overridable="yes">Cliquez sur suivant pour installer dans le dossier par défaut, ou cliquez sur Changer pour sélectionner une autre dossier</String>
+    <String Id="InstallDirDlgBannerBitmap" Overridable="yes">WixUI_Bmp_Banner</String>
+    <String Id="InstallDirDlgFolderLabel" Overridable="yes">
+        Sélectionnez, le dossier dans lequel CloudCompare.exe se situe.
+        CloudCompare v2.12.alpha requis.
+    </String>
+</WixLocalization>
+
+

@@ -3,7 +3,9 @@
 
 <?define SourcePluginPath = "$(var.SourceInstallPath)/plugins" ?>
 
+
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+
     <Product
         Name='CloudCompare-PythonPlugin 0.0.1' 
         Manufacturer='Thomas Montaigu'
@@ -59,7 +61,6 @@
 
         <UIRef Id="WixUI_InstallDir" />
         <UIRef Id="WixUI_ErrorProgressText" />
-
     </Product>
 </Wix>
 

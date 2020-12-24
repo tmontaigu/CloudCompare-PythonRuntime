@@ -1,6 +1,10 @@
 param(
     [Parameter(Mandatory = $true)]
-    [String]$CloudCompareInstallFolder
+    [String]$CloudCompareInstallFolder,
+
+    [Parameter()]
+    [ValidateSet("En", "Fr")]
+    [String]$Localization = "En"
 )
 
 $IsFolder = Test-Path -Path $CloudCompareInstallFolder -PathType Container
@@ -23,6 +27,10 @@ else {
 
 Write-Host "Python DLL suffix: $PythonDllSuffix"
 
+$LocalizationFile = if ($Localization -eq "Fr") { "french.wxl" } else { "english.wxl" }
+$LocalizationSwitch = if ($Localization -eq "Fr") { "fr-fr" } else { "en-us" }
+$LocalizationName = if ($Localization -eq "Fr") { "French" } else { "English" }
+
 &heat `
     dir "$CloudCompareInstallFolder\plugins\Python" `
     -scom `
@@ -32,7 +40,7 @@ Write-Host "Python DLL suffix: $PythonDllSuffix"
     -gg `
     -cg PythonEnvironment `
     -dr PythonEnvironmentDir `
-    -o PythonEnvironment.wxs 
+    -o PythonEnvironment.wxs
 
 
 &candle `
@@ -49,7 +57,11 @@ Write-Host "Python DLL suffix: $PythonDllSuffix"
     .\PythonEnvironment.wixobj `
     -b "$CloudCompareInstallFolder\plugins\Python" `
     -b "$CloudCompareInstallFolder\resources" `
-    -o CloudCompare-PythonPlugin-Setup.msi
+    -b "$(Get-Location)" `
+    -dWixUILicenseRtf="GPLv3_en.rtf" `
+    -cultures:$LocalizationSwitch `
+    -loc $LocalizationFile `
+    -o "CloudCompare-PythonPlugin-Setup-$LocalizationName.msi"
 
 
 # The heat command is taken from https://stackoverflow.com/questions/26550763/wix-how-to-copy-a-directory-to-install-folder

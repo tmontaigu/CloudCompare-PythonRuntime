@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<WixLocalization Culture="en-EN" Codepage="1252" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+    <String Id="InstallDirDlgFolderLabel" Overridable="yes">
+        Select the folder where CloudCompare.exe is installed
+        CloudCompare v2.12.alpha required.
+    </String>
+</WixLocalization>
+
+
