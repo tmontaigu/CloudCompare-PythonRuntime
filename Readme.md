@@ -45,7 +45,7 @@ Early step attempt at allowing to use Python to automate some stuff in CloudComp
    conda install pybind11
     ```
    
-5) Start cmake or your IDE from within then environment
+5) Start cmake or your IDE from within the environment
 
     The option to build the plugin is 
     ```shell script
