@@ -64,9 +64,10 @@ if (PLUGIN_PYTHON)
         endif()
 
         # If the docs have been built, we copy them in the install folder
-        if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/docs/_build/index.html")
+        set(DOCUMENTATION_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/docs/_build")
+        if (EXISTS "${DOCUMENTATION_FOLDER}/index.html")
             install(
-                    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/docs/_build/
+                    DIRECTORY ${DOCUMENTATION_FOLDER}
                     DESTINATION ${CC_PYTHON_INSTALL_DIR}/docs
             )
         endif()
