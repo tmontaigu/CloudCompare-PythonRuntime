@@ -151,6 +151,7 @@ void define_ccDish(py::module &);
 void define_ccCone(py::module &);
 void define_ccCylinder(py::module& );
 void define_ccProgressDialog(py::module&);
+void define_ccLog(py::module&);
 
 template <class T> using observer_ptr = std::unique_ptr<T, py::nodelete>;
 
@@ -214,7 +215,7 @@ void define_pycc(py::module &m)
     define_ccGenericPointCloud(m);
     define_ccPointCloud(m);
 
-
+    define_ccLog(m);
     define_ccProgressDialog(m);
 
     py::class_<ccGlobalShiftManager> PyccGlobalShiftManager(m, "ccGlobalShiftManager");
