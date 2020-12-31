@@ -21,6 +21,7 @@ set(pycc_sources
         ${CMAKE_CURRENT_LIST_DIR}/src/ccGenericMesh.cpp
         ${CMAKE_CURRENT_LIST_DIR}/src/ccGenericPrimitive.cpp
         ${CMAKE_CURRENT_LIST_DIR}/src/ccMesh.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/src/ccProgressDialog.cpp
         )
 
 if (NOT USE_EMBEDDED_MODULES)

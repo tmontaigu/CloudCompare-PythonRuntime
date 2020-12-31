@@ -150,6 +150,7 @@ void define_ccBox(py::module &);
 void define_ccDish(py::module &);
 void define_ccCone(py::module &);
 void define_ccCylinder(py::module& );
+void define_ccProgressDialog(py::module&);
 
 template <class T> using observer_ptr = std::unique_ptr<T, py::nodelete>;
 
@@ -161,7 +162,7 @@ void define_pycc(py::module &m)
 
     py::class_<QWidget>(m, "QWidget");
     py::class_<QOpenGLWidget>(m, "QOpenGLWidget");
-    py::class_<QProgressDialog>(m, "QProgressDialog");
+    py::class_<QProgressDialog, QWidget>(m, "QProgressDialog");
     py::class_<QMainWindow, QWidget>(m, "QMainWindow");
     py::class_<QFont>(m, "QFont")
         .def("__repr__", [](const QFont& self)
@@ -213,8 +214,8 @@ void define_pycc(py::module &m)
     define_ccGenericPointCloud(m);
     define_ccPointCloud(m);
 
-    py::class_<ccProgressDialog, QProgressDialog, CCCoreLib::GenericProgressCallback>(m, "ccProgressDialog")
-        .def(py::init<bool>(), "cancelButton"_a = false);
+
+    define_ccProgressDialog(m);
 
     py::class_<ccGlobalShiftManager> PyccGlobalShiftManager(m, "ccGlobalShiftManager");
 
