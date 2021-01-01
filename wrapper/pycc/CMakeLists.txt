@@ -23,6 +23,8 @@ set(pycc_sources
         ${CMAKE_CURRENT_LIST_DIR}/src/ccMesh.cpp
         ${CMAKE_CURRENT_LIST_DIR}/src/ccProgressDialog.cpp
         ${CMAKE_CURRENT_LIST_DIR}/src/ccLog.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/src/ccInteractor.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/src/cc2DLabel.cpp
         )
 
 if (NOT USE_EMBEDDED_MODULES)

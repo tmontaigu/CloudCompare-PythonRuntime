@@ -152,6 +152,8 @@ void define_ccCone(py::module &);
 void define_ccCylinder(py::module& );
 void define_ccProgressDialog(py::module&);
 void define_ccLog(py::module&);
+void define_ccInteractor(py::module &);
+void define_cc2DLabel(py::module &);
 
 template <class T> using observer_ptr = std::unique_ptr<T, py::nodelete>;
 
@@ -198,6 +200,7 @@ void define_pycc(py::module &m)
     define_ccGLWindow(m);
     define_ccScalarField(m);
     define_ccGLMatrix(m);
+    define_ccInteractor(m);
 
     define_ccDrawableObject(m);
     define_ccObject(m);
@@ -211,6 +214,7 @@ void define_pycc(py::module &m)
     define_ccDish(m);
     define_ccCone(m);
     define_ccCylinder(m);
+    define_cc2DLabel(m);
 
     define_ccGenericPointCloud(m);
     define_ccPointCloud(m);

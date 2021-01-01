@@ -19,22 +19,15 @@
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
 
-#include <ccGLMatrix.h>
-#include <ccGenericPrimitive.h>
-#include <ccMesh.h>
+#include <cc2DLabel.h>
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-void define_ccGenericPrimitive(py::module &m)
+void define_ccInteractor(py::module &m)
 {
-    py::class_<ccGenericPrimitive, ccMesh>(m, "ccGenericPrimitive")
-        .def("getTypeName", &ccGenericPrimitive::getTypeName)
-        .def("clone", &ccGenericPrimitive::getTypeName)
-        .def("setColor", &ccGenericPrimitive::setColor, "col"_a)
-        .def("hasDrawingPrecision", &ccGenericPrimitive::hasDrawingPrecision)
-        .def("setDrawingPrecision", &ccGenericPrimitive::setDrawingPrecision, "steps"_a)
-        .def("getDrawingPrecision", &ccGenericPrimitive::getDrawingPrecision)
-        .def("getTransformation",
-             (const ccGLMatrix &(ccGenericPrimitive::*)() const)(&ccGenericPrimitive::getTransformation));
+    py::class_<ccInteractor>(m, "ccInteractor")
+        .def("acceptClick", &ccInteractor::acceptClick, "x"_a, "y"_a, "button"_a)
+        .def("move2D", &ccInteractor::move2D, "x"_a, "y"_a, "dx"_a, "dy"_a, "screenWidth"_a, "screenHeight"_a)
+        .def("move3D", &ccInteractor::move3D, "u"_a);
 }
