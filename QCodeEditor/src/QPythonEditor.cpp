@@ -49,6 +49,7 @@ QPythonEditor::QPythonEditor(PythonInterpreter *interpreter) : Ui::QPythonEditor
 
 void QPythonEditor::closeEvent(QCloseEvent *event)
 {
+    projectBrowser->hide();
     mdiArea->closeAllSubWindows();
     if (mdiArea->currentSubWindow())
     {
