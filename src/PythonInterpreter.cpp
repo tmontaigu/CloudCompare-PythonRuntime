@@ -286,7 +286,7 @@ void PythonInterpreter::executeCodeWithState(const std::string &code, QListWidge
     catch (const std::exception &e)
     {
         auto message = new QListWidgetItem(e.what());
-        message->setTextColor(Qt::red);
+        message->setForeground(Qt::red);
         output->addItem(message);
     }
 
