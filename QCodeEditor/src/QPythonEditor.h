@@ -23,6 +23,7 @@
 // Qt
 #include "QEditorSettings.h"
 #include <QMainWindow>
+#include <ccLog.h>
 
 class CodeEditor;
 QT_BEGIN_NAMESPACE
@@ -30,6 +31,8 @@ class QAction;
 class QMenu;
 class QMdiArea;
 class QMdiSubWindow;
+class QFileSystemModel;
+class QModelIndex;
 QT_END_NAMESPACE
 
 class ccMainAppInterface;
@@ -40,8 +43,16 @@ class QPythonEditor : public QMainWindow, public Ui::QPythonEditor
     Q_OBJECT
 
   public:
-    QPythonEditor(PythonInterpreter *interpreter);
+    explicit QPythonEditor(PythonInterpreter *interpreter);
+
     void changeEvent(QEvent *e) override;
+    /// Opens a file
+    ///
+    /// If the fileName points to an already opened file,
+    /// then its window takes focus
+    ///
+    /// \param fileName the file to open
+    /// \return true of success
     bool openFile(const QString &fileName);
     static QString settingsApplicationName();
 
@@ -53,12 +64,19 @@ class QPythonEditor : public QMainWindow, public Ui::QPythonEditor
 
   protected Q_SLOTS:
     void newFile();
-    void open();
+    void promptForFileToOpen();
+    // Display a folder selection dialog & fills the
+    // content of the project view with the content of the selected folder
+    void promptForFolderToOpen();
     void save();
     void saveAs();
     void updateRecentFileActions();
     void openRecentFile();
     bool eventFilter(QObject *obj, QEvent *e) override;
+    // Loads the double clicked item from the project view
+    // if its a file
+    void projectTreeDoubleClicked(const QModelIndex& index);
+
 #ifndef QT_NO_CLIPBOARD
     void cut();
     void copy();
@@ -69,7 +87,6 @@ class QPythonEditor : public QMainWindow, public Ui::QPythonEditor
     void indentMore();
     void indentLess();
     void about();
-    void updateMenus();
     void updateWindowMenu();
     void executionStarted();
     void executionFinished();
@@ -81,9 +98,13 @@ class QPythonEditor : public QMainWindow, public Ui::QPythonEditor
         MaxRecentFiles = 10
     };
 
+    // Initialization functions
     void createActions();
-    void runExecute();
     void createStatusBar();
+    void updateMenus();
+    void initProjectView();
+
+    void runExecute();
     void readSettings();
     void writeSettings();
     bool loadFile(const QString &fileName);
@@ -92,6 +113,8 @@ class QPythonEditor : public QMainWindow, public Ui::QPythonEditor
     void setRecentFilesVisible(bool visible);
     CodeEditor *activeChildCodeEditor() const;
     QMdiSubWindow *findChildCodeEditor(const QString &fileName) const;
+
+    QFileSystemModel* fileSystemModel{nullptr};
 
     QEditorSettings *settings{nullptr};
 

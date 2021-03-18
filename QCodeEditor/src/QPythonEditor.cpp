@@ -34,7 +34,7 @@ QPythonEditor::QPythonEditor(PythonInterpreter *interpreter) : Ui::QPythonEditor
     connect(mdiArea, &QMdiArea::subWindowActivated, this, &QPythonEditor::updateMenus);
 
     this->settings = new QEditorSettings;
-    this->projectBrowser->hide();
+    initProjectView();
     createActions();
     createStatusBar();
     updateMenus();
@@ -70,7 +70,7 @@ void QPythonEditor::newFile()
     child->show();
 }
 
-void QPythonEditor::open()
+void QPythonEditor::promptForFileToOpen()
 {
     const QString fileName =
         QFileDialog::getOpenFileName(this, "Open Python Script", QString(), "Python Script (*.py)");
@@ -78,6 +78,15 @@ void QPythonEditor::open()
     {
         openFile(fileName);
     }
+}
+
+void QPythonEditor::promptForFolderToOpen()
+{
+    const QString folderName = QFileDialog::getExistingDirectory(this, "Open folder");
+    fileSystemModel->setRootPath(folderName);
+    PBtreeView->setRootIndex(fileSystemModel->index(folderName));
+    projectBrowser->setWindowTitle(QString("Project Browser (%1)").arg(folderName));
+    this->projectBrowser->show();
 }
 
 void QPythonEditor::changeEvent(QEvent *e)
@@ -106,6 +115,15 @@ bool QPythonEditor::openFile(const QString &fileName)
         statusBar()->showMessage(tr("File loaded"), 2000);
     }
     return succeeded;
+}
+
+void QPythonEditor::projectTreeDoubleClicked(const QModelIndex &index)
+{
+    const QString path = fileSystemModel->filePath(index);
+    if (QFileInfo(path).isFile())
+    {
+        openFile(path);
+    }
 }
 
 bool QPythonEditor::loadFile(const QString &fileName)
@@ -336,7 +354,8 @@ void QPythonEditor::createActions()
 {
     connect(actionNew, &QAction::triggered, this, &QPythonEditor::newFile);
     connect(actionSave, &QAction::triggered, this, &QPythonEditor::save);
-    connect(actionOpen, &QAction::triggered, this, &QPythonEditor::open);
+    connect(actionOpen, &QAction::triggered, this, &QPythonEditor::promptForFileToOpen);
+    connect(actionOpenFolder, &QAction::triggered, this, &QPythonEditor::promptForFolderToOpen);
     connect(actionSave_As, &QAction::triggered, this, &QPythonEditor::saveAs);
     connect(actionRun, &QAction::triggered, this, &QPythonEditor::runExecute);
     connect(actionClose, &QAction::triggered, this, [=]() { close(); });
@@ -430,6 +449,18 @@ void QPythonEditor::createActions()
 void QPythonEditor::createStatusBar()
 {
     statusBar()->showMessage(tr("Ready"));
+}
+
+void QPythonEditor::initProjectView()
+{
+    projectBrowser->hide();
+    fileSystemModel = new QFileSystemModel;
+    PBtreeView->setModel(fileSystemModel);
+    for (int i{1}; i < PBtreeView->size().width(); ++i)
+    {
+        PBtreeView->hideColumn(i);
+    }
+    connect(PBtreeView, &QTreeView::doubleClicked, this, &QPythonEditor::projectTreeDoubleClicked);
 }
 
 void QPythonEditor::updateMenus()
