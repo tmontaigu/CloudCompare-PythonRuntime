@@ -84,10 +84,13 @@ void QPythonEditor::promptForFileToOpen()
 void QPythonEditor::promptForFolderToOpen()
 {
     const QString folderName = QFileDialog::getExistingDirectory(this, "Open folder");
-    fileSystemModel->setRootPath(folderName);
-    PBtreeView->setRootIndex(fileSystemModel->index(folderName));
-    projectBrowser->setWindowTitle(QString("Project Browser (%1)").arg(folderName));
-    this->projectBrowser->show();
+    if (!folderName.isEmpty())
+    {
+        fileSystemModel->setRootPath(folderName);
+        PBtreeView->setRootIndex(fileSystemModel->index(folderName));
+        projectBrowser->setWindowTitle(QString("Project Browser (%1)").arg(folderName));
+        this->projectBrowser->show();
+    }
 }
 
 void QPythonEditor::changeEvent(QEvent *e)
