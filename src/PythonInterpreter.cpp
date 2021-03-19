@@ -278,7 +278,7 @@ void PythonInterpreter::executeCodeWithState(const std::string &code, QListWidge
 
     try
     {
-        py::object newStdout = py::module::import("ccinternals").attr("ConsoleREPL")(output, Qt::black);
+        py::object newStdout = py::module::import("ccinternals").attr("ConsoleREPL")(output);
         py::object newStderr = py::module::import("ccinternals").attr("ConsoleREPL")(output, orange);
         PyStdErrOutStreamRedirect redirect{newStdout, newStderr};
         py::exec(code);

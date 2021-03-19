@@ -42,7 +42,7 @@ class ConsoleWrapper
     /// using the newline ('\n') character and call the printFn on for each of these
     /// splits.
     ///
-    /// The goal if this is to ensure that each '\n'-separated lines
+    /// The goal of this is to ensure that each '\n'-separated lines
     /// appears one one line on CloudCompare's console output
     ///
     /// \param messagePart the message that the Python interpreter sends us
@@ -111,8 +111,9 @@ class ccConsoleOutput
 class ConsoleREPL
 {
   public:
-    explicit ConsoleREPL(QListWidget *view, Qt::GlobalColor color) : view(view), brush(color) {}
-    explicit ConsoleREPL(QListWidget *view, const QColor& color) : view(view), brush(color) {}
+    ConsoleREPL(QListWidget *view, Qt::GlobalColor color) : view(view), brush(color) {}
+    ConsoleREPL(QListWidget *view, const QColor& color) : view(view), brush() {}
+    explicit ConsoleREPL(QListWidget *view) : view(view), brush() {}
 
     void write(const char *messagePart)
     {
