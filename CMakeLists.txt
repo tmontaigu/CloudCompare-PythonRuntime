@@ -44,16 +44,14 @@ if (PLUGIN_PYTHON)
     add_subdirectory(QCodeEditor)
 
     find_package(pybind11 CONFIG REQUIRED)
-    find_package(Qt5 COMPONENTS WebEngineWidgets REQUIRED)
 
-    target_link_libraries(PythonPlugin pybind11::embed Qt5::WebEngineWidgets)
+    target_link_libraries(PythonPlugin pybind11::embed)
 
     if (WIN32)
         set(CC_PYTHON_ENV_NAME "Python")
         set(CC_PLUGIN_INSTALL_DIR ${CLOUDCOMPARE_DEST_FOLDER}/plugins)
         set(CC_PYTHON_INSTALL_DIR "${CC_PLUGIN_INSTALL_DIR}/${CC_PYTHON_ENV_NAME}")
 
-        deploy_qt_copy(${PROJECT_NAME} ${CLOUDCOMPARE_DEST_FOLDER})
         if (PLUGIN_PYTHON_COPY_ENV)
             copy_python_venv(${CC_PYTHON_INSTALL_DIR})
         endif()

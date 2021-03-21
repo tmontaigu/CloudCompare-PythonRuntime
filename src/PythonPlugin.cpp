@@ -23,9 +23,8 @@
 #include "QPythonREPL.h"
 #include "Utilities.h"
 
-#include <QWebEngineHistory>
-#include <QWebEngineSettings>
-#include <QWebEngineView>
+#include <QUrl>
+#include <QDesktopServices>
 
 #include <memory>
 
@@ -33,80 +32,6 @@
 #define signals Q_SIGNALS
 #include <ccCommandLineInterface.h>
 
-class QDocViewer : public QWidget
-{
-    Q_OBJECT
-
-  public:
-    explicit QDocViewer(QWidget *parent = nullptr) : QWidget(parent, Qt::Window)
-    {
-        setMinimumSize(1280, 800);
-        setWindowTitle("Python Plugin Documentation");
-
-        m_viewEngine = new QWebEngineView;
-        setupWebEngine();
-
-        auto toolbar = new QToolBar;
-        setupToolBarActions(toolbar);
-
-        auto layout = new QVBoxLayout;
-        layout->setSpacing(0);
-        layout->setMargin(0);
-        layout->addWidget(toolbar);
-        layout->addWidget(m_viewEngine);
-        setLayout(layout);
-
-        loadHomePage();
-    }
-
-    void loadHomePage()
-    {
-        QUrl url(QString("file:///%1/%2")
-                     .arg(QApplication::applicationDirPath())
-                     .arg("plugins/Python/docs/index.html"));
-        m_viewEngine->load(QUrl(url));
-    }
-
-    void loadPreviousPage()
-    {
-        m_viewEngine->history()->back();
-    }
-
-    void loadNextPage()
-    {
-        m_viewEngine->history()->forward();
-    }
-
-  protected:
-    void setupWebEngine()
-    {
-        QWebEngineSettings *settings = m_viewEngine->settings();
-        settings->setAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls, true);
-        settings->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, false);
-    }
-
-    void setupToolBarActions(QToolBar *toolbar)
-    {
-        auto homePageAction = new QAction("Home Page");
-        homePageAction->setIcon(this->style()->standardIcon(QStyle::SP_DirHomeIcon));
-        connect(homePageAction, &QAction::triggered, this, &QDocViewer::loadHomePage);
-
-        auto previousPageAction = new QAction("Previous Page");
-        previousPageAction->setIcon(this->style()->standardIcon(QStyle::SP_ArrowLeft));
-        connect(previousPageAction, &QAction::triggered, this, &QDocViewer::loadPreviousPage);
-
-        auto nextPageAction = new QAction("Next Page");
-        nextPageAction->setIcon(this->style()->standardIcon(QStyle::SP_ArrowRight));
-        connect(nextPageAction, &QAction::triggered, this, &QDocViewer::loadNextPage);
-
-        toolbar->addAction(previousPageAction);
-        toolbar->addAction(nextPageAction);
-        toolbar->addAction(homePageAction);
-    }
-
-  private:
-    QWebEngineView *m_viewEngine{nullptr};
-};
 
 void logPythonPath()
 {
@@ -192,9 +117,9 @@ QList<QAction *> PythonPlugin::getActions()
     if (!m_showDoc)
     {
         m_showDoc = new QAction("Show Documentation", this);
-        m_showDoc->setToolTip("Show local documentation");
+        m_showDoc->setToolTip("Show local documentation in your web browser");
         m_showDoc->setIcon(m_app->getMainWindow()->style()->standardIcon(QStyle::SP_FileDialogInfoView));
-        connect(m_showDoc, &QAction::triggered, this, &PythonPlugin::showDocumentation);
+        connect(m_showDoc, &QAction::triggered, &PythonPlugin::showDocumentation);
         m_showDoc->setEnabled(enableActions);
     }
 
@@ -238,11 +163,10 @@ void PythonPlugin::showEditor()
 
 void PythonPlugin::showDocumentation()
 {
-    if (!m_docView)
-    {
-        m_docView = new QDocViewer(m_app->getMainWindow());
-    }
-    m_docView->show();
+	QUrl url(QString("file:///%1/%2")
+					 .arg(QApplication::applicationDirPath())
+					 .arg("plugins/Python/docs/index.html"));
+	QDesktopServices::openUrl(url);
 }
 
 void PythonPlugin::showAboutDialog()
@@ -337,5 +261,3 @@ void PythonPlugin::setMainAppInterface(ccMainAppInterface *app)
     ccStdPluginInterface::setMainAppInterface(app);
     Python::setMainAppInterfaceInstance(m_app);
 }
-
-#include "PythonPlugin.moc"

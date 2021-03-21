@@ -17,16 +17,6 @@ param(
     -dr PythonEnvironmentDir `
     -o PythonEnvironment.wxs 
 
-&heat `
-    dir "$CloudCompareInstallFolder\resources" `
-    -scom `
-    -frag `
-    -srd `
-    -sreg `
-    -gg `
-    -cg QtResources `
-    -dr QtResourcesDir `
-    -o QtResources.wxs 
 
 &candle `
     -arch x64 `
@@ -34,14 +24,12 @@ param(
     -dPythonSuffix="$PythonDllSuffix" `
     .\Installer.wxs `
     .\PythonEnvironment.wxs `
-    .\QtResources.wxs
 
 
 &light `
     -ext WixUIExtension `
     .\Installer.wixobj `
     .\PythonEnvironment.wixobj `
-    .\QtResources.wixobj `
     -b "$CloudCompareInstallFolder\plugins\Python" `
     -b "$CloudCompareInstallFolder\resources" `
     -o CloudCompare-PythonPlugin-Setup.msi
