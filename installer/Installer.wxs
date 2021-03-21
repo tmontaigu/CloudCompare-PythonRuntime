@@ -35,29 +35,6 @@
         <Directory Id='TARGETDIR' Name='SourceDir'>
             <Directory Id='ProgramFiles64Folder' Name='PFiles'>
                     <Directory Id='CLOUDCOMPAREDIR' Name='CloudCompare'>
-
-                        <Component Id='AdditionalQtStuff' Guid='2abce2b9-7492-491b-949d-eac667ea8930' Win64="yes" >
-                                <File Id='Qt5WebEngineCore' Name='Qt5WebEngineCore.dll' DiskId='1' Source='$(var.SourceInstallPath)/Qt5WebEngineCore.dll' KeyPath='yes'/>
-                                <File Id='Qt5WebEngineWidgets' Name='Qt5WebEngineWidgets.dll' DiskId='1' Source='$(var.SourceInstallPath)/Qt5WebEngineWidgets.dll'/>
-                                <File Id='Qt5WebChannel' Name='Qt5WebChannel.dll' DiskId='1' Source='$(var.SourceInstallPath)/Qt5WebChannel.dll'/>
-                                <File Id='QtWebEngineProcess' Name='QtWebEngineProcess.dll' DiskId='1' Source='$(var.SourceInstallPath)/QtWebEngineProcess.exe' />
-
-                                <File Id='Qt5Network' Name='Qt5Network.dll' DiskId='1' Source='$(var.SourceInstallPath)/Qt5Network.dll' />
-                                <File Id='Qt5Positioning' Name='Qt5Positioning.dll' DiskId='1' Source='$(var.SourceInstallPath)/Qt5Positioning.dll' />
-                                <File Id='Qt5PrintSupport' Name='Qt5PrintSupport.dll' DiskId='1' Source='$(var.SourceInstallPath)/Qt5PrintSupport.dll' />
-                                <File Id='Qt5Qml' Name='Qt5Qml.dll' DiskId='1' Source='$(var.SourceInstallPath)/Qt5Qml.dll' />
-                                <File Id='Qt5Quick' Name='Qt5Quick.dll' DiskId='1' Source='$(var.SourceInstallPath)/Qt5Quick.dll' />
-                                <File Id='Qt5QuickWidgets' Name='Qt5QuickWidgets.dll' DiskId='1' Source='$(var.SourceInstallPath)/Qt5QuickWidgets.dll' />
-                        </Component>
-
-                        <Directory Id='QtBearerDir' Name='bearer'>
-                            <Component Id='QtBearer' Guid='c3547011-2c80-4396-9975-17a87f037b42' Win64="yes" >
-                                <File Id='qgenericbearer' Name='qgenericbearer.dll' DiskId='1' Source='$(var.SourceInstallPath)/bearer/qgenericbearer.dll' />
-                            </Component>
-                        </Directory>
-
-                        <Directory Id='QtResourcesDir' Name="resources"/>
-
                         <Component Id='OfficialPythonDLL' Guid='fd589986-9e18-491c-9272-a2ead3a573b9' Win64="yes" >
                             <File Id='PythonDll' Name='python$(var.PythonSuffix).dll' DiskId='1' Source='$(var.SourceInstallPath)/python$(var.PythonSuffix).dll' KeyPath='yes'/>
                         </Component>

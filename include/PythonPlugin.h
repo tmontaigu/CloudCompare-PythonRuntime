@@ -23,7 +23,6 @@
 
 class QListWidget;
 class QPythonEditor;
-class QDocViewer;
 class QPythonREPL;
 
 
@@ -51,14 +50,13 @@ class PythonPlugin : public QObject, public ccStdPluginInterface
   private:
     void showRepl();
     void showEditor();
-    void showDocumentation();
     void showAboutDialog();
+	static void showDocumentation();
 
     PythonInterpreter m_interp;
 
     QPythonREPL *m_repl{nullptr};
     QPythonEditor *m_editor{nullptr};
-    QDocViewer *m_docView{nullptr};
 
     /// Actions
     QAction *m_showEditor{nullptr};
