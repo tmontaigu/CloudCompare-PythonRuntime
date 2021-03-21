@@ -17,8 +17,6 @@ param(
     -dr PythonEnvironmentDir `
     -o PythonEnvironment.wxs 
 
-&heat `
-
 
 &candle `
     -arch x64 `

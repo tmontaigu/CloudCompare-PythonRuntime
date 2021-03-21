@@ -55,9 +55,6 @@
             <ComponentRef Id='PythonPlugin' />
             <ComponentGroupRef Id='PythonEnvironment' />
             <ComponentRef Id='OfficialPythonDLL' />
-            <ComponentRef Id='AdditionalQtStuff' />
-            <ComponentRef Id='QtBearer' />
-            <ComponentGroupRef Id='QtResources' />
         </Feature>
 
         <UIRef Id="WixUI_InstallDir" />
