@@ -45,8 +45,8 @@ void define_ccCone(py::module &m)
              "yOff"_a = 0,
              "transMat"_a = nullptr,
              "name"_a = QString("Cone"),
-             "precision"_a = ccCone::DEFAULT_DRAWING_PRECISION,
-             "uniqueID"_a = ccUniqueIDGenerator::InvalidUniqueID)
+             "precision"_a = [](){ return ccCone::DEFAULT_DRAWING_PRECISION; }(),
+             "uniqueID"_a = [](){ return ccUniqueIDGenerator::InvalidUniqueID; }())
         .def("getHeight", &ccCone::getHeight)
         .def("setHeight", &ccCone::setHeight, "height"_a)
         .def("getBottomRadius", &ccCone::getBottomRadius)

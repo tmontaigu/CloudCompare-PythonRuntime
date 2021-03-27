@@ -40,6 +40,6 @@ void define_ccCylinder(py::module &m)
              "height"_a,
              "transMat"_a = nullptr,
              "name"_a = QString("Cylinder"),
-             "precision"_a = ccCylinder::DEFAULT_DRAWING_PRECISION,
-             "uniqueID"_a = ccUniqueIDGenerator::InvalidUniqueID);
+             "precision"_a = [](){ return ccCylinder::DEFAULT_DRAWING_PRECISION;}(),
+             "uniqueID"_a = [](){ return ccUniqueIDGenerator::InvalidUniqueID; }());
 }

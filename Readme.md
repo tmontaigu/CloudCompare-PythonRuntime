@@ -64,13 +64,12 @@ Early step attempt at allowing to use Python to automate some stuff in CloudComp
     Use `-DPLUGIN_PYTHON_COPY_ENV=OFF` after the plugin has been installed once to gain time.
 
 ## Linux
+1) Clone this project in CloudCompare/plugins/private
+1) Install additional dependencies
 
-1) Install additional dependencies (package name for debian/ubuntu)
+Ubuntu: `libpython3-dev ` and `pybind11-dev` (only available since 20.04)
+Fedora: `python3-devel` and  `pybind11-devel`
 
-    `libpython3-dev qtwebengine5-dev`
-    if you are using Ubuntu 20.04 or later you can install pybind via the  `pybind11-dev` package
-    on older version you have to compile and install pybind11 yourself as the version in the repo
-    are too old
 
 2) Run cmake with `-DPLUGIN_PYTHON=ON`
 3) Build

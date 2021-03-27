@@ -45,6 +45,6 @@ void define_ccTorus(py::module &m)
              "rectSectionHeight"_a = 0,
              "transMat"_a = nullptr,
              "name"_a = QString("Torus"),
-             "precision"_a = ccTorus::DEFAULT_DRAWING_PRECISION,
-             "uniqueId"_a = ccUniqueIDGenerator::InvalidUniqueID);
+             "precision"_a = [](){ return ccTorus::DEFAULT_DRAWING_PRECISION; }(),
+             "uniqueId"_a = [](){ return ccUniqueIDGenerator::InvalidUniqueID; }());
 }

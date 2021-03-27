@@ -38,6 +38,7 @@
 #include <ccMainAppInterface.h>
 #include <ccProgressDialog.h>
 #include <ccColorTypes.h>
+#include <ccAdvancedTypes.h>
 
 #include "Runtime.h"
 #include "casters.h"
@@ -202,8 +203,21 @@ void define_pycc(py::module &m)
     define_ccGLMatrix(m);
     define_ccInteractor(m);
 
+
+
     define_ccDrawableObject(m);
     define_ccObject(m);
+
+    using NormsIndexesArrayType = ccArray<CompressedNormType, 1, CompressedNormType>;
+
+    py::class_<NormsIndexesArrayType,
+            std::vector<CompressedNormType>,
+            CCShareable,
+            ccHObject,
+            std::unique_ptr<NormsIndexesArrayType, py::nodelete>>
+            (m, "_NormsIndexesArrayType");
+    py::class_<NormsIndexesTableType, NormsIndexesArrayType>(m, "NormsIndexesTableType");
+
     define_ccGenericMesh(m);
     define_ccMesh(m);
     define_ccGenericPrimitive(m);

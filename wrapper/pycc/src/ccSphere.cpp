@@ -34,7 +34,7 @@ void define_ccSphere(py::module &m)
              "transMat"_a = nullptr,
              "name"_a = QString("Sphere"),
              "precision"_a = 24,
-             "uniqueId"_a = ccUniqueIDGenerator::InvalidUniqueID)
+             "uniqueId"_a = [](){ return ccUniqueIDGenerator::InvalidUniqueID; }())
         .def("getRadius", &ccSphere::getRadius)
         .def("setRadius", &ccSphere::setRadius, "radius"_a);
 }

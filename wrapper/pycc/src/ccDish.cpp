@@ -40,5 +40,5 @@ void define_ccDish(py::module &m)
              "radius2"_a = 0,
              "transMat"_a = nullptr,
              "name"_a = QString("Dish"),
-             "precision"_a = ccDish::DEFAULT_DRAWING_PRECISION);
+             "precision"_a = [](){ return ccDish::DEFAULT_DRAWING_PRECISION; }());
 }
