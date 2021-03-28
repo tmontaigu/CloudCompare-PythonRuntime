@@ -15,13 +15,17 @@
 //#                                                                        #
 //##########################################################################
 
-#include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
-#include <pybind11/stl_bind.h>
+#include "ccGUIPythonInstance.h"
+
 
 #include <QMainWindow>
 
-#include "ccGUIPythonInstance.h"
+#include <ccGLWindow.h>
+
+#undef slots
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+#include <pybind11/stl_bind.h>
 
 namespace py = pybind11;
 using namespace pybind11::literals;
@@ -37,6 +41,7 @@ void define_ccGUIPythonInstance(py::module &m)
 
 )")
         .def("getMainWindow", &ccGUIPythonInstance::getMainWindow, py::return_value_policy::reference)
+        .def("getActiveGLWindow", &ccGUIPythonInstance::getActiveGLWindow, py::return_value_policy::reference)
         .def("haveSelection",
              &ccGUIPythonInstance::haveSelection,
              R"(Returns true if at least one entity is selected in the GUI DB Tree)")

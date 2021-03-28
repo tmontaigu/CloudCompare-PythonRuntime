@@ -7,10 +7,16 @@ if (PLUGIN_PYTHON)
 
     AddPlugin(NAME ${PROJECT_NAME})
 
+    # TODO when using non embeded modules, the .so/.pyd of the modules should
+    # be copied somewhere and the runtime should add the path to python paths
+    option(USE_EMBEDDED_MODULES "Should the Python wrapper libs be embedded in the cc plugin" ON)
+    mark_as_advanced(USE_EMBEDDED_MODULES)
+
     if (WIN32)
         option(PLUGIN_PYTHON_COPY_ENV "Should the content of the current python venv be copied on install" ON)
         mark_as_advanced(PLUGIN_PYTHON_COPY_ENV)
     endif()
+
 
     # If we detect that we are running inside a virtualenv
     # we try to find pybind11 in the site-packages
@@ -29,17 +35,29 @@ if (PLUGIN_PYTHON)
         list(APPEND CMAKE_PREFIX_PATH ${PYBIND11_CMAKE_MODULES_PATH})
     endif ()
 
-    set(USE_EMBEDDED_MODULES ON)
-    target_compile_definitions(PythonPlugin PRIVATE -DUSE_EMBEDDED_MODULES)
-    include(wrapper/cccorelib/CMakeLists.txt)
-    include(wrapper/pycc/CMakeLists.txt)
+
+
+    if (USE_EMBEDDED_MODULES)
+        message(DEBUG "Using embedded modules")
+        target_compile_definitions(PythonPlugin PRIVATE -DUSE_EMBEDDED_MODULES)
+
+        include(wrapper/cccorelib/CMakeLists.txt)
+        include(wrapper/pycc/CMakeLists.txt)
+
+        embed_cccorelib_in(${PROJECT_NAME})
+        embed_pycc_in(${PROJECT_NAME})
+    else()
+        add_subdirectory(wrapper)
+        if (UNIX)
+            InstallSharedLibrary(TARGET cccorelib)
+            InstallSharedLibrary(TARGET pycc)
+        endif()
+    endif()
+
 
     add_subdirectory(include)
     add_subdirectory(src)
     add_subdirectory(ui)
-
-    embed_cccorelib_in(${PROJECT_NAME})
-    embed_pycc_in(${PROJECT_NAME})
 
     add_subdirectory(QCodeEditor)
 

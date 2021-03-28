@@ -92,7 +92,8 @@ void define_ccPointCloud(py::module &m)
                std::unique_ptr<ccPointCloud, py::nodelete>>(m, "ccPointCloud")
         .def(py::init<QString, unsigned>(),
              "name"_a = QString(),
-             "uniqueID"_a = [](){return ccUniqueIDGenerator::InvalidUniqueID;}())
+             "uniqueID"_a = [](){return ccUniqueIDGenerator::InvalidUniqueID;}(),
+            py::return_value_policy::reference)
         // features deletion/clearing
         // features allocation/resize
         .def("reserveThePointsTable", &ccPointCloud::reserveThePointsTable, "_numberOfPoints"_a)

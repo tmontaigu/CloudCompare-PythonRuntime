@@ -31,7 +31,7 @@ void define_KdTree(py::module &cccorelib)
 {
 
     py::class_<CCCoreLib::KDTree> a(cccorelib, "KDTree");
-    py::bind_vector<std::vector<unsigned>>(a, "IndicesVector");
+    py::bind_vector<std::vector<unsigned>>(a, "IndicesVector", py::module_local(true));
 
     a.def(py::init<>())
         .def("buildFromCloud", &CCCoreLib::KDTree::buildFromCloud, "cloud"_a, "progressCb"_a = nullptr)
