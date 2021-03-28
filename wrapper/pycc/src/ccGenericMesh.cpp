@@ -73,7 +73,8 @@ void define_ccGenericMesh(py::module &m)
                 self.getTriangleNormals(triangleIndex, Na, Nb, Nc);
                 return py::make_tuple(Na, Nb, Nc);
             },
-            "triangleIndex"_a)
-        .def("getTriNormsTable", &ccGenericMesh::getTriNormsTable, py::return_value_policy::reference);
+            "triangleIndex"_a);
+         // FIXME blocked by NormsIndexesTableType not being wrappable due to link errors
+        //.def("getTriNormsTable", &ccGenericMesh::getTriNormsTable, py::return_value_policy::reference);
     // TODD compute interpolation weights and following
 }
