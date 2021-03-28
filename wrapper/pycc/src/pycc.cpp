@@ -208,15 +208,22 @@ void define_pycc(py::module &m)
     define_ccDrawableObject(m);
     define_ccObject(m);
 
-    using NormsIndexesArrayType = ccArray<CompressedNormType, 1, CompressedNormType>;
 
-    py::class_<NormsIndexesArrayType,
-            std::vector<CompressedNormType>,
+    using VectorCompressedNormType = std::vector<CompressedNormType>;
+    using ccArrayCompressedNormType = ccArray<CompressedNormType, 1, CompressedNormType>;
+
+    // We can't bind_vector, at runtime we get an error that _VectorCompressedNormType
+    // is already defined, that is because CompressedNormType is unsigned int
+    // and std::vector<unsigned int> is already bound in define_KdTree
+    //py::bind_vector<VectorCompressedNormType>(m, "_VectorCompressedNormType", py::module_local(true));
+
+    py::class_<ccArrayCompressedNormType,
+            VectorCompressedNormType,
             CCShareable,
             ccHObject,
-            std::unique_ptr<NormsIndexesArrayType, py::nodelete>>
+            observer_ptr<ccArrayCompressedNormType>>
             (m, "_NormsIndexesArrayType");
-    py::class_<NormsIndexesTableType, NormsIndexesArrayType>(m, "NormsIndexesTableType");
+    py::class_<NormsIndexesTableType, ccArrayCompressedNormType>(m, "NormsIndexesTableType");
 
     define_ccGenericMesh(m);
     define_ccMesh(m);
