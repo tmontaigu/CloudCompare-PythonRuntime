@@ -65,21 +65,8 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update -qq
-          sudo apt install build-essential cmake libqt5svg5-dev libqt5opengl5-dev qt5-default qttools5-dev qttools5-dev-tools qtwebengine5-dev xvfb
+          sudo apt install build-essential cmake libqt5svg5-dev libqt5opengl5-dev qt5-default qttools5-dev qttools5-dev-tools pybind11-dev xvfb
           python3 -m pip install pytest numpy
-
-      - name: Checkout pybind11
-        uses: actions/checkout@v2
-        with:
-          repository: 'pybind/pybind11'
-          ref: 'v2.4.3'
-
-      - name: Build & Install pybind11
-        run: |
-          mkdir build-pybind11
-          cd build-pybind11
-          cmake -DCMAKE_BUILD_TYPE=ON ..
-          sudo make install
 
       - name: Clone CloudCompare
         uses: actions/checkout@v2
