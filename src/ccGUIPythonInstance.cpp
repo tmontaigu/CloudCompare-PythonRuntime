@@ -146,6 +146,11 @@ ccHObject *ccGUIPythonInstance::createObject(const pybind11::object &class_,
 void ccGUIPythonInstance::addToDB(
     ccHObject *obj, bool updateZoom, bool autoExpandDBTree, bool checkDimensions, bool autoRedraw)
 {
+    if (obj == nullptr)
+    {
+        return;
+    }
+
     auto pos = std::find(std::begin(m_pythonDB), std::end(m_pythonDB), obj);
 
     if (pos != std::end(m_pythonDB))
