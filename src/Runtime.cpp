@@ -134,6 +134,7 @@ PYBIND11_EMBEDDED_MODULE(ccinternals, m)
     py::class_<ConsoleREPL>(m, "ConsoleREPL")
         .def(py::init<QListWidget *, Qt::GlobalColor>())
         .def(py::init<QListWidget *, QColor>())
+        .def(py::init<QListWidget *>())
         .def("write", &ConsoleREPL::write)
         .def("flush", &ConsoleREPL::flush);
 }

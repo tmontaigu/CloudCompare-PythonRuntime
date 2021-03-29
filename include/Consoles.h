@@ -111,8 +111,9 @@ class ccConsoleOutput
 class ConsoleREPL
 {
   public:
-    explicit ConsoleREPL(QListWidget *view, Qt::GlobalColor color) : view(view), brush(color) {}
-    explicit ConsoleREPL(QListWidget *view, const QColor& color) : view(view), brush(color) {}
+    ConsoleREPL(QListWidget *view, Qt::GlobalColor color) : view(view), brush(color) {}
+    ConsoleREPL(QListWidget *view, const QColor& color) : view(view), brush() {}
+    explicit ConsoleREPL(QListWidget *view) : view(view), brush() {}
 
     void write(const char *messagePart)
     {
