@@ -65,7 +65,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update -qq
-          sudo apt install build-essential cmake libqt5svg5-dev libqt5opengl5-dev qt5-default qttools5-dev qttools5-dev-tools pybind11-dev xvfb
+          sudo apt install build-essential cmake ninja-build libqt5svg5-dev libqt5opengl5-dev qt5-default qttools5-dev qttools5-dev-tools pybind11-dev xvfb
           python3 -m pip install pytest numpy
 
       - name: Clone CloudCompare
@@ -85,13 +85,14 @@ jobs:
         run: |
           mkdir build
           cmake  `
+            -G Ninja `
             -B build `
             -DPLUGIN_PYTHON=ON `
             -DCMAKE_BUILD_TYPE=Release `
             .
 
       - name: Build
-        run: cmake --build build
+        run: cmake --build build --parallel
 
       - name: Install
         run: sudo cmake --install build
