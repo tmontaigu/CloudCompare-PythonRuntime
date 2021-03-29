@@ -87,7 +87,6 @@ class QPythonEditor : public QMainWindow, public Ui::QPythonEditor
     void uncomment();
     void indentMore();
     void indentLess();
-    void about();
     void updateWindowMenu();
     void executionStarted();
     void executionFinished();

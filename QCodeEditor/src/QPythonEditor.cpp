@@ -338,7 +338,6 @@ void QPythonEditor::indentLess()
     }
 }
 
-void QPythonEditor::about() {}
 
 void QPythonEditor::executionStarted()
 {
@@ -432,12 +431,6 @@ void QPythonEditor::createActions()
     updateWindowMenu();
 
     menuBar()->addSeparator();
-
-    QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
-
-    QAction *aboutAct = helpMenu->addAction(tr("&About"));
-    connect(aboutAct, &QAction::triggered, this, &QPythonEditor::about);
-    aboutAct->setStatusTip(tr("Show the application's About box"));
 
     addAction(actionNew); // Actions must be added to be able to find shortcuts in event filter
     addAction(actionSave);
