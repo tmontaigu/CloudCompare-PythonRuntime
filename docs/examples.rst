@@ -1,6 +1,12 @@
 Examples
 ========
 
+Loading a file
+--------------
+
+.. literalinclude:: ../script_examples/loading_a_file.py
+    :language: Python
+
 
 Sub sampling
 ------------

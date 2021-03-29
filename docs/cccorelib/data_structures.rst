@@ -172,3 +172,10 @@ ___________
    :undoc-members:
 
 
+ScalarField
+___________
+
+.. autoclass:: cccorelib.ScalarField
+   :members:
+   :undoc-members:
+   :show-inheritance:

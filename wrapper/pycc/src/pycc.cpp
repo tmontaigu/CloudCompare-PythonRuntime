@@ -313,7 +313,7 @@ void define_pycc(py::module &m)
         loop.exec();
 
         return future.result();
-    });
+    }, "callable"_a);
 
     m.def("RunThread", [](py::object thread) {
         py::object isAliveMethod = thread.attr("is_alive");
