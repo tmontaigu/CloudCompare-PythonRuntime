@@ -125,17 +125,17 @@ QList<QAction *> PythonPlugin::getActions()
 
     if (!m_showAboutDialog)
     {
-
         m_showAboutDialog = new QAction("About", this);
-        m_showAboutDialog->setToolTip("Show the Python REPL");
+        m_showAboutDialog->setToolTip("About this plugin");
         m_showAboutDialog->setIcon(
             m_app->getMainWindow()->style()->standardIcon(QStyle::SP_MessageBoxQuestion));
         connect(m_showAboutDialog, &QAction::triggered, this, &PythonPlugin::showAboutDialog);
         m_showAboutDialog->setEnabled(enableActions);
     }
 
-    return {m_showREPL, m_showEditor, m_showAboutDialog, m_showDoc};
+    return { m_showEditor, m_showAboutDialog, m_showDoc, m_showREPL };
 }
+
 void PythonPlugin::showRepl()
 {
     if (m_repl)
