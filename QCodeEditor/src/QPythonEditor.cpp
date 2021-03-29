@@ -94,7 +94,7 @@ void QPythonEditor::promptForFolderToOpen()
     if (!folderName.isEmpty())
     {
         fileSystemModel->setRootPath(folderName);
-        PBtreeView->setRootIndex(fileSystemModel->index(folderName));
+        projectTreeView->setRootIndex(fileSystemModel->index(folderName));
         this->projectBrowser->show();
     }
 }
@@ -365,7 +365,7 @@ void QPythonEditor::createActions()
     connect(actionSave, &QAction::triggered, this, &QPythonEditor::save);
     connect(actionOpen, &QAction::triggered, this, &QPythonEditor::promptForFileToOpen);
     connect(actionOpenFolder, &QAction::triggered, this, &QPythonEditor::promptForFolderToOpen);
-    connect(actionSave_As, &QAction::triggered, this, &QPythonEditor::saveAs);
+    connect(actionSaveAs, &QAction::triggered, this, &QPythonEditor::saveAs);
     connect(actionRun, &QAction::triggered, this, &QPythonEditor::runExecute);
     connect(actionClose, &QAction::triggered, this, [=]() { close(); });
     connect(actionSettings, &QAction::triggered, this, [this]() { this->settings->show(); });
@@ -388,17 +388,17 @@ void QPythonEditor::createActions()
     setRecentFilesVisible(QPythonEditor::hasRecentFiles());
     menuFile->addSeparator();
 
-    actionCu_t->setShortcuts(QKeySequence::Cut);
-    action_Copy->setShortcuts(QKeySequence::Copy);
-    action_Paste->setShortcuts(QKeySequence::Paste);
-    connect(actionCu_t, &QAction::triggered, this, &QPythonEditor::cut);
-    connect(action_Copy, &QAction::triggered, this, &QPythonEditor::copy);
-    connect(action_Paste, &QAction::triggered, this, &QPythonEditor::paste);
+    actionCut->setShortcuts(QKeySequence::Cut);
+    actionCopy->setShortcuts(QKeySequence::Copy);
+    actionPaste->setShortcuts(QKeySequence::Paste);
+    connect(actionCut, &QAction::triggered, this, &QPythonEditor::cut);
+    connect(actionCopy, &QAction::triggered, this, &QPythonEditor::copy);
+    connect(actionPaste, &QAction::triggered, this, &QPythonEditor::paste);
 
     connect(actionComment, &QAction::triggered, this, &QPythonEditor::comment);
     connect(actionUncomment, &QAction::triggered, this, &QPythonEditor::uncomment);
-    connect(actionIndent_More, &QAction::triggered, this, &QPythonEditor::indentMore);
-    connect(actionIndent_Less, &QAction::triggered, this, &QPythonEditor::indentLess);
+    connect(actionIndentMore, &QAction::triggered, this, &QPythonEditor::indentMore);
+    connect(actionIndentLess, &QAction::triggered, this, &QPythonEditor::indentLess);
 
     windowMenu = menuBar()->addMenu(tr("&Window"));
     connect(windowMenu, &QMenu::aboutToShow, this, &QPythonEditor::updateWindowMenu);
@@ -440,13 +440,13 @@ void QPythonEditor::createActions()
     addAction(actionNew); // Actions must be added to be able to find shortcuts in event filter
     addAction(actionSave);
     addAction(actionOpen);
-    addAction(actionSave_As);
+    addAction(actionSaveAs);
     addAction(actionRun);
     addAction(actionClose);
     addAction(actionComment);
     addAction(actionUncomment);
-    addAction(actionIndent_More);
-    addAction(actionIndent_Less);
+    addAction(actionIndentMore);
+    addAction(actionIndentLess);
 }
 
 void QPythonEditor::createStatusBar()
@@ -458,17 +458,17 @@ void QPythonEditor::initProjectView()
 {
     projectBrowser->hide();
     fileSystemModel = new QFileSystemModel;
-    PBtreeView->setModel(fileSystemModel);
+    projectTreeView->setModel(fileSystemModel);
 
-    projectViewContextMenu = new ProjectViewContextMenu(PBtreeView);
-    PBtreeView->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+    projectViewContextMenu = new ProjectViewContextMenu(projectTreeView);
+    projectTreeView->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 
-    for (int i{1}; i < PBtreeView->size().width(); ++i)
+    for (int i{1}; i < projectTreeView->size().width(); ++i)
     {
-        PBtreeView->hideColumn(i);
+        projectTreeView->hideColumn(i);
     }
-    connect(PBtreeView, &QTreeView::doubleClicked, this, &QPythonEditor::projectTreeDoubleClicked);
-    connect(PBtreeView,
+    connect(projectTreeView, &QTreeView::doubleClicked, this, &QPythonEditor::projectTreeDoubleClicked);
+    connect(projectTreeView,
             &QTreeView::customContextMenuRequested,
             projectViewContextMenu,
             &ProjectViewContextMenu::requested);
@@ -478,7 +478,7 @@ void QPythonEditor::updateMenus()
 {
     bool hasChildCodeEditor = (activeChildCodeEditor() != nullptr);
     actionSave->setEnabled(hasChildCodeEditor);
-    actionSave_As->setEnabled(hasChildCodeEditor);
+    actionSaveAs->setEnabled(hasChildCodeEditor);
     actionRun->setEnabled(hasChildCodeEditor);
     closeAct->setEnabled(hasChildCodeEditor);
     closeAllAct->setEnabled(hasChildCodeEditor);
@@ -489,14 +489,14 @@ void QPythonEditor::updateMenus()
     windowMenuSeparatorAct->setVisible(hasChildCodeEditor);
     actionComment->setEnabled(hasChildCodeEditor);
     actionUncomment->setEnabled(hasChildCodeEditor);
-    actionIndent_More->setEnabled(hasChildCodeEditor);
-    actionIndent_Less->setEnabled(hasChildCodeEditor);
+    actionIndentMore->setEnabled(hasChildCodeEditor);
+    actionIndentLess->setEnabled(hasChildCodeEditor);
 
 #ifndef QT_NO_CLIPBOARD
-    action_Paste->setEnabled(hasChildCodeEditor);
+    actionPaste->setEnabled(hasChildCodeEditor);
     bool hasSelection = (activeChildCodeEditor() && activeChildCodeEditor()->textCursor().hasSelection());
-    actionCu_t->setEnabled(hasSelection);
-    action_Copy->setEnabled(hasSelection);
+    actionCut->setEnabled(hasSelection);
+    actionCopy->setEnabled(hasSelection);
 #endif
 }
 
@@ -544,8 +544,8 @@ CodeEditor *QPythonEditor::createChildCodeEditor()
     auto *child = new CodeEditor(this->settings);
 
 #ifndef QT_NO_CLIPBOARD
-    connect(child, &QPlainTextEdit::copyAvailable, actionCu_t, &QAction::setEnabled);
-    connect(child, &QPlainTextEdit::copyAvailable, action_Copy, &QAction::setEnabled);
+    connect(child, &QPlainTextEdit::copyAvailable, actionCut, &QAction::setEnabled);
+    connect(child, &QPlainTextEdit::copyAvailable, actionCopy, &QAction::setEnabled);
 #endif
 
     return child;
@@ -606,6 +606,7 @@ void QPythonEditor::runExecute()
 {
     if (activeChildCodeEditor())
     {
+        scriptOutputConsoleDock->show();
         this->scriptOutputConsole->clear();
         Q_EMIT executionCalled(qPrintable(activeChildCodeEditor()->toPlainText()), this->scriptOutputConsole);
     }
