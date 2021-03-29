@@ -83,7 +83,7 @@ if (PLUGIN_PYTHON)
         set(DOCUMENTATION_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/docs/_build")
         if (EXISTS "${DOCUMENTATION_FOLDER}/index.html")
             install(
-                    DIRECTORY ${DOCUMENTATION_FOLDER}
+                    DIRECTORY "${DOCUMENTATION_FOLDER}/"
                     DESTINATION ${CC_PYTHON_INSTALL_DIR}/docs
             )
         endif()
