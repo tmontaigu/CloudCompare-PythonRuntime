@@ -1,35 +1,15 @@
 pycc API
 ========
 
-ccObject
-________
+.. toctree::
+    :maxdepth: 2
+    :caption: Contents
 
-.. autoclass:: pycc.ccObject
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-ccHObject
-_________
+    data_structures
+    primitives
+    others
 
 
-.. autoclass:: pycc.ccHObject
-    :members:
-    :undoc-members:
-    :show-inheritance:
 
-ccGenericPointCloud
-___________________
 
-.. autoclass:: pycc.ccGenericPointCloud
-    :members:
-    :undoc-members:
-    :show-inheritance:
 
-ccPointCloud
-_____________
-
-.. autoclass:: pycc.ccPointCloud
-    :members:
-    :undoc-members:
-    :show-inheritance:

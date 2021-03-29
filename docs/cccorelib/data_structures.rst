@@ -5,7 +5,7 @@ Vectors
 -------
 
 CCVector3
-____________
+__________
 
 .. autoclass:: cccorelib.CCVector3
    :members:
@@ -172,3 +172,10 @@ ___________
    :undoc-members:
 
 
+ScalarField
+___________
+
+.. autoclass:: cccorelib.ScalarField
+   :members:
+   :undoc-members:
+   :show-inheritance:

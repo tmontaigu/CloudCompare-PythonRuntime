@@ -5,11 +5,17 @@ CC = pycc.GetInstance()
 params = pycc.FileIOFilter.LoadParameters()
 params.parentWidget = CC.getMainWindow()
 
+path = r"C:\Users\t.montaigu\Projects\CloudCompare\plugins\private\CloudCompare-PythonPlugin\tests\data\a_cloud.bin"
 
-obj = CC.loadFile(r"C:\Users\t.montaigu\Projects\CloudCompare\plugins\private\CloudCompare-PythonPlugin\tests\data\a_cloud.bin", params)
+
+# This automatically adds the loaded entities
+# to the DB on success, and raises an exception if an error occured
+obj = CC.loadFile(path, params)
 
 
-obj = pycc.FileIOFilter.LoadFromFile(r"C:\Users\t.montaigu\Desktop\BDX_RG_270_0+0_0+50 - Cloud.bin", params)
+# This does not add to the DB, and returns None if the loading failed
+obj = pycc.FileIOFilter.LoadFromFile(path, params)
 
 if obj is not None:
+    print("Failed to load the file")
     CC.addToDB(obj)

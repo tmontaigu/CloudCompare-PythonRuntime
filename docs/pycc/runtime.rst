@@ -24,9 +24,38 @@ pycc Runtime
     the command line mode, otherwise returns `None`.
 
 
+.. autofunction:: pycc.RunInThread
+
+    Runs the function in a different thread to keep the UI
+    responsive and returns the result of the function when the
+    thread is done.
+
+    Example:
+
+    .. code:: Python
+
+        import time
+
+        def expensive_sum(a, b):
+            time.sleep(10)
+            return a + b
+
+        # if we ran expensive_sum directly, CloudCompare would
+        # become unresponsive for 10 seconds
+        result = pycc.RunInThread(expensive_sum, 1, 2)
+        assert result == 3
+
+
+
+ccPythonInstance
+________________
+
 .. autoclass:: pycc.ccPythonInstance
     :members:
     :undoc-members:
+
+ccCommandLineInterface
+______________________
 
 .. autoclass:: pycc.ccCommandLineInterface
     :members:

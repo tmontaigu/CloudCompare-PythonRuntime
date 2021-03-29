@@ -11,9 +11,10 @@ Welcome to CloudCompare's Python plugin
    :caption: Contents:
 
    getting_started
+   thingstoknow
+   examples
    cccorelib/index
    pycc/index
-   examples
 
 
 
