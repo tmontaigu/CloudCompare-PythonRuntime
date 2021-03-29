@@ -39,10 +39,10 @@ class ConsoleWrapper
     /// This function will in turn call the printFn callback given to the constructor
     ///
     /// This function splits the messagePart given by the Python interpreter
-    /// using the newline ('\n') character and call the printFn on for each of these
+    /// using the newline ('\n') character and call the printFn on each of these
     /// splits.
     ///
-    /// The goal if this is to ensure that each '\n'-separated lines
+    /// The goal of this is to ensure that each '\n'-separated lines
     /// appears one one line on CloudCompare's console output
     ///
     /// \param messagePart the message that the Python interpreter sends us
@@ -107,7 +107,7 @@ class ccConsoleOutput
     }};
 };
 
-/// Redirects messages to the console output of the Python plugin's REPL
+/// Writes messages to the QListWidget given
 class ConsoleREPL
 {
   public:
