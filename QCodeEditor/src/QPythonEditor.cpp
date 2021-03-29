@@ -463,11 +463,10 @@ void QPythonEditor::initProjectView()
         PBtreeView->hideColumn(i);
     }
     connect(PBtreeView, &QTreeView::doubleClicked, this, &QPythonEditor::projectTreeDoubleClicked);
-
     connect(PBtreeView,
             &QTreeView::customContextMenuRequested,
             projectViewContextMenu,
-            &ProjectViewContextMenu::contextMenuRequested);
+            &ProjectViewContextMenu::requested);
 }
 
 void QPythonEditor::updateMenus()

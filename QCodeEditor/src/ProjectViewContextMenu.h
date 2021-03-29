@@ -32,7 +32,9 @@ class ProjectViewContextMenu : public QMenu
     explicit ProjectViewContextMenu(QTreeView *view);
 
   public Q_SLOTS:
-    void contextMenuRequested(const QPoint &pos);
+    void requested(const QPoint &pos);
+
+  private Q_SLOTS:
     void renameFile() const;
     void deleteElement() const;
     void createFile() const;

@@ -40,7 +40,7 @@ ProjectViewContextMenu::ProjectViewContextMenu(QTreeView *view)
     connect(&createFolderAction, &QAction::triggered, this, &ProjectViewContextMenu::createFolder);
 }
 
-void ProjectViewContextMenu::contextMenuRequested(const QPoint &pos)
+void ProjectViewContextMenu::requested(const QPoint &pos)
 {
     currentIndex = treeView->indexAt(pos);
 
