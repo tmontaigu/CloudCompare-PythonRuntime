@@ -46,6 +46,12 @@ QPythonEditor::QPythonEditor(PythonInterpreter *interpreter) : Ui::QPythonEditor
     connect(this, &QPythonEditor::executionCalled, interpreter, &PythonInterpreter::executeCode);
     connect(interpreter, &PythonInterpreter::executionStarted, this, &QPythonEditor::executionStarted);
     connect(interpreter, &PythonInterpreter::executionFinished, this, &QPythonEditor::executionFinished);
+
+    viewsToolBar->setMovable(false);
+    projectBrowser->toggleViewAction()->setEnabled(true);
+    viewsToolBar->addAction(projectBrowser->toggleViewAction());
+    scriptOutputConsoleDock->toggleViewAction()->setEnabled(true);
+    viewsToolBar->addAction(scriptOutputConsoleDock->toggleViewAction());
 }
 
 void QPythonEditor::closeEvent(QCloseEvent *event)
@@ -89,7 +95,6 @@ void QPythonEditor::promptForFolderToOpen()
     {
         fileSystemModel->setRootPath(folderName);
         PBtreeView->setRootIndex(fileSystemModel->index(folderName));
-        projectBrowser->setWindowTitle(QString("Project Browser (%1)").arg(folderName));
         this->projectBrowser->show();
     }
 }

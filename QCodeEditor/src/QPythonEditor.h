@@ -60,8 +60,7 @@ class QPythonEditor : public QMainWindow, public Ui::QPythonEditor
   protected:
     void closeEvent(QCloseEvent *event) override;
   Q_SIGNALS:
-    void
-    executionCalled(const std::string &evalStatement, QListWidget *output);
+    void executionCalled(const std::string &evalStatement, QListWidget *output);
 
   protected Q_SLOTS:
     void newFile();
