@@ -1,10 +1,27 @@
 param(
     [Parameter(Mandatory = $true)]
-    [String]$CloudCompareInstallFolder,
-    [Parameter(Mandatory = $true)]
-    [String]$PythonDllSuffix
+    [String]$CloudCompareInstallFolder
 )
 
+$IsFolder = Test-Path -Path $CloudCompareInstallFolder -PathType Container
+if ($IsFolder -eq $False) {
+    throw '$CloudCompareInstallFolder does no point to a Folder'
+}
+
+$PythonDlls = Get-ChildItem -Path $CloudCompareInstallFolder -Filter "python*.dll"
+if ($PythonDlls.count -gt 1) {
+    throw "Too many Python DLLs, please remove the incorrect ones"
+}
+elseif ($PythonDlls.count -eq 0)
+{
+    throw "No Python DLL found"
+}
+else {
+    $re = [Regex]::new("python(?<Suffix>[0-9]+).dll")
+    $PythonDllSuffix = $re.Match($PythonDlls[0].Name).Groups['Suffix'].Value
+}
+
+Write-Host "Python DLL suffix: $PythonDllSuffix"
 
 &heat `
     dir "$CloudCompareInstallFolder\plugins\Python" `
