@@ -17,7 +17,8 @@
 
 #include "QPythonEditor.h"
 #include "CodeEditor.h"
-#include <PythonInterpreter.h>
+#include "ProjectViewContextMenu.h"
+#include "PythonInterpreter.h"
 
 // qCC
 #include "ccMainAppInterface.h"
@@ -460,11 +461,20 @@ void QPythonEditor::initProjectView()
     projectBrowser->hide();
     fileSystemModel = new QFileSystemModel;
     PBtreeView->setModel(fileSystemModel);
+
+    projectViewContextMenu = new ProjectViewContextMenu(PBtreeView);
+    PBtreeView->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
+
     for (int i{1}; i < PBtreeView->size().width(); ++i)
     {
         PBtreeView->hideColumn(i);
     }
     connect(PBtreeView, &QTreeView::doubleClicked, this, &QPythonEditor::projectTreeDoubleClicked);
+
+    connect(PBtreeView,
+            &QTreeView::customContextMenuRequested,
+            projectViewContextMenu,
+            &ProjectViewContextMenu::contextMenuRequested);
 }
 
 void QPythonEditor::updateMenus()
