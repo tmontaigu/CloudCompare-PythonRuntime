@@ -5,7 +5,7 @@ Vectors
 -------
 
 CCVector3
-____________
+__________
 
 .. autoclass:: cccorelib.CCVector3
    :members:

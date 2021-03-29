@@ -10,4 +10,8 @@ while C++ has a minimal runtime and no garbage collection, this means that extra
 using both languages at the same time, especially since CloudCompare also has its own way of managing objects
 lifetime.
 
-CloudCompare assumes ownership of the entities in its "DB Tree",
+CloudCompare assumes ownership of the entities in its "DB Tree", since there is no way to transfer ownership
+between C++ and Python, Most CloudCompare type wrapper are compiled to not be garbabe collected by Python.
+
+
+To create objects and avoid leaks, the way to go is :meth:`pycc.ccPythonInstance.createObject`
