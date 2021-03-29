@@ -37,6 +37,7 @@ QT_END_NAMESPACE
 
 class ccMainAppInterface;
 class PythonInterpreter;
+class ProjectViewContextMenu;
 
 class QPythonEditor : public QMainWindow, public Ui::QPythonEditor
 {
@@ -121,11 +122,11 @@ class QPythonEditor : public QMainWindow, public Ui::QPythonEditor
     QMdiArea *mdiArea{nullptr};
 
     QMenu *windowMenu{nullptr};
+    ProjectViewContextMenu *projectViewContextMenu{nullptr};
 
     QAction *recentFileActs[MaxRecentFiles] = {nullptr};
     QAction *recentFileSeparator{nullptr};
     QAction *recentFileSubMenuAct{nullptr};
-
     QAction *closeAct{nullptr};
     QAction *closeAllAct{nullptr};
     QAction *tileAct{nullptr};

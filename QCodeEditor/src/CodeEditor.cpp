@@ -41,7 +41,6 @@ CodeEditor::CodeEditor(QEditorSettings *settings, QWidget *parent)
 
 bool CodeEditor::eventFilter(QObject *target, QEvent *event)
 {
-
     if (target == this && event->type() == QEvent::Wheel)
     {
         auto *wheel = static_cast<QWheelEvent *>(event);
