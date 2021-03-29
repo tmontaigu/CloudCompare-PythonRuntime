@@ -1,4 +1,19 @@
-
+//##########################################################################
+//#                                                                        #
+//#                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+//#                                                                        #
+//#  This program is free software; you can redistribute it and/or modify  #
+//#  it under the terms of the GNU General Public License as published by  #
+//#  the Free Software Foundation; version 2 of the License.               #
+//#                                                                        #
+//#  This program is distributed in the hope that it will be useful,       #
+//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+//#  GNU General Public License for more details.                          #
+//#                                                                        #
+//#                     COPYRIGHT: Chris S Brown                           #
+//#                                Thomas Montaigu                         #
+//##########################################################################
 
 #ifndef CODEEDITOR_H
 #define CODEEDITOR_H
@@ -37,7 +52,10 @@ class CodeEditor : public QPlainTextEdit
     bool saveAs();
     bool saveFile(const QString &fileName);
     QString userFriendlyCurrentFile();
-    QString currentFile() { return curFile; }
+    QString currentFile()
+    {
+        return curFile;
+    }
     void comment();
     void uncomment();
     void indentMore();
@@ -76,12 +94,21 @@ class CodeEditor : public QPlainTextEdit
 class LineNumberArea : public QWidget
 {
   public:
-    explicit LineNumberArea(CodeEditor *editor) : QWidget(editor) { codeEditor = editor; }
+    explicit LineNumberArea(CodeEditor *editor) : QWidget(editor)
+    {
+        codeEditor = editor;
+    }
 
-    QSize sizeHint() const override { return QSize(codeEditor->lineNumberAreaWidth(), 0); }
+    QSize sizeHint() const override
+    {
+        return QSize(codeEditor->lineNumberAreaWidth(), 0);
+    }
 
   protected:
-    void paintEvent(QPaintEvent *event) override { codeEditor->lineNumberAreaPaintEvent(event); }
+    void paintEvent(QPaintEvent *event) override
+    {
+        codeEditor->lineNumberAreaPaintEvent(event);
+    }
 
   private:
     CodeEditor *codeEditor;
