@@ -30,9 +30,6 @@ class PythonHighlighter : public QSyntaxHighlighter
   public:
     explicit PythonHighlighter(QTextDocument *parent = nullptr);
 
-    // Helper
-    static QTextCharFormat format(const QString &colorName, const QString &style = QString());
-
   protected:
     void highlightBlock(const QString &text) override;
 
