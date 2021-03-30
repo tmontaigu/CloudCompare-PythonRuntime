@@ -118,48 +118,48 @@ void PythonHighlighter::initialize()
     // Multi-line strings (expression, flag, style)
     // FIXME: The triple-quotes in these two lines will mess up the
     // syntax highlighting from this point onward
-    _triSingle = HighlightingRule("'''", 1, s_Styles[CodeElement::DocString]);
-    _triDouble = HighlightingRule(R"(""")", 2, s_Styles[CodeElement::DocString]);
+    triSingle = HighlightingRule("'''", 1, s_Styles[CodeElement::DocString]);
+    triDouble = HighlightingRule(R"(""")", 2, s_Styles[CodeElement::DocString]);
 
     // Keyword, operator, and brace rules
     for (const QString &keyword : s_Keywords)
     {
         QString pattern = QString("\\b%1\\b").arg(keyword);
-        _pythonHighlightingRules += HighlightingRule(pattern, 0, s_Styles[CodeElement::Keyword]);
+        pythonHighlightingRules += HighlightingRule(pattern, 0, s_Styles[CodeElement::Keyword]);
     }
 
     for (const QString &pattern : s_Operators)
-        _pythonHighlightingRules += HighlightingRule(pattern, 0, s_Styles[CodeElement::Operator]);
+        pythonHighlightingRules += HighlightingRule(pattern, 0, s_Styles[CodeElement::Operator]);
 
     for (const QString &pattern : s_Braces)
-        _pythonHighlightingRules += HighlightingRule(pattern, 0, s_Styles[CodeElement::Brace]);
+        pythonHighlightingRules += HighlightingRule(pattern, 0, s_Styles[CodeElement::Brace]);
 
     // All other rules
 
     // 'self'
-    _pythonHighlightingRules += HighlightingRule("\\bself\\b", 0, s_Styles[CodeElement::Self]);
+    pythonHighlightingRules += HighlightingRule("\\bself\\b", 0, s_Styles[CodeElement::Self]);
 
     // Double-quoted string, possibly containing escape sequences
-    _pythonHighlightingRules +=
+    pythonHighlightingRules +=
         HighlightingRule(R"("[^"\\]*(\\.[^"\\]*)*")", 0, s_Styles[CodeElement::String]);
     // Single-quoted string, possibly containing escape sequences
-    _pythonHighlightingRules +=
+    pythonHighlightingRules +=
         HighlightingRule(R"("[^'\\]*(\\.[^'\\]*)*")", 0, s_Styles[CodeElement::String]);
 
     // 'def' followed by an identifier
-    _pythonHighlightingRules += HighlightingRule(R"(\bdef\b\s*(\w+))", 1, s_Styles[CodeElement::Definition]);
+    pythonHighlightingRules += HighlightingRule(R"(\bdef\b\s*(\w+))", 1, s_Styles[CodeElement::Definition]);
     // 'class' followed by an identifier
-    _pythonHighlightingRules +=
+    pythonHighlightingRules +=
         HighlightingRule(R"(\bclass\b\s*(\w+))", 1, s_Styles[CodeElement::Definition]);
 
     // From '#' until a newline
-    _pythonHighlightingRules += HighlightingRule("#[^\\n]*", 0, s_Styles[CodeElement::Comment]);
+    pythonHighlightingRules += HighlightingRule("#[^\\n]*", 0, s_Styles[CodeElement::Comment]);
 
     // Numeric literals
-    _pythonHighlightingRules += HighlightingRule("\\b[+-]?[0-9]+[lL]?\\b", 0, s_Styles[CodeElement::Numbers]);
-    _pythonHighlightingRules +=
+    pythonHighlightingRules += HighlightingRule("\\b[+-]?[0-9]+[lL]?\\b", 0, s_Styles[CodeElement::Numbers]);
+    pythonHighlightingRules +=
         HighlightingRule("\\b[+-]?0[xX][0-9A-Fa-f]+[lL]?\\b", 0, s_Styles[CodeElement::Numbers]);
-    _pythonHighlightingRules += HighlightingRule(
+    pythonHighlightingRules += HighlightingRule(
         R"(\b[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\b)", 0, s_Styles[CodeElement::Numbers]);
 }
 
@@ -171,7 +171,7 @@ void PythonHighlighter::highlightPythonBlock(const QString &text)
     int index = -1;
 
     // Do other syntax formatting
-    for (const auto &rule : _pythonHighlightingRules)
+    for (const auto &rule : pythonHighlightingRules)
     {
         index = rule.pattern.indexIn(text, 0);
 
@@ -191,9 +191,9 @@ void PythonHighlighter::highlightPythonBlock(const QString &text)
     setCurrentBlockState(0);
 
     // Do multi-line strings
-    bool in_multiline = matchMultiLine(text, _triSingle);
+    bool in_multiline = matchMultiLine(text, triSingle);
     if (!in_multiline)
-        in_multiline = matchMultiLine(text, _triDouble);
+        in_multiline = matchMultiLine(text, triDouble);
 }
 
 /*Do highlighting of multi-line strings. ``delimiter`` should be a

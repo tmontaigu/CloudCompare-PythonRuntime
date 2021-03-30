@@ -15,9 +15,12 @@
 //#                                                                        #
 //##########################################################################
 
-// https://forum.qt.io/topic/96285/c-highlighter-for-python
-#ifndef PYTHONHIGHLIGHTER_H
-#define PYTHONHIGHLIGHTER_H
+// Original Author: "JeroenDierckx"
+// from https://forum.qt.io/topic/96285/c-highlighter-for-python
+// "The license is "don't make money off this without giving back to the community" ;-)"
+
+#ifndef PYTHON_HIGHLIGHTER_H
+#define PYTHON_HIGHLIGHTER_H
 
 #include <QRegExp>
 #include <QSyntaxHighlighter>
@@ -59,8 +62,9 @@ class PythonHighlighter : public QSyntaxHighlighter
 
     bool matchMultiLine(const QString &text, const HighlightingRule &rule);
 
-    QVector<HighlightingRule> _pythonHighlightingRules;
-    HighlightingRule _triSingle, _triDouble;
+    QVector<HighlightingRule> pythonHighlightingRules;
+    HighlightingRule triSingle;
+    HighlightingRule triDouble;
 };
 
-#endif // PYTHONHIGHLIGHTER_H
+#endif // PYTHON_HIGHLIGHTER_H
