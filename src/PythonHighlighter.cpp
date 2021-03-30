@@ -147,10 +147,10 @@ void PythonHighlighter::initialize()
         HighlightingRule(R"("[^'\\]*(\\.[^'\\]*)*")", 0, s_Styles[CodeElement::String]);
 
     // 'def' followed by an identifier
-    _pythonHighlightingRules += HighlightingRule("\\bdef\\b\\s*(\\w+)", 1, s_Styles[CodeElement::Definition]);
+    _pythonHighlightingRules += HighlightingRule(R"(\bdef\b\s*(\w+))", 1, s_Styles[CodeElement::Definition]);
     // 'class' followed by an identifier
     _pythonHighlightingRules +=
-        HighlightingRule("\\bclass\\b\\s*(\\w+)", 1, s_Styles[CodeElement::Definition]);
+        HighlightingRule(R"(\bclass\b\s*(\w+))", 1, s_Styles[CodeElement::Definition]);
 
     // From '#' until a newline
     _pythonHighlightingRules += HighlightingRule("#[^\\n]*", 0, s_Styles[CodeElement::Comment]);
@@ -160,7 +160,7 @@ void PythonHighlighter::initialize()
     _pythonHighlightingRules +=
         HighlightingRule("\\b[+-]?0[xX][0-9A-Fa-f]+[lL]?\\b", 0, s_Styles[CodeElement::Numbers]);
     _pythonHighlightingRules += HighlightingRule(
-        "\\b[+-]?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\\b", 0, s_Styles[CodeElement::Numbers]);
+        R"(\b[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\b)", 0, s_Styles[CodeElement::Numbers]);
 }
 
 void PythonHighlighter::highlightPythonBlock(const QString &text)
@@ -246,8 +246,5 @@ bool PythonHighlighter::matchMultiLine(const QString &text, const HighlightingRu
     }
 
     // Return True if still inside a multi-line string, False otherwise
-    if (currentBlockState() == rule.matchIndex)
-        return true;
-    else
-        return false;
+    return currentBlockState() == rule.matchIndex;
 }
