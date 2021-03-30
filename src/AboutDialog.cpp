@@ -29,6 +29,6 @@ AboutDialog::AboutDialog(QWidget *parent): QDialog(parent), m_dlg(new Ui_AboutDi
     QObject::connect(m_dlg->okBtn, &QPushButton::clicked, this, &QDialog::close);
 
     const char* versionStr = Py_GetVersion();
-    m_dlg->pythonVersionLabel->setText(QString("<p align=\"center\"> %1 </p>").arg(versionStr));
+    m_dlg->pythonVersionLabel->setText(QString(versionStr));
 }
 

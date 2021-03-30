@@ -2,7 +2,7 @@
   "type": "Standard",
   "name": "Python Plugin",
   "icon": ":/CC/plugin/PythonPlugin/images/python-icon.png",
-  "description": "This is a description of the marvelous Example plugin. It does nothing.",
+  "description": "Python scripting in CloudCompare",
   "authors": [
     {
       "name": "Thomas Montaigu",
