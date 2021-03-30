@@ -113,14 +113,11 @@ class QPythonEditor : public QMainWindow, public Ui::QPythonEditor
     CodeEditor *activeChildCodeEditor() const;
     QMdiSubWindow *findChildCodeEditor(const QString &fileName) const;
 
-    QFileSystemModel* fileSystemModel{nullptr};
-
     QEditorSettings *settings{nullptr};
 
     QMdiArea *mdiArea{nullptr};
 
     QMenu *windowMenu{nullptr};
-    ProjectViewContextMenu *projectViewContextMenu{nullptr};
 
     QAction *recentFileActs[MaxRecentFiles] = {nullptr};
     QAction *recentFileSeparator{nullptr};

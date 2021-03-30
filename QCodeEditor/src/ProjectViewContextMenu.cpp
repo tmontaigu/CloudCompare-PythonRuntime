@@ -15,19 +15,15 @@
 //#                                                                        #
 //##########################################################################
 #include "ProjectViewContextMenu.h"
+#include "ProjectView.h"
 
-#include <QDir>
 #include <QFileSystemModel>
 #include <QInputDialog>
 #include <QMessageBox>
-#include <QTreeView>
 
-#include <ccLog.h>
-
-ProjectViewContextMenu::ProjectViewContextMenu(QTreeView *view)
-    : QMenu(), treeView(view), model(static_cast<QFileSystemModel *>(treeView->model())),
-      renameAction("Rename"), deleteAction("Delete"), createFileAction("Create File"),
-      createFolderAction("Create Folder")
+ProjectViewContextMenu::ProjectViewContextMenu(ProjectView *view)
+    : QMenu(), treeView(view), renameAction("Rename"), deleteAction("Delete"),
+      createFileAction("Create File"), createFolderAction("Create Folder")
 {
     addAction(&renameAction);
     addAction(&deleteAction);
@@ -50,8 +46,7 @@ void ProjectViewContextMenu::requested(const QPoint &pos)
         renameAction.setVisible(true);
         deleteAction.setVisible(true);
 
-        ccLog::Print(model->rootDirectory().filePath(model->filePath(currentIndex)));
-        if (QFileInfo(model->rootDirectory().filePath(model->filePath(currentIndex))).isDir())
+        if (QFileInfo(treeView->absolutePathAt(currentIndex)).isDir())
         {
             createFileAction.setVisible(true);
             createFolderAction.setVisible(true);
@@ -85,7 +80,7 @@ void ProjectViewContextMenu::renameFile() const
 
     if (ok && !newName.isEmpty())
     {
-        const QString currentPath = model->filePath(currentIndex);
+        const QString currentPath = treeView->relativePathAt(currentIndex);
         const QString oldFilePath = QFileInfo(currentPath).absoluteFilePath();
         const QString newFilePath = QFileInfo(currentPath).absoluteDir().filePath(newName);
 
@@ -105,7 +100,7 @@ void ProjectViewContextMenu::deleteElement() const
 
     if (result == QMessageBox::StandardButton::Yes)
     {
-        if (!model->remove(treeView->currentIndex()))
+        if (!treeView->fileSystemModel->remove(treeView->currentIndex()))
         {
             QMessageBox::critical(treeView, "Error", "Failed to delete");
         }
@@ -120,16 +115,7 @@ void ProjectViewContextMenu::createFile() const
 
     if (ok && !fileName.isEmpty())
     {
-        QDir basePath;
-        if (currentIndex.isValid())
-        {
-            basePath = model->filePath(currentIndex);
-        }
-        else
-        {
-            basePath = model->rootDirectory();
-        }
-
+        QDir basePath(treeView->absolutePathAt(currentIndex));
         QFile f(basePath.filePath(fileName));
         if (!f.open(QFile::OpenModeFlag::NewOnly))
         {
@@ -150,11 +136,11 @@ void ProjectViewContextMenu::createFolder() const
     {
         if (currentIndex.isValid())
         {
-            model->mkdir(currentIndex, folderName);
+            treeView->fileSystemModel->mkdir(currentIndex, folderName);
         }
         else
         {
-            model->rootDirectory().mkdir(folderName);
+            treeView->fileSystemModel->rootDirectory().mkdir(folderName);
         }
     }
 }
