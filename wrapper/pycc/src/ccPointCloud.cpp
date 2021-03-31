@@ -95,6 +95,7 @@ void define_ccPointCloud(py::module &m)
              "uniqueID"_a = [](){return ccUniqueIDGenerator::InvalidUniqueID;}(),
             py::return_value_policy::reference)
         // features deletion/clearing
+        .def("partialClone", &ccPointCloud::partialClone, "reference"_a, "warnings"_a = nullptr)
         // features allocation/resize
         .def("reserveThePointsTable", &ccPointCloud::reserveThePointsTable, "_numberOfPoints"_a)
         .def("reserveTheRGBTable", &ccPointCloud::reserveThePointsTable)

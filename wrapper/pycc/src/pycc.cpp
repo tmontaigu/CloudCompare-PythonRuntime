@@ -140,12 +140,11 @@ void define_pycc(py::module &m)
     using VectorCompressedNormType = std::vector<CompressedNormType>;
     using ccArrayCompressedNormType = ccArray<CompressedNormType, 1, CompressedNormType>;
 
-    // FIXME
-    // We can't bind_vector, at runtime we get an error that _VectorCompressedNormType
-    // is already defined, that is because CompressedNormType is unsigned int
-    // and std::vector<unsigned int> is already bound in define_KdTree
-    // -> When not using embedded modules this doesn't seem to cause the error <-
-    // py::bind_vector<VectorCompressedNormType>(m, "_VectorCompressedNormType", py::module_local(true));
+    // FIXME: strange that this is needed when _not_ using embedded modules
+    //      but breaks if present while using embedded modules
+#ifndef USE_EMBEDDED_MODULES
+     py::bind_vector<VectorCompressedNormType>(m, "_VectorCompressedNormType", py::module_local(true));
+#endif
 
     py::class_<ccArrayCompressedNormType,
             VectorCompressedNormType,

@@ -76,7 +76,12 @@ if (PLUGIN_PYTHON)
 
         set(PYTHON_DLL "${PYTHON_PREFIX}/python${PYTHON_LIBRARY_SUFFIX}.dll")
         if (EXISTS "${PYTHON_DLL}")
-            install(FILES ${PYTHON_DLL} DESTINATION ${CLOUDCOMPARE_DEST_FOLDER})
+            install(FILES ${PYTHON_DLL} DESTINATION ${CLOUDCOMPARE_DEST_FOLDER}/LIB/site-packages)
+        endif()
+
+        if (NOT USE_EMBEDDED_MODULES)
+            install(TARGETS pycc cccorelib
+                    DESTINATION "${CC_PYTHON_INSTALL_DIR}/Lib/site-packages")
         endif()
 
         # If the docs have been built, we copy them in the install folder

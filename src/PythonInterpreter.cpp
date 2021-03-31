@@ -179,8 +179,11 @@ PythonConfigPaths PythonConfigPaths::WindowsCondaEnv(const char *condaPrefix)
         config.m_pythonHome.reset(QStringToWcharArray(qPythonHome));
 
         QString qPythonPath =
-            QString("%1/DLLs;%1/lib;%1/Lib/site-packages")
+            QString("%1/DLLs;%1/lib;%1/Lib/site-packages;")
                 .arg(qPythonHome);
+#ifndef USE_EMBEDDED_MODULES
+        qPythonPath.append(QApplication::applicationDirPath() + "/plugins/Python/Lib/site-packages");
+#endif
         config.m_pythonPath.reset(QStringToWcharArray(qPythonPath));
     }
     else
@@ -209,6 +212,10 @@ PythonConfigPaths PythonConfigPaths::WindowsVenv(const char *venvPrefix, const P
         {
             qPythonPath.append(QString("%1/Lib/site-packages").arg(cfg.home));
         }
+
+#ifndef USE_EMBEDDED_MODULES
+        qPythonPath.append(QApplication::applicationDirPath() + "/plugins/Python/Lib/site-packages");
+#endif
         config.m_pythonPath.reset(QStringToWcharArray(qPythonPath));
     }
     else
