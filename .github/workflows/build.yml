@@ -34,6 +34,16 @@ jobs:
           conda install -c conda-forge qt=5.12.* pybind11 ninja
           pip install numpy
 
+      - name: Configure MSVC console
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Set environment for MSVC
+        run: |
+          # Set these env vars so cmake picks the correct compiler
+          # https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions#environment-files
+          echo "CXX=cl.exe" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "CC=cl.exe" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
       - name: Configure CMake
         shell: pwsh
         run: |
@@ -41,12 +51,13 @@ jobs:
           cmake  `
             -G Ninja `
             -B build `
+            -DCMAKE_BUILD_TYPE=Release `
             -DCMAKE_INSTALL_PREFIX=install `
             -DPLUGIN_PYTHON=ON `
             .
 
       - name: Build
-        run: cmake --build build --parallel --config Release
+        run: cmake --build build --parallel
 
       - name: Install
         run: cmake --install build
