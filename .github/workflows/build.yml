@@ -5,7 +5,7 @@ on: [ push, pull_request ]
 
 jobs:
   Windows-Build:
-    name: Windows
+    name: Windows embedded-modules=${{matrix.use_embbed_modules}}
     runs-on: windows-latest
     strategy:
       matrix:
