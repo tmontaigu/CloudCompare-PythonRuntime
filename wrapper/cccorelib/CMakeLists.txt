@@ -1,3 +1,5 @@
+project(pycccorelib LANGUAGES CXX)
+
 set(cccorelib_sources
     ${CMAKE_CURRENT_LIST_DIR}/src/cccorelib.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/cccorelib.h
@@ -47,18 +49,17 @@ set(cccorelib_sources
 )
 
 if (NOT USE_EMBEDDED_MODULES)
-    cmake_minimum_required(VERSION 3.12)
-    project(pycccorelib)
 
-    set(CMAKE_CXX_STANDARD 14)
 
     find_package(pybind11 CONFIG REQUIRED)
-
     pybind11_add_module(cccorelib ${cccorelib_sources})
     target_link_libraries(cccorelib PRIVATE CCCoreLib)
-else ()
-    function(embed_cccorelib_in target)
-        target_sources(${target} PRIVATE ${cccorelib_sources})
-        target_link_libraries(${target} CCCoreLib)
-    endfunction(embed_cccorelib_in)
-endif ()
+endif()
+
+function(embed_cccorelib_in target)
+    target_sources(${target} PRIVATE ${cccorelib_sources})
+    target_link_libraries(${target} CCCoreLib)
+endfunction(embed_cccorelib_in)
+
+# Cache variables so embed_cccorelib_in can be used in parent projects
+set(cccorelib_sources ${cccorelib_sources} CACHE INTERNAL "")

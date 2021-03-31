@@ -52,3 +52,49 @@ print(s.get_python_lib(plat_specific=True));
 
     set(${PYTHON_SITE_PACKAGES} ${_PYTHON_VALUES} PARENT_SCOPE)
 endfunction()
+
+# Tries to find pybind11 in the site-packages
+# because it bundles the .cmake files the
+# find_package command needs
+function(try_append_pybind11_cmake_module_to_modules_path)
+    set(PYTHON_SITE_PACKAGES "")
+    get_python_sites_packages(PYTHON_SITE_PACKAGES)
+    set(PYBIND11_CMAKE_MODULES_PATH "${PYTHON_SITE_PACKAGES}/pybind11/share/cmake/pybind11")
+    if (NOT EXISTS "${PYBIND11_CMAKE_MODULES_PATH}")
+        message(STATUS "pybind11 cmake modules not found at ${PYBIND11_CMAKE_MODULES_PATH}, is pybind11 installed ?")
+    else ()
+        message(STATUS "${PYBIND11_CMAKE_MODULES_PATH} added to CMAKE_PREFIX_PATH")
+    endif ()
+
+    list(APPEND CMAKE_PREFIX_PATH ${PYBIND11_CMAKE_MODULES_PATH})
+endfunction()
+
+
+function(manage_windows_install)
+    set(CC_PYTHON_ENV_NAME "Python")
+    set(CC_PLUGIN_INSTALL_DIR ${CLOUDCOMPARE_DEST_FOLDER}/plugins)
+    set(CC_PYTHON_INSTALL_DIR "${CC_PLUGIN_INSTALL_DIR}/${CC_PYTHON_ENV_NAME}")
+
+    if (PLUGIN_PYTHON_COPY_ENV)
+        copy_python_venv(${CC_PYTHON_INSTALL_DIR})
+    endif ()
+
+    set(PYTHON_DLL "${PYTHON_PREFIX}/python${PYTHON_LIBRARY_SUFFIX}.dll")
+    if (EXISTS "${PYTHON_DLL}")
+        install(FILES ${PYTHON_DLL} DESTINATION ${CLOUDCOMPARE_DEST_FOLDER}/LIB/site-packages)
+    endif ()
+
+    if (NOT USE_EMBEDDED_MODULES)
+        install(TARGETS pycc cccorelib
+                DESTINATION "${CC_PYTHON_INSTALL_DIR}/Lib/site-packages")
+    endif ()
+
+    # If the docs have been built, we copy them in the install folder
+    set(DOCUMENTATION_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/docs/_build")
+    if (EXISTS "${DOCUMENTATION_FOLDER}/index.html")
+        install(
+                DIRECTORY "${DOCUMENTATION_FOLDER}/"
+                DESTINATION ${CC_PYTHON_INSTALL_DIR}/docs
+        )
+    endif ()
+endfunction()
