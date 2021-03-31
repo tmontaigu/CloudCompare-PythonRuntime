@@ -31,7 +31,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          conda install -c conda-forge qt=5.12.* pybind11
+          conda install -c conda-forge qt=5.12.* pybind11 ninja
           pip install numpy
 
       - name: Configure CMake
@@ -39,6 +39,7 @@ jobs:
         run: |
           mkdir build
           cmake  `
+            -G Ninja `
             -B build `
             -DCMAKE_INSTALL_PREFIX=install `
             -DPLUGIN_PYTHON=ON `
