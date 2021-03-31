@@ -7,6 +7,9 @@ jobs:
   Windows-Build:
     name: Windows
     runs-on: windows-latest
+    strategy:
+      matrix:
+        use_embedded_modules: [ON, OFF]
 
     steps:
       - name: Clone CloudCompare
@@ -42,6 +45,7 @@ jobs:
             -B build `
             -DCMAKE_INSTALL_PREFIX=install `
             -DPLUGIN_PYTHON=ON `
+            -DUSE_EMBEDDED_MODULES=${{ matrix.use_embedded_modules }} `
             .
 
       - name: Build
