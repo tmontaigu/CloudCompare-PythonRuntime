@@ -93,9 +93,8 @@ void QPythonEditor::promptForFolderToOpen()
     const QString folderName = QFileDialog::getExistingDirectory(this, "Open folder");
     if (!folderName.isEmpty())
     {
-        fileSystemModel->setRootPath(folderName);
-        projectTreeView->setRootIndex(fileSystemModel->index(folderName));
-        this->projectBrowser->show();
+        projectBrowser->show();
+        projectTreeView->setRootPath(folderName);
     }
 }
 
@@ -129,7 +128,7 @@ bool QPythonEditor::openFile(const QString &fileName)
 
 void QPythonEditor::projectTreeDoubleClicked(const QModelIndex &index)
 {
-    const QString path = fileSystemModel->filePath(index);
+    const QString path = projectTreeView->relativePathAt(index);
     if (QFileInfo(path).isFile())
     {
         openFile(path);
@@ -457,21 +456,7 @@ void QPythonEditor::createStatusBar()
 void QPythonEditor::initProjectView()
 {
     projectBrowser->hide();
-    fileSystemModel = new QFileSystemModel;
-    projectTreeView->setModel(fileSystemModel);
-
-    projectViewContextMenu = new ProjectViewContextMenu(projectTreeView);
-    projectTreeView->setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
-
-    for (int i{1}; i < projectTreeView->size().width(); ++i)
-    {
-        projectTreeView->hideColumn(i);
-    }
-    connect(projectTreeView, &QTreeView::doubleClicked, this, &QPythonEditor::projectTreeDoubleClicked);
-    connect(projectTreeView,
-            &QTreeView::customContextMenuRequested,
-            projectViewContextMenu,
-            &ProjectViewContextMenu::requested);
+    connect(projectTreeView, &ProjectView::doubleClicked, this, &QPythonEditor::projectTreeDoubleClicked);
 }
 
 void QPythonEditor::updateMenus()

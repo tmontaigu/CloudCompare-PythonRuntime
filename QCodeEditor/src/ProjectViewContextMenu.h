@@ -24,12 +24,14 @@
 class QTreeView;
 class QFileSystemModel;
 
+class ProjectView;
+
 class ProjectViewContextMenu : public QMenu
 {
     Q_OBJECT
 
   public:
-    explicit ProjectViewContextMenu(QTreeView *view);
+    explicit ProjectViewContextMenu(ProjectView *view);
 
   public Q_SLOTS:
     void requested(const QPoint &pos);
@@ -41,9 +43,7 @@ class ProjectViewContextMenu : public QMenu
     void createFolder() const;
 
   private:
-    QTreeView *treeView;
-    QFileSystemModel *model;
-
+    ProjectView *treeView;
     QModelIndex currentIndex;
 
     QAction renameAction;

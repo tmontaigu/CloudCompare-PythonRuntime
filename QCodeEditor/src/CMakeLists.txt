@@ -8,4 +8,5 @@ target_sources(${PROJECT_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/QEditorSettings.h
     ${CMAKE_CURRENT_SOURCE_DIR}/ProjectViewContextMenu.h
     ${CMAKE_CURRENT_SOURCE_DIR}/ProjectViewContextMenu.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ProjectView.h
 )

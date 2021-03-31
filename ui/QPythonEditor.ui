@@ -142,7 +142,7 @@
    <widget class="QWidget" name="dockWidgetContents">
     <layout class="QVBoxLayout">
      <item>
-      <widget class="QTreeView" name="projectTreeView">
+      <widget class="ProjectView" name="projectTreeView">
        <property name="sizePolicy">
         <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
          <horstretch>0</horstretch>
@@ -378,6 +378,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ProjectView</class>
+   <extends>QTreeView</extends>
+   <header>ProjectView.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../CloudCompare-PythonPlugin.qrc"/>
  </resources>
