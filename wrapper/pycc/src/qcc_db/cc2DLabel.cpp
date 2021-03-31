@@ -23,7 +23,7 @@
 #include <ccGenericMesh.h>
 #include <ccGenericPointCloud.h>
 
-#include "casters.h"
+#include "../casters.h"
 
 namespace py = pybind11;
 using namespace pybind11::literals;

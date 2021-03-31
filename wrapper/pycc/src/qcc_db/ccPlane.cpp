@@ -19,7 +19,7 @@
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
 
-#include "casters.h"
+#include "../casters.h"
 
 #include <GenericIndexedCloudPersist.h>
 #include <ccPlane.h>

@@ -19,32 +19,25 @@
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
 
-#include <ccTorus.h>
+#include "../casters.h"
 
-#include "casters.h"
+#include <ccLog.h>
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-void define_ccTorus(py::module &m)
+void define_ccLog(py::module &m)
 {
-    py::class_<ccTorus, ccGenericPrimitive, std::unique_ptr<ccTorus, py::nodelete>>(m, "ccTorus")
-        .def(py::init<PointCoordinateType,
-                      PointCoordinateType,
-                      double,
-                      bool,
-                      PointCoordinateType,
-                      const ccGLMatrix *,
-                      QString,
-                      unsigned,
-                      unsigned>(),
-             "insideRadius"_a,
-             "outsideRadius"_a,
-             "angleRad"_a = 2.0 * M_PI,
-             "rectangularSection"_a = false,
-             "rectSectionHeight"_a = 0,
-             "transMat"_a = nullptr,
-             "name"_a = QString("Torus"),
-             "precision"_a = [](){ return ccTorus::DEFAULT_DRAWING_PRECISION; }(),
-             "uniqueId"_a = [](){ return ccUniqueIDGenerator::InvalidUniqueID; }());
+    py::class_<ccLog> PyccLog(m, "ccLog");
+    PyccLog.def_static("TheInstance", &ccLog::TheInstance, py::return_value_policy::reference);
+    PyccLog.def_static("LogMessage", &ccLog::LogMessage, "message"_a, "level"_a);
+    PyccLog.def_static("Print", (bool (*)(const QString &)) & ccLog::Print, "message"_a);
+    PyccLog.def_static("Warning", (bool (*)(const QString &)) & ccLog::Warning, "message"_a);
+    PyccLog.def_static("Error", (bool (*)(const QString &)) & ccLog::Error, "message"_a);
+
+    py::enum_<ccLog::MessageLevelFlags>(PyccLog, "MessageLevelFlags")
+        .value("LOG_STANDARD", ccLog::MessageLevelFlags::LOG_STANDARD)
+        .value("LOG_DEBUG", ccLog::MessageLevelFlags::LOG_DEBUG)
+        .value("LOG_WARNING", ccLog::MessageLevelFlags::LOG_WARNING)
+        .value("LOG_ERROR", ccLog::MessageLevelFlags::LOG_ERROR);
 }
