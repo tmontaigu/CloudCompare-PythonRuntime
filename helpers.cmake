@@ -77,17 +77,21 @@ function(manage_windows_install)
 
     if (PLUGIN_PYTHON_COPY_ENV)
         copy_python_venv(${CC_PYTHON_INSTALL_DIR})
-    endif ()
+    endif()
 
     set(PYTHON_DLL "${PYTHON_PREFIX}/python${PYTHON_LIBRARY_SUFFIX}.dll")
     if (EXISTS "${PYTHON_DLL}")
-        install(FILES ${PYTHON_DLL} DESTINATION ${CLOUDCOMPARE_DEST_FOLDER}/LIB/site-packages)
-    endif ()
+        install(FILES ${PYTHON_DLL} DESTINATION ${CLOUDCOMPARE_DEST_FOLDER})
+    endif()
+
+    install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/docs/stubfiles/pycc.pyi"
+                  "${CMAKE_CURRENT_SOURCE_DIR}/docs/stubfiles/cccorelib.pyi"
+            DESTINATION "${CC_PYTHON_INSTALL_DIR}/Lib/site-packages")
 
     if (NOT USE_EMBEDDED_MODULES)
         install(TARGETS pycc cccorelib
                 DESTINATION "${CC_PYTHON_INSTALL_DIR}/Lib/site-packages")
-    endif ()
+    endif()
 
     # If the docs have been built, we copy them in the install folder
     set(DOCUMENTATION_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/docs/_build")
@@ -96,5 +100,5 @@ function(manage_windows_install)
                 DIRECTORY "${DOCUMENTATION_FOLDER}/"
                 DESTINATION ${CC_PYTHON_INSTALL_DIR}/docs
         )
-    endif ()
+    endif()
 endfunction()
