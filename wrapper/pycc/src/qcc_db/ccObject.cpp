@@ -23,7 +23,7 @@
 #include <ccObject.h>
 #include <ccShiftedObject.h>
 
-#include "casters.h"
+#include "../casters.h"
 
 namespace py = pybind11;
 using namespace pybind11::literals;

@@ -19,25 +19,18 @@
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
 
-#include "casters.h"
+#include <GenericProgressCallback.h>
+#include <ccProgressDialog.h>
 
-#include <ccLog.h>
+#include "../casters.h"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-void define_ccLog(py::module &m)
+void define_ccProgressDialog(py::module &m)
 {
-    py::class_<ccLog> PyccLog(m, "ccLog");
-    PyccLog.def_static("TheInstance", &ccLog::TheInstance, py::return_value_policy::reference);
-    PyccLog.def_static("LogMessage", &ccLog::LogMessage, "message"_a, "level"_a);
-    PyccLog.def_static("Print", (bool (*)(const QString &)) & ccLog::Print, "message"_a);
-    PyccLog.def_static("Warning", (bool (*)(const QString &)) & ccLog::Warning, "message"_a);
-    PyccLog.def_static("Error", (bool (*)(const QString &)) & ccLog::Error, "message"_a);
-
-    py::enum_<ccLog::MessageLevelFlags>(PyccLog, "MessageLevelFlags")
-        .value("LOG_STANDARD", ccLog::MessageLevelFlags::LOG_STANDARD)
-        .value("LOG_DEBUG", ccLog::MessageLevelFlags::LOG_DEBUG)
-        .value("LOG_WARNING", ccLog::MessageLevelFlags::LOG_WARNING)
-        .value("LOG_ERROR", ccLog::MessageLevelFlags::LOG_ERROR);
+    py::class_<ccProgressDialog, QProgressDialog, CCCoreLib::GenericProgressCallback>(m, "ccProgressDialog")
+        .def(py::init<bool>(), "cancelButton"_a = false)
+        .def("setMethodTitle", (void (ccProgressDialog::*)(QString)) &ccProgressDialog::setMethodTitle, "methodTitle"_a)
+        .def("setInfo", (void (ccProgressDialog::*)(QString))&ccProgressDialog::setInfo, "infoStr"_a);
 }

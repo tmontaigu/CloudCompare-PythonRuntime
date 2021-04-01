@@ -19,26 +19,20 @@
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
 
-#include <ccDish.h>
+#include <ccBox.h>
 
-#include "casters.h"
+#include "../casters.h"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-void define_ccDish(py::module &m)
+void define_ccBox(py::module &m)
 {
-    py::class_<ccDish, ccGenericPrimitive, std::unique_ptr<ccDish, py::nodelete>>(m, "ccDish")
-        .def(py::init<PointCoordinateType,
-                      PointCoordinateType,
-                      PointCoordinateType,
-                      const ccGLMatrix *,
-                      QString,
-                      unsigned>(),
-             "radius"_a,
-             "height"_a,
-             "radius2"_a = 0,
+    py::class_<ccBox, ccGenericPrimitive, std::unique_ptr<ccBox, py::nodelete>>(m, "ccBox")
+        .def(py::init<const CCVector3 &, const ccGLMatrix *, QString>(),
+             "dims"_a,
              "transMat"_a = nullptr,
-             "name"_a = QString("Dish"),
-             "precision"_a = [](){ return ccDish::DEFAULT_DRAWING_PRECISION; }());
+             "name"_a = QString("Box"))
+        .def("getDimensions", &ccBox::getDimensions)
+        .def("setDimensions", &ccBox::setDimensions, "dims"_a);
 }

@@ -19,18 +19,27 @@
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
 
-#include <GenericProgressCallback.h>
-#include <ccProgressDialog.h>
+#include <ccCone.h>
+#include <ccCylinder.h>
 
-#include "casters.h"
+#include "../casters.h"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-void define_ccProgressDialog(py::module &m)
+void define_ccCylinder(py::module &m)
 {
-    py::class_<ccProgressDialog, QProgressDialog, CCCoreLib::GenericProgressCallback>(m, "ccProgressDialog")
-        .def(py::init<bool>(), "cancelButton"_a = false)
-        .def("setMethodTitle", (void (ccProgressDialog::*)(QString)) &ccProgressDialog::setMethodTitle, "methodTitle"_a)
-        .def("setInfo", (void (ccProgressDialog::*)(QString))&ccProgressDialog::setInfo, "infoStr"_a);
+    py::class_<ccCylinder, ccCone, std::unique_ptr<ccCylinder, py::nodelete>>(m, "ccCylinder")
+        .def(py::init<PointCoordinateType,
+                      PointCoordinateType,
+                      const ccGLMatrix *,
+                      QString,
+                      unsigned,
+                      unsigned>(),
+             "radius"_a,
+             "height"_a,
+             "transMat"_a = nullptr,
+             "name"_a = QString("Cylinder"),
+             "precision"_a = [](){ return ccCylinder::DEFAULT_DRAWING_PRECISION;}(),
+             "uniqueID"_a = [](){ return ccUniqueIDGenerator::InvalidUniqueID; }());
 }
