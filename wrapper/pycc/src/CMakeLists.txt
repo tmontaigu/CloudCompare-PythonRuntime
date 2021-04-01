@@ -1,6 +1,8 @@
-add_subdirectory(runtime)
 add_subdirectory(qcc_io)
 add_subdirectory(qcc_db)
+if (DEFINE_PYCC_RUNTIME)
+    add_subdirectory(runtime)
+endif()
 
 set(pycc_sources
     ${CMAKE_CURRENT_LIST_DIR}/casters.h
