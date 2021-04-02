@@ -9,6 +9,7 @@ target_sources(${PROJECT_NAME}
         ${CMAKE_CURRENT_LIST_DIR}/PythonHighlighter.h
         ${CMAKE_CURRENT_LIST_DIR}/Consoles.h
         ${CMAKE_CURRENT_LIST_DIR}/ccGUIPythonInstance.h
+        ${CMAKE_CURRENT_LIST_DIR}/FileRunner.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Utilities.h
         )
 

@@ -8,4 +8,5 @@ target_sources(${PROJECT_NAME}
         ${CMAKE_CURRENT_LIST_DIR}/QPythonREPL.cpp
         ${CMAKE_CURRENT_LIST_DIR}/PythonHighlighter.cpp
         ${CMAKE_CURRENT_LIST_DIR}/ccGUIPythonInstance.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/FileRunner.cpp
         )

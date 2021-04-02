@@ -21,6 +21,7 @@
 #include "PythonStdErrOutRedirect.h"
 #include "QPythonEditor.h"
 #include "QPythonREPL.h"
+#include "FileRunner.h"
 #include "Utilities.h"
 
 #include <QUrl>
@@ -31,7 +32,6 @@
 #define slots Q_SLOTS
 #define signals Q_SIGNALS
 #include <ccCommandLineInterface.h>
-
 
 void logPythonPath()
 {
@@ -133,7 +133,16 @@ QList<QAction *> PythonPlugin::getActions()
         m_showAboutDialog->setEnabled(enableActions);
     }
 
-    return { m_showEditor, m_showAboutDialog, m_showDoc, m_showREPL };
+    if (!m_showFileRunner)
+    {
+        m_showFileRunner = new QAction("File Runner", this);
+        m_showFileRunner->setToolTip("Small widget to select and run a script");
+        m_showFileRunner->setIcon(QIcon(":/CC/plugin/PythonPlugin/images/runner-icon.png"));
+        connect(m_showFileRunner, &QAction::triggered, this, &PythonPlugin::showFileRunner);
+        m_showFileRunner->setEnabled(enableActions);
+    }
+
+    return { m_showEditor, m_showFileRunner, m_showAboutDialog, m_showDoc, m_showREPL };
 }
 
 void PythonPlugin::showRepl()
@@ -159,6 +168,10 @@ void PythonPlugin::showEditor()
         m_editor->raise();
         m_editor->activateWindow();
     }
+}
+
+void PythonPlugin::showFileRunner() const {
+    m_fileRunner->show();
 }
 
 void PythonPlugin::showDocumentation()
@@ -260,4 +273,5 @@ void PythonPlugin::setMainAppInterface(ccMainAppInterface *app)
 {
     ccStdPluginInterface::setMainAppInterface(app);
     Python::setMainAppInterfaceInstance(m_app);
+    m_fileRunner = new FileRunner(&m_interp, m_app->getMainWindow());
 }

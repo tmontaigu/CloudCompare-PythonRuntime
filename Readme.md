@@ -112,3 +112,9 @@ Which by default will build the docs in HTML in docs/_build. Open docs/_build/in
 editor icon base on https://www.flaticon.com/free-icon/blank-page_18530
 
 python icon from https://python.org
+
+Parts of icons taken from [Flaticon.com](www.flaticon.com): 
+https://www.flaticon.com/free-icon/pencil_2919592?term=edit&page=1&position=16&page=1&position=16&related_id=2919592&origin=search
+https://www.flaticon.com/free-icon/py_180867?related_id=180867
+https://www.flaticon.com/free-icon/play_915999
+

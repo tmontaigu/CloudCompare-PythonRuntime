@@ -24,6 +24,7 @@
 class QListWidget;
 class QPythonEditor;
 class QPythonREPL;
+class FileRunner;
 
 
 /// "Entry point" of the plugin
@@ -51,16 +52,20 @@ class PythonPlugin : public QObject, public ccStdPluginInterface
     void showRepl();
     void showEditor();
     void showAboutDialog();
+    void showFileRunner() const;
 	static void showDocumentation();
 
     PythonInterpreter m_interp;
 
     QPythonREPL *m_repl{nullptr};
     QPythonEditor *m_editor{nullptr};
+    FileRunner *m_fileRunner{nullptr};
+
 
     /// Actions
     QAction *m_showEditor{nullptr};
     QAction *m_showREPL{nullptr};
     QAction *m_showDoc{nullptr};
+    QAction *m_showFileRunner{nullptr};
     QAction *m_showAboutDialog{nullptr};
 };
