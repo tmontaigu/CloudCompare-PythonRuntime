@@ -134,7 +134,7 @@ void define_ccPointCloud(py::module &m)
                  }
                  else
                  {
-                     return py::array();
+                     return py::array("3f", 0);
                  }
              })
         .def("__repr__",
