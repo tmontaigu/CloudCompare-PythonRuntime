@@ -58,7 +58,7 @@ jobs:
             -DCMAKE_BUILD_TYPE=Release `
             -DCMAKE_INSTALL_PREFIX=install `
             -DPLUGIN_PYTHON=ON `
-            -DUSE_EMBEDDED_MODULES=${{ matrix.use_embedded_modules }} `
+            -DPLUGIN_PYTHON_USE_EMBEDDED_MODULES=${{ matrix.use_embedded_modules }} `
             .
 
       - name: Build

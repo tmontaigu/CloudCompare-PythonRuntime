@@ -86,7 +86,7 @@ function(manage_windows_install)
                   "${CMAKE_CURRENT_SOURCE_DIR}/docs/stubfiles/cccorelib.pyi"
             DESTINATION "${CC_PYTHON_INSTALL_DIR}/Lib/site-packages")
 
-    if (NOT USE_EMBEDDED_MODULES)
+    if (NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
         install(TARGETS pycc cccorelib
                 DESTINATION "${CC_PYTHON_INSTALL_DIR}/Lib/site-packages")
     endif()

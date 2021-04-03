@@ -1,12 +1,11 @@
 project(pycc LANGUAGES CXX)
 
-# TODO if runtime is not defined then, all observer_ptr<T> should becomte unique_ptr<T>s
 option(DEFINE_PYCC_RUNTIME "Should the runtime functions be included" ON)
 
 add_subdirectory(src)
 
 
-if (NOT USE_EMBEDDED_MODULES)
+if (NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
     find_package(pybind11 CONFIG REQUIRED)
 
     pybind11_add_module(pycc ${pycc_sources})

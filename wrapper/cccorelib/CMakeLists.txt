@@ -48,8 +48,7 @@ set(cccorelib_sources
     ${CMAKE_CURRENT_LIST_DIR}/src/casters.h
 )
 
-if (NOT USE_EMBEDDED_MODULES)
-
+if (NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
 
     find_package(pybind11 CONFIG REQUIRED)
     pybind11_add_module(cccorelib ${cccorelib_sources})

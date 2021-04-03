@@ -7,8 +7,8 @@ if (PLUGIN_PYTHON)
 
     AddPlugin(NAME ${PROJECT_NAME})
 
-    option(USE_EMBEDDED_MODULES "Should th Python wrapper libs be embedded in the cc plugin" ON)
-    mark_as_advanced(USE_EMBEDDED_MODULES)
+    option(PLUGIN_PYTHON_USE_EMBEDDED_MODULES "Should th Python wrapper libs be embedded in the cc plugin" ON)
+    mark_as_advanced(PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
 
     if (WIN32)
         option(PLUGIN_PYTHON_COPY_ENV "Should the content of the current python venv be copied on install" ON)
@@ -37,7 +37,7 @@ if (PLUGIN_PYTHON)
     add_subdirectory(ui)
     add_subdirectory(QCodeEditor)
 
-    if (USE_EMBEDDED_MODULES)
+    if (PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
         target_compile_definitions(PythonPlugin PRIVATE -DUSE_EMBEDDED_MODULES)
 
         embed_cccorelib_in(${PROJECT_NAME})
@@ -51,7 +51,7 @@ if (PLUGIN_PYTHON)
     if (WIN32)
         manage_windows_install()
     elseif(UNIX AND NOT APPLE)
-        if (NOT USE_EMBEDDED_MODULES)
+        if (NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
             InstallSharedLibrary(TARGET cccorelib)
             InstallSharedLibrary(TARGET pycc)
         endif()
