@@ -7,12 +7,24 @@ if (PLUGIN_PYTHON)
 
     AddPlugin(NAME ${PROJECT_NAME})
 
-    option(USE_EMBEDDED_MODULES "Should the Python wrapper libs be embedded in the cc plugin" ON)
+    option(USE_EMBEDDED_MODULES "Should th Python wrapper libs be embedded in the cc plugin" ON)
     mark_as_advanced(USE_EMBEDDED_MODULES)
 
     if (WIN32)
         option(PLUGIN_PYTHON_COPY_ENV "Should the content of the current python venv be copied on install" ON)
         mark_as_advanced(PLUGIN_PYTHON_COPY_ENV)
+
+        set(CONDA_PREFIX $ENV{CONDA_PREFIX} CACHE PATH "Path to the root of the conda env")
+        string(REPLACE "\\" "/" CONDA_PREFIX ${CONDA_PREFIX})
+
+        # To avoid having to launch cmake the ide from an activated env
+        # if a conda env is already activated, it is prioritized
+        if (NOT CONDA_PREFIX AND NOT DEFINED ENV{CONDA_PREFIX})
+            message(DEBUG "Not using conda")
+        elseif (CONDA_PREFIX AND NOT DEFINED ENV{CONDA_PREFIX})
+            list(APPEND CMAKE_PREFIX_PATH "${CONDA_PREFIX}/Library/share/cmake")
+            set(PYTHON_EXECUTABLE "${CONDA_PREFIX}/python.exe")
+        endif()
     endif()
 
     if (DEFINED ENV{VIRTUAL_ENV})

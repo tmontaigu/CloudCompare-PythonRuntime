@@ -1,7 +1,5 @@
 function(copy_python_venv install_dir)
-    if (DEFINED ENV{CONDA_PREFIX})
-        message(STATUS "Conda environment found")
-        string(REPLACE "\\" "/" CONDA_PREFIX $ENV{CONDA_PREFIX})
+    if (DEFINED CONDA_PREFIX)
         INSTALL(
                 DIRECTORY "${CONDA_PREFIX}/"
                 DESTINATION "${install_dir}"
@@ -31,7 +29,7 @@ endfunction()
 
 function(get_python_sites_packages PYTHON_SITE_PACKAGES)
     execute_process(
-            COMMAND "python" "-c" "from distutils import sysconfig as s;
+            COMMAND "${PYTHON_EXECUTABLE}" "-c" "from distutils import sysconfig as s;
 print(s.get_python_lib(plat_specific=True));
 "
     RESULT_VARIABLE _PYTHON_SUCCESS
