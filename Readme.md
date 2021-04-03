@@ -14,7 +14,9 @@ Early step attempt at allowing to use Python to automate some stuff in CloudComp
 1) Clone this project in CloudCompare/plugins/private
 
 
-2) Create a Virtual env or a conda env
+2) Create a Virtual env or a conda env 
+
+   (conda environment works, virtual envs may not as they were not as tested)
 
     ```shell script
     # Python's venv
@@ -32,16 +34,16 @@ Early step attempt at allowing to use Python to automate some stuff in CloudComp
    .\Scripts\Activate.ps1
     
     # Conda environment
-    conda create -n pyccenv
+    conda active pyccenv
     ```
    
 4) Install dependencies
 
     ```shell script
-    # Python's venv (PowerShell)
+   # Python's venv (PowerShell)
    pip install pybind11
     
-    # Conda environment
+   # Conda environment
    conda install pybind11
     ```
    
@@ -65,10 +67,11 @@ Early step attempt at allowing to use Python to automate some stuff in CloudComp
 
 ## Linux
 1) Clone this project in CloudCompare/plugins/private
-1) Install additional dependencies
+2) Install additional dependencies
 
-Ubuntu: `libpython3-dev ` and `pybind11-dev` (only available since 20.04)
-Fedora: `python3-devel` and  `pybind11-devel`
+    Ubuntu: `libpython3-dev ` and `pybind11-dev` (only available since 20.04)
+
+    Fedora: `python3-devel` and  `pybind11-devel`
 
 
 2) Run cmake with `-DPLUGIN_PYTHON=ON`
