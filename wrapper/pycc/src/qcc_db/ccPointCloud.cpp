@@ -88,12 +88,12 @@ void define_ccPointCloud(py::module &m)
     DEFINE_POINTCLOUDTPL(ccGenericPointCloud, QString, m, "__ccGenericPointCloudTpl");
 
     py::class_<ccPointCloud,
-               CCCoreLib::PointCloudTpl<ccGenericPointCloud, QString>,
-               std::unique_ptr<ccPointCloud, py::nodelete>>(m, "ccPointCloud")
+               CCCoreLib::PointCloudTpl<ccGenericPointCloud, QString>>(
+            m,
+            "ccPointCloud")
         .def(py::init<QString, unsigned>(),
              "name"_a = QString(),
-             "uniqueID"_a = [](){return ccUniqueIDGenerator::InvalidUniqueID;}(),
-            py::return_value_policy::reference)
+             "uniqueID"_a = []() { return ccUniqueIDGenerator::InvalidUniqueID; }())
         // features deletion/clearing
         .def("partialClone", &ccPointCloud::partialClone, "reference"_a, "warnings"_a = nullptr)
         // features allocation/resize
@@ -110,8 +110,10 @@ void define_ccPointCloud(py::module &m)
         .def("sfColorScaleShown", &ccPointCloud::sfColorScaleShown)
         .def("showSFColorsScale", &ccPointCloud::showSFColorsScale, "state"_a)
 
-        .def("__repr__", [](const ccPointCloud &self) {
-            return std::string("<ccPointCloud(") + "'" + self.getName().toStdString() + "', " +
-                   std::to_string(self.size()) + " points)>";
-        });
+        .def("__repr__",
+             [](const ccPointCloud &self)
+             {
+                 return std::string("<ccPointCloud(") + "'" + self.getName().toStdString() + "', " +
+                        std::to_string(self.size()) + " points)>";
+             });
 }

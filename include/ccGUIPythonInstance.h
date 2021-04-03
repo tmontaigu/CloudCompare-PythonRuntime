@@ -54,7 +54,7 @@ class Q_DECL_EXPORT ccGUIPythonInstance
 
     ccHObject *dbRootObject();
 
-    void addToDB(ccHObject *obj,
+    void addToDB(pybind11::object& obj,
                  bool updateZoom = false,
                  bool autoExpandDBTree = true,
                  bool checkDimensions = false,

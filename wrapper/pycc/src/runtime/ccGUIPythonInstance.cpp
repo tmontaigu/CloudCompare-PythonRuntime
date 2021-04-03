@@ -32,7 +32,9 @@ using namespace pybind11::literals;
 
 void define_ccGUIPythonInstance(py::module &m)
 {
-    py::class_<ccGUIPythonInstance>(m, "ccPythonInstance", R"(
+    py::class_<ccGUIPythonInstance>(m,
+                                    "ccPythonInstance",
+                                    R"(
     Class to interact with the running GUI of CloudCompare.
 
     The methods allow you to get/add objects to GUI DB Tree.
@@ -90,7 +92,7 @@ void define_ccGUIPythonInstance(py::module &m)
 )")
         .def("createObject",
              (ccHObject *
-              (ccGUIPythonInstance::*)(const char *, const pybind11::args &, const pybind11::kwargs &))(
+                 (ccGUIPythonInstance::*)(const char *, const pybind11::args &, const pybind11::kwargs &))(
                  &ccGUIPythonInstance::createObject),
              py::return_value_policy::reference,
              R"(
@@ -101,9 +103,9 @@ void define_ccGUIPythonInstance(py::module &m)
 )")
         .def("createObject",
              (ccHObject *
-              (ccGUIPythonInstance::*)(const pybind11::object &,
-                                       const pybind11::args &,
-                                       const pybind11::kwargs &))(&ccGUIPythonInstance::createObject),
+                 (ccGUIPythonInstance::*)(const pybind11::object &,
+                                          const pybind11::args &,
+                                          const pybind11::kwargs &))(&ccGUIPythonInstance::createObject),
              py::return_value_policy::reference,
              R"(
     Creates a CloudCompare object that can be tracked and automatically cleanup up

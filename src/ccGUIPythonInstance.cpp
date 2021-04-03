@@ -144,21 +144,17 @@ ccHObject *ccGUIPythonInstance::createObject(const pybind11::object &class_,
 }
 
 void ccGUIPythonInstance::addToDB(
-    ccHObject *obj, bool updateZoom, bool autoExpandDBTree, bool checkDimensions, bool autoRedraw)
+    pybind11::object &obj, bool updateZoom, bool autoExpandDBTree, bool checkDimensions, bool autoRedraw)
 {
-    if (obj == nullptr)
+    try
     {
-        return;
+        auto *const hobj= obj.inc_ref().cast<ccHObject *>();
+        m_app->addToDB(hobj, updateZoom, autoExpandDBTree, checkDimensions, autoRedraw);
     }
-
-    auto pos = std::find(std::begin(m_pythonDB), std::end(m_pythonDB), obj);
-
-    if (pos != std::end(m_pythonDB))
+    catch (const pybind11::cast_error&)
     {
-        m_pythonDB.erase(pos);
+        throw std::runtime_error("Cannot add to the DB a type that does not sub class ccHObject");
     }
-
-    m_app->addToDB(obj, updateZoom, autoExpandDBTree, checkDimensions, autoRedraw);
 }
 
 size_t ccGUIPythonInstance::clearDB()
