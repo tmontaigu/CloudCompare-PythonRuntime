@@ -15,16 +15,26 @@
 //#                                                                        #
 //##########################################################################
 
-
 #include "../casters.h"
+
 #include <ccPointCloud.h>
 #include <ccScalarField.h>
+#include <vector>
+#include <type_traits>
+
 
 #undef slots
 #include <pybind11/functional.h>
+#include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
+
+
+static_assert(std::is_same<PointCoordinateType, float>::value,
+    "PointCoordinateType is neither double or float");
+static_assert(sizeof(CCVector3) == sizeof(PointCoordinateType) * 3, "Unexpected layout for CCVector3");
+
 
 namespace py = pybind11;
 using namespace pybind11::literals;
@@ -86,7 +96,6 @@ using namespace pybind11::literals;
 void define_ccPointCloud(py::module &m)
 {
     DEFINE_POINTCLOUDTPL(ccGenericPointCloud, QString, m, "__ccGenericPointCloudTpl");
-
     py::class_<ccPointCloud,
                CCCoreLib::PointCloudTpl<ccGenericPointCloud, QString>>(
             m,
@@ -109,7 +118,25 @@ void define_ccPointCloud(py::module &m)
         .def("setCurrentDisplayedScalarField", &ccPointCloud::setCurrentDisplayedScalarField, "index"_a)
         .def("sfColorScaleShown", &ccPointCloud::sfColorScaleShown)
         .def("showSFColorsScale", &ccPointCloud::showSFColorsScale, "state"_a)
-
+        .def("points",
+             [](ccPointCloud &self)
+             {
+                 if (self.size() > 0)
+                 {
+                     // FIXME, idealy, ccPointCloud would have a .points() method returning a ref
+                     // to the std::vector of points, and we would avoit the const cast
+                     auto *ptr = const_cast<CCVector3 *>(self.getPoint(0));
+                     auto capsule = py::capsule(ptr,
+                                                [](void *)
+                                                {
+                                                });
+                     return py::array("3f", self.size(), ptr, capsule);
+                 }
+                 else
+                 {
+                     return py::array();
+                 }
+             })
         .def("__repr__",
              [](const ccPointCloud &self)
              {
