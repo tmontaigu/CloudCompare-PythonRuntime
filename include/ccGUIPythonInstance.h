@@ -42,10 +42,9 @@ class Q_DECL_EXPORT ccGUIPythonInstance
 
     QMainWindow *getMainWindow();
 
-    bool haveSelection() const;
-
     ccGLWindow *getActiveGLWindow();
 
+    bool haveSelection() const;
 
     bool haveOneSelection() const;
 
