@@ -61,7 +61,7 @@ $LocalizationName = if ($Localization -eq "Fr") { "French" } else { "English" }
     -dWixUILicenseRtf="GPLv3_en.rtf" `
     -cultures:$LocalizationSwitch `
     -loc $LocalizationFile `
-    -o "CloudCompare-PythonPlugin-Setup-$LocalizationName.msi"
+    -o "CloudCompare-PythonPlugin-Setup-$LocalizationName-Python$PythonDllSuffix.msi"
 
 
 # The heat command is taken from https://stackoverflow.com/questions/26550763/wix-how-to-copy-a-directory-to-install-folder
