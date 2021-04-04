@@ -72,25 +72,11 @@ class Q_DECL_EXPORT ccGUIPythonInstance
 
     void freezeUI(bool state);
 
-    ccHObject *
-    createObject(const char *type_name, const pybind11::args &args, const pybind11::kwargs &kwargs);
-
-    ccHObject *
-    createObject(const pybind11::object& class_, const pybind11::args &args, const pybind11::kwargs &kwargs);
-
     ccHObject *loadFile(const char *filename, FileIOFilter::LoadParameters &parameters);
 
-    /// Clears the internal database of objects that were allocated on the python side
-    /// but were not added to the DB tree via `addToDB`
-    size_t clearDB();
 
   private:
     ccMainAppInterface *m_app;
-    // This holds pointer to objects that were created by a Python script.
-    // They are kept in this vector until they are either moved to the true ccDB (using `addToDB`)
-    // or when `clearDB` is called (which is a method not exposed to the python side
-    // and the c++ takes care of calling the `clearDB` fn when appropriate).
-    std::vector<ccHObject *> m_pythonDB;
 };
 
 #endif // CLOUDCOMPAREPROJECTS_CCGUIPYTHONINSTANCE_H

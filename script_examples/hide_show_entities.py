@@ -16,7 +16,7 @@ for entity in entities:
 cc.updateUI()
 cc.redrawAll()
 
-pycc.RunInThread(sleep, 2)
+pycc.RunInThread(sleep, 5)
 
 for entity in entities:
     entity.setVisible(True)
@@ -27,3 +27,4 @@ for entity in entities:
     print(f"{entity} shown")
     pycc.RunInThread(sleep, 5)
 
+print("Done")

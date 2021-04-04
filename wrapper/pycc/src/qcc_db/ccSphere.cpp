@@ -28,7 +28,7 @@ using namespace pybind11::literals;
 
 void define_ccSphere(py::module &m)
 {
-    py::class_<ccSphere, ccGenericPrimitive, std::unique_ptr<ccSphere, py::nodelete>>(m, "ccSphere")
+    py::class_<ccSphere, ccGenericPrimitive>(m, "ccSphere")
         .def(py::init<PointCoordinateType, const ccGLMatrix *, QString, unsigned, unsigned>(),
              "radius"_a,
              "transMat"_a = nullptr,

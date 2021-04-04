@@ -51,7 +51,6 @@ void define_pycc_runtime(py::module& m) {
     });
 
     // Use leading __ to give hints that user should not import this in their scripts
-    m.def("__GetREPLInstance", &GetREPLInstance, py::return_value_policy::reference);
     m.def("GetGUIInstance", &GetInstance, py::return_value_policy::reference);
     m.def("GetCmdLineInstance", &GetCmdLineInstance, py::return_value_policy::reference);
     m.def(

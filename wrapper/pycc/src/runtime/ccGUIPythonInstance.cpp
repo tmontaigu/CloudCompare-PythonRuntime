@@ -89,28 +89,5 @@ void define_ccGUIPythonInstance(py::module &m)
     and then returns loaded object handle.
 
     raises RuntimeError in case of error
-)")
-        .def("createObject",
-             (ccHObject *
-                 (ccGUIPythonInstance::*)(const char *, const pybind11::args &, const pybind11::kwargs &))(
-                 &ccGUIPythonInstance::createObject),
-             py::return_value_policy::reference,
-             R"(
-    Creates a CloudCompare object that can be tracked and automatically cleanup up
-
-    >>> import pycc
-    >>> point_cloud = pycc.createObject("ccPointCloud", "CoolPointCloud")
-)")
-        .def("createObject",
-             (ccHObject *
-                 (ccGUIPythonInstance::*)(const pybind11::object &,
-                                          const pybind11::args &,
-                                          const pybind11::kwargs &))(&ccGUIPythonInstance::createObject),
-             py::return_value_policy::reference,
-             R"(
-    Creates a CloudCompare object that can be tracked and automatically cleanup up
-
-    >>> import pycc
-    >>> point_cloud = pycc.createObject(pycc.ccPointCloud. "CoolPointCloud")
 )");
 }

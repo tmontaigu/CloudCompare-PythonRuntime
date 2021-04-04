@@ -18,8 +18,9 @@ def main():
     progress = pycc.ccProgressDialog()
     progress.start()
     refcloud = cccorelib.CloudSamplingTools.subsampleCloudRandomly(pc, pc.size() // 2, progressCb=progress)
-    randomPc = pc.partialClone(refcloud, CC)
+    randomPc = pc.partialClone(refcloud)
     randomPc.setName("Randomly subsampled")
+    CC.addToDB(randomPc)
 
     refcloud.addPointIndex(0)
     refcloud.addPointIndex(0, 10)

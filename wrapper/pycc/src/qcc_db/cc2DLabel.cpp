@@ -30,7 +30,7 @@ using namespace pybind11::literals;
 
 void define_cc2DLabel(py::module &m)
 {
-    py::class_<cc2DLabel, ccHObject, ccInteractor, std::unique_ptr<cc2DLabel, py::nodelete>> Pycc2DLabel(
+    py::class_<cc2DLabel, ccHObject, ccInteractor> Pycc2DLabel(
         m, "cc2DLabel");
     Pycc2DLabel.def(py::init<QString>(), "name"_a = QString("Label"));
     Pycc2DLabel.def("getRawName", &cc2DLabel::getRawName);

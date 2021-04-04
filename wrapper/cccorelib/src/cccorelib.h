@@ -32,7 +32,6 @@ PYBIND11_MAKE_OPAQUE(CCCoreLib::DgmOctree::NeighbourCellsSet)
 PYBIND11_MAKE_OPAQUE(CCCoreLib::DgmOctree::NeighboursSet)
 PYBIND11_MAKE_OPAQUE(CCCoreLib::GenericDistribution::ScalarContainer)
 
-PYBIND11_MAKE_OPAQUE(std::vector<int>)
 PYBIND11_MAKE_OPAQUE(CCCoreLib::TrueKdTree::LeafVector)
 
 #endif // CLOUDCOMPAREPROJECTS_CCCORELIB_H

@@ -88,8 +88,6 @@ PythonPlugin::PythonPlugin(QObject *parent)
 
     logPythonHome();
     logPythonPath();
-
-    connect(&m_interp, &PythonInterpreter::executionFinished, Python::clearDB);
 }
 
 QList<QAction *> PythonPlugin::getActions()

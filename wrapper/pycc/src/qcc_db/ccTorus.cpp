@@ -28,7 +28,7 @@ using namespace pybind11::literals;
 
 void define_ccTorus(py::module &m)
 {
-    py::class_<ccTorus, ccGenericPrimitive, std::unique_ptr<ccTorus, py::nodelete>>(m, "ccTorus")
+    py::class_<ccTorus, ccGenericPrimitive>(m, "ccTorus")
         .def(py::init<PointCoordinateType,
                       PointCoordinateType,
                       double,

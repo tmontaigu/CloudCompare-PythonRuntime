@@ -27,7 +27,7 @@ if (PLUGIN_PYTHON)
         endif()
     endif()
 
-    if (DEFINED ENV{VIRTUAL_ENV})
+    if (DEFINED ENV{VIRTUAL_ENV} OR CONDA_PREFIX)
         try_append_pybind11_cmake_module_to_modules_path()
     endif()
 

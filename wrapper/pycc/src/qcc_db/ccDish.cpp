@@ -28,7 +28,7 @@ using namespace pybind11::literals;
 
 void define_ccDish(py::module &m)
 {
-    py::class_<ccDish, ccGenericPrimitive, std::unique_ptr<ccDish, py::nodelete>>(m, "ccDish")
+    py::class_<ccDish, ccGenericPrimitive>(m, "ccDish")
         .def(py::init<PointCoordinateType,
                       PointCoordinateType,
                       PointCoordinateType,

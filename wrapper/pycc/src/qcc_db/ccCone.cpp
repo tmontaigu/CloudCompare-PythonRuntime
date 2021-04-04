@@ -28,7 +28,7 @@ using namespace pybind11::literals;
 
 void define_ccCone(py::module &m)
 {
-    py::class_<ccCone, ccGenericPrimitive, std::unique_ptr<ccCone, py::nodelete>>(m, "ccCone")
+    py::class_<ccCone, ccGenericPrimitive>(m, "ccCone")
         .def(py::init<PointCoordinateType,
                       PointCoordinateType,
                       PointCoordinateType,

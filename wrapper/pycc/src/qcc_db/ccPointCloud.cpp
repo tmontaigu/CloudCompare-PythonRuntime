@@ -104,7 +104,12 @@ void define_ccPointCloud(py::module &m)
              "name"_a = QString(),
              "uniqueID"_a = []() { return ccUniqueIDGenerator::InvalidUniqueID; }())
         // features deletion/clearing
-        .def("partialClone", &ccPointCloud::partialClone, "reference"_a, "warnings"_a = nullptr)
+        .def("partialClone",
+             [](const ccPointCloud&self, const CCCoreLib::ReferenceCloud *refCloud)
+             {
+                 return self.partialClone(refCloud);
+             },
+             "reference"_a)
         // features allocation/resize
         .def("reserveThePointsTable", &ccPointCloud::reserveThePointsTable, "_numberOfPoints"_a)
         .def("reserveTheRGBTable", &ccPointCloud::reserveThePointsTable)

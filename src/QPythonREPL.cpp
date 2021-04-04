@@ -194,17 +194,13 @@ void QPythonREPL::reset()
     m_state = PythonInterpreter::State();
     m_ui->outputDisplay->clear();
     importNeededPackages();
-    auto *replInstance = GetREPLInstance();
-    if (replInstance) {
-        replInstance->clearDB();
-    }
 }
 
 void QPythonREPL::importNeededPackages()
 {
     executeCode(replArrows + "import pycc");
     executeCode(replArrows + "import cccorelib");
-    executeCode(replArrows + "cc = pycc.__GetREPLInstance()");
+    executeCode(replArrows + "cc = pycc.GetInstance()");
 }
 
 void QPythonREPL::executeCode(const QString &pythonCode)

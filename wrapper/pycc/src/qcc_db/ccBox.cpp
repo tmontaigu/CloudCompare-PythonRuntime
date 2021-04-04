@@ -16,8 +16,6 @@
 //##########################################################################
 
 #include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
-#include <pybind11/stl_bind.h>
 
 #include <ccBox.h>
 
@@ -28,7 +26,7 @@ using namespace pybind11::literals;
 
 void define_ccBox(py::module &m)
 {
-    py::class_<ccBox, ccGenericPrimitive, std::unique_ptr<ccBox, py::nodelete>>(m, "ccBox")
+    py::class_<ccBox, ccGenericPrimitive>(m, "ccBox")
         .def(py::init<const CCVector3 &, const ccGLMatrix *, QString>(),
              "dims"_a,
              "transMat"_a = nullptr,

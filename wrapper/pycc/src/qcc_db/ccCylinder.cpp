@@ -29,7 +29,7 @@ using namespace pybind11::literals;
 
 void define_ccCylinder(py::module &m)
 {
-    py::class_<ccCylinder, ccCone, std::unique_ptr<ccCylinder, py::nodelete>>(m, "ccCylinder")
+    py::class_<ccCylinder, ccCone>(m, "ccCylinder")
         .def(py::init<PointCoordinateType,
                       PointCoordinateType,
                       const ccGLMatrix *,

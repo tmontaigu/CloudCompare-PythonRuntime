@@ -4,9 +4,7 @@ import pycc
 def merge(clouds):
     total_num_points = sum(cloud.size() for cloud in clouds)
 
-    merge_result = pycc.CreateObject('ccPointCloud')
-
-    merge_result.setName("MergeResult")
+    merge_result = pycc.ccPointCloud("MergeResult")
     merge_result.reserve(total_num_points)
 
     for cloud_idx, cloud in enumerate(clouds):
