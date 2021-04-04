@@ -1,5 +1,5 @@
 function(copy_python_venv install_dir)
-    if (DEFINED CONDA_PREFIX)
+    if (CONDA_PREFIX)
         INSTALL(
                 DIRECTORY "${CONDA_PREFIX}/"
                 DESTINATION "${install_dir}"
@@ -22,7 +22,7 @@ function(copy_python_venv install_dir)
             )
         endforeach ()
     else ()
-        message(WARNING "No Python Home found")
+        message(FATAL_ERROR "Please use a conda env")
     endif ()
 endfunction()
 
@@ -50,23 +50,6 @@ print(s.get_python_lib(plat_specific=True));
 
     set(${PYTHON_SITE_PACKAGES} ${_PYTHON_VALUES} PARENT_SCOPE)
 endfunction()
-
-# Tries to find pybind11 in the site-packages
-# because it bundles the .cmake files the
-# find_package command needs
-function(try_append_pybind11_cmake_module_to_modules_path)
-    set(PYTHON_SITE_PACKAGES "")
-    get_python_sites_packages(PYTHON_SITE_PACKAGES)
-    set(PYBIND11_CMAKE_MODULES_PATH "${PYTHON_SITE_PACKAGES}/pybind11/share/cmake/pybind11")
-    if (NOT EXISTS "${PYBIND11_CMAKE_MODULES_PATH}")
-        message(STATUS "pybind11 cmake modules not found at ${PYBIND11_CMAKE_MODULES_PATH}, is pybind11 installed ?")
-    else ()
-        message(STATUS "${PYBIND11_CMAKE_MODULES_PATH} added to CMAKE_PREFIX_PATH")
-    endif ()
-
-    list(APPEND CMAKE_PREFIX_PATH ${PYBIND11_CMAKE_MODULES_PATH})
-endfunction()
-
 
 function(manage_windows_install)
     set(CC_PYTHON_ENV_NAME "Python")

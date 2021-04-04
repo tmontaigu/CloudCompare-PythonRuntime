@@ -15,21 +15,28 @@ if (PLUGIN_PYTHON)
         mark_as_advanced(PLUGIN_PYTHON_COPY_ENV)
 
         set(CONDA_PREFIX $ENV{CONDA_PREFIX} CACHE PATH "Path to the root of the conda env")
-        string(REPLACE "\\" "/" CONDA_PREFIX ${CONDA_PREFIX})
 
         # To avoid having to launch cmake the ide from an activated env
         # if a conda env is already activated, it is prioritized
         if (NOT CONDA_PREFIX AND NOT DEFINED ENV{CONDA_PREFIX})
             message(DEBUG "Not using conda")
         elseif (CONDA_PREFIX AND NOT DEFINED ENV{CONDA_PREFIX})
-            list(APPEND CMAKE_PREFIX_PATH "${CONDA_PREFIX}/Library/share/cmake")
+            string(REPLACE "\\" "/" CONDA_PREFIX ${CONDA_PREFIX})
+            list(INSERT CMAKE_PREFIX_PATH 0 "${CONDA_PREFIX}/Library/share/cmake")
             set(PYTHON_EXECUTABLE "${CONDA_PREFIX}/python.exe")
         endif()
     endif()
 
     if (DEFINED ENV{VIRTUAL_ENV} OR CONDA_PREFIX)
-        try_append_pybind11_cmake_module_to_modules_path()
+        set(PYTHON_SITE_PACKAGES "")
+        get_python_sites_packages(PYTHON_SITE_PACKAGES)
+        set(PYBIND11_CMAKE_MODULES_PATH "${PYTHON_SITE_PACKAGES}/pybind11/share/cmake")
+         if (EXISTS "${PYBIND11_CMAKE_MODULES_PATH}")
+            list(INSERT CMAKE_PREFIX_PATH 0 "${PYBIND11_CMAKE_MODULES_PATH}")
+         endif()
     endif()
+
+    find_package(pybind11 CONFIG REQUIRED)
 
     add_subdirectory(wrapper)
     add_subdirectory(include)
@@ -44,7 +51,6 @@ if (PLUGIN_PYTHON)
         embed_pycc_in(${PROJECT_NAME})
     endif()
 
-    find_package(pybind11 CONFIG REQUIRED)
 
     target_link_libraries(PythonPlugin pybind11::embed)
 
