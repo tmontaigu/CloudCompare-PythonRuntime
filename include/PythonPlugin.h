@@ -49,6 +49,7 @@ class PythonPlugin : public QObject, public ccStdPluginInterface
     void setMainAppInterface(ccMainAppInterface *app) override;
 
   private:
+    void finalizeInterpreter();
     void showRepl();
     void showEditor();
     void showAboutDialog();
