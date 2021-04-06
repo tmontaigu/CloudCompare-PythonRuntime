@@ -311,7 +311,11 @@ void PythonInterpreter::initialize()
 {
 #ifdef Q_OS_WIN32
     configureEnvironment();
+#if PY_MINOR_VERSION==6
+    Py_SetPythonHome(const_cast<wchar_t *>(m_config.pythonHome()));
+#else
     Py_SetPythonHome(m_config.pythonHome());
+#endif
     Py_SetPath(m_config.pythonPath());
 #endif
 #ifdef Q_OS_UNIX
