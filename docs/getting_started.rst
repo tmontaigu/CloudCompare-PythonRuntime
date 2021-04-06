@@ -14,7 +14,7 @@ This plugin allows to run scripts in the 2 _CloudCompares_ 'modes': GUI & Comman
 GUI
 ---
 
-In GUI, there are 2 actions:
+In GUI, there are 3 actions:
 
 *  The REPL (Read Print Eval Loop) which allows for quick testing of some actions.
     .. image:: ../images/repl-icon.png
@@ -22,8 +22,11 @@ In GUI, there are 2 actions:
 *  The editor which allows to create,edit,save python script and most importantly run them.
     .. image:: ../images/python-editor-icon.png
 
-In a your Python script you will probably want to access Objects (PointCloud, Meshes) already loaded
-into the app and use them.
+*  The file runner, which shows a small dialog where you can select a file and run it 
+   whithout having to have the editor openned.
+
+    .. image:: ../images/runner-icon.png
+
 
 The typical python script will need to import Python modules that provide access to
 functions and data-structures of cloudcompare:
