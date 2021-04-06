@@ -88,6 +88,8 @@ PythonPlugin::PythonPlugin(QObject *parent)
 
     logPythonHome();
     logPythonPath();
+
+    connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &PythonPlugin::finalizeInterpreter);
 }
 
 QList<QAction *> PythonPlugin::getActions()
@@ -190,7 +192,6 @@ PythonPlugin::~PythonPlugin()
 {
     Python::unsetMainAppInterfaceInstance();
     Python::unsetCmdLineInterfaceInstance();
-    m_interp.finalize();
 }
 
 struct PythonPluginCommand : public ccCommandLineInterface::Command
@@ -212,12 +213,6 @@ struct PythonPluginCommand : public ccCommandLineInterface::Command
 
         PySys_SetArgvEx(static_cast<int>(args.pythonArgv.size()), args.pythonArgv.data(), 1);
         bool success = interpreter->executeFile(qPrintable(args.filepath));
-
-
-        // We have to finalize the interpreter here, as it relies
-        // on the argv we set earlier, and these argv will be deleted at the
-        // end of this function
-        interpreter->finalize();
 
         cmd.print(
             QString("[PythonPlugin] Script %1 executed").arg(success ? "successfully" : "unsuccessfully"));
@@ -272,4 +267,9 @@ void PythonPlugin::setMainAppInterface(ccMainAppInterface *app)
     ccStdPluginInterface::setMainAppInterface(app);
     Python::setMainAppInterfaceInstance(m_app);
     m_fileRunner = new FileRunner(&m_interp, m_app->getMainWindow());
+}
+
+void PythonPlugin::finalizeInterpreter()
+{
+    m_interp.finalize();
 }
