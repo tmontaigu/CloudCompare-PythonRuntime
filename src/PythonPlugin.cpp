@@ -82,7 +82,7 @@ void logPythonHome()
 // https://docs.python.org/3/c-api/init.html#initialization-finalization-and-threads
 PythonPlugin::PythonPlugin(QObject *parent)
     : QObject(parent), ccStdPluginInterface(":/CC/plugin/PythonPlugin/info.json"),
-      m_editor(new QPythonEditor(&m_interp)), m_interp(nullptr)
+     m_interp(nullptr),  m_editor(new QPythonEditor(&m_interp))
 {
     m_interp.initialize();
 
@@ -160,7 +160,7 @@ void PythonPlugin::showRepl()
     }
 }
 
-void PythonPlugin::showEditor()
+void PythonPlugin::showEditor() const
 {
     if (m_editor)
     {
@@ -182,7 +182,7 @@ void PythonPlugin::showDocumentation()
 	QDesktopServices::openUrl(url);
 }
 
-void PythonPlugin::showAboutDialog()
+void PythonPlugin::showAboutDialog() const
 {
     AboutDialog dlg(m_app->getMainWindow());
     dlg.exec();

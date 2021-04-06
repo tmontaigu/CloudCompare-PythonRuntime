@@ -51,10 +51,10 @@ class PythonPlugin : public QObject, public ccStdPluginInterface
   private:
     void finalizeInterpreter();
     void showRepl();
-    void showEditor();
-    void showAboutDialog();
+    void showEditor() const;
+    void showAboutDialog() const;
     void showFileRunner() const;
-	static void showDocumentation();
+    static void showDocumentation();
 
     PythonInterpreter m_interp;
 
