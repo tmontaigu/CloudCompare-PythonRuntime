@@ -53,6 +53,17 @@ CC will be an object of type :class:`pycc.ccPythonInstance`.
 Command Line
 ------------
 
+Similarly a commandline script will start with the following lines:
+
+.. code:: Python
+
+    import cccorelib
+    import pycc
+
+    CC = pycc.GetCmdLineInstance()
+
+CC will be an object of type :class:`pycc.ccCommandLineInterface`.
+
 
 To run in command line mode pass following option: `-PYTHON_SCRIPT`
 
@@ -74,13 +85,3 @@ Python's sys.argv will be equal to:
 ['/path/to/cloudcompare', 'some_positional_arg', '--size', '50']
 
 
-Similarly a commandline script will start with the following lines:
-
-.. code:: Python
-
-    import cccorelib
-    import pycc
-
-    CC = pycc.GetCmdLineInstance()
-
-CC will be an object of type :class:`pycc.ccCommandLineInterface`.

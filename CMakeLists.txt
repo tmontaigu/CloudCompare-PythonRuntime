@@ -16,7 +16,7 @@ if (PLUGIN_PYTHON)
 
         set(CONDA_PREFIX $ENV{CONDA_PREFIX} CACHE PATH "Path to the root of the conda env")
 
-        # To avoid having to launch cmake the ide from an activated env
+        # To avoid having to launch cmake or the ide from an activated env
         # if a conda env is already activated, it is prioritized
         if (NOT CONDA_PREFIX AND NOT DEFINED ENV{CONDA_PREFIX})
             message(DEBUG "Not using conda")

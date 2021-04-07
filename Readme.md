@@ -40,11 +40,7 @@ Early step attempt at allowing to use Python to automate some stuff in CloudComp
 4) Install dependencies
 
     ```shell script
-   # Python's venv (PowerShell)
-   pip install pybind11
-    
-   # Conda environment
-   conda install pybind11
+   pip install -r requirements-release.txt
     ```
    
 5) Start cmake or your IDE from within the environment
@@ -53,6 +49,11 @@ Early step attempt at allowing to use Python to automate some stuff in CloudComp
     ```shell script
     -DPLUGIN_PYTHON=ON
     ```
+
+   Or, if you created a conda environment, you can add
+    `-DCONDA_PREFIX=C:\path\to\pyccenv` to the cmake invocation
+
+
     In the cmake Invocation you may also have to use:
     ```shell script
     -DPYTHON_INCLUDE_DIR=$(python-c"from distutils.sysconfig import get_python_inc; print(get_python_inc())")
