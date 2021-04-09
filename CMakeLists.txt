@@ -15,6 +15,7 @@ if (PLUGIN_PYTHON)
         mark_as_advanced(PLUGIN_PYTHON_COPY_ENV)
 
         set(CONDA_PREFIX $ENV{CONDA_PREFIX} CACHE PATH "Path to the root of the conda env")
+        set(VENV_PREFIX $ENV{VIRTUAL_ENV} CACHE PATH "Path to the root of the python virtual env")
 
         # To avoid having to launch cmake or the ide from an activated env
         # if a conda env is already activated, it is prioritized
@@ -25,13 +26,14 @@ if (PLUGIN_PYTHON)
             list(INSERT CMAKE_PREFIX_PATH 0 "${CONDA_PREFIX}/Library/share/cmake")
             set(PYTHON_EXECUTABLE "${CONDA_PREFIX}/python.exe")
         endif()
+
+        if (VENV_PREFIX)
+            string(REPLACE "\\" "/" VENV_PREFIX ${VENV_PREFIX})
+            set(PYTHON_EXECUTABLE "${VENV_PREFIX}/Scripts/python.exe")
+        endif()
     endif()
 
-    if (DEFINED ENV{VIRTUAL_ENV} OR CONDA_PREFIX)
-        if (NOT PYTHON_EXECUTABLE)
-            set(PYTHON_EXECUTABLE "python")
-        endif()
-
+    if (PYTHON_EXECUTABLE)
         execute_process(
             COMMAND "${PYTHON_EXECUTABLE}" "-m" "pybind11" "--cmake"
             RESULT_VARIABLE _PYTHON_SUCCESS

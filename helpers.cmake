@@ -5,8 +5,7 @@ function(copy_python_venv install_dir)
                 DESTINATION "${install_dir}"
                 PATTERN "tests/*" EXCLUDE
         )
-    elseif (DEFINED ENV{VIRTUAL_ENV})
-        message(STATUS "Python virtualenv found")
+    elseif (VENV_PREFIX)
         execute_process(
             COMMAND 
                 "${PYTHON_EXECUTABLE}" 
@@ -15,8 +14,7 @@ function(copy_python_venv install_dir)
             RESUlT_VARIABLE PYTHON_RES
             OUTPUT_VARIABLE PYTHON_OUT
         )
-        string(REPLACE "\\" "/" VIRTUAL_ENV $ENV{VIRTUAL_ENV})
-        INSTALL(DIRECTORY "$ENV{VIRTUAL_ENV}/" DESTINATION "${install_dir}")
+        INSTALL(DIRECTORY "${VENV_PREFIX}/" DESTINATION "${install_dir}")
         foreach (path ${PYTHON_OUT})
             INSTALL(
                     DIRECTORY "${path}"
@@ -25,7 +23,7 @@ function(copy_python_venv install_dir)
             )
         endforeach ()
     else ()
-        message(FATAL_ERROR "Please use a conda env")
+        message(FATAL_ERROR "Please use a virtual env (venv or conda)")
     endif ()
 endfunction()
 
