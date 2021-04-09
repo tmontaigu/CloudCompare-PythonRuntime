@@ -8,9 +8,12 @@ function(copy_python_venv install_dir)
     elseif (DEFINED ENV{VIRTUAL_ENV})
         message(STATUS "Python virtualenv found")
         execute_process(
-                COMMAND "${PYTHON_EXECUTABLE}" -c "import sys; print(';'.join(p for p in sys.path if p.endswith('DLLs') or p.endswith('lib')), end='')"
-                RESUlT_VARIABLE PYTHON_RES
-                OUTPUT_VARIABLE PYTHON_OUT
+            COMMAND 
+                "${PYTHON_EXECUTABLE}" 
+                -c 
+                "import sys; print(';'.join(p for p in sys.path if p.endswith('DLLs') or p.endswith('lib')), end='')"
+            RESUlT_VARIABLE PYTHON_RES
+            OUTPUT_VARIABLE PYTHON_OUT
         )
         string(REPLACE "\\" "/" VIRTUAL_ENV $ENV{VIRTUAL_ENV})
         INSTALL(DIRECTORY "$ENV{VIRTUAL_ENV}/" DESTINATION "${install_dir}")
@@ -27,17 +30,37 @@ function(copy_python_venv install_dir)
 endfunction()
 
 
+function (copy_python_dll)
+    if (CONDA_PREFIX)
+        set(PYTHON_DLL "${PYTHON_PREFIX}/python${PYTHON_LIBRARY_SUFFIX}.dll")
+        install(FILES ${PYTHON_DLL} DESTINATION ${CLOUDCOMPARE_DEST_FOLDER})
+    elseif (DEFINED ENV{VIRTUAL_ENV})
+        execute_process(
+            COMMAND 
+                "${PYTHON_EXECUTABLE}" 
+                "-c" 
+                "from distutils import sysconfig as s;print(s.BASE_PREFIX, end='');"
+            RESULT_VARIABLE _PYTHON_SUCCESS
+            OUTPUT_VARIABLE PYTHON_BASE_PREFIX
+        )
+        install(FILES "${PYTHON_BASE_PREFIX}/python${PYTHON_LIBRARY_SUFFIX}.dll" DESTINATION ${CLOUDCOMPARE_DEST_FOLDER})
+    endif()
+endfunction()
+
+
 function(get_python_sites_packages PYTHON_SITE_PACKAGES)
     execute_process(
-            COMMAND "${PYTHON_EXECUTABLE}" "-c" "from distutils import sysconfig as s;
-print(s.get_python_lib(plat_specific=True));
-"
-    RESULT_VARIABLE _PYTHON_SUCCESS
-    OUTPUT_VARIABLE _PYTHON_VALUES
-    ERROR_VARIABLE _PYTHON_ERROR_VALUE)
+        COMMAND 
+            "${PYTHON_EXECUTABLE}" 
+            "-c"   
+            "from distutils import sysconfig as s;print(s.get_python_lib(plat_specific=True));"
+        RESULT_VARIABLE _PYTHON_SUCCESS
+        OUTPUT_VARIABLE _PYTHON_VALUES
+        ERROR_VARIABLE _PYTHON_ERROR_VALUE
+    )
 
     if (NOT _PYTHON_SUCCESS MATCHES 0)
-        message("${_PYTHON_SUCCESS} zdf ${PYTHON_EXECUTABLE}")
+        message("${_PYTHON_SUCCESS}")
         return()
     endif ()
 
@@ -60,10 +83,7 @@ function(manage_windows_install)
         copy_python_venv(${CC_PYTHON_INSTALL_DIR})
     endif()
 
-    set(PYTHON_DLL "${PYTHON_PREFIX}/python${PYTHON_LIBRARY_SUFFIX}.dll")
-    if (EXISTS "${PYTHON_DLL}")
-        install(FILES ${PYTHON_DLL} DESTINATION ${CLOUDCOMPARE_DEST_FOLDER})
-    endif()
+    copy_python_dll()
 
     install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/docs/stubfiles/pycc.pyi"
                   "${CMAKE_CURRENT_SOURCE_DIR}/docs/stubfiles/cccorelib.pyi"
