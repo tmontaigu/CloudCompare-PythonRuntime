@@ -28,12 +28,22 @@ if (PLUGIN_PYTHON)
     endif()
 
     if (DEFINED ENV{VIRTUAL_ENV} OR CONDA_PREFIX)
-        set(PYTHON_SITE_PACKAGES "")
-        get_python_sites_packages(PYTHON_SITE_PACKAGES)
-        set(PYBIND11_CMAKE_MODULES_PATH "${PYTHON_SITE_PACKAGES}/pybind11/share/cmake")
-         if (EXISTS "${PYBIND11_CMAKE_MODULES_PATH}")
+        if (NOT PYTHON_EXECUTABLE)
+            set(PYTHON_EXECUTABLE "python")
+        endif()
+
+        execute_process(
+            COMMAND "${PYTHON_EXECUTABLE}" "-m" "pybind11" "--cmake"
+            RESULT_VARIABLE _PYTHON_SUCCESS
+            OUTPUT_VARIABLE PYBIND11_CMAKE_MODULES_PATH
+        )
+        
+        if (_PYTHON_SUCCESS MATCHES 0)
+            string(REGEX REPLACE "\n" "" PYBIND11_CMAKE_MODULES_PATH ${PYBIND11_CMAKE_MODULES_PATH})
             list(INSERT CMAKE_PREFIX_PATH 0 "${PYBIND11_CMAKE_MODULES_PATH}")
-         endif()
+        else()
+            message(WARNING "Failed to get pybind11 cmake prefix path ${_PYTHON_SUCCESS}")
+        endif()
     endif()
 
     find_package(pybind11 CONFIG REQUIRED)
