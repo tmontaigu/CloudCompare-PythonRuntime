@@ -9,19 +9,21 @@ function(copy_python_venv install_dir)
         execute_process(
             COMMAND 
                 "${PYTHON_EXECUTABLE}" 
-                -c 
-                "import sys; print(';'.join(p for p in sys.path if p.endswith('DLLs') or p.endswith('lib')), end='')"
-            RESUlT_VARIABLE PYTHON_RES
-            OUTPUT_VARIABLE PYTHON_OUT
+                "-c" 
+                "from distutils import sysconfig as s;print(s.BASE_PREFIX, end='');"
+            RESULT_VARIABLE _PYTHON_SUCCESS
+            OUTPUT_VARIABLE PYTHON_BASE_PREFIX
         )
-        INSTALL(DIRECTORY "${VENV_PREFIX}/" DESTINATION "${install_dir}")
-        foreach (path ${PYTHON_OUT})
-            INSTALL(
-                    DIRECTORY "${path}"
-                    DESTINATION "${install_dir}"
-                    PATTERN "tests/*" EXCLUDE
-            )
-        endforeach ()
+        INSTALL(
+            DIRECTORY "${PYTHON_BASE_PREFIX}/"
+            DESTINATION "${install_dir}"
+            PATTERN "*test*" EXCLUDE
+        )
+        INSTALL(
+            DIRECTORY  "${VENV_PREFIX}/Lib/" 
+            DESTINATION "${install_dir}/Lib"
+            PATTERN "*test*" EXCLUDE
+        )
     else ()
         message(FATAL_ERROR "Please use a virtual env (venv or conda)")
     endif ()
