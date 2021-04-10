@@ -15,6 +15,7 @@ if (PLUGIN_PYTHON)
         mark_as_advanced(PLUGIN_PYTHON_COPY_ENV)
 
         set(CONDA_PREFIX $ENV{CONDA_PREFIX} CACHE PATH "Path to the root of the conda env")
+        set(VENV_PREFIX $ENV{VIRTUAL_ENV} CACHE PATH "Path to the root of the python virtual env")
 
         # To avoid having to launch cmake or the ide from an activated env
         # if a conda env is already activated, it is prioritized
@@ -25,15 +26,26 @@ if (PLUGIN_PYTHON)
             list(INSERT CMAKE_PREFIX_PATH 0 "${CONDA_PREFIX}/Library/share/cmake")
             set(PYTHON_EXECUTABLE "${CONDA_PREFIX}/python.exe")
         endif()
+
+        if (VENV_PREFIX)
+            string(REPLACE "\\" "/" VENV_PREFIX ${VENV_PREFIX})
+            set(PYTHON_EXECUTABLE "${VENV_PREFIX}/Scripts/python.exe")
+        endif()
     endif()
 
-    if (DEFINED ENV{VIRTUAL_ENV} OR CONDA_PREFIX)
-        set(PYTHON_SITE_PACKAGES "")
-        get_python_sites_packages(PYTHON_SITE_PACKAGES)
-        set(PYBIND11_CMAKE_MODULES_PATH "${PYTHON_SITE_PACKAGES}/pybind11/share/cmake")
-         if (EXISTS "${PYBIND11_CMAKE_MODULES_PATH}")
+    if (PYTHON_EXECUTABLE)
+        execute_process(
+            COMMAND "${PYTHON_EXECUTABLE}" "-m" "pybind11" "--cmake"
+            RESULT_VARIABLE _PYTHON_SUCCESS
+            OUTPUT_VARIABLE PYBIND11_CMAKE_MODULES_PATH
+        )
+        
+        if (_PYTHON_SUCCESS MATCHES 0)
+            string(REGEX REPLACE "\n" "" PYBIND11_CMAKE_MODULES_PATH ${PYBIND11_CMAKE_MODULES_PATH})
             list(INSERT CMAKE_PREFIX_PATH 0 "${PYBIND11_CMAKE_MODULES_PATH}")
-         endif()
+        else()
+            message(WARNING "Failed to get pybind11 cmake prefix path ${_PYTHON_SUCCESS}")
+        endif()
     endif()
 
     find_package(pybind11 CONFIG REQUIRED)

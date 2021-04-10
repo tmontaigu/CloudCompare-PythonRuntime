@@ -30,8 +30,7 @@ Early step attempt at allowing to use Python to automate some stuff in CloudComp
 
     ```shell script
     # Python's venv (PowerShell)
-   cd .\pyccenv
-   .\Scripts\Activate.ps1
+    cd pyccenv\Scripts\Activate.ps1
     
     # Conda environment
     conda active pyccenv
