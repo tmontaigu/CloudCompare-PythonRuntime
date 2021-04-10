@@ -1,13 +1,16 @@
-include(helpers.cmake)
+include(cmake/helpers.cmake)
+include(cmake/CompilerWarnings.cmake)
 
-option(PLUGIN_PYTHON "Install example plugin" OFF)
+option(PLUGIN_PYTHON "Install Python Plugin" OFF)
 
 if (PLUGIN_PYTHON)
     project(PythonPlugin)
 
     AddPlugin(NAME ${PROJECT_NAME})
 
-    option(PLUGIN_PYTHON_USE_EMBEDDED_MODULES "Should th Python wrapper libs be embedded in the cc plugin" ON)
+    set_project_warnings(${PROJECT_NAME})
+
+    option(PLUGIN_PYTHON_USE_EMBEDDED_MODULES "Should the Python wrapper libs be embedded in the plugin" ON)
     mark_as_advanced(PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
 
     if (WIN32)
