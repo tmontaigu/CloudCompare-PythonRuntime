@@ -17,22 +17,13 @@ if (PLUGIN_PYTHON)
         option(PLUGIN_PYTHON_COPY_ENV "Should the content of the current python venv be copied on install" ON)
         mark_as_advanced(PLUGIN_PYTHON_COPY_ENV)
 
-        set(CONDA_PREFIX $ENV{CONDA_PREFIX} CACHE PATH "Path to the root of the conda env")
-        set(VENV_PREFIX $ENV{VIRTUAL_ENV} CACHE PATH "Path to the root of the python virtual env")
-
-        # To avoid having to launch cmake or the ide from an activated env
-        # if a conda env is already activated, it is prioritized
-        if (NOT CONDA_PREFIX AND NOT DEFINED ENV{CONDA_PREFIX})
-            message(DEBUG "Not using conda")
-        elseif (CONDA_PREFIX AND NOT DEFINED ENV{CONDA_PREFIX})
-            string(REPLACE "\\" "/" CONDA_PREFIX ${CONDA_PREFIX})
-            list(INSERT CMAKE_PREFIX_PATH 0 "${CONDA_PREFIX}/Library/share/cmake")
-            set(PYTHON_EXECUTABLE "${CONDA_PREFIX}/python.exe")
-        endif()
-
-        if (VENV_PREFIX)
-            string(REPLACE "\\" "/" VENV_PREFIX ${VENV_PREFIX})
-            set(PYTHON_EXECUTABLE "${VENV_PREFIX}/Scripts/python.exe")
+        if (NOT PYTHON_EXECUTABLE)
+            if (DEFINED ENV{CONDA_PREFIX})
+                list(INSERT CMAKE_PREFIX_PATH 0 "$ENV{CONDA_PREFIX}/Library/share/cmake")
+                set(PYTHON_EXECUTABLE "$ENV{CONDA_PREFIX}/python.exe")
+            elseif (DEFINED ENV{VIRTUAL_ENV})
+                set(PYTHON_EXECUTABLE "$ENV{VENV_PREFIX}/Scripts/python.exe")
+            endif()
         endif()
     endif()
 
@@ -58,6 +49,7 @@ if (PLUGIN_PYTHON)
     add_subdirectory(src)
     add_subdirectory(ui)
     add_subdirectory(QCodeEditor)
+
 
     if (PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
         target_compile_definitions(PythonPlugin PRIVATE -DUSE_EMBEDDED_MODULES)
