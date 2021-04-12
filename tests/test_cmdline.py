@@ -63,9 +63,3 @@ def test_scalarfield_tools(cloudcompare_exe):
     assert_command_runs(
         cloudcompare_exe, "-SILENT", "-O", f"{abspath}/data/a_cloud.bin", "-PYTHON_SCRIPT",
         os.path.join(abspath, "scripts", "scalarfield.py"))
-
-
-def test_scalarfield_tools(cloudcompare_exe):
-    assert_command_runs(
-        cloudcompare_exe, "-SILENT", "-O", f"{abspath}/data/a_cloud.bin", "-PYTHON_SCRIPT",
-        os.path.join(abspath, "scripts", "bounding_box.py"))
