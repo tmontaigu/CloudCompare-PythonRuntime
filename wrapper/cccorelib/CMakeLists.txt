@@ -1,58 +1,94 @@
+cmake_minimum_required(VERSION 3.14)
 project(pycccorelib LANGUAGES CXX)
 
-set(cccorelib_sources
-    ${CMAKE_CURRENT_LIST_DIR}/src/cccorelib.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/cccorelib.h
-    ${CMAKE_CURRENT_LIST_DIR}/src/AutoSegmentationTools.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/BoundingBox.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/CCGeom.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/CCMath.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/CCConst.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/CCMiscTools.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/CCShareable.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/CloudSamplingTools.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/GenericIndexedCloudPersist.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/PointCloud.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/GenericOctree.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/ChamferDistanceTransform.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/DgmOctree.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/DgmOctreeReferenceCloud.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/GenericCloud.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/GenericIndexedCloud.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/GenericProgressCallback.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/GeometricalAnalysisTools.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/TrueKdTree.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/StatisticalTestingTools.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/GenericDistribution.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/GenericTriangle.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/SimpleTriangle.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/GenericMesh.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/GenericIndexedMesh.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/SimpleMesh.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/KdTree.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/LocalModel.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/WeibullDistribution.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/ScalarFieldTools.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/ScalarField.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/RegistrationTools.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/ReferenceCloud.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/Polyline.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/PointProjectionTools.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/ManualSegmentationTools.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/NormalDistribution.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/Delaynay2dMesh.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/ErrorFunction.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/FastMarching.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/DistanceComputationTools.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/wrappers.h
-    ${CMAKE_CURRENT_LIST_DIR}/src/casters.h
-)
 
-if (NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
+# MASTER_PROJECT means that this CMakeLists is the top level CMakeLists
+# which in our case means that this project is not built as a part
+# of the PythonPlugin but as a standalone wheel
+if(CMAKE_PROJECT_NAME STREQUAL pycccorelib)
+    set(CCCORELIB_PYTHON_IS_MASTER_PROJECT ON)
+else()
+    set(CCCORELIB_PYTHON_IS_MASTER_PROJECT OFF)
+endif()
 
+add_subdirectory(src)
+
+if(CCCORELIB_PYTHON_IS_MASTER_PROJECT)
+    if (WIN32)
+        if (NOT PYTHON_EXECUTABLE)
+            if (DEFINED ENV{CONDA_PREFIX})
+                list(INSERT CMAKE_PREFIX_PATH 0 "$ENV{CONDA_PREFIX}/Library/share/cmake")
+                set(PYTHON_EXECUTABLE "$ENV{CONDA_PREFIX}/python.exe")
+            elseif (DEFINED ENV{VIRTUAL_ENV})
+                set(PYTHON_EXECUTABLE "$ENV{VENV_PREFIX}/Scripts/python.exe")
+            endif()
+        endif()
+    endif()
+
+    if (PYTHON_EXECUTABLE)
+        execute_process(
+            COMMAND "${PYTHON_EXECUTABLE}" "-m" "pybind11" "--cmake"
+            RESULT_VARIABLE _PYTHON_SUCCESS
+            OUTPUT_VARIABLE PYBIND11_CMAKE_MODULES_PATH
+        )
+        
+        if (_PYTHON_SUCCESS MATCHES 0)
+            string(REGEX REPLACE "\n" "" PYBIND11_CMAKE_MODULES_PATH ${PYBIND11_CMAKE_MODULES_PATH})
+            list(INSERT CMAKE_PREFIX_PATH 0 "${PYBIND11_CMAKE_MODULES_PATH}")
+        else()
+            message(WARNING "Failed to get pybind11 cmake prefix path ${_PYTHON_SUCCESS}")
+        endif()
+    endif()
+
+
+    include(FetchContent)
+
+    set(FETCHCONTENT_QUIET OFF)
+
+    FetchContent_Declare(
+      CCCoreLib
+      GIT_REPOSITORY https://github.com/CloudCompare/CCCoreLib
+      GIT_PROGRESS ON
+      GIT_SHALLOW ON
+    )
+
+    FetchContent_MakeAvailable(CCCoreLib)
+endif()
+
+if (CCCORELIB_PYTHON_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
     find_package(pybind11 CONFIG REQUIRED)
     pybind11_add_module(cccorelib ${cccorelib_sources})
     target_link_libraries(cccorelib PRIVATE CCCoreLib)
+
+    if (CCCORELIB_PYTHON_IS_MASTER_PROJECT)
+
+        if (WIN32)
+            # Force finding Qt5 to have the Qt5::qmake thing later
+            find_package(Qt5 COMPONENTS Core REQUIRED)
+
+            get_target_property(QMAKE_EXE Qt5::qmake IMPORTED_LOCATION)
+            get_filename_component(QT_BIN_DIR "${QMAKE_EXE}" DIRECTORY)
+
+            find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${QT_BIN_DIR}")
+          
+            add_custom_command(
+                TARGET cccorelib POST_BUILD
+                COMMAND "${CMAKE_COMMAND}" -E make_directory deployqt
+                COMMAND "${WINDEPLOYQT_EXECUTABLE}"
+                        "$<TARGET_FILE:CCCoreLib>"
+                        --dir "${CMAKE_CURRENT_BINARY_DIR}/deployqt"
+            )
+
+            install(TARGETS CCCoreLib RUNTIME DESTINATION cccorelib)
+            install(
+                DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/deployqt/"
+                DESTINATION cccorelib
+                PATTERN "*.lib" EXCLUDE
+                PATTERN "*.exe" EXCLUDE
+            )
+        endif()
+            install(TARGETS cccorelib LIBRARY DESTINATION cccorelib)
+    endif()
 endif()
 
 function(embed_cccorelib_in target)

@@ -74,6 +74,50 @@ jobs:
           pytest --cloudcompare_exe ${{ github.workspace }}/install/CloudCompare/CloudCompare.exe tests
 
 
+  Windows-cccorelib-wheel:
+    name: "Windows wheels"
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: CloudCompareDev
+          auto-activate-base: false
+          python-version: "3.7"
+          miniconda-version: 'latest'
+
+      - name: Install Dependencies
+        run: conda install -c conda-forge qt=5.12.*
+
+      - name: Configure MSVC console
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Set environment for MSVC
+        run: |
+          # Set these env vars so cmake picks the correct compiler
+          # https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions#environment-files
+          echo "CXX=cl.exe" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "CC=cl.exe" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: pip install cccorelib
+        working-directory: "./wrapper"
+        run: pip install -v .\cccorelib
+
+      - name: pip install pycc
+        working-directory: "./wrapper"
+        run: pip install -v .\pycc
+
+      - name: test cccorelib
+        run: |
+          pip install pytest
+          pytest wrapper\cccorelib\tests
+
+      - name: test pycc
+        run: python -c "import pycc"
+
   Ubuntu-Build:
     name: Ubuntu
     runs-on: ubuntu-latest
