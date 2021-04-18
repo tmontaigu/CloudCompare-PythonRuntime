@@ -1,0 +1,6 @@
+.idea
+cmake-build-*
+
+_skbuild
+*egg-info
+.pytest_cache

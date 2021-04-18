@@ -27,7 +27,8 @@ using namespace pybind11::literals;
 
 void define_ScalarField(py::module &cccorelib)
 {
-    py::class_<CCCoreLib::ScalarField, CCShareable, observer_ptr<CCCoreLib::ScalarField>>(cccorelib, "ScalarField")
+    py::class_<CCCoreLib::ScalarField, CCShareable, observer_ptr<CCCoreLib::ScalarField>>(cccorelib,
+                                                                                          "ScalarField")
         .def(py::init<const char *>(), "name"_a)
         .def("setName", &CCCoreLib::ScalarField::setName)
         .def("getName", &CCCoreLib::ScalarField::getName)
@@ -49,14 +50,19 @@ void define_ScalarField(py::module &cccorelib)
              "count"_a,
              "initNewElements"_a = false,
              "valueForNewElements"_a = 0)
+        .def("getValue",
+             static_cast<ScalarType &(CCCoreLib::ScalarField::*)(std::size_t)>(
+                 &CCCoreLib::ScalarField::getValue),
+             "index"_a)
+        .def("setValue", &CCCoreLib::ScalarField::setValue, "index"_a, "value"_a)
+        .def("addElement", &CCCoreLib::ScalarField::addElement, "value"_a)
         .def("asArray", [](CCCoreLib::ScalarField &self) { return PyCC::VectorAsNumpyArray(self); })
         .def("__getitem__",
              [](const CCCoreLib::ScalarField &self, ssize_t index) { return self.at(index % self.size()); })
         .def("__setitem__",
-             [](CCCoreLib::ScalarField &self, ssize_t index, ScalarType value) {
-                 self.at(index % self.size()) = value;
-             })
-        .def("__repr__", [](const CCCoreLib::ScalarField &self) {
-            return std::string("<ScalarField(name=") + self.getName() + ")>";
-        });
+             [](CCCoreLib::ScalarField &self, ssize_t index, ScalarType value)
+             { self.at(index % self.size()) = value; })
+        .def("__repr__",
+             [](const CCCoreLib::ScalarField &self)
+             { return std::string("<ScalarField(name=") + self.getName() + ")>"; });
 }

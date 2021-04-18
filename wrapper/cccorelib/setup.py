@@ -9,6 +9,10 @@ setup(
     author_email="thomas.montaigu@laposte.net",
     description="Python bindings for CCCoreLib",
     packages=["cccorelib"],
+    package_data={
+      'cccorelib': ['*.pyi'],
+    },
+    include_package_data=True,
     cmake_args=['-GNinja'],
     zip_safe=False,
 )

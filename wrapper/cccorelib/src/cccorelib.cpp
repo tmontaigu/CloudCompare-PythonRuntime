@@ -177,7 +177,8 @@ class NumpyCloud : public CCCoreLib::GenericIndexedCloud
         P.y = m_ys.at(index);
         P.z = m_zs.at(index);
     }
-    unsigned int size() const override {
+    unsigned int size() const override
+    {
         assert(m_xs.size() <= std::numeric_limits<unsigned int>::max());
         return m_xs.size();
     }
@@ -201,7 +202,8 @@ class NumpyCloud : public CCCoreLib::GenericIndexedCloud
     }
     void getBoundingBox(CCVector3 &bbMin, CCVector3 &bbMax) override
     {
-        const auto updateMinMax = [&bbMin, &bbMax](const CCVector3 &point, ScalarType _s) {
+        const auto updateMinMax = [&bbMin, &bbMax](const CCVector3 &point, ScalarType _s)
+        {
             bbMin.x = std::min(point.x, bbMin.x);
             bbMin.y = std::min(point.y, bbMin.y);
             bbMin.z = std::min(point.z, bbMin.z);
@@ -213,11 +215,23 @@ class NumpyCloud : public CCCoreLib::GenericIndexedCloud
         forEach(updateMinMax);
     }
     void placeIteratorAtBeginning() override {}
-    const CCVector3 *getNextPoint() override { return &m_pts; }
-    bool enableScalarField() override { return false; }
-    bool isScalarFieldEnabled() const override { return false; }
+    const CCVector3 *getNextPoint() override
+    {
+        return &m_pts;
+    }
+    bool enableScalarField() override
+    {
+        return false;
+    }
+    bool isScalarFieldEnabled() const override
+    {
+        return false;
+    }
     void setPointScalarValue(unsigned int pointIndex, ScalarType value) override {}
-    ScalarType getPointScalarValue(unsigned int pointIndex) const override { return 0; }
+    ScalarType getPointScalarValue(unsigned int pointIndex) const override
+    {
+        return 0;
+    }
 
   private:
     mutable CCVector3 m_pts{};
@@ -226,15 +240,15 @@ class NumpyCloud : public CCCoreLib::GenericIndexedCloud
     py::array_t<PointCoordinateType> m_zs;
 };
 
-void define_cccorelib(py::module& m) {
-    py::bind_vector<CCCoreLib::ReferenceCloudContainer>(m, "ReferenceCloudContainer");
-
+void define_cccorelib(py::module &m)
+{
     define_CCShareable(m);
 
     define_CCGeom(m);
     define_CCMath(m);
     define_CCConst(m);
     define_BoundingBox(m);
+    py::bind_vector<std::vector<CCVector2>>(m, "CCVector2List");
 
     define_GenericCloud(m);
     define_GenericIndexedCloud(m);
@@ -247,6 +261,7 @@ void define_cccorelib(py::module& m) {
     define_Delaunay2dMesh(m);
     define_ReferenceCloud(m);
     define_Polyline(m);
+    py::bind_vector<CCCoreLib::ReferenceCloudContainer>(m, "ReferenceCloudContainer");
 
     define_GenericDistribution(m);
     define_NormalDistribution(m);
@@ -281,8 +296,6 @@ void define_cccorelib(py::module& m) {
     define_TrueKdTree(m);
 
     define_LocalModel(m);
-
-    m.def("delete", [](CCCoreLib::ReferenceCloud *self) { delete self; });
 
     py::class_<NumpyCloud, CCCoreLib::GenericIndexedCloud, CCCoreLib::GenericCloud>(m, "NumpyCloud")
         .def(py::init<py::array>());

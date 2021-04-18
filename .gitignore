@@ -1,3 +1,5 @@
 ﻿__pycache__
 *.whl
 docs/_build
+*.egg
+.idea

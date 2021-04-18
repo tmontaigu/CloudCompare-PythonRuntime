@@ -24,12 +24,18 @@
 namespace py = pybind11;
 using namespace pybind11::literals;
 
+using CCCoreLib::GeometricalAnalysisTools;
+
 void define_GeometricalAnalysisTools(py::module &cccorelib)
 {
-    py::class_<CCCoreLib::GeometricalAnalysisTools> GeometricalAnalysisTools(cccorelib,
-                                                                             "GeometricalAnalysisTools");
+    py::class_<GeometricalAnalysisTools> GeometricalAnalysisTools(cccorelib, "GeometricalAnalysisTools");
+    py::enum_<GeometricalAnalysisTools::GeomCharacteristic> PyGeomCharacteristic(GeometricalAnalysisTools,
+                                                                                 "GeomCharacteristic");
+    py::enum_<GeometricalAnalysisTools::Density> PyDensity(GeometricalAnalysisTools, "Density");
+    py::enum_<GeometricalAnalysisTools::ErrorCode> PyErrorCode(GeometricalAnalysisTools, "ErrorCode");
+
     GeometricalAnalysisTools.def_static("ComputeCharactersitic",
-                                        &CCCoreLib::GeometricalAnalysisTools::ComputeCharactersitic,
+                                        &GeometricalAnalysisTools::ComputeCharactersitic,
                                         "c"_a,
                                         "subOptions"_a,
                                         "cloud"_a,
@@ -38,41 +44,40 @@ void define_GeometricalAnalysisTools(py::module &cccorelib)
                                         "inputOctree"_a = nullptr);
 
     GeometricalAnalysisTools.def_static("ComputeLocalDensityApprox",
-                                        &CCCoreLib::GeometricalAnalysisTools::ComputeLocalDensityApprox,
+                                        &GeometricalAnalysisTools::ComputeLocalDensityApprox,
                                         "cloud"_a,
                                         "densityType"_a,
                                         "progressCb"_a = nullptr,
                                         "DgmOctree"_a = nullptr);
 
     GeometricalAnalysisTools.def_static(
-        "ComputeGravityCenter", &CCCoreLib::GeometricalAnalysisTools::ComputeGravityCenter, "theCloud"_a);
+        "ComputeGravityCenter", &GeometricalAnalysisTools::ComputeGravityCenter, "theCloud"_a);
     GeometricalAnalysisTools.def_static("ComputeWeightedGravityCenter",
-                                        &CCCoreLib::GeometricalAnalysisTools::ComputeWeightedGravityCenter,
+                                        &GeometricalAnalysisTools::ComputeWeightedGravityCenter,
                                         "theCloud"_a,
                                         "weights"_a);
     GeometricalAnalysisTools.def_static("ComputeCrossCovarianceMatrix",
-                                        &CCCoreLib::GeometricalAnalysisTools::ComputeCrossCovarianceMatrix,
+                                        &GeometricalAnalysisTools::ComputeCrossCovarianceMatrix,
                                         "P"_a,
                                         "Q"_a,
                                         "pGravityCenter"_a,
                                         "qGravityCenter"_a);
-    GeometricalAnalysisTools.def_static(
-        "ComputeWeightedCrossCovarianceMatrix",
-        &CCCoreLib::GeometricalAnalysisTools::ComputeWeightedCrossCovarianceMatrix,
-        "P"_a,
-        "Q"_a,
-        "pGravityCenter"_a,
-        "qGravityCenter"_a,
-        "coupleWeights"_a = nullptr);
+    GeometricalAnalysisTools.def_static("ComputeWeightedCrossCovarianceMatrix",
+                                        &GeometricalAnalysisTools::ComputeWeightedCrossCovarianceMatrix,
+                                        "P"_a,
+                                        "Q"_a,
+                                        "pGravityCenter"_a,
+                                        "qGravityCenter"_a,
+                                        "coupleWeights"_a = nullptr);
     GeometricalAnalysisTools.def_static("FlagDuplicatePoints",
-                                        &CCCoreLib::GeometricalAnalysisTools::FlagDuplicatePoints,
+                                        &GeometricalAnalysisTools::FlagDuplicatePoints,
                                         "theCloud"_a,
                                         "minDistanceBetweenPoints"_a,
                                         "progressCb"_a = nullptr,
                                         "inputOctree"_a = nullptr);
 
     GeometricalAnalysisTools.def_static("DetectSphereRobust",
-                                        &CCCoreLib::GeometricalAnalysisTools::DetectSphereRobust,
+                                        &GeometricalAnalysisTools::DetectSphereRobust,
                                         "cloud"_a,
                                         "outlierRatio"_a,
                                         "center"_a,
@@ -83,7 +88,7 @@ void define_GeometricalAnalysisTools(py::module &cccorelib)
                                         "seed"_a = 0);
 
     GeometricalAnalysisTools.def_static("ComputeSphereFrom4",
-                                        &CCCoreLib::GeometricalAnalysisTools::ComputeSphereFrom4,
+                                        &GeometricalAnalysisTools::ComputeSphereFrom4,
                                         "A"_a,
                                         "B"_a,
                                         "C"_a,
@@ -91,34 +96,26 @@ void define_GeometricalAnalysisTools(py::module &cccorelib)
                                         "center"_a,
                                         "radius"_a);
 
-    py::enum_<CCCoreLib::GeometricalAnalysisTools::GeomCharacteristic>(GeometricalAnalysisTools,
-                                                                       "GeomCharacteristic")
-        .value("Feature", CCCoreLib::GeometricalAnalysisTools::GeomCharacteristic::Feature)
-        .value("Curvature", CCCoreLib::GeometricalAnalysisTools::GeomCharacteristic::Curvature)
-        .value("LocalDensity", CCCoreLib::GeometricalAnalysisTools::GeomCharacteristic::LocalDensity)
-        .value("ApproxLocalDensity",
-               CCCoreLib::GeometricalAnalysisTools::GeomCharacteristic::ApproxLocalDensity)
-        .value("Roughness", CCCoreLib::GeometricalAnalysisTools::GeomCharacteristic::Roughness)
-        .value("MomentOrder1", CCCoreLib::GeometricalAnalysisTools::GeomCharacteristic::MomentOrder1)
+    PyGeomCharacteristic.value("Feature", GeometricalAnalysisTools::GeomCharacteristic::Feature)
+        .value("Curvature", GeometricalAnalysisTools::GeomCharacteristic::Curvature)
+        .value("LocalDensity", GeometricalAnalysisTools::GeomCharacteristic::LocalDensity)
+        .value("ApproxLocalDensity", GeometricalAnalysisTools::GeomCharacteristic::ApproxLocalDensity)
+        .value("Roughness", GeometricalAnalysisTools::GeomCharacteristic::Roughness)
+        .value("MomentOrder1", GeometricalAnalysisTools::GeomCharacteristic::MomentOrder1)
         .export_values();
 
-    py::enum_<CCCoreLib::GeometricalAnalysisTools::Density>(GeometricalAnalysisTools, "Density")
-        .value("DENSITY_KNN", CCCoreLib::GeometricalAnalysisTools::Density::DENSITY_KNN)
-        .value("DENSITY_2D", CCCoreLib::GeometricalAnalysisTools::Density::DENSITY_2D)
-        .value("DENSITY_3D", CCCoreLib::GeometricalAnalysisTools::Density::DENSITY_3D)
+    PyDensity.value("DENSITY_KNN", GeometricalAnalysisTools::Density::DENSITY_KNN)
+        .value("DENSITY_2D", GeometricalAnalysisTools::Density::DENSITY_2D)
+        .value("DENSITY_3D", GeometricalAnalysisTools::Density::DENSITY_3D)
         .export_values();
 
-    py::enum_<CCCoreLib::GeometricalAnalysisTools::ErrorCode>(GeometricalAnalysisTools, "ErrorCode")
-        .value("NoError", CCCoreLib::GeometricalAnalysisTools::ErrorCode::NoError)
-        .value("InvalidInput", CCCoreLib::GeometricalAnalysisTools::ErrorCode::InvalidInput)
-        .value("NotEnoughPoints", CCCoreLib::GeometricalAnalysisTools::ErrorCode::NotEnoughPoints)
-        .value("OctreeComputationFailed",
-               CCCoreLib::GeometricalAnalysisTools::ErrorCode::OctreeComputationFailed)
-        .value("ProcessFailed", CCCoreLib::GeometricalAnalysisTools::ErrorCode::ProcessFailed)
-        .value("UnhandledCharacteristic",
-               CCCoreLib::GeometricalAnalysisTools::ErrorCode::UnhandledCharacteristic)
-        .value("NotEnoughMemory", CCCoreLib::GeometricalAnalysisTools::ErrorCode::NotEnoughMemory)
-        .value("ProcessCancelledByUser",
-               CCCoreLib::GeometricalAnalysisTools::ErrorCode::ProcessCancelledByUser)
+    PyErrorCode.value("NoError", GeometricalAnalysisTools::ErrorCode::NoError)
+        .value("InvalidInput", GeometricalAnalysisTools::ErrorCode::InvalidInput)
+        .value("NotEnoughPoints", GeometricalAnalysisTools::ErrorCode::NotEnoughPoints)
+        .value("OctreeComputationFailed", GeometricalAnalysisTools::ErrorCode::OctreeComputationFailed)
+        .value("ProcessFailed", GeometricalAnalysisTools::ErrorCode::ProcessFailed)
+        .value("UnhandledCharacteristic", GeometricalAnalysisTools::ErrorCode::UnhandledCharacteristic)
+        .value("NotEnoughMemory", GeometricalAnalysisTools::ErrorCode::NotEnoughMemory)
+        .value("ProcessCancelledByUser", GeometricalAnalysisTools::ErrorCode::ProcessCancelledByUser)
         .export_values();
 }

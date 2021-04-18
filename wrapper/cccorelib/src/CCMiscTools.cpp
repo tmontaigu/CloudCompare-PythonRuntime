@@ -41,15 +41,17 @@ void define_CCMiscTools(py::module &cccorelib)
         "Y"_a);
 
     CCMiscTools.def_static("ComputeBaseVectors",
-                           (void (*)(const CCVector3d &, CCVector3d &, CCVector3d &))(
-                               &CCCoreLib::CCMiscTools::ComputeBaseVectors),
+                           (void (*)(const CCVector3d &,
+                                     CCVector3d &,
+                                     CCVector3d &))(&CCCoreLib::CCMiscTools::ComputeBaseVectors),
                            "N"_a,
                            "X"_a,
                            "Y"_a);
 
     CCMiscTools.def_static(
         "TriBoxOverlap",
-        [](const CCVector3 &boxCenter, const CCVector3 boxhalfsize, py::list &triverts) {
+        [](const CCVector3 &boxCenter, const CCVector3 boxhalfsize, py::list &triverts)
+        {
             const CCVector3 *trueTrivers[3] = {
                 triverts[0].cast<CCVector3 *>(),
                 triverts[1].cast<CCVector3 *>(),

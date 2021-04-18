@@ -24,10 +24,8 @@ using namespace pybind11::literals;
 
 void define_CCMath(py::module &cccorelib)
 {
-    cccorelib.def("LessThanEpsilon", [](const double x) { return CCCoreLib::LessThanEpsilon(x); });
-    cccorelib.def("GreaterThanEpsilon", [](const double x) { return CCCoreLib::GreaterThanEpsilon(x); });
-    cccorelib.def("RadiansToDegrees",
-                  [](const double radians) { return CCCoreLib::RadiansToDegrees(radians); });
-    cccorelib.def("DegreesToRadians",
-                  [](const double degrees) { return CCCoreLib::DegreesToRadians(degrees); });
+    cccorelib.def("LessThanEpsilon", static_cast<bool (*)(double)>(&CCCoreLib::LessThanEpsilon));
+    cccorelib.def("GreaterThanEpsilon", static_cast<bool (*)(double)>(&CCCoreLib::GreaterThanEpsilon));
+    cccorelib.def("RadiansToDegrees", static_cast<double (*)(double)>(&CCCoreLib::RadiansToDegrees));
+    cccorelib.def("DegreesToRadians", static_cast<double (*)(double)>(&CCCoreLib::DegreesToRadians));
 }

@@ -47,6 +47,8 @@ void define_RegistrationTools(py::module &cccorelib)
                                  "transformationFilters"_a,
                                  "outTrans"_a);
 
+    // HornRegistrationTools
+
     py::class_<CCCoreLib::HornRegistrationTools, CCCoreLib::RegistrationTools>(cccorelib,
                                                                                "HornRegistrationTools")
         .def_static("FindAbsoluteOrientation",
@@ -58,8 +60,14 @@ void define_RegistrationTools(py::module &cccorelib)
         .def_static(
             "ComputeRMS", &CCCoreLib::HornRegistrationTools::ComputeRMS, "lCloud"_a, "rCloud"_a, "trans"_a);
 
+    // ICPRegistrationTools
+
     py::class_<CCCoreLib::ICPRegistrationTools, CCCoreLib::RegistrationTools> ICPRegistrationTools(
         cccorelib, "ICPRegistrationTools");
+    py::enum_<CCCoreLib::ICPRegistrationTools::CONVERGENCE_TYPE> PyConvergenceType(ICPRegistrationTools,
+                                                                                   "CONVERGENCE_TYPE");
+    py::enum_<CCCoreLib::ICPRegistrationTools::RESULT_TYPE> PyResultType(ICPRegistrationTools, "RESULT_TYPE");
+    py::class_<CCCoreLib::ICPRegistrationTools::Parameters> PyParameters(ICPRegistrationTools, "Parameters");
 
     ICPRegistrationTools.def_static("Register",
                                     &CCCoreLib::ICPRegistrationTools::Register,
@@ -72,15 +80,14 @@ void define_RegistrationTools(py::module &cccorelib)
                                     "finalPointCount"_a,
                                     "progressCb"_a = nullptr);
 
-    py::enum_<CCCoreLib::ICPRegistrationTools::CONVERGENCE_TYPE>(ICPRegistrationTools, "CONVERGENCE_TYPE")
+    PyConvergenceType
         .value("MAX_ERROR_CONVERGENCE",
                CCCoreLib::ICPRegistrationTools::CONVERGENCE_TYPE::MAX_ERROR_CONVERGENCE)
         .value("MAX_ITER_CONVERGENCE",
                CCCoreLib::ICPRegistrationTools::CONVERGENCE_TYPE::MAX_ITER_CONVERGENCE)
         .export_values();
 
-    py::enum_<CCCoreLib::ICPRegistrationTools::RESULT_TYPE>(ICPRegistrationTools, "RESULT_TYPE")
-        .value("ICP_NOTHING_TO_DO", CCCoreLib::ICPRegistrationTools::RESULT_TYPE::ICP_NOTHING_TO_DO)
+    PyResultType.value("ICP_NOTHING_TO_DO", CCCoreLib::ICPRegistrationTools::RESULT_TYPE::ICP_NOTHING_TO_DO)
         .value("ICP_APPLY_TRANSFO", CCCoreLib::ICPRegistrationTools::RESULT_TYPE::ICP_APPLY_TRANSFO)
         .value("ICP_ERROR", CCCoreLib::ICPRegistrationTools::RESULT_TYPE::ICP_ERROR)
 
@@ -96,8 +103,7 @@ void define_RegistrationTools(py::module &cccorelib)
                CCCoreLib::ICPRegistrationTools::RESULT_TYPE::ICP_ERROR_INVALID_INPUT)
         .export_values();
 
-    py::class_<CCCoreLib::ICPRegistrationTools::Parameters>(ICPRegistrationTools, "Parameters")
-        .def(py::init<>())
+    PyParameters.def(py::init<>())
         .def_readwrite("convType", &CCCoreLib::ICPRegistrationTools::Parameters::convType)
         .def_readwrite("minRMSDecrease", &CCCoreLib::ICPRegistrationTools::Parameters::minRMSDecrease)
         .def_readwrite("nbMaxIterations", &CCCoreLib::ICPRegistrationTools::Parameters::nbMaxIterations)
@@ -111,6 +117,8 @@ void define_RegistrationTools(py::module &cccorelib)
         .def_readwrite("transformationFilters",
                        &CCCoreLib::ICPRegistrationTools::Parameters::transformationFilters)
         .def_readwrite("maxThreadCount", &CCCoreLib::ICPRegistrationTools::Parameters::maxThreadCount);
+
+    // FPCSRegistrationTools
 
     py::class_<CCCoreLib::FPCSRegistrationTools, CCCoreLib::RegistrationTools>(cccorelib,
                                                                                "FPCSRegistrationTools")

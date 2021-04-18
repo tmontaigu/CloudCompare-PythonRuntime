@@ -28,12 +28,12 @@ void define_GenericCloud(py::module &cccorelib)
     py::class_<CCCoreLib::GenericCloud>(cccorelib, "GenericCloud")
         .def("size", &CCCoreLib::GenericCloud::size)
         .def("forEach", &CCCoreLib::GenericCloud::forEach, "action"_a)
-        .def("getBoundingBox", &CCCoreLib::GenericCloud::getBoundingBox)
-        .def("testVisibility", &CCCoreLib::GenericCloud::testVisibility)
+        .def("getBoundingBox", &CCCoreLib::GenericCloud::getBoundingBox, "bbMin"_a, "bbMax"_a)
+        .def("testVisibility", &CCCoreLib::GenericCloud::testVisibility, "P"_a)
         .def("placeIteratorAtBeginning", &CCCoreLib::GenericCloud::placeIteratorAtBeginning)
         .def("getNextPoint", &CCCoreLib::GenericCloud::getNextPoint, py::return_value_policy::reference)
         .def("enableScalarField", &CCCoreLib::GenericCloud::enableScalarField)
         .def("isScalarFieldEnabled", &CCCoreLib::GenericCloud::enableScalarField)
-        .def("setPointScalarValue", &CCCoreLib::GenericCloud::getPointScalarValue)
-        .def("getPointScalarValue", &CCCoreLib::GenericCloud::getPointScalarValue);
+        .def("setPointScalarValue", &CCCoreLib::GenericCloud::setPointScalarValue, "pointIndex"_a, "value"_a)
+        .def("getPointScalarValue", &CCCoreLib::GenericCloud::getPointScalarValue, "pointIndex"_a);
 }

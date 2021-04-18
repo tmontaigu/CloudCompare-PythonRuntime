@@ -27,64 +27,70 @@
 namespace py = pybind11;
 using namespace pybind11::literals;
 
+using CCCoreLib::TrueKdTree;
+
 void define_TrueKdTree(py::module &cccorelib)
 {
-    py::class_<CCCoreLib::TrueKdTree> PyTrueKdTree(cccorelib, "TrueKdTree");
 
-    py::bind_vector<CCCoreLib::TrueKdTree::LeafVector>(PyTrueKdTree, "LeafVector");
+    py::class_<TrueKdTree> PyTrueKdTree(cccorelib, "TrueKdTree");
+    py::class_<TrueKdTree::BaseNode> PyBaseNode(PyTrueKdTree, "BaseNode");
+    py::class_<TrueKdTree::Node, TrueKdTree::BaseNode> PyNode(PyTrueKdTree, "Node");
+    py::class_<TrueKdTree::Leaf, TrueKdTree::BaseNode> PyLeaf(PyTrueKdTree, "Leaf");
+    py::bind_vector<TrueKdTree::LeafVector>(PyTrueKdTree, "LeafVector");
 
-    PyTrueKdTree.def_property_readonly_static("X_DIM", [](){ return CCCoreLib::TrueKdTree::X_DIM; })
-        .def_property_readonly_static("Y_DIM", [](){ return CCCoreLib::TrueKdTree::Y_DIM; })
-        .def_property_readonly_static("Z_DIM", [](){ return CCCoreLib::TrueKdTree::Z_DIM; } )
-        .def_property_readonly_static("NODE_TYPE", [](){ return CCCoreLib::TrueKdTree::NODE_TYPE; })
-        .def_property_readonly_static("LEAF_TYPE", [](){ return CCCoreLib::TrueKdTree::LEAF_TYPE;})
+    PyTrueKdTree
+        .def_property_readonly_static("X_DIM",
+                                      [](const py::object & /* self */) { return TrueKdTree::X_DIM; })
+        .def_property_readonly_static("Y_DIM",
+                                      [](const py::object & /* self */) { return TrueKdTree::Y_DIM; })
+        .def_property_readonly_static("Z_DIM",
+                                      [](const py::object & /* self */) { return TrueKdTree::Z_DIM; })
+        .def_property_readonly_static("NODE_TYPE",
+                                      [](const py::object & /* self */) { return TrueKdTree::NODE_TYPE; })
+        .def_property_readonly_static("LEAF_TYPE",
+                                      [](const py::object & /* self */) { return TrueKdTree::LEAF_TYPE; })
         .def(py::init<CCCoreLib::GenericIndexedCloudPersist *>(), "cloud"_a)
-        .def("associatedCloud", &CCCoreLib::TrueKdTree::associatedCloud, py::return_value_policy::reference)
+        .def("associatedCloud", &TrueKdTree::associatedCloud, py::return_value_policy::reference)
         .def("build",
-             &CCCoreLib::TrueKdTree::build,
+             &TrueKdTree::build,
              "maxError"_a,
              "errorMeasure"_a = CCCoreLib::DistanceComputationTools::RMS,
              "minPointCountPerCell"_a = 3,
              "maxPointCountPerCell"_a = 0,
              "progressCb"_a = nullptr)
-        .def("clear", &CCCoreLib::TrueKdTree::clear)
-        .def("getMaxErrorType", &CCCoreLib::TrueKdTree::getMaxErrorType)
-        .def("getLeaves", &CCCoreLib::TrueKdTree::getLeaves, "leaves"_a);
+        .def("clear", &TrueKdTree::clear)
+        .def("getMaxErrorType", &TrueKdTree::getMaxErrorType)
+        .def("getLeaves", &TrueKdTree::getLeaves, "leaves"_a);
 
-    py::class_<CCCoreLib::TrueKdTree::BaseNode>(PyTrueKdTree, "BaseNode")
-        .def(py::init<uint8_t>(), "nodeType"_a)
-        .def("isNode", &CCCoreLib::TrueKdTree::BaseNode::isNode)
-        .def("isLeaf", &CCCoreLib::TrueKdTree::BaseNode::isLeaf)
-        .def_readwrite(
-            "parent", &CCCoreLib::TrueKdTree::BaseNode::parent, py::return_value_policy::reference);
+    PyBaseNode.def(py::init<uint8_t>(), "nodeType"_a)
+        .def("isNode", &TrueKdTree::BaseNode::isNode)
+        .def("isLeaf", &TrueKdTree::BaseNode::isLeaf)
+        .def_readwrite("parent", &TrueKdTree::BaseNode::parent, py::return_value_policy::reference);
 
-    py::class_<CCCoreLib::TrueKdTree::Node, CCCoreLib::TrueKdTree::BaseNode>(PyTrueKdTree, "Node")
-        .def_readwrite(
-            "splitValue", &CCCoreLib::TrueKdTree::Node::splitValue, py::return_value_policy::reference)
-        .def_readwrite(
-            "leftChild", &CCCoreLib::TrueKdTree::Node::leftChild, py::return_value_policy::reference)
-        .def_readwrite(
-            "rightChild", &CCCoreLib::TrueKdTree::Node::rightChild, py::return_value_policy::reference)
-        .def_readwrite("splitDim", &CCCoreLib::TrueKdTree::Node::splitDim)
+    PyNode.def_readwrite("splitValue", &TrueKdTree::Node::splitValue, py::return_value_policy::reference)
+        .def_readwrite("leftChild", &TrueKdTree::Node::leftChild, py::return_value_policy::reference)
+        .def_readwrite("rightChild", &TrueKdTree::Node::rightChild, py::return_value_policy::reference)
+        .def_readwrite("splitDim", &TrueKdTree::Node::splitDim)
         .def(py::init<>());
 
-    py::class_<CCCoreLib::TrueKdTree::Leaf, CCCoreLib::TrueKdTree::BaseNode>(PyTrueKdTree, "Leaf")
-        .def_readwrite("points", &CCCoreLib::TrueKdTree::Leaf::points, py::return_value_policy::reference)
-//        .def_readwrite("planeEq",
-//                       &CCCoreLib::TrueKdTree::Leaf::planeEq) // FIXME
-        .def_readwrite("error", &CCCoreLib::TrueKdTree::Leaf::error)
-        .def_readwrite("userData", &CCCoreLib::TrueKdTree::Leaf::userData)
-        .def(
-            py::init([](CCCoreLib::ReferenceCloud *set, const py::sequence &planeEquation, ScalarType error) {
-                PointCoordinateType planeEq[4] = {0};
-                planeEq[0] = planeEquation[0].cast<PointCoordinateType>();
-                planeEq[1] = planeEquation[1].cast<PointCoordinateType>();
-                planeEq[2] = planeEquation[2].cast<PointCoordinateType>();
-                planeEq[3] = planeEquation[3].cast<PointCoordinateType>();
+    PyLeaf
+        .def_readwrite("points", &TrueKdTree::Leaf::points, py::return_value_policy::reference)
+        //        .def_readwrite("planeEq",
+        //                       &TrueKdTree::Leaf::planeEq) // FIXME
+        .def_readwrite("error", &TrueKdTree::Leaf::error)
+        .def_readwrite("userData", &TrueKdTree::Leaf::userData)
+        .def(py::init(
+                 [](CCCoreLib::ReferenceCloud *set, const py::sequence &planeEquation, ScalarType error)
+                 {
+                     PointCoordinateType planeEq[4] = {0};
+                     planeEq[0] = planeEquation[0].cast<PointCoordinateType>();
+                     planeEq[1] = planeEquation[1].cast<PointCoordinateType>();
+                     planeEq[2] = planeEquation[2].cast<PointCoordinateType>();
+                     planeEq[3] = planeEquation[3].cast<PointCoordinateType>();
 
-                return CCCoreLib::TrueKdTree::Leaf(set, nullptr, error);
-            }),
-            "set"_a,
-            "planeEquation"_a,
-            "_error"_a);
+                     return TrueKdTree::Leaf(set, nullptr, error);
+                 }),
+             "set"_a,
+             "planeEquation"_a,
+             "_error"_a);
 }

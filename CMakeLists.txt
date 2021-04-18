@@ -8,7 +8,7 @@ if (PLUGIN_PYTHON)
 
     AddPlugin(NAME ${PROJECT_NAME})
 
-    set_project_warnings(${PROJECT_NAME})
+    # set_project_warnings(${PROJECT_NAME})
 
     option(PLUGIN_PYTHON_USE_EMBEDDED_MODULES "Should the Python wrapper libs be embedded in the plugin" ON)
     mark_as_advanced(PLUGIN_PYTHON_USE_EMBEDDED_MODULES)

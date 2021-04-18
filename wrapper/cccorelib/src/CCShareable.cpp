@@ -19,19 +19,16 @@
 
 #include <CCShareable.h>
 
-
-
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-
-void define_CCShareable(py::module& cccorelib)
+void define_CCShareable(py::module &cccorelib)
 {
     py::class_<CCShareable, std::unique_ptr<CCShareable, py::nodelete>>(cccorelib, "CCShareable")
         .def(py::init<>())
-    .def("link", &CCShareable::link)
-    .def("release", &CCShareable::release)
-    .def("getLinkCount", &CCShareable::getLinkCount)
+        .def("link", &CCShareable::link)
+        .def("release", &CCShareable::release)
+        .def("getLinkCount", &CCShareable::getLinkCount)
 #ifdef CC_TRACK_ALIVE_SHARED_OBJECTS
         .def_static("GetAliveCount", &CCShareable::GetAliveCount);
 #else

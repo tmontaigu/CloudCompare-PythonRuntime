@@ -30,5 +30,7 @@ void define_GenericMesh(py::module &cccorelib)
         .def("forEach", &CCCoreLib::GenericMesh::forEach, "action"_a)
         .def("getBoundingBox", &CCCoreLib::GenericMesh::getBoundingBox, "bbMin"_a, "bbMax"_a)
         .def("placeIteratorAtBeginning", &CCCoreLib::GenericMesh::placeIteratorAtBeginning)
-        .def("_getNextTriangle", &CCCoreLib::GenericMesh::_getNextTriangle, py::return_value_policy::reference);
+        .def("_getNextTriangle",
+             &CCCoreLib::GenericMesh::_getNextTriangle,
+             py::return_value_policy::reference);
 }

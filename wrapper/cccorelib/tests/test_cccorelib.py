@@ -4,8 +4,6 @@ def test_min_max_corners():
 	boxA = BoundingBox(CCVector3(-1, -1, -1), CCVector3(0, 0, 0))
 	boxB = BoundingBox(CCVector3(0, 0, 0), CCVector3(1, 1, 1))
 
-	box2 = BoundingBox(CCVector3(0, 0, 0), CCVector3(2, 2, 2))
-
 	box3 = boxA + boxB
 
 	assert box3.minCorner().x == -1.0

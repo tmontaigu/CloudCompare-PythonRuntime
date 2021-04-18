@@ -24,34 +24,38 @@
 namespace py = pybind11;
 using namespace pybind11::literals;
 
+using CCCoreLib::ReferenceCloud;
+
 void define_ReferenceCloud(py::module &cccorelib)
 {
-    py::class_<CCCoreLib::ReferenceCloud, CCCoreLib::GenericIndexedCloudPersist>(cccorelib, "ReferenceCloud")
+    py::class_<ReferenceCloud, CCCoreLib::GenericIndexedCloudPersist>(cccorelib, "ReferenceCloud")
         .def(py::init<CCCoreLib::GenericIndexedCloudPersist *>(), "associatedCloud"_a)
-        .def("getPointGlobalIndex", &CCCoreLib::ReferenceCloud::getPointGlobalIndex)
-        .def("getCurrentPointGlobalIndex", &CCCoreLib::ReferenceCloud::getCurrentPointGlobalIndex)
-        .def("getCurrentPointScalarValue", &CCCoreLib::ReferenceCloud::getCurrentPointScalarValue)
-        .def("setCurrentPointScalarValue", &CCCoreLib::ReferenceCloud::setCurrentPointScalarValue)
-        .def("forwardIterator", &CCCoreLib::ReferenceCloud::forwardIterator)
-        .def("clear", &CCCoreLib::ReferenceCloud::clear, "releaseMemory"_a = false)
+        .def("getPointGlobalIndex", &ReferenceCloud::getPointGlobalIndex)
+        .def("getCurrentPointCoordinates", &ReferenceCloud::getCurrentPointCoordinates)
+        .def("getCurrentPointGlobalIndex", &ReferenceCloud::getCurrentPointGlobalIndex)
+        .def("getCurrentPointScalarValue", &ReferenceCloud::getCurrentPointScalarValue)
+        .def("setCurrentPointScalarValue", &ReferenceCloud::setCurrentPointScalarValue)
+        .def("forwardIterator", &ReferenceCloud::forwardIterator)
+        .def("clear", &ReferenceCloud::clear, "releaseMemory"_a = false)
         .def("addPointIndex",
-             [](CCCoreLib::ReferenceCloud &self, unsigned firstIndex, unsigned lastIndex) {
-                 self.addPointIndex(firstIndex, lastIndex);
-             })
+             static_cast<bool (ReferenceCloud::*)(unsigned)>(&ReferenceCloud::addPointIndex),
+             "unsigned"_a)
         .def("addPointIndex",
-             [](CCCoreLib::ReferenceCloud &self, unsigned globalIndex) { self.addPointIndex(globalIndex); })
-        .def("setPointIndex", &CCCoreLib::ReferenceCloud::setPointIndex)
-        .def("reserve", &CCCoreLib::ReferenceCloud::reserve)
-        .def("resize", &CCCoreLib::ReferenceCloud::resize)
-        .def("capacity", &CCCoreLib::ReferenceCloud::capacity)
-        .def("swap", &CCCoreLib::ReferenceCloud::swap)
-        .def("removeCurrentPointGlobalIndex", &CCCoreLib::ReferenceCloud::removeCurrentPointGlobalIndex)
-        .def("removePointGlobalIndex", &CCCoreLib::ReferenceCloud::removePointGlobalIndex)
-        .def(
-            "getAssociatedCloud",
-            [](CCCoreLib::ReferenceCloud &self) { return self.getAssociatedCloud(); },
-            py::return_value_policy::reference)
-        .def("setAssociatedCloud", &CCCoreLib::ReferenceCloud::setAssociatedCloud)
-        .def("add", &CCCoreLib::ReferenceCloud::add)
-        .def("invalidateBoundingBox", &CCCoreLib::ReferenceCloud::invalidateBoundingBox);
+             static_cast<bool (ReferenceCloud::*)(unsigned, unsigned)>(&ReferenceCloud::addPointIndex),
+             "firstIndex"_a,
+             "lastIndex"_a)
+        .def("setPointIndex", &ReferenceCloud::setPointIndex, "firstIndex"_a, "lastIndex"_a)
+        .def("reserve", &ReferenceCloud::reserve, "n"_a)
+        .def("resize", &ReferenceCloud::resize, "_n")
+        .def("capacity", &ReferenceCloud::capacity)
+        .def("swap", &ReferenceCloud::swap, "i"_a, "j"_a)
+        .def("removeCurrentPointGlobalIndex", &ReferenceCloud::removeCurrentPointGlobalIndex)
+        .def("removePointGlobalIndex", &ReferenceCloud::removePointGlobalIndex, "localIndex"_a)
+        .def("getAssociatedCloud",
+             static_cast<CCCoreLib::GenericIndexedCloudPersist *(ReferenceCloud::*)()>(
+                 &ReferenceCloud::getAssociatedCloud),
+             py::return_value_policy::reference)
+        .def("setAssociatedCloud", &ReferenceCloud::setAssociatedCloud, "cloud"_a)
+        .def("add", &ReferenceCloud::add, "cloud"_a)
+        .def("invalidateBoundingBox", &ReferenceCloud::invalidateBoundingBox);
 }
