@@ -14,5 +14,6 @@ setup(
     },
     include_package_data=True,
     cmake_args=['-GNinja'],
+    install_requires=["numpy"],
     zip_safe=False,
 )

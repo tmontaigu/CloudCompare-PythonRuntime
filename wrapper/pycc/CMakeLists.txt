@@ -96,8 +96,29 @@ if (PYCC_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
                 PATTERN "*.lib" EXCLUDE
                 PATTERN "*.exe" EXCLUDE
             )
+        elseif(APPLE)
+            set_property(
+                TARGET pycc
+                PROPERTY INSTALL_RPATH
+                "@loader_path/../../.." # or "${PYTHON_SITE_PACKAGES}/../..""
+            )
+        else()
+            # Its a bit hacky but its the way we have to make it work as the CMakeLists from
+            # CloudCompare sets the RPATH to a absolute path that does not work in our case
+            foreach(target_name IN ITEMS QCC_DB_LIB QCC_GL_LIB QCC_IO_LIB CC_FBO_LIB)
+                set_property(
+                    TARGET "${target_name}"
+                    PROPERTY INSTALL_RPATH
+                    "$ORIGIN" 
+                )
+            endforeach()
+            set_property(
+                TARGET pycc
+                PROPERTY INSTALL_RPATH
+                "$ORIGIN/../../.." # or "${PYTHON_SITE_PACKAGES}/../..""
+            )
         endif()
-        install(TARGETS pycc DESTINATION pycc)
+        install(TARGETS pycc LIBRARY DESTINATION pycc)
     endif()
 endif()
 

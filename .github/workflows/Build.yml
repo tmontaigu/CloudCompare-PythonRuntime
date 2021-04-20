@@ -73,51 +73,6 @@ jobs:
           cd plugins/private/CloudCompare-PythonPlugin
           pytest --cloudcompare_exe ${{ github.workspace }}/install/CloudCompare/CloudCompare.exe tests
 
-
-  Windows-cccorelib-wheel:
-    name: "Windows wheels"
-    runs-on: windows-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Install Miniconda
-        uses: conda-incubator/setup-miniconda@v2
-        with:
-          activate-environment: CloudCompareDev
-          auto-activate-base: false
-          python-version: "3.7"
-          miniconda-version: 'latest'
-
-      - name: Install Dependencies
-        run: conda install -c conda-forge qt=5.12.*
-
-      - name: Configure MSVC console
-        uses: ilammy/msvc-dev-cmd@v1
-
-      - name: Set environment for MSVC
-        run: |
-          # Set these env vars so cmake picks the correct compiler
-          # https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions#environment-files
-          echo "CXX=cl.exe" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          echo "CC=cl.exe" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-
-      - name: pip install cccorelib
-        working-directory: "./wrapper"
-        run: pip install -v .\cccorelib
-
-      - name: pip install pycc
-        working-directory: "./wrapper"
-        run: pip install -v .\pycc
-
-      - name: test cccorelib
-        run: |
-          pip install pytest
-          pytest wrapper\cccorelib\tests
-
-      - name: test pycc
-        run: python -c "import pycc"
-
   Ubuntu-Build:
     name: Ubuntu
     runs-on: ubuntu-latest
@@ -163,3 +118,78 @@ jobs:
           cd plugins/private/CloudCompare-PythonPlugin
           export LD_LIBRARY_PATH=/usr/local/lib
           xvfb-run python3 -m pytest --cloudcompare_exe /usr/local/bin/CloudCompare tests
+
+
+  Windows-Wheels:
+    name: "Windows Wheels"
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: CloudCompareDev
+          auto-activate-base: false
+          python-version: "3.7"
+          miniconda-version: 'latest'
+
+      - name: Install Dependencies
+        run: conda install -c conda-forge qt=5.12.*
+
+      - name: Configure MSVC console
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Set environment for MSVC
+        run: |
+          # Set these env vars so cmake picks the correct compiler
+          # https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions#environment-files
+          echo "CXX=cl.exe" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "CC=cl.exe" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: pip install cccorelib
+        working-directory: "./wrapper"
+        run: pip install -v .\cccorelib
+
+      - name: pip install pycc
+        working-directory: "./wrapper"
+        run: pip install -v .\pycc
+
+      - name: test cccorelib
+        run: |
+          pip install pytest
+          pytest wrapper\cccorelib\tests
+
+      - name: test pycc
+        run: python -c "import pycc"
+
+  Ubuntu-Wheels:
+    name: "Ubuntu Wheels"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt install build-essential cmake ninja-build libqt5svg5-dev libqt5opengl5-dev qt5-default qttools5-dev qttools5-dev-tools pybind11-dev xvfb
+          python3 -m pip install pytest
+
+      - name: pip install cccorelib
+        working-directory: "./wrapper"
+        run: pip install -v ./cccorelib
+
+      - name: pip install pycc
+        working-directory: "./wrapper"
+        run: pip install -v ./pycc
+
+      - name: test cccorelib
+        run: |
+          pip install pytest
+          pytest wrapper/cccorelib/tests
+
+      - name: test pycc
+        run: python -c "import pycc"
+

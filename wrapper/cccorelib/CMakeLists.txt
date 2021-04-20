@@ -86,6 +86,18 @@ if (CCCORELIB_PYTHON_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES
                 PATTERN "*.lib" EXCLUDE
                 PATTERN "*.exe" EXCLUDE
             )
+        elseif(APPLE)
+            set_property(
+                TARGET cccorelib
+                PROPERTY INSTALL_RPATH
+                "@loader_path/../../.." # or "${PYTHON_SITE_PACKAGES}/../..""
+            )
+        else()
+            set_property(
+                TARGET cccorelib
+                PROPERTY INSTALL_RPATH
+                "$ORIGIN/../../.." # or "${PYTHON_SITE_PACKAGES}/../..""
+            )
         endif()
             install(TARGETS cccorelib LIBRARY DESTINATION cccorelib)
     endif()
