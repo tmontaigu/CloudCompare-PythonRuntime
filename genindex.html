@@ -84,11 +84,15 @@
               
             
             
-              <p><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Plugin Documentation</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="building.html">Building from sources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cccorelib/index.html">CCCoreLib</a></li>
+</ul>
+<p class="caption"><span class="caption-text">APIs Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cccorelib/index.html">cccorelib</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pycc/index.html">pycc</a></li>
 </ul>
 
@@ -182,9 +186,6 @@
  | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
  | <a href="#W"><strong>W</strong></a>
- | <a href="#X"><strong>X</strong></a>
- | <a href="#Y"><strong>Y</strong></a>
- | <a href="#Z"><strong>Z</strong></a>
  
 </div>
 <h2 id="_">_</h2>
@@ -223,6 +224,8 @@
 </li>
       </ul></li>
       <li><a href="pycc/api/data_structures.html#pycc.ccPointCloud.addClipPlanes">addClipPlanes() (pycc.ccPointCloud method)</a>
+</li>
+      <li><a href="cccorelib/data_structures.html#cccorelib.ScalarField.addElement">addElement() (cccorelib.ScalarField method)</a>
 </li>
       <li><a href="pycc/api/primitives.html#pycc.cc2DLabel.addPickedPoint">addPickedPoint() (pycc.cc2DLabel method)</a>
 </li>
@@ -419,11 +422,21 @@
 </li>
         <li><a href="pycc/api/primitives.html#pycc.cc2DLabel.clear">(pycc.cc2DLabel method)</a>
 </li>
+        <li><a href="pycc/api/data_structures.html#pycc.ccGenericPointCloud.clear">(pycc.ccGenericPointCloud method)</a>
+</li>
+        <li><a href="pycc/api/data_structures.html#pycc.ccPointCloud.clear">(pycc.ccPointCloud method)</a>
+</li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pycc/api/primitives.html#pycc.ccGenericPrimitive.clone">clone() (pycc.ccGenericPrimitive method)</a>
+      <li><a href="pycc/api/data_structures.html#pycc.ccGenericPointCloud.clone">clone() (pycc.ccGenericPointCloud method)</a>
+
+      <ul>
+        <li><a href="pycc/api/primitives.html#pycc.ccGenericPrimitive.clone">(pycc.ccGenericPrimitive method)</a>
 </li>
+        <li><a href="pycc/api/data_structures.html#pycc.ccPointCloud.clone">(pycc.ccPointCloud method)</a>
+</li>
+      </ul></li>
       <li><a href="pycc/api/primitives.html#pycc.cc2DLabel.PickedPoint.cloudOrVertices">cloudOrVertices() (pycc.cc2DLabel.PickedPoint method)</a>
 </li>
       <li><a href="pycc/runtime.html#pycc.ccCommandLineInterface.clouds">clouds() (pycc.ccCommandLineInterface method)</a>
@@ -770,6 +783,8 @@
 </li>
       <li><a href="pycc/api/data_structures.html#pycc.ccPointCloud.getCurrentOutScalarFieldIndex">getCurrentOutScalarFieldIndex() (pycc.ccPointCloud method)</a>
 </li>
+      <li><a href="cccorelib/data_structures.html#cccorelib.ReferenceCloud.getCurrentPointCoordinates">getCurrentPointCoordinates() (cccorelib.ReferenceCloud method)</a>
+</li>
       <li><a href="cccorelib/data_structures.html#cccorelib.ReferenceCloud.getCurrentPointGlobalIndex">getCurrentPointGlobalIndex() (cccorelib.ReferenceCloud method)</a>
 </li>
       <li><a href="cccorelib/data_structures.html#cccorelib.ReferenceCloud.getCurrentPointScalarValue">getCurrentPointScalarValue() (cccorelib.ReferenceCloud method)</a>
@@ -938,6 +953,8 @@
         <li><a href="pycc/api/data_structures.html#pycc.ccPointCloud.getUniqueID">(pycc.ccPointCloud method)</a>
 </li>
       </ul></li>
+      <li><a href="cccorelib/data_structures.html#cccorelib.ScalarField.getValue">getValue() (cccorelib.ScalarField method)</a>
+</li>
       <li><a href="pycc/api/primitives.html#pycc.ccPlane.getXWidth">getXWidth() (pycc.ccPlane method)</a>
 </li>
       <li><a href="pycc/api/primitives.html#pycc.ccPlane.getYWidth">getYWidth() (pycc.ccPlane method)</a>
@@ -1000,7 +1017,7 @@
       </ul></li>
       <li><a href="cccorelib/tools.html#cccorelib.ManualSegmentationTools.MeshCutterParams.insideMesh">insideMesh() (cccorelib.ManualSegmentationTools.MeshCutterParams property)</a>
 </li>
-      <li><a href="cccorelib/data_structures.html#cccorelib.DgmOctree.INVALID_CELL_CODE">INVALID_CELL_CODE() (cccorelib.DgmOctree property)</a>
+      <li><a href="cccorelib/data_structures.html#cccorelib.DgmOctree.INVALID_CELL_CODE">INVALID_CELL_CODE (cccorelib.DgmOctree attribute)</a>
 </li>
       <li><a href="cccorelib/data_structures.html#cccorelib.ReferenceCloud.invalidateBoundingBox">invalidateBoundingBox() (cccorelib.ReferenceCloud method)</a>
 
@@ -1148,14 +1165,14 @@
 </li>
       <li><a href="cccorelib/tools.html#cccorelib.ManualSegmentationTools.MeshCutterParams">ManualSegmentationTools.MeshCutterParams (class in cccorelib)</a>
 </li>
-      <li><a href="cccorelib/tools.html#cccorelib.DistanceComputationTools.MAX_DIST">MAX_DIST (cccorelib.DistanceComputationTools attribute)</a>
+      <li><a href="cccorelib/tools.html#cccorelib.ChamferDistanceTransform.MAX_DIST">MAX_DIST (cccorelib.ChamferDistanceTransform attribute)</a>
 
       <ul>
+        <li><a href="cccorelib/tools.html#cccorelib.DistanceComputationTools.MAX_DIST">(cccorelib.DistanceComputationTools attribute)</a>
+</li>
         <li><a href="cccorelib/tools.html#cccorelib.DistanceComputationTools.ERRPOR_MEASURES.MAX_DIST">(cccorelib.DistanceComputationTools.ERRPOR_MEASURES attribute)</a>
 </li>
       </ul></li>
-      <li><a href="cccorelib/tools.html#cccorelib.ChamferDistanceTransform.MAX_DIST">MAX_DIST() (cccorelib.ChamferDistanceTransform property)</a>
-</li>
       <li><a href="cccorelib/tools.html#cccorelib.DistanceComputationTools.MAX_DIST_68_PERCENT">MAX_DIST_68_PERCENT (cccorelib.DistanceComputationTools attribute)</a>
 
       <ul>
@@ -1176,9 +1193,9 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="cccorelib/data_structures.html#cccorelib.DgmOctree.MAX_OCTREE_LENGTH">MAX_OCTREE_LENGTH() (cccorelib.DgmOctree property)</a>
+      <li><a href="cccorelib/data_structures.html#cccorelib.DgmOctree.MAX_OCTREE_LENGTH">MAX_OCTREE_LENGTH (cccorelib.DgmOctree attribute)</a>
 </li>
-      <li><a href="cccorelib/data_structures.html#cccorelib.DgmOctree.MAX_OCTREE_LEVEL">MAX_OCTREE_LEVEL() (cccorelib.DgmOctree property)</a>
+      <li><a href="cccorelib/data_structures.html#cccorelib.DgmOctree.MAX_OCTREE_LEVEL">MAX_OCTREE_LEVEL (cccorelib.DgmOctree attribute)</a>
 </li>
       <li><a href="cccorelib/data_structures.html#cccorelib.BoundingBox.maxCorner">maxCorner() (cccorelib.BoundingBox method)</a>
 </li>
@@ -1614,6 +1631,8 @@
 </li>
       <li><a href="cccorelib/data_structures.html#cccorelib.BoundingBox.setValidity">setValidity() (cccorelib.BoundingBox method)</a>
 </li>
+      <li><a href="cccorelib/data_structures.html#cccorelib.ScalarField.setValue">setValue() (cccorelib.ScalarField method)</a>
+</li>
       <li><a href="pycc/api/data_structures.html#pycc.ccPointCloud.setVisible">setVisible() (pycc.ccPointCloud method)</a>
 </li>
       <li><a href="pycc/api/primitives.html#pycc.ccPlane.setXWidth">setXWidth() (pycc.ccPlane method)</a>
@@ -1802,7 +1821,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pycc/runtime.html#pycc.ccPythonInstance.updateUI">updateUI() (pycc.ccPythonInstance method)</a>
 </li>
-      <li><a href="cccorelib/data_structures.html#cccorelib.Delaunay2dMesh.USE_ALL_POINTS">USE_ALL_POINTS() (cccorelib.Delaunay2dMesh property)</a>
+      <li><a href="cccorelib/data_structures.html#cccorelib.Delaunay2dMesh.USE_ALL_POINTS">USE_ALL_POINTS (cccorelib.Delaunay2dMesh attribute)</a>
 </li>
       <li><a href="pycc/api/primitives.html#pycc.cc2DLabel.PickedPoint.uv">uv() (pycc.cc2DLabel.PickedPoint property)</a>
 </li>
@@ -1847,30 +1866,6 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pycc/api/others.html#pycc.ccLog.Warning">Warning() (pycc.ccLog static method)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="X">X</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="cccorelib/data_structures.html#cccorelib.CCVector3.x">x() (cccorelib.CCVector3 property)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="Y">Y</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="cccorelib/data_structures.html#cccorelib.CCVector3.y">y() (cccorelib.CCVector3 property)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="Z">Z</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="cccorelib/data_structures.html#cccorelib.CCVector3.z">z() (cccorelib.CCVector3 property)</a>
 </li>
   </ul></td>
 </tr></table>

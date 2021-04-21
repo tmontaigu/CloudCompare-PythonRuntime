@@ -1,0 +1,103 @@
+Building from sources
+=====================
+
+In the following sections we assume that you know
+how to compile CloudCompare from source, otherwise refer
+to the CloudCompare documentation on how to do.
+
+
+To Compile this plugin you need to have Python installed.
+
+
+Windows
+-------
+
+1. Clone this project into CloudCompare/plugins/private
+2. Create a virtual environment via ``venv`` or ``conda``
+   
+   .. code-block::
+        
+       # Python's venv
+       python -m venv .\pyccvenv 
+
+       # Conda environment
+       conda create -n pyccenv 
+
+3. Activate the environment
+
+   .. code-block::
+
+       # Python's venv (PowerShell)
+       .\pyccenv\Scripts\Activate.ps1
+
+       # Conda environment
+       conda activate pyccenv
+
+4. install dependencies
+    
+   .. code-block::
+
+       pip install -r requirements-release.txt
+
+5. Generate the cmake config
+
+    To generate the cmake config you have 2 options:
+
+    1. Start the cmake generation while still within the activated environment
+    
+    2. Add ``-DPTYHON_EXECUTABLE="somepath_to_python.exe"``
+       Where ``somepath_to_python.exe`` is the absolute path to the python executable 
+       of the pyccenv created earlier. 
+
+       To get it, run: ``python -c "import sys;print(sys.executable)"`` (while in the activated env)
+
+    In both cases the cmake option to add in order to build the plugin in ``-DPLUGIN_PYTHON=ON``
+   
+
+Linux
+-----
+
+
+1. Clone this project in CloudCompare/plugins/private
+2. Install additional dependencies
+
+    Ubuntu: ``libpython3-dev`` and ``pybind11-dev`` (only available since 20.04)
+
+    Fedora: ``python3-devel`` and  ``pybind11-devel``
+
+
+3. Run cmake with ``-DPLUGIN_PYTHON=ON``
+4. Build
+5. Install
+
+
+
+Other development related things
+--------------------------------
+
+
+Running the tests
+_________________
+
+Tests works by running CloudCompare in command line mode.
+To run them, you need pytest, and you need to provide to pytest the path the where CloudCompare is installed
+
+.. code-block::
+    
+    # in CloudCompare/plugins/private/CloudCompare-PythonPlugin:
+
+    pytest --cloudcompare_exe "C:\CMakeBuilds\CloudCompare\Release\install\CloudCompare\CloudCompare.exe" tests
+
+Building the documentation
+__________________________
+
+Building the documentation also works by running CloudCompare in command line mode.
+To build the documentation:
+
+.. code-block::
+
+    cd docs
+    .\make-docs.ps1 "C:\CMakeBuilds\CloudCompare\Release\install\CloudCompare\CloudCompare.exe"
+
+Which by default will build the docs in HTML in docs/_build. Open docs/_build/index.html to view it.
+(The output dir can be changed using the `-OutputDir` option)

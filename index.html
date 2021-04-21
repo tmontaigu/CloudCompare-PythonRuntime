@@ -4,11 +4,10 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Welcome to CloudCompare’s Python plugin &mdash; CloudCompare-PythonPlugin  documentation</title>
+  <title>CloudCompare-PythonPlugin &mdash; CloudCompare-PythonPlugin  documentation</title>
   
 
   
@@ -39,7 +38,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Getting Started" href="getting_started.html" />
+    <link rel="next" title="Building from sources" href="building.html" />
 <link href="_static/style.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -86,11 +85,15 @@
               
             
             
-              <p><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Plugin Documentation</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="building.html">Building from sources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cccorelib/index.html">CCCoreLib</a></li>
+</ul>
+<p class="caption"><span class="caption-text">APIs Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cccorelib/index.html">cccorelib</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pycc/index.html">pycc</a></li>
 </ul>
 
@@ -140,7 +143,7 @@
     
       <li><a href="#" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Welcome to CloudCompare’s Python plugin</li>
+      <li>CloudCompare-PythonPlugin</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -159,11 +162,27 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="welcome-to-cloudcompare-s-python-plugin">
-<h1>Welcome to CloudCompare’s Python plugin<a class="headerlink" href="#welcome-to-cloudcompare-s-python-plugin" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="cloudcompare-pythonplugin">
+<h1>CloudCompare-PythonPlugin<a class="headerlink" href="#cloudcompare-pythonplugin" title="Permalink to this headline">¶</a></h1>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>This plugin is in its very early stage, so a lot of things are missings
+and some things may not work.</p>
+<p>And some names, functions are subject to change.</p>
+</div>
+<p>This plugin allows to write Python scripts in CloudCompare,
+by providing python bindings to the set of CloudCompare’s
+libraries (that you can use in C++ plugins) as well as embedding a python
+interpreter to run scripts.</p>
 <div class="toctree-wrapper compound">
-<p><span class="caption-text">Contents:</span></p>
+<p class="caption"><span class="caption-text">Plugin Documentation</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="building.html">Building from sources</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="building.html#windows">Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="building.html#linux">Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="building.html#other-development-related-things">Other development related things</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="getting_started.html#gui">GUI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="getting_started.html#command-line">Command Line</a></li>
@@ -175,7 +194,12 @@
 <li class="toctree-l2"><a class="reference internal" href="examples.html#merge">Merge</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="cccorelib/index.html">CCCoreLib</a><ul>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">APIs Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cccorelib/index.html">cccorelib</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="cccorelib/tools.html">CCCoreLib Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cccorelib/data_structures.html">CCCoreLib Data Structures &amp; Interfaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cccorelib/others.html">Others</a></li>
@@ -188,15 +212,15 @@
 </li>
 </ul>
 </div>
-</section>
-<section id="indices-and-tables">
+</div>
+<div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
-</section>
+</div>
 
 
            </div>
@@ -204,7 +228,7 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="getting_started.html" class="btn btn-neutral float-right" title="Getting Started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="building.html" class="btn btn-neutral float-right" title="Building from sources" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

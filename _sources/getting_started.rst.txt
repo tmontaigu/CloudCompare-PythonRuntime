@@ -1,14 +1,6 @@
 Getting Started
 ===============
 
-
-This plugin allows to write Python scripts to automate some tasks in CloudCompare
-
-.. caution::
-    This plugin is in its very early stage, so a lot of things are missings
-    some things may not work, bugs are most probably common, etc
-
-
 This plugin allows to run scripts in the 2 _CloudCompares_ 'modes': GUI & CommandLine.
 
 GUI

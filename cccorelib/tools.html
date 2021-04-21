@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>CCCoreLib Tools &mdash; CloudCompare-PythonPlugin  documentation</title>
@@ -87,10 +86,13 @@
               
             
             
-              <p><span class="caption-text">Contents:</span></p>
-<ul class="current">
+              <p class="caption"><span class="caption-text">Plugin Documentation</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">APIs Documentation</span></p>
+<ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">CCCoreLib</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">CCCoreLib Tools</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#ccmisctools">CCMiscTools</a></li>
@@ -180,10 +182,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="cccorelib-tools">
+  <div class="section" id="cccorelib-tools">
 <h1>CCCoreLib Tools<a class="headerlink" href="#cccorelib-tools" title="Permalink to this headline">¶</a></h1>
 <p>Available tools from cccorelib.</p>
-<section id="ccmisctools">
+<div class="section" id="ccmisctools">
 <h2>CCMiscTools<a class="headerlink" href="#ccmisctools" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="cccorelib.CCMiscTools">
@@ -220,8 +222,8 @@
 
 </dd></dl>
 
-</section>
-<section id="autosegmentationtools">
+</div>
+<div class="section" id="autosegmentationtools">
 <h2>AutoSegmentationTools<a class="headerlink" href="#autosegmentationtools" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="cccorelib.AutoSegmentationTools">
@@ -243,8 +245,8 @@
 
 </dd></dl>
 
-</section>
-<section id="distancecomputationtools">
+</div>
+<div class="section" id="distancecomputationtools">
 <h2>DistanceComputationTools<a class="headerlink" href="#distancecomputationtools" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="cccorelib.DistanceComputationTools">
@@ -322,8 +324,8 @@
 
 </dd></dl>
 
-</section>
-<section id="manualsegmentationtools">
+</div>
+<div class="section" id="manualsegmentationtools">
 <h2>ManualSegmentationTools<a class="headerlink" href="#manualsegmentationtools" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="cccorelib.ManualSegmentationTools">
@@ -394,7 +396,7 @@
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
 <li><p>isPointInsidePoly(P: cccorelib.CCVector2, polyVertices: cccorelib.GenericIndexedCloud) -&gt; bool</p></li>
-<li><p>isPointInsidePoly(P: cccorelib.CCVector2, polyVertices: std::vector&lt;Vector2Tpl&lt;float&gt;,std::allocator&lt;Vector2Tpl&lt;float&gt; &gt; &gt;) -&gt; bool</p></li>
+<li><p>isPointInsidePoly(P: cccorelib.CCVector2, polyVertices: cccorelib.CCVector2List) -&gt; bool</p></li>
 </ol>
 </dd></dl>
 
@@ -430,8 +432,8 @@
 
 </dd></dl>
 
-</section>
-<section id="scalarfieldtools">
+</div>
+<div class="section" id="scalarfieldtools">
 <h2>ScalarFieldTools<a class="headerlink" href="#scalarfieldtools" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="cccorelib.ScalarFieldTools">
@@ -498,8 +500,8 @@
 
 </dd></dl>
 
-</section>
-<section id="chamferdistancetools">
+</div>
+<div class="section" id="chamferdistancetools">
 <h2>ChamferDistanceTools<a class="headerlink" href="#chamferdistancetools" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="cccorelib.ChamferDistanceTransform">
@@ -514,15 +516,15 @@
 <code class="sig-name descname"><span class="pre">propagateDistance</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#cccorelib.ChamferDistanceTransform" title="cccorelib.ChamferDistanceTransform"><span class="pre">cccorelib.ChamferDistanceTransform</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">cccorelib.CHAMFER_DISTANCE_TYPE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progressCb</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="others.html#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#cccorelib.ChamferDistanceTransform.propagateDistance" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
+<dl class="py attribute">
 <dt id="cccorelib.ChamferDistanceTransform.MAX_DIST">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">MAX_DIST</span></code><a class="headerlink" href="#cccorelib.ChamferDistanceTransform.MAX_DIST" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">MAX_DIST</span></code><em class="property"> <span class="pre">=</span> <span class="pre">64250</span></em><a class="headerlink" href="#cccorelib.ChamferDistanceTransform.MAX_DIST" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-</section>
-<section id="cloudsamplingtools">
+</div>
+<div class="section" id="cloudsamplingtools">
 <h2>CloudSamplingTools<a class="headerlink" href="#cloudsamplingtools" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="cccorelib.CloudSamplingTools">
@@ -665,8 +667,8 @@
 
 </dd></dl>
 
-</section>
-<section id="geometricalanalysistools">
+</div>
+<div class="section" id="geometricalanalysistools">
 <h2>GeometricalAnalysisTools<a class="headerlink" href="#geometricalanalysistools" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="cccorelib.GeometricalAnalysisTools">
@@ -823,7 +825,7 @@
 
 <dl class="py method">
 <dt id="cccorelib.GeometricalAnalysisTools.ComputeCharactersitic">
-<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">ComputeCharactersitic</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">c:</span> <span class="pre">CCCoreLib::GeometricalAnalysisTools::GeomCharacteristic</span></em>, <em class="sig-param"><span class="pre">subOptions:</span> <span class="pre">int</span></em>, <em class="sig-param"><span class="pre">cloud:</span> <span class="pre">cccorelib.GenericIndexedCloudPersist</span></em>, <em class="sig-param"><span class="pre">kernelRadius:</span> <span class="pre">float</span></em>, <em class="sig-param"><span class="pre">progressCb:</span> <span class="pre">cccorelib.GenericProgressCallback</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">inputOctree:</span> <span class="pre">cccorelib.DgmOctree</span> <span class="pre">=</span> <span class="pre">None</span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">CCCoreLib::GeometricalAnalysisTools::ErrorCode</span><a class="headerlink" href="#cccorelib.GeometricalAnalysisTools.ComputeCharactersitic" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">ComputeCharactersitic</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#cccorelib.GeometricalAnalysisTools.GeomCharacteristic" title="cccorelib.GeometricalAnalysisTools.GeomCharacteristic"><span class="pre">cccorelib.GeometricalAnalysisTools.GeomCharacteristic</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">subOptions</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cloud</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.GenericIndexedCloudPersist" title="cccorelib.GenericIndexedCloudPersist"><span class="pre">cccorelib.GenericIndexedCloudPersist</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernelRadius</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progressCb</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="others.html#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputOctree</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.DgmOctree" title="cccorelib.DgmOctree"><span class="pre">cccorelib.DgmOctree</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#cccorelib.GeometricalAnalysisTools.ErrorCode" title="cccorelib.GeometricalAnalysisTools.ErrorCode"><span class="pre">cccorelib.GeometricalAnalysisTools.ErrorCode</span></a><a class="headerlink" href="#cccorelib.GeometricalAnalysisTools.ComputeCharactersitic" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -838,12 +840,12 @@
 
 <dl class="py method">
 <dt id="cccorelib.GeometricalAnalysisTools.ComputeLocalDensityApprox">
-<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">ComputeLocalDensityApprox</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cloud:</span> <span class="pre">cccorelib.GenericIndexedCloudPersist</span></em>, <em class="sig-param"><span class="pre">densityType:</span> <span class="pre">CCCoreLib::GeometricalAnalysisTools::Density</span></em>, <em class="sig-param"><span class="pre">progressCb:</span> <span class="pre">cccorelib.GenericProgressCallback</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">DgmOctree:</span> <span class="pre">cccorelib.DgmOctree</span> <span class="pre">=</span> <span class="pre">None</span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">CCCoreLib::GeometricalAnalysisTools::ErrorCode</span><a class="headerlink" href="#cccorelib.GeometricalAnalysisTools.ComputeLocalDensityApprox" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">ComputeLocalDensityApprox</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cloud</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.GenericIndexedCloudPersist" title="cccorelib.GenericIndexedCloudPersist"><span class="pre">cccorelib.GenericIndexedCloudPersist</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">densityType</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#cccorelib.GeometricalAnalysisTools.Density" title="cccorelib.GeometricalAnalysisTools.Density"><span class="pre">cccorelib.GeometricalAnalysisTools.Density</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">progressCb</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="others.html#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DgmOctree</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.DgmOctree" title="cccorelib.DgmOctree"><span class="pre">cccorelib.DgmOctree</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#cccorelib.GeometricalAnalysisTools.ErrorCode" title="cccorelib.GeometricalAnalysisTools.ErrorCode"><span class="pre">cccorelib.GeometricalAnalysisTools.ErrorCode</span></a><a class="headerlink" href="#cccorelib.GeometricalAnalysisTools.ComputeLocalDensityApprox" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="cccorelib.GeometricalAnalysisTools.ComputeSphereFrom4">
-<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">ComputeSphereFrom4</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">CCCoreLib::GeometricalAnalysisTools::ErrorCode</span><a class="headerlink" href="#cccorelib.GeometricalAnalysisTools.ComputeSphereFrom4" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">ComputeSphereFrom4</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#cccorelib.GeometricalAnalysisTools.ErrorCode" title="cccorelib.GeometricalAnalysisTools.ErrorCode"><span class="pre">cccorelib.GeometricalAnalysisTools.ErrorCode</span></a><a class="headerlink" href="#cccorelib.GeometricalAnalysisTools.ComputeSphereFrom4" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -858,12 +860,12 @@
 
 <dl class="py method">
 <dt id="cccorelib.GeometricalAnalysisTools.DetectSphereRobust">
-<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">DetectSphereRobust</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cloud</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.GenericIndexedCloudPersist" title="cccorelib.GenericIndexedCloudPersist"><span class="pre">cccorelib.GenericIndexedCloudPersist</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">outlierRatio</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rms</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progressCb</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="others.html#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0.99</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">CCCoreLib::GeometricalAnalysisTools::ErrorCode</span><a class="headerlink" href="#cccorelib.GeometricalAnalysisTools.DetectSphereRobust" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">DetectSphereRobust</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cloud</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.GenericIndexedCloudPersist" title="cccorelib.GenericIndexedCloudPersist"><span class="pre">cccorelib.GenericIndexedCloudPersist</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">outlierRatio</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rms</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progressCb</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="others.html#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0.99</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#cccorelib.GeometricalAnalysisTools.ErrorCode" title="cccorelib.GeometricalAnalysisTools.ErrorCode"><span class="pre">cccorelib.GeometricalAnalysisTools.ErrorCode</span></a><a class="headerlink" href="#cccorelib.GeometricalAnalysisTools.DetectSphereRobust" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="cccorelib.GeometricalAnalysisTools.FlagDuplicatePoints">
-<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">FlagDuplicatePoints</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theCloud</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.GenericIndexedCloudPersist" title="cccorelib.GenericIndexedCloudPersist"><span class="pre">cccorelib.GenericIndexedCloudPersist</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">minDistanceBetweenPoints</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progressCb</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="others.html#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputOctree</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.DgmOctree" title="cccorelib.DgmOctree"><span class="pre">cccorelib.DgmOctree</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">CCCoreLib::GeometricalAnalysisTools::ErrorCode</span><a class="headerlink" href="#cccorelib.GeometricalAnalysisTools.FlagDuplicatePoints" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">FlagDuplicatePoints</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theCloud</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.GenericIndexedCloudPersist" title="cccorelib.GenericIndexedCloudPersist"><span class="pre">cccorelib.GenericIndexedCloudPersist</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">minDistanceBetweenPoints</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progressCb</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="others.html#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputOctree</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="data_structures.html#cccorelib.DgmOctree" title="cccorelib.DgmOctree"><span class="pre">cccorelib.DgmOctree</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#cccorelib.GeometricalAnalysisTools.ErrorCode" title="cccorelib.GeometricalAnalysisTools.ErrorCode"><span class="pre">cccorelib.GeometricalAnalysisTools.ErrorCode</span></a><a class="headerlink" href="#cccorelib.GeometricalAnalysisTools.FlagDuplicatePoints" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -953,8 +955,8 @@
 
 </dd></dl>
 
-</section>
-<section id="statisticaltestingtools">
+</div>
+<div class="section" id="statisticaltestingtools">
 <h2>StatisticalTestingTools<a class="headerlink" href="#statisticaltestingtools" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="cccorelib.StatisticalTestingTools">
@@ -981,8 +983,8 @@
 
 </dd></dl>
 
-</section>
-<section id="pointprojectiontools">
+</div>
+<div class="section" id="pointprojectiontools">
 <h2>PointProjectionTools<a class="headerlink" href="#pointprojectiontools" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="cccorelib.PointProjectionTools">
@@ -1032,7 +1034,7 @@
 <em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">applyTransformation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cccorelib.PointProjectionTools.applyTransformation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>applyTransformation(cloud: cccorelib.GenericCloud, trans: CCCoreLib::PointProjectionTools::Transformation, progressCb: cccorelib.GenericProgressCallback = None) -&gt; cccorelib.PointCloud</p></li>
+<li><p>applyTransformation(cloud: cccorelib.GenericCloud, trans: cccorelib.PointProjectionTools.Transformation, progressCb: cccorelib.GenericProgressCallback = None) -&gt; cccorelib.PointCloud</p></li>
 <li><p>applyTransformation(cloud: cccorelib.GenericCloud, trans: cccorelib.PointProjectionTools.Transformation, progressCb: cccorelib.GenericProgressCallback = None) -&gt; cccorelib.PointCloud</p></li>
 </ol>
 </dd></dl>
@@ -1069,8 +1071,8 @@
 
 </dd></dl>
 
-</section>
-<section id="registrationtools">
+</div>
+<div class="section" id="registrationtools">
 <h2>RegistrationTools<a class="headerlink" href="#registrationtools" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="cccorelib.RegistrationTools">
@@ -1197,8 +1199,8 @@
 
 </dd></dl>
 
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

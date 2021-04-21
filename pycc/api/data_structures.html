@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>CloudCompare Data Structures &amp; Interfaces &mdash; CloudCompare-PythonPlugin  documentation</title>
@@ -87,10 +86,13 @@
               
             
             
-              <p><span class="caption-text">Contents:</span></p>
-<ul class="current">
+              <p class="caption"><span class="caption-text">Plugin Documentation</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">APIs Documentation</span></p>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../cccorelib/index.html">CCCoreLib</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">pycc</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../runtime.html">pycc Runtime</a></li>
@@ -178,11 +180,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="cloudcompare-data-structures-interfaces">
+  <div class="section" id="cloudcompare-data-structures-interfaces">
 <h1>CloudCompare Data Structures &amp; Interfaces<a class="headerlink" href="#cloudcompare-data-structures-interfaces" title="Permalink to this headline">¶</a></h1>
-<section id="base">
+<div class="section" id="base">
 <h2>Base<a class="headerlink" href="#base" title="Permalink to this headline">¶</a></h2>
-<section id="ccobject">
+<div class="section" id="ccobject">
 <h3>ccObject<a class="headerlink" href="#ccobject" title="Permalink to this headline">¶</a></h3>
 <dl class="py class">
 <dt id="pycc.ccObject">
@@ -245,8 +247,8 @@
 
 </dd></dl>
 
-</section>
-<section id="cchobject">
+</div>
+<div class="section" id="cchobject">
 <h3>ccHObject<a class="headerlink" href="#cchobject" title="Permalink to this headline">¶</a></h3>
 <dl class="py class">
 <dt id="pycc.ccHObject">
@@ -284,20 +286,30 @@
 
 </dd></dl>
 
-</section>
-</section>
-<section id="pointcloud">
+</div>
+</div>
+<div class="section" id="pointcloud">
 <h2>PointCloud<a class="headerlink" href="#pointcloud" title="Permalink to this headline">¶</a></h2>
-<section id="ccgenericpointcloud">
+<div class="section" id="ccgenericpointcloud">
 <h3>ccGenericPointCloud<a class="headerlink" href="#ccgenericpointcloud" title="Permalink to this headline">¶</a></h3>
 <dl class="py class">
 <dt id="pycc.ccGenericPointCloud">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pycc.</span></code><code class="sig-name descname"><span class="pre">ccGenericPointCloud</span></code><a class="headerlink" href="#pycc.ccGenericPointCloud" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccShiftedObject</span></code>, <a class="reference internal" href="../../cccorelib/data_structures.html#cccorelib.GenericIndexedCloudPersist" title="cccorelib.GenericIndexedCloudPersist"><code class="xref py py-class docutils literal notranslate"><span class="pre">cccorelib.GenericIndexedCloudPersist</span></code></a></p>
+<dl class="py method">
+<dt id="pycc.ccGenericPointCloud.clear">
+<code class="sig-name descname"><span class="pre">clear</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccGenericPointCloud" title="pycc.ccGenericPointCloud"><span class="pre">pycc.ccGenericPointCloud</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.ccGenericPointCloud.clear" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccGenericPointCloud.clone">
+<code class="sig-name descname"><span class="pre">clone</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccGenericPointCloud" title="pycc.ccGenericPointCloud"><span class="pre">pycc.ccGenericPointCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">desttClous</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccGenericPointCloud" title="pycc.ccGenericPointCloud"><span class="pre">pycc.ccGenericPointCloud</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignoreChildren</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pycc.ccGenericPointCloud" title="pycc.ccGenericPointCloud"><span class="pre">pycc.ccGenericPointCloud</span></a><a class="headerlink" href="#pycc.ccGenericPointCloud.clone" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
-</section>
-<section id="ccpointcloud">
+</div>
+<div class="section" id="ccpointcloud">
 <h3>ccPointCloud<a class="headerlink" href="#ccpointcloud" title="Permalink to this headline">¶</a></h3>
 <dl class="py class">
 <dt id="pycc.ccPointCloud">
@@ -316,6 +328,16 @@
 <dl class="py method">
 <dt id="pycc.ccPointCloud.addScalarField">
 <code class="sig-name descname"><span class="pre">addScalarField</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pycc.__ccGenericPointCloudTpl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uniqueName</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#pycc.ccPointCloud.addScalarField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPointCloud.clear">
+<code class="sig-name descname"><span class="pre">clear</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccGenericPointCloud" title="pycc.ccGenericPointCloud"><span class="pre">pycc.ccGenericPointCloud</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.ccPointCloud.clear" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPointCloud.clone">
+<code class="sig-name descname"><span class="pre">clone</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccGenericPointCloud" title="pycc.ccGenericPointCloud"><span class="pre">pycc.ccGenericPointCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">desttClous</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccGenericPointCloud" title="pycc.ccGenericPointCloud"><span class="pre">pycc.ccGenericPointCloud</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignoreChildren</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pycc.ccGenericPointCloud" title="pycc.ccGenericPointCloud"><span class="pre">pycc.ccGenericPointCloud</span></a><a class="headerlink" href="#pycc.ccPointCloud.clone" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -825,7 +847,7 @@
 
 <dl class="py method">
 <dt id="pycc.ccPointCloud.testVisibility">
-<code class="sig-name descname"><span class="pre">testVisibility</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../../cccorelib/data_structures.html#cccorelib.GenericCloud" title="cccorelib.GenericCloud"><span class="pre">cccorelib.GenericCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#pycc.ccPointCloud.testVisibility" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">testVisibility</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../../cccorelib/data_structures.html#cccorelib.GenericCloud" title="cccorelib.GenericCloud"><span class="pre">cccorelib.GenericCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">P</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#pycc.ccPointCloud.testVisibility" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -875,11 +897,11 @@
 
 </dd></dl>
 
-</section>
-</section>
-<section id="mesh">
+</div>
+</div>
+<div class="section" id="mesh">
 <h2>Mesh<a class="headerlink" href="#mesh" title="Permalink to this headline">¶</a></h2>
-<section id="ccgenericmesh">
+<div class="section" id="ccgenericmesh">
 <h3>ccGenericMesh<a class="headerlink" href="#ccgenericmesh" title="Permalink to this headline">¶</a></h3>
 <dl class="py class">
 <dt id="pycc.ccGenericMesh">
@@ -957,8 +979,8 @@
 
 </dd></dl>
 
-</section>
-<section id="ccmesh">
+</div>
+<div class="section" id="ccmesh">
 <h3>ccMesh<a class="headerlink" href="#ccmesh" title="Permalink to this headline">¶</a></h3>
 <dl class="py class">
 <dt id="pycc.ccMesh">
@@ -971,9 +993,9 @@
 
 </dd></dl>
 
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
 
            </div>
