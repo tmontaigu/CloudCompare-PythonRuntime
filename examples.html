@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Examples &mdash; CloudCompare-PythonPlugin  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="CCCoreLib" href="cccorelib/index.html" />
+    <link rel="prev" title="Getting Started" href="getting_started.html" />
+<link href="_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> CloudCompare-PythonPlugin
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#loading-a-file">Loading a file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sub-sampling">Sub sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#merge">Merge</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cccorelib/index.html">CCCoreLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pycc/index.html">pycc</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CloudCompare-PythonPlugin</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Examples</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/examples.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
+<section id="loading-a-file">
+<h2>Loading a file<a class="headerlink" href="#loading-a-file" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pycc</span>
+
+<span class="n">CC</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">GetInstance</span><span class="p">()</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">FileIOFilter</span><span class="o">.</span><span class="n">LoadParameters</span><span class="p">()</span>
+<span class="n">params</span><span class="o">.</span><span class="n">parentWidget</span> <span class="o">=</span> <span class="n">CC</span><span class="o">.</span><span class="n">getMainWindow</span><span class="p">()</span>
+
+<span class="n">path</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;C:\Users\t.montaigu\Projects\CloudCompare\plugins\private\CloudCompare-PythonPlugin\tests\data\a_cloud.bin&quot;</span>
+
+
+<span class="c1"># This automatically adds the loaded entities</span>
+<span class="c1"># to the DB on success, and raises an exception if an error occured</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">CC</span><span class="o">.</span><span class="n">loadFile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+
+<span class="c1"># This does not add to the DB, and returns None if the loading failed</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">FileIOFilter</span><span class="o">.</span><span class="n">LoadFromFile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Failed to load the file&quot;</span><span class="p">)</span>
+    <span class="n">CC</span><span class="o">.</span><span class="n">addToDB</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="sub-sampling">
+<h2>Sub sampling<a class="headerlink" href="#sub-sampling" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cccorelib</span>
+<span class="kn">import</span> <span class="nn">pycc</span>
+
+<span class="n">CC</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">GetInstance</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">doSubSampling</span><span class="p">(</span><span class="n">pc</span><span class="p">):</span>
+    <span class="n">refcloud</span> <span class="o">=</span> <span class="n">cccorelib</span><span class="o">.</span><span class="n">CloudSamplingTools</span><span class="o">.</span><span class="n">subsampleCloudRandomly</span><span class="p">(</span><span class="n">pc</span><span class="p">,</span> <span class="n">pc</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">randomPc</span> <span class="o">=</span> <span class="n">pc</span><span class="o">.</span><span class="n">partialClone</span><span class="p">(</span><span class="n">refcloud</span><span class="p">)</span>
+    <span class="n">randomPc</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s2">&quot;Randomly subsampled&quot;</span><span class="p">)</span>
+    <span class="n">CC</span><span class="o">.</span><span class="n">addToDB</span><span class="p">(</span><span class="n">randomPc</span><span class="p">)</span>
+
+    <span class="n">refcloud</span> <span class="o">=</span> <span class="n">cccorelib</span><span class="o">.</span><span class="n">CloudSamplingTools</span><span class="o">.</span><span class="n">subsampleCloudWithOctree</span><span class="p">(</span><span class="n">pc</span><span class="p">,</span> <span class="n">pc</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">//</span> <span class="mi">4</span><span class="p">,</span>
+                                                                     <span class="n">cccorelib</span><span class="o">.</span><span class="n">CloudSamplingTools</span><span class="o">.</span><span class="n">RANDOM_POINT</span><span class="p">)</span>
+    <span class="n">randomPc</span> <span class="o">=</span> <span class="n">pc</span><span class="o">.</span><span class="n">partialClone</span><span class="p">(</span><span class="n">refcloud</span><span class="p">)</span>
+    <span class="n">randomPc</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s2">&quot;Subsampled using octree (RANDOM_POINT)&quot;</span><span class="p">)</span>
+    <span class="n">CC</span><span class="o">.</span><span class="n">addToDB</span><span class="p">(</span><span class="n">randomPc</span><span class="p">)</span>
+
+    <span class="n">refcloud</span> <span class="o">=</span> <span class="n">cccorelib</span><span class="o">.</span><span class="n">CloudSamplingTools</span><span class="o">.</span><span class="n">subsampleCloudWithOctree</span><span class="p">(</span><span class="n">pc</span><span class="p">,</span> <span class="n">pc</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">//</span> <span class="mi">4</span><span class="p">,</span>
+                                                                     <span class="n">cccorelib</span><span class="o">.</span><span class="n">CloudSamplingTools</span><span class="o">.</span><span class="n">NEAREST_POINT_TO_CELL_CENTER</span><span class="p">)</span>
+    <span class="n">randomPc</span> <span class="o">=</span> <span class="n">pc</span><span class="o">.</span><span class="n">partialClone</span><span class="p">(</span><span class="n">refcloud</span><span class="p">)</span>
+    <span class="n">randomPc</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s2">&quot;Subsampled using octree (NEAREST_POINT_TO_CELL_CENTER)&quot;</span><span class="p">)</span>
+    <span class="n">CC</span><span class="o">.</span><span class="n">addToDB</span><span class="p">(</span><span class="n">randomPc</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">entities</span> <span class="o">=</span> <span class="n">CC</span><span class="o">.</span><span class="n">getSelectedEntities</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Selected entities: </span><span class="si">{</span><span class="n">entities</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">entities</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No entities selected&quot;</span><span class="p">)</span>
+
+    <span class="n">pointCloud</span> <span class="o">=</span> <span class="n">entities</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pointCloud</span><span class="p">)</span>
+
+    <span class="n">pycc</span><span class="o">.</span><span class="n">RunInThread</span><span class="p">(</span><span class="n">doSubSampling</span><span class="p">,</span> <span class="n">pointCloud</span><span class="p">)</span>
+
+    <span class="n">CC</span><span class="o">.</span><span class="n">updateUI</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="merge">
+<h2>Merge<a class="headerlink" href="#merge" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pycc</span>
+
+
+<span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="n">clouds</span><span class="p">):</span>
+    <span class="n">total_num_points</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">cloud</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="k">for</span> <span class="n">cloud</span> <span class="ow">in</span> <span class="n">clouds</span><span class="p">)</span>
+
+    <span class="n">merge_result</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccPointCloud</span><span class="p">(</span><span class="s2">&quot;MergeResult&quot;</span><span class="p">)</span>
+    <span class="n">merge_result</span><span class="o">.</span><span class="n">reserve</span><span class="p">(</span><span class="n">total_num_points</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">cloud_idx</span><span class="p">,</span> <span class="n">cloud</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">clouds</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">point_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cloud</span><span class="o">.</span><span class="n">size</span><span class="p">()):</span>
+            <span class="n">merge_result</span><span class="o">.</span><span class="n">addPoint</span><span class="p">(</span><span class="n">cloud</span><span class="o">.</span><span class="n">getPoint</span><span class="p">(</span><span class="n">point_idx</span><span class="p">))</span>
+
+    <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">cloud</span> <span class="ow">in</span> <span class="n">clouds</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cloud</span><span class="o">.</span><span class="n">getNumberOfScalarFields</span><span class="p">()):</span>
+            <span class="n">scalarFieldName</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">getScalarFieldName</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">merge_result</span><span class="o">.</span><span class="n">getScalarFieldIndexByName</span><span class="p">(</span><span class="n">scalarFieldName</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">idx</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="n">merge_result</span><span class="o">.</span><span class="n">addScalarField</span><span class="p">(</span><span class="n">scalarFieldName</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">idx</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Failed to add ScalarField&quot;</span><span class="p">)</span>
+
+            <span class="n">scalarField</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">getScalarField</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">sf</span> <span class="o">=</span> <span class="n">merge_result</span><span class="o">.</span><span class="n">getScalarField</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+            <span class="n">sf</span><span class="o">.</span><span class="n">asArray</span><span class="p">()[</span><span class="n">pos</span><span class="p">:</span> <span class="n">pos</span> <span class="o">+</span> <span class="n">scalarField</span><span class="o">.</span><span class="n">size</span><span class="p">()]</span> <span class="o">=</span> <span class="n">scalarField</span><span class="o">.</span><span class="n">asArray</span><span class="p">()[:]</span>
+            <span class="n">sf</span><span class="o">.</span><span class="n">computeMinAndMax</span><span class="p">()</span>
+
+        <span class="n">pos</span> <span class="o">+=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">merge_result</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">CC</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">GetInstance</span><span class="p">()</span>
+    <span class="n">clouds</span> <span class="o">=</span> <span class="n">CC</span><span class="o">.</span><span class="n">getSelectedEntities</span><span class="p">()</span>
+
+    <span class="n">merged_cloud</span> <span class="o">=</span> <span class="n">merge</span><span class="p">(</span><span class="n">clouds</span><span class="p">)</span>
+    <span class="n">CC</span><span class="o">.</span><span class="n">addToDB</span><span class="p">(</span><span class="n">merged_cloud</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="cccorelib/index.html" class="btn btn-neutral float-right" title="CCCoreLib" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="getting_started.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Thomas Montaigu.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

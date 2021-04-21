@@ -1,0 +1,428 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pycc Runtime &mdash; CloudCompare-PythonPlugin  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pycc API" href="api/index.html" />
+    <link rel="prev" title="pycc" href="index.html" />
+<link href="../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CloudCompare-PythonPlugin
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cccorelib/index.html">CCCoreLib</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">pycc</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pycc Runtime</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ccpythoninstance">ccPythonInstance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cccommandlineinterface">ccCommandLineInterface</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/index.html">pycc API</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CloudCompare-PythonPlugin</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">pycc</a> &raquo;</li>
+        
+      <li>pycc Runtime</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/pycc/runtime.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="pycc-runtime">
+<h1>pycc Runtime<a class="headerlink" href="#pycc-runtime" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="pycc.GetInstance">
+<code class="sig-prename descclassname"><span class="pre">pycc.</span></code><code class="sig-name descname"><span class="pre">GetInstance</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">object</span><a class="headerlink" href="#pycc.GetInstance" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns an object that allows to interact with the running CC instance
+to get access to already loaded PointCloud and Meshes.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>on command line mode, the object returned will be of type <a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc.ccCommandLineInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccCommandLineInterface</span></code></a>.</p>
+<p>on gui mode, the object returned will be of type <a class="reference internal" href="#pycc.ccPythonInstance" title="pycc.ccPythonInstance"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccPythonInstance</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pycc.GetCmdLineInstance">
+<code class="sig-prename descclassname"><span class="pre">pycc.</span></code><code class="sig-name descname"><span class="pre">GetCmdLineInstance</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc.ccCommandLineInterface"><span class="pre">pycc.ccCommandLineInterface</span></a><a class="headerlink" href="#pycc.GetCmdLineInstance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the <a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc.ccCommandLineInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccCommandLineInterface</span></code></a> object if the script is ran from
+the command line mode, otherwise returns <cite>None</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pycc.GetGUIInstance">
+<code class="sig-prename descclassname"><span class="pre">pycc.</span></code><code class="sig-name descname"><span class="pre">GetGUIInstance</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pycc.ccPythonInstance" title="pycc.ccPythonInstance"><span class="pre">pycc.ccPythonInstance</span></a><a class="headerlink" href="#pycc.GetGUIInstance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the <a class="reference internal" href="#pycc.ccPythonInstance" title="pycc.ccPythonInstance"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccPythonInstance</span></code></a> object if the script is ran from
+the command line mode, otherwise returns <cite>None</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pycc.RunInThread">
+<code class="sig-prename descclassname"><span class="pre">pycc.</span></code><code class="sig-name descname"><span class="pre">RunInThread</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callable</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">object</span><a class="headerlink" href="#pycc.RunInThread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the function in a different thread to keep the UI
+responsive and returns the result of the function when the
+thread is done.</p>
+<p>Example:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">expensive_sum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="c1"># if we ran expensive_sum directly, CloudCompare would</span>
+<span class="c1"># become unresponsive for 10 seconds</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">RunInThread</span><span class="p">(</span><span class="n">expensive_sum</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="mi">3</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<section id="ccpythoninstance">
+<h2>ccPythonInstance<a class="headerlink" href="#ccpythoninstance" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pycc.ccPythonInstance">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pycc.</span></code><code class="sig-name descname"><span class="pre">ccPythonInstance</span></code><a class="headerlink" href="#pycc.ccPythonInstance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to interact with the running GUI of CloudCompare.</p>
+<p>The methods allow you to get/add objects to GUI DB Tree.
+Refresh/freeze/update the UI and display.
+Get selected objects, deselect/set selected state for entities…</p>
+<dl class="py method">
+<dt id="pycc.ccPythonInstance.addToDB">
+<code class="sig-name descname"><span class="pre">addToDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc.ccPythonInstance"><span class="pre">pycc.ccPythonInstance</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">updateZoom</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autoExpandDBTree</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkDimensions</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autoRedraw</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.ccPythonInstance.addToDB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the object to the GUI DB Tree</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPythonInstance.dbRootObject">
+<code class="sig-name descname"><span class="pre">dbRootObject</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc.ccPythonInstance"><span class="pre">pycc.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="api/data_structures.html#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">ccHObject</span></a><a class="headerlink" href="#pycc.ccPythonInstance.dbRootObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the root of the GUI DB Tree</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPythonInstance.disableAll">
+<code class="sig-name descname"><span class="pre">disableAll</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc.ccPythonInstance"><span class="pre">pycc.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.ccPythonInstance.disableAll" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPythonInstance.enableAll">
+<code class="sig-name descname"><span class="pre">enableAll</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc.ccPythonInstance"><span class="pre">pycc.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.ccPythonInstance.enableAll" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPythonInstance.freezeUI">
+<code class="sig-name descname"><span class="pre">freezeUI</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc.ccPythonInstance"><span class="pre">pycc.ccPythonInstance</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.ccPythonInstance.freezeUI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPythonInstance.getActiveGLWindow">
+<code class="sig-name descname"><span class="pre">getActiveGLWindow</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc.ccPythonInstance"><span class="pre">pycc.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">ccGLWindow</span><a class="headerlink" href="#pycc.ccPythonInstance.getActiveGLWindow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPythonInstance.getMainWindow">
+<code class="sig-name descname"><span class="pre">getMainWindow</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc.ccPythonInstance"><span class="pre">pycc.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pycc.QMainWindow</span><a class="headerlink" href="#pycc.ccPythonInstance.getMainWindow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPythonInstance.getSelectedEntities">
+<code class="sig-name descname"><span class="pre">getSelectedEntities</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc.ccPythonInstance"><span class="pre">pycc.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="api/data_structures.html#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">ccHObject</span></a><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#pycc.ccPythonInstance.getSelectedEntities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of selected entities in the GUI DB Tree</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPythonInstance.haveOneSelection">
+<code class="sig-name descname"><span class="pre">haveOneSelection</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc.ccPythonInstance"><span class="pre">pycc.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#pycc.ccPythonInstance.haveOneSelection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if exactly one entity is selected in the GUI DB Tree</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPythonInstance.haveSelection">
+<code class="sig-name descname"><span class="pre">haveSelection</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc.ccPythonInstance"><span class="pre">pycc.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#pycc.ccPythonInstance.haveSelection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if at least one entity is selected in the GUI DB Tree</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPythonInstance.loadFile">
+<code class="sig-name descname"><span class="pre">loadFile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">self:</span> <span class="pre">pycc.ccPythonInstance</span></em>, <em class="sig-param"><span class="pre">filepath:</span> <span class="pre">str</span></em>, <em class="sig-param"><span class="pre">loadParameters:</span> <span class="pre">FileIOFilter::LoadParameters</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="api/data_structures.html#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">ccHObject</span></a><a class="headerlink" href="#pycc.ccPythonInstance.loadFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the file located at the filepath.</p>
+<p>Adds the file content of the file into the DBTree
+and then returns loaded object handle.</p>
+<p>raises RuntimeError in case of error</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPythonInstance.redrawAll">
+<code class="sig-name descname"><span class="pre">redrawAll</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc.ccPythonInstance"><span class="pre">pycc.ccPythonInstance</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">only2D</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.ccPythonInstance.redrawAll" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPythonInstance.refreshAll">
+<code class="sig-name descname"><span class="pre">refreshAll</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc.ccPythonInstance"><span class="pre">pycc.ccPythonInstance</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">only2D</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.ccPythonInstance.refreshAll" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPythonInstance.setSelectedInDB">
+<code class="sig-name descname"><span class="pre">setSelectedInDB</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc.ccPythonInstance"><span class="pre">pycc.ccPythonInstance</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="api/data_structures.html#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">ccHObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.ccPythonInstance.setSelectedInDB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the selection state of the object in the GUI DB Tree</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPythonInstance.updateUI">
+<code class="sig-name descname"><span class="pre">updateUI</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc.ccPythonInstance"><span class="pre">pycc.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.ccPythonInstance.updateUI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="cccommandlineinterface">
+<h2>ccCommandLineInterface<a class="headerlink" href="#cccommandlineinterface" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pycc.ccCommandLineInterface">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pycc.</span></code><code class="sig-name descname"><span class="pre">ccCommandLineInterface</span></code><a class="headerlink" href="#pycc.ccCommandLineInterface" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py class">
+<dt id="pycc.ccCommandLineInterface.ExportOption">
+<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">ExportOption</span></code><a class="headerlink" href="#pycc.ccCommandLineInterface.ExportOption" title="Permalink to this definition">¶</a></dt>
+<dd><p>Members:</p>
+<dl class="py method">
+<dt id="pycc.ccCommandLineInterface.ExportOption.name">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">name</span></code><a class="headerlink" href="#pycc.ccCommandLineInterface.ExportOption.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccCommandLineInterface.ExportOption.value">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">value</span></code><a class="headerlink" href="#pycc.ccCommandLineInterface.ExportOption.value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccCommandLineInterface.clouds">
+<code class="sig-name descname"><span class="pre">clouds</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc.ccCommandLineInterface"><span class="pre">pycc.ccCommandLineInterface</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pycc.CLCloudDescVector</span><a class="headerlink" href="#pycc.ccCommandLineInterface.clouds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccCommandLineInterface.exportEntity">
+<code class="sig-name descname"><span class="pre">exportEntity</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">self:</span> <span class="pre">pycc.ccCommandLineInterface</span></em>, <em class="sig-param"><span class="pre">entityDesc:</span> <span class="pre">pycc.CLEntityDesc</span></em>, <em class="sig-param"><span class="pre">suffix:</span> <span class="pre">QString</span> <span class="pre">=</span> <span class="pre">''</span></em>, <em class="sig-param"><span class="pre">outputFilename:</span> <span class="pre">QString</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">options:</span> <span class="pre">QFlags&lt;ccCommandLineInterface::ExportOption&gt;</span> <span class="pre">=</span> <span class="pre">&lt;ExportOption.???:</span> <span class="pre">0&gt;</span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">QString</span><a class="headerlink" href="#pycc.ccCommandLineInterface.exportEntity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccCommandLineInterface.getExportFilename">
+<code class="sig-name descname"><span class="pre">getExportFilename</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc.ccCommandLineInterface"><span class="pre">pycc.ccCommandLineInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">entityDesc</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pycc.CLEntityDesc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">QString</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">QString</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baseOutputFilename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">QString</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forceNoTimestamp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">QString</span><a class="headerlink" href="#pycc.ccCommandLineInterface.getExportFilename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccCommandLineInterface.importFile">
+<code class="sig-name descname"><span class="pre">importFile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc.ccCommandLineInterface"><span class="pre">pycc.ccCommandLineInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">QString</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#pycc.ccCommandLineInterface.importFile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccCommandLineInterface.meshes">
+<code class="sig-name descname"><span class="pre">meshes</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc.ccCommandLineInterface"><span class="pre">pycc.ccCommandLineInterface</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pycc.CLMeshDescVector</span><a class="headerlink" href="#pycc.ccCommandLineInterface.meshes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccCommandLineInterface.saveCloud">
+<code class="sig-name descname"><span class="pre">saveCloud</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc.ccCommandLineInterface"><span class="pre">pycc.ccCommandLineInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">QString</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allAtOnce</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allAtOnceFileName</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">QString</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#pycc.ccCommandLineInterface.saveCloud" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccCommandLineInterface.saveMeshes">
+<code class="sig-name descname"><span class="pre">saveMeshes</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc.ccCommandLineInterface"><span class="pre">pycc.ccCommandLineInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">QString</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allAtOnce</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allAtOnceFileName</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">QString</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#pycc.ccCommandLineInterface.saveMeshes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="api/index.html" class="btn btn-neutral float-right" title="pycc API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="pycc" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Thomas Montaigu.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

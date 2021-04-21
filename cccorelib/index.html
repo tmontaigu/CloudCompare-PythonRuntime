@@ -1,0 +1,288 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>CCCoreLib &mdash; CloudCompare-PythonPlugin  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="CCCoreLib Tools" href="tools.html" />
+    <link rel="prev" title="Examples" href="../examples.html" />
+<link href="../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CloudCompare-PythonPlugin
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">CCCoreLib</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tools.html">CCCoreLib Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_structures.html">CCCoreLib Data Structures &amp; Interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="others.html">Others</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../pycc/index.html">pycc</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CloudCompare-PythonPlugin</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>CCCoreLib</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/cccorelib/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="cccorelib">
+<h1>CCCoreLib<a class="headerlink" href="#cccorelib" title="Permalink to this headline">¶</a></h1>
+<p>CCCoreLib defines some data structures and interfaces/methods
+of these data structures.</p>
+<p>But the things that will probably interest you are the tools.</p>
+<div class="toctree-wrapper compound">
+<p><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">CCCoreLib Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#ccmisctools">CCMiscTools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#autosegmentationtools">AutoSegmentationTools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#distancecomputationtools">DistanceComputationTools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#manualsegmentationtools">ManualSegmentationTools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#scalarfieldtools">ScalarFieldTools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#chamferdistancetools">ChamferDistanceTools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#cloudsamplingtools">CloudSamplingTools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#geometricalanalysistools">GeometricalAnalysisTools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#statisticaltestingtools">StatisticalTestingTools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#pointprojectiontools">PointProjectionTools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#registrationtools">RegistrationTools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data_structures.html">CCCoreLib Data Structures &amp; Interfaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data_structures.html#vectors">Vectors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#ccvector3">CCVector3</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data_structures.html#pointclouds">PointClouds</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#genericcloud">GenericCloud</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#genericindexedcloud">GenericIndexedCloud</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#genericindexedcloudpersist">GenericIndexedCloudPersist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#pointcloud">PointCloud</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#referencecloud">ReferenceCloud</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data_structures.html#meshes">Meshes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#generictriangle">GenericTriangle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#genericmesh">GenericMesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#genericindexedmesh">GenericIndexedMesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#delaunay2dmesh">Delaunay2dMesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#polyline">Polyline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#simpletriangle">SimpleTriangle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#simplemesh">SimpleMesh</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data_structures.html#kdtrees">KdTrees</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#kdtree">KDTree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#truekdtree">TrueKdTree</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data_structures.html#octrees">Octrees</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#genericoctree">GenericOctree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#dgmoctree">DgmOctree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#dgmoctreereferencecloud">DgmOctreeReferenceCloud</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data_structures.html#others">Others</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#boundingbox">BoundingBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#scalarfield">ScalarField</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="others.html">Others</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="others.html#genericprogresscallback">GenericProgressCallback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="others.html#normalizedprogress">NormalizedProgress</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="tools.html" class="btn btn-neutral float-right" title="CCCoreLib Tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../examples.html" class="btn btn-neutral float-left" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Thomas Montaigu.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

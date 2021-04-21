@@ -1,0 +1,288 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Getting Started &mdash; CloudCompare-PythonPlugin  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="Welcome to CloudCompare’s Python plugin" href="index.html" />
+<link href="_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> CloudCompare-PythonPlugin
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#gui">GUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#command-line">Command Line</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cccorelib/index.html">CCCoreLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pycc/index.html">pycc</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CloudCompare-PythonPlugin</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Getting Started</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/getting_started.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<p>This plugin allows to write Python scripts to automate some tasks in CloudCompare</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>This plugin is in its very early stage, so a lot of things are missings
+some things may not work, bugs are most probably common, etc</p>
+</div>
+<p>This plugin allows to run scripts in the 2 _CloudCompares_ ‘modes’: GUI &amp; CommandLine.</p>
+<section id="gui">
+<h2>GUI<a class="headerlink" href="#gui" title="Permalink to this headline">¶</a></h2>
+<p>In GUI, there are 3 actions:</p>
+<ul>
+<li><dl>
+<dt>The REPL (Read Print Eval Loop) which allows for quick testing of some actions.</dt><dd><img alt="_images/repl-icon.png" src="_images/repl-icon.png" />
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>The editor which allows to create,edit,save python script and most importantly run them.</dt><dd><img alt="_images/python-editor-icon.png" src="_images/python-editor-icon.png" />
+</dd>
+</dl>
+</li>
+<li><p>The file runner, which shows a small dialog where you can select a file and run it
+whithout having to have the editor openned.</p>
+<blockquote>
+<div><img alt="_images/runner-icon.png" src="_images/runner-icon.png" />
+</div></blockquote>
+</li>
+</ul>
+<p>The typical python script will need to import Python modules that provide access to
+functions and data-structures of cloudcompare:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># cccorelib contains definitions of tools, such as Cloud2Cloud distance,</span>
+<span class="c1"># sampling algorithm, etc</span>
+<span class="kn">import</span> <span class="nn">cccorelib</span>
+
+<span class="c1"># pycc contains definitions of data structures and other things,</span>
+<span class="c1"># the most important being getting the current running CC instance</span>
+<span class="c1"># to retreive point cloud/meshes</span>
+<span class="kn">import</span> <span class="nn">pycc</span>
+
+<span class="c1"># The CC object is the interface that will allow you to navigate</span>
+<span class="c1"># the tree of files currently loaded, the list of files selected, etc</span>
+<span class="n">CC</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">GetInstance</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>CC will be an object of type <a class="reference internal" href="pycc/runtime.html#pycc.ccPythonInstance" title="pycc.ccPythonInstance"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccPythonInstance</span></code></a>.</p>
+</section>
+<section id="command-line">
+<h2>Command Line<a class="headerlink" href="#command-line" title="Permalink to this headline">¶</a></h2>
+<p>Similarly a commandline script will start with the following lines:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cccorelib</span>
+<span class="kn">import</span> <span class="nn">pycc</span>
+
+<span class="n">CC</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">GetCmdLineInstance</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>CC will be an object of type <a class="reference internal" href="pycc/runtime.html#pycc.ccCommandLineInterface" title="pycc.ccCommandLineInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccCommandLineInterface</span></code></a>.</p>
+<p>To run in command line mode pass following option: <cite>-PYTHON_SCRIPT</cite></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>cloudcompare -PYTHON_SCRIPT my_script.py
+</pre></div>
+</div>
+<p>The plugin will take all arguments that follows the script name and populate
+python’s sys.argv with them:</p>
+<p>Example:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>/path/to/cloudcompare -PYTHON_SCRIPT my_script.py some_positional_arg --size <span class="m">50</span>
+</pre></div>
+</div>
+<p>Python’s sys.argv will be equal to:
+[‘/path/to/cloudcompare’, ‘some_positional_arg’, ‘–size’, ‘50’]</p>
+</section>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to CloudCompare’s Python plugin" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Thomas Montaigu.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

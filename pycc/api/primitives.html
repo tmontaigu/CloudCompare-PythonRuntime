@@ -1,0 +1,617 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Primitives &mdash; CloudCompare-PythonPlugin  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Others" href="others.html" />
+    <link rel="prev" title="CloudCompare Data Structures &amp; Interfaces" href="data_structures.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> CloudCompare-PythonPlugin
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cccorelib/index.html">CCCoreLib</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">pycc</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../runtime.html">pycc Runtime</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">pycc API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html">CloudCompare Data Structures &amp; Interfaces</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Primitives</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ccgenericprimitive">ccGenericPrimitive</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ccsphere">ccSphere</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ccplane">ccPlane</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cctorus">ccTorus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ccbox">ccBox</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ccdish">ccDish</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cccone">ccCone</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cccylinder">ccCylinder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cc2dlabel">cc2DLabel</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="others.html">Others</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">CloudCompare-PythonPlugin</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">pycc</a> &raquo;</li>
+        
+          <li><a href="index.html">pycc API</a> &raquo;</li>
+        
+      <li>Primitives</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/pycc/api/primitives.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="primitives">
+<h1>Primitives<a class="headerlink" href="#primitives" title="Permalink to this headline">¶</a></h1>
+<section id="ccgenericprimitive">
+<h2>ccGenericPrimitive<a class="headerlink" href="#ccgenericprimitive" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pycc.ccGenericPrimitive">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pycc.</span></code><code class="sig-name descname"><span class="pre">ccGenericPrimitive</span></code><a class="headerlink" href="#pycc.ccGenericPrimitive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="data_structures.html#pycc.ccMesh" title="pycc.ccMesh"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccMesh</span></code></a></p>
+<dl class="py method">
+<dt id="pycc.ccGenericPrimitive.clone">
+<code class="sig-name descname"><span class="pre">clone</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccGenericPrimitive" title="pycc.ccGenericPrimitive"><span class="pre">pycc.ccGenericPrimitive</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">QString</span><a class="headerlink" href="#pycc.ccGenericPrimitive.clone" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccGenericPrimitive.getDrawingPrecision">
+<code class="sig-name descname"><span class="pre">getDrawingPrecision</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccGenericPrimitive" title="pycc.ccGenericPrimitive"><span class="pre">pycc.ccGenericPrimitive</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#pycc.ccGenericPrimitive.getDrawingPrecision" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccGenericPrimitive.getTransformation">
+<code class="sig-name descname"><span class="pre">getTransformation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccGenericPrimitive" title="pycc.ccGenericPrimitive"><span class="pre">pycc.ccGenericPrimitive</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pycc.ccGLMatrix</span><a class="headerlink" href="#pycc.ccGenericPrimitive.getTransformation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccGenericPrimitive.getTypeName">
+<code class="sig-name descname"><span class="pre">getTypeName</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccGenericPrimitive" title="pycc.ccGenericPrimitive"><span class="pre">pycc.ccGenericPrimitive</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">QString</span><a class="headerlink" href="#pycc.ccGenericPrimitive.getTypeName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccGenericPrimitive.hasDrawingPrecision">
+<code class="sig-name descname"><span class="pre">hasDrawingPrecision</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccGenericPrimitive" title="pycc.ccGenericPrimitive"><span class="pre">pycc.ccGenericPrimitive</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#pycc.ccGenericPrimitive.hasDrawingPrecision" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccGenericPrimitive.setColor">
+<code class="sig-name descname"><span class="pre">setColor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">self:</span> <span class="pre">pycc.ccGenericPrimitive</span></em>, <em class="sig-param"><span class="pre">col:</span> <span class="pre">ccColor::RgbTpl&lt;unsigned</span> <span class="pre">char&gt;</span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.ccGenericPrimitive.setColor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccGenericPrimitive.setDrawingPrecision">
+<code class="sig-name descname"><span class="pre">setDrawingPrecision</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccGenericPrimitive" title="pycc.ccGenericPrimitive"><span class="pre">pycc.ccGenericPrimitive</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">steps</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#pycc.ccGenericPrimitive.setDrawingPrecision" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="ccsphere">
+<h2>ccSphere<a class="headerlink" href="#ccsphere" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pycc.ccSphere">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pycc.</span></code><code class="sig-name descname"><span class="pre">ccSphere</span></code><a class="headerlink" href="#pycc.ccSphere" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycc.ccGenericPrimitive" title="pycc.ccGenericPrimitive"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccGenericPrimitive</span></code></a></p>
+<dl class="py method">
+<dt id="pycc.ccSphere.getRadius">
+<code class="sig-name descname"><span class="pre">getRadius</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccSphere" title="pycc.ccSphere"><span class="pre">pycc.ccSphere</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="headerlink" href="#pycc.ccSphere.getRadius" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccSphere.setRadius">
+<code class="sig-name descname"><span class="pre">setRadius</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccSphere" title="pycc.ccSphere"><span class="pre">pycc.ccSphere</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.ccSphere.setRadius" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="ccplane">
+<h2>ccPlane<a class="headerlink" href="#ccplane" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pycc.ccPlane">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pycc.</span></code><code class="sig-name descname"><span class="pre">ccPlane</span></code><a class="headerlink" href="#pycc.ccPlane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycc.ccGenericPrimitive" title="pycc.ccGenericPrimitive"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccGenericPrimitive</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccPlanarEntityInterface</span></code></p>
+<dl class="py method">
+<dt id="pycc.ccPlane.Fit">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">Fit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cloud</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../../cccorelib/data_structures.html#cccorelib.GenericIndexedCloudPersist" title="cccorelib.GenericIndexedCloudPersist"><span class="pre">cccorelib.GenericIndexedCloudPersist</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rms</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pycc.ccPlane" title="pycc.ccPlane"><span class="pre">pycc.ccPlane</span></a><a class="headerlink" href="#pycc.ccPlane.Fit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPlane.flip">
+<code class="sig-name descname"><span class="pre">flip</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccPlane" title="pycc.ccPlane"><span class="pre">pycc.ccPlane</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.ccPlane.flip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPlane.getCenter">
+<code class="sig-name descname"><span class="pre">getCenter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccPlane" title="pycc.ccPlane"><span class="pre">pycc.ccPlane</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="../../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a><a class="headerlink" href="#pycc.ccPlane.getCenter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPlane.getEquation">
+<code class="sig-name descname"><span class="pre">getEquation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccPlane" title="pycc.ccPlane"><span class="pre">pycc.ccPlane</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">tuple</span><a class="headerlink" href="#pycc.ccPlane.getEquation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPlane.getXWidth">
+<code class="sig-name descname"><span class="pre">getXWidth</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccPlane" title="pycc.ccPlane"><span class="pre">pycc.ccPlane</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="headerlink" href="#pycc.ccPlane.getXWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPlane.getYWidth">
+<code class="sig-name descname"><span class="pre">getYWidth</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccPlane" title="pycc.ccPlane"><span class="pre">pycc.ccPlane</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="headerlink" href="#pycc.ccPlane.getYWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPlane.setXWidth">
+<code class="sig-name descname"><span class="pre">setXWidth</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccPlane" title="pycc.ccPlane"><span class="pre">pycc.ccPlane</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autoUpdate</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.ccPlane.setXWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccPlane.setYWidth">
+<code class="sig-name descname"><span class="pre">setYWidth</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccPlane" title="pycc.ccPlane"><span class="pre">pycc.ccPlane</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autoUpdate</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.ccPlane.setYWidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="cctorus">
+<h2>ccTorus<a class="headerlink" href="#cctorus" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pycc.ccTorus">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pycc.</span></code><code class="sig-name descname"><span class="pre">ccTorus</span></code><a class="headerlink" href="#pycc.ccTorus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycc.ccGenericPrimitive" title="pycc.ccGenericPrimitive"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccGenericPrimitive</span></code></a></p>
+</dd></dl>
+
+</section>
+<section id="ccbox">
+<h2>ccBox<a class="headerlink" href="#ccbox" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pycc.ccBox">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pycc.</span></code><code class="sig-name descname"><span class="pre">ccBox</span></code><a class="headerlink" href="#pycc.ccBox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycc.ccGenericPrimitive" title="pycc.ccGenericPrimitive"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccGenericPrimitive</span></code></a></p>
+<dl class="py method">
+<dt id="pycc.ccBox.getDimensions">
+<code class="sig-name descname"><span class="pre">getDimensions</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccBox" title="pycc.ccBox"><span class="pre">pycc.ccBox</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="../../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a><a class="headerlink" href="#pycc.ccBox.getDimensions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccBox.setDimensions">
+<code class="sig-name descname"><span class="pre">setDimensions</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccBox" title="pycc.ccBox"><span class="pre">pycc.ccBox</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dims</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.ccBox.setDimensions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="ccdish">
+<h2>ccDish<a class="headerlink" href="#ccdish" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pycc.ccDish">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pycc.</span></code><code class="sig-name descname"><span class="pre">ccDish</span></code><a class="headerlink" href="#pycc.ccDish" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycc.ccGenericPrimitive" title="pycc.ccGenericPrimitive"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccGenericPrimitive</span></code></a></p>
+</dd></dl>
+
+</section>
+<section id="cccone">
+<h2>ccCone<a class="headerlink" href="#cccone" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pycc.ccCone">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pycc.</span></code><code class="sig-name descname"><span class="pre">ccCone</span></code><a class="headerlink" href="#pycc.ccCone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycc.ccGenericPrimitive" title="pycc.ccGenericPrimitive"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccGenericPrimitive</span></code></a></p>
+<dl class="py method">
+<dt id="pycc.ccCone.getBottomCenter">
+<code class="sig-name descname"><span class="pre">getBottomCenter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccCone" title="pycc.ccCone"><span class="pre">pycc.ccCone</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="../../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a><a class="headerlink" href="#pycc.ccCone.getBottomCenter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccCone.getBottomRadius">
+<code class="sig-name descname"><span class="pre">getBottomRadius</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccCone" title="pycc.ccCone"><span class="pre">pycc.ccCone</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="headerlink" href="#pycc.ccCone.getBottomRadius" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccCone.getHeight">
+<code class="sig-name descname"><span class="pre">getHeight</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccCone" title="pycc.ccCone"><span class="pre">pycc.ccCone</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="headerlink" href="#pycc.ccCone.getHeight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccCone.getLargeCenter">
+<code class="sig-name descname"><span class="pre">getLargeCenter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccCone" title="pycc.ccCone"><span class="pre">pycc.ccCone</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="../../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a><a class="headerlink" href="#pycc.ccCone.getLargeCenter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccCone.getLargeRadius">
+<code class="sig-name descname"><span class="pre">getLargeRadius</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccCone" title="pycc.ccCone"><span class="pre">pycc.ccCone</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="headerlink" href="#pycc.ccCone.getLargeRadius" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccCone.getSmallCenter">
+<code class="sig-name descname"><span class="pre">getSmallCenter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccCone" title="pycc.ccCone"><span class="pre">pycc.ccCone</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="../../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a><a class="headerlink" href="#pycc.ccCone.getSmallCenter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccCone.getSmallRadius">
+<code class="sig-name descname"><span class="pre">getSmallRadius</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccCone" title="pycc.ccCone"><span class="pre">pycc.ccCone</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="headerlink" href="#pycc.ccCone.getSmallRadius" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccCone.getTopCenter">
+<code class="sig-name descname"><span class="pre">getTopCenter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccCone" title="pycc.ccCone"><span class="pre">pycc.ccCone</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="../../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a><a class="headerlink" href="#pycc.ccCone.getTopCenter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccCone.getTopRadius">
+<code class="sig-name descname"><span class="pre">getTopRadius</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccCone" title="pycc.ccCone"><span class="pre">pycc.ccCone</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="headerlink" href="#pycc.ccCone.getTopRadius" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccCone.isSnoutMode">
+<code class="sig-name descname"><span class="pre">isSnoutMode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccCone" title="pycc.ccCone"><span class="pre">pycc.ccCone</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#pycc.ccCone.isSnoutMode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccCone.setBottomRadius">
+<code class="sig-name descname"><span class="pre">setBottomRadius</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccCone" title="pycc.ccCone"><span class="pre">pycc.ccCone</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.ccCone.setBottomRadius" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccCone.setHeight">
+<code class="sig-name descname"><span class="pre">setHeight</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccCone" title="pycc.ccCone"><span class="pre">pycc.ccCone</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.ccCone.setHeight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.ccCone.setTopRadius">
+<code class="sig-name descname"><span class="pre">setTopRadius</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.ccCone" title="pycc.ccCone"><span class="pre">pycc.ccCone</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.ccCone.setTopRadius" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="cccylinder">
+<h2>ccCylinder<a class="headerlink" href="#cccylinder" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pycc.ccCylinder">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pycc.</span></code><code class="sig-name descname"><span class="pre">ccCylinder</span></code><a class="headerlink" href="#pycc.ccCylinder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycc.ccCone" title="pycc.ccCone"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccCone</span></code></a></p>
+</dd></dl>
+
+</section>
+<section id="cc2dlabel">
+<h2>cc2DLabel<a class="headerlink" href="#cc2dlabel" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pycc.cc2DLabel">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pycc.</span></code><code class="sig-name descname"><span class="pre">cc2DLabel</span></code><a class="headerlink" href="#pycc.cc2DLabel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="data_structures.html#pycc.ccHObject" title="pycc.ccHObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccHObject</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccInteractor</span></code></p>
+<dl class="py class">
+<dt id="pycc.cc2DLabel.PickedPoint">
+<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">PickedPoint</span></code><a class="headerlink" href="#pycc.cc2DLabel.PickedPoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<dl class="py method">
+<dt id="pycc.cc2DLabel.PickedPoint.cloudOrVertices">
+<code class="sig-name descname"><span class="pre">cloudOrVertices</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.cc2DLabel.PickedPoint" title="pycc.cc2DLabel.PickedPoint"><span class="pre">pycc.cc2DLabel.PickedPoint</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="data_structures.html#pycc.ccGenericPointCloud" title="pycc.ccGenericPointCloud"><span class="pre">ccGenericPointCloud</span></a><a class="headerlink" href="#pycc.cc2DLabel.PickedPoint.cloudOrVertices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.PickedPoint.entity">
+<code class="sig-name descname"><span class="pre">entity</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.cc2DLabel.PickedPoint" title="pycc.cc2DLabel.PickedPoint"><span class="pre">pycc.cc2DLabel.PickedPoint</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="data_structures.html#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">pycc.ccHObject</span></a><a class="headerlink" href="#pycc.cc2DLabel.PickedPoint.entity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.PickedPoint.getPointPosition">
+<code class="sig-name descname"><span class="pre">getPointPosition</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.cc2DLabel.PickedPoint" title="pycc.cc2DLabel.PickedPoint"><span class="pre">pycc.cc2DLabel.PickedPoint</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="../../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a><a class="headerlink" href="#pycc.cc2DLabel.PickedPoint.getPointPosition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.PickedPoint.getUniqueID">
+<code class="sig-name descname"><span class="pre">getUniqueID</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.cc2DLabel.PickedPoint" title="pycc.cc2DLabel.PickedPoint"><span class="pre">pycc.cc2DLabel.PickedPoint</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#pycc.cc2DLabel.PickedPoint.getUniqueID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.PickedPoint.itemTitle">
+<code class="sig-name descname"><span class="pre">itemTitle</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.cc2DLabel.PickedPoint" title="pycc.cc2DLabel.PickedPoint"><span class="pre">pycc.cc2DLabel.PickedPoint</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">QString</span><a class="headerlink" href="#pycc.cc2DLabel.PickedPoint.itemTitle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.PickedPoint.prefix">
+<code class="sig-name descname"><span class="pre">prefix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.cc2DLabel.PickedPoint" title="pycc.cc2DLabel.PickedPoint"><span class="pre">pycc.cc2DLabel.PickedPoint</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">QString</span><a class="headerlink" href="#pycc.cc2DLabel.PickedPoint.prefix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.PickedPoint.entityCenterPoint">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">entityCenterPoint</span></code><a class="headerlink" href="#pycc.cc2DLabel.PickedPoint.entityCenterPoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.PickedPoint.index">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">index</span></code><a class="headerlink" href="#pycc.cc2DLabel.PickedPoint.index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.PickedPoint.pos2D">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">pos2D</span></code><a class="headerlink" href="#pycc.cc2DLabel.PickedPoint.pos2D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.PickedPoint.uv">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">uv</span></code><a class="headerlink" href="#pycc.cc2DLabel.PickedPoint.uv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.addPickedPoint">
+<code class="sig-name descname"><span class="pre">addPickedPoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycc.cc2DLabel.addPickedPoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>addPickedPoint(self: pycc.cc2DLabel, cloud: ccGenericPointCloud, pointIndex: int, entityCenter: bool = False) -&gt; bool</p></li>
+<li><p>addPickedPoint(self: pycc.cc2DLabel, cloud: pycc.ccGenericMesh, triangleIndex: int, uv: cccorelib.CCVector2d, entityCenter: bool = False) -&gt; bool</p></li>
+<li><p>addPickedPoint(self: pycc.cc2DLabel, pp: pycc.cc2DLabel.PickedPoint) -&gt; bool</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.clear">
+<code class="sig-name descname"><span class="pre">clear</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.cc2DLabel" title="pycc.cc2DLabel"><span class="pre">pycc.cc2DLabel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignoreDependencies</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.cc2DLabel.clear" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.displayPointLegend">
+<code class="sig-name descname"><span class="pre">displayPointLegend</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.cc2DLabel" title="pycc.cc2DLabel"><span class="pre">pycc.cc2DLabel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.cc2DLabel.displayPointLegend" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.getLabelContent">
+<code class="sig-name descname"><span class="pre">getLabelContent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.cc2DLabel" title="pycc.cc2DLabel"><span class="pre">pycc.cc2DLabel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">precision</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">QStringList</span><a class="headerlink" href="#pycc.cc2DLabel.getLabelContent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.getPickedPoint">
+<code class="sig-name descname"><span class="pre">getPickedPoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.cc2DLabel" title="pycc.cc2DLabel"><span class="pre">pycc.cc2DLabel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pycc.cc2DLabel.PickedPoint" title="pycc.cc2DLabel.PickedPoint"><span class="pre">pycc.cc2DLabel.PickedPoint</span></a><a class="headerlink" href="#pycc.cc2DLabel.getPickedPoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.getRawName">
+<code class="sig-name descname"><span class="pre">getRawName</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.cc2DLabel" title="pycc.cc2DLabel"><span class="pre">pycc.cc2DLabel</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">QString</span><a class="headerlink" href="#pycc.cc2DLabel.getRawName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.getTitle">
+<code class="sig-name descname"><span class="pre">getTitle</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.cc2DLabel" title="pycc.cc2DLabel"><span class="pre">pycc.cc2DLabel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">precision</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">QString</span><a class="headerlink" href="#pycc.cc2DLabel.getTitle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.isCollapsed">
+<code class="sig-name descname"><span class="pre">isCollapsed</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.cc2DLabel" title="pycc.cc2DLabel"><span class="pre">pycc.cc2DLabel</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#pycc.cc2DLabel.isCollapsed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.isDisplayedIn2D">
+<code class="sig-name descname"><span class="pre">isDisplayedIn2D</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.cc2DLabel" title="pycc.cc2DLabel"><span class="pre">pycc.cc2DLabel</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#pycc.cc2DLabel.isDisplayedIn2D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.isPointLegendDisplayed">
+<code class="sig-name descname"><span class="pre">isPointLegendDisplayed</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.cc2DLabel" title="pycc.cc2DLabel"><span class="pre">pycc.cc2DLabel</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#pycc.cc2DLabel.isPointLegendDisplayed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.setCollapsed">
+<code class="sig-name descname"><span class="pre">setCollapsed</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.cc2DLabel" title="pycc.cc2DLabel"><span class="pre">pycc.cc2DLabel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.cc2DLabel.setCollapsed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.setDisplayedIn2D">
+<code class="sig-name descname"><span class="pre">setDisplayedIn2D</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.cc2DLabel" title="pycc.cc2DLabel"><span class="pre">pycc.cc2DLabel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.cc2DLabel.setDisplayedIn2D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.setPosition">
+<code class="sig-name descname"><span class="pre">setPosition</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.cc2DLabel" title="pycc.cc2DLabel"><span class="pre">pycc.cc2DLabel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.cc2DLabel.setPosition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.setRelativeMarkerScale">
+<code class="sig-name descname"><span class="pre">setRelativeMarkerScale</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.cc2DLabel" title="pycc.cc2DLabel"><span class="pre">pycc.cc2DLabel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#pycc.cc2DLabel.setRelativeMarkerScale" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pycc.cc2DLabel.size">
+<code class="sig-name descname"><span class="pre">size</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#pycc.cc2DLabel" title="pycc.cc2DLabel"><span class="pre">pycc.cc2DLabel</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#pycc.cc2DLabel.size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="others.html" class="btn btn-neutral float-right" title="Others" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="data_structures.html" class="btn btn-neutral float-left" title="CloudCompare Data Structures &amp; Interfaces" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Thomas Montaigu.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
