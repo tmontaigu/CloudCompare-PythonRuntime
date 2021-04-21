@@ -59,13 +59,4 @@ function(manage_windows_install)
             DESTINATION "${CC_PYTHON_INSTALL_DIR}/Lib/site-packages"
         )
     endif()
-
-    # If the docs have been built, we copy them in the install folder
-    set(DOCUMENTATION_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/docs/_build")
-    if (EXISTS "${DOCUMENTATION_FOLDER}/index.html")
-        install(
-            DIRECTORY "${DOCUMENTATION_FOLDER}/"
-            DESTINATION ${CC_PYTHON_INSTALL_DIR}/docs
-        )
-    endif()
 endfunction()

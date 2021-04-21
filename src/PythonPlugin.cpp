@@ -176,9 +176,7 @@ void PythonPlugin::showFileRunner() const {
 
 void PythonPlugin::showDocumentation()
 {
-	QUrl url(QString("file:///%1/%2")
-					 .arg(QApplication::applicationDirPath())
-					 .arg("plugins/Python/docs/index.html"));
+	const QUrl url(QString("https://tmontaigu.github.io/CloudCompare-PythonPlugin/index.html"));
 	QDesktopServices::openUrl(url);
 }
 

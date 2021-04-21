@@ -1,20 +1,38 @@
-.. pycc documentation master file, created by
-   sphinx-quickstart on Wed Jul  1 13:48:08 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+CloudCompare-PythonPlugin
+=========================
 
-Welcome to CloudCompare's Python plugin
-=======================================
+
+.. caution::
+
+    This plugin is in its very early stage, so a lot of things are missings
+    and some things may not work.
+
+    And some names, functions are subject to change.
+
+
+This plugin allows to write Python scripts in CloudCompare,
+by providing python bindings to the set of CloudCompare's
+libraries (that you can use in C++ plugins) as well as embedding a python
+interpreter to run scripts.
+
 
 .. toctree::
+   :caption: Plugin Documentation
    :maxdepth: 2
-   :caption: Contents:
 
+   building
    getting_started
    examples
+
+
+
+.. toctree::
+   :caption: APIs Documentation
+   :maxdepth: 2
+
+
    cccorelib/index
    pycc/index
-
 
 
 
