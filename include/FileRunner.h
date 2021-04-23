@@ -38,10 +38,19 @@ class FileRunner : public QDialog
 
   private Q_SLOTS:
     void selectFile();
-    void runFile();
+    void runFile() const;
+    void pythonExecutionStarted();
+    void pythonExecutionEnded();
+
+  protected:
+    void resizeEvent(QResizeEvent *event) override;
+
 
   private:
     PythonInterpreter *interpreter;
+
+    QWidget *busyWidget;
+
     QString filePath;
     Ui::FileRunner *ui;
 };

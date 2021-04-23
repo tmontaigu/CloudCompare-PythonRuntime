@@ -19,22 +19,50 @@
 
 #include "PythonInterpreter.h"
 #include "FileRunner.h"
+
+#include "ccLog.h"
 #include "ui_FileRunner.h"
 
+#include <qevent.h>
 #include <QStyle>
+#include <QProgressBar>
+
+static QWidget *createBusyWidget(QWidget *parent)
+{
+    auto *w = new QWidget(parent);
+    w->hide();
+    w->setBaseSize(parent->size());
+    w->setStyleSheet("background-color: rgba(125, 125, 125, 85%)");
+
+    auto *bar = new QProgressBar(w);
+    bar->setStyleSheet("");
+    bar->setRange(0, 0);
+
+    auto *layout = new QHBoxLayout;
+    layout->addStretch();
+    layout->addWidget(bar);
+    layout->addStretch();
+    w->setLayout(layout);
+
+    return w;
+}
 
 FileRunner::FileRunner(PythonInterpreter* interpreter, QWidget *parent) :
-      interpreter(interpreter),
       QDialog(parent),
-      ui(new Ui::FileRunner)
+      ui(new Ui::FileRunner),
+      busyWidget(nullptr),
+      interpreter(interpreter)
 {
     ui->setupUi(this);
     ui->runFileBtn->setEnabled(false);
     ui->runFileBtn->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowRight));
     setWindowIcon(QIcon(":/CC/plugin/PythonPlugin/images/runner-icon.png"));
+    busyWidget = createBusyWidget(this);
 
     connect(ui->selectFileBtn, &QPushButton::clicked, this, &FileRunner::selectFile);
     connect(ui->runFileBtn, &QPushButton::clicked, this, &FileRunner::runFile);
+    connect(interpreter, &PythonInterpreter::executionStarted, this, &FileRunner::pythonExecutionStarted);
+    connect(interpreter, &PythonInterpreter::executionFinished, this, &FileRunner::pythonExecutionEnded);
 }
 
 void FileRunner::selectFile() {
@@ -43,7 +71,7 @@ void FileRunner::selectFile() {
     ui->runFileBtn->setEnabled(!filePath.isEmpty());
 }
 
-void FileRunner::runFile()
+void FileRunner::runFile() const
 {
     if (!filePath.isEmpty()) {
         const std::string path = filePath.toStdString();
@@ -51,7 +79,26 @@ void FileRunner::runFile()
     }
 }
 
+void FileRunner::pythonExecutionStarted()
+{
+    setEnabled(false);
+    busyWidget->show();
+}
+
+void FileRunner::pythonExecutionEnded()
+{
+    setEnabled(true);
+    busyWidget->hide();
+}
+
 FileRunner::~FileRunner()
 {
     delete ui;
 }
+
+void FileRunner::resizeEvent(QResizeEvent *event)
+{
+    busyWidget->resize(event->size());
+    QDialog::resizeEvent(event);
+}
+
