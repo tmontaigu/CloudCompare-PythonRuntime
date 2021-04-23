@@ -25,11 +25,18 @@ else {
     $PythonDllSuffix = $re.Match($PythonDlls[0].Name).Groups['Suffix'].Value
 }
 
-Write-Host "Python DLL suffix: $PythonDllSuffix"
-
 $LocalizationFile = if ($Localization -eq "Fr") { "french.wxl" } else { "english.wxl" }
 $LocalizationSwitch = if ($Localization -eq "Fr") { "fr-fr" } else { "en-us" }
 $LocalizationName = if ($Localization -eq "Fr") { "French" } else { "English" }
+
+$PythonEnvPrefix = Join-Path -Resolve -Path $CloudCompareInstallFolder -ChildPath "plugins" -AdditionalChildPath "Python"
+$EnvTypeName = if (Test-Path -Path (Join-Path -Path $PythonEnvPrefix -ChildPath "conda-meta")) { "Conda" } else { "Venv" }
+
+Write-Host "Python DLL suffix: $PythonDllSuffix"
+Write-Host "Localization name: $LocalizationName"
+Write-Host "Environment type : $EnvTypeName"
+Write-Host ""
+
 
 &heat `
     dir "$CloudCompareInstallFolder\plugins\Python" `
@@ -63,7 +70,7 @@ $LocalizationName = if ($Localization -eq "Fr") { "French" } else { "English" }
     -dWixUIDialogBmp="UiBanner.bmp" `
     -cultures:$LocalizationSwitch `
     -loc $LocalizationFile `
-    -o "CloudCompare-PythonPlugin-Setup-$LocalizationName-Python$PythonDllSuffix.msi"
+    -o "CloudCompare-PythonPlugin-Setup-$LocalizationName-Python$PythonDllSuffix-$EnvTypeName.msi"
 
 
 # The heat command is taken from https://stackoverflow.com/questions/26550763/wix-how-to-copy-a-directory-to-install-folder
