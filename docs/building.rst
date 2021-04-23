@@ -1,6 +1,10 @@
 Building from sources
 =====================
 
+
+Building as Plugin
+------------------
+
 In the following sections we assume that you know
 how to compile CloudCompare from source, otherwise refer
 to the CloudCompare documentation on how to do.
@@ -10,7 +14,7 @@ To Compile this plugin you need to have Python installed.
 
 
 Windows
--------
+_______
 
 1. Clone this project into CloudCompare/plugins/private
 2. Create a virtual environment via ``venv`` or ``conda``
@@ -59,7 +63,7 @@ Windows
    
 
 Linux
------
+_____
 
 
 1. Clone this project in CloudCompare/plugins/private
@@ -73,6 +77,29 @@ Linux
 3. Run cmake with ``-DPLUGIN_PYTHON=ON``
 4. Build
 5. Install
+
+
+
+Building as indenpendent wheels
+-------------------------------
+
+It is also possible to build and install the bindings as standard python
+packages to use them in python scripts (run by a standalone python executable
+and not the embedded python in the plugin). 
+
+To do so:
+
+.. code-block:: console
+
+    # Building the wheels
+
+    pip wheel --no-deps wrapper/cccorelib
+    pip wheel --no-deps wrapper/pycc
+
+    # Installing directly
+
+    pip install wrapper/cccorelib
+    pip install wrapper/pycc
 
 
 
