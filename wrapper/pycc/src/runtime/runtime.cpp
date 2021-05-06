@@ -48,10 +48,10 @@ void define_pycc_runtime(py::module& m) {
             PyThreadStateReleaser stateReleaser{};
             QEventLoop loop;
             QFutureWatcher<py::object> watcher;
+            QObject::connect(&watcher, &decltype(watcher)::finished, &loop, &decltype(loop)::quit);
             QFuture<py::object> future =
                 QtConcurrent::run(call_fn, stateReleaser.state, callable, args, kwargs);
             watcher.setFuture(future);
-            QObject::connect(&watcher, &decltype(watcher)::finished, &loop, &decltype(loop)::quit);
             loop.exec();
 
             return future.result();
