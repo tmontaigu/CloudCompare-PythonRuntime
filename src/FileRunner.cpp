@@ -15,15 +15,13 @@
 //#                                                                        #
 //##########################################################################
 
-#include <QFileDialog>
+#include "ui_FileRunner.h"
 
 #include "PythonInterpreter.h"
 #include "FileRunner.h"
 
-#include "ccLog.h"
-#include "ui_FileRunner.h"
-
-#include <qevent.h>
+#include <QFileDialog>
+#include <QResizeEvent>
 #include <QStyle>
 #include <QProgressBar>
 
@@ -47,11 +45,12 @@ static QWidget *createBusyWidget(QWidget *parent)
     return w;
 }
 
-FileRunner::FileRunner(PythonInterpreter* interpreter, QWidget *parent) :
+FileRunner::FileRunner(PythonInterpreter* interp, QWidget *parent) :
       QDialog(parent),
-      ui(new Ui::FileRunner),
+      interpreter(interp),
       busyWidget(nullptr),
-      interpreter(interpreter)
+      ui(new Ui::FileRunner)
+
 {
     ui->setupUi(this);
     ui->runFileBtn->setEnabled(false);
@@ -61,8 +60,8 @@ FileRunner::FileRunner(PythonInterpreter* interpreter, QWidget *parent) :
 
     connect(ui->selectFileBtn, &QPushButton::clicked, this, &FileRunner::selectFile);
     connect(ui->runFileBtn, &QPushButton::clicked, this, &FileRunner::runFile);
-    connect(interpreter, &PythonInterpreter::executionStarted, this, &FileRunner::pythonExecutionStarted);
-    connect(interpreter, &PythonInterpreter::executionFinished, this, &FileRunner::pythonExecutionEnded);
+    connect(interp, &PythonInterpreter::executionStarted, this, &FileRunner::pythonExecutionStarted);
+    connect(interp, &PythonInterpreter::executionFinished, this, &FileRunner::pythonExecutionEnded);
 }
 
 void FileRunner::selectFile() {

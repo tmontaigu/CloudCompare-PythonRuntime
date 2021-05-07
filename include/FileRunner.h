@@ -15,8 +15,8 @@
 //#                                                                        #
 //##########################################################################
 
-#ifndef FILERUNNER_H
-#define FILERUNNER_H
+#ifndef FILE_RUNNER_H
+#define FILE_RUNNER_H
 
 #include <QWidget>
 #include <QDialog>
@@ -48,11 +48,9 @@ class FileRunner : public QDialog
 
   private:
     PythonInterpreter *interpreter;
-
     QWidget *busyWidget;
-
-    QString filePath;
     Ui::FileRunner *ui;
+    QString filePath;
 };
 
-#endif // FILERUNNER_H
+#endif // FILE_RUNNER_H
