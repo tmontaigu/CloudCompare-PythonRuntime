@@ -15,14 +15,14 @@
 //#                                                                        #
 //##########################################################################
 
-#ifndef CLOUDCOMPAREPROJECTS_ABOUTDIALOG_H
-#define CLOUDCOMPAREPROJECTS_ABOUTDIALOG_H
+#ifndef PYTHON_PLUGIN_PROJECTS_ABOUT_DIALOG_H
+#define PYTHON_PLUGIN_PROJECTS_ABOUT_DIALOG_H
 
 #include <QDialog>
 
 class Ui_AboutDialog;
 
-class AboutDialog : public QDialog
+class AboutDialog final: public QDialog
 {
   public:
     explicit AboutDialog(QWidget *parent = nullptr);
@@ -31,4 +31,4 @@ class AboutDialog : public QDialog
     Ui_AboutDialog *m_dlg;
 };
 
-#endif // CLOUDCOMPAREPROJECTS_ABOUTDIALOG_H
+#endif // PYTHON_PLUGIN_PROJECTS_ABOUT_DIALOG_H

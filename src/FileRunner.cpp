@@ -25,6 +25,8 @@
 #include <QStyle>
 #include <QProgressBar>
 
+/// Simple widget that grays out the view of its parent
+/// and shows a waiting bar, to give visual feedback that a script is running
 static QWidget *createBusyWidget(QWidget *parent)
 {
     auto *w = new QWidget(parent);
@@ -90,7 +92,7 @@ void FileRunner::pythonExecutionEnded()
     busyWidget->hide();
 }
 
-FileRunner::~FileRunner()
+FileRunner::~FileRunner() noexcept
 {
     delete ui;
 }

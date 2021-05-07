@@ -46,7 +46,7 @@ struct Version
 {
     constexpr Version() = default;
 
-    constexpr Version(uint16_t major, uint16_t minor, uint16_t patch);
+    constexpr Version(uint16_t major_, uint16_t minor_, uint16_t patch_);
 
     explicit Version(const QStringRef &versionStr);
 
@@ -136,7 +136,7 @@ Version GetPythonExeVersion(const QString &pythonExePath)
     pythonProcess.start(pythonExePath, {"--version"});
     pythonProcess.waitForFinished();
 
-    QString versionStr = QTextCodec::codecForName("utf-8")->toUnicode(pythonProcess.readAllStandardOutput());
+    const QString versionStr = QTextCodec::codecForName("utf-8")->toUnicode(pythonProcess.readAllStandardOutput());
 
     QVector<QStringRef> splits = versionStr.splitRef(" ");
     if (splits.size() == 2 && splits[0].contains("Python"))
@@ -152,13 +152,13 @@ PythonConfigPaths PythonConfigPaths::WindowsBundled()
 {
     PythonConfigPaths config{};
 
-    QDir pythonEnvDirPath(QApplication::applicationDirPath() + "/plugins/Python");
+    const QDir pythonEnvDirPath(QApplication::applicationDirPath() + "/plugins/Python");
     if (pythonEnvDirPath.exists())
     {
-        QString qPythonHome = pythonEnvDirPath.path();
+        const QString qPythonHome = pythonEnvDirPath.path();
         config.m_pythonHome.reset(QStringToWcharArray(qPythonHome));
 
-        QString qPythonPath = QString("%1/DLLs;%1/lib;%1/Lib/site-packages;").arg(qPythonHome);
+        const QString qPythonPath = QString("%1/DLLs;%1/lib;%1/Lib/site-packages;").arg(qPythonHome);
         config.m_pythonPath.reset(QStringToWcharArray(qPythonPath));
     }
     else

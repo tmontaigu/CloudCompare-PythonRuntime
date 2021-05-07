@@ -20,7 +20,7 @@
 #include <pybind11/embed.h>
 #include <pybind11/pybind11.h>
 
-#include "ccGUIPythonInstance.h"
+#include "ccGuiPythonInstance.h"
 #include "ccMainAppInterface.h"
 
 #include "Runtime.h"
@@ -28,41 +28,38 @@
 #include <Consoles.h>
 #include <PrivateRuntime.h>
 
-#include "QPythonREPL.h"
-
 class ccCommandLineInterface;
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-ccGUIPythonInstance *s_pythonInstance{nullptr};
+ccGuiPythonInstance *s_pythonInstance{nullptr};
 
 
 ccCommandLineInterface *s_cmdLineInstance{nullptr};
 
-ccGUIPythonInstance *GetInstance()
+ccGuiPythonInstance *GetInstance() noexcept
 {
     return s_pythonInstance;
 }
 
 
-
-ccCommandLineInterface *GetCmdLineInstance()
+ccCommandLineInterface *GetCmdLineInstance() noexcept
 {
     return s_cmdLineInstance;
 }
 
 namespace Python
 {
-void setMainAppInterfaceInstance(ccMainAppInterface *appInterface)
+void setMainAppInterfaceInstance(ccMainAppInterface *appInterface) noexcept(false)
 {
     if (s_pythonInstance == nullptr)
     {
-        s_pythonInstance = new ccGUIPythonInstance(appInterface);
+        s_pythonInstance = new ccGuiPythonInstance(appInterface);
     }
 }
 
-void unsetMainAppInterfaceInstance()
+void unsetMainAppInterfaceInstance() noexcept
 {
     if (s_pythonInstance != nullptr)
     {
@@ -71,7 +68,7 @@ void unsetMainAppInterfaceInstance()
     }
 }
 
-void setCmdLineInterfaceInstance(ccCommandLineInterface *cmdLine)
+void setCmdLineInterfaceInstance(ccCommandLineInterface *cmdLine) noexcept
 {
     if (s_cmdLineInstance == nullptr)
     {
@@ -79,7 +76,7 @@ void setCmdLineInterfaceInstance(ccCommandLineInterface *cmdLine)
     }
 }
 
-void unsetCmdLineInterfaceInstance()
+void unsetCmdLineInterfaceInstance() noexcept
 {
     if (s_cmdLineInstance != nullptr)
     {

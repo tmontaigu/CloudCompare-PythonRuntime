@@ -27,14 +27,20 @@ class FileRunner;
 
 class PythonInterpreter;
 
-class FileRunner : public QDialog
+/// The File Runner is a small widget that let the user pick a .py file
+/// and run it, without having the editor opened. 
+class FileRunner final : public QDialog
 {
     Q_OBJECT
 
   public:
     explicit FileRunner(PythonInterpreter* interp, QWidget *parent = nullptr);
-    ~FileRunner() override;
 
+    FileRunner(const FileRunner &) = delete;
+    FileRunner operator=(const FileRunner &) = delete;
+    FileRunner(FileRunner &&) = delete;
+    FileRunner operator=(FileRunner &&) = delete;
+    ~FileRunner() noexcept override;
 
   private Q_SLOTS:
     void selectFile();

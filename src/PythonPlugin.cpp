@@ -20,63 +20,17 @@
 #include "PythonPlugin.h"
 #include "PythonStdErrOutRedirect.h"
 #include "QPythonEditor.h"
-#include "QPythonREPL.h"
+#include "QPythonRepl.h"
 #include "FileRunner.h"
 #include "Utilities.h"
 
 #include <QUrl>
 #include <QDesktopServices>
 
-#include <memory>
-
 #define slots Q_SLOTS
 #define signals Q_SIGNALS
 #include <ccCommandLineInterface.h>
 
-void logPythonPath()
-{
-    const wchar_t *pythonPath = Py_GetPath();
-    if (pythonPath != nullptr)
-    {
-        size_t errPos{0};
-        char *cPythonPath = Py_EncodeLocale(pythonPath, &errPos);
-        if (cPythonPath)
-        {
-            ccLog::Print("[PythonPlugin] PythonPath is set to: %s", cPythonPath);
-        }
-        else
-        {
-            ccLog::Print("[PythonPlugin] Failed to convert the PythonPath");
-        }
-    }
-    else
-    {
-        ccLog::Print("[PythonPlugin] PythonPath is not set");
-    }
-}
-
-void logPythonHome()
-{
-    const wchar_t *pythonHome = Py_GetPythonHome();
-    if (pythonHome != nullptr)
-    {
-        size_t errPos{0};
-        char *cPythonHome = Py_EncodeLocale(pythonHome, &errPos);
-        if (cPythonHome)
-        {
-            ccLog::Print("[PythonPlugin] PythonHome is set to: %s", cPythonHome);
-            PyMem_Free(cPythonHome);
-        }
-        else
-        {
-            ccLog::Print("[PythonPlugin]Failed to convert the PythonHome path");
-        }
-    }
-    else
-    {
-        ccLog::Print("[PythonPlugin] PythonHome is not set");
-    }
-}
 
 // Useful link:
 // https://docs.python.org/3/c-api/init.html#initialization-finalization-and-threads
@@ -86,15 +40,15 @@ PythonPlugin::PythonPlugin(QObject *parent)
 {
     m_interp.initialize();
 
-    logPythonHome();
-    logPythonPath();
+    LogPythonHome();
+    LogPythonPath();
 
     connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &PythonPlugin::finalizeInterpreter);
 }
 
 QList<QAction *> PythonPlugin::getActions()
 {
-    bool enableActions = PythonInterpreter::isInitialized();
+    const bool enableActions = PythonInterpreter::isInitialized();
 
     if (!m_showEditor)
     {
@@ -155,7 +109,7 @@ void PythonPlugin::showRepl()
     }
     else
     {
-        m_repl = new QPythonREPL(&m_interp);
+        m_repl = new QPythonRepl(&m_interp);
         m_repl->show();
     }
 }
@@ -186,13 +140,13 @@ void PythonPlugin::showAboutDialog() const
     dlg.exec();
 }
 
-PythonPlugin::~PythonPlugin()
+PythonPlugin::~PythonPlugin() noexcept
 {
     Python::unsetMainAppInterfaceInstance();
     Python::unsetCmdLineInterfaceInstance();
 }
 
-struct PythonPluginCommand : public ccCommandLineInterface::Command
+struct PythonPluginCommand final : public ccCommandLineInterface::Command
 {
     explicit PythonPluginCommand(PythonInterpreter *interpreter_)
         : Command("PYTHON", "PYTHON_SCRIPT"), interpreter(interpreter_)
@@ -210,7 +164,7 @@ struct PythonPluginCommand : public ccCommandLineInterface::Command
         }
 
         PySys_SetArgvEx(static_cast<int>(args.pythonArgv.size()), args.pythonArgv.data(), 1);
-        bool success = interpreter->executeFile(qPrintable(args.filepath));
+        const bool success = interpreter->executeFile(qPrintable(args.filepath));
 
         cmd.print(
             QString("[PythonPlugin] Script %1 executed").arg(success ? "successfully" : "unsuccessfully"));

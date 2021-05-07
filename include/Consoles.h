@@ -15,12 +15,14 @@
 //#                                                                        #
 //##########################################################################
 
-#ifndef CLOUDCOMPAREPROJECTS_CONSOLES_H
-#define CLOUDCOMPAREPROJECTS_CONSOLES_H
+#ifndef PYTHON_PLUGIN_CONSOLES_H
+#define PYTHON_PLUGIN_CONSOLES_H
 
 #include <QListWidget>
 #include <QString>
+
 #include <ccLog.h>
+
 #include <functional>
 #include <utility>
 
@@ -49,7 +51,7 @@ class ConsoleWrapper
     void write(const char *messagePart)
     {
 
-        size_t len = strlen(messagePart);
+        const size_t len = strlen(messagePart);
         const char *messageEnd = messagePart + len;
         const char *start = messagePart;
 
@@ -68,7 +70,7 @@ class ConsoleWrapper
         }
     }
 
-    void flush()
+    void flush() const
     {
         m_printFn(m_currentMessage);
     }
@@ -90,7 +92,7 @@ class ccConsoleOutput
         m_output.write(messagePart);
     }
 
-    void flush()
+    void flush() const
     {
         m_output.flush();
     }
@@ -119,7 +121,7 @@ class ConsoleREPL
     {
         m_output.write(messagePart);
     }
-    void flush()
+    void flush() const
     {
         m_output.flush();
     }
@@ -134,4 +136,4 @@ class ConsoleREPL
         view->addItem(messageItem);
     }};
 };
-#endif // CLOUDCOMPAREPROJECTS_CONSOLES_H
+#endif // PYTHON_PLUGIN_CONSOLES_H

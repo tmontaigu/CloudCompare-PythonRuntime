@@ -15,13 +15,13 @@
 //#                                                                        #
 //##########################################################################
 
-#ifndef CLOUDCOMPAREPROJECTS_RUNTIME_H
-#define CLOUDCOMPAREPROJECTS_RUNTIME_H
+#ifndef PYTHON_PLUGIN_RUNTIME_H
+#define PYTHON_PLUGIN_RUNTIME_H
 
-class ccGUIPythonInstance;
+class ccGuiPythonInstance;
 class ccCommandLineInterface;
 
-Q_DECL_EXPORT ccGUIPythonInstance *GetInstance();
-Q_DECL_EXPORT ccCommandLineInterface *GetCmdLineInstance();
+Q_DECL_EXPORT ccGuiPythonInstance *GetInstance() noexcept;
+Q_DECL_EXPORT ccCommandLineInterface *GetCmdLineInstance() noexcept;
 
-#endif // CLOUDCOMPAREPROJECTS_RUNTIME_H
+#endif // PYTHON_PLUGIN_RUNTIME_H

@@ -15,8 +15,8 @@
 //#                                                                        #
 //##########################################################################
 
-#ifndef CLOUDCOMPAREPROJECTS_CCGUIPYTHONINSTANCE_H
-#define CLOUDCOMPAREPROJECTS_CCGUIPYTHONINSTANCE_H
+#ifndef PYTHON_PLUGIN_CC_GUI_PYTHON_INSTANCE_H
+#define PYTHON_PLUGIN_CC_GUI_PYTHON_INSTANCE_H
 
 #include <FileIOFilter.h>
 
@@ -35,10 +35,10 @@ class object;
 /// kind of like C++ plugins have access to a `ccMainAppInterface`.
 /// Thus this class is mostly a ccMainAppInterface with some accommodations
 /// to handle the fact that it is made to interact with python.
-class Q_DECL_EXPORT ccGUIPythonInstance
+class Q_DECL_EXPORT ccGuiPythonInstance final
 {
   public:
-    explicit ccGUIPythonInstance(ccMainAppInterface *app);
+    explicit ccGuiPythonInstance(ccMainAppInterface *app) noexcept(false);
 
     QMainWindow *getMainWindow();
 
@@ -79,4 +79,4 @@ class Q_DECL_EXPORT ccGUIPythonInstance
     ccMainAppInterface *m_app;
 };
 
-#endif // CLOUDCOMPAREPROJECTS_CCGUIPYTHONINSTANCE_H
+#endif // PYTHON_PLUGIN_CC_GUI_PYTHON_INSTANCE_H

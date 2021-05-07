@@ -23,12 +23,12 @@
 
 class QListWidget;
 class QPythonEditor;
-class QPythonREPL;
+class QPythonRepl;
 class FileRunner;
 
 
 /// "Entry point" of the plugin
-class PythonPlugin : public QObject, public ccStdPluginInterface
+class PythonPlugin final : public QObject, public ccStdPluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(ccPluginInterface ccStdPluginInterface)
@@ -38,8 +38,6 @@ class PythonPlugin : public QObject, public ccStdPluginInterface
   public:
     explicit PythonPlugin(QObject *parent = nullptr);
 
-    ~PythonPlugin() override;
-
     QList<QAction *> getActions() override;
 
     /// Registers the -PYTHON_SCRIPT command to run Python scripts in
@@ -47,6 +45,12 @@ class PythonPlugin : public QObject, public ccStdPluginInterface
     void registerCommands(ccCommandLineInterface *cmd) override;
 
     void setMainAppInterface(ccMainAppInterface *app) override;
+
+	PythonPlugin(const PythonPlugin &) = delete;
+    PythonPlugin(PythonPlugin &&) = delete;
+    PythonPlugin &operator=(const PythonPlugin &) = delete;
+    PythonPlugin &operator=(PythonPlugin &&) = delete;
+    ~PythonPlugin() noexcept override;
 
   private:
     void finalizeInterpreter();
@@ -58,7 +62,7 @@ class PythonPlugin : public QObject, public ccStdPluginInterface
 
     PythonInterpreter m_interp;
 
-    QPythonREPL *m_repl{nullptr};
+    QPythonRepl *m_repl{nullptr};
     QPythonEditor *m_editor{nullptr};
     FileRunner *m_fileRunner{nullptr};
 

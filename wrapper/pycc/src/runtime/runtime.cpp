@@ -24,7 +24,7 @@
 
 #include "Runtime.h"
 #include "threading.h"
-#include "ccGUIPythonInstance.h"
+#include "ccGuiPythonInstance.h"
 
 
 namespace py = pybind11;

@@ -15,8 +15,8 @@
 //#                                                                        #
 //##########################################################################
 
-#ifndef CLOUDCOMPAREPROJECTS_PYTHONSTDERROUTREDIRECT_H
-#define CLOUDCOMPAREPROJECTS_PYTHONSTDERROUTREDIRECT_H
+#ifndef PYTHON_PLUGIN_PYTHON_STDERR_OUT_REDIRECT_H
+#define PYTHON_PLUGIN_PYTHON_STDERR_OUT_REDIRECT_H
 
 #include <pybind11/pybind11.h>
 
@@ -56,12 +56,19 @@ class PyStdErrOutStreamRedirect
         sysm.attr("stderr") = m_stderr_buffer;
     }
 
-    ~PyStdErrOutStreamRedirect()
+    ~PyStdErrOutStreamRedirect() noexcept
     {
-        auto sysm = py::module::import("sys");
-        sysm.attr("stdout") = m_stdout;
-        sysm.attr("stderr") = m_stderr;
+        try
+        {
+            const auto sysm = py::module::import("sys");
+            sysm.attr("stdout") = m_stdout;
+            sysm.attr("stderr") = m_stderr;
+        }
+        catch (const std::exception &e)
+        {
+            
+        }
     }
 };
 
-#endif // CLOUDCOMPAREPROJECTS_PYTHONSTDERROUTREDIRECT_H
+#endif // PYTHON_PLUGIN_PYTHON_STDERR_OUT_REDIRECT_H

@@ -15,8 +15,8 @@
 //#                                                                        #
 //##########################################################################
 
-#ifndef CLOUDCOMPAREPROJECTS_PYTHONINTERPRETER_H
-#define CLOUDCOMPAREPROJECTS_PYTHONINTERPRETER_H
+#ifndef PYTHON_PLUGIN_PYTHON_INTERPRETER_H
+#define PYTHON_PLUGIN_PYTHON_INTERPRETER_H
 
 #include <QObject>
 
@@ -31,7 +31,7 @@ struct PyVenvCfg;
 /// Holds strings of the PythonHome & PythonPath
 /// Which are variables that needs to be properly set
 /// in order to have a functioning Python environment
-class PythonConfigPaths
+class PythonConfigPaths final
 {
   public:
     /// Default ctor, does not initialize pythonHome & pythonPath
@@ -66,11 +66,20 @@ class PythonConfigPaths
     std::unique_ptr<wchar_t[]> m_pythonPath{};
 };
 
-class PythonInterpreter : public QObject
+
+/// PythonInterpreter, There should be only one, and it is managed by the PythonPlugin.
+/// It centralizes the execution of python scripts.
+/// 
+/// Only one script can be executed at a time.
+/// Classes that allow user to start the execution of a script should connect the
+/// executionStarted & executionFinished to give feedback on
+/// when a script is running and whether a new script can be ran
+class PythonInterpreter final: public QObject
 {
     Q_OBJECT
 
   public:
+    /// Variable state
     struct State
     {
         State() : globals(pybind11::globals()), locals(){};
@@ -86,9 +95,9 @@ class PythonInterpreter : public QObject
     static bool isInitialized();
 
 
-    bool executeFile(const std::string& filePath);
-
+	/// Execution functions (and slots)
   public Q_SLOTS:
+    bool executeFile(const std::string &filePath);
     void executeCode(const std::string &code, QListWidget *output);
     void executeCodeWithState(const std::string &code, QListWidget *output, State &state);
 
@@ -112,4 +121,4 @@ class PythonInterpreter : public QObject
 #endif
 };
 
-#endif // CLOUDCOMPAREPROJECTS_PYTHONINTERPRETER_H
+#endif // PYTHON_PLUGIN_PYTHON_INTERPRETER_H

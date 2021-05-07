@@ -17,7 +17,6 @@
 
 #include "QPythonEditor.h"
 #include "CodeEditor.h"
-#include "ProjectViewContextMenu.h"
 #include "PythonInterpreter.h"
 
 // qCC

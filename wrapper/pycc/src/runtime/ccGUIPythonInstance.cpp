@@ -15,7 +15,7 @@
 //#                                                                        #
 //##########################################################################
 
-#include "ccGUIPythonInstance.h"
+#include "ccGuiPythonInstance.h"
 
 
 #include <QMainWindow>
@@ -32,7 +32,7 @@ using namespace pybind11::literals;
 
 void define_ccGUIPythonInstance(py::module &m)
 {
-    py::class_<ccGUIPythonInstance>(m,
+    py::class_<ccGuiPythonInstance>(m,
                                     "ccPythonInstance",
                                     R"(
     Class to interact with the running GUI of CloudCompare.
@@ -42,43 +42,43 @@ void define_ccGUIPythonInstance(py::module &m)
     Get selected objects, deselect/set selected state for entities...
 
 )")
-        .def("getMainWindow", &ccGUIPythonInstance::getMainWindow, py::return_value_policy::reference)
-        .def("getActiveGLWindow", &ccGUIPythonInstance::getActiveGLWindow, py::return_value_policy::reference)
+        .def("getMainWindow", &ccGuiPythonInstance::getMainWindow, py::return_value_policy::reference)
+        .def("getActiveGLWindow", &ccGuiPythonInstance::getActiveGLWindow, py::return_value_policy::reference)
         .def("haveSelection",
-             &ccGUIPythonInstance::haveSelection,
+             &ccGuiPythonInstance::haveSelection,
              R"(Returns true if at least one entity is selected in the GUI DB Tree)")
         .def("haveOneSelection",
-             &ccGUIPythonInstance::haveOneSelection,
+             &ccGuiPythonInstance::haveOneSelection,
              R"(Returns True if exactly one entity is selected in the GUI DB Tree)")
         .def("getSelectedEntities",
-             &ccGUIPythonInstance::getSelectedEntities,
+             &ccGuiPythonInstance::getSelectedEntities,
              py::return_value_policy::reference,
              R"(Returns the list of selected entities in the GUI DB Tree)")
         .def("setSelectedInDB",
-             &ccGUIPythonInstance::setSelectedInDB,
+             &ccGuiPythonInstance::setSelectedInDB,
              "obj"_a,
              "selected"_a,
              R"(Set the selection state of the object in the GUI DB Tree)")
         .def("dbRootObject",
-             &ccGUIPythonInstance::dbRootObject,
+             &ccGuiPythonInstance::dbRootObject,
              py::return_value_policy::reference,
              R"(Returns the root of the GUI DB Tree)")
         .def("addToDB",
-             &ccGUIPythonInstance::addToDB,
+             &ccGuiPythonInstance::addToDB,
              "obj"_a,
              "updateZoom"_a = false,
              "autoExpandDBTree"_a = true,
              "checkDimensions"_a = false,
              "autoRedraw"_a = true,
              R"(Adds the object to the GUI DB Tree)")
-        .def("redrawAll", &ccGUIPythonInstance::redrawAll, "only2D"_a = false)
-        .def("refreshAll", &ccGUIPythonInstance::refreshAll, "only2D"_a = false)
-        .def("enableAll", &ccGUIPythonInstance::enableAll)
-        .def("disableAll", &ccGUIPythonInstance::disableAll)
-        .def("updateUI", &ccGUIPythonInstance::updateUI)
-        .def("freezeUI", &ccGUIPythonInstance::freezeUI, "state"_a)
+        .def("redrawAll", &ccGuiPythonInstance::redrawAll, "only2D"_a = false)
+        .def("refreshAll", &ccGuiPythonInstance::refreshAll, "only2D"_a = false)
+        .def("enableAll", &ccGuiPythonInstance::enableAll)
+        .def("disableAll", &ccGuiPythonInstance::disableAll)
+        .def("updateUI", &ccGuiPythonInstance::updateUI)
+        .def("freezeUI", &ccGuiPythonInstance::freezeUI, "state"_a)
         .def("loadFile",
-             &ccGUIPythonInstance::loadFile,
+             &ccGuiPythonInstance::loadFile,
              py::return_value_policy::reference,
              "filepath"_a,
              "loadParameters"_a,

@@ -15,13 +15,11 @@
 //#                                                                        #
 //##########################################################################
 
-#include "QPythonREPL.h"
+#include "QPythonRepl.h"
 #include "PythonHighlighter.h"
 #include "PythonInterpreter.h"
-#include <Runtime.h>
-#include <ccGUIPythonInstance.h>
+#include <ccGuiPythonInstance.h>
 
-#include <ccLog.h>
 #include <ui_QPythonREPL.h>
 
 #include "PythonStdErrOutRedirect.h"
@@ -66,7 +64,7 @@ bool KeyPressEater::eventFilter(QObject *obj, QEvent *event)
 
             // Try to be smart, create a new line if the python code will need one
 
-            int lastCharPos = m_repl->codeEdit()->document()->characterCount() - 2;
+            const int lastCharPos = m_repl->codeEdit()->document()->characterCount() - 2;
             if (m_repl->codeEdit()->document()->characterAt(lastCharPos) == ":")
             {
                 m_repl->codeEdit()->appendPlainText(continuationDots);
@@ -142,9 +140,9 @@ bool KeyPressEater::eventFilter(QObject *obj, QEvent *event)
     }
 }
 
-KeyPressEater::KeyPressEater(QPythonREPL *repl, QObject *parent) : QObject(parent), m_repl(repl) {}
+KeyPressEater::KeyPressEater(QPythonRepl *repl, QObject *parent) : QObject(parent), m_repl(repl) {}
 
-QPythonREPL::QPythonREPL(PythonInterpreter *interpreter, QMainWindow *parent)
+QPythonRepl::QPythonRepl(PythonInterpreter *interpreter, QMainWindow *parent)
     : m_interpreter(interpreter), QMainWindow(parent), m_ui(new Ui_QPythonREPL), m_state()
 {
     m_buf.reserve(255);
@@ -153,27 +151,27 @@ QPythonREPL::QPythonREPL(PythonInterpreter *interpreter, QMainWindow *parent)
     importNeededPackages();
 }
 
-QPythonREPL::~QPythonREPL()
+QPythonRepl::~QPythonRepl() noexcept
 {
     delete m_ui;
 }
 
-QPlainTextEdit *QPythonREPL::codeEdit()
+QPlainTextEdit *QPythonRepl::codeEdit()
 {
     return m_ui->codeEdit;
 }
 
-QListWidget *QPythonREPL::outputDisplay()
+QListWidget *QPythonRepl::outputDisplay()
 {
     return m_ui->outputDisplay;
 }
 
-void QPythonREPL::setupUI()
+void QPythonRepl::setupUI()
 {
     m_ui->setupUi(this);
-    auto keyPressEater = new KeyPressEater(this);
+    const auto keyPressEater = new KeyPressEater(this);
 
-    auto codeEditorHeight = static_cast<int>(height() * 0.25);
+    const auto codeEditorHeight = static_cast<int>(height() * 0.25);
     m_ui->splitter->setSizes({height() - codeEditorHeight, codeEditorHeight});
     new PythonHighlighter(codeEdit()->document());
 
@@ -186,34 +184,34 @@ void QPythonREPL::setupUI()
 
     codeEdit()->setFont(font);
 
-    connect(m_ui->toolBar->actions().at(0), &QAction::triggered, this, &QPythonREPL::reset);
+    connect(m_ui->toolBar->actions().at(0), &QAction::triggered, this, &QPythonRepl::reset);
 }
 
-void QPythonREPL::reset()
+void QPythonRepl::reset()
 {
     m_state = PythonInterpreter::State();
     m_ui->outputDisplay->clear();
     importNeededPackages();
 }
 
-void QPythonREPL::importNeededPackages()
+void QPythonRepl::importNeededPackages()
 {
     executeCode(replArrows + "import pycc");
     executeCode(replArrows + "import cccorelib");
     executeCode(replArrows + "cc = pycc.GetInstance()");
 }
 
-void QPythonREPL::executeCode(const QString &pythonCode)
+void QPythonRepl::executeCode(const QString &pythonCode)
 {
     /// Our raw input contains the ">>> " and "... " and is a QString
     /// convert it to std::string while filtering out non needed chars
     m_buf.clear();
-    QString::const_iterator iter = pythonCode.begin() + replArrows.size();
+    auto iter = pythonCode.begin() + replArrows.size();
     while (iter < pythonCode.end())
     {
         // FIXME this will return 0 on non latin chars
         //  we should do better
-        char c = iter->toLatin1();
+        const char c = iter->toLatin1();
         if (c == 0)
         {
             outputDisplay()->addItem("Input contains non Latin1 chars");
@@ -246,7 +244,7 @@ const QString &History::older()
         m_current = m_commands.rbegin();
     }
     const QString &current = *m_current;
-    m_current++;
+    ++m_current;
     return current;
 }
 
@@ -264,7 +262,7 @@ const QString &History::newer()
     }
     else
     {
-        m_current--;
+        --m_current;
     }
     return current;
 }

@@ -15,7 +15,7 @@
 //#                                                                        #
 //##########################################################################
 
-#include "ccGUIPythonInstance.h"
+#include "ccGuiPythonInstance.h"
 
 #include <ccMainAppInterface.h>
 
@@ -72,7 +72,7 @@ static void ThrowForFileError(CC_FILE_ERROR error)
     }
 }
 
-ccGUIPythonInstance::ccGUIPythonInstance(ccMainAppInterface *app) : m_app(app)
+ccGuiPythonInstance::ccGuiPythonInstance(ccMainAppInterface *app) noexcept(false) : m_app(app)
 {
     if (m_app == nullptr)
     {
@@ -80,37 +80,37 @@ ccGUIPythonInstance::ccGUIPythonInstance(ccMainAppInterface *app) : m_app(app)
     }
 }
 
-ccGLWindow *ccGUIPythonInstance::getActiveGLWindow()
+ccGLWindow *ccGuiPythonInstance::getActiveGLWindow()
 {
     return m_app->getActiveGLWindow();
 }
 
-QMainWindow *ccGUIPythonInstance::getMainWindow()
+QMainWindow *ccGuiPythonInstance::getMainWindow()
 {
     return m_app->getMainWindow();
 }
 
-bool ccGUIPythonInstance::haveSelection() const
+bool ccGuiPythonInstance::haveSelection() const
 {
     return m_app->haveSelection();
 }
 
-bool ccGUIPythonInstance::haveOneSelection() const
+bool ccGuiPythonInstance::haveOneSelection() const
 {
     return m_app->haveOneSelection();
 }
 
-const ccHObject::Container &ccGUIPythonInstance::getSelectedEntities() const
+const ccHObject::Container &ccGuiPythonInstance::getSelectedEntities() const
 {
     return m_app->getSelectedEntities();
 }
 
-void ccGUIPythonInstance::setSelectedInDB(ccHObject *obj, bool selected)
+void ccGuiPythonInstance::setSelectedInDB(ccHObject *obj, bool selected)
 {
     m_app->setSelectedInDB(obj, selected);
 }
 
-ccHObject *ccGUIPythonInstance::loadFile(const char *filename, FileIOFilter::LoadParameters &parameters)
+ccHObject *ccGuiPythonInstance::loadFile(const char *filename, FileIOFilter::LoadParameters &parameters)
 {
     CC_FILE_ERROR result = CC_FERR_NO_ERROR;
     ccHObject *newGroup = FileIOFilter::LoadFromFile(filename, parameters, result);
@@ -126,7 +126,7 @@ ccHObject *ccGUIPythonInstance::loadFile(const char *filename, FileIOFilter::Loa
 }
 
 
-void ccGUIPythonInstance::addToDB(
+void ccGuiPythonInstance::addToDB(
     pybind11::object &obj, bool updateZoom, bool autoExpandDBTree, bool checkDimensions, bool autoRedraw)
 {
     try
@@ -141,37 +141,37 @@ void ccGUIPythonInstance::addToDB(
 }
 
 
-ccHObject *ccGUIPythonInstance::dbRootObject()
+ccHObject *ccGuiPythonInstance::dbRootObject()
 {
     return m_app->dbRootObject();
 }
 
-void ccGUIPythonInstance::redrawAll(bool only2D)
+void ccGuiPythonInstance::redrawAll(bool only2D)
 {
     m_app->redrawAll(only2D);
 }
 
-void ccGUIPythonInstance::refreshAll(bool only2D)
+void ccGuiPythonInstance::refreshAll(bool only2D)
 {
     m_app->refreshAll(only2D);
 }
 
-void ccGUIPythonInstance::enableAll()
+void ccGuiPythonInstance::enableAll()
 {
     m_app->enableAll();
 }
 
-void ccGUIPythonInstance::disableAll()
+void ccGuiPythonInstance::disableAll()
 {
     m_app->disableAll();
 }
 
-void ccGUIPythonInstance::updateUI()
+void ccGuiPythonInstance::updateUI()
 {
     m_app->updateUI();
 }
 
-void ccGUIPythonInstance::freezeUI(bool state)
+void ccGuiPythonInstance::freezeUI(bool state)
 {
     m_app->freezeUI(state);
 }

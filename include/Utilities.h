@@ -15,18 +15,68 @@
 //#                                                                        #
 //##########################################################################
 
-#ifndef CLOUDCOMPAREPROJECTS_UTILITIES_H
-#define CLOUDCOMPAREPROJECTS_UTILITIES_H
+#ifndef PYTHON_PLUGIN_UTILITIES_H
+#define PYTHON_PLUGIN_UTILITIES_H
 
 #include <QString>
+
+#include <Python.h>
+
+#include <ccLog.h>
 
 /// Returns a newly allocated array (null terminated) from a QString
 inline wchar_t *QStringToWcharArray(const QString &string)
 {
     auto *wcharArray = new wchar_t[string.size() + 1];
-    int len = string.toWCharArray(wcharArray);
+    const int len = string.toWCharArray(wcharArray);
     Q_ASSERT(len <= string.size());
     wcharArray[len] = '\0';
     return wcharArray;
 }
-#endif // CLOUDCOMPAREPROJECTS_UTILITIES_H
+
+
+inline void LogPythonPath()
+{
+    const wchar_t *pythonPath = Py_GetPath();
+    if (pythonPath != nullptr)
+    {
+        size_t errPos{0};
+        char *cPythonPath = Py_EncodeLocale(pythonPath, &errPos);
+        if (cPythonPath)
+        {
+            ccLog::Print("[PythonPlugin] PythonPath is set to: %s", cPythonPath);
+        }
+        else
+        {
+            ccLog::Print("[PythonPlugin] Failed to convert the PythonPath");
+        }
+    }
+    else
+    {
+        ccLog::Print("[PythonPlugin] PythonPath is not set");
+    }
+}
+
+inline void LogPythonHome()
+{
+    const wchar_t *pythonHome = Py_GetPythonHome();
+    if (pythonHome != nullptr)
+    {
+        size_t errPos{0};
+        char *cPythonHome = Py_EncodeLocale(pythonHome, &errPos);
+        if (cPythonHome)
+        {
+            ccLog::Print("[PythonPlugin] PythonHome is set to: %s", cPythonHome);
+            PyMem_Free(cPythonHome);
+        }
+        else
+        {
+            ccLog::Print("[PythonPlugin]Failed to convert the PythonHome path");
+        }
+    }
+    else
+    {
+        ccLog::Print("[PythonPlugin] PythonHome is not set");
+    }
+}
+#endif // PYTHON_PLUGIN_UTILITIES_H

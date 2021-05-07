@@ -15,8 +15,8 @@
 //#                                                                        #
 //##########################################################################
 
-#ifndef CLOUDCOMPAREPROJECTS_QPYTHONREPL_H
-#define CLOUDCOMPAREPROJECTS_QPYTHONREPL_H
+#ifndef PYTHON_PLUGIN_QPYTHON_REPL_H
+#define PYTHON_PLUGIN_QPYTHON_REPL_H
 
 #include <QMainWindow>
 
@@ -29,10 +29,10 @@ class PythonInterpreter;
 class Ui_QPythonREPL;
 class QPlainTextEdit;
 
-class QPythonREPL;
+class QPythonRepl;
 
 /// Simple history system for the REPL.
-class History
+class History final
 {
   public:
     explicit History() = default;
@@ -53,31 +53,35 @@ class History
 };
 
 /// Class used by the REPL to handle key presses
-class KeyPressEater : public QObject
+class KeyPressEater final : public QObject
 {
     Q_OBJECT
   public:
-    explicit KeyPressEater(QPythonREPL *repl, QObject *parent = nullptr);
+    explicit KeyPressEater(QPythonRepl *repl, QObject *parent = nullptr);
 
   protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
 
   private:
-    QPythonREPL *m_repl{nullptr};
+    QPythonRepl *m_repl{nullptr};
 };
 
 /// Homemade REPL (Read Print Eval Loop)
-class QPythonREPL : public QMainWindow
+class QPythonRepl final : public QMainWindow
 {
     friend KeyPressEater;
     Q_OBJECT
 
   public:
-    explicit QPythonREPL(PythonInterpreter *interpreter, QMainWindow *parent = nullptr);
+    explicit QPythonRepl(PythonInterpreter *interpreter, QMainWindow *parent = nullptr);
 
     void executeCode(const QString &pythonCode);
 
-    ~QPythonREPL() override;
+    QPythonRepl(const QPythonRepl &) = delete;
+    QPythonRepl(QPythonRepl &&) = delete;
+    QPythonRepl& operator=(const QPythonRepl &) = delete;
+    QPythonRepl &operator=(QPythonRepl &&) = delete;
+    ~QPythonRepl() noexcept override;
 
   protected:
     QPlainTextEdit *codeEdit();
@@ -96,4 +100,4 @@ class QPythonREPL : public QMainWindow
 };
 
 
-#endif // CLOUDCOMPAREPROJECTS_QPYTHONREPL_H
+#endif // PYTHON_PLUGIN_QPYTHON_REPL_H

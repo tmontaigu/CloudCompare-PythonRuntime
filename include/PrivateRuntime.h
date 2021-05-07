@@ -22,9 +22,9 @@ class ccCommandLineInterface;
 
 namespace Python
 {
-void setMainAppInterfaceInstance(ccMainAppInterface *appInterface);
-void unsetMainAppInterfaceInstance();
+void setMainAppInterfaceInstance(ccMainAppInterface *appInterface) noexcept(false);
+void unsetMainAppInterfaceInstance() noexcept;
 
-void setCmdLineInterfaceInstance(ccCommandLineInterface *cmdLine);
-void unsetCmdLineInterfaceInstance();
+void setCmdLineInterfaceInstance(ccCommandLineInterface *cmdLine) noexcept;
+void unsetCmdLineInterfaceInstance() noexcept;
 } // namespace Python
