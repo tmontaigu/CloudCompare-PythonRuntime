@@ -58,6 +58,7 @@ if (PLUGIN_PYTHON)
 
 
     target_link_libraries(PythonPlugin pybind11::embed)
+    set_target_properties(PythonPlugin PROPERTIES CXX_VISIBILITY_PRESET hidden)
 
     if (WIN32)
         manage_windows_install()
