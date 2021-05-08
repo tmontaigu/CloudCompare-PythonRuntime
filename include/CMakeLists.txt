@@ -7,6 +7,8 @@ target_sources(${PROJECT_NAME}
         ${CMAKE_CURRENT_LIST_DIR}/PythonInterpreter.h
         ${CMAKE_CURRENT_LIST_DIR}/QPythonRepl.h
         ${CMAKE_CURRENT_LIST_DIR}/PythonHighlighter.h
+        ${CMAKE_CURRENT_LIST_DIR}/ColorScheme.h
+        ${CMAKE_CURRENT_LIST_DIR}/PythonHighlighterSettings.h
         ${CMAKE_CURRENT_LIST_DIR}/Consoles.h
         ${CMAKE_CURRENT_LIST_DIR}/ccGuiPythonInstance.h
         ${CMAKE_CURRENT_LIST_DIR}/FileRunner.h

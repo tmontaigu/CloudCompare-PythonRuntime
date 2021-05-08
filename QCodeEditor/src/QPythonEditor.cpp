@@ -17,6 +17,7 @@
 
 #include "QPythonEditor.h"
 #include "CodeEditor.h"
+#include "PythonHighlighterSettings.h"
 #include "PythonInterpreter.h"
 
 // qCC
@@ -341,7 +342,6 @@ void QPythonEditor::indentLess()
     }
 }
 
-
 void QPythonEditor::executionStarted()
 {
     actionRun->setEnabled(false);
@@ -366,7 +366,7 @@ void QPythonEditor::createActions()
     connect(actionSaveAs, &QAction::triggered, this, &QPythonEditor::saveAs);
     connect(actionRun, &QAction::triggered, this, &QPythonEditor::runExecute);
     connect(actionClose, &QAction::triggered, this, [=]() { close(); });
-    connect(actionSettings, &QAction::triggered, this, [this]() { this->settings->show(); });
+    connect(actionSettings, &QAction::triggered, settings, &QEditorSettings::show);
 
     menuFile->addSeparator();
 

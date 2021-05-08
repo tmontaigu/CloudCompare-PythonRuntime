@@ -89,9 +89,10 @@ class CodeEditor : public QPlainTextEdit
     bool isUntitled{true};
     QWidget *lineNumberArea{nullptr};
     QEditorSettings *settings{nullptr};
+    PythonHighlighter *highlighter;
 };
 
-class LineNumberArea : public QWidget
+class LineNumberArea final : public QWidget
 {
   public:
     explicit LineNumberArea(CodeEditor *editor) : QWidget(editor)
@@ -101,7 +102,7 @@ class LineNumberArea : public QWidget
 
     QSize sizeHint() const override
     {
-        return QSize(codeEditor->lineNumberAreaWidth(), 0);
+        return {codeEditor->lineNumberAreaWidth(), 0};
     }
 
   protected:

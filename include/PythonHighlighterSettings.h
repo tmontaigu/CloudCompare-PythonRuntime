@@ -15,39 +15,27 @@
 //#                                                                        #
 //##########################################################################
 
-#ifndef PYTHON_PLUGIN_QEDITOR_SETTINGS_H
-#define PYTHON_PLUGIN_QEDITOR_SETTINGS_H
+#ifndef PYTHON_HIGHLIGHTER_SETTINGS_H
+#define PYTHON_HIGHLIGHTER_SETTINGS_H
 
-#include <ui_QEditorSettings.h>
+#include <QDialog>
+#include <QVector>
 
-#include "ColorScheme.h"
+#include "PythonHighlighter.h"
 
-class QEditorSettings final : public QDialog, public Ui::QEditorSettings
+class QColorDialog;
+class QSignalMapper;
+
+class PythonHighlighterSettings final : public QWidget
 {
     Q_OBJECT
   public:
-    QEditorSettings();
-
-    int fontSize() const;
-    bool shouldHighlightCurrentLine() const;
-    const ColorScheme &colorScheme() const;
-
-  public:
-  Q_SIGNALS:
-    void settingsChanged();
-
-  protected:
-    void connectSignals() const;
-    void saveChanges();
-    void saveChangesAndClose();
-    void cancel();
-    void setFormValuesToCurrentValues() const;
-    void loadFromSettings();
-    void setupUi();
+    explicit PythonHighlighterSettings(QWidget *parent = nullptr);
 
   private:
-    ColorScheme m_colorScheme = ColorScheme::Default();
-    bool m_shouldHighlightCurrentLine = true;
+    QColorDialog *colorDialog;
+    QSignalMapper *signalMapper;
+    QVector<QPair<PythonHighlighter::CodeElement, QColor>> colors;
 };
 
-#endif // PYTHON_PLUGIN_QEDITOR_SETTINGS_H
+#endif // PYTHON_HIGHLIGHTER_SETTINGS_H

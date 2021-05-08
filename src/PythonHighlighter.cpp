@@ -16,113 +16,147 @@
 //##########################################################################
 
 #include "PythonHighlighter.h"
-
-
-// Syntax styles that can be shared by all languages
-typedef QMap<QString, QTextCharFormat> FormatMap;
-// static FormatMap STYLES;
-static const FormatMap STYLES = {{"keyword", PythonHighlighter::format("blue")},
-                                 {"operator", PythonHighlighter::format("red")},
-                                 {"brace", PythonHighlighter::format("darkGray")},
-                                 {"defclass", PythonHighlighter::format("black", "bold")},
-                                 {"string", PythonHighlighter::format("magenta")},
-                                 {"string2", PythonHighlighter::format("darkMagenta")},
-                                 {"comment", PythonHighlighter::format("darkGreen", "italic")},
-                                 {"self", PythonHighlighter::format("black", "italic")},
-                                 {"numbers", PythonHighlighter::format("brown")}};
+#include "ColorScheme.h"
 
 // Python keywords
-static const QStringList keywords = {
+static const QStringList s_Keywords = {
     "and",     "assert", "break", "class",  "continue", "def",    "del",   "elif", "else",   "except", "exec",
     "finally", "for",    "from",  "global", "if",       "import", "in",    "is",   "lambda", "not",    "or",
     "pass",    "print",  "raise", "return", "try",      "while",  "yield", "None", "True",   "False"};
 
 // Python operators
-static const QStringList operators = {"=",
-                                      // Comparison
-                                      "==",
-                                      "!=",
-                                      "<",
-                                      "<=",
-                                      ">",
-                                      ">=",
-                                      // Arithmetic
-                                      "\\+",
-                                      "-",
-                                      "\\*",
-                                      "/",
-                                      "//",
-                                      "\\%",
-                                      "\\*\\*",
-                                      // In-place
-                                      "\\+=",
-                                      "-=",
-                                      "\\*=",
-                                      "/=",
-                                      "\\%=",
-                                      // Bitwise
-                                      "\\^",
-                                      "\\|",
-                                      "\\&",
-                                      "\\~",
-                                      ">>",
-                                      "<<"};
+static const QStringList s_Operators = {"=",
+                                        // Comparison
+                                        "==",
+                                        "!=",
+                                        "<",
+                                        "<=",
+                                        ">",
+                                        ">=",
+                                        // Arithmetic
+                                        "\\+",
+                                        "-",
+                                        "\\*",
+                                        "/",
+                                        "//",
+                                        "\\%",
+                                        "\\*\\*",
+                                        // In-place
+                                        "\\+=",
+                                        "-=",
+                                        "\\*=",
+                                        "/=",
+                                        "\\%=",
+                                        // Bitwise
+                                        "\\^",
+                                        "\\|",
+                                        "\\&",
+                                        "\\~",
+                                        ">>",
+                                        "<<"};
 
 // Python braces
-static const QStringList braces = {"\\{", "\\}", "\\(", "\\)", R"([)", R"(])"};
+static const QStringList s_Braces = {"\\{", "\\}", "\\(", "\\)", R"([)", R"(])"};
 
-/////
+QString PythonHighlighter::CodeElementName(PythonHighlighter::CodeElement e)
+{
+    switch (e)
+    {
+    case CodeElement::Keyword:
+        return {"Keyword"};
+    case CodeElement::Operator:
+        return {"Operator"};
+    case CodeElement::Brace:
+        return {"Brace"};
+    case CodeElement::Definition:
+        return {"Definition"};
+    case CodeElement::String:
+        return {"String"};
+    case CodeElement::DocString:
+        return {"Doc String"};
+    case CodeElement::Comment:
+        return {"Comment"};
+    case CodeElement::Self:
+        return {"Self"};
+    case CodeElement::Numbers:
+        return {"Numbers"};
+    case CodeElement::End:
+        Q_FALLTHROUGH();
+    default:
+        Q_ASSERT(false);
+        return {};
+    }
+}
 
-PythonHighlighter::PythonHighlighter(QTextDocument *parent) : QSyntaxHighlighter(parent) { initialize(); }
 
-void PythonHighlighter::highlightBlock(const QString &text) { highlightPythonBlock(text); }
+void PythonHighlighter::useColorScheme(const ColorScheme& colorScheme)
+{
+    for (HighlightingRule &rule : pythonHighlightingRules)
+    {
+        rule.format = colorScheme[rule.element];
+    }
+}
 
-/////
+PythonHighlighter::PythonHighlighter(QTextDocument *parent) : QSyntaxHighlighter(parent)
+{
+    initialize();
+}
+
+
+void PythonHighlighter::highlightBlock(const QString &text)
+{
+    highlightPythonBlock(text);
+}
 
 void PythonHighlighter::initialize()
 {
     // Multi-line strings (expression, flag, style)
     // FIXME: The triple-quotes in these two lines will mess up the
     // syntax highlighting from this point onward
-    _triSingle = HighlightingRule("'''", 1, STYLES["string2"]);
-    _triDouble = HighlightingRule(R"(""")", 2, STYLES["string2"]);
+    triSingle = HighlightingRule(CodeElement::DocString ,"'''", 1);
+    
+    triDouble = HighlightingRule(CodeElement::DocString, R"(""")", 2);
 
     // Keyword, operator, and brace rules
-    for (const QString &keyword : keywords)
+    for (const QString &keyword : s_Keywords)
     {
         QString pattern = QString("\\b%1\\b").arg(keyword);
-        _pythonHighlightingRules += HighlightingRule(pattern, 0, STYLES["keyword"]);
+        pythonHighlightingRules += HighlightingRule(CodeElement::Keyword, pattern, 0);
     }
 
-    for (const QString &pattern : operators)
-        _pythonHighlightingRules += HighlightingRule(pattern, 0, STYLES["operator"]);
+    for (const QString &pattern : s_Operators)
+        pythonHighlightingRules += HighlightingRule(CodeElement::Operator, pattern, 0);
 
-    for (const QString &pattern : braces)
-        _pythonHighlightingRules += HighlightingRule(pattern, 0, STYLES["brace"]);
+    for (const QString &pattern : s_Braces)
+        pythonHighlightingRules += HighlightingRule(CodeElement::Brace, pattern, 0);
 
     // All other rules
 
     // 'self'
-    _pythonHighlightingRules += HighlightingRule("\\bself\\b", 0, STYLES["self"]);
+    pythonHighlightingRules += HighlightingRule(CodeElement::Self , "\\bself\\b", 0);
 
     // Double-quoted string, possibly containing escape sequences
-    _pythonHighlightingRules += HighlightingRule(R"("[^"\\]*(\\.[^"\\]*)*")", 0, STYLES["string"]);
+    pythonHighlightingRules +=
+        HighlightingRule(CodeElement::String, R"("[^"\\]*(\\.[^"\\]*)*")", 0);
     // Single-quoted string, possibly containing escape sequences
-    _pythonHighlightingRules += HighlightingRule(R"("[^'\\]*(\\.[^'\\]*)*")", 0, STYLES["string"]);
+    pythonHighlightingRules +=
+        HighlightingRule(CodeElement::String, R"("[^'\\]*(\\.[^'\\]*)*")", 0);
 
     // 'def' followed by an identifier
-    _pythonHighlightingRules += HighlightingRule("\\bdef\\b\\s*(\\w+)", 1, STYLES["defclass"]);
+    pythonHighlightingRules += HighlightingRule(CodeElement::Definition, R"(\bdef\b\s*(\w+))", 1);
     // 'class' followed by an identifier
-    _pythonHighlightingRules += HighlightingRule("\\bclass\\b\\s*(\\w+)", 1, STYLES["defclass"]);
+    pythonHighlightingRules += HighlightingRule(CodeElement::Definition, R"(\bclass\b\s*(\w+))", 1);
 
     // From '#' until a newline
-    _pythonHighlightingRules += HighlightingRule("#[^\\n]*", 0, STYLES["comment"]);
+    pythonHighlightingRules += HighlightingRule(CodeElement::Comment , "#[^\\n]*", 0);
 
     // Numeric literals
-    _pythonHighlightingRules += HighlightingRule("\\b[+-]?[0-9]+[lL]?\\b", 0, STYLES["numbers"]);
-    _pythonHighlightingRules += HighlightingRule("\\b[+-]?0[xX][0-9A-Fa-f]+[lL]?\\b", 0, STYLES["numbers"]);
-    _pythonHighlightingRules +=
-        HighlightingRule("\\b[+-]?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\\b", 0, STYLES["numbers"]);
+    pythonHighlightingRules += HighlightingRule(CodeElement::Numbers, "\\b[+-]?[0-9]+[lL]?\\b", 0);
+    pythonHighlightingRules +=
+        HighlightingRule(CodeElement::Numbers, "\\b[+-]?0[xX][0-9A-Fa-f]+[lL]?\\b", 0);
+    pythonHighlightingRules += HighlightingRule(
+        CodeElement::Numbers,
+        R"(\b[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\b)", 0);
 }
 
 void PythonHighlighter::highlightPythonBlock(const QString &text)
@@ -133,7 +167,7 @@ void PythonHighlighter::highlightPythonBlock(const QString &text)
     int index = -1;
 
     // Do other syntax formatting
-    for (const auto &rule : _pythonHighlightingRules)
+    for (const auto &rule : pythonHighlightingRules)
     {
         index = rule.pattern.indexIn(text, 0);
 
@@ -153,26 +187,9 @@ void PythonHighlighter::highlightPythonBlock(const QString &text)
     setCurrentBlockState(0);
 
     // Do multi-line strings
-    bool in_multiline = matchMultiLine(text, _triSingle);
+    bool in_multiline = matchMultiLine(text, triSingle);
     if (!in_multiline)
-        in_multiline = matchMultiLine(text, _triDouble);
-}
-
-// Return a QTextCharFormat with the given attributes.
-QTextCharFormat PythonHighlighter::format(const QString &colorName, const QString &style)
-{
-    QColor color;
-    color.setNamedColor(colorName);
-
-    QTextCharFormat format;
-    format.setForeground(color);
-
-    if (style.contains("bold"))
-        format.setFontWeight(QFont::Bold);
-    if (style.contains("italic"))
-        format.setFontItalic(true);
-
-    return format;
+        in_multiline = matchMultiLine(text, triDouble);
 }
 
 /*Do highlighting of multi-line strings. ``delimiter`` should be a
@@ -225,8 +242,5 @@ bool PythonHighlighter::matchMultiLine(const QString &text, const HighlightingRu
     }
 
     // Return True if still inside a multi-line string, False otherwise
-    if (currentBlockState() == rule.matchIndex)
-        return true;
-    else
-        return false;
+    return currentBlockState() == rule.matchIndex;
 }

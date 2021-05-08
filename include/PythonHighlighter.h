@@ -15,23 +15,43 @@
 //#                                                                        #
 //##########################################################################
 
-// https://forum.qt.io/topic/96285/c-highlighter-for-python
-#ifndef PYTHONHIGHLIGHTER_H
-#define PYTHONHIGHLIGHTER_H
+// Original Author: "JeroenDierckx"
+// from https://forum.qt.io/topic/96285/c-highlighter-for-python
+// "The license is "don't make money off this without giving back to the community" ;-)"
 
-#include <QRegExp>
+#ifndef PYTHON_HIGHLIGHTER_H
+#define PYTHON_HIGHLIGHTER_H
+
 #include <QSyntaxHighlighter>
-#include <utility>
+
+
+class ColorScheme;
 
 // Started from Qt Syntax Highlighter example and then ported
 // https://wiki.python.org/moin/PyQt/Python%20syntax%20highlighting
 class PythonHighlighter : public QSyntaxHighlighter
 {
   public:
-    explicit PythonHighlighter(QTextDocument *parent = nullptr);
+    // For lack of a better name
+    enum class CodeElement
+    {
+        Keyword = 0,
+        Operator,
+        Brace,
+        Definition,
+        String,
+        DocString,
+        Comment,
+        Self,
+        Numbers,
+        End
+    };
 
-    // Helper
-    static QTextCharFormat format(const QString &colorName, const QString &style = QString());
+    static QString CodeElementName(PythonHighlighter::CodeElement e);
+
+	void useColorScheme(const ColorScheme &colorScheme);
+
+    explicit PythonHighlighter(QTextDocument *parent = nullptr);
 
   protected:
     void highlightBlock(const QString &text) override;
@@ -39,19 +59,15 @@ class PythonHighlighter : public QSyntaxHighlighter
   private:
     struct HighlightingRule
     {
+        CodeElement element = CodeElement::End;
         QRegExp pattern;
         QTextCharFormat format;
         int matchIndex = 0;
-
+    	
         HighlightingRule() = default;
-
-        HighlightingRule(const QRegExp &r, int i, QTextCharFormat f)
-            : pattern(r), format(std::move(f)), matchIndex(i)
-        {
-        }
-
-        HighlightingRule(const QString &p, int i, QTextCharFormat f)
-            : pattern(QRegExp(p)), format(std::move(f)), matchIndex(i)
+    	
+        HighlightingRule(CodeElement e, const QString &p, int i)
+            : element(e), pattern(QRegExp(p)), matchIndex(i)
         {
         }
     };
@@ -62,8 +78,10 @@ class PythonHighlighter : public QSyntaxHighlighter
 
     bool matchMultiLine(const QString &text, const HighlightingRule &rule);
 
-    QVector<HighlightingRule> _pythonHighlightingRules;
-    HighlightingRule _triSingle, _triDouble;
+    QVector<HighlightingRule> pythonHighlightingRules;
+    HighlightingRule triSingle;
+    HighlightingRule triDouble;
 };
 
-#endif // PYTHONHIGHLIGHTER_H
+
+#endif // PYTHON_HIGHLIGHTER_H
