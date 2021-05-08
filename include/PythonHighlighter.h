@@ -22,15 +22,35 @@
 #ifndef PYTHON_HIGHLIGHTER_H
 #define PYTHON_HIGHLIGHTER_H
 
-#include <QRegExp>
 #include <QSyntaxHighlighter>
-#include <utility>
+
+
+class ColorScheme;
 
 // Started from Qt Syntax Highlighter example and then ported
 // https://wiki.python.org/moin/PyQt/Python%20syntax%20highlighting
 class PythonHighlighter : public QSyntaxHighlighter
 {
   public:
+    // For lack of a better name
+    enum class CodeElement
+    {
+        Keyword = 0,
+        Operator,
+        Brace,
+        Definition,
+        String,
+        DocString,
+        Comment,
+        Self,
+        Numbers,
+        End
+    };
+
+    static QString CodeElementName(PythonHighlighter::CodeElement e);
+
+	void useColorScheme(const ColorScheme &colorScheme);
+
     explicit PythonHighlighter(QTextDocument *parent = nullptr);
 
   protected:
@@ -39,19 +59,15 @@ class PythonHighlighter : public QSyntaxHighlighter
   private:
     struct HighlightingRule
     {
+        CodeElement element = CodeElement::End;
         QRegExp pattern;
         QTextCharFormat format;
         int matchIndex = 0;
-
+    	
         HighlightingRule() = default;
-
-        HighlightingRule(const QRegExp &r, int i, QTextCharFormat f)
-            : pattern(r), format(std::move(f)), matchIndex(i)
-        {
-        }
-
-        HighlightingRule(const QString &p, int i, QTextCharFormat f)
-            : pattern(QRegExp(p)), format(std::move(f)), matchIndex(i)
+    	
+        HighlightingRule(CodeElement e, const QString &p, int i)
+            : element(e), pattern(QRegExp(p)), matchIndex(i)
         {
         }
     };
@@ -66,5 +82,6 @@ class PythonHighlighter : public QSyntaxHighlighter
     HighlightingRule triSingle;
     HighlightingRule triDouble;
 };
+
 
 #endif // PYTHON_HIGHLIGHTER_H

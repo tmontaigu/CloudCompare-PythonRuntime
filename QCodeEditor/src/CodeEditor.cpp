@@ -19,10 +19,9 @@
 
 #include "CodeEditor.h"
 #include "PythonHighlighter.h"
-#include <ccLog.h>
 
 CodeEditor::CodeEditor(QEditorSettings *settings, QWidget *parent)
-    : settings(settings), QPlainTextEdit(parent)
+    : QPlainTextEdit(parent), settings(settings), highlighter(new PythonHighlighter(document()))
 {
     connect(settings, &QEditorSettings::settingsChanged, this, &CodeEditor::updateUsingSettings);
 
@@ -32,11 +31,9 @@ CodeEditor::CodeEditor(QEditorSettings *settings, QWidget *parent)
     connect(this, &QPlainTextEdit::cursorPositionChanged, this, &CodeEditor::startAllHighlighting);
 
     updateLineNumberAreaWidth(0);
-    highlightCurrentLine();
     setAttribute(Qt::WA_DeleteOnClose);
     updateUsingSettings();
     installEventFilter(this);
-    new PythonHighlighter(document());
 }
 
 bool CodeEditor::eventFilter(QObject *target, QEvent *event)
@@ -68,12 +65,17 @@ void CodeEditor::updateUsingSettings()
     font.setPointSize(settings->fontSize());
 
     setFont(font);
-    //	QPalette p = palette();
-    //	p.setColor(QPalette::Base, Qt::black);
-    //	p.setColor(QPalette::Text, Qt::white);
-    //	setPalette(p);
+    QPalette p = palette();
+    p.setColor(QPalette::Base, settings->colorScheme().backgroundColor());
+    p.setColor(QPalette::Text, settings->colorScheme().foregroundColor());
+    setPalette(p);
+
     setLineWrapMode(QPlainTextEdit::NoWrap);
 
+    highlighter->useColorScheme(settings->colorScheme());
+
+    highlighter->rehighlight();
+    highlightCurrentLine();
     this->repaint();
 }
 
@@ -125,15 +127,18 @@ void CodeEditor::resizeEvent(QResizeEvent *e)
 
 void CodeEditor::highlightCurrentLine()
 {
+    if (!settings->shouldHighlightCurrentLine())
+    {
+        return;
+    }
+
     QList<QTextEdit::ExtraSelection> selections = extraSelections();
 
     if (!isReadOnly())
     {
         QTextEdit::ExtraSelection selection;
 
-        QColor lineColor = QColor(Qt::yellow).lighter(160);
-
-        selection.format.setBackground(lineColor);
+        selection.format.setBackground(settings->colorScheme().currentLineHighlightColor());
         selection.format.setProperty(QTextFormat::FullWidthSelection, true);
         selection.cursor = textCursor();
         selection.cursor.clearSelection();
@@ -244,7 +249,10 @@ bool CodeEditor::saveFile(const QString &fileName)
     return true;
 }
 
-QString CodeEditor::userFriendlyCurrentFile() { return strippedName(curFile); }
+QString CodeEditor::userFriendlyCurrentFile()
+{
+    return strippedName(curFile);
+}
 
 void CodeEditor::closeEvent(QCloseEvent *event)
 {
@@ -258,7 +266,10 @@ void CodeEditor::closeEvent(QCloseEvent *event)
     }
 }
 
-void CodeEditor::documentWasModified() { setWindowModified(document()->isModified()); }
+void CodeEditor::documentWasModified()
+{
+    setWindowModified(document()->isModified());
+}
 
 bool CodeEditor::maybeSave()
 {
@@ -292,8 +303,10 @@ void CodeEditor::setCurrentFile(const QString &fileName)
     setWindowTitle(userFriendlyCurrentFile() + "[*]");
 }
 
-QString CodeEditor::strippedName(const QString &fullFileName) { return QFileInfo(fullFileName).fileName(); }
-
+QString CodeEditor::strippedName(const QString &fullFileName)
+{
+    return QFileInfo(fullFileName).fileName();
+}
 
 void CodeEditor::createPairedCharsSelection(int pos)
 {
