@@ -92,7 +92,7 @@ class PythonInterpreter final: public QObject
     bool isExecuting() const;
     void initialize();
     void finalize();
-    static bool isInitialized();
+    static bool IsInitialized();
 
 
 	/// Execution functions (and slots)

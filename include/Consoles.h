@@ -85,7 +85,7 @@ class ccConsoleOutput
 {
   public:
     ccConsoleOutput() = default;
-    explicit ccConsoleOutput(const char*  prefix) : prefix(prefix) {}
+    explicit ccConsoleOutput(const char*  prefix) : m_prefix(prefix) {}
 
     void write(const char *messagePart)
     {
@@ -98,24 +98,24 @@ class ccConsoleOutput
     }
 
   private:
-    const QString prefix;
+    const QString m_prefix;
     ConsoleWrapper m_output{[this](const QString &message) {
-        if (prefix.isEmpty())
+        if (m_prefix.isEmpty())
         {
             ccLog::Print(message);
         } else {
-            ccLog::Print(prefix + message);
+            ccLog::Print(m_prefix + message);
         }
     }};
 };
 
 /// Writes messages to the QListWidget given
-class ConsoleREPL
+class ConsoleRepl
 {
   public:
-    ConsoleREPL(QListWidget *view, Qt::GlobalColor color) : view(view), brush(color) {}
-    ConsoleREPL(QListWidget *view, const QColor& color) : view(view), brush() {}
-    explicit ConsoleREPL(QListWidget *view) : view(view), brush() {}
+    ConsoleRepl(QListWidget *view, const Qt::GlobalColor color) : m_view(view), m_brush(color) {}
+    ConsoleRepl(QListWidget *view, const QColor& color) : m_view(view), m_brush() {}
+    explicit ConsoleRepl(QListWidget *view) : m_view(view), m_brush() {}
 
     void write(const char *messagePart)
     {
@@ -127,13 +127,13 @@ class ConsoleREPL
     }
 
   private:
-    QListWidget *view;
-    QBrush brush;
-    QString prefix;
+    QListWidget *m_view;
+    QBrush m_brush;
+    QString m_prefix;
     ConsoleWrapper m_output{[this](const QString &message) {
         auto *messageItem = new QListWidgetItem(message);
-        messageItem->setForeground(brush);
-        view->addItem(messageItem);
+        messageItem->setForeground(m_brush);
+        m_view->addItem(messageItem);
     }};
 };
 #endif // PYTHON_PLUGIN_CONSOLES_H

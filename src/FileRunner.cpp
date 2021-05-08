@@ -27,7 +27,7 @@
 
 /// Simple widget that grays out the view of its parent
 /// and shows a waiting bar, to give visual feedback that a script is running
-static QWidget *createBusyWidget(QWidget *parent)
+static QWidget *CreateBusyWidget(QWidget *parent)
 {
     auto *w = new QWidget(parent);
     w->hide();
@@ -49,57 +49,57 @@ static QWidget *createBusyWidget(QWidget *parent)
 
 FileRunner::FileRunner(PythonInterpreter* interp, QWidget *parent) :
       QDialog(parent),
-      interpreter(interp),
-      busyWidget(nullptr),
-      ui(new Ui::FileRunner)
+      m_interpreter(interp),
+      m_busyWidget(nullptr),
+      m_ui(new Ui::FileRunner)
 
 {
-    ui->setupUi(this);
-    ui->runFileBtn->setEnabled(false);
-    ui->runFileBtn->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowRight));
+    m_ui->setupUi(this);
+    m_ui->runFileBtn->setEnabled(false);
+    m_ui->runFileBtn->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowRight));
     setWindowIcon(QIcon(":/CC/plugin/PythonPlugin/images/runner-icon.png"));
-    busyWidget = createBusyWidget(this);
+    m_busyWidget = CreateBusyWidget(this);
 
-    connect(ui->selectFileBtn, &QPushButton::clicked, this, &FileRunner::selectFile);
-    connect(ui->runFileBtn, &QPushButton::clicked, this, &FileRunner::runFile);
+    connect(m_ui->selectFileBtn, &QPushButton::clicked, this, &FileRunner::selectFile);
+    connect(m_ui->runFileBtn, &QPushButton::clicked, this, &FileRunner::runFile);
     connect(interp, &PythonInterpreter::executionStarted, this, &FileRunner::pythonExecutionStarted);
     connect(interp, &PythonInterpreter::executionFinished, this, &FileRunner::pythonExecutionEnded);
 }
 
 void FileRunner::selectFile() {
-    filePath = QFileDialog::getOpenFileName(this, "Select Python Script", QString(), "Python Script (*.py)");
-    ui->filePathLabel->setText(filePath);
-    ui->runFileBtn->setEnabled(!filePath.isEmpty());
+    m_filePath = QFileDialog::getOpenFileName(this, "Select Python Script", QString(), "Python Script (*.py)");
+    m_ui->filePathLabel->setText(m_filePath);
+    m_ui->runFileBtn->setEnabled(!m_filePath.isEmpty());
 }
 
 void FileRunner::runFile() const
 {
-    if (!filePath.isEmpty()) {
-        const std::string path = filePath.toStdString();
-        interpreter->executeFile(path);
+    if (!m_filePath.isEmpty()) {
+        const std::string path = m_filePath.toStdString();
+        m_interpreter->executeFile(path);
     }
 }
 
 void FileRunner::pythonExecutionStarted()
 {
     setEnabled(false);
-    busyWidget->show();
+    m_busyWidget->show();
 }
 
 void FileRunner::pythonExecutionEnded()
 {
     setEnabled(true);
-    busyWidget->hide();
+    m_busyWidget->hide();
 }
 
 FileRunner::~FileRunner() noexcept
 {
-    delete ui;
+    delete m_ui;
 }
 
 void FileRunner::resizeEvent(QResizeEvent *event)
 {
-    busyWidget->resize(event->size());
+    m_busyWidget->resize(event->size());
     QDialog::resizeEvent(event);
 }
 

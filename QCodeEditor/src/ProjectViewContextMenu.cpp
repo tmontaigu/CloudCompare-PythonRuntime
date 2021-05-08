@@ -22,87 +22,87 @@
 #include <QMessageBox>
 
 ProjectViewContextMenu::ProjectViewContextMenu(ProjectView *view)
-    : QMenu(), treeView(view), renameAction("Rename"), deleteAction("Delete"),
-      createFileAction("Create File"), createFolderAction("Create Folder")
+    : QMenu(), m_treeView(view), m_renameAction("Rename"), m_deleteAction("Delete"),
+      m_createFileAction("Create File"), m_createFolderAction("Create Folder")
 {
-    addAction(&renameAction);
-    addAction(&deleteAction);
-    addAction(&createFileAction);
-    addAction(&createFolderAction);
+    addAction(&m_renameAction);
+    addAction(&m_deleteAction);
+    addAction(&m_createFileAction);
+    addAction(&m_createFolderAction);
 
-    connect(&renameAction, &QAction::triggered, this, &ProjectViewContextMenu::renameFile);
-    connect(&deleteAction, &QAction::triggered, this, &ProjectViewContextMenu::deleteElement);
-    connect(&createFileAction, &QAction::triggered, this, &ProjectViewContextMenu::createFile);
-    connect(&createFolderAction, &QAction::triggered, this, &ProjectViewContextMenu::createFolder);
+    connect(&m_renameAction, &QAction::triggered, this, &ProjectViewContextMenu::renameFile);
+    connect(&m_deleteAction, &QAction::triggered, this, &ProjectViewContextMenu::deleteElement);
+    connect(&m_createFileAction, &QAction::triggered, this, &ProjectViewContextMenu::createFile);
+    connect(&m_createFolderAction, &QAction::triggered, this, &ProjectViewContextMenu::createFolder);
 }
 
 void ProjectViewContextMenu::requested(const QPoint &pos)
 {
-    currentIndex = treeView->indexAt(pos);
+    m_currentIndex = m_treeView->indexAt(pos);
 
-    if (currentIndex.isValid())
+    if (m_currentIndex.isValid())
     {
 
-        renameAction.setVisible(true);
-        deleteAction.setVisible(true);
+        m_renameAction.setVisible(true);
+        m_deleteAction.setVisible(true);
 
-        if (QFileInfo(treeView->absolutePathAt(currentIndex)).isDir())
+        if (QFileInfo(m_treeView->absolutePathAt(m_currentIndex)).isDir())
         {
-            createFileAction.setVisible(true);
-            createFolderAction.setVisible(true);
+            m_createFileAction.setVisible(true);
+            m_createFolderAction.setVisible(true);
         }
         else
         {
-            createFileAction.setVisible(false);
-            createFolderAction.setVisible(false);
+            m_createFileAction.setVisible(false);
+            m_createFolderAction.setVisible(false);
         }
     }
     else
     {
-        renameAction.setVisible(false);
-        deleteAction.setVisible(false);
-        createFileAction.setVisible(true);
-        createFolderAction.setVisible(true);
+        m_renameAction.setVisible(false);
+        m_deleteAction.setVisible(false);
+        m_createFileAction.setVisible(true);
+        m_createFolderAction.setVisible(true);
     }
     exec(QCursor::pos());
 }
 
 void ProjectViewContextMenu::renameFile() const
 {
-    Q_ASSERT(currentIndex.isValid());
+    Q_ASSERT(m_currentIndex.isValid());
     bool ok;
-    QString newName = QInputDialog::getText(treeView,
+    QString newName = QInputDialog::getText(m_treeView,
                                             tr("Enter a new name"),
                                             tr("new name"),
                                             QLineEdit::Normal,
-                                            *static_cast<QString *>(currentIndex.internalPointer()),
+                                            *static_cast<QString *>(m_currentIndex.internalPointer()),
                                             &ok);
 
     if (ok && !newName.isEmpty())
     {
-        const QString currentPath = treeView->relativePathAt(currentIndex);
+        const QString currentPath = m_treeView->relativePathAt(m_currentIndex);
         const QString oldFilePath = QFileInfo(currentPath).absoluteFilePath();
         const QString newFilePath = QFileInfo(currentPath).absoluteDir().filePath(newName);
 
         if (!QFile::rename(oldFilePath, newFilePath))
         {
-            QMessageBox::critical(treeView, "Error", "Failed to rename the file");
+            QMessageBox::critical(m_treeView, "Error", "Failed to rename the file");
         }
-        treeView->setEnabled(true);
+        m_treeView->setEnabled(true);
     }
 }
 
 void ProjectViewContextMenu::deleteElement() const
 {
-    Q_ASSERT(currentIndex.isValid());
+    Q_ASSERT(m_currentIndex.isValid());
     auto result =
-        QMessageBox::question(treeView, "Confirm deletion ?", "Are you sure you want to delete this ?");
+        QMessageBox::question(m_treeView, "Confirm deletion ?", "Are you sure you want to delete this ?");
 
     if (result == QMessageBox::StandardButton::Yes)
     {
-        if (!treeView->fileSystemModel->remove(treeView->currentIndex()))
+        if (!m_treeView->m_fileSystemModel->remove(m_treeView->currentIndex()))
         {
-            QMessageBox::critical(treeView, "Error", "Failed to delete");
+            QMessageBox::critical(m_treeView, "Error", "Failed to delete");
         }
     }
 }
@@ -111,15 +111,15 @@ void ProjectViewContextMenu::createFile() const
 {
     bool ok;
     QString fileName =
-        QInputDialog::getText(treeView, tr("Enter a new name"), tr("new name"), QLineEdit::Normal, "", &ok);
+        QInputDialog::getText(m_treeView, tr("Enter a new name"), tr("new name"), QLineEdit::Normal, "", &ok);
 
     if (ok && !fileName.isEmpty())
     {
-        QDir basePath(treeView->absolutePathAt(currentIndex));
+        QDir basePath(m_treeView->absolutePathAt(m_currentIndex));
         QFile f(basePath.filePath(fileName));
         if (!f.open(QFile::OpenModeFlag::NewOnly))
         {
-            QMessageBox::critical(treeView, "Error", "Failed to create the file");
+            QMessageBox::critical(m_treeView, "Error", "Failed to create the file");
             return;
         }
         f.close();
@@ -130,17 +130,17 @@ void ProjectViewContextMenu::createFolder() const
 {
     bool ok;
     QString folderName = QInputDialog::getText(
-        treeView, tr("Enter a new name"), tr("Folder name"), QLineEdit::Normal, "New Folder", &ok);
+        m_treeView, tr("Enter a new name"), tr("Folder name"), QLineEdit::Normal, "New Folder", &ok);
 
     if (ok && !folderName.isEmpty())
     {
-        if (currentIndex.isValid())
+        if (m_currentIndex.isValid())
         {
-            treeView->fileSystemModel->mkdir(currentIndex, folderName);
+            m_treeView->m_fileSystemModel->mkdir(m_currentIndex, folderName);
         }
         else
         {
-            treeView->fileSystemModel->rootDirectory().mkdir(folderName);
+            m_treeView->m_fileSystemModel->rootDirectory().mkdir(folderName);
         }
     }
 }

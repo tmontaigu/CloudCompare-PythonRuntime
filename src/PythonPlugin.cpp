@@ -48,7 +48,7 @@ PythonPlugin::PythonPlugin(QObject *parent)
 
 QList<QAction *> PythonPlugin::getActions()
 {
-    const bool enableActions = PythonInterpreter::isInitialized();
+    const bool enableActions = PythonInterpreter::IsInitialized();
 
     if (!m_showEditor)
     {
@@ -59,13 +59,13 @@ QList<QAction *> PythonPlugin::getActions()
         m_showEditor->setEnabled(enableActions);
     }
 
-    if (!m_showREPL)
+    if (!m_showRepl)
     {
-        m_showREPL = new QAction("Show REPL", this);
-        m_showREPL->setToolTip("Show the Python REPL");
-        m_showREPL->setIcon(QIcon(":/CC/plugin/PythonPlugin/images/repl-icon.png"));
-        connect(m_showREPL, &QAction::triggered, this, &PythonPlugin::showRepl);
-        m_showREPL->setEnabled(enableActions);
+        m_showRepl = new QAction("Show REPL", this);
+        m_showRepl->setToolTip("Show the Python REPL");
+        m_showRepl->setIcon(QIcon(":/CC/plugin/PythonPlugin/images/repl-icon.png"));
+        connect(m_showRepl, &QAction::triggered, this, &PythonPlugin::showRepl);
+        m_showRepl->setEnabled(enableActions);
     }
 
     if (!m_showDoc)
@@ -96,7 +96,7 @@ QList<QAction *> PythonPlugin::getActions()
         m_showFileRunner->setEnabled(enableActions);
     }
 
-    return { m_showEditor, m_showFileRunner, m_showAboutDialog, m_showDoc, m_showREPL };
+    return { m_showEditor, m_showFileRunner, m_showAboutDialog, m_showDoc, m_showRepl };
 }
 
 void PythonPlugin::showRepl()

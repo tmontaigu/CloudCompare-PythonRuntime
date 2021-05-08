@@ -351,7 +351,7 @@ void PythonInterpreter::initialize()
     py::initialize_interpreter();
 }
 
-bool PythonInterpreter::isInitialized()
+bool PythonInterpreter::IsInitialized()
 {
     return Py_IsInitialized();
 }

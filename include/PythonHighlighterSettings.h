@@ -33,9 +33,9 @@ class PythonHighlighterSettings final : public QWidget
     explicit PythonHighlighterSettings(QWidget *parent = nullptr);
 
   private:
-    QColorDialog *colorDialog;
-    QSignalMapper *signalMapper;
-    QVector<QPair<PythonHighlighter::CodeElement, QColor>> colors;
+    QColorDialog *m_colorDialog;
+    QSignalMapper *m_signalMapper;
+    QVector<QPair<PythonHighlighter::CodeElement, QColor>> m_colors;
 };
 
 #endif // PYTHON_HIGHLIGHTER_SETTINGS_H

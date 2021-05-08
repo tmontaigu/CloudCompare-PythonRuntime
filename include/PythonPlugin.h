@@ -69,7 +69,7 @@ class PythonPlugin final : public QObject, public ccStdPluginInterface
 
     /// Actions
     QAction *m_showEditor{nullptr};
-    QAction *m_showREPL{nullptr};
+    QAction *m_showRepl{nullptr};
     QAction *m_showDoc{nullptr};
     QAction *m_showFileRunner{nullptr};
     QAction *m_showAboutDialog{nullptr};

@@ -29,7 +29,7 @@ class ColorScheme;
 
 // Started from Qt Syntax Highlighter example and then ported
 // https://wiki.python.org/moin/PyQt/Python%20syntax%20highlighting
-class PythonHighlighter : public QSyntaxHighlighter
+class PythonHighlighter final : public QSyntaxHighlighter
 {
   public:
     // For lack of a better name
@@ -66,7 +66,7 @@ class PythonHighlighter : public QSyntaxHighlighter
     	
         HighlightingRule() = default;
     	
-        HighlightingRule(CodeElement e, const QString &p, int i)
+        HighlightingRule(const CodeElement e, const QString &p, const int i)
             : element(e), pattern(QRegExp(p)), matchIndex(i)
         {
         }
@@ -78,9 +78,9 @@ class PythonHighlighter : public QSyntaxHighlighter
 
     bool matchMultiLine(const QString &text, const HighlightingRule &rule);
 
-    QVector<HighlightingRule> pythonHighlightingRules;
-    HighlightingRule triSingle;
-    HighlightingRule triDouble;
+    QVector<HighlightingRule> m_highlightingRules;
+    HighlightingRule m_triSingle;
+    HighlightingRule m_triDouble;
 };
 
 

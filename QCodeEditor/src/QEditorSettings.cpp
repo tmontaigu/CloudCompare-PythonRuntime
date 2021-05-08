@@ -23,7 +23,7 @@
 static const auto SHOULD_HIGHLIGHT_SETTINGS_KEY = QStringLiteral("ShouldHighlightCurrentLine");
 static const auto COLOR_SCHEME_SETTINGS_KEY = QStringLiteral("ColorSchemeName");
 
-static const QString SettingsScopeName()
+static QString SettingsScopeName()
 {
     return QCoreApplication::applicationName().append(":PythonPlugin.Editor");
 }

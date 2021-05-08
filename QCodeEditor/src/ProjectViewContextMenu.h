@@ -26,7 +26,7 @@ class QFileSystemModel;
 
 class ProjectView;
 
-class ProjectViewContextMenu : public QMenu
+class ProjectViewContextMenu final : public QMenu
 {
     Q_OBJECT
 
@@ -43,13 +43,13 @@ class ProjectViewContextMenu : public QMenu
     void createFolder() const;
 
   private:
-    ProjectView *treeView;
-    QModelIndex currentIndex;
+    ProjectView *m_treeView;
+    QModelIndex m_currentIndex;
 
-    QAction renameAction;
-    QAction deleteAction;
-    QAction createFileAction;
-    QAction createFolderAction;
+    QAction m_renameAction;
+    QAction m_deleteAction;
+    QAction m_createFileAction;
+    QAction m_createFolderAction;
 };
 
 #endif // PROJECT_VIEW_CONTEXT_MENU_H

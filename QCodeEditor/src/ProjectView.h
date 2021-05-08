@@ -24,7 +24,7 @@
 
 class ProjectViewContextMenu;
 
-class ProjectView : public QTreeView
+class ProjectView final : public QTreeView
 {
     Q_OBJECT
 
@@ -33,10 +33,10 @@ class ProjectView : public QTreeView
   public:
     explicit ProjectView(QWidget *parent = nullptr) : QTreeView(parent)
     {
-        fileSystemModel = new QFileSystemModel;
-        setModel(fileSystemModel);
+        m_fileSystemModel = new QFileSystemModel;
+        QTreeView::setModel(m_fileSystemModel);
 
-        contextMenu = new ProjectViewContextMenu(this);
+        m_contextMenu = new ProjectViewContextMenu(this);
         setContextMenuPolicy(Qt::ContextMenuPolicy::CustomContextMenu);
 
         for (int i{1}; i < size().width(); ++i)
@@ -44,26 +44,26 @@ class ProjectView : public QTreeView
             hideColumn(i);
         }
         connect(
-            this, &QTreeView::customContextMenuRequested, contextMenu, &ProjectViewContextMenu::requested);
+            this, &QTreeView::customContextMenuRequested, m_contextMenu, &ProjectViewContextMenu::requested);
     }
 
 
     void setRootPath(const QString& path) {
-        fileSystemModel->setRootPath(path);
-        setRootIndex(fileSystemModel->index(path));
+        m_fileSystemModel->setRootPath(path);
+        setRootIndex(m_fileSystemModel->index(path));
     }
 
-    inline QString relativePathAt(const QModelIndex& index) const {
-        return fileSystemModel->filePath(index);
+    QString relativePathAt(const QModelIndex& index) const {
+        return m_fileSystemModel->filePath(index);
     }
 
-    inline QString absolutePathAt(const QModelIndex& index) const {
-        return fileSystemModel->rootDirectory().filePath(relativePathAt(index));
+    QString absolutePathAt(const QModelIndex& index) const {
+        return m_fileSystemModel->rootDirectory().filePath(relativePathAt(index));
     }
 
   private:
-    QFileSystemModel *fileSystemModel;
-    ProjectViewContextMenu *contextMenu;
+    QFileSystemModel *m_fileSystemModel;
+    ProjectViewContextMenu *m_contextMenu;
 };
 
 #endif // PROJECT_TREE_VIEW_H

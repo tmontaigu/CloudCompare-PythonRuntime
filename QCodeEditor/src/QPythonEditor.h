@@ -39,11 +39,13 @@ class ccMainAppInterface;
 class PythonInterpreter;
 class ProjectViewContextMenu;
 
-class QPythonEditor : public QMainWindow, public Ui::QPythonEditor
+class QPythonEditor final : public QMainWindow, public Ui::QPythonEditor
 {
     Q_OBJECT
 
   public:
+    static QString SettingsApplicationName();
+
     explicit QPythonEditor(PythonInterpreter *interpreter);
 
     void changeEvent(QEvent *e) override;
@@ -55,7 +57,6 @@ class QPythonEditor : public QMainWindow, public Ui::QPythonEditor
     /// \param fileName the file to open
     /// \return true of success
     bool openFile(const QString &fileName);
-    static QString settingsApplicationName();
 
   protected:
     void closeEvent(QCloseEvent *event) override;
@@ -75,7 +76,7 @@ class QPythonEditor : public QMainWindow, public Ui::QPythonEditor
     bool eventFilter(QObject *obj, QEvent *e) override;
     // Loads the double clicked item from the project view
     // if its a file
-    void projectTreeDoubleClicked(const QModelIndex& index);
+    void projectTreeDoubleClicked(const QModelIndex &index);
 
 #ifndef QT_NO_CLIPBOARD
     void cut();
@@ -92,43 +93,41 @@ class QPythonEditor : public QMainWindow, public Ui::QPythonEditor
     CodeEditor *createChildCodeEditor();
 
   private:
-    enum
-    {
-        MaxRecentFiles = 10
-    };
+    static const int MaxRecentFiles = 10;
+
+    static bool HasRecentFiles();
 
     // Initialization functions
+    void setupUi();
     void createActions();
-    void createStatusBar();
     void updateMenus();
-    void initProjectView();
 
     void runExecute();
     void readSettings();
     void writeSettings();
     bool loadFile(const QString &fileName);
-    static bool hasRecentFiles();
     void prependToRecentFiles(const QString &fileName);
     void setRecentFilesVisible(bool visible);
     CodeEditor *activeChildCodeEditor() const;
     QMdiSubWindow *findChildCodeEditor(const QString &fileName) const;
 
-    QEditorSettings *settings{nullptr};
+  private: // Members
+    QEditorSettings *m_settings{nullptr};
 
-    QMdiArea *mdiArea{nullptr};
+    QMdiArea *m_mdiArea{nullptr};
 
-    QMenu *windowMenu{nullptr};
+    QMenu *m_windowMenu{nullptr};
 
-    QAction *recentFileActs[MaxRecentFiles] = {nullptr};
-    QAction *recentFileSeparator{nullptr};
-    QAction *recentFileSubMenuAct{nullptr};
-    QAction *closeAct{nullptr};
-    QAction *closeAllAct{nullptr};
-    QAction *tileAct{nullptr};
-    QAction *cascadeAct{nullptr};
-    QAction *nextAct{nullptr};
-    QAction *previousAct{nullptr};
-    QAction *windowMenuSeparatorAct{nullptr};
+    QAction *m_recentFileActs[MaxRecentFiles] = {nullptr};
+    QAction *m_recentFileSeparator{nullptr};
+    QAction *m_recentFileSubMenuAct{nullptr};
+    QAction *m_closeAct{nullptr};
+    QAction *m_closeAllAct{nullptr};
+    QAction *m_tileAct{nullptr};
+    QAction *m_cascadeAct{nullptr};
+    QAction *m_nextAct{nullptr};
+    QAction *m_previousAct{nullptr};
+    QAction *m_windowMenuSeparatorAct{nullptr};
 };
 
 #endif // CHAISCRIPT_CODE_EDITOR_MAIN_WINDOW

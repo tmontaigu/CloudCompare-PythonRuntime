@@ -26,7 +26,7 @@
 AboutDialog::AboutDialog(QWidget *parent): QDialog(parent), m_dlg(new Ui_AboutDialog) {
     m_dlg->setupUi(this);
 
-    QObject::connect(m_dlg->okBtn, &QPushButton::clicked, this, &QDialog::close);
+    connect(m_dlg->okBtn, &QPushButton::clicked, this, &QDialog::close);
 
     const char* versionStr = Py_GetVersion();
     m_dlg->pythonVersionLabel->setText(QString(versionStr));

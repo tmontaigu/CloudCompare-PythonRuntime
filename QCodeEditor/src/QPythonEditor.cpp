@@ -17,7 +17,6 @@
 
 #include "QPythonEditor.h"
 #include "CodeEditor.h"
-#include "PythonHighlighterSettings.h"
 #include "PythonInterpreter.h"
 
 // qCC
@@ -26,39 +25,41 @@
 // Qt
 #include <QtWidgets>
 
-QPythonEditor::QPythonEditor(PythonInterpreter *interpreter) : Ui::QPythonEditor()
-{
-    setupUi(this);
-    mdiArea = new QMdiArea(this);
-    setCentralWidget(mdiArea);
-    mdiArea->showMaximized();
-    connect(mdiArea, &QMdiArea::subWindowActivated, this, &QPythonEditor::updateMenus);
 
-    this->settings = new QEditorSettings;
-    initProjectView();
+static QString RecentFilesKey()
+{
+    return QStringLiteral("recentFileList");
+}
+
+static QString FileKey()
+{
+    return QStringLiteral("file");
+}
+
+QPythonEditor::QPythonEditor(PythonInterpreter *interpreter)
+    : Ui::QPythonEditor(), m_settings(new QEditorSettings), m_mdiArea(new QMdiArea(this))
+{
+    setupUi();
     createActions();
-    createStatusBar();
     updateMenus();
 
     readSettings();
     QCoreApplication::instance()->installEventFilter(this);
 
     connect(this, &QPythonEditor::executionCalled, interpreter, &PythonInterpreter::executeCode);
-    connect(interpreter, &PythonInterpreter::executionStarted, this, &QPythonEditor::executionStarted);
-    connect(interpreter, &PythonInterpreter::executionFinished, this, &QPythonEditor::executionFinished);
-
-    viewsToolBar->setMovable(false);
-    projectBrowser->toggleViewAction()->setEnabled(true);
-    viewsToolBar->addAction(projectBrowser->toggleViewAction());
-    scriptOutputConsoleDock->toggleViewAction()->setEnabled(true);
-    viewsToolBar->addAction(scriptOutputConsoleDock->toggleViewAction());
+    connect(
+        interpreter, &PythonInterpreter::executionStarted, this, &QPythonEditor::executionStarted);
+    connect(interpreter,
+            &PythonInterpreter::executionFinished,
+            this,
+            &QPythonEditor::executionFinished);
 }
 
 void QPythonEditor::closeEvent(QCloseEvent *event)
 {
     projectBrowser->hide();
-    mdiArea->closeAllSubWindows();
-    if (mdiArea->currentSubWindow())
+    m_mdiArea->closeAllSubWindows();
+    if (m_mdiArea->currentSubWindow())
     {
         event->ignore();
     }
@@ -73,7 +74,7 @@ void QPythonEditor::closeEvent(QCloseEvent *event)
 void QPythonEditor::newFile()
 {
     CodeEditor *child = createChildCodeEditor();
-    mdiArea->addSubWindow(child);
+    m_mdiArea->addSubWindow(child);
     child->newFile();
     child->show();
 }
@@ -115,7 +116,7 @@ bool QPythonEditor::openFile(const QString &fileName)
 {
     if (QMdiSubWindow *existing = findChildCodeEditor(fileName))
     {
-        mdiArea->setActiveSubWindow(existing);
+        m_mdiArea->setActiveSubWindow(existing);
         return true;
     }
     const bool succeeded = loadFile(fileName);
@@ -141,12 +142,12 @@ bool QPythonEditor::loadFile(const QString &fileName)
     const bool succeeded = child->loadFile(fileName);
     if (succeeded)
     {
-        mdiArea->addSubWindow(child);
+        m_mdiArea->addSubWindow(child);
         child->show();
     }
     else
     {
-        mdiArea->removeSubWindow(child);
+        m_mdiArea->removeSubWindow(child);
         child->close();
         delete child;
     }
@@ -154,23 +155,14 @@ bool QPythonEditor::loadFile(const QString &fileName)
     return succeeded;
 }
 
-static inline QString recentFilesKey()
-{
-    return QStringLiteral("recentFileList");
-}
-static inline QString fileKey()
-{
-    return QStringLiteral("file");
-}
-
 static QStringList readRecentFiles(QSettings &settings)
 {
     QStringList result;
-    const int count = settings.beginReadArray(recentFilesKey());
+    const int count = settings.beginReadArray(RecentFilesKey());
     for (int i = 0; i < count; ++i)
     {
         settings.setArrayIndex(i);
-        result.append(settings.value(fileKey()).toString());
+        result.append(settings.value(FileKey()).toString());
     }
     settings.endArray();
     return result;
@@ -179,26 +171,26 @@ static QStringList readRecentFiles(QSettings &settings)
 static void writeRecentFiles(const QStringList &files, QSettings &settings)
 {
     const int count = files.size();
-    settings.beginWriteArray(recentFilesKey());
+    settings.beginWriteArray(RecentFilesKey());
     for (int i = 0; i < count; ++i)
     {
         settings.setArrayIndex(i);
-        settings.setValue(fileKey(), files.at(i));
+        settings.setValue(FileKey(), files.at(i));
     }
     settings.endArray();
 }
 
-bool QPythonEditor::hasRecentFiles()
+bool QPythonEditor::HasRecentFiles()
 {
-    QSettings settings(QCoreApplication::organizationName(), settingsApplicationName());
-    const int count = settings.beginReadArray(recentFilesKey());
+    QSettings settings(QCoreApplication::organizationName(), SettingsApplicationName());
+    const int count = settings.beginReadArray(RecentFilesKey());
     settings.endArray();
     return count > 0;
 }
 
 void QPythonEditor::prependToRecentFiles(const QString &fileName)
 {
-    QSettings settings(QCoreApplication::organizationName(), settingsApplicationName());
+    QSettings settings(QCoreApplication::organizationName(), SettingsApplicationName());
 
     const QStringList oldRecentFiles = readRecentFiles(settings);
     QStringList recentFiles = oldRecentFiles;
@@ -212,27 +204,27 @@ void QPythonEditor::prependToRecentFiles(const QString &fileName)
 
 void QPythonEditor::setRecentFilesVisible(bool visible)
 {
-    recentFileSubMenuAct->setVisible(visible);
-    recentFileSeparator->setVisible(visible);
+    m_recentFileSubMenuAct->setVisible(visible);
+    m_recentFileSeparator->setVisible(visible);
 }
 
 void QPythonEditor::updateRecentFileActions()
 {
-    QSettings settings(QCoreApplication::organizationName(), settingsApplicationName());
+    QSettings settings(QCoreApplication::organizationName(), SettingsApplicationName());
 
     const QStringList recentFiles = readRecentFiles(settings);
-    const int count = qMin(int(MaxRecentFiles), recentFiles.size());
+    const int count = qMin(MaxRecentFiles, recentFiles.size());
     int i = 0;
     for (; i < count; ++i)
     {
         const QString fileName = QFileInfo(recentFiles.at(i)).fileName();
-        recentFileActs[i]->setText(tr("&%1 %2").arg(i + 1).arg(fileName));
-        recentFileActs[i]->setData(recentFiles.at(i));
-        recentFileActs[i]->setVisible(true);
+        m_recentFileActs[i]->setText(tr("&%1 %2").arg(i + 1).arg(fileName));
+        m_recentFileActs[i]->setData(recentFiles.at(i));
+        m_recentFileActs[i]->setVisible(true);
     }
     for (; i < MaxRecentFiles; ++i)
     {
-        recentFileActs[i]->setVisible(false);
+        m_recentFileActs[i]->setVisible(false);
     }
 }
 
@@ -257,7 +249,8 @@ bool QPythonEditor::eventFilter(QObject *obj, QEvent *e)
             {
                 if (action->shortcut() == sev->key())
                 {
-                    action->trigger(); // Trigger the action that matches the ambiguous shortcut event.
+                    action->trigger(); // Trigger the action that matches the ambiguous shortcut
+                                       // event.
                     return true;
                 }
             }
@@ -357,6 +350,33 @@ void QPythonEditor::executionFinished()
     statusbar->clearMessage();
 }
 
+void QPythonEditor::setupUi()
+{
+    Ui::QPythonEditor::setupUi(this);
+
+    // Setup MDI Area
+    
+    setCentralWidget(m_mdiArea);
+    m_mdiArea->showMaximized();
+    connect(m_mdiArea, &QMdiArea::subWindowActivated, this, &QPythonEditor::updateMenus);
+
+    // setup ViewToolBar
+    viewsToolBar->setMovable(false);
+    projectBrowser->toggleViewAction()->setEnabled(true);
+    viewsToolBar->addAction(projectBrowser->toggleViewAction());
+    scriptOutputConsoleDock->toggleViewAction()->setEnabled(true);
+    viewsToolBar->addAction(scriptOutputConsoleDock->toggleViewAction());
+
+    // Setup Project View
+    projectBrowser->hide();
+    connect(projectTreeView,
+            &ProjectView::doubleClicked,
+            this,
+            &QPythonEditor::projectTreeDoubleClicked);
+
+    scriptOutputConsoleDock->hide();
+}
+
 void QPythonEditor::createActions()
 {
     connect(actionNew, &QAction::triggered, this, &QPythonEditor::newFile);
@@ -366,24 +386,24 @@ void QPythonEditor::createActions()
     connect(actionSaveAs, &QAction::triggered, this, &QPythonEditor::saveAs);
     connect(actionRun, &QAction::triggered, this, &QPythonEditor::runExecute);
     connect(actionClose, &QAction::triggered, this, [=]() { close(); });
-    connect(actionSettings, &QAction::triggered, settings, &QEditorSettings::show);
+    connect(actionSettings, &QAction::triggered, m_settings, &QEditorSettings::show);
 
     menuFile->addSeparator();
 
     QMenu *recentMenu = menuFile->addMenu(tr("Recent..."));
     connect(recentMenu, &QMenu::aboutToShow, this, &QPythonEditor::updateRecentFileActions);
-    recentFileSubMenuAct = recentMenu->menuAction();
+    m_recentFileSubMenuAct = recentMenu->menuAction();
 
-    for (auto &recentFileAct : recentFileActs)
+    for (auto &recentFileAct : m_recentFileActs)
     {
         recentFileAct = recentMenu->addAction(QString());
         connect(recentFileAct, &QAction::triggered, this, &QPythonEditor::openRecentFile);
         recentFileAct->setVisible(false);
     }
 
-    recentFileSeparator = menuFile->addSeparator();
+    m_recentFileSeparator = menuFile->addSeparator();
 
-    setRecentFilesVisible(QPythonEditor::hasRecentFiles());
+    setRecentFilesVisible(QPythonEditor::HasRecentFiles());
     menuFile->addSeparator();
 
     actionCut->setShortcuts(QKeySequence::Cut);
@@ -398,38 +418,38 @@ void QPythonEditor::createActions()
     connect(actionIndentMore, &QAction::triggered, this, &QPythonEditor::indentMore);
     connect(actionIndentLess, &QAction::triggered, this, &QPythonEditor::indentLess);
 
-    windowMenu = menuBar()->addMenu(tr("&Window"));
-    connect(windowMenu, &QMenu::aboutToShow, this, &QPythonEditor::updateWindowMenu);
+    m_windowMenu = menuBar()->addMenu(tr("&Window"));
+    connect(m_windowMenu, &QMenu::aboutToShow, this, &QPythonEditor::updateWindowMenu);
 
-    closeAct = new QAction(tr("Cl&ose"), this);
-    closeAct->setStatusTip(tr("Close the active window"));
-    connect(closeAct, &QAction::triggered, mdiArea, &QMdiArea::closeActiveSubWindow);
+    m_closeAct = new QAction(tr("Cl&ose"), this);
+    m_closeAct->setStatusTip(tr("Close the active window"));
+    connect(m_closeAct, &QAction::triggered, m_mdiArea, &QMdiArea::closeActiveSubWindow);
 
-    closeAllAct = new QAction(tr("Close &All"), this);
-    closeAllAct->setStatusTip(tr("Close all the windows"));
-    connect(closeAllAct, &QAction::triggered, mdiArea, &QMdiArea::closeAllSubWindows);
+    m_closeAllAct = new QAction(tr("Close &All"), this);
+    m_closeAllAct->setStatusTip(tr("Close all the windows"));
+    connect(m_closeAllAct, &QAction::triggered, m_mdiArea, &QMdiArea::closeAllSubWindows);
 
-    tileAct = new QAction(tr("&Tile"), this);
-    tileAct->setStatusTip(tr("Tile the windows"));
-    connect(tileAct, &QAction::triggered, mdiArea, &QMdiArea::tileSubWindows);
+    m_tileAct = new QAction(tr("&Tile"), this);
+    m_tileAct->setStatusTip(tr("Tile the windows"));
+    connect(m_tileAct, &QAction::triggered, m_mdiArea, &QMdiArea::tileSubWindows);
 
-    cascadeAct = new QAction(tr("&Cascade"), this);
-    cascadeAct->setStatusTip(tr("Cascade the windows"));
-    connect(cascadeAct, &QAction::triggered, mdiArea, &QMdiArea::cascadeSubWindows);
+    m_cascadeAct = new QAction(tr("&Cascade"), this);
+    m_cascadeAct->setStatusTip(tr("Cascade the windows"));
+    connect(m_cascadeAct, &QAction::triggered, m_mdiArea, &QMdiArea::cascadeSubWindows);
 
-    nextAct = new QAction(tr("Ne&xt"), this);
-    nextAct->setShortcuts(QKeySequence::NextChild);
-    nextAct->setStatusTip(tr("Move the focus to the next window"));
-    connect(nextAct, &QAction::triggered, mdiArea, &QMdiArea::activateNextSubWindow);
+    m_nextAct = new QAction(tr("Ne&xt"), this);
+    m_nextAct->setShortcuts(QKeySequence::NextChild);
+    m_nextAct->setStatusTip(tr("Move the focus to the next window"));
+    connect(m_nextAct, &QAction::triggered, m_mdiArea, &QMdiArea::activateNextSubWindow);
 
-    previousAct = new QAction(tr("Pre&vious"), this);
-    previousAct->setShortcuts(QKeySequence::PreviousChild);
-    previousAct->setStatusTip(tr("Move the focus to the previous "
+    m_previousAct = new QAction(tr("Pre&vious"), this);
+    m_previousAct->setShortcuts(QKeySequence::PreviousChild);
+    m_previousAct->setStatusTip(tr("Move the focus to the previous "
                                  "window"));
-    connect(previousAct, &QAction::triggered, mdiArea, &QMdiArea::activatePreviousSubWindow);
+    connect(m_previousAct, &QAction::triggered, m_mdiArea, &QMdiArea::activatePreviousSubWindow);
 
-    windowMenuSeparatorAct = new QAction(this);
-    windowMenuSeparatorAct->setSeparator(true);
+    m_windowMenuSeparatorAct = new QAction(this);
+    m_windowMenuSeparatorAct->setSeparator(true);
 
     updateWindowMenu();
 
@@ -447,30 +467,19 @@ void QPythonEditor::createActions()
     addAction(actionIndentLess);
 }
 
-void QPythonEditor::createStatusBar()
-{
-    statusBar()->showMessage(tr("Ready"));
-}
-
-void QPythonEditor::initProjectView()
-{
-    projectBrowser->hide();
-    connect(projectTreeView, &ProjectView::doubleClicked, this, &QPythonEditor::projectTreeDoubleClicked);
-}
-
 void QPythonEditor::updateMenus()
 {
-    bool hasChildCodeEditor = (activeChildCodeEditor() != nullptr);
+    const bool hasChildCodeEditor = (activeChildCodeEditor() != nullptr);
     actionSave->setEnabled(hasChildCodeEditor);
     actionSaveAs->setEnabled(hasChildCodeEditor);
     actionRun->setEnabled(hasChildCodeEditor);
-    closeAct->setEnabled(hasChildCodeEditor);
-    closeAllAct->setEnabled(hasChildCodeEditor);
-    tileAct->setEnabled(hasChildCodeEditor);
-    cascadeAct->setEnabled(hasChildCodeEditor);
-    nextAct->setEnabled(hasChildCodeEditor);
-    previousAct->setEnabled(hasChildCodeEditor);
-    windowMenuSeparatorAct->setVisible(hasChildCodeEditor);
+    m_closeAct->setEnabled(hasChildCodeEditor);
+    m_closeAllAct->setEnabled(hasChildCodeEditor);
+    m_tileAct->setEnabled(hasChildCodeEditor);
+    m_cascadeAct->setEnabled(hasChildCodeEditor);
+    m_nextAct->setEnabled(hasChildCodeEditor);
+    m_previousAct->setEnabled(hasChildCodeEditor);
+    m_windowMenuSeparatorAct->setVisible(hasChildCodeEditor);
     actionComment->setEnabled(hasChildCodeEditor);
     actionUncomment->setEnabled(hasChildCodeEditor);
     actionIndentMore->setEnabled(hasChildCodeEditor);
@@ -478,7 +487,8 @@ void QPythonEditor::updateMenus()
 
 #ifndef QT_NO_CLIPBOARD
     actionPaste->setEnabled(hasChildCodeEditor);
-    bool hasSelection = (activeChildCodeEditor() && activeChildCodeEditor()->textCursor().hasSelection());
+    const bool hasSelection =
+        (activeChildCodeEditor() && activeChildCodeEditor()->textCursor().hasSelection());
     actionCut->setEnabled(hasSelection);
     actionCopy->setEnabled(hasSelection);
 #endif
@@ -486,19 +496,19 @@ void QPythonEditor::updateMenus()
 
 void QPythonEditor::updateWindowMenu()
 {
-    windowMenu->clear();
-    windowMenu->addAction(closeAct);
-    windowMenu->addAction(closeAllAct);
-    windowMenu->addSeparator();
-    windowMenu->addAction(tileAct);
-    windowMenu->addAction(cascadeAct);
-    windowMenu->addSeparator();
-    windowMenu->addAction(nextAct);
-    windowMenu->addAction(previousAct);
-    windowMenu->addAction(windowMenuSeparatorAct);
+    m_windowMenu->clear();
+    m_windowMenu->addAction(m_closeAct);
+    m_windowMenu->addAction(m_closeAllAct);
+    m_windowMenu->addSeparator();
+    m_windowMenu->addAction(m_tileAct);
+    m_windowMenu->addAction(m_cascadeAct);
+    m_windowMenu->addSeparator();
+    m_windowMenu->addAction(m_nextAct);
+    m_windowMenu->addAction(m_previousAct);
+    m_windowMenu->addAction(m_windowMenuSeparatorAct);
 
-    QList<QMdiSubWindow *> windows = mdiArea->subWindowList();
-    windowMenuSeparatorAct->setVisible(!windows.isEmpty());
+    QList<QMdiSubWindow *> windows = m_mdiArea->subWindowList();
+    m_windowMenuSeparatorAct->setVisible(!windows.isEmpty());
 
     for (int i = 0; i < windows.size(); ++i)
     {
@@ -514,9 +524,9 @@ void QPythonEditor::updateWindowMenu()
         {
             text = tr("%1 %2").arg(i + 1).arg(child->userFriendlyCurrentFile());
         }
-        QAction *action = windowMenu->addAction(text);
+        QAction *action = m_windowMenu->addAction(text);
         connect(action, &QAction::triggered, mdiSubWindow, [this, mdiSubWindow]() {
-            mdiArea->setActiveSubWindow(mdiSubWindow);
+            m_mdiArea->setActiveSubWindow(mdiSubWindow);
         });
         action->setCheckable(true);
         action->setChecked(child == activeChildCodeEditor());
@@ -525,7 +535,7 @@ void QPythonEditor::updateWindowMenu()
 
 CodeEditor *QPythonEditor::createChildCodeEditor()
 {
-    auto *child = new CodeEditor(this->settings);
+    auto *child = new CodeEditor(this->m_settings);
 
 #ifndef QT_NO_CLIPBOARD
     connect(child, &QPlainTextEdit::copyAvailable, actionCut, &QAction::setEnabled);
@@ -537,13 +547,14 @@ CodeEditor *QPythonEditor::createChildCodeEditor()
 
 void QPythonEditor::readSettings()
 {
-    QSettings settings(QCoreApplication::organizationName(), settingsApplicationName());
+    QSettings settings(QCoreApplication::organizationName(), SettingsApplicationName());
     const QByteArray geometry = settings.value("geometry", QByteArray()).toByteArray();
     if (geometry.isEmpty())
     {
         const QRect availableGeometry = QApplication::desktop()->availableGeometry(this);
         resize(availableGeometry.width() / 3, availableGeometry.height() / 2);
-        move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
+        move((availableGeometry.width() - width()) / 2,
+             (availableGeometry.height() - height()) / 2);
     }
     else
     {
@@ -553,13 +564,13 @@ void QPythonEditor::readSettings()
 
 void QPythonEditor::writeSettings()
 {
-    QSettings settings(QCoreApplication::organizationName(), settingsApplicationName());
+    QSettings settings(QCoreApplication::organizationName(), SettingsApplicationName());
     settings.setValue("geometry", saveGeometry());
 }
 
 CodeEditor *QPythonEditor::activeChildCodeEditor() const
 {
-    if (QMdiSubWindow *activeSubWindow = mdiArea->activeSubWindow())
+    if (QMdiSubWindow *activeSubWindow = m_mdiArea->activeSubWindow())
     {
         return qobject_cast<CodeEditor *>(activeSubWindow->widget());
     }
@@ -570,7 +581,7 @@ QMdiSubWindow *QPythonEditor::findChildCodeEditor(const QString &fileName) const
 {
     QString canonicalFilePath = QFileInfo(fileName).canonicalFilePath();
 
-    for (QMdiSubWindow *window : mdiArea->subWindowList())
+    for (QMdiSubWindow *window : m_mdiArea->subWindowList())
     {
         auto *mdiChild = qobject_cast<CodeEditor *>(window->widget());
         if (mdiChild->currentFile() == canonicalFilePath)
@@ -581,7 +592,7 @@ QMdiSubWindow *QPythonEditor::findChildCodeEditor(const QString &fileName) const
     return nullptr;
 }
 
-QString QPythonEditor::settingsApplicationName()
+QString QPythonEditor::SettingsApplicationName()
 {
     return QString(QCoreApplication::applicationName()).append(":PythonPlugin");
 }
@@ -592,6 +603,7 @@ void QPythonEditor::runExecute()
     {
         scriptOutputConsoleDock->show();
         this->scriptOutputConsole->clear();
-        Q_EMIT executionCalled(qPrintable(activeChildCodeEditor()->toPlainText()), this->scriptOutputConsole);
+        Q_EMIT executionCalled(qPrintable(activeChildCodeEditor()->toPlainText()),
+                               this->scriptOutputConsole);
     }
 }

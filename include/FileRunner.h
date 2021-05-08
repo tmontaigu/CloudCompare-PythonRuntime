@@ -53,10 +53,10 @@ class FileRunner final : public QDialog
 
 
   private:
-    PythonInterpreter *interpreter;
-    QWidget *busyWidget;
-    Ui::FileRunner *ui;
-    QString filePath;
+    PythonInterpreter *m_interpreter;
+    QWidget *m_busyWidget;
+    Ui::FileRunner *m_ui;
+    QString m_filePath;
 };
 
 #endif // FILE_RUNNER_H

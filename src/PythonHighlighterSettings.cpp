@@ -27,13 +27,13 @@
 
 PythonHighlighterSettings::PythonHighlighterSettings(QWidget *parent)
     : QWidget(parent)
-    , colorDialog(new QColorDialog(this))
-    , signalMapper(new QSignalMapper(this)) {
+    , m_colorDialog(new QColorDialog(this))
+    , m_signalMapper(new QSignalMapper(this)) {
     auto formLayout = new QFormLayout;
     setLayout(formLayout);
 
     const int numCodeElement = static_cast<size_t>(PythonHighlighter::CodeElement::End);
-    colors.resize(numCodeElement);
+    m_colors.resize(numCodeElement);
     for (int i{0}; i < numCodeElement; ++i)
     {
         const auto e = static_cast<PythonHighlighter::CodeElement>(i);
@@ -44,10 +44,10 @@ PythonHighlighterSettings::PythonHighlighterSettings(QWidget *parent)
        
         connect(btn, &QPushButton::clicked, [this, btn, i]
         {
-            colorDialog->exec();
-            colors[i].second = colorDialog->selectedColor();
+            m_colorDialog->exec();
+            m_colors[i].second = m_colorDialog->selectedColor();
             btn->setStyleSheet(QString("background-color: %1")
-                .arg(colors[i].second.name(QColor::HexRgb)));
+                .arg(m_colors[i].second.name(QColor::HexRgb)));
         });
     }
 }

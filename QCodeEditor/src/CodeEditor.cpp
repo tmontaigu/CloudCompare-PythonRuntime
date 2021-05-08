@@ -20,12 +20,17 @@
 #include "CodeEditor.h"
 #include "PythonHighlighter.h"
 
+
+static const char *const INDENT_STRING = "    ";
+
+static const char *const PYTHON_COMMENT_STR = "# ";
+
 CodeEditor::CodeEditor(QEditorSettings *settings, QWidget *parent)
-    : QPlainTextEdit(parent), settings(settings), highlighter(new PythonHighlighter(document()))
+    : QPlainTextEdit(parent), m_settings(settings), m_highlighter(new PythonHighlighter(document()))
 {
     connect(settings, &QEditorSettings::settingsChanged, this, &CodeEditor::updateUsingSettings);
 
-    lineNumberArea = new LineNumberArea(this);
+    m_lineNumberArea = new LineNumberArea(this);
     connect(this, &QPlainTextEdit::blockCountChanged, this, &CodeEditor::updateLineNumberAreaWidth);
     connect(this, &QPlainTextEdit::updateRequest, this, &CodeEditor::updateLineNumberArea);
     connect(this, &QPlainTextEdit::cursorPositionChanged, this, &CodeEditor::startAllHighlighting);
@@ -62,19 +67,19 @@ void CodeEditor::updateUsingSettings()
     QFont font;
     font.setFamily("Courier");
     font.setFixedPitch(true);
-    font.setPointSize(settings->fontSize());
+    font.setPointSize(m_settings->fontSize());
 
     setFont(font);
     QPalette p = palette();
-    p.setColor(QPalette::Base, settings->colorScheme().backgroundColor());
-    p.setColor(QPalette::Text, settings->colorScheme().foregroundColor());
+    p.setColor(QPalette::Base, m_settings->colorScheme().backgroundColor());
+    p.setColor(QPalette::Text, m_settings->colorScheme().foregroundColor());
     setPalette(p);
 
     setLineWrapMode(QPlainTextEdit::NoWrap);
 
-    highlighter->useColorScheme(settings->colorScheme());
+    m_highlighter->useColorScheme(m_settings->colorScheme());
 
-    highlighter->rehighlight();
+    m_highlighter->rehighlight();
     highlightCurrentLine();
     this->repaint();
 }
@@ -109,9 +114,9 @@ void CodeEditor::updateLineNumberAreaWidth(int /* newBlockCount */)
 void CodeEditor::updateLineNumberArea(const QRect &rect, int dy)
 {
     if (dy)
-        lineNumberArea->scroll(0, dy);
+        m_lineNumberArea->scroll(0, dy);
     else
-        lineNumberArea->update(0, rect.y(), lineNumberArea->width(), rect.height());
+        m_lineNumberArea->update(0, rect.y(), m_lineNumberArea->width(), rect.height());
 
     if (rect.contains(viewport()->rect()))
         updateLineNumberAreaWidth(0);
@@ -122,12 +127,12 @@ void CodeEditor::resizeEvent(QResizeEvent *e)
     QPlainTextEdit::resizeEvent(e);
 
     QRect cr = contentsRect();
-    lineNumberArea->setGeometry(QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height()));
+    m_lineNumberArea->setGeometry(QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height()));
 }
 
 void CodeEditor::highlightCurrentLine()
 {
-    if (!settings->shouldHighlightCurrentLine())
+    if (!m_settings->shouldHighlightCurrentLine())
     {
         return;
     }
@@ -138,7 +143,7 @@ void CodeEditor::highlightCurrentLine()
     {
         QTextEdit::ExtraSelection selection;
 
-        selection.format.setBackground(settings->colorScheme().currentLineHighlightColor());
+        selection.format.setBackground(m_settings->colorScheme().currentLineHighlightColor());
         selection.format.setProperty(QTextFormat::FullWidthSelection, true);
         selection.cursor = textCursor();
         selection.cursor.clearSelection();
@@ -150,7 +155,7 @@ void CodeEditor::highlightCurrentLine()
 
 void CodeEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
 {
-    QPainter painter(lineNumberArea);
+    QPainter painter(m_lineNumberArea);
     painter.fillRect(event->rect(), Qt::lightGray);
 
     QTextBlock block = firstVisibleBlock();
@@ -164,7 +169,7 @@ void CodeEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
         {
             QString number = QString::number(blockNumber + 1);
             painter.setPen(Qt::black);
-            painter.drawText(0, top, lineNumberArea->width(), fontMetrics().height(), Qt::AlignRight, number);
+            painter.drawText(0, top, m_lineNumberArea->width(), fontMetrics().height(), Qt::AlignRight, number);
         }
 
         block = block.next();
@@ -178,9 +183,9 @@ void CodeEditor::newFile()
 {
     static int sequenceNumber = 1;
 
-    isUntitled = true;
-    curFile = tr("script%1.py").arg(sequenceNumber++);
-    setWindowTitle(curFile + "[*]");
+    m_isUntitled = true;
+    m_curFile = tr("script%1.py").arg(sequenceNumber++);
+    setWindowTitle(m_curFile + "[*]");
 
     connect(document(), &QTextDocument::contentsChanged, this, &CodeEditor::documentWasModified);
 }
@@ -209,19 +214,19 @@ bool CodeEditor::loadFile(const QString &fileName)
 
 bool CodeEditor::save()
 {
-    if (isUntitled)
+    if (m_isUntitled)
     {
         return saveAs();
     }
     else
     {
-        return saveFile(curFile);
+        return saveFile(m_curFile);
     }
 }
 
 bool CodeEditor::saveAs()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"), curFile);
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"), m_curFile);
     if (fileName.isEmpty())
         return false;
 
@@ -251,7 +256,7 @@ bool CodeEditor::saveFile(const QString &fileName)
 
 QString CodeEditor::userFriendlyCurrentFile()
 {
-    return strippedName(curFile);
+    return strippedName(m_curFile);
 }
 
 void CodeEditor::closeEvent(QCloseEvent *event)
@@ -296,8 +301,8 @@ bool CodeEditor::maybeSave()
 
 void CodeEditor::setCurrentFile(const QString &fileName)
 {
-    curFile = QFileInfo(fileName).canonicalFilePath();
-    isUntitled = false;
+    m_curFile = QFileInfo(fileName).canonicalFilePath();
+    m_isUntitled = false;
     document()->setModified(false);
     setWindowModified(false);
     setWindowTitle(userFriendlyCurrentFile() + "[*]");
@@ -369,7 +374,7 @@ void CodeEditor::indentMore()
     for (int i = 0; i < lineCount; i++)
     {
         cursor.movePosition(QTextCursor::MoveOperation::StartOfLine);
-        cursor.insertText(indentString);
+        cursor.insertText(INDENT_STRING);
         cursor.movePosition(QTextCursor::MoveOperation::Up);
     }
 }
@@ -388,7 +393,7 @@ void CodeEditor::indentLess()
         {
             cursor.deleteChar();
         }
-        else if (line.startsWith(indentString))
+        else if (line.startsWith(INDENT_STRING))
         {
             for (int i = 0; i < 4; i++)
             {

@@ -64,9 +64,8 @@ class PyStdErrOutStreamRedirect
             sysm.attr("stdout") = m_stdout;
             sysm.attr("stderr") = m_stderr;
         }
-        catch (const std::exception &e)
+        catch (const std::exception&)
         {
-            
         }
     }
 };

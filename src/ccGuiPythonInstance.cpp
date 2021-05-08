@@ -105,7 +105,7 @@ const ccHObject::Container &ccGuiPythonInstance::getSelectedEntities() const
     return m_app->getSelectedEntities();
 }
 
-void ccGuiPythonInstance::setSelectedInDB(ccHObject *obj, bool selected)
+void ccGuiPythonInstance::setSelectedInDB(ccHObject *obj, const bool selected)
 {
     m_app->setSelectedInDB(obj, selected);
 }

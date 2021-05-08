@@ -15,12 +15,10 @@
 //#                                Thomas Montaigu                         #
 //##########################################################################
 
-#ifndef CODEEDITOR_H
-#define CODEEDITOR_H
+#ifndef CODE_EDITOR_H
+#define CODE_EDITOR_H
 
-static const char *const indentString = "    ";
 
-static const char *const PYTHON_COMMENT_STR = "# ";
 
 #include "QEditorSettings.h"
 #include <QObject>
@@ -35,7 +33,7 @@ class PythonHighlighter;
 
 class LineNumberArea;
 
-class CodeEditor : public QPlainTextEdit
+class CodeEditor final : public QPlainTextEdit
 {
     Q_OBJECT
 
@@ -43,7 +41,7 @@ class CodeEditor : public QPlainTextEdit
     explicit CodeEditor(QEditorSettings *settings, QWidget *parent = nullptr);
 
     void lineNumberAreaPaintEvent(QPaintEvent *event);
-    ~CodeEditor() override = default;
+
     bool eventFilter(QObject *target, QEvent *event) override;
     int lineNumberAreaWidth();
     void newFile();
@@ -52,9 +50,9 @@ class CodeEditor : public QPlainTextEdit
     bool saveAs();
     bool saveFile(const QString &fileName);
     QString userFriendlyCurrentFile();
-    QString currentFile()
+    QString currentFile() const
     {
-        return curFile;
+        return m_curFile;
     }
     void comment();
     void uncomment();
@@ -85,11 +83,11 @@ class CodeEditor : public QPlainTextEdit
     void createPairedCharsSelection(int pos);
     int getSelectedLineCount();
 
-    QString curFile;
-    bool isUntitled{true};
-    QWidget *lineNumberArea{nullptr};
-    QEditorSettings *settings{nullptr};
-    PythonHighlighter *highlighter;
+    QString m_curFile;
+    bool m_isUntitled{true};
+    QWidget *m_lineNumberArea{nullptr};
+    QEditorSettings *m_settings{nullptr};
+    PythonHighlighter *m_highlighter;
 };
 
 class LineNumberArea final : public QWidget
@@ -97,22 +95,22 @@ class LineNumberArea final : public QWidget
   public:
     explicit LineNumberArea(CodeEditor *editor) : QWidget(editor)
     {
-        codeEditor = editor;
+        m_codeEditor = editor;
     }
 
     QSize sizeHint() const override
     {
-        return {codeEditor->lineNumberAreaWidth(), 0};
+        return {m_codeEditor->lineNumberAreaWidth(), 0};
     }
 
   protected:
     void paintEvent(QPaintEvent *event) override
     {
-        codeEditor->lineNumberAreaPaintEvent(event);
+        m_codeEditor->lineNumberAreaPaintEvent(event);
     }
 
   private:
-    CodeEditor *codeEditor;
+    CodeEditor *m_codeEditor;
 };
 
-#endif // CODEEDITOR_H
+#endif // CODE_EDITOR_H
