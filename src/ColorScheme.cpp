@@ -82,7 +82,7 @@ ColorScheme ColorScheme::Dracula()
                                      FormatHelper(Qt::darkMagenta, QFont::StyleItalic),
                                      FormatHelper(QColor(98, 114, 164), QFont::StyleItalic),
                                      FormatHelper(QColor(255, 184, 108), QFont::StyleItalic),
-                                     FormatHelper("brown")};
+                                     FormatHelper("#bd93f9")};
 
     return {"Dracula", std::move(formats), FormatHelper(QColor(248, 248, 242)), QColor(40, 42, 54), QColor(68, 71, 90)};
 }
