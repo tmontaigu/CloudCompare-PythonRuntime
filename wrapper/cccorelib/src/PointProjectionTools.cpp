@@ -58,7 +58,18 @@ void define_PointProjectionTools(py::module &cccorelib)
                     "center"_a,
                     "progressCb"_a = nullptr)
         .def_static("applyTransformation",
-                    &PointProjectionTools::applyTransformation,
+                    static_cast<CCCoreLib::PointCloud *(*)(CCCoreLib::GenericCloud *,
+                                                           PointProjectionTools::Transformation &,
+                                                           CCCoreLib::GenericProgressCallback *)>(
+                        &PointProjectionTools::applyTransformation),
+                    "cloud"_a,
+                    "trans"_a,
+                    "progressCb"_a = nullptr)
+        .def_static("applyTransformation",
+                    static_cast<CCCoreLib::PointCloud *(*)(CCCoreLib::GenericIndexedCloud *,
+                                                           PointProjectionTools::Transformation &,
+                                                           CCCoreLib::GenericProgressCallback *)>(
+                        &PointProjectionTools::applyTransformation),
                     "cloud"_a,
                     "trans"_a,
                     "progressCb"_a = nullptr)
@@ -82,37 +93,6 @@ void define_PointProjectionTools(py::module &cccorelib)
              (void (PointProjectionTools::Transformation::*)(CCCoreLib::GenericIndexedCloudPersist &)
                   const)(&PointProjectionTools::Transformation::apply),
              "cloud"_a);
-
-    PyPointProjectionTools.def_static("developCloudOnCylinder",
-                                      &PointProjectionTools::developCloudOnCylinder,
-                                      "cloud"_a,
-                                      "radius"_a,
-                                      "dim"_a = 2,
-                                      "center"_a = nullptr,
-                                      "progressCb"_a = nullptr);
-
-    PyPointProjectionTools.def_static("developCloudOnCone",
-                                      &PointProjectionTools::developCloudOnCone,
-                                      "cloud"_a,
-                                      "dim"_a,
-                                      "baseRadius"_a,
-                                      "alpha"_a,
-                                      "center"_a,
-                                      "progressCb"_a = nullptr);
-
-    PyPointProjectionTools.def_static("applyTransformation",
-                                      &PointProjectionTools::applyTransformation,
-                                      "cloud"_a,
-                                      "trans"_a,
-                                      "progressCb"_a = nullptr);
-
-    PyPointProjectionTools.def_static("computeTriangulation",
-                                      &PointProjectionTools::computeTriangulation,
-                                      "cloud"_a,
-                                      "type"_a,
-                                      "maxEdgedLength"_a,
-                                      "dim"_a,
-                                      "outputErrorStr"_a);
 
     PyIndexedCCVector2.def(py::init<>())
         .def(py::init<PointCoordinateType, PointCoordinateType>(), "x"_a, "y"_a)
