@@ -1,6 +1,8 @@
 import cccorelib
 import pycc
 
+import numpy as np
+
 CC = pycc.GetInstance()
 
 
@@ -13,21 +15,45 @@ def main():
 
     print(pc, pc.size())
 
-    numLabels = pycc.RunInThread(cccorelib.AutoSegmentationTools.labelConnectedComponents, pc, 11, False)
+
+    print(pc.getNumberOfScalarFields())
+
+    # Create (if it does not exists already) 
+    # a scalar field where we store the Labels
+    labelsSfIdx = pc.getScalarFieldIndexByName("Labels")
+    if labelsSfIdx == -1:
+        labelsSfIdx = pc.addScalarField("Labels")
+    pc.setCurrentScalarField(labelsSfIdx)
+
+   
+    numLabels = pycc.RunInThread(
+        cccorelib.AutoSegmentationTools.labelConnectedComponents, pc, 11, False)
     print("There are {} labels".format(numLabels))
 
-    labelsSfIdx = pc.getScalarFieldIndexByName("Default");
+    # If we didn't create the Labels scalar field
+    # we would do here:
+    # labelsSfIdx = pc.getScalarFieldIndexByName("Default");
+    
     labelsSf = pc.getScalarField(labelsSfIdx)
-    labelsSf.computeMinAndMax()
-    pc.setCurrentDisplayedScalarField(labelsSfIdx)
-    CC.updateUI()
-    CC.redrawAll(False)
+    pointLabels = labelsSf.asArray()
+    pointsArray = pc.points()
 
-    referenceClouds = cccorelib.ReferenceCloudContainer()
-    if not pycc.extractConnectedComponents(pc, referenceClouds):
+    # Just to show access to x, y, z
+    # print(f"x: {pointsArray[:, 0]}")
+    # print(f"y: {pointsArray[:, 1]}")
+    # print(f"z: {pointsArray[:, 2]}")
+    
+    allLabels = np.unique(pointLabels)
+    
+    for label in allLabels:
+        pointsOfLabel = pointsArray[pointLabels == label]
+        print(f"Label {label}: {len(pointsOfLabel)} points")
+
+
+    referenceClouds = cccorelib.AutoSegmentationTools.ReferenceCloudContainer()
+    if not cccorelib.extractConnectedComponents(pc, referenceClouds):
         print("Failed to extract the connected Components")
-    else:
-        assert len(referenceClouds) == numLabels
+    assert(len(referenceClouds) == numLabels)
 
 
 if __name__ == '__main__':
