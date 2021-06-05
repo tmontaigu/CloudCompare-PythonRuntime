@@ -5,7 +5,7 @@ CC = pycc.GetInstance()
 params = pycc.FileIOFilter.LoadParameters()
 params.parentWidget = CC.getMainWindow()
 
-path = r"C:\Users\t.montaigu\Projects\CloudCompare\plugins\private\CloudCompare-PythonPlugin\tests\data\a_cloud.bin"
+path = r"~\Projects\CloudCompare\plugins\private\CloudCompare-PythonPlugin\tests\data\a_cloud.bin"
 
 
 # This automatically adds the loaded entities

@@ -21,7 +21,7 @@ ys = (las.y - las.header.y_min).astype(pycc.PointCoordinateType)
 zs = (las.z - las.header.z_min).astype(pycc.PointCoordinateType)
 
 point_cloud = pycc.ccPointCloud(xs, ys, zs)
-# Add the global shift to CloudCompare app can use it
+# Add the global shift to CloudCompare so that it can use it,
 # for example to display the real coordinates in point picking tool
 point_cloud.setGlobalShift(-las.header.x_min, -las.header.y_min, -las.header.z_min)
 point_cloud.setName(path_to_las)
@@ -31,8 +31,6 @@ assert np.all(xs == point_cloud.points()[..., 0])
 
 # Adding scalar field & copying values the manual way
 idx = point_cloud.addScalarField("classification")
-if idx == -1:
-	raise RuntimeError("Failed to create scalar field")
 
 classification_array = point_cloud.getScalarField(idx).asArray()
 classification_array[:] = las.classification[:]
@@ -50,7 +48,7 @@ try:
 except AttributeError:
     exit(0)
 # We are in "embedded mode", add the point cloud to the DB
-# but first we should compute min and maxs for the scalarfield
+# but first we should compute min and max for the scalarfields
 # so that their color ranges displays properly
 point_cloud.getScalarField(point_cloud.getScalarFieldIndexByName("intensity")).computeMinAndMax()
 point_cloud.getScalarField(point_cloud.getScalarFieldIndexByName("classification")).computeMinAndMax()
