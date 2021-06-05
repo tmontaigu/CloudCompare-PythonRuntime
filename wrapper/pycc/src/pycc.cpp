@@ -25,6 +25,7 @@
 
 #undef slots
 #include <pybind11/stl_bind.h>
+#include <pybind11/numpy.h>
 
 #include "CCTypes.h"
 
@@ -54,15 +55,13 @@ void define_scalar_type(py::module& m)
 template<>
 void define_scalar_type<float>(py::module &m)
 {
-    auto numpy = py::module_::import("numpy");
-    m.attr("ScalarType") = numpy.attr("float32");
+    m.attr("ScalarType") = py::dtype("float32");
 }
 
 template <>
 void define_scalar_type<double>(py::module &m)
 {
-    auto numpy = py::module_::import("numpy");
-    m.attr("ScalarType") = numpy.attr("float64");
+    m.attr("ScalarType") = py::dtype("float64");
 }
 
 void define_pycc(py::module &m)
@@ -89,8 +88,7 @@ void define_pycc(py::module &m)
             return std::string("<QSize(") + std::to_string(self.width()) + ", " + std::to_string(self.height()) + ")>";
         });
 
-    auto numpy = py::module_::import("numpy");
-    m.attr("PointCoordinateType") = numpy.attr("float32");
+    m.attr("PointCoordinateType") = py::dtype("float32");
     define_scalar_type<ScalarType>(m);
 
     py::class_<QPointF>(m, "QPointF");
