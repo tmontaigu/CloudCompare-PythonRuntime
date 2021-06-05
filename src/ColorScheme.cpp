@@ -26,7 +26,8 @@ ColorScheme::ColorScheme(QString name,
                          const QTextFormat &defaultFormat,
                          QColor backgroundColor,
                          QColor currentLineHighlightColor)
-    : m_name(name), m_formats(formats), m_defaultFormat(defaultFormat), m_backgroundColor(std::move(backgroundColor)),
+    : m_name(name), m_formats(formats), m_defaultFormat(defaultFormat),
+      m_backgroundColor(std::move(backgroundColor)),
       m_currentLineHighlightColor(std::move(currentLineHighlightColor))
 {
     Q_ASSERT(formats.size() == static_cast<int>(PythonHighlighter::CodeElement::End));
@@ -66,10 +67,11 @@ ColorScheme ColorScheme::Default()
                                      FormatHelper(Qt::black, QFont::StyleItalic),
                                      FormatHelper("brown")};
 
-    return
-    {
-        "Default", std::move(formats), FormatHelper(Qt::black), Qt::white, QColor(Qt::yellow).lighter(160)
-    };
+    return {"Default",
+            std::move(formats),
+            FormatHelper(Qt::black),
+            Qt::white,
+            QColor(Qt::yellow).lighter(160)};
 };
 
 ColorScheme ColorScheme::Dracula()
@@ -84,10 +86,14 @@ ColorScheme ColorScheme::Dracula()
                                      FormatHelper(QColor(255, 184, 108), QFont::StyleItalic),
                                      FormatHelper("#bd93f9")};
 
-    return {"Dracula", std::move(formats), FormatHelper(QColor(248, 248, 242)), QColor(40, 42, 54), QColor(68, 71, 90)};
+    return {"Dracula",
+            std::move(formats),
+            FormatHelper(QColor(248, 248, 242)),
+            QColor(40, 42, 54),
+            QColor(68, 71, 90)};
 }
 
-const QString& ColorScheme::name() const
+const QString &ColorScheme::name() const
 {
     return m_name;
 };
@@ -105,9 +111,10 @@ const ColorScheme::Vector &ColorScheme::AvailableColorSchemes()
 
 const ColorScheme *ColorScheme::ColorSchemeByName(const QString &name)
 {
-    const auto it = std::find_if(s_AvailableColorSchemes.begin(),
-              s_AvailableColorSchemes.end(),
-              [name](const ColorScheme &colorScheme) { return colorScheme.name() == name; });
+    const auto it =
+        std::find_if(s_AvailableColorSchemes.begin(),
+                     s_AvailableColorSchemes.end(),
+                     [name](const ColorScheme &colorScheme) { return colorScheme.name() == name; });
 
     if (it != s_AvailableColorSchemes.end())
     {

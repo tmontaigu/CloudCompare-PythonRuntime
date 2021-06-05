@@ -72,8 +72,7 @@ void define_ScalarFieldTools(py::module &cccorelib)
                     "histo"_a)
         .def_static(
             "computeScalarFieldExtremas",
-            [](const CCCoreLib::GenericCloud *theCloud)
-            {
+            [](const CCCoreLib::GenericCloud *theCloud) {
                 ScalarType minV{};
                 ScalarType maxV{};
                 CCCoreLib::ScalarFieldTools::computeScalarFieldExtremas(theCloud, minV, maxV);

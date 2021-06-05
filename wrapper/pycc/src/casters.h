@@ -20,9 +20,11 @@
 
 #include <QString>
 
+// clang-format off
 #undef slots
 #include <pybind11/pybind11.h>
 #include <Python.h>
+// clang-format on
 
 namespace pybind11
 {

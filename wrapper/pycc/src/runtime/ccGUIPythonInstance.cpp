@@ -17,7 +17,6 @@
 
 #include "ccGuiPythonInstance.h"
 
-
 #include <QMainWindow>
 
 #include <ccGLWindow.h>
@@ -42,8 +41,12 @@ void define_ccGUIPythonInstance(py::module &m)
     Get selected objects, deselect/set selected state for entities...
 
 )")
-        .def("getMainWindow", &ccGuiPythonInstance::getMainWindow, py::return_value_policy::reference)
-        .def("getActiveGLWindow", &ccGuiPythonInstance::getActiveGLWindow, py::return_value_policy::reference)
+        .def("getMainWindow",
+             &ccGuiPythonInstance::getMainWindow,
+             py::return_value_policy::reference)
+        .def("getActiveGLWindow",
+             &ccGuiPythonInstance::getActiveGLWindow,
+             py::return_value_policy::reference)
         .def("haveSelection",
              &ccGuiPythonInstance::haveSelection,
              R"(Returns true if at least one entity is selected in the GUI DB Tree)")

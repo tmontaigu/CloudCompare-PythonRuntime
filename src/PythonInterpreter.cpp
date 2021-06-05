@@ -30,8 +30,8 @@
 #include <ccLog.h>
 
 #ifdef Q_OS_UNIX
-#include <dlfcn.h>
 #include <cstdio>
+#include <dlfcn.h>
 #endif
 
 // seems like gcc defines macro with these names
@@ -136,7 +136,8 @@ Version GetPythonExeVersion(const QString &pythonExePath)
     pythonProcess.start(pythonExePath, {"--version"});
     pythonProcess.waitForFinished();
 
-    const QString versionStr = QTextCodec::codecForName("utf-8")->toUnicode(pythonProcess.readAllStandardOutput());
+    const QString versionStr =
+        QTextCodec::codecForName("utf-8")->toUnicode(pythonProcess.readAllStandardOutput());
 
     QVector<QStringRef> splits = versionStr.splitRef(" ");
     if (splits.size() == 2 && splits[0].contains("Python"))
@@ -158,7 +159,8 @@ PythonConfigPaths PythonConfigPaths::WindowsBundled()
         const QString qPythonHome = pythonEnvDirPath.path();
         config.m_pythonHome.reset(QStringToWcharArray(qPythonHome));
 
-        const QString qPythonPath = QString("%1/DLLs;%1/lib;%1/Lib/site-packages;").arg(qPythonHome);
+        const QString qPythonPath =
+            QString("%1/DLLs;%1/lib;%1/Lib/site-packages;").arg(qPythonHome);
         config.m_pythonPath.reset(QStringToWcharArray(qPythonPath));
     }
     else
@@ -178,11 +180,10 @@ PythonConfigPaths PythonConfigPaths::WindowsCondaEnv(const char *condaPrefix)
         QString qPythonHome = pythonEnvDirPath.path();
         config.m_pythonHome.reset(QStringToWcharArray(qPythonHome));
 
-        QString qPythonPath =
-            QString("%1/DLLs;%1/lib;%1/Lib/site-packages;")
-                .arg(qPythonHome);
+        QString qPythonPath = QString("%1/DLLs;%1/lib;%1/Lib/site-packages;").arg(qPythonHome);
 #ifndef USE_EMBEDDED_MODULES
-        qPythonPath.append(QApplication::applicationDirPath() + "/plugins/Python/Lib/site-packages");
+        qPythonPath.append(QApplication::applicationDirPath() +
+                           "/plugins/Python/Lib/site-packages");
 #endif
         config.m_pythonPath.reset(QStringToWcharArray(qPythonPath));
     }
@@ -204,9 +205,7 @@ PythonConfigPaths PythonConfigPaths::WindowsVenv(const char *venvPrefix, const P
         config.m_pythonHome.reset(QStringToWcharArray(qPythonHome));
 
         QString qPythonPath =
-            QString("%1/Lib/site-packages;%3/DLLS;%3/lib")
-                .arg(qPythonHome)
-                .arg(cfg.home);
+            QString("%1/Lib/site-packages;%3/DLLS;%3/lib").arg(qPythonHome).arg(cfg.home);
 
         if (cfg.includeSystemSitesPackages)
         {
@@ -214,7 +213,8 @@ PythonConfigPaths PythonConfigPaths::WindowsVenv(const char *venvPrefix, const P
         }
 
 #ifndef USE_EMBEDDED_MODULES
-        qPythonPath.append(QApplication::applicationDirPath() + "/plugins/Python/Lib/site-packages");
+        qPythonPath.append(QApplication::applicationDirPath() +
+                           "/plugins/Python/Lib/site-packages");
 #endif
         config.m_pythonPath.reset(QStringToWcharArray(qPythonPath));
     }
@@ -245,7 +245,7 @@ const wchar_t *PythonConfigPaths::pythonPath() const
 
 PythonInterpreter::PythonInterpreter(QObject *parent) : QObject(parent) {}
 
-bool PythonInterpreter::executeFile(const std::string& filepath)
+bool PythonInterpreter::executeFile(const std::string &filepath)
 {
     if (m_isExecuting)
     {
@@ -256,8 +256,10 @@ bool PythonInterpreter::executeFile(const std::string& filepath)
     bool success{true};
     try
     {
-        py::object pyStdout = py::module::import("ccinternals").attr("ccConsoleOutput")("[PythonStdout] ");
-        py::object pyStderr = py::module::import("ccinternals").attr("ccConsoleOutput")("[PythonStderr] ");
+        py::object pyStdout =
+            py::module::import("ccinternals").attr("ccConsoleOutput")("[PythonStdout] ");
+        py::object pyStderr =
+            py::module::import("ccinternals").attr("ccConsoleOutput")("[PythonStderr] ");
         PyStdErrOutStreamRedirect r{pyStdout, pyStderr};
         py::eval_file(filepath);
     }
@@ -271,7 +273,9 @@ bool PythonInterpreter::executeFile(const std::string& filepath)
     return success;
 }
 
-void PythonInterpreter::executeCodeWithState(const std::string &code, QListWidget *output, State &state)
+void PythonInterpreter::executeCodeWithState(const std::string &code,
+                                             QListWidget *output,
+                                             State &state)
 {
     Q_ASSERT(output != nullptr);
     if (m_isExecuting)
@@ -286,7 +290,8 @@ void PythonInterpreter::executeCodeWithState(const std::string &code, QListWidge
     try
     {
         py::object newStdout = py::module::import("ccinternals").attr("ConsoleREPL")(output);
-        py::object newStderr = py::module::import("ccinternals").attr("ConsoleREPL")(output, orange);
+        py::object newStderr =
+            py::module::import("ccinternals").attr("ConsoleREPL")(output, orange);
         PyStdErrOutStreamRedirect redirect{newStdout, newStderr};
         py::exec(code);
     }
@@ -311,7 +316,7 @@ void PythonInterpreter::initialize()
 {
 #ifdef Q_OS_WIN32
     configureEnvironment();
-#if PY_MINOR_VERSION==6
+#if PY_MINOR_VERSION == 6
     Py_SetPythonHome(const_cast<wchar_t *>(m_config.pythonHome()));
 #else
     Py_SetPythonHome(m_config.pythonHome());
@@ -319,13 +324,13 @@ void PythonInterpreter::initialize()
     Py_SetPath(m_config.pythonPath());
 #endif
 #ifdef Q_OS_UNIX
-    // Work-around issue: undefined symbol: PyExc_RecursionError 
+    // Work-around issue: undefined symbol: PyExc_RecursionError
     // when trying to import numpy in the intepreter
     // e.g: https://github.com/numpy/numpy/issues/14946
     // https://stackoverflow.com/questions/49784583/numpy-import-fails-on-multiarray-extension-library-when-called-from-embedded-pyt
     // This workaround is weak
 
-    const auto displaydlopenError = [](){
+    const auto displaydlopenError = []() {
         char *error = dlerror();
         if (error)
         {
@@ -347,7 +352,7 @@ void PythonInterpreter::initialize()
         }
     }
 #endif
-    
+
     py::initialize_interpreter();
 }
 
@@ -362,14 +367,14 @@ void PythonInterpreter::finalize()
     {
         py::finalize_interpreter();
 #ifdef Q_OS_UNIX
-        if (m_libPythonHandle) {
+        if (m_libPythonHandle)
+        {
             dlclose(m_libPythonHandle);
             m_libPythonHandle = nullptr;
         }
 #else
-            Q_UNUSED(this);
+        Q_UNUSED(this);
 #endif
-
     }
 }
 
@@ -380,7 +385,8 @@ void PythonInterpreter::configureEnvironment()
     const char *venvPrefix = std::getenv("VIRTUAL_ENV");
     if (condaPrefix)
     {
-        ccLog::Print("[PythonPlugin] Conda environment detected (%s)", std::getenv("CONDA_DEFAULT_ENV"));
+        ccLog::Print("[PythonPlugin] Conda environment detected (%s)",
+                     std::getenv("CONDA_DEFAULT_ENV"));
         QString pythonExePath = QString(condaPrefix) + "/python.exe";
         if (!QFile::exists(pythonExePath))
         {

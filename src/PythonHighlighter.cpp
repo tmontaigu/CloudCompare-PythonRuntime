@@ -20,9 +20,10 @@
 
 // Python keywords
 static const QStringList s_Keywords = {
-    "and",     "assert", "break", "class",  "continue", "def",    "del",   "elif", "else",   "except", "exec",
-    "finally", "for",    "from",  "global", "if",       "import", "in",    "is",   "lambda", "not",    "or",
-    "pass",    "print",  "raise", "return", "try",      "while",  "yield", "None", "True",   "False"};
+    "and",    "assert", "break", "class",   "continue", "def",  "del",    "elif",
+    "else",   "except", "exec",  "finally", "for",      "from", "global", "if",
+    "import", "in",     "is",    "lambda",  "not",      "or",   "pass",   "print",
+    "raise",  "return", "try",   "while",   "yield",    "None", "True",   "False"};
 
 // Python operators
 static const QStringList s_Operators = {"=",
@@ -88,8 +89,7 @@ QString PythonHighlighter::CodeElementName(PythonHighlighter::CodeElement e)
     }
 }
 
-
-void PythonHighlighter::useColorScheme(const ColorScheme& colorScheme)
+void PythonHighlighter::useColorScheme(const ColorScheme &colorScheme)
 {
     for (HighlightingRule &rule : m_highlightingRules)
     {
@@ -102,7 +102,6 @@ PythonHighlighter::PythonHighlighter(QTextDocument *parent) : QSyntaxHighlighter
     initialize();
 }
 
-
 void PythonHighlighter::highlightBlock(const QString &text)
 {
     highlightPythonBlock(text);
@@ -113,8 +112,8 @@ void PythonHighlighter::initialize()
     // Multi-line strings (expression, flag, style)
     // FIXME: The triple-quotes in these two lines will mess up the
     // syntax highlighting from this point onward
-    m_triSingle = HighlightingRule(CodeElement::DocString ,"'''", 1);
-    
+    m_triSingle = HighlightingRule(CodeElement::DocString, "'''", 1);
+
     m_triDouble = HighlightingRule(CodeElement::DocString, R"(""")", 2);
 
     // Keyword, operator, and brace rules
@@ -133,14 +132,12 @@ void PythonHighlighter::initialize()
     // All other rules
 
     // 'self'
-    m_highlightingRules += HighlightingRule(CodeElement::Self , "\\bself\\b", 0);
+    m_highlightingRules += HighlightingRule(CodeElement::Self, "\\bself\\b", 0);
 
     // Double-quoted string, possibly containing escape sequences
-    m_highlightingRules +=
-        HighlightingRule(CodeElement::String, R"("[^"\\]*(\\.[^"\\]*)*")", 0);
+    m_highlightingRules += HighlightingRule(CodeElement::String, R"("[^"\\]*(\\.[^"\\]*)*")", 0);
     // Single-quoted string, possibly containing escape sequences
-    m_highlightingRules +=
-        HighlightingRule(CodeElement::String, R"("[^'\\]*(\\.[^'\\]*)*")", 0);
+    m_highlightingRules += HighlightingRule(CodeElement::String, R"("[^'\\]*(\\.[^'\\]*)*")", 0);
 
     // 'def' followed by an identifier
     m_highlightingRules += HighlightingRule(CodeElement::Definition, R"(\bdef\b\s*(\w+))", 1);
@@ -148,15 +145,14 @@ void PythonHighlighter::initialize()
     m_highlightingRules += HighlightingRule(CodeElement::Definition, R"(\bclass\b\s*(\w+))", 1);
 
     // From '#' until a newline
-    m_highlightingRules += HighlightingRule(CodeElement::Comment , "#[^\\n]*", 0);
+    m_highlightingRules += HighlightingRule(CodeElement::Comment, "#[^\\n]*", 0);
 
     // Numeric literals
     m_highlightingRules += HighlightingRule(CodeElement::Numbers, "\\b[+-]?[0-9]+[lL]?\\b", 0);
     m_highlightingRules +=
         HighlightingRule(CodeElement::Numbers, "\\b[+-]?0[xX][0-9A-Fa-f]+[lL]?\\b", 0);
     m_highlightingRules += HighlightingRule(
-        CodeElement::Numbers,
-        R"(\b[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\b)", 0);
+        CodeElement::Numbers, R"(\b[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\b)", 0);
 }
 
 void PythonHighlighter::highlightPythonBlock(const QString &text)

@@ -38,8 +38,7 @@ void define_KdTree(py::module &cccorelib)
         .def("getAssociatedCloud", &CCCoreLib::KDTree::getAssociatedCloud, py::return_value_policy::reference)
         .def(
             "findNearestNeighbour",
-            [](CCCoreLib::KDTree &self, py::sequence &queryPoint, ScalarType maxDist)
-            {
+            [](CCCoreLib::KDTree &self, py::sequence &queryPoint, ScalarType maxDist) {
                 PointCoordinateType point[3];
                 point[0] = queryPoint[0].cast<PointCoordinateType>();
                 point[1] = queryPoint[1].cast<PointCoordinateType>();
@@ -57,8 +56,7 @@ void define_KdTree(py::module &cccorelib)
             "maxDist"_a)
         .def(
             "findPointBelowDistance",
-            [](CCCoreLib::KDTree &self, py::sequence &queryPoint, ScalarType maxDist)
-            {
+            [](CCCoreLib::KDTree &self, py::sequence &queryPoint, ScalarType maxDist) {
                 PointCoordinateType point[3];
                 point[0] = queryPoint[0].cast<PointCoordinateType>();
                 point[1] = queryPoint[1].cast<PointCoordinateType>();
@@ -73,8 +71,7 @@ void define_KdTree(py::module &cccorelib)
                py::sequence &queryPoint,
                ScalarType distance,
                ScalarType tolerance,
-               std::vector<unsigned> &points)
-            {
+               std::vector<unsigned> &points) {
                 PointCoordinateType point[3];
                 point[0] = queryPoint[0].cast<PointCoordinateType>();
                 point[1] = queryPoint[1].cast<PointCoordinateType>();

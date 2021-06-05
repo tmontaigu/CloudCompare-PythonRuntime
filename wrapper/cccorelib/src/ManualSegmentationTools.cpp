@@ -58,15 +58,14 @@ void define_ManualSegmentationTools(py::module &cccorelib)
                     "minDist"_a,
                     "maxDist"_a,
                     "outside"_a = false)
-        .def_static(
-            "isPointInsidePoly",
-            (bool (*)(const CCVector2 &,
-                      const CCCoreLib::GenericIndexedCloud *))(&ManualSegmentationTools::isPointInsidePoly),
-            "P"_a,
-            "polyVertices"_a)
         .def_static("isPointInsidePoly",
-                    (bool (*)(const CCVector2 &,
-                              const std::vector<CCVector2> &))(&ManualSegmentationTools::isPointInsidePoly),
+                    (bool (*)(const CCVector2 &, const CCCoreLib::GenericIndexedCloud *))(
+                        &ManualSegmentationTools::isPointInsidePoly),
+                    "P"_a,
+                    "polyVertices"_a)
+        .def_static("isPointInsidePoly",
+                    (bool (*)(const CCVector2 &, const std::vector<CCVector2> &))(
+                        &ManualSegmentationTools::isPointInsidePoly),
                     "P"_a,
                     "polyVertices"_a)
 

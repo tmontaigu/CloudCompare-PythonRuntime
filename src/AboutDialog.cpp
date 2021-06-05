@@ -22,13 +22,12 @@
 #undef slots
 #include <pybind11/pybind11.h>
 
-
-AboutDialog::AboutDialog(QWidget *parent): QDialog(parent), m_dlg(new Ui_AboutDialog) {
+AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent), m_dlg(new Ui_AboutDialog)
+{
     m_dlg->setupUi(this);
 
     connect(m_dlg->okBtn, &QPushButton::clicked, this, &QDialog::close);
 
-    const char* versionStr = Py_GetVersion();
+    const char *versionStr = Py_GetVersion();
     m_dlg->pythonVersionLabel->setText(QString(versionStr));
 }
-

@@ -35,14 +35,12 @@ using namespace pybind11::literals;
 
 ccGuiPythonInstance *s_pythonInstance{nullptr};
 
-
 ccCommandLineInterface *s_cmdLineInstance{nullptr};
 
 ccGuiPythonInstance *GetInstance() noexcept
 {
     return s_pythonInstance;
 }
-
 
 ccCommandLineInterface *GetCmdLineInstance() noexcept
 {
@@ -84,7 +82,6 @@ void unsetCmdLineInterfaceInstance() noexcept
     }
 }
 
-
 } // namespace Python
 
 PYBIND11_EMBEDDED_MODULE(ccinternals, m)
@@ -95,10 +92,9 @@ PYBIND11_EMBEDDED_MODULE(ccinternals, m)
 
     py::class_<QListWidget, std::unique_ptr<QListWidget, py::nodelete>>(m, "QListWidget");
 
-
     py::class_<ccConsoleOutput>(m, "ccConsoleOutput")
         .def(py::init<>())
-        .def(py::init<const char*>(), "prefix"_a)
+        .def(py::init<const char *>(), "prefix"_a)
         .def("write", &ccConsoleOutput::write)
         .def("flush", &ccConsoleOutput::flush);
 

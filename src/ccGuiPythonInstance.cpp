@@ -110,7 +110,8 @@ void ccGuiPythonInstance::setSelectedInDB(ccHObject *obj, const bool selected)
     m_app->setSelectedInDB(obj, selected);
 }
 
-ccHObject *ccGuiPythonInstance::loadFile(const char *filename, FileIOFilter::LoadParameters &parameters)
+ccHObject *ccGuiPythonInstance::loadFile(const char *filename,
+                                         FileIOFilter::LoadParameters &parameters)
 {
     CC_FILE_ERROR result = CC_FERR_NO_ERROR;
     ccHObject *newGroup = FileIOFilter::LoadFromFile(filename, parameters, result);
@@ -125,21 +126,22 @@ ccHObject *ccGuiPythonInstance::loadFile(const char *filename, FileIOFilter::Loa
     return newGroup;
 }
 
-
-void ccGuiPythonInstance::addToDB(
-    pybind11::object &obj, bool updateZoom, bool autoExpandDBTree, bool checkDimensions, bool autoRedraw)
+void ccGuiPythonInstance::addToDB(pybind11::object &obj,
+                                  bool updateZoom,
+                                  bool autoExpandDBTree,
+                                  bool checkDimensions,
+                                  bool autoRedraw)
 {
     try
     {
-        auto *const hobj= obj.inc_ref().cast<ccHObject *>();
+        auto *const hobj = obj.inc_ref().cast<ccHObject *>();
         m_app->addToDB(hobj, updateZoom, autoExpandDBTree, checkDimensions, autoRedraw);
     }
-    catch (const pybind11::cast_error&)
+    catch (const pybind11::cast_error &)
     {
         throw std::runtime_error("Cannot add to the DB a type that does not sub class ccHObject");
     }
 }
-
 
 ccHObject *ccGuiPythonInstance::dbRootObject()
 {

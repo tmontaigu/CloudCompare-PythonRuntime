@@ -15,8 +15,8 @@
 //#                                                                        #
 //##########################################################################
 
-#include <ccColorTypes.h>
 #include <ccAdvancedTypes.h>
+#include <ccColorTypes.h>
 
 #undef slots
 #include <pybind11/pybind11.h>
@@ -54,7 +54,8 @@ template <class T> using observer_ptr = std::unique_ptr<T, py::nodelete>;
 #include <pybind11/stl_bind.h>
 #endif
 
-void define_qcc_db(py::module& m) {
+void define_qcc_db(py::module &m)
+{
     /**********************************
      * qCC_db
      **********************************/
@@ -76,7 +77,8 @@ void define_qcc_db(py::module& m) {
     // FIXME: strange that this is needed when _not_ using embedded modules
     //      but breaks if present while using embedded modules
 #ifndef USE_EMBEDDED_MODULES
-    py::bind_vector<VectorCompressedNormType>(m, "_VectorCompressedNormType", py::module_local(true));
+    py::bind_vector<VectorCompressedNormType>(
+        m, "_VectorCompressedNormType", py::module_local(true));
 #endif
 
     py::class_<ccArrayCompressedNormType,

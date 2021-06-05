@@ -18,23 +18,24 @@
 #ifndef FILE_RUNNER_H
 #define FILE_RUNNER_H
 
-#include <QWidget>
 #include <QDialog>
+#include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
 class FileRunner;
 }
 
 class PythonInterpreter;
 
 /// The File Runner is a small widget that let the user pick a .py file
-/// and run it, without having the editor opened. 
+/// and run it, without having the editor opened.
 class FileRunner final : public QDialog
 {
     Q_OBJECT
 
   public:
-    explicit FileRunner(PythonInterpreter* interp, QWidget *parent = nullptr);
+    explicit FileRunner(PythonInterpreter *interp, QWidget *parent = nullptr);
 
     FileRunner(const FileRunner &) = delete;
     FileRunner operator=(const FileRunner &) = delete;
@@ -50,7 +51,6 @@ class FileRunner final : public QDialog
 
   protected:
     void resizeEvent(QResizeEvent *event) override;
-
 
   private:
     PythonInterpreter *m_interpreter;

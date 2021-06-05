@@ -27,8 +27,7 @@ void define_GenericIndexedCloud(py::module &cccorelib)
     py::class_<CCCoreLib::GenericIndexedCloud, CCCoreLib::GenericCloud>(cccorelib, "GenericIndexedCloud")
         .def(
             "getPoint",
-            [](CCCoreLib::GenericIndexedCloud &self, const unsigned index)
-            {
+            [](CCCoreLib::GenericIndexedCloud &self, const unsigned index) {
                 if (index < self.size())
                 {
                     return *self.getPoint(index);
@@ -42,8 +41,7 @@ void define_GenericIndexedCloud(py::module &cccorelib)
             py::return_value_policy::reference)
         .def(
             "getPoint",
-            [](CCCoreLib::GenericIndexedCloud &self, const unsigned index, CCVector3 &P)
-            {
+            [](CCCoreLib::GenericIndexedCloud &self, const unsigned index, CCVector3 &P) {
                 if (index < self.size())
                 {
                     self.getPoint(index, P);

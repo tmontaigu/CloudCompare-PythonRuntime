@@ -30,16 +30,17 @@ using namespace pybind11::literals;
 void define_ccCylinder(py::module &m)
 {
     py::class_<ccCylinder, ccCone>(m, "ccCylinder")
-        .def(py::init<PointCoordinateType,
-                      PointCoordinateType,
-                      const ccGLMatrix *,
-                      QString,
-                      unsigned,
-                      unsigned>(),
-             "radius"_a,
-             "height"_a,
-             "transMat"_a = nullptr,
-             "name"_a = QString("Cylinder"),
-             "precision"_a = [](){ return ccCylinder::DEFAULT_DRAWING_PRECISION;}(),
-             "uniqueID"_a = [](){ return ccUniqueIDGenerator::InvalidUniqueID; }());
+        .def(
+            py::init<PointCoordinateType,
+                     PointCoordinateType,
+                     const ccGLMatrix *,
+                     QString,
+                     unsigned,
+                     unsigned>(),
+            "radius"_a,
+            "height"_a,
+            "transMat"_a = nullptr,
+            "name"_a = QString("Cylinder"),
+            "precision"_a = []() { return ccCylinder::DEFAULT_DRAWING_PRECISION; }(),
+            "uniqueID"_a = []() { return ccUniqueIDGenerator::InvalidUniqueID; }());
 }

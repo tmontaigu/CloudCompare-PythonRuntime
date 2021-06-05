@@ -22,7 +22,7 @@
 
 class Ui_AboutDialog;
 
-class AboutDialog final: public QDialog
+class AboutDialog final : public QDialog
 {
   public:
     explicit AboutDialog(QWidget *parent = nullptr);

@@ -17,13 +17,13 @@
 
 #include "ui_FileRunner.h"
 
-#include "PythonInterpreter.h"
 #include "FileRunner.h"
+#include "PythonInterpreter.h"
 
 #include <QFileDialog>
+#include <QProgressBar>
 #include <QResizeEvent>
 #include <QStyle>
-#include <QProgressBar>
 
 /// Simple widget that grays out the view of its parent
 /// and shows a waiting bar, to give visual feedback that a script is running
@@ -47,11 +47,8 @@ static QWidget *CreateBusyWidget(QWidget *parent)
     return w;
 }
 
-FileRunner::FileRunner(PythonInterpreter* interp, QWidget *parent) :
-      QDialog(parent),
-      m_interpreter(interp),
-      m_busyWidget(nullptr),
-      m_ui(new Ui::FileRunner)
+FileRunner::FileRunner(PythonInterpreter *interp, QWidget *parent)
+    : QDialog(parent), m_interpreter(interp), m_busyWidget(nullptr), m_ui(new Ui::FileRunner)
 
 {
     m_ui->setupUi(this);
@@ -62,19 +59,23 @@ FileRunner::FileRunner(PythonInterpreter* interp, QWidget *parent) :
 
     connect(m_ui->selectFileBtn, &QPushButton::clicked, this, &FileRunner::selectFile);
     connect(m_ui->runFileBtn, &QPushButton::clicked, this, &FileRunner::runFile);
-    connect(interp, &PythonInterpreter::executionStarted, this, &FileRunner::pythonExecutionStarted);
+    connect(
+        interp, &PythonInterpreter::executionStarted, this, &FileRunner::pythonExecutionStarted);
     connect(interp, &PythonInterpreter::executionFinished, this, &FileRunner::pythonExecutionEnded);
 }
 
-void FileRunner::selectFile() {
-    m_filePath = QFileDialog::getOpenFileName(this, "Select Python Script", QString(), "Python Script (*.py)");
+void FileRunner::selectFile()
+{
+    m_filePath = QFileDialog::getOpenFileName(
+        this, "Select Python Script", QString(), "Python Script (*.py)");
     m_ui->filePathLabel->setText(m_filePath);
     m_ui->runFileBtn->setEnabled(!m_filePath.isEmpty());
 }
 
 void FileRunner::runFile() const
 {
-    if (!m_filePath.isEmpty()) {
+    if (!m_filePath.isEmpty())
+    {
         const std::string path = m_filePath.toStdString();
         m_interpreter->executeFile(path);
     }
@@ -102,4 +103,3 @@ void FileRunner::resizeEvent(QResizeEvent *event)
     m_busyWidget->resize(event->size());
     QDialog::resizeEvent(event);
 }
-

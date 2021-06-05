@@ -25,7 +25,6 @@
 // Qt
 #include <QtWidgets>
 
-
 static QString RecentFilesKey()
 {
     return QStringLiteral("recentFileList");
@@ -355,7 +354,7 @@ void QPythonEditor::setupUi()
     Ui::QPythonEditor::setupUi(this);
 
     // Setup MDI Area
-    
+
     setCentralWidget(m_mdiArea);
     m_mdiArea->showMaximized();
     connect(m_mdiArea, &QMdiArea::subWindowActivated, this, &QPythonEditor::updateMenus);
@@ -445,7 +444,7 @@ void QPythonEditor::createActions()
     m_previousAct = new QAction(tr("Pre&vious"), this);
     m_previousAct->setShortcuts(QKeySequence::PreviousChild);
     m_previousAct->setStatusTip(tr("Move the focus to the previous "
-                                 "window"));
+                                   "window"));
     connect(m_previousAct, &QAction::triggered, m_mdiArea, &QMdiArea::activatePreviousSubWindow);
 
     m_windowMenuSeparatorAct = new QAction(this);

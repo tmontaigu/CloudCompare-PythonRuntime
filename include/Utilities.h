@@ -34,7 +34,6 @@ inline wchar_t *QStringToWcharArray(const QString &string)
     return wcharArray;
 }
 
-
 inline void LogPythonPath()
 {
     const wchar_t *pythonPath = Py_GetPath();

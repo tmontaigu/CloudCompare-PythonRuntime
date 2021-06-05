@@ -35,7 +35,10 @@ class ConsoleWrapper
   public:
     /// printFn: callback function that will be called by this wrapper
     ///			 this callback function shall display the received QString somewhere
-    explicit ConsoleWrapper(std::function<void(const QString &)> printFn) : m_printFn(std::move(printFn)) {}
+    explicit ConsoleWrapper(std::function<void(const QString &)> printFn)
+        : m_printFn(std::move(printFn))
+    {
+    }
 
     /// Method called by the Python interpreter when something is written.
     /// This function will in turn call the printFn callback given to the constructor
@@ -85,7 +88,7 @@ class ccConsoleOutput
 {
   public:
     ccConsoleOutput() = default;
-    explicit ccConsoleOutput(const char*  prefix) : m_prefix(prefix) {}
+    explicit ccConsoleOutput(const char *prefix) : m_prefix(prefix) {}
 
     void write(const char *messagePart)
     {
@@ -103,7 +106,9 @@ class ccConsoleOutput
         if (m_prefix.isEmpty())
         {
             ccLog::Print(message);
-        } else {
+        }
+        else
+        {
             ccLog::Print(m_prefix + message);
         }
     }};
@@ -114,7 +119,7 @@ class ConsoleRepl
 {
   public:
     ConsoleRepl(QListWidget *view, const Qt::GlobalColor color) : m_view(view), m_brush(color) {}
-    ConsoleRepl(QListWidget *view, const QColor& color) : m_view(view), m_brush() {}
+    ConsoleRepl(QListWidget *view, const QColor &color) : m_view(view), m_brush() {}
     explicit ConsoleRepl(QListWidget *view) : m_view(view), m_brush() {}
 
     void write(const char *messagePart)

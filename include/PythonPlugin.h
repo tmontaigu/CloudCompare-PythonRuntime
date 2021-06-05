@@ -26,7 +26,6 @@ class QPythonEditor;
 class QPythonRepl;
 class FileRunner;
 
-
 /// "Entry point" of the plugin
 class PythonPlugin final : public QObject, public ccStdPluginInterface
 {
@@ -46,7 +45,7 @@ class PythonPlugin final : public QObject, public ccStdPluginInterface
 
     void setMainAppInterface(ccMainAppInterface *app) override;
 
-	PythonPlugin(const PythonPlugin &) = delete;
+    PythonPlugin(const PythonPlugin &) = delete;
     PythonPlugin(PythonPlugin &&) = delete;
     PythonPlugin &operator=(const PythonPlugin &) = delete;
     PythonPlugin &operator=(PythonPlugin &&) = delete;
@@ -65,7 +64,6 @@ class PythonPlugin final : public QObject, public ccStdPluginInterface
     QPythonRepl *m_repl{nullptr};
     QPythonEditor *m_editor{nullptr};
     FileRunner *m_fileRunner{nullptr};
-
 
     /// Actions
     QAction *m_showEditor{nullptr};

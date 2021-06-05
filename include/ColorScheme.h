@@ -1,9 +1,7 @@
 #ifndef PYTHON_PLUGIN_COLOR_SCHEME_H
 #define PYTHON_PLUGIN_COLOR_SCHEME_H
 
-
 #include "PythonHighlighter.h"
-
 
 class ColorScheme final
 {

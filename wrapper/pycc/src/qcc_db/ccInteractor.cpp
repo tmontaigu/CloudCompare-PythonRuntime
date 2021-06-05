@@ -28,6 +28,13 @@ void define_ccInteractor(py::module &m)
 {
     py::class_<ccInteractor>(m, "ccInteractor")
         .def("acceptClick", &ccInteractor::acceptClick, "x"_a, "y"_a, "button"_a)
-        .def("move2D", &ccInteractor::move2D, "x"_a, "y"_a, "dx"_a, "dy"_a, "screenWidth"_a, "screenHeight"_a)
+        .def("move2D",
+             &ccInteractor::move2D,
+             "x"_a,
+             "y"_a,
+             "dx"_a,
+             "dy"_a,
+             "screenWidth"_a,
+             "screenHeight"_a)
         .def("move3D", &ccInteractor::move3D, "u"_a);
 }

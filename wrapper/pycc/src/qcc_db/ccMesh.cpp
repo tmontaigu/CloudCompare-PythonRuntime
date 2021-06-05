@@ -26,8 +26,7 @@
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-
-void define_ccMesh(py::module& m)
+void define_ccMesh(py::module &m)
 {
     py::class_<ccMesh, ccGenericMesh>(m, "ccMesh")
         .def("setAssociatedCloud", &ccMesh::setAssociatedCloud, "cloud"_a);

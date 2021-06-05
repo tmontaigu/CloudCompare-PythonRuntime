@@ -48,14 +48,17 @@ void define_qcc_io(py::module &m)
     py::class_<FileIOFilter::LoadParameters>(PyFileIOFilter, "LoadParameters")
         .def(py::init<>())
         .def_readwrite("shiftHandlingMode", &FileIOFilter::LoadParameters::shiftHandlingMode)
-        .def_readwrite("alwaysDisplayLoadDialog", &FileIOFilter::LoadParameters::alwaysDisplayLoadDialog)
-        .def_readwrite("coordinatesShiftEnabled", &FileIOFilter::LoadParameters::coordinatesShiftEnabled)
+        .def_readwrite("alwaysDisplayLoadDialog",
+                       &FileIOFilter::LoadParameters::alwaysDisplayLoadDialog)
+        .def_readwrite("coordinatesShiftEnabled",
+                       &FileIOFilter::LoadParameters::coordinatesShiftEnabled)
         .def_readwrite("coordinatesShift",
                        &FileIOFilter::LoadParameters::coordinatesShift,
                        py::return_value_policy::reference)
         .def_readwrite("preserveShiftOnSave", &FileIOFilter::LoadParameters::preserveShiftOnSave)
         .def_readwrite("autoComputeNormals", &FileIOFilter::LoadParameters::autoComputeNormals)
-        .def_readwrite(
-            "parentWidget", &FileIOFilter::LoadParameters::parentWidget, py::return_value_policy::reference)
+        .def_readwrite("parentWidget",
+                       &FileIOFilter::LoadParameters::parentWidget,
+                       py::return_value_policy::reference)
         .def_readwrite("sessionStart", &FileIOFilter::LoadParameters::sessionStart);
 }

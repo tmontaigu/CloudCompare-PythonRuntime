@@ -29,7 +29,9 @@ using namespace pybind11::literals;
 void define_ccGenericMesh(py::module &m)
 {
     py::class_<ccGenericMesh, CCCoreLib::GenericIndexedMesh, ccHObject>(m, "ccGenericMesh")
-        .def("getAssociatedCloud", &ccGenericMesh::getAssociatedCloud, py::return_value_policy::reference)
+        .def("getAssociatedCloud",
+             &ccGenericMesh::getAssociatedCloud,
+             py::return_value_policy::reference)
         .def("refreshBB", &ccGenericMesh::refreshBB)
         .def("capacity", &ccGenericMesh::capacity)
         .def("hasMaterials", &ccGenericMesh::hasMaterials)
@@ -74,7 +76,8 @@ void define_ccGenericMesh(py::module &m)
                 return py::make_tuple(Na, Nb, Nc);
             },
             "triangleIndex"_a);
-         // FIXME blocked by NormsIndexesTableType not being wrappable due to link errors
-        //.def("getTriNormsTable", &ccGenericMesh::getTriNormsTable, py::return_value_policy::reference);
+    // FIXME blocked by NormsIndexesTableType not being wrappable due to link errors
+    //.def("getTriNormsTable", &ccGenericMesh::getTriNormsTable,
+    // py::return_value_policy::reference);
     // TODD compute interpolation weights and following
 }

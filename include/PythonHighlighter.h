@@ -24,7 +24,6 @@
 
 #include <QSyntaxHighlighter>
 
-
 class ColorScheme;
 
 // Started from Qt Syntax Highlighter example and then ported
@@ -49,7 +48,7 @@ class PythonHighlighter final : public QSyntaxHighlighter
 
     static QString CodeElementName(PythonHighlighter::CodeElement e);
 
-	void useColorScheme(const ColorScheme &colorScheme);
+    void useColorScheme(const ColorScheme &colorScheme);
 
     explicit PythonHighlighter(QTextDocument *parent = nullptr);
 
@@ -63,9 +62,9 @@ class PythonHighlighter final : public QSyntaxHighlighter
         QRegExp pattern;
         QTextCharFormat format;
         int matchIndex = 0;
-    	
+
         HighlightingRule() = default;
-    	
+
         HighlightingRule(const CodeElement e, const QString &p, const int i)
             : element(e), pattern(QRegExp(p)), matchIndex(i)
         {
@@ -82,6 +81,5 @@ class PythonHighlighter final : public QSyntaxHighlighter
     HighlightingRule m_triSingle;
     HighlightingRule m_triDouble;
 };
-
 
 #endif // PYTHON_HIGHLIGHTER_H

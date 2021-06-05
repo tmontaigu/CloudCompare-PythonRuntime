@@ -131,7 +131,6 @@ using namespace pybind11::literals;
         .def("addPoint", &CCCoreLib::PointCloudTpl<T, StringType>::addPoint, "P"_a)                \
         .def("__len__", &CCCoreLib::PointCloudTpl<T, StringType>::size);
 
-
 void define_ccPointCloud(py::module &m)
 {
     DEFINE_POINTCLOUDTPL(ccGenericPointCloud, QString, m, "__ccGenericPointCloudTpl");

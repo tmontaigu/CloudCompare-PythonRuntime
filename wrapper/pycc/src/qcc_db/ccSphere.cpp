@@ -29,12 +29,13 @@ using namespace pybind11::literals;
 void define_ccSphere(py::module &m)
 {
     py::class_<ccSphere, ccGenericPrimitive>(m, "ccSphere")
-        .def(py::init<PointCoordinateType, const ccGLMatrix *, QString, unsigned, unsigned>(),
-             "radius"_a,
-             "transMat"_a = nullptr,
-             "name"_a = QString("Sphere"),
-             "precision"_a = 24,
-             "uniqueId"_a = [](){ return ccUniqueIDGenerator::InvalidUniqueID; }())
+        .def(
+            py::init<PointCoordinateType, const ccGLMatrix *, QString, unsigned, unsigned>(),
+            "radius"_a,
+            "transMat"_a = nullptr,
+            "name"_a = QString("Sphere"),
+            "precision"_a = 24,
+            "uniqueId"_a = []() { return ccUniqueIDGenerator::InvalidUniqueID; }())
         .def("getRadius", &ccSphere::getRadius)
         .def("setRadius", &ccSphere::setRadius, "radius"_a);
 }

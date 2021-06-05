@@ -66,15 +66,14 @@ class PythonConfigPaths final
     std::unique_ptr<wchar_t[]> m_pythonPath{};
 };
 
-
 /// PythonInterpreter, There should be only one, and it is managed by the PythonPlugin.
 /// It centralizes the execution of python scripts.
-/// 
+///
 /// Only one script can be executed at a time.
 /// Classes that allow user to start the execution of a script should connect the
 /// executionStarted & executionFinished to give feedback on
 /// when a script is running and whether a new script can be ran
-class PythonInterpreter final: public QObject
+class PythonInterpreter final : public QObject
 {
     Q_OBJECT
 
@@ -94,8 +93,7 @@ class PythonInterpreter final: public QObject
     void finalize();
     static bool IsInitialized();
 
-
-	/// Execution functions (and slots)
+    /// Execution functions (and slots)
   public Q_SLOTS:
     bool executeFile(const std::string &filePath);
     void executeCode(const std::string &code, QListWidget *output);
@@ -104,18 +102,17 @@ class PythonInterpreter final: public QObject
   Q_SIGNALS:
     void executionStarted();
     void executionFinished();
-    
+
 #ifdef Q_OS_WIN32
   private:
     void configureEnvironment();
 #endif
 
-    
   private:
     bool m_isExecuting{false};
 
     PythonConfigPaths m_config;
-    
+
 #ifdef Q_OS_UNIX
     void *m_libPythonHandle{nullptr};
 #endif

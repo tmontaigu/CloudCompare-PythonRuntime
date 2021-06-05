@@ -30,8 +30,7 @@ using namespace pybind11::literals;
 
 void define_cc2DLabel(py::module &m)
 {
-    py::class_<cc2DLabel, ccHObject, ccInteractor> Pycc2DLabel(
-        m, "cc2DLabel");
+    py::class_<cc2DLabel, ccHObject, ccInteractor> Pycc2DLabel(m, "cc2DLabel");
     Pycc2DLabel.def(py::init<QString>(), "name"_a = QString("Label"));
     Pycc2DLabel.def("getRawName", &cc2DLabel::getRawName);
     Pycc2DLabel.def("getLabelContent", &cc2DLabel::getLabelContent, "precision"_a);
@@ -41,7 +40,8 @@ void define_cc2DLabel(py::module &m)
     Pycc2DLabel.def("clear", &cc2DLabel::clear, "ignoreDependencies"_a = false);
     Pycc2DLabel.def("size", &cc2DLabel::size);
     Pycc2DLabel.def("addPickedPoint",
-                    (bool (cc2DLabel::*)(ccGenericPointCloud *, unsigned, bool)) & cc2DLabel::addPickedPoint,
+                    (bool (cc2DLabel::*)(ccGenericPointCloud *, unsigned, bool)) &
+                        cc2DLabel::addPickedPoint,
                     "cloud"_a,
                     "pointIndex"_a,
                     "entityCenter"_a = false);
@@ -60,14 +60,17 @@ void define_cc2DLabel(py::module &m)
     Pycc2DLabel.def("isDisplayedIn2D", &cc2DLabel::isDisplayedIn2D);
 
     py::class_<cc2DLabel::PickedPoint>(Pycc2DLabel, "PickedPoint")
-        .def_readwrite("_cloud", &cc2DLabel::PickedPoint::_cloud, py::return_value_policy::reference)
+        .def_readwrite(
+            "_cloud", &cc2DLabel::PickedPoint::_cloud, py::return_value_policy::reference)
         .def_readwrite("_mesh", &cc2DLabel::PickedPoint::_mesh, py::return_value_policy::reference)
         .def_readwrite("index", &cc2DLabel::PickedPoint::index)
         .def_readwrite("pos2D", &cc2DLabel::PickedPoint::pos2D)
         .def_readwrite("uv", &cc2DLabel::PickedPoint::uv)
         .def_readwrite("entityCenterPoint", &cc2DLabel::PickedPoint::entityCenterPoint)
         .def("getPointPosition", &cc2DLabel::PickedPoint::getPointPosition)
-        .def("cloudOrVertices", &cc2DLabel::PickedPoint::cloudOrVertices, py::return_value_policy::reference)
+        .def("cloudOrVertices",
+             &cc2DLabel::PickedPoint::cloudOrVertices,
+             py::return_value_policy::reference)
         .def("getUniqueID", &cc2DLabel::PickedPoint::getUniqueID)
         .def("entity", &cc2DLabel::PickedPoint::entity, py::return_value_policy::reference)
         .def("itemTitle", &cc2DLabel::PickedPoint::itemTitle)
@@ -84,7 +87,8 @@ void define_cc2DLabel(py::module &m)
              "centerPoint"_a = false);
 
     Pycc2DLabel.def("addPickedPoint",
-                    (bool (cc2DLabel::*)(const cc2DLabel::PickedPoint &)) & cc2DLabel::addPickedPoint,
+                    (bool (cc2DLabel::*)(const cc2DLabel::PickedPoint &)) &
+                        cc2DLabel::addPickedPoint,
                     "pp"_a);
     Pycc2DLabel.def("getPickedPoint", &cc2DLabel::getPickedPoint, "index"_a);
     Pycc2DLabel.def("setRelativeMarkerScale", &cc2DLabel::setRelativeMarkerScale, "scale"_a);

@@ -60,9 +60,10 @@ void define_ScalarField(py::module &cccorelib)
         .def("__getitem__",
              [](const CCCoreLib::ScalarField &self, ssize_t index) { return self.at(index % self.size()); })
         .def("__setitem__",
-             [](CCCoreLib::ScalarField &self, ssize_t index, ScalarType value)
-             { self.at(index % self.size()) = value; })
-        .def("__repr__",
-             [](const CCCoreLib::ScalarField &self)
-             { return std::string("<ScalarField(name=") + self.getName() + ")>"; });
+             [](CCCoreLib::ScalarField &self, ssize_t index, ScalarType value) {
+                 self.at(index % self.size()) = value;
+             })
+        .def("__repr__", [](const CCCoreLib::ScalarField &self) {
+            return std::string("<ScalarField(name=") + self.getName() + ")>";
+        });
 }

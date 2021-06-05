@@ -19,16 +19,15 @@
 
 #include "PythonHighlighter.h"
 
-
 #include <QColorDialog>
 #include <QFormLayout>
 #include <QPushButton>
 #include <QSignalMapper>
 
 PythonHighlighterSettings::PythonHighlighterSettings(QWidget *parent)
-    : QWidget(parent)
-    , m_colorDialog(new QColorDialog(this))
-    , m_signalMapper(new QSignalMapper(this)) {
+    : QWidget(parent), m_colorDialog(new QColorDialog(this)),
+      m_signalMapper(new QSignalMapper(this))
+{
     auto formLayout = new QFormLayout;
     setLayout(formLayout);
 
@@ -41,14 +40,12 @@ PythonHighlighterSettings::PythonHighlighterSettings(QWidget *parent)
         const auto qss = QString("background-color: red");
         btn->setStyleSheet(qss);
         formLayout->addRow(PythonHighlighter::CodeElementName(e), btn);
-       
-        connect(btn, &QPushButton::clicked, [this, btn, i]
-        {
+
+        connect(btn, &QPushButton::clicked, [this, btn, i] {
             m_colorDialog->exec();
             m_colors[i].second = m_colorDialog->selectedColor();
-            btn->setStyleSheet(QString("background-color: %1")
-                .arg(m_colors[i].second.name(QColor::HexRgb)));
+            btn->setStyleSheet(
+                QString("background-color: %1").arg(m_colors[i].second.name(QColor::HexRgb)));
         });
     }
 }
-

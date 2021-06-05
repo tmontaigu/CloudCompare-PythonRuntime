@@ -20,7 +20,6 @@
 #include "CodeEditor.h"
 #include "PythonHighlighter.h"
 
-
 static const char *const INDENT_STRING = "    ";
 
 static const char *const PYTHON_COMMENT_STR = "# ";
@@ -169,7 +168,8 @@ void CodeEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
         {
             QString number = QString::number(blockNumber + 1);
             painter.setPen(Qt::black);
-            painter.drawText(0, top, m_lineNumberArea->width(), fontMetrics().height(), Qt::AlignRight, number);
+            painter.drawText(
+                0, top, m_lineNumberArea->width(), fontMetrics().height(), Qt::AlignRight, number);
         }
 
         block = block.next();
@@ -238,10 +238,10 @@ bool CodeEditor::saveFile(const QString &fileName)
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text))
     {
-        QMessageBox::warning(
-            this,
-            tr("MDI"),
-            tr("Cannot write file %1:\n%2.").arg(QDir::toNativeSeparators(fileName), file.errorString()));
+        QMessageBox::warning(this,
+                             tr("MDI"),
+                             tr("Cannot write file %1:\n%2.")
+                                 .arg(QDir::toNativeSeparators(fileName), file.errorString()));
         return false;
     }
 

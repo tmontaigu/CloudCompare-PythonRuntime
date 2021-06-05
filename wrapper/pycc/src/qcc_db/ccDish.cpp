@@ -29,16 +29,17 @@ using namespace pybind11::literals;
 void define_ccDish(py::module &m)
 {
     py::class_<ccDish, ccGenericPrimitive>(m, "ccDish")
-        .def(py::init<PointCoordinateType,
-                      PointCoordinateType,
-                      PointCoordinateType,
-                      const ccGLMatrix *,
-                      QString,
-                      unsigned>(),
-             "radius"_a,
-             "height"_a,
-             "radius2"_a = 0,
-             "transMat"_a = nullptr,
-             "name"_a = QString("Dish"),
-             "precision"_a = [](){ return ccDish::DEFAULT_DRAWING_PRECISION; }());
+        .def(
+            py::init<PointCoordinateType,
+                     PointCoordinateType,
+                     PointCoordinateType,
+                     const ccGLMatrix *,
+                     QString,
+                     unsigned>(),
+            "radius"_a,
+            "height"_a,
+            "radius2"_a = 0,
+            "transMat"_a = nullptr,
+            "name"_a = QString("Dish"),
+            "precision"_a = []() { return ccDish::DEFAULT_DRAWING_PRECISION; }());
 }

@@ -57,12 +57,14 @@ void define_ccDrawableObject(py::module &m)
         .def("isColorOverriden", &ccDrawableObject::isColorOverriden)
         .def("getTempColor", &ccDrawableObject::getTempColor)
         .def("setTempColor",
-             (void (ccDrawableObject::*)(const ccColor::Rgba &, bool))(&ccDrawableObject::setTempColor),
+             (void (ccDrawableObject::*)(const ccColor::Rgba &, bool))(
+                 &ccDrawableObject::setTempColor),
              "col"_a,
              "autoActivate"_a = true)
 
         .def("setTempColor",
-             (void (ccDrawableObject::*)(const ccColor::Rgb &, bool))(&ccDrawableObject::setTempColor),
+             (void (ccDrawableObject::*)(const ccColor::Rgb &, bool))(
+                 &ccDrawableObject::setTempColor),
              "col"_a,
              "autoActivate"_a = true)
         // associated display managenement

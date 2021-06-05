@@ -43,21 +43,25 @@ class ProjectView final : public QTreeView
         {
             hideColumn(i);
         }
-        connect(
-            this, &QTreeView::customContextMenuRequested, m_contextMenu, &ProjectViewContextMenu::requested);
+        connect(this,
+                &QTreeView::customContextMenuRequested,
+                m_contextMenu,
+                &ProjectViewContextMenu::requested);
     }
 
-
-    void setRootPath(const QString& path) {
+    void setRootPath(const QString &path)
+    {
         m_fileSystemModel->setRootPath(path);
         setRootIndex(m_fileSystemModel->index(path));
     }
 
-    QString relativePathAt(const QModelIndex& index) const {
+    QString relativePathAt(const QModelIndex &index) const
+    {
         return m_fileSystemModel->filePath(index);
     }
 
-    QString absolutePathAt(const QModelIndex& index) const {
+    QString absolutePathAt(const QModelIndex &index) const
+    {
         return m_fileSystemModel->rootDirectory().filePath(relativePathAt(index));
     }
 

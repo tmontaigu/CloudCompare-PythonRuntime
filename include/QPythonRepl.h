@@ -24,7 +24,6 @@
 
 #include "PythonInterpreter.h"
 
-
 class PythonInterpreter;
 class Ui_QPythonREPL;
 class QPlainTextEdit;
@@ -79,7 +78,7 @@ class QPythonRepl final : public QMainWindow
 
     QPythonRepl(const QPythonRepl &) = delete;
     QPythonRepl(QPythonRepl &&) = delete;
-    QPythonRepl& operator=(const QPythonRepl &) = delete;
+    QPythonRepl &operator=(const QPythonRepl &) = delete;
     QPythonRepl &operator=(QPythonRepl &&) = delete;
     ~QPythonRepl() noexcept override;
 
@@ -98,6 +97,5 @@ class QPythonRepl final : public QMainWindow
     PythonInterpreter *m_interpreter{nullptr};
     PythonInterpreter::State m_state;
 };
-
 
 #endif // PYTHON_PLUGIN_QPYTHON_REPL_H

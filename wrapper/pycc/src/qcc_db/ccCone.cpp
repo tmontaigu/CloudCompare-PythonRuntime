@@ -29,24 +29,25 @@ using namespace pybind11::literals;
 void define_ccCone(py::module &m)
 {
     py::class_<ccCone, ccGenericPrimitive>(m, "ccCone")
-        .def(py::init<PointCoordinateType,
-                      PointCoordinateType,
-                      PointCoordinateType,
-                      PointCoordinateType,
-                      PointCoordinateType,
-                      const ccGLMatrix *,
-                      QString,
-                      unsigned,
-                      unsigned>(),
-             "bottomRadius"_a,
-             "topRadius"_a,
-             "height"_a,
-             "xOff"_a = 0,
-             "yOff"_a = 0,
-             "transMat"_a = nullptr,
-             "name"_a = QString("Cone"),
-             "precision"_a = [](){ return ccCone::DEFAULT_DRAWING_PRECISION; }(),
-             "uniqueID"_a = [](){ return ccUniqueIDGenerator::InvalidUniqueID; }())
+        .def(
+            py::init<PointCoordinateType,
+                     PointCoordinateType,
+                     PointCoordinateType,
+                     PointCoordinateType,
+                     PointCoordinateType,
+                     const ccGLMatrix *,
+                     QString,
+                     unsigned,
+                     unsigned>(),
+            "bottomRadius"_a,
+            "topRadius"_a,
+            "height"_a,
+            "xOff"_a = 0,
+            "yOff"_a = 0,
+            "transMat"_a = nullptr,
+            "name"_a = QString("Cone"),
+            "precision"_a = []() { return ccCone::DEFAULT_DRAWING_PRECISION; }(),
+            "uniqueID"_a = []() { return ccUniqueIDGenerator::InvalidUniqueID; }())
         .def("getHeight", &ccCone::getHeight)
         .def("setHeight", &ccCone::setHeight, "height"_a)
         .def("getBottomRadius", &ccCone::getBottomRadius)

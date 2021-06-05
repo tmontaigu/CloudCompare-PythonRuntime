@@ -29,22 +29,23 @@ using namespace pybind11::literals;
 void define_ccTorus(py::module &m)
 {
     py::class_<ccTorus, ccGenericPrimitive>(m, "ccTorus")
-        .def(py::init<PointCoordinateType,
-                      PointCoordinateType,
-                      double,
-                      bool,
-                      PointCoordinateType,
-                      const ccGLMatrix *,
-                      QString,
-                      unsigned,
-                      unsigned>(),
-             "insideRadius"_a,
-             "outsideRadius"_a,
-             "angleRad"_a = 2.0 * M_PI,
-             "rectangularSection"_a = false,
-             "rectSectionHeight"_a = 0,
-             "transMat"_a = nullptr,
-             "name"_a = QString("Torus"),
-             "precision"_a = [](){ return ccTorus::DEFAULT_DRAWING_PRECISION; }(),
-             "uniqueId"_a = [](){ return ccUniqueIDGenerator::InvalidUniqueID; }());
+        .def(
+            py::init<PointCoordinateType,
+                     PointCoordinateType,
+                     double,
+                     bool,
+                     PointCoordinateType,
+                     const ccGLMatrix *,
+                     QString,
+                     unsigned,
+                     unsigned>(),
+            "insideRadius"_a,
+            "outsideRadius"_a,
+            "angleRad"_a = 2.0 * M_PI,
+            "rectangularSection"_a = false,
+            "rectSectionHeight"_a = 0,
+            "transMat"_a = nullptr,
+            "name"_a = QString("Torus"),
+            "precision"_a = []() { return ccTorus::DEFAULT_DRAWING_PRECISION; }(),
+            "uniqueId"_a = []() { return ccUniqueIDGenerator::InvalidUniqueID; }());
 }

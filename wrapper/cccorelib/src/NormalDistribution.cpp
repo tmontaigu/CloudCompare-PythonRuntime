@@ -30,8 +30,7 @@ void define_NormalDistribution(py::module &cccorelib)
         .def(py::init<>())
         .def(py::init<ScalarType, ScalarType>(), "_mu"_a, "_sigma2"_a)
         .def("getParameters",
-             [](const CCCoreLib::NormalDistribution &self)
-             {
+             [](const CCCoreLib::NormalDistribution &self) {
                  ScalarType mu, sigma2 = 0.0;
                  self.getParameters(mu, sigma2);
                  return std::make_pair(mu, sigma2);
@@ -40,8 +39,8 @@ void define_NormalDistribution(py::module &cccorelib)
         .def("getMu", &CCCoreLib::NormalDistribution::getMu)
         .def("getSigma2", &CCCoreLib::NormalDistribution::getSigma2)
         .def("computeParameters",
-             (bool (CCCoreLib::NormalDistribution::*)(
-                 const CCCoreLib::GenericCloud *))(&CCCoreLib::NormalDistribution::computeParameters),
+             (bool (CCCoreLib::NormalDistribution::*)(const CCCoreLib::GenericCloud *))(
+                 &CCCoreLib::NormalDistribution::computeParameters),
              "cloud"_a)
         .def("computeRobustParameters",
              &CCCoreLib::NormalDistribution::computeRobustParameters,

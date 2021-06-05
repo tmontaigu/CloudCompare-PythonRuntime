@@ -64,10 +64,12 @@ void define_ccCommandLine(py::module &m)
 
     PyccCommandLineInterface
         .def("clouds",
-             (std::vector<CLCloudDesc> & (ccCommandLineInterface::*)())(&ccCommandLineInterface::clouds),
+             (std::vector<CLCloudDesc> &
+              (ccCommandLineInterface::*)())(&ccCommandLineInterface::clouds),
              py::return_value_policy::reference)
         .def("meshes",
-             (std::vector<CLMeshDesc> & (ccCommandLineInterface::*)())(&ccCommandLineInterface::meshes))
+             (std::vector<CLMeshDesc> &
+              (ccCommandLineInterface::*)())(&ccCommandLineInterface::meshes))
         .def("getExportFilename",
              &ccCommandLineInterface::getExportFilename,
              "entityDesc"_a,
@@ -93,6 +95,8 @@ void define_ccCommandLine(py::module &m)
              "allAtOnceFileName"_a = nullptr)
         .def(
             "importFile",
-            [](ccCommandLineInterface &self, QString filename) { return self.importFile(filename); },
+            [](ccCommandLineInterface &self, QString filename) {
+                return self.importFile(filename);
+            },
             "filename"_a);
 }

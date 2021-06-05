@@ -79,18 +79,17 @@ void define_TrueKdTree(py::module &cccorelib)
         //                       &TrueKdTree::Leaf::planeEq) // FIXME
         .def_readwrite("error", &TrueKdTree::Leaf::error)
         .def_readwrite("userData", &TrueKdTree::Leaf::userData)
-        .def(py::init(
-                 [](CCCoreLib::ReferenceCloud *set, const py::sequence &planeEquation, ScalarType error)
-                 {
-                     PointCoordinateType planeEq[4] = {0};
-                     planeEq[0] = planeEquation[0].cast<PointCoordinateType>();
-                     planeEq[1] = planeEquation[1].cast<PointCoordinateType>();
-                     planeEq[2] = planeEquation[2].cast<PointCoordinateType>();
-                     planeEq[3] = planeEquation[3].cast<PointCoordinateType>();
+        .def(
+            py::init([](CCCoreLib::ReferenceCloud *set, const py::sequence &planeEquation, ScalarType error) {
+                PointCoordinateType planeEq[4] = {0};
+                planeEq[0] = planeEquation[0].cast<PointCoordinateType>();
+                planeEq[1] = planeEquation[1].cast<PointCoordinateType>();
+                planeEq[2] = planeEquation[2].cast<PointCoordinateType>();
+                planeEq[3] = planeEquation[3].cast<PointCoordinateType>();
 
-                     return TrueKdTree::Leaf(set, nullptr, error);
-                 }),
-             "set"_a,
-             "planeEquation"_a,
-             "_error"_a);
+                return TrueKdTree::Leaf(set, nullptr, error);
+            }),
+            "set"_a,
+            "planeEquation"_a,
+            "_error"_a);
 }

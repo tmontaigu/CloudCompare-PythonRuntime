@@ -15,7 +15,6 @@
 //#                                                                        #
 //##########################################################################
 
-
 #ifndef CLOUD_COMPARE_PROJECTS_THREADING_H
 #define CLOUD_COMPARE_PROJECTS_THREADING_H
 
@@ -87,7 +86,8 @@ class ThreadException : public QException
     std::exception e;
 };
 
-inline py::object call_fn(PyThreadState *main_state, py::object callable, py::args args, py::kwargs kwargs)
+inline py::object
+call_fn(PyThreadState *main_state, py::object callable, py::args args, py::kwargs kwargs)
 {
     PyThreadStateGuard threadStateGuard{main_state->interp};
     try

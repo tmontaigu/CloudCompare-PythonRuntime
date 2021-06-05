@@ -33,7 +33,8 @@ ProjectViewContextMenu::ProjectViewContextMenu(ProjectView *view)
     connect(&m_renameAction, &QAction::triggered, this, &ProjectViewContextMenu::renameFile);
     connect(&m_deleteAction, &QAction::triggered, this, &ProjectViewContextMenu::deleteElement);
     connect(&m_createFileAction, &QAction::triggered, this, &ProjectViewContextMenu::createFile);
-    connect(&m_createFolderAction, &QAction::triggered, this, &ProjectViewContextMenu::createFolder);
+    connect(
+        &m_createFolderAction, &QAction::triggered, this, &ProjectViewContextMenu::createFolder);
 }
 
 void ProjectViewContextMenu::requested(const QPoint &pos)
@@ -71,12 +72,13 @@ void ProjectViewContextMenu::renameFile() const
 {
     Q_ASSERT(m_currentIndex.isValid());
     bool ok;
-    QString newName = QInputDialog::getText(m_treeView,
-                                            tr("Enter a new name"),
-                                            tr("new name"),
-                                            QLineEdit::Normal,
-                                            *static_cast<QString *>(m_currentIndex.internalPointer()),
-                                            &ok);
+    QString newName =
+        QInputDialog::getText(m_treeView,
+                              tr("Enter a new name"),
+                              tr("new name"),
+                              QLineEdit::Normal,
+                              *static_cast<QString *>(m_currentIndex.internalPointer()),
+                              &ok);
 
     if (ok && !newName.isEmpty())
     {
@@ -95,8 +97,8 @@ void ProjectViewContextMenu::renameFile() const
 void ProjectViewContextMenu::deleteElement() const
 {
     Q_ASSERT(m_currentIndex.isValid());
-    auto result =
-        QMessageBox::question(m_treeView, "Confirm deletion ?", "Are you sure you want to delete this ?");
+    auto result = QMessageBox::question(
+        m_treeView, "Confirm deletion ?", "Are you sure you want to delete this ?");
 
     if (result == QMessageBox::StandardButton::Yes)
     {
@@ -110,8 +112,8 @@ void ProjectViewContextMenu::deleteElement() const
 void ProjectViewContextMenu::createFile() const
 {
     bool ok;
-    QString fileName =
-        QInputDialog::getText(m_treeView, tr("Enter a new name"), tr("new name"), QLineEdit::Normal, "", &ok);
+    QString fileName = QInputDialog::getText(
+        m_treeView, tr("Enter a new name"), tr("new name"), QLineEdit::Normal, "", &ok);
 
     if (ok && !fileName.isEmpty())
     {
@@ -129,8 +131,12 @@ void ProjectViewContextMenu::createFile() const
 void ProjectViewContextMenu::createFolder() const
 {
     bool ok;
-    QString folderName = QInputDialog::getText(
-        m_treeView, tr("Enter a new name"), tr("Folder name"), QLineEdit::Normal, "New Folder", &ok);
+    QString folderName = QInputDialog::getText(m_treeView,
+                                               tr("Enter a new name"),
+                                               tr("Folder name"),
+                                               QLineEdit::Normal,
+                                               "New Folder",
+                                               &ok);
 
     if (ok && !folderName.isEmpty())
     {

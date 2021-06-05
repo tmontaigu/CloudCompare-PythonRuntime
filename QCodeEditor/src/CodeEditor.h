@@ -18,8 +18,6 @@
 #ifndef CODE_EDITOR_H
 #define CODE_EDITOR_H
 
-
-
 #include "QEditorSettings.h"
 #include <QObject>
 #include <QPlainTextEdit>

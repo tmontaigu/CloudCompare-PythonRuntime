@@ -54,7 +54,7 @@ class Q_DECL_EXPORT ccGuiPythonInstance final
 
     ccHObject *dbRootObject();
 
-    void addToDB(pybind11::object& obj,
+    void addToDB(pybind11::object &obj,
                  bool updateZoom = false,
                  bool autoExpandDBTree = true,
                  bool checkDimensions = false,
@@ -73,7 +73,6 @@ class Q_DECL_EXPORT ccGuiPythonInstance final
     void freezeUI(bool state);
 
     ccHObject *loadFile(const char *filename, FileIOFilter::LoadParameters &parameters);
-
 
   private:
     ccMainAppInterface *m_app;

@@ -35,8 +35,7 @@ void define_ccPlane(py::module &m)
         .def("normalVectorIsShown", &ccPlanarEntityInterface::normalVectorIsShown)
         .def("getNormal", &ccPlanarEntityInterface::getNormal);
 
-    py::class_<ccPlane, ccGenericPrimitive, ccPlanarEntityInterface>(
-        m, "ccPlane")
+    py::class_<ccPlane, ccGenericPrimitive, ccPlanarEntityInterface>(m, "ccPlane")
         .def(py::init<PointCoordinateType, PointCoordinateType, const ccGLMatrix *, QString>(),
              "xWidth"_a,
              "yWidth"_a,

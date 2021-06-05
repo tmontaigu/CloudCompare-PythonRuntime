@@ -36,5 +36,6 @@ void define_ccGenericPrimitive(py::module &m)
         .def("setDrawingPrecision", &ccGenericPrimitive::setDrawingPrecision, "steps"_a)
         .def("getDrawingPrecision", &ccGenericPrimitive::getDrawingPrecision)
         .def("getTransformation",
-             (const ccGLMatrix &(ccGenericPrimitive::*)() const)(&ccGenericPrimitive::getTransformation));
+             (const ccGLMatrix &(ccGenericPrimitive::*)()
+                  const)(&ccGenericPrimitive::getTransformation));
 }

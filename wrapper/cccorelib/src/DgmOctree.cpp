@@ -50,8 +50,9 @@ void define_DgmOctree(py::module &cccorelib)
         .def("clear", &DgmOctree::clear)
         .def(
             "build",
-            [](DgmOctree &self, CCCoreLib::GenericProgressCallback *progressCb = nullptr)
-            { return self.build(); },
+            [](DgmOctree &self, CCCoreLib::GenericProgressCallback *progressCb = nullptr) {
+                return self.build();
+            },
             "progressCb"_a = nullptr)
         .def(
             "build",
@@ -60,8 +61,9 @@ void define_DgmOctree(py::module &cccorelib)
                const CCVector3 &octreeMax,
                const CCVector3 *pointsMinFilter = nullptr,
                const CCVector3 *pointsMaxFilter = nullptr,
-               CCCoreLib::GenericProgressCallback *progressCb = nullptr)
-            { return self.build(octreeMax, octreeMax, pointsMinFilter, pointsMaxFilter, progressCb); },
+               CCCoreLib::GenericProgressCallback *progressCb = nullptr) {
+                return self.build(octreeMax, octreeMax, pointsMinFilter, pointsMaxFilter, progressCb);
+            },
             "octreeMin"_a,
             "octreeMax"_a,
             "pointsMinFilter"_a = nullptr,

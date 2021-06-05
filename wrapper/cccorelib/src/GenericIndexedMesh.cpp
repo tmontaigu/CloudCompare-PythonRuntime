@@ -32,21 +32,19 @@ void define_GenericIndexedMesh(py::module &cccorelib)
         .def_readwrite("i1", &CCCoreLib::VerticesIndexes::i1)
         .def_readwrite("i2", &CCCoreLib::VerticesIndexes::i2)
         .def_readwrite("i3", &CCCoreLib::VerticesIndexes::i3)
-        .def("__getitem__",
-             [](CCCoreLib::VerticesIndexes &self, unsigned index)
-             {
-                 switch (index)
-                 {
-                 case 0:
-                     return self.i1;
-                 case 1:
-                     return self.i2;
-                 case 2:
-                     return self.i3;
-                 default:
-                     throw py::index_error("index out of range");
-                 }
-             });
+        .def("__getitem__", [](CCCoreLib::VerticesIndexes &self, unsigned index) {
+            switch (index)
+            {
+            case 0:
+                return self.i1;
+            case 1:
+                return self.i2;
+            case 2:
+                return self.i3;
+            default:
+                throw py::index_error("index out of range");
+            }
+        });
 
     py::class_<CCCoreLib::GenericIndexedMesh, CCCoreLib::GenericMesh>(cccorelib, "GenericIndexedMesh")
         .def("_getTriangle",

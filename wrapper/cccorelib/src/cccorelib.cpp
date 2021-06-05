@@ -15,6 +15,7 @@
 //#                                                                        #
 //##########################################################################
 
+#include <limits>
 #include <pybind11/functional.h>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
@@ -180,7 +181,8 @@ class NumpyCloud : public CCCoreLib::GenericIndexedCloud
     unsigned int size() const override
     {
         assert(m_xs.size() <= std::numeric_limits<unsigned int>::max());
-        return m_xs.size();
+        assert(m_xs.size() >= std::numeric_limits<unsigned int>::min());
+        return static_cast<unsigned int>(m_xs.size());
     }
 
     void forEach(genericPointAction action) override
@@ -202,8 +204,7 @@ class NumpyCloud : public CCCoreLib::GenericIndexedCloud
     }
     void getBoundingBox(CCVector3 &bbMin, CCVector3 &bbMax) override
     {
-        const auto updateMinMax = [&bbMin, &bbMax](const CCVector3 &point, ScalarType _s)
-        {
+        const auto updateMinMax = [&bbMin, &bbMax](const CCVector3 &point, ScalarType _s) {
             bbMin.x = std::min(point.x, bbMin.x);
             bbMin.y = std::min(point.y, bbMin.y);
             bbMin.z = std::min(point.z, bbMin.z);

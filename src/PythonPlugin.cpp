@@ -15,35 +15,37 @@
 //#                                                                        #
 //##########################################################################
 
-#include "AboutDialog.h"
-#include "PrivateRuntime.h"
 #include "PythonPlugin.h"
+#include "AboutDialog.h"
+#include "FileRunner.h"
+#include "PrivateRuntime.h"
 #include "PythonStdErrOutRedirect.h"
 #include "QPythonEditor.h"
 #include "QPythonRepl.h"
-#include "FileRunner.h"
 #include "Utilities.h"
 
-#include <QUrl>
 #include <QDesktopServices>
+#include <QUrl>
 
 #define slots Q_SLOTS
 #define signals Q_SIGNALS
 #include <ccCommandLineInterface.h>
 
-
 // Useful link:
 // https://docs.python.org/3/c-api/init.html#initialization-finalization-and-threads
 PythonPlugin::PythonPlugin(QObject *parent)
     : QObject(parent), ccStdPluginInterface(":/CC/plugin/PythonPlugin/info.json"),
-     m_interp(nullptr),  m_editor(new QPythonEditor(&m_interp))
+      m_interp(nullptr), m_editor(new QPythonEditor(&m_interp))
 {
     m_interp.initialize();
 
     LogPythonHome();
     LogPythonPath();
 
-    connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &PythonPlugin::finalizeInterpreter);
+    connect(QCoreApplication::instance(),
+            &QCoreApplication::aboutToQuit,
+            this,
+            &PythonPlugin::finalizeInterpreter);
 }
 
 QList<QAction *> PythonPlugin::getActions()
@@ -72,7 +74,8 @@ QList<QAction *> PythonPlugin::getActions()
     {
         m_showDoc = new QAction("Show Documentation", this);
         m_showDoc->setToolTip("Show local documentation in your web browser");
-        m_showDoc->setIcon(m_app->getMainWindow()->style()->standardIcon(QStyle::SP_FileDialogInfoView));
+        m_showDoc->setIcon(
+            m_app->getMainWindow()->style()->standardIcon(QStyle::SP_FileDialogInfoView));
         connect(m_showDoc, &QAction::triggered, &PythonPlugin::showDocumentation);
         m_showDoc->setEnabled(enableActions);
     }
@@ -96,7 +99,7 @@ QList<QAction *> PythonPlugin::getActions()
         m_showFileRunner->setEnabled(enableActions);
     }
 
-    return { m_showEditor, m_showFileRunner, m_showAboutDialog, m_showDoc, m_showRepl };
+    return {m_showEditor, m_showFileRunner, m_showAboutDialog, m_showDoc, m_showRepl};
 }
 
 void PythonPlugin::showRepl()
@@ -124,14 +127,15 @@ void PythonPlugin::showEditor() const
     }
 }
 
-void PythonPlugin::showFileRunner() const {
+void PythonPlugin::showFileRunner() const
+{
     m_fileRunner->show();
 }
 
 void PythonPlugin::showDocumentation()
 {
-	const QUrl url(QString("https://tmontaigu.github.io/CloudCompare-PythonPlugin/index.html"));
-	QDesktopServices::openUrl(url);
+    const QUrl url(QString("https://tmontaigu.github.io/CloudCompare-PythonPlugin/index.html"));
+    QDesktopServices::openUrl(url);
 }
 
 void PythonPlugin::showAboutDialog() const
@@ -166,8 +170,8 @@ struct PythonPluginCommand final : public ccCommandLineInterface::Command
         PySys_SetArgvEx(static_cast<int>(args.pythonArgv.size()), args.pythonArgv.data(), 1);
         const bool success = interpreter->executeFile(qPrintable(args.filepath));
 
-        cmd.print(
-            QString("[PythonPlugin] Script %1 executed").arg(success ? "successfully" : "unsuccessfully"));
+        cmd.print(QString("[PythonPlugin] Script %1 executed")
+                      .arg(success ? "successfully" : "unsuccessfully"));
         return success;
     }
 
@@ -182,8 +186,8 @@ struct PythonPluginCommand final : public ccCommandLineInterface::Command
         {
             if (cmd.arguments().empty())
             {
-                return cmd.error(
-                    QString("Missing parameter: parameters filename after \"-%1\"").arg("PYTHON_SCRIPT"));
+                return cmd.error(QString("Missing parameter: parameters filename after \"-%1\"")
+                                     .arg("PYTHON_SCRIPT"));
             }
             filepath = cmd.arguments().takeFirst();
 
@@ -210,7 +214,8 @@ struct PythonPluginCommand final : public ccCommandLineInterface::Command
 
 void PythonPlugin::registerCommands(ccCommandLineInterface *cmd)
 {
-    cmd->registerCommand(ccCommandLineInterface::Command::Shared(new PythonPluginCommand(&m_interp)));
+    cmd->registerCommand(
+        ccCommandLineInterface::Command::Shared(new PythonPluginCommand(&m_interp)));
     Python::setCmdLineInterfaceInstance(cmd);
 }
 

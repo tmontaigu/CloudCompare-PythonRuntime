@@ -23,22 +23,19 @@
 #include <pybind11/pybind11.h>
 
 #include "Runtime.h"
-#include "threading.h"
 #include "ccGuiPythonInstance.h"
-
+#include "threading.h"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-
 void define_ccGUIPythonInstance(py::module &);
 void define_ccCommandLine(py::module &);
 
-
-void define_pycc_runtime(py::module& m) {
+void define_pycc_runtime(py::module &m)
+{
     define_ccGUIPythonInstance(m);
     define_ccCommandLine(m);
-
 
     m.def("ProcessEvents", []() { QCoreApplication::processEvents(); });
 
