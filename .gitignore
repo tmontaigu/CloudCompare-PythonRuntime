@@ -3,3 +3,5 @@
 docs/_build
 *.egg
 .idea
+
+*build*
