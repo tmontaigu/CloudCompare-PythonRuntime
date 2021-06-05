@@ -20,6 +20,8 @@
 #include <QOpenGLWidget>
 #include <QProgressDialog>
 #include <QMainWindow>
+#include <CCTypes.h>
+
 
 #include "casters.h"
 
@@ -27,7 +29,6 @@
 #include <pybind11/stl_bind.h>
 #include <pybind11/numpy.h>
 
-#include "CCTypes.h"
 
 
 namespace py = pybind11;
@@ -45,24 +46,21 @@ template <class T> using observer_ptr = std::unique_ptr<T, py::nodelete>;
 
 
 
-template<typename T>
-void define_scalar_type(py::module& m)
+template <typename T>
+typename std::enable_if<std::is_same<T, double>::value, void>::type
+define_scalar_type(py::module& m)
 {
-    static_assert(false, "Invalid ScalarType");
+    m.attr("ScalarType") = py::dtype("float64");
 }
 
-
-template<>
-void define_scalar_type<float>(py::module &m)
+template <typename T>
+typename std::enable_if<std::is_same<T, float>::value, void>::type
+define_scalar_type(py::module &m)
 {
     m.attr("ScalarType") = py::dtype("float32");
 }
 
-template <>
-void define_scalar_type<double>(py::module &m)
-{
-    m.attr("ScalarType") = py::dtype("float64");
-}
+
 
 void define_pycc(py::module &m)
 {
