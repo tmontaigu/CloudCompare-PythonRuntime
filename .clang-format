@@ -5,7 +5,7 @@ Language: Cpp
 PointerAlignment: Right
 BinPackArguments: false
 BinPackParameters: false
-ColumnLimit: 110
+ColumnLimit: 100
 AccessModifierOffset: -2
 SpaceBeforeParens: ControlStatements
 AllowShortLoopsOnASingleLine: false

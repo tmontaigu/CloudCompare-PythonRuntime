@@ -156,13 +156,11 @@ jobs:
         working-directory: "./wrapper"
         run: pip install -v .\pycc
 
-      - name: test cccorelib
+      - name: test cccorelib & cccorelib
         run: |
           pip install pytest
           pytest wrapper\cccorelib\tests
-
-      - name: test pycc
-        run: python -c "import pycc"
+          pytest wrapper\pycc\tests
 
   Ubuntu-Wheels:
     name: "Ubuntu Wheels"
@@ -185,11 +183,9 @@ jobs:
         working-directory: "./wrapper"
         run: pip install -v ./pycc
 
-      - name: test cccorelib
+      - name: test cccorelib & cccorelib
         run: |
           pip install pytest
           pytest wrapper/cccorelib/tests
-
-      - name: test pycc
-        run: python -c "import pycc"
+          pytest wrapper/pycc/tests
 
