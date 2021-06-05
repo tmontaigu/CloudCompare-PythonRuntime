@@ -1,7 +1,7 @@
 add_subdirectory(qcc_io)
 add_subdirectory(qcc_db)
-if (DEFINE_PYCC_RUNTIME)
-    add_subdirectory(runtime)
+if(DEFINE_PYCC_RUNTIME)
+  add_subdirectory(runtime)
 endif()
 
 set(pycc_sources
@@ -12,4 +12,3 @@ set(pycc_sources
     ${pycc_db_sources}
     PARENT_SCOPE
 )
-
