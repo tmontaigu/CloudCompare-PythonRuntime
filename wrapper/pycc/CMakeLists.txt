@@ -52,8 +52,8 @@ if(PYCC_IS_MASTER_PROJECT)
       GIT_REPOSITORY https://github.com/CloudCompare/CloudCompare
       GIT_SUBMODULES "libs/qCC_db/extern/CCCoreLib"
       GIT_PROGRESS ON
-      GIT_SHALLOW ON
       GIT_TAG a4ebd61e903c986e18d468df67320cce6378e78f
+      GIT_SHALLOW OFF
     )
 
     FetchContent_MakeAvailable(CloudCompare)
