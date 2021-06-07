@@ -54,3 +54,4 @@ point_cloud.getScalarField(point_cloud.getScalarFieldIndexByName("intensity")).c
 point_cloud.getScalarField(point_cloud.getScalarFieldIndexByName("classification")).computeMinAndMax()
 
 cc.addToDB(point_cloud)
+cc.updateUI()
