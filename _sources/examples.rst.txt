@@ -1,6 +1,14 @@
 Examples
 ========
 
+
+Creating a ccPointCloud from Python
+-----------------------------------
+
+.. literalinclude:: ../script_examples/creating_point_cloud.py
+    :language: Python
+
+
 Loading a file
 --------------
 

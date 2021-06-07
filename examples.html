@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Examples &mdash; CloudCompare-PythonPlugin  documentation</title>
   
@@ -16,10 +16,7 @@
 
   
   
-
   
-  
-
   
 
   
@@ -32,13 +29,14 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="CCCoreLib" href="cccorelib/index.html" />
+    <link rel="next" title="cccorelib" href="cccorelib/index.html" />
     <link rel="prev" title="Getting Started" href="getting_started.html" />
 <link href="_static/style.css" rel="stylesheet" type="text/css">
 
@@ -55,7 +53,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> CloudCompare-PythonPlugin
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> CloudCompare-PythonPlugin
           
 
           
@@ -88,8 +86,10 @@
             
               <p class="caption"><span class="caption-text">Plugin Documentation</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="building.html">Building from sources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-ccpointcloud-from-python">Creating a ccPointCloud from Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#loading-a-file">Loading a file</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sub-sampling">Sub sampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#merge">Merge</a></li>
@@ -98,7 +98,7 @@
 </ul>
 <p class="caption"><span class="caption-text">APIs Documentation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="cccorelib/index.html">CCCoreLib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cccorelib/index.html">cccorelib</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pycc/index.html">pycc</a></li>
 </ul>
 
@@ -140,8 +140,6 @@
 
 
 
-
-
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -153,7 +151,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="_sources/examples.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -169,6 +167,67 @@
             
   <div class="section" id="examples">
 <h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="creating-a-ccpointcloud-from-python">
+<h2>Creating a ccPointCloud from Python<a class="headerlink" href="#creating-a-ccpointcloud-from-python" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pycc</span>
+<span class="kn">import</span> <span class="nn">laspy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># This example shows how to create a ccPointCloud from your custom data</span>
+<span class="c1"># here, we will load data from a las file using laspy.</span>
+
+<span class="c1"># Note that the resulting ccPointCloud&#39;s point values and scalar field values</span>
+<span class="c1"># will be copies.</span>
+
+<span class="n">path_to_las</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;L:\R1_F_0+000_0+050.las&quot;</span>
+
+<span class="n">las</span> <span class="o">=</span> <span class="n">laspy</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">path_to_las</span><span class="p">)</span>
+
+<span class="c1"># Be aware that CloudCompare stores coordinates on 32 bit floats.</span>
+<span class="c1"># To avoid losing too much precision you should &#39;shift&#39; your coordinates </span>
+<span class="c1"># if they are 64 bit floats (which is the default in python land)</span>
+
+<span class="n">xs</span> <span class="o">=</span> <span class="p">(</span><span class="n">las</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">las</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">x_min</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">pycc</span><span class="o">.</span><span class="n">PointCoordinateType</span><span class="p">)</span>
+<span class="n">ys</span> <span class="o">=</span> <span class="p">(</span><span class="n">las</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">las</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">y_min</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">pycc</span><span class="o">.</span><span class="n">PointCoordinateType</span><span class="p">)</span>
+<span class="n">zs</span> <span class="o">=</span> <span class="p">(</span><span class="n">las</span><span class="o">.</span><span class="n">z</span> <span class="o">-</span> <span class="n">las</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">z_min</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">pycc</span><span class="o">.</span><span class="n">PointCoordinateType</span><span class="p">)</span>
+
+<span class="n">point_cloud</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccPointCloud</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">)</span>
+<span class="c1"># Add the global shift to CloudCompare so that it can use it,</span>
+<span class="c1"># for example to display the real coordinates in point picking tool</span>
+<span class="n">point_cloud</span><span class="o">.</span><span class="n">setGlobalShift</span><span class="p">(</span><span class="o">-</span><span class="n">las</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">x_min</span><span class="p">,</span> <span class="o">-</span><span class="n">las</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">y_min</span><span class="p">,</span> <span class="o">-</span><span class="n">las</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">z_min</span><span class="p">)</span>
+<span class="n">point_cloud</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="n">path_to_las</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">point_cloud</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">xs</span> <span class="o">==</span> <span class="n">point_cloud</span><span class="o">.</span><span class="n">points</span><span class="p">()[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># Adding scalar field &amp; copying values the manual way</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">point_cloud</span><span class="o">.</span><span class="n">addScalarField</span><span class="p">(</span><span class="s2">&quot;classification&quot;</span><span class="p">)</span>
+
+<span class="n">classification_array</span> <span class="o">=</span> <span class="n">point_cloud</span><span class="o">.</span><span class="n">getScalarField</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span><span class="o">.</span><span class="n">asArray</span><span class="p">()</span>
+<span class="n">classification_array</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">las</span><span class="o">.</span><span class="n">classification</span><span class="p">[:]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_array</span><span class="p">)</span>
+
+<span class="c1"># Or give the values directly</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">point_cloud</span><span class="o">.</span><span class="n">addScalarField</span><span class="p">(</span><span class="s2">&quot;intensity&quot;</span><span class="p">,</span> <span class="n">las</span><span class="o">.</span><span class="n">intensity</span><span class="p">)</span>
+<span class="n">intensity_array</span> <span class="o">=</span> <span class="n">point_cloud</span><span class="o">.</span><span class="n">getScalarField</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span><span class="o">.</span><span class="n">asArray</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">intensity_array</span><span class="p">[:])</span>
+
+
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">cc</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">GetInstance</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+    <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># We are in &quot;embedded mode&quot;, add the point cloud to the DB</span>
+<span class="c1"># but first we should compute min and max for the scalarfields</span>
+<span class="c1"># so that their color ranges displays properly</span>
+<span class="n">point_cloud</span><span class="o">.</span><span class="n">getScalarField</span><span class="p">(</span><span class="n">point_cloud</span><span class="o">.</span><span class="n">getScalarFieldIndexByName</span><span class="p">(</span><span class="s2">&quot;intensity&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">computeMinAndMax</span><span class="p">()</span>
+<span class="n">point_cloud</span><span class="o">.</span><span class="n">getScalarField</span><span class="p">(</span><span class="n">point_cloud</span><span class="o">.</span><span class="n">getScalarFieldIndexByName</span><span class="p">(</span><span class="s2">&quot;classification&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">computeMinAndMax</span><span class="p">()</span>
+
+<span class="n">cc</span><span class="o">.</span><span class="n">addToDB</span><span class="p">(</span><span class="n">point_cloud</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="loading-a-file">
 <h2>Loading a file<a class="headerlink" href="#loading-a-file" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pycc</span>
@@ -178,7 +237,7 @@
 <span class="n">params</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">FileIOFilter</span><span class="o">.</span><span class="n">LoadParameters</span><span class="p">()</span>
 <span class="n">params</span><span class="o">.</span><span class="n">parentWidget</span> <span class="o">=</span> <span class="n">CC</span><span class="o">.</span><span class="n">getMainWindow</span><span class="p">()</span>
 
-<span class="n">path</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;C:\Users\t.montaigu\Projects\CloudCompare\plugins\private\CloudCompare-PythonPlugin\tests\data\a_cloud.bin&quot;</span>
+<span class="n">path</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;~\Projects\CloudCompare\plugins\private\CloudCompare-PythonPlugin\tests\data\a_cloud.bin&quot;</span>
 
 
 <span class="c1"># This automatically adds the loaded entities</span>
@@ -298,29 +357,37 @@
            
           </div>
           <footer>
+  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="cccorelib/index.html" class="btn btn-neutral float-right" title="CCCoreLib" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="getting_started.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+      
+        <a href="cccorelib/index.html" class="btn btn-neutral float-right" title="cccorelib" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="getting_started.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
     </div>
+  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2020, Thomas Montaigu.
+        
+        &copy; Copyright 2020, Thomas Montaigu
 
     </p>
   </div>
     
     
     
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
+
         </div>
       </div>
 

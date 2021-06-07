@@ -1,6 +1,14 @@
 pycc Runtime
 ============
 
+
+.. important::
+
+    As the functions and types below allow to interact with the CloudCompare app,
+    they are only available in the python embedded within the plugin and not available
+    when using standalone pycc module.
+
+
 .. autofunction:: pycc.GetInstance
 
     This function returns an object that allows to interact with the running CC instance
