@@ -4,10 +4,7 @@ project(pycccorelib LANGUAGES CXX)
 # MASTER_PROJECT means that this CMakeLists is the top level CMakeLists which in
 # our case means that this project is not built as a part of the PythonPlugin
 # but as a standalone wheel
-if(CMAKE_PROJECT_NAME
-   STREQUAL
-   pycccorelib
-)
+if(CMAKE_PROJECT_NAME STREQUAL pycccorelib)
   set(CCCORELIB_PYTHON_IS_MASTER_PROJECT ON)
 else()
   set(CCCORELIB_PYTHON_IS_MASTER_PROJECT OFF)
@@ -19,11 +16,8 @@ if(CCCORELIB_PYTHON_IS_MASTER_PROJECT)
   if(WIN32)
     if(NOT PYTHON_EXECUTABLE)
       if(DEFINED ENV{CONDA_PREFIX})
-        list(
-          INSERT
-          CMAKE_PREFIX_PATH
-          0
-          "$ENV{CONDA_PREFIX}/Library/share/cmake"
+        list(INSERT CMAKE_PREFIX_PATH 0
+             "$ENV{CONDA_PREFIX}/Library/share/cmake"
         )
         set(PYTHON_EXECUTABLE "$ENV{CONDA_PREFIX}/python.exe")
       elseif(DEFINED ENV{VIRTUAL_ENV})
@@ -39,23 +33,11 @@ if(CCCORELIB_PYTHON_IS_MASTER_PROJECT)
       OUTPUT_VARIABLE PYBIND11_CMAKE_MODULES_PATH
     )
 
-    if(_PYTHON_SUCCESS
-       MATCHES
-       0
-    )
-      string(
-        REGEX
-        REPLACE "\n"
-                ""
-                PYBIND11_CMAKE_MODULES_PATH
-                ${PYBIND11_CMAKE_MODULES_PATH}
+    if(_PYTHON_SUCCESS MATCHES 0)
+      string(REGEX REPLACE "\n" "" PYBIND11_CMAKE_MODULES_PATH
+                           ${PYBIND11_CMAKE_MODULES_PATH}
       )
-      list(
-        INSERT
-        CMAKE_PREFIX_PATH
-        0
-        "${PYBIND11_CMAKE_MODULES_PATH}"
-      )
+      list(INSERT CMAKE_PREFIX_PATH 0 "${PYBIND11_CMAKE_MODULES_PATH}")
     else()
       message(
         WARNING "Failed to get pybind11 cmake prefix path ${_PYTHON_SUCCESS}"
@@ -79,11 +61,7 @@ if(CCCORELIB_PYTHON_IS_MASTER_PROJECT)
 endif()
 
 if(CCCORELIB_PYTHON_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
-  find_package(
-    pybind11
-    CONFIG
-    REQUIRED
-  )
+  find_package(pybind11 CONFIG REQUIRED)
   pybind11_add_module(cccorelib ${cccorelib_sources})
   target_link_libraries(cccorelib PRIVATE CCCoreLib)
 
@@ -97,16 +75,8 @@ if(CCCORELIB_PYTHON_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
         REQUIRED
       )
 
-      get_target_property(
-        QMAKE_EXE
-        Qt5::qmake
-        IMPORTED_LOCATION
-      )
-      get_filename_component(
-        QT_BIN_DIR
-        "${QMAKE_EXE}"
-        DIRECTORY
-      )
+      get_target_property(QMAKE_EXE Qt5::qmake IMPORTED_LOCATION)
+      get_filename_component(QT_BIN_DIR "${QMAKE_EXE}" DIRECTORY)
 
       find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${QT_BIN_DIR}")
 

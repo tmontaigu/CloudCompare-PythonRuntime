@@ -15,9 +15,9 @@
 //#                                                                        #
 //##########################################################################
 
+#include <GenericIndexedCloud.h>
 #include <PointCloud.h>
 #include <PointCloudTpl.h>
-#include <GenericIndexedCloud.h>
 
 #include "wrappers.h"
 
@@ -29,7 +29,8 @@ void define_PointCloud(py::module &cccorelib)
     using CCCoreLib::PointCloudTpl;
 
     DEFINE_POINTCLOUDTPL(GenericIndexedCloudPersist, const char *, cccorelib, "__pointCloudTplCCCoreLib");
-    py::class_<PointCloud, CCCoreLib::PointCloudTpl<GenericIndexedCloudPersist, const char *>>(cccorelib, "PointCloud")
+    py::class_<PointCloud, CCCoreLib::PointCloudTpl<GenericIndexedCloudPersist, const char *>>(cccorelib,
+                                                                                               "PointCloud")
         .def(py::init<>())
         .def("reserveNormals", &PointCloud::reserveNormals, "newCount"_a)
         .def("addNormals", &PointCloud::addNormal, "normal"_a);

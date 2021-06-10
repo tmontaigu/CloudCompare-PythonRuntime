@@ -1,11 +1,7 @@
 include(cmake/helpers.cmake)
 include(cmake/CompilerWarnings.cmake)
 
-option(
-  PLUGIN_PYTHON
-  "Install Python Plugin"
-  OFF
-)
+option(PLUGIN_PYTHON "Install Python Plugin" OFF)
 
 if(PLUGIN_PYTHON)
   project(PythonPlugin)
@@ -14,28 +10,22 @@ if(PLUGIN_PYTHON)
 
   # set_project_warnings(${PROJECT_NAME})
 
-  option(
-    PLUGIN_PYTHON_USE_EMBEDDED_MODULES
-    "Should the Python wrapper libs be embedded in the plugin"
-    ON
+  option(PLUGIN_PYTHON_USE_EMBEDDED_MODULES
+         "Should the Python wrapper libs be embedded in the plugin" ON
   )
   mark_as_advanced(PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
 
   if(WIN32)
-    option(
-      PLUGIN_PYTHON_COPY_ENV
-      "Should the content of the current python venv be copied on install"
-      ON
+    option(PLUGIN_PYTHON_COPY_ENV
+           "Should the content of the current python venv be copied on install"
+           ON
     )
     mark_as_advanced(PLUGIN_PYTHON_COPY_ENV)
 
     if(NOT PYTHON_EXECUTABLE)
       if(DEFINED ENV{CONDA_PREFIX})
-        list(
-          INSERT
-          CMAKE_PREFIX_PATH
-          0
-          "$ENV{CONDA_PREFIX}/Library/share/cmake"
+        list(INSERT CMAKE_PREFIX_PATH 0
+             "$ENV{CONDA_PREFIX}/Library/share/cmake"
         )
         set(PYTHON_EXECUTABLE "$ENV{CONDA_PREFIX}/python.exe")
       elseif(DEFINED ENV{VIRTUAL_ENV})
@@ -51,31 +41,15 @@ if(PLUGIN_PYTHON)
       OUTPUT_VARIABLE PYBIND11_CMAKE_MODULES_PATH
     )
 
-    if(_PYTHON_SUCCESS
-       MATCHES
-       0
-    )
-      string(
-        REGEX
-        REPLACE "\n"
-                ""
-                PYBIND11_CMAKE_MODULES_PATH
-                ${PYBIND11_CMAKE_MODULES_PATH}
+    if(_PYTHON_SUCCESS MATCHES 0)
+      string(REGEX REPLACE "\n" "" PYBIND11_CMAKE_MODULES_PATH
+                           ${PYBIND11_CMAKE_MODULES_PATH}
       )
-      list(
-        INSERT
-        CMAKE_PREFIX_PATH
-        0
-        "${PYBIND11_CMAKE_MODULES_PATH}"
-      )
+      list(INSERT CMAKE_PREFIX_PATH 0 "${PYBIND11_CMAKE_MODULES_PATH}")
     endif()
   endif()
 
-  find_package(
-    pybind11
-    CONFIG
-    REQUIRED
-  )
+  find_package(pybind11 CONFIG REQUIRED)
 
   add_subdirectory(wrapper)
   add_subdirectory(include)

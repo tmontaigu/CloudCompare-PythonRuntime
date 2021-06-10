@@ -4,19 +4,12 @@ project(pycc LANGUAGES CXX)
 # MASTER_PROJECT means that this CMakeLists is the top level CMakeLists which in
 # our case means that this project is not built as a part of the PythonPlugin
 # but as a standalone wheel
-if(CMAKE_PROJECT_NAME
-   STREQUAL
-   pycc
-)
+if(CMAKE_PROJECT_NAME STREQUAL pycc)
   set(PYCC_IS_MASTER_PROJECT ON)
   set(DEFINE_PYCC_RUNTIME OFF)
 else()
   set(PYCC_IS_MASTER_PROJECT OFF)
-  option(
-    DEFINE_PYCC_RUNTIME
-    "Should the runtime functions be included"
-    ON
-  )
+  option(DEFINE_PYCC_RUNTIME "Should the runtime functions be included" ON)
 endif()
 
 add_subdirectory(src)
@@ -25,11 +18,8 @@ if(PYCC_IS_MASTER_PROJECT)
   if(WIN32)
     if(NOT PYTHON_EXECUTABLE)
       if(DEFINED ENV{CONDA_PREFIX})
-        list(
-          INSERT
-          CMAKE_PREFIX_PATH
-          0
-          "$ENV{CONDA_PREFIX}/Library/share/cmake"
+        list(INSERT CMAKE_PREFIX_PATH 0
+             "$ENV{CONDA_PREFIX}/Library/share/cmake"
         )
         set(PYTHON_EXECUTABLE "$ENV{CONDA_PREFIX}/python.exe")
       elseif(DEFINED ENV{VIRTUAL_ENV})
@@ -45,23 +35,11 @@ if(PYCC_IS_MASTER_PROJECT)
       OUTPUT_VARIABLE PYBIND11_CMAKE_MODULES_PATH
     )
 
-    if(_PYTHON_SUCCESS
-       MATCHES
-       0
-    )
-      string(
-        REGEX
-        REPLACE "\n"
-                ""
-                PYBIND11_CMAKE_MODULES_PATH
-                ${PYBIND11_CMAKE_MODULES_PATH}
+    if(_PYTHON_SUCCESS MATCHES 0)
+      string(REGEX REPLACE "\n" "" PYBIND11_CMAKE_MODULES_PATH
+                           ${PYBIND11_CMAKE_MODULES_PATH}
       )
-      list(
-        INSERT
-        CMAKE_PREFIX_PATH
-        0
-        "${PYBIND11_CMAKE_MODULES_PATH}"
-      )
+      list(INSERT CMAKE_PREFIX_PATH 0 "${PYBIND11_CMAKE_MODULES_PATH}")
     else()
       message(
         WARNING "Failed to get pybind11 cmake prefix path ${_PYTHON_SUCCESS}"
@@ -86,11 +64,7 @@ if(PYCC_IS_MASTER_PROJECT)
 endif()
 
 if(PYCC_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
-  function(
-    run_windeployqt
-    TARGET_NAME
-    FILE_PATH
-  )
+  function(run_windeployqt TARGET_NAME FILE_PATH)
     add_custom_command(
       TARGET ${TARGET_NAME}
       POST_BUILD
@@ -100,23 +74,16 @@ if(PYCC_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
     )
   endfunction()
 
-  find_package(
-    pybind11
-    CONFIG
-    REQUIRED
-  )
+  find_package(pybind11 CONFIG REQUIRED)
 
   pybind11_add_module(pycc ${pycc_sources})
-  target_link_libraries(
-    pycc
-    PRIVATE QCC_DB_LIB
-            QCC_GL_LIB
-            QCC_IO_LIB
-  )
+  target_link_libraries(pycc PRIVATE QCC_DB_LIB QCC_GL_LIB QCC_IO_LIB)
 
-  target_include_directories(pycc PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../cccorelib/src")
+  target_include_directories(
+    pycc PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../cccorelib/src"
+  )
   message("LOL: ${CMAKE_CURRENT_SOURCE_DIR}/../cccorelib/src")
-  
+
   if(DEFINE_PYCC_RUNTIME)
     target_include_directories(pycc PRIVATE ../../include)
     target_link_libraries(pycc PRIVATE PythonPlugin)
@@ -156,13 +123,7 @@ if(PYCC_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
       # Its a bit hacky but its the way we have to make it work as the
       # CMakeLists from CloudCompare sets the RPATH to a absolute path that does
       # not work in our case
-      foreach(
-        target_name IN
-        ITEMS QCC_DB_LIB
-              QCC_GL_LIB
-              QCC_IO_LIB
-              CC_FBO_LIB
-      )
+      foreach(target_name IN ITEMS QCC_DB_LIB QCC_GL_LIB QCC_IO_LIB CC_FBO_LIB)
         set_property(TARGET "${target_name}" PROPERTY INSTALL_RPATH "$ORIGIN")
       endforeach()
       set_property(
@@ -190,6 +151,6 @@ set(pycc_sources
 )
 
 set(cccorelib_inc
-  "${CMAKE_CURRENT_SOURCE_DIR}/../cccorelib/src"
-  CACHE INTERNAL ""
+    "${CMAKE_CURRENT_SOURCE_DIR}/../cccorelib/src"
+    CACHE INTERNAL ""
 )
