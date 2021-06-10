@@ -18,6 +18,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
+#include <pybind11/numpy.h>
 
 #include <GenericCloud.h>
 #include <GenericIndexedCloudPersist.h>
@@ -64,12 +65,14 @@ void define_ScalarFieldTools(py::module &cccorelib)
                     "firstCloud"_a,
                     "secondCloud"_a,
                     "progressCb"_a = nullptr)
-
         .def_static("computeScalarFieldHistogram",
-                    &ScalarFieldTools::computeScalarFieldHistogram,
+                    [](const CCCoreLib::GenericCloud* theCloud, unsigned numberOfClasses) {
+                        std::vector<int> histo;
+                        ScalarFieldTools::computeScalarFieldHistogram(theCloud, numberOfClasses, histo);
+                        return py::array_t<int>(histo.size(), histo.data());
+                    },
                     "theCloud"_a,
-                    "numberOfClasses"_a,
-                    "histo"_a)
+                    "numberOfClasses"_a)
         .def_static(
             "computeScalarFieldExtremas",
             [](const CCCoreLib::GenericCloud *theCloud) {

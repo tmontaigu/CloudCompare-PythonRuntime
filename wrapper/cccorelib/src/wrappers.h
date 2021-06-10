@@ -18,6 +18,9 @@
 #ifndef CLOUDCOMPAREPROJECTS_WRAPPERS_H
 #define CLOUDCOMPAREPROJECTS_WRAPPERS_H
 
+#include <CCTypes.h>
+#include <PointCloudTpl.h>
+
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
