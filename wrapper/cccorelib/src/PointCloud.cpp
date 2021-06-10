@@ -15,18 +15,22 @@
 //#                                                                        #
 //##########################################################################
 
-#include <pybind11/pybind11.h>
-#include <pybind11/stl_bind.h>
-
 #include <PointCloud.h>
+#include <PointCloudTpl.h>
+#include <GenericIndexedCloud.h>
 
-namespace py = pybind11;
-using namespace pybind11::literals;
+#include "wrappers.h"
 
 void define_PointCloud(py::module &cccorelib)
 {
-    py::class_<CCCoreLib::PointCloud, CCCoreLib::GenericIndexedCloudPersist>(cccorelib, "PointCloud")
+
+    using CCCoreLib::GenericIndexedCloudPersist;
+    using CCCoreLib::PointCloud;
+    using CCCoreLib::PointCloudTpl;
+
+    DEFINE_POINTCLOUDTPL(GenericIndexedCloudPersist, const char *, cccorelib, "__pointCloudTplCCCoreLib");
+    py::class_<PointCloud, CCCoreLib::PointCloudTpl<GenericIndexedCloudPersist, const char *>>(cccorelib, "PointCloud")
         .def(py::init<>())
-        .def("reserve", &CCCoreLib::PointCloud::reserve, "newCapacity"_a)
-        .def("addPoint", &CCCoreLib::PointCloud::addPoint, "P"_a);
+        .def("reserveNormals", &PointCloud::reserveNormals, "newCount"_a)
+        .def("addNormals", &PointCloud::addNormal, "normal"_a);
 }

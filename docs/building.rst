@@ -1,6 +1,23 @@
 Building from sources
 =====================
 
+There is 2 way in which you can build the project:
+
+    1. As a CloudCompare Plugin
+    2. As "standalone" Python packages
+
+When built as CloudCompare plugin, at the end of the process,
+you will have a standard CloudCompare plugin that embeds Python to
+allow running Python script directly in the app and allow scripts to interact with 
+the currently running CloudCompare like a regular C++ plugin would.
+The plugin built, also embeds various Python bindings of 
+CloudCompare's libraries to be used in your script.
+
+When build as standalone packages, you will install the Python bindings
+of the CloudCompare's libraries in your Python environment.
+
+The process to build is explained in the sections below.
+
 
 Building as Plugin
 ------------------
@@ -87,20 +104,40 @@ It is also possible to build and install the bindings as standard python
 packages to use them in python scripts (run by a standalone python executable
 and not the embedded python in the plugin). 
 
+To build as standalone wheels, it is not necessary to clone the repo
+in CloudCompare's `plugins/private` folder.
+
+
+.. important::
+
+    To be able to pip install from source, you need pip version >= 21.1
+    Run  `pip install --upgrade pip` to get the latest version
+
 To do so:
+
+1. Clone this project
+
+2. (Windows) Set path to Qt
+
+.. code-block:: PowerShell
+
+    # First set `CMAKE_PREFIX_PATH` with the path to Qt
+    $env:CMAKE_PREFIX_PATH+=";C:\Qt\5.15.2\msvc2019_64
+
+
+3. Run
 
 .. code-block:: console
 
     # Building the wheels
 
     pip wheel --no-deps wrapper/cccorelib
-    pip wheel --no-deps wrapper/pycc
+    pip wheel --use-feature=in-tree-build --no-deps wrapper/pycc
 
     # Installing directly
 
     pip install wrapper/cccorelib
-    pip install wrapper/pycc
-
+    pip install --use-feature=in-tree-build wrapper/pycc
 
 
 Other development related things

@@ -114,6 +114,9 @@ if(PYCC_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
             QCC_IO_LIB
   )
 
+  target_include_directories(pycc PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../cccorelib/src")
+  message("LOL: ${CMAKE_CURRENT_SOURCE_DIR}/../cccorelib/src")
+  
   if(DEFINE_PYCC_RUNTIME)
     target_include_directories(pycc PRIVATE ../../include)
     target_link_libraries(pycc PRIVATE PythonPlugin)
@@ -174,6 +177,7 @@ endif()
 
 function(embed_pycc_in target)
   target_sources(${target} PRIVATE ${pycc_sources})
+  target_include_directories(${target} PRIVATE ${cccorelib_inc})
   if(DEFINE_PYCC_RUNTIME)
     target_compile_definitions(${target} PRIVATE DEFINE_PYCC_RUNTIME)
   endif()
@@ -183,4 +187,9 @@ endfunction(embed_pycc_in)
 set(pycc_sources
     ${pycc_sources}
     CACHE INTERNAL ""
+)
+
+set(cccorelib_inc
+  "${CMAKE_CURRENT_SOURCE_DIR}/../cccorelib/src"
+  CACHE INTERNAL ""
 )

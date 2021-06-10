@@ -154,7 +154,9 @@ jobs:
 
       - name: pip install pycc
         working-directory: "./wrapper"
-        run: pip install -v .\pycc
+        run: |
+          pip install --upgrade pip
+          pip install -v --use-feature=in-tree-build .\pycc
 
       - name: test cccorelib & cccorelib
         run: |
@@ -177,15 +179,16 @@ jobs:
 
       - name: pip install cccorelib
         working-directory: "./wrapper"
-        run: pip install -v ./cccorelib
+        run: python3 -m pip install -v ./cccorelib
 
       - name: pip install pycc
         working-directory: "./wrapper"
-        run: pip install -v ./pycc
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -v --use-feature=in-tree-build ./pycc
 
       - name: test cccorelib & cccorelib
         run: |
-          pip install pytest
-          pytest wrapper/cccorelib/tests
-          pytest wrapper/pycc/tests
+          python3 -m pytest wrapper/cccorelib/tests
+          python3 -m pytest wrapper/pycc/tests
 
