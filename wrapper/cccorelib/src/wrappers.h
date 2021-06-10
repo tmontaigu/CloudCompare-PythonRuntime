@@ -38,6 +38,35 @@ template <class T> py::array_t<T> VectorAsNumpyArray(std::vector<T> &vector)
     return py::array(vector.size(), vector.data(), capsule);
 }
 
+template <class PointCloudType>
+void addPointsFromArrays(PointCloudType &self,
+                         py::array_t<PointCoordinateType> &xs,
+                         py::array_t<PointCoordinateType> &ys,
+                         py::array_t<PointCoordinateType> &zs)
+{
+    if (xs.size() != ys.size() || xs.size() != zs.size())
+    {
+        throw py::value_error("xs, ys, zs must have the same size");
+    }
+
+    self.reserve(self.size() + xs.size());
+
+    auto xs_it = xs.begin();
+    auto ys_it = ys.begin();
+    auto zs_it = zs.begin();
+
+    for (; xs_it != xs.end();)
+    {
+        self.addPoint({xs_it->cast<PointCoordinateType>(),
+                       ys_it->cast<PointCoordinateType>(),
+                       zs_it->cast<PointCoordinateType>()});
+        ++xs_it;
+        ++ys_it;
+        ++zs_it;
+    }
+}
+} // namespace PyCC
+
 #define DEFINE_POINTCLOUDTPL(T, StringType, module, name)                                                    \
     py::class_<CCCoreLib::PointCloudTpl<T, StringType>, T>(module, name)                                     \
         .def("size", &CCCoreLib::PointCloudTpl<T, StringType>::size)                                         \
@@ -118,34 +147,7 @@ template <class T> py::array_t<T> VectorAsNumpyArray(std::vector<T> &vector)
         .def("deleteScalarField", &CCCoreLib::PointCloudTpl<T, StringType>::deleteScalarField, "index"_a)    \
         .def("deleteAllScalarFields", &CCCoreLib::PointCloudTpl<T, StringType>::deleteAllScalarFields)       \
         .def("addPoint", &CCCoreLib::PointCloudTpl<T, StringType>::addPoint, "P"_a)                          \
-        .def("addPoints",                                                                                    \
-             [](CCCoreLib::PointCloudTpl<T, StringType> &self,                                               \
-                py::array_t<PointCoordinateType> &xs,                                                        \
-                py::array_t<PointCoordinateType> &ys,                                                        \
-                py::array_t<PointCoordinateType> &zs) {                                                      \
-                 if (xs.size() != ys.size() || xs.size() != zs.size())                                       \
-                 {                                                                                           \
-                     throw py::value_error("xs, ys, zs must have the same size");                            \
-                 }                                                                                           \
-                                                                                                             \
-                 self.reserve(self.size() + xs.size());                                                      \
-                                                                                                             \
-                 auto xs_it = xs.begin();                                                                    \
-                 auto ys_it = ys.begin();                                                                    \
-                 auto zs_it = zs.begin();                                                                    \
-                                                                                                             \
-                 for (; xs_it != xs.end();)                                                                  \
-                 {                                                                                           \
-                     self.addPoint({xs_it->cast<PointCoordinateType>(),                                      \
-                                    ys_it->cast<PointCoordinateType>(),                                      \
-                                    zs_it->cast<PointCoordinateType>()});                                    \
-                     ++xs_it;                                                                                \
-                     ++ys_it;                                                                                \
-                     ++zs_it;                                                                                \
-                 }                                                                                           \
-             })                                                                                              \
+        .def("addPoints", &PyCC::addPointsFromArrays<CCCoreLib::PointCloudTpl<T, StringType>>)               \
         .def("__len__", &CCCoreLib::PointCloudTpl<T, StringType>::size);
-
-} // namespace PyCC
 
 #endif // CLOUDCOMPAREPROJECTS_WRAPPERS_H

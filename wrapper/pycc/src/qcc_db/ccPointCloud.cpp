@@ -48,27 +48,17 @@ void define_ccPointCloud(py::module &m)
         .def(py::init([](py::array_t<PointCoordinateType> &xs,
                          py::array_t<PointCoordinateType> &ys,
                          py::array_t<PointCoordinateType> &zs) {
-            if (xs.size() != ys.size() || xs.size() != zs.size())
-            {
-                throw py::value_error("xs, ys, zs must have the same size");
-            }
-
             auto pointCloud = new ccPointCloud;
-            pointCloud->reserve(xs.size());
-
-            auto xs_it = xs.begin();
-            auto ys_it = ys.begin();
-            auto zs_it = zs.begin();
-
-            for (; xs_it != xs.end();)
+            try
             {
-                pointCloud->addPoint({xs_it->cast<PointCoordinateType>(),
-                                      ys_it->cast<PointCoordinateType>(),
-                                      zs_it->cast<PointCoordinateType>()});
-                ++xs_it;
-                ++ys_it;
-                ++zs_it;
+                PyCC::addPointsFromArrays(*pointCloud, xs, ys, zs);
             }
+            catch (const std::exception &e)
+            {
+                delete pointCloud;
+                throw;
+            }
+
             return pointCloud;
         }))
 
@@ -95,6 +85,7 @@ void define_ccPointCloud(py::module &m)
              "index"_a)
         .def("sfColorScaleShown", &ccPointCloud::sfColorScaleShown)
         .def("showSFColorsScale", &ccPointCloud::showSFColorsScale, "state"_a)
+        .def("addPoints", &PyCC::addPointsFromArrays<ccPointCloud>)
         .def("points",
              [](ccPointCloud &self) {
                  if (self.size() > 0)
