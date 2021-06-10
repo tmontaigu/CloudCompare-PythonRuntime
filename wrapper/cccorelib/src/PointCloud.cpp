@@ -33,5 +33,5 @@ void define_PointCloud(py::module &cccorelib)
                                                                                                "PointCloud")
         .def(py::init<>())
         .def("reserveNormals", &PointCloud::reserveNormals, "newCount"_a)
-        .def("addNormals", &PointCloud::addNormal, "normal"_a);
+        .def("addNormal", &PointCloud::addNormal, "normal"_a);
 }
