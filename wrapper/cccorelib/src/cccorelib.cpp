@@ -251,6 +251,8 @@ void define_cccorelib(py::module &m)
     define_BoundingBox(m);
     py::bind_vector<std::vector<CCVector2>>(m, "CCVector2List");
 
+    define_ScalarField(m);
+
     define_GenericCloud(m);
     define_GenericIndexedCloud(m);
     define_GenericIndexedCloudPersist(m);
@@ -274,7 +276,6 @@ void define_cccorelib(py::module &m)
     define_DgmOctree(m);
     define_DgmOctreeReferenceCloud(m);
 
-    define_ScalarField(m);
     define_SimpleMesh(m);
     define_SimpleTriangle(m);
 
@@ -288,9 +289,9 @@ void define_cccorelib(py::module &m)
     define_ScalarFieldTools(m);
     define_ChamferDistanceTransform(m);
     define_CloudSamplingTools(m);
+    define_PointProjectionTools(m);
     define_GeometricalAnalysisTools(m);
     define_StatisticalTestingTools(m);
-    define_PointProjectionTools(m);
     define_RegistrationTools(m);
 
     define_KdTree(m);

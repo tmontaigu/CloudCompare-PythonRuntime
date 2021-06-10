@@ -23,6 +23,7 @@
 #include <GenericProgressCallback.h>
 #include <PointCloud.h>
 #include <PointProjectionTools.h>
+#include <SquareMatrix.h>
 
 namespace py = pybind11;
 using namespace pybind11::literals;
@@ -34,6 +35,8 @@ void define_PointProjectionTools(py::module &cccorelib)
     py::enum_<CCCoreLib::TRIANGULATION_TYPES>(cccorelib, "TRIANGULATION_TYPES")
         .value("DELAUNAY_2D_AXIS_ALIGNED", CCCoreLib::TRIANGULATION_TYPES::DELAUNAY_2D_AXIS_ALIGNED)
         .value("DELAUNAY_2D_BEST_LS_PLANE", CCCoreLib::TRIANGULATION_TYPES::DELAUNAY_2D_BEST_LS_PLANE);
+
+    py::class_<CCCoreLib::SquareMatrixTpl<double>> PySquareMatrixd(cccorelib, "SquareMatrixd");
 
     py::class_<PointProjectionTools> PyPointProjectionTools(cccorelib, "PointProjectionTools");
     py::class_<PointProjectionTools::Transformation> PyTransformation(PyPointProjectionTools,
