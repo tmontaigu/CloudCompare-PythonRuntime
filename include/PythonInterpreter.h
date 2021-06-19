@@ -92,6 +92,7 @@ class PythonInterpreter final : public QObject
     void initialize();
     void finalize();
     static bool IsInitialized();
+    const PythonConfigPaths &config() const;
 
     /// Execution functions (and slots)
   public Q_SLOTS:

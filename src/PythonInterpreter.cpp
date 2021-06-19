@@ -330,7 +330,8 @@ void PythonInterpreter::initialize()
     // https://stackoverflow.com/questions/49784583/numpy-import-fails-on-multiarray-extension-library-when-called-from-embedded-pyt
     // This workaround is weak
 
-    const auto displaydlopenError = []() {
+    const auto displaydlopenError = []()
+    {
         char *error = dlerror();
         if (error)
         {
@@ -446,4 +447,9 @@ void PythonInterpreter::configureEnvironment()
 bool PythonInterpreter::isExecuting() const
 {
     return m_isExecuting;
+}
+
+const PythonConfigPaths &PythonInterpreter::config() const
+{
+    return m_config;
 }

@@ -10,4 +10,5 @@ target_sources(
           ${CMAKE_CURRENT_LIST_DIR}/ColorScheme.cpp
           ${CMAKE_CURRENT_LIST_DIR}/ccGuiPythonInstance.cpp
           ${CMAKE_CURRENT_LIST_DIR}/FileRunner.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/PackageManager.cpp
 )

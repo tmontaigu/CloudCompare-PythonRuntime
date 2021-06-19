@@ -11,6 +11,7 @@ target_sources(
           ${CMAKE_CURRENT_LIST_DIR}/Consoles.h
           ${CMAKE_CURRENT_LIST_DIR}/ccGuiPythonInstance.h
           ${CMAKE_CURRENT_LIST_DIR}/FileRunner.h
+          ${CMAKE_CURRENT_LIST_DIR}/PackageManager.h
           ${CMAKE_CURRENT_SOURCE_DIR}/Utilities.h
 )
 

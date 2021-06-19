@@ -18,6 +18,7 @@
 #include "PythonPlugin.h"
 #include "AboutDialog.h"
 #include "FileRunner.h"
+#include "PackageManager.h"
 #include "PrivateRuntime.h"
 #include "PythonStdErrOutRedirect.h"
 #include "QPythonEditor.h"
@@ -99,7 +100,21 @@ QList<QAction *> PythonPlugin::getActions()
         m_showFileRunner->setEnabled(enableActions);
     }
 
-    return {m_showEditor, m_showFileRunner, m_showAboutDialog, m_showDoc, m_showRepl};
+    if (!m_showPackageManager)
+    {
+        m_showPackageManager = new QAction("Package Manager", this);
+        m_showPackageManager->setToolTip("Manage packages with pip");
+        m_showPackageManager->setIcon(QIcon());
+        connect(m_showPackageManager, &QAction::triggered, this, &PythonPlugin::showPackageManager);
+        m_showPackageManager->setEnabled(enableActions);
+    }
+
+    return {m_showEditor,
+            m_showFileRunner,
+            m_showAboutDialog,
+            m_showDoc,
+            m_showRepl,
+            m_showPackageManager};
 }
 
 void PythonPlugin::showRepl()
@@ -142,6 +157,17 @@ void PythonPlugin::showAboutDialog() const
 {
     AboutDialog dlg(m_app->getMainWindow());
     dlg.exec();
+}
+
+void PythonPlugin::showPackageManager()
+{
+    if (m_packageManager == nullptr)
+    {
+        m_packageManager = new PackageManager(m_interp.config());
+    }
+    m_packageManager->show();
+    m_editor->raise();
+    m_editor->activateWindow();
 }
 
 PythonPlugin::~PythonPlugin() noexcept
