@@ -2,6 +2,7 @@
 #include "PythonInterpreter.h"
 
 #include <QDialog>
+#include <QDir>
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QPlainTextEdit>
@@ -73,6 +74,15 @@ PackageManager::PackageManager(const PythonConfigPaths &config, QWidget *parent)
     {
 
 #ifdef Q_OS_WIN
+        const QString additionalPath =
+            QString("%1/Library/bin").arg(QString::fromWCharArray(config.pythonHome()));
+        if (QDir(additionalPath).exists())
+        {
+            QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+            QString path = env.value("PATH").append(';').append(additionalPath);
+            env.insert("PATH", path);
+            m_pythonProcess->setProcessEnvironment(env);
+        }
         const QString pythonExePath = QString::fromWCharArray(config.pythonHome()) + "/python.exe";
 #else
         const QString pythonExePath = QString::fromWCharArray(config.pythonHome()) + "/python";
