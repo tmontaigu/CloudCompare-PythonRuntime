@@ -17,6 +17,9 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
+      <widget class="QLineEdit" name="searchBar"/>
+     </item>
+     <item>
       <widget class="QTableWidget" name="installedPackagesView"/>
      </item>
     </layout>

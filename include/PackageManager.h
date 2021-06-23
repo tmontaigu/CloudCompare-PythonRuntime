@@ -18,6 +18,7 @@ class PackageManager final : public QWidget
     void handleInstallPackage();
     void handleUninstallPackage();
     void handleSelectionChanged();
+    void handleSearch();
 
     void executeCommand(const QStringList &arguments);
     void setBusy(bool isBusy);

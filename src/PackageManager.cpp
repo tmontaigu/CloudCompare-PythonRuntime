@@ -67,6 +67,8 @@ PackageManager::PackageManager(const PythonConfigPaths &config, QWidget *parent)
     connect(m_ui->installBtn, &QPushButton::clicked, this, &PackageManager::handleInstallPackage);
     connect(
         m_ui->uninstallBtn, &QPushButton::clicked, this, &PackageManager::handleUninstallPackage);
+
+    connect(m_ui->searchBar, &QLineEdit::returnPressed, this, &PackageManager::handleSearch);
     if (config.isSet())
     {
 
@@ -195,6 +197,37 @@ void PackageManager::handleUninstallPackage()
         }
     }
     refreshInstalledPackagesList();
+}
+
+void PackageManager::handleSearch()
+{
+    const QString searchString = m_ui->searchBar->text();
+    QTableWidget *table = m_ui->installedPackagesView;
+
+    if (searchString.isEmpty())
+    {
+        for (int i = 0; i < table->rowCount(); ++i)
+        {
+            table->setRowHidden(i, false);
+        }
+    }
+    else
+    {
+        for (int i = 0; i < table->rowCount(); ++i)
+        {
+            bool match = false;
+            for (int j = 0; j < table->columnCount(); ++j)
+            {
+                QTableWidgetItem *item = table->item(i, j);
+                if (item->text().contains(searchString))
+                {
+                    match = true;
+                    break;
+                }
+            }
+            table->setRowHidden(i, !match);
+        }
+    }
 }
 
 void PackageManager::executeCommand(const QStringList &arguments)
