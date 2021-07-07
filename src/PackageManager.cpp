@@ -54,8 +54,8 @@ PackageManager::PackageManager(const PythonConfig &config, QWidget *parent)
     m_pythonProcess->setProcessChannelMode(QProcess::MergedChannels);
     connect(m_pythonProcess, &QProcess::started, [this]() { setBusy(true); });
     connect(m_pythonProcess,
-            static_cast<void (QProcess::*)(int)>(&QProcess::finished),
-            [this](int) { setBusy(false); });
+            static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
+            [this](int, QProcess::ExitStatus) { setBusy(false); });
 
     m_ui->installedPackagesView->setColumnCount(2);
     m_ui->installedPackagesView->setEditTriggers(QAbstractItemView::NoEditTriggers);
