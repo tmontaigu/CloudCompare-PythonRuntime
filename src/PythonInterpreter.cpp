@@ -39,8 +39,6 @@
 
 namespace py = pybind11;
 
-
-
 //================================================================================
 
 PythonInterpreter::PythonInterpreter(QObject *parent) : QObject(parent) {}
@@ -112,7 +110,7 @@ void PythonInterpreter::executeCode(const std::string &code, QListWidget *output
     executeCodeWithState(code, output, tmpState);
 }
 
-void PythonInterpreter::initialize(const PythonConfig& config)
+void PythonInterpreter::initialize(const PythonConfig &config)
 {
 #ifdef Q_OS_WIN32
     m_config = config.pythonCompatiblePaths();
@@ -131,8 +129,7 @@ void PythonInterpreter::initialize(const PythonConfig& config)
     // https://stackoverflow.com/questions/49784583/numpy-import-fails-on-multiarray-extension-library-when-called-from-embedded-pyt
     // This workaround is weak
 
-    const auto displaydlopenError = []()
-    {
+    const auto displaydlopenError = []() {
         char *error = dlerror();
         if (error)
         {
@@ -178,7 +175,6 @@ void PythonInterpreter::finalize()
 #endif
     }
 }
-
 
 bool PythonInterpreter::isExecuting() const
 {

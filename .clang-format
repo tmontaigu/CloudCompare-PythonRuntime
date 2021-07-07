@@ -12,3 +12,5 @@ AllowShortLoopsOnASingleLine: false
 BreakBeforeBraces: Allman
 AllowShortBlocksOnASingleLine: Empty
 AllowShortFunctionsOnASingleLine: Empty
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+BreakConstructorInitializers: BeforeColon

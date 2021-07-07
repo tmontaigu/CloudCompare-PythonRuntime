@@ -45,7 +45,9 @@ class CommandOutputDialog : public QDialog
 };
 
 PackageManager::PackageManager(const PythonConfig &config, QWidget *parent)
-    : QWidget(parent), m_ui(new Ui_PackageManager), m_pythonProcess(new QProcess),
+    : QWidget(parent),
+      m_ui(new Ui_PackageManager),
+      m_pythonProcess(new QProcess),
       m_outputDialog(new CommandOutputDialog(this))
 {
     m_ui->setupUi(this);

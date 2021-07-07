@@ -25,7 +25,8 @@
 #include <QSignalMapper>
 
 PythonHighlighterSettings::PythonHighlighterSettings(QWidget *parent)
-    : QWidget(parent), m_colorDialog(new QColorDialog(this)),
+    : QWidget(parent),
+      m_colorDialog(new QColorDialog(this)),
       m_signalMapper(new QSignalMapper(this))
 {
     auto formLayout = new QFormLayout;

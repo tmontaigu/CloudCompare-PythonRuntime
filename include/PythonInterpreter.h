@@ -18,8 +18,8 @@
 #ifndef PYTHON_PLUGIN_PYTHON_INTERPRETER_H
 #define PYTHON_PLUGIN_PYTHON_INTERPRETER_H
 
-#include <QObject>
 #include "PythonConfig.h"
+#include <QObject>
 
 #include <memory>
 
@@ -28,7 +28,6 @@
 
 class QListWidget;
 class PythonConfig;
-
 
 /// PythonInterpreter, There should be only one, and it is managed by the PythonPlugin.
 /// It centralizes the execution of python scripts.
@@ -53,7 +52,7 @@ class PythonInterpreter final : public QObject
   public:
     explicit PythonInterpreter(QObject *parent = nullptr);
     bool isExecuting() const;
-    void initialize(const PythonConfig& config);
+    void initialize(const PythonConfig &config);
     void finalize();
     static bool IsInitialized();
     const PythonConfigPaths &config() const;

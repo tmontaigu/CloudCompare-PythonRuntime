@@ -26,7 +26,9 @@ ColorScheme::ColorScheme(QString name,
                          const QTextFormat &defaultFormat,
                          QColor backgroundColor,
                          QColor currentLineHighlightColor)
-    : m_name(name), m_formats(formats), m_defaultFormat(defaultFormat),
+    : m_name(name),
+      m_formats(formats),
+      m_defaultFormat(defaultFormat),
       m_backgroundColor(std::move(backgroundColor)),
       m_currentLineHighlightColor(std::move(currentLineHighlightColor))
 {

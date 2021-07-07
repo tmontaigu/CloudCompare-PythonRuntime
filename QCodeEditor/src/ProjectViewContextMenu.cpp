@@ -22,8 +22,12 @@
 #include <QMessageBox>
 
 ProjectViewContextMenu::ProjectViewContextMenu(ProjectView *view)
-    : QMenu(), m_treeView(view), m_renameAction("Rename"), m_deleteAction("Delete"),
-      m_createFileAction("Create File"), m_createFolderAction("Create Folder")
+    : QMenu(),
+      m_treeView(view),
+      m_renameAction("Rename"),
+      m_deleteAction("Delete"),
+      m_createFileAction("Create File"),
+      m_createFolderAction("Create Folder")
 {
     addAction(&m_renameAction);
     addAction(&m_deleteAction);

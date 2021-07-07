@@ -28,8 +28,6 @@ bool Version::operator==(const Version &other) const
     return major == other.major && minor == other.minor && patch == other.patch;
 }
 
-
-
 Version GetPythonExeVersion(const QString &pythonExePath)
 {
     QProcess pythonProcess;
@@ -113,21 +111,26 @@ const wchar_t *PythonConfigPaths::pythonPath() const
 }
 
 //================================================================================
-PythonConfig::PythonConfig() {
+PythonConfig::PythonConfig()
+{
 #ifdef Q_OS_WIN32
     const char *condaPrefix = std::getenv("CONDA_PREFIX");
     const char *venvPrefix = std::getenv("VIRTUAL_ENV");
-    if (condaPrefix) {
+    if (condaPrefix)
+    {
         initCondaEnv(condaPrefix);
-    } else if (venvPrefix) {
+    }
+    else if (venvPrefix)
+    {
         initVenv(venvPrefix);
-    } else {
+    }
+    else
+    {
         initBundled();
         return;
     }
 #ifndef USE_EMBEDDED_MODULES
-    m_pythonPath.append(QApplication::applicationDirPath() +
-                        "/plugins/Python/Lib/site-packages");
+    m_pythonPath.append(QApplication::applicationDirPath() + "/plugins/Python/Lib/site-packages");
 #endif
 #else
     // On Non windows platform
@@ -162,11 +165,16 @@ void PythonConfig::initBundled()
     const QDir pythonEnvDirPath(QApplication::applicationDirPath() + "/plugins/Python");
     if (pythonEnvDirPath.exists())
     {
-        if (pythonEnvDirPath.exists("pyenv.cfg")) {
+        if (pythonEnvDirPath.exists("pyenv.cfg"))
+        {
             initVenv(pythonEnvDirPath.path());
-        } else if (pythonEnvDirPath.exists("conda-meta")) {
+        }
+        else if (pythonEnvDirPath.exists("conda-meta"))
+        {
             initCondaEnv(pythonEnvDirPath.path());
-        } else {
+        }
+        else
+        {
             m_pythonHome = pythonEnvDirPath.path();
             m_pythonPath = QString("%1/DLLs;%1/lib;%1/Lib/site-packages;").arg(m_pythonHome);
             m_type = Type::Unknown;
@@ -177,9 +185,12 @@ void PythonConfig::initBundled()
 
 void PythonConfig::preparePythonProcess(QProcess &pythonProcess) const
 {
-    if (m_type == Type::System) {
+    if (m_type == Type::System)
+    {
         pythonProcess.setProgram(QStringLiteral("python"));
-    } else {
+    }
+    else
+    {
 #ifdef Q_OS_WIN
         pythonProcess.setProgram(QString("%1/python.exe").arg(m_pythonHome));
 #else
