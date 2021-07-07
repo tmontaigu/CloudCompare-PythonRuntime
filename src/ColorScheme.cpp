@@ -16,6 +16,8 @@
 //##########################################################################
 #include "ColorScheme.h"
 
+#include <utility>
+
 static QTextCharFormat FormatHelper(const QColor &color,
                                     const QFont::Style style = QFont::Style::StyleNormal,
                                     const QFont::Weight weight = QFont::Weight::Normal)
@@ -42,7 +44,7 @@ ColorScheme::ColorScheme(QString name,
                          const QTextFormat &defaultFormat,
                          QColor backgroundColor,
                          QColor currentLineHighlightColor)
-    : m_name(name),
+    : m_name(std::move(name)),
       m_formats(formats),
       m_defaultFormat(defaultFormat),
       m_backgroundColor(std::move(backgroundColor)),

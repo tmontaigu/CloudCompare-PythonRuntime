@@ -20,7 +20,6 @@
 #include "FileRunner.h"
 #include "PackageManager.h"
 #include "PrivateRuntime.h"
-#include "PythonStdErrOutRedirect.h"
 #include "QPythonEditor.h"
 #include "QPythonRepl.h"
 #include "Utilities.h"
