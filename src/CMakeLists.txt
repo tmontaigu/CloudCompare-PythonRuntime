@@ -11,4 +11,5 @@ target_sources(
           ${CMAKE_CURRENT_LIST_DIR}/ccGuiPythonInstance.cpp
           ${CMAKE_CURRENT_LIST_DIR}/FileRunner.cpp
           ${CMAKE_CURRENT_LIST_DIR}/PackageManager.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/PythonConfig.cpp
 )

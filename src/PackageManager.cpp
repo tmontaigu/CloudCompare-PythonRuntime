@@ -44,7 +44,7 @@ class CommandOutputDialog : public QDialog
     QPlainTextEdit *m_display;
 };
 
-PackageManager::PackageManager(const PythonConfigPaths &config, QWidget *parent)
+PackageManager::PackageManager(const PythonConfig &config, QWidget *parent)
     : QWidget(parent), m_ui(new Ui_PackageManager), m_pythonProcess(new QProcess),
       m_outputDialog(new CommandOutputDialog(this))
 {
@@ -70,29 +70,7 @@ PackageManager::PackageManager(const PythonConfigPaths &config, QWidget *parent)
         m_ui->uninstallBtn, &QPushButton::clicked, this, &PackageManager::handleUninstallPackage);
 
     connect(m_ui->searchBar, &QLineEdit::returnPressed, this, &PackageManager::handleSearch);
-    if (config.isSet())
-    {
-
-#ifdef Q_OS_WIN
-        const QString additionalPath =
-            QString("%1/Library/bin").arg(QString::fromWCharArray(config.pythonHome()));
-        if (QDir(additionalPath).exists())
-        {
-            QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-            QString path = env.value("PATH").append(';').append(additionalPath);
-            env.insert("PATH", path);
-            m_pythonProcess->setProcessEnvironment(env);
-        }
-        const QString pythonExePath = QString::fromWCharArray(config.pythonHome()) + "/python.exe";
-#else
-        const QString pythonExePath = QString::fromWCharArray(config.pythonHome()) + "/python";
-#endif
-        m_pythonProcess->setProgram(pythonExePath);
-    }
-    else
-    {
-        m_pythonProcess->setProgram("python");
-    }
+    config.preparePythonProcess(*m_pythonProcess);
     refreshInstalledPackagesList();
 }
 

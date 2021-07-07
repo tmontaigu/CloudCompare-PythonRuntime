@@ -5,13 +5,13 @@
 
 class QProcess;
 class CommandOutputDialog;
-class PythonConfigPaths;
+class PythonConfig;
 
 class PackageManager final : public QWidget
 {
     Q_OBJECT
   public:
-    explicit PackageManager(const PythonConfigPaths &config, QWidget *parent = nullptr);
+    explicit PackageManager(const PythonConfig &config, QWidget *parent = nullptr);
 
   private: // Methods
     void refreshInstalledPackagesList();

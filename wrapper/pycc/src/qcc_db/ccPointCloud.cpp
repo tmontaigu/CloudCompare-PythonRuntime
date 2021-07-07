@@ -53,7 +53,7 @@ void define_ccPointCloud(py::module &m)
             {
                 PyCC::addPointsFromArrays(*pointCloud, xs, ys, zs);
             }
-            catch (const std::exception &e)
+            catch (const std::exception &)
             {
                 delete pointCloud;
                 throw;

@@ -19,6 +19,7 @@
 #define PYTHON_PLUGIN_PYTHON_INTERPRETER_H
 
 #include <QObject>
+#include "PythonConfig.h"
 
 #include <memory>
 
@@ -26,45 +27,8 @@
 #include <pybind11/pybind11.h>
 
 class QListWidget;
-struct PyVenvCfg;
+class PythonConfig;
 
-/// Holds strings of the PythonHome & PythonPath
-/// Which are variables that needs to be properly set
-/// in order to have a functioning Python environment
-class PythonConfigPaths final
-{
-  public:
-    /// Default ctor, does not initialize pythonHome & pythonPath
-    PythonConfigPaths() = default;
-
-#ifdef Q_OS_WIN32
-    /// Initialize the paths to point to where the Python
-    /// environment was bundled on a Windows installation
-    static PythonConfigPaths WindowsBundled();
-
-    /// Initialize the paths to use the conda environment stored at condaPrefix
-    static PythonConfigPaths WindowsCondaEnv(const char *condaPrefix);
-
-    /// Initialize the paths to use the python venv stored at venvPrefix.
-    ///
-    /// \param venvPrefix Path on disk to the root of the venv
-    /// \param cfg options that were read from the pyvenv.cfg file
-    /// \return the configured paths
-    static PythonConfigPaths WindowsVenv(const char *venvPrefix, const PyVenvCfg &cfg);
-#endif
-    /// returns true if both paths are non empty
-    bool isSet() const;
-
-    /// Returns the pythonHome
-    const wchar_t *pythonHome() const;
-
-    /// Returns the pythonPath
-    const wchar_t *pythonPath() const;
-
-  private:
-    std::unique_ptr<wchar_t[]> m_pythonHome{};
-    std::unique_ptr<wchar_t[]> m_pythonPath{};
-};
 
 /// PythonInterpreter, There should be only one, and it is managed by the PythonPlugin.
 /// It centralizes the execution of python scripts.
@@ -89,7 +53,7 @@ class PythonInterpreter final : public QObject
   public:
     explicit PythonInterpreter(QObject *parent = nullptr);
     bool isExecuting() const;
-    void initialize();
+    void initialize(const PythonConfig& config);
     void finalize();
     static bool IsInitialized();
     const PythonConfigPaths &config() const;
@@ -103,11 +67,6 @@ class PythonInterpreter final : public QObject
   Q_SIGNALS:
     void executionStarted();
     void executionFinished();
-
-#ifdef Q_OS_WIN32
-  private:
-    void configureEnvironment();
-#endif
 
   private:
     bool m_isExecuting{false};

@@ -18,8 +18,8 @@
 #pragma once
 
 #include "ccStdPluginInterface.h"
-
 #include "PythonInterpreter.h"
+#include "PythonConfig.h"
 
 class QListWidget;
 class QPythonEditor;
@@ -61,12 +61,14 @@ class PythonPlugin final : public QObject, public ccStdPluginInterface
     void showPackageManager();
     static void showDocumentation();
 
+    PythonConfig m_config{};
     PythonInterpreter m_interp;
 
     QPythonRepl *m_repl{nullptr};
     QPythonEditor *m_editor{nullptr};
     FileRunner *m_fileRunner{nullptr};
     PackageManager *m_packageManager{nullptr};
+
 
 
     /// Actions

@@ -82,7 +82,6 @@ if(PYCC_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
   target_include_directories(
     pycc PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../cccorelib/src"
   )
-  message("LOL: ${CMAKE_CURRENT_SOURCE_DIR}/../cccorelib/src")
 
   if(DEFINE_PYCC_RUNTIME)
     target_include_directories(pycc PRIVATE ../../include)

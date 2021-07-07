@@ -13,14 +13,12 @@ function(copy_python_venv install_dir)
     install(
         DIRECTORY "${PYTHON_BASE_PREFIX}/"
         DESTINATION "${install_dir}"
-        PATTERN "*tests*" EXCLUDE
     )
 
     if (NOT "${PYTHON_BASE_PREFIX}" STREQUAL "${PYTHON_PREFIX}")
         install(
             DIRECTORY "${PYTHON_PREFIX}/Lib/site-packages/"
             DESTINATION "${install_dir}/Lib/site-packages/"
-            PATTERN "*tests*" EXCLUDE
         )
     endif()
 endfunction()

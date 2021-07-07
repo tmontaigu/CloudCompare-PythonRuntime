@@ -38,7 +38,7 @@ PythonPlugin::PythonPlugin(QObject *parent)
     : QObject(parent), ccStdPluginInterface(":/CC/plugin/PythonPlugin/info.json"),
       m_interp(nullptr), m_editor(new QPythonEditor(&m_interp))
 {
-    m_interp.initialize();
+    m_interp.initialize(m_config);
 
     LogPythonHome();
     LogPythonPath();
@@ -163,7 +163,7 @@ void PythonPlugin::showPackageManager()
 {
     if (m_packageManager == nullptr)
     {
-        m_packageManager = new PackageManager(m_interp.config());
+        m_packageManager = new PackageManager(m_config);
     }
     m_packageManager->show();
     m_editor->raise();
