@@ -94,9 +94,13 @@ class PythonConfig final
     Type m_type{Type::Unknown};
 };
 
-/// Holds strings of the PythonHome & PythonPath
-/// Which are variables that needs to be properly set
-/// in order to have a functioning Python environment
+/// Holds strings of the PythonHome & PythonPath,
+/// in types that are compatible with CPython API.
+///
+/// They are meant to be used for `Py_SetPythonHome` and `Py_SetPath`.
+/// See:
+///  - https://docs.python.org/3/c-api/init.html#c.Py_SetPythonHome
+///  - https://docs.python.org/3/c-api/init.html#c.Py_SetPath
 class PythonConfigPaths final
 {
     friend PythonConfig;
@@ -115,7 +119,10 @@ class PythonConfigPaths final
     const wchar_t *pythonPath() const;
 
   private:
+    /// Once Py_SetPythonHome is used, the value of m_pythonHome must never change
+    /// and must not be freed until the interpreter is uninitialized.
     std::unique_ptr<wchar_t[]> m_pythonHome{};
+    /// m_pythonPath can however be freed after Py_SetPath was used
     std::unique_ptr<wchar_t[]> m_pythonPath{};
 };
 #endif // PYTHON_PLUGIN_PYTHON_CONFIG_H

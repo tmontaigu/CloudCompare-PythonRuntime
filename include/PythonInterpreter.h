@@ -29,10 +29,13 @@
 class QListWidget;
 class PythonConfig;
 
-/// PythonInterpreter, There should be only one, and it is managed by the PythonPlugin.
+/// PythonInterpreter.
+///
+/// There should be only one, and it is managed by the PythonPlugin.
 /// It centralizes the execution of python scripts.
 ///
 /// Only one script can be executed at a time.
+///
 /// Classes that allow user to start the execution of a script should connect the
 /// executionStarted & executionFinished to give feedback on
 /// when a script is running and whether a new script can be ran
