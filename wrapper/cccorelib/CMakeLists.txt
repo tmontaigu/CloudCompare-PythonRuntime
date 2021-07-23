@@ -53,7 +53,7 @@ if(CCCORELIB_PYTHON_IS_MASTER_PROJECT)
     CCCoreLib
     GIT_REPOSITORY https://github.com/CloudCompare/CCCoreLib
     GIT_PROGRESS ON
-    GIT_SHALLOW ON
+    GIT_SHALLOW OFF
     GIT_TAG be52fc2f9981a80cd457cd914f44f17f6ebf04f1
   )
 
