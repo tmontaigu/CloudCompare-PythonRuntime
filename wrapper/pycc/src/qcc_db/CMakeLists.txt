@@ -24,5 +24,9 @@ set(pycc_db_sources
     ${CMAKE_CURRENT_LIST_DIR}/cc2DLabel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccViewPortParameters.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccViewportObject.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ccBBox.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ccSensor.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ccCameraSensor.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ccColorScale.cpp
     PARENT_SCOPE
 )

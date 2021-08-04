@@ -48,6 +48,10 @@ void define_ccInteractor(py::module &);
 void define_cc2DLabel(py::module &);
 void define_ccViewPortParameters(py::module &);
 void define_ccViewportObject(py::module &);
+void define_ccBBox(py::module &);
+void define_ccSensor(py::module &m);
+void define_ccCameraSensor(py::module &);
+void define_ccColorScale(py::module &);
 
 template <class T> using observer_ptr = std::unique_ptr<T, py::nodelete>;
 
@@ -100,8 +104,12 @@ void define_qcc_db(py::module &m)
     define_ccCone(m);
     define_ccCylinder(m);
     define_cc2DLabel(m);
+    define_ccColorScale(m);
     define_ccViewPortParameters(m);
     define_ccViewportObject(m);
+    define_ccBBox(m);
+    define_ccSensor(m);
+    define_ccCameraSensor(m);
 
     define_ccGenericPointCloud(m);
     define_ccPointCloud(m);

@@ -81,11 +81,11 @@ void define_pycc(py::module &m)
         Python module exposing some CloudCompare functions
     )pbdoc";
 
+    define_qcc_db(m);
+    define_qcc_io(m);
 #ifdef DEFINE_PYCC_RUNTIME
     define_pycc_runtime(m);
 #endif
-    define_qcc_io(m);
-    define_qcc_db(m);
 }
 
 #ifdef USE_EMBEDDED_MODULES

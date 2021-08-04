@@ -36,7 +36,12 @@ void define_cc2DLabel(py::module &m)
     Pycc2DLabel.def("getLabelContent", &cc2DLabel::getLabelContent, "precision"_a);
     Pycc2DLabel.def("getTitle", &cc2DLabel::getTitle, "precision"_a);
     Pycc2DLabel.def("setPosition", &cc2DLabel::setPosition, "x"_a, "y"_a);
-    // TODO getPosition
+    Pycc2DLabel.def("getPosition", [](const cc2DLabel &self) {
+        py::tuple pos(2);
+        pos[0] = self.getPosition()[0];
+        pos[1] = self.getPosition()[1];
+        return pos;
+    });
     Pycc2DLabel.def("clear", &cc2DLabel::clear, "ignoreDependencies"_a = false);
     Pycc2DLabel.def("size", &cc2DLabel::size);
     Pycc2DLabel.def("addPickedPoint",

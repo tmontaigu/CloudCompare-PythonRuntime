@@ -62,6 +62,24 @@ void define_ccCommandLine(py::module &m)
 
     py::enum_<ccCommandLineInterface::ExportOption>(PyccCommandLineInterface, "ExportOption");
 
+    py::class_<ccCommandLineInterface::GlobalShiftOptions> PyGlobalShiftOptions(
+        PyccCommandLineInterface, "GlobalShiftOptions");
+
+    py::enum_<ccCommandLineInterface::GlobalShiftOptions::Mode>(PyGlobalShiftOptions, "Mode")
+        .value("NO_GLOBAL_SHIFT", ccCommandLineInterface::GlobalShiftOptions::Mode::NO_GLOBAL_SHIFT)
+        .value("AUTO_GLOBAL_SHIFT",
+               ccCommandLineInterface::GlobalShiftOptions::Mode::AUTO_GLOBAL_SHIFT)
+        .value("FIRST_GLOBAL_SHIFT",
+               ccCommandLineInterface::GlobalShiftOptions::Mode::FIRST_GLOBAL_SHIFT)
+        .value("CUSTOM_GLOBAL_SHIFT",
+               ccCommandLineInterface::GlobalShiftOptions::Mode::CUSTOM_GLOBAL_SHIFT)
+        .export_values();
+
+    PyGlobalShiftOptions.def_readwrite("mode", &ccCommandLineInterface::GlobalShiftOptions::mode)
+        .def_readwrite("customGlobalShift",
+                       &ccCommandLineInterface::GlobalShiftOptions::customGlobalShift)
+        .def(py::init<>());
+
     PyccCommandLineInterface
         .def("clouds",
              (std::vector<CLCloudDesc> &
@@ -95,8 +113,11 @@ void define_ccCommandLine(py::module &m)
              "allAtOnceFileName"_a = nullptr)
         .def(
             "importFile",
-            [](ccCommandLineInterface &self, QString filename) {
-                return self.importFile(filename);
+            [](ccCommandLineInterface &self,
+               QString filename,
+               const ccCommandLineInterface::GlobalShiftOptions &opts) {
+                return self.importFile(filename, opts);
             },
-            "filename"_a);
+            "filename"_a,
+            "opts"_a);
 }
