@@ -22,5 +22,7 @@ set(pycc_db_sources
     ${CMAKE_CURRENT_LIST_DIR}/ccLog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccInteractor.cpp
     ${CMAKE_CURRENT_LIST_DIR}/cc2DLabel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ccViewPortParameters.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ccViewportObject.cpp
     PARENT_SCOPE
 )

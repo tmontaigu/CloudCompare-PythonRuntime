@@ -98,16 +98,14 @@ void define_ccGenericGLDisplay(py::module &m)
              "color"_a = nullptr,
              "font"_a = QFont())
         .def("getGLCameraParameters", &ccGenericGLDisplay::getGLCameraParameters, "params"_a)
-        .def("toCenteredGLCoordinates", &ccGenericGLDisplay::toCenteredGLCoordinates, "x"_a, "y"_a);
-    // TODO
-    //   .def("getViewportParameters", &ccGenericGLDisplay::getViewportParameters)
-    //        .def("setupProjectveViewport",
-    //             &ccGenericGLDisplay::setupProjectiveViewport,
-    //             "cameraMatrix"_a,
-    //             "fov_deg"_a = 0.0f,
-    //             "ar"_a = 1.0f,
-    //             "viewerBasedPerspective"_a = true,
-    //             "bubbleViewMode"_a = false)
-    //        // TODO as widget
-    //        ;
+        .def("toCenteredGLCoordinates", &ccGenericGLDisplay::toCenteredGLCoordinates, "x"_a, "y"_a)
+        .def("getViewportParameters", &ccGenericGLDisplay::getViewportParameters)
+        .def("setupProjectveViewport",
+             &ccGenericGLDisplay::setupProjectiveViewport,
+             "cameraMatrix"_a,
+             "fov_deg"_a = 0.0f,
+             "ar"_a = 1.0f,
+             "viewerBasedPerspective"_a = true,
+             "bubbleViewMode"_a = false);
+    // TODO as widget
 }

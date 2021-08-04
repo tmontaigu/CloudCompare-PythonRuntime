@@ -46,6 +46,8 @@ void define_ccProgressDialog(py::module &);
 void define_ccLog(py::module &);
 void define_ccInteractor(py::module &);
 void define_cc2DLabel(py::module &);
+void define_ccViewPortParameters(py::module &);
+void define_ccViewportObject(py::module &);
 
 template <class T> using observer_ptr = std::unique_ptr<T, py::nodelete>;
 
@@ -62,8 +64,6 @@ void define_qcc_db(py::module &m)
 
     py::class_<ccColor::Rgba>(m, "Rgba");
 
-    define_ccGenericGLDisplay(m);
-    define_ccGLWindow(m);
     define_ccScalarField(m);
     define_ccGLMatrix(m);
     define_ccInteractor(m);
@@ -100,10 +100,15 @@ void define_qcc_db(py::module &m)
     define_ccCone(m);
     define_ccCylinder(m);
     define_cc2DLabel(m);
+    define_ccViewPortParameters(m);
+    define_ccViewportObject(m);
 
     define_ccGenericPointCloud(m);
     define_ccPointCloud(m);
 
     define_ccLog(m);
     define_ccProgressDialog(m);
+
+    define_ccGenericGLDisplay(m);
+    define_ccGLWindow(m);
 }
