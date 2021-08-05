@@ -2,8 +2,8 @@ function(getset_python_base_prefix)
     execute_process(
         COMMAND 
             "${PYTHON_EXECUTABLE}" 
-            "-c" 
-            "import sys;print(sys.base_prefix, end='');"
+            "-c"
+            "import sys;print(sys.base_prefix.replace('\\\\', '/'), end='')"
         OUTPUT_VARIABLE PYTHON_BASE_PREFIX
     )
     set(PYTHON_BASE_PREFIX "${PYTHON_BASE_PREFIX}" PARENT_SCOPE)
