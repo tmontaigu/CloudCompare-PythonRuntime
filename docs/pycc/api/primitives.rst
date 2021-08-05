@@ -67,11 +67,5 @@ __________
     :show-inheritance:
 
 
-cc2DLabel
-_________
 
-.. autoclass:: pycc.cc2DLabel
-    :members:
-    :undoc-members:
-    :show-inheritance:
 
