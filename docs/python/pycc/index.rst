@@ -1,5 +1,5 @@
-pycc
-====
+pycc (Python)
+=============
 
 
 pycc is the module that wraps CloudCompare's data structures to make them
@@ -14,5 +14,7 @@ It also define classes and functions that allows to interact with the "CloudComp
     :caption: API
 
     runtime
-    api/index
+    data_structures
+    primitives
+    others
 

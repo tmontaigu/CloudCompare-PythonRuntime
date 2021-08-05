@@ -6,6 +6,9 @@ Vectors
 
 CCVector3
 __________
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::CCVector3`
 
 .. autoclass:: cccorelib.CCVector3
    :members:
@@ -21,6 +24,9 @@ PointClouds
 
 GenericCloud
 ____________
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::GenericCloud`
 
 .. autoclass:: cccorelib.GenericCloud
    :members:
@@ -28,6 +34,9 @@ ____________
 
 GenericIndexedCloud
 ___________________
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::GenericIndexedCloud`
 
 .. autoclass:: cccorelib.GenericIndexedCloud
    :members:
@@ -36,6 +45,9 @@ ___________________
 
 GenericIndexedCloudPersist
 __________________________
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::GenericIndexedCloudPersist`
 
 .. autoclass:: cccorelib.GenericIndexedCloudPersist
    :members:
@@ -45,6 +57,9 @@ __________________________
 
 PointCloud
 __________
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::PointCloud`
 
 .. autoclass:: cccorelib.PointCloud
    :members:
@@ -53,6 +68,9 @@ __________
 
 ReferenceCloud
 ______________
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::ReferenceCloud`
 
 .. autoclass:: cccorelib.ReferenceCloud
    :members:
@@ -64,6 +82,9 @@ Meshes
 
 GenericTriangle
 _______________
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::GenericTriangle`
 
 .. autoclass:: cccorelib.GenericTriangle
     :members:
@@ -71,6 +92,9 @@ _______________
 
 GenericMesh
 ___________
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::GenericMesh`
 
 .. autoclass:: cccorelib.GenericMesh
     :members:
@@ -78,6 +102,9 @@ ___________
 
 GenericIndexedMesh
 __________________
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::GenericIndexedMesh`
 
 .. autoclass:: cccorelib.GenericIndexedMesh
     :members:
@@ -86,6 +113,9 @@ __________________
 
 Delaunay2dMesh
 ______________
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::Delaunay2dMesh`
 
 .. autoclass:: cccorelib.Delaunay2dMesh
     :members:
@@ -94,6 +124,9 @@ ______________
 
 Polyline
 ________
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::Polyline`
 
 .. autoclass:: cccorelib.Polyline
     :members:
@@ -102,6 +135,9 @@ ________
 
 SimpleTriangle
 ______________
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::SimpleTriangle`
 
 .. autoclass:: cccorelib.SimpleTriangle
     :members:
@@ -110,6 +146,9 @@ ______________
 
 SimpleMesh
 __________
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::SimpleMesh`
 
 .. autoclass:: cccorelib.SimpleMesh
     :members:
@@ -121,6 +160,9 @@ KdTrees
 
 KDTree
 ______
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::KDTree`
 
 .. autoclass:: cccorelib.KDTree
     :members:
@@ -129,6 +171,9 @@ ______
 
 TrueKdTree
 __________
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::TrueKdTree`
 
 .. autoclass:: cccorelib.TrueKdTree
     :members:
@@ -139,6 +184,9 @@ Octrees
 
 GenericOctree
 _____________
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::GenericOctree`
 
 .. autoclass:: cccorelib.GenericOctree
     :members:
@@ -147,6 +195,9 @@ _____________
 
 DgmOctree
 _________
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::DgmOctree`
 
 .. autoclass:: cccorelib.DgmOctree
     :members:
@@ -155,6 +206,9 @@ _________
 
 DgmOctreeReferenceCloud
 _______________________
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::DgmOctreeReferenceCloud`
 
 .. autoclass:: cccorelib.DgmOctreeReferenceCloud
     :members:
@@ -166,6 +220,9 @@ Others
 
 BoundingBox
 ___________
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::BoundingBox`
 
 .. autoclass:: cccorelib.BoundingBox
    :members:
@@ -174,6 +231,9 @@ ___________
 
 ScalarField
 ___________
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::ScalarField`
 
 .. autoclass:: cccorelib.ScalarField
    :members:

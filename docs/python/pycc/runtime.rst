@@ -1,5 +1,5 @@
-pycc Runtime
-============
+Runtime
+=======
 
 
 .. important::

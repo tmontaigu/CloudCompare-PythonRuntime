@@ -24,15 +24,20 @@ interpreter to run scripts.
    getting_started
    examples
 
+This project hosts the API Documentation for both the C++ and Python
+API.
 
+When using Python functions, the functions explanations can
+be found on the corresponding C++ function documentation.
 
 .. toctree::
    :caption: APIs Documentation
    :maxdepth: 2
 
-
-   cccorelib/index
-   pycc/index
+   python/cccorelib/index
+   python/pycc/index
+   cpp/qCC_db/index
+   cpp/CCCoreLib/index
 
 
 

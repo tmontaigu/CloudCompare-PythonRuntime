@@ -4,6 +4,9 @@ Others
 
 GenericProgressCallback
 -----------------------
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::GenericProgressCallback`
 
 .. autoclass:: cccorelib.GenericProgressCallback
    :members:
@@ -12,6 +15,9 @@ GenericProgressCallback
 
 NormalizedProgress
 -----------------------
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::NormalizedProgress`
 
 .. autoclass:: cccorelib.NormalizedProgress
    :members:

@@ -5,6 +5,9 @@ Available tools from cccorelib.
 
 CCMiscTools
 -----------
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::CCMiscTools`
 
 .. autoclass:: cccorelib.CCMiscTools
    :members:
@@ -13,6 +16,9 @@ CCMiscTools
 
 AutoSegmentationTools
 ---------------------
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::AutoSegmentationTools`
 
 .. autoclass:: cccorelib.AutoSegmentationTools
    :members:
@@ -21,6 +27,9 @@ AutoSegmentationTools
 
 DistanceComputationTools
 ------------------------
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::DistanceComputationTools`
 
 .. autoclass:: cccorelib.DistanceComputationTools
    :members:
@@ -28,6 +37,9 @@ DistanceComputationTools
 
 ManualSegmentationTools
 -----------------------
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::ManualSegmentationTools`
 
 .. autoclass:: cccorelib.ManualSegmentationTools
    :members:
@@ -35,6 +47,9 @@ ManualSegmentationTools
 
 ScalarFieldTools
 ----------------
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::ScalarFieldTools`
 
 .. autoclass:: cccorelib.ScalarFieldTools
    :members:
@@ -43,6 +58,9 @@ ScalarFieldTools
 
 ChamferDistanceTools
 ---------------------
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::ChamferDistanceTransform`
 
 .. autoclass:: cccorelib.ChamferDistanceTransform
    :members:
@@ -51,6 +69,9 @@ ChamferDistanceTools
 
 CloudSamplingTools
 -------------------
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::CloudSamplingTools`
 
 .. autoclass:: cccorelib.CloudSamplingTools
    :members:
@@ -59,6 +80,9 @@ CloudSamplingTools
 
 GeometricalAnalysisTools
 ------------------------
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::GeometricalAnalysisTools`
 
 .. autoclass:: cccorelib.GeometricalAnalysisTools
    :members:
@@ -66,6 +90,9 @@ GeometricalAnalysisTools
 
 StatisticalTestingTools
 -----------------------
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::StatisticalTestingTools`
 
 .. autoclass:: cccorelib.StatisticalTestingTools
    :members:
@@ -74,6 +101,9 @@ StatisticalTestingTools
 
 PointProjectionTools
 --------------------
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::PointProjectionTools`
 
 .. autoclass:: cccorelib.PointProjectionTools
    :members:
@@ -82,6 +112,9 @@ PointProjectionTools
 
 RegistrationTools
 -----------------
+.. seealso::
+
+    C++: :cpp:class:`CCCoreLib::RegistrationTools`
 
 .. autoclass:: cccorelib.RegistrationTools
    :members:

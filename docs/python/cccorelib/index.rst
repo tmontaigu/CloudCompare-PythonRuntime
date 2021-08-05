@@ -1,5 +1,5 @@
-cccorelib
-=========
+cccorelib (Python)
+==================
 
 cccorelib defines some data structures and interfaces/methods
 of these data structures.
