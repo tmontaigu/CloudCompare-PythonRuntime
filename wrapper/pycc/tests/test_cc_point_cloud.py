@@ -35,6 +35,7 @@ def test_cc_point_cloud_from_sequences():
     with pytest.raises(ValueError):
             pc.addScalarField("wrong_size", np.array([1.0], pycc.ScalarType))
 
+
 def test_len_ccloud():
     pc = pycc.ccPointCloud()
 
@@ -42,3 +43,24 @@ def test_len_ccloud():
 
     assert pc.size() == 10
     assert len(pc) == pc.size()
+
+
+def test_metadata():
+    obj = pycc.ccPointCloud()
+
+    assert obj.hasMetaData("int value") is False
+    obj.setMetaData("int value", 3)
+    assert obj.hasMetaData("int value") is True
+    assert obj.getMetaData("int value") == 3
+
+    obj.removeMetaData("int value")
+    assert obj.hasMetaData("int value") is False
+
+    obj.setMetaData("string value", "ayaya")
+    assert obj.getMetaData("string value") == "ayaya"
+
+    obj.setMetaData("double value", 4536.135)
+    assert obj.getMetaData("double value") == 4536.135
+
+
+

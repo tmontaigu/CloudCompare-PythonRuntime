@@ -43,7 +43,15 @@ void define_ccObject(py::module &m)
         .def("setLocked", &ccObject::setLocked)
         .def("isLeaf", &ccObject::isLeaf)
         .def("isCustom", &ccObject::isCustom)
-        .def("isHierarchy", &ccObject::isHierarchy);
+        .def("isHierarchy", &ccObject::isHierarchy)
+        .def("getMetaData", &ccObject::getMetaData, "key"_a)
+        .def("removeMetaData", &ccObject::removeMetaData, "key"_a)
+        .def("setMetaData",
+             static_cast<void (ccObject::*)(const QString &, const QVariant &)>(
+                 &ccObject::setMetaData),
+             "key"_a,
+             "data"_a)
+        .def("hasMetaData", &ccObject::hasMetaData, "key"_a);
 
     py::class_<ccHObject, ccObject, ccDrawableObject>(m, "ccHObject")
         .def("isGroup", &ccHObject::isGroup)
