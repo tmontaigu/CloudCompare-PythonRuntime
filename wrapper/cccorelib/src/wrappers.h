@@ -24,6 +24,8 @@
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
+#include <stdexcept>
+
 namespace py = pybind11;
 using namespace pybind11::literals;
 
@@ -52,7 +54,11 @@ void addPointsFromArrays(PointCloudType &self,
         throw py::value_error("xs, ys, zs must have the same size");
     }
 
-    self.reserve(self.size() + xs.size());
+    py::ssize_t numToReserve = self.size() + xs.size();
+    if (numToReserve > std::numeric_limits<unsigned int>::max()) {
+        throw std::out_of_range(std::to_string(numToReserve) + " cannot be casted to unsigned int");
+    }
+    self.reserve(static_cast<unsigned int>(numToReserve));
 
     auto xs_it = xs.begin();
     auto ys_it = ys.begin();
