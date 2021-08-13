@@ -67,7 +67,6 @@ PackageManager::PackageManager(const PythonConfig &config, QWidget *parent)
       m_outputDialog(new CommandOutputDialog(this))
 {
     m_ui->setupUi(this);
-    m_pythonProcess->setProcessChannelMode(QProcess::MergedChannels);
     connect(m_pythonProcess, &QProcess::started, [this]() { setBusy(true); });
     connect(m_pythonProcess,
             static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
@@ -94,6 +93,8 @@ PackageManager::PackageManager(const PythonConfig &config, QWidget *parent)
 
 void PackageManager::refreshInstalledPackagesList()
 {
+    m_pythonProcess->setProcessChannelMode(QProcess::SeparateChannels);
+
     const QStringList arguments = {"-m", "pip", "list"};
     m_pythonProcess->setArguments(arguments);
 
@@ -150,6 +151,7 @@ void PackageManager::refreshInstalledPackagesList()
             }
         }
     }
+    m_pythonProcess->setProcessChannelMode(QProcess::MergedChannels);
 }
 
 void PackageManager::handleInstallPackage()
