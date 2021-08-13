@@ -44,10 +44,9 @@ bool Version::operator==(const Version &other) const
     return major == other.major && minor == other.minor && patch == other.patch;
 }
 
-Version GetPythonExeVersion(const QString &pythonExePath)
+static Version GetPythonExeVersion(QProcess &pythonProcess)
 {
-    QProcess pythonProcess;
-    pythonProcess.start(pythonExePath, {"--version"});
+    pythonProcess.setArguments({"--version"});
     pythonProcess.waitForFinished();
 
     const QString versionStr =
@@ -132,22 +131,38 @@ PythonConfig::PythonConfig()
 #ifdef Q_OS_WIN32
     const char *condaPrefix = std::getenv("CONDA_PREFIX");
     const char *venvPrefix = std::getenv("VIRTUAL_ENV");
-    if (condaPrefix)
+    if (condaPrefix || venvPrefix)
     {
-        initCondaEnv(condaPrefix);
-    }
-    else if (venvPrefix)
-    {
-        initVenv(venvPrefix);
+        if (condaPrefix)
+        {
+            initCondaEnv(condaPrefix);
+        }
+        else if (venvPrefix)
+        {
+            initVenv(venvPrefix);
+        }
+
+#ifndef USE_EMBEDDED_MODULES
+        m_pythonPath.append(QApplication::applicationDirPath() +
+                            "/plugins/Python/Lib/site-packages");
+#endif
+        QProcess pythonProcess;
+        preparePythonProcess(pythonProcess);
+        const Version version = GetPythonExeVersion(pythonProcess);
+
+        if (version.major != PythonVersion.major || version.minor != PythonVersion.minor)
+        {
+            ccLog::Warning(QString("Python environment at %1 is not compatible."
+                                   " Reverting to default environment").arg(m_pythonHome));
+            initBundled();
+            return;
+        }
     }
     else
     {
         initBundled();
         return;
     }
-#ifndef USE_EMBEDDED_MODULES
-    m_pythonPath.append(QApplication::applicationDirPath() + "/plugins/Python/Lib/site-packages");
-#endif
 #else
     // On Non windows platform
     // We do nothing, and rely on system's python installation
