@@ -26,7 +26,7 @@
 #include <functional>
 #include <utility>
 
-/// Class implementing 'write' to be able to act like
+/// Class implementing 'write' and `flush` to be able to act like
 /// a Python file object in order to be able to
 /// output messages from Python's print to the CloudCompare console
 /// instead of CloudCompare's stdout & stderr
