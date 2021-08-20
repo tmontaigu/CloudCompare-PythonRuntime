@@ -151,6 +151,14 @@ void PackageManager::refreshInstalledPackagesList()
             }
         }
     }
+
+    const QString errorOutput =
+        QTextCodec::codecForName("utf-8")->toUnicode(m_pythonProcess->readAllStandardError());
+
+    if (!errorOutput.isEmpty()) {
+       ccLog::Warning(errorOutput);
+    }
+
     m_pythonProcess->setProcessChannelMode(QProcess::MergedChannels);
 }
 
