@@ -15,16 +15,48 @@
 //#                                                                        #
 //##########################################################################
 
-#ifndef CLOUDCOMPAREPROJECTS_CASTERS_H
-#define CLOUDCOMPAREPROJECTS_CASTERS_H
+#ifndef PYTHON_PLUGIN_FILE_RUNNER_H
+#define PYTHON_PLUGIN_FILE_RUNNER_H
 
-#include <pybind11/numpy.h>
-#include <pybind11/pybind11.h>
+#include <QDialog>
+#include <QWidget>
 
-#include <GenericCloud.h>
-#include <GenericIndexedCloud.h>
-#include <iostream>
+namespace Ui
+{
+class FileRunner;
+}
 
-namespace py = pybind11;
+class PythonInterpreter;
 
-#endif // CLOUDCOMPAREPROJECTS_CASTERS_H
+/// The File Runner is a small widget that let the user pick a .py file
+/// and run it, without having the editor opened.
+class FileRunner final : public QDialog
+{
+    Q_OBJECT
+
+  public:
+    explicit FileRunner(PythonInterpreter *interp, QWidget *parent = nullptr);
+
+    FileRunner(const FileRunner &) = delete;
+    FileRunner operator=(const FileRunner &) = delete;
+    FileRunner(FileRunner &&) = delete;
+    FileRunner operator=(FileRunner &&) = delete;
+    ~FileRunner() noexcept override;
+
+  private Q_SLOTS:
+    void selectFile();
+    void runFile() const;
+    void pythonExecutionStarted();
+    void pythonExecutionEnded();
+
+  protected:
+    void resizeEvent(QResizeEvent *event) override;
+
+  private:
+    PythonInterpreter *m_interpreter;
+    QWidget *m_busyWidget;
+    Ui::FileRunner *m_ui;
+    QString m_filePath;
+};
+
+#endif // PYTHON_PLUGIN_FILE_RUNNER_H

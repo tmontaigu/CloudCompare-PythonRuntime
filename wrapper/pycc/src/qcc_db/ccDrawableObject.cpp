@@ -54,7 +54,7 @@ void define_ccDrawableObject(py::module &m)
         .def("nameShownIn3D", &ccDrawableObject::nameShownIn3D)
         .def("toggleShowName", &ccDrawableObject::toggleShowName)
         // temporary color
-        .def("isColorOverriden", &ccDrawableObject::isColorOverriden)
+        .def("isColorOverridden", &ccDrawableObject::isColorOverriden)
         .def("getTempColor", &ccDrawableObject::getTempColor)
         .def("setTempColor",
              (void (ccDrawableObject::*)(const ccColor::Rgba &, bool))(

@@ -15,12 +15,11 @@
 //#                                                                        #
 //##########################################################################
 
-#include "QPythonRepl.h"
+#include "PythonRepl.h"
 #include "PythonHighlighter.h"
 #include "PythonInterpreter.h"
-#include <ccGuiPythonInstance.h>
 
-#include <ui_QPythonREPL.h>
+#include <ui_PythonREPL.h>
 
 #include "PythonStdErrOutRedirect.h"
 
@@ -140,10 +139,10 @@ bool KeyPressEater::eventFilter(QObject *obj, QEvent *event)
     }
 }
 
-KeyPressEater::KeyPressEater(QPythonRepl *repl, QObject *parent) : QObject(parent), m_repl(repl) {}
+KeyPressEater::KeyPressEater(PythonRepl *repl, QObject *parent) : QObject(parent), m_repl(repl) {}
 
-QPythonRepl::QPythonRepl(PythonInterpreter *interpreter, QMainWindow *parent)
-    : m_interpreter(interpreter), QMainWindow(parent), m_ui(new Ui_QPythonREPL), m_state()
+PythonRepl::PythonRepl(PythonInterpreter *interpreter, QMainWindow *parent)
+    : m_interpreter(interpreter), QMainWindow(parent), m_ui(new Ui_PythonREPL), m_state()
 {
     m_buf.reserve(255);
 
@@ -151,22 +150,22 @@ QPythonRepl::QPythonRepl(PythonInterpreter *interpreter, QMainWindow *parent)
     importNeededPackages();
 }
 
-QPythonRepl::~QPythonRepl() noexcept
+PythonRepl::~PythonRepl() noexcept
 {
     delete m_ui;
 }
 
-QPlainTextEdit *QPythonRepl::codeEdit()
+QPlainTextEdit *PythonRepl::codeEdit()
 {
     return m_ui->codeEdit;
 }
 
-QListWidget *QPythonRepl::outputDisplay()
+QListWidget *PythonRepl::outputDisplay()
 {
     return m_ui->outputDisplay;
 }
 
-void QPythonRepl::setupUI()
+void PythonRepl::setupUI()
 {
     m_ui->setupUi(this);
     const auto keyPressEater = new KeyPressEater(this);
@@ -184,24 +183,24 @@ void QPythonRepl::setupUI()
 
     codeEdit()->setFont(font);
 
-    connect(m_ui->toolBar->actions().at(0), &QAction::triggered, this, &QPythonRepl::reset);
+    connect(m_ui->toolBar->actions().at(0), &QAction::triggered, this, &PythonRepl::reset);
 }
 
-void QPythonRepl::reset()
+void PythonRepl::reset()
 {
     m_state = PythonInterpreter::State();
     m_ui->outputDisplay->clear();
     importNeededPackages();
 }
 
-void QPythonRepl::importNeededPackages()
+void PythonRepl::importNeededPackages()
 {
     executeCode(replArrows + "import pycc");
     executeCode(replArrows + "import cccorelib");
     executeCode(replArrows + "cc = pycc.GetInstance()");
 }
 
-void QPythonRepl::executeCode(const QString &pythonCode)
+void PythonRepl::executeCode(const QString &pythonCode)
 {
     /// Our raw input contains the ">>> " and "... " and is a QString
     /// convert it to std::string while filtering out non needed chars

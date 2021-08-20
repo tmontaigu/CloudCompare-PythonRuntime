@@ -15,8 +15,8 @@
 //#                                                                        #
 //##########################################################################
 
-#ifndef CLOUDCOMPAREPROJECTS_CCCORELIB_H
-#define CLOUDCOMPAREPROJECTS_CCCORELIB_H
+#ifndef PYTHON_PLUGIN_CCCORELIB_H
+#define PYTHON_PLUGIN_CCCORELIB_H
 
 #include <pybind11/pybind11.h>
 
@@ -34,4 +34,4 @@ PYBIND11_MAKE_OPAQUE(CCCoreLib::GenericDistribution::ScalarContainer)
 
 PYBIND11_MAKE_OPAQUE(CCCoreLib::TrueKdTree::LeafVector)
 
-#endif // CLOUDCOMPAREPROJECTS_CCCORELIB_H
+#endif // PYTHON_PLUGIN_CCCORELIB_H

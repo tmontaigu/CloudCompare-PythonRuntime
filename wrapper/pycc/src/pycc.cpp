@@ -57,10 +57,9 @@ void define_pycc(py::module &m)
     py::class_<QOpenGLWidget>(m, "QOpenGLWidget");
     py::class_<QProgressDialog, QWidget>(m, "QProgressDialog");
     py::class_<QMainWindow, QWidget>(m, "QMainWindow");
-    py::class_<QFont>(m, "QFont")
-        .def("__repr__",
-             [](const QFont &self)
-             { return std::string("<QFont(") + self.toString().toStdString() + ")>"; });
+    py::class_<QFont>(m, "QFont").def("__repr__", [](const QFont &self) {
+        return std::string("<QFont(") + self.toString().toStdString() + ")>";
+    });
     py::class_<QSize>(m, "QSize")
         .def(py::init<>())
         .def(py::init<int, int>(), "width"_a, "height"_a)
@@ -68,12 +67,10 @@ void define_pycc(py::module &m)
         .def("width", &QSize::width)
         .def("isEmpty", &QSize::isEmpty)
         .def("isValid", &QSize::isValid)
-        .def("__repr__",
-             [](const QSize &self)
-             {
-                 return std::string("<QSize(") + std::to_string(self.width()) + ", " +
-                        std::to_string(self.height()) + ")>";
-             });
+        .def("__repr__", [](const QSize &self) {
+            return std::string("<QSize(") + std::to_string(self.width()) + ", " +
+                   std::to_string(self.height()) + ")>";
+        });
 
     m.attr("PointCoordinateType") = py::dtype("float32");
     define_scalar_type<ScalarType>(m);
@@ -87,7 +84,25 @@ void define_pycc(py::module &m)
     define_qcc_db(m);
     define_qcc_io(m);
 #ifdef DEFINE_PYCC_RUNTIME
-    define_pycc_runtime(m);
+    try
+    {
+#if PYBIND11_VERSION_MINOR >= 5
+        const py::module pycc_runtime = py::module_::import("pycc_runtime");
+#else
+        const py::module pycc_runtime = py::module::import("pycc_runtime");
+#endif
+        const auto runtime_module_content = pycc_runtime.attr("__dict__").cast<py::dict>();
+        const auto pycc_module_content = m.attr("__dict__").cast<py::dict>();
+
+        for (const auto &entry : runtime_module_content)
+        {
+            pycc_module_content[entry.first] = entry.second;
+        }
+    }
+    catch (std::exception &e)
+    {
+        py::print("Failed to import pycc_runtime content: ", e.what());
+    }
 #endif
 }
 

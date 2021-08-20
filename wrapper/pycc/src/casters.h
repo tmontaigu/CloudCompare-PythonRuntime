@@ -15,8 +15,8 @@
 //#                                                                        #
 //##########################################################################
 
-#ifndef CLOUDCOMPAREPROJECTS_CASTERS_H
-#define CLOUDCOMPAREPROJECTS_CASTERS_H
+#ifndef PYTHON_PLUGIN_CASTERS_H
+#define PYTHON_PLUGIN_CASTERS_H
 
 #include <QString>
 #include <QVariant>
@@ -51,7 +51,7 @@ template <> struct type_caster<QString>
         return true;
     }
 
-    static handle cast(const QString &src, return_value_policy policy, handle  parent)
+    static handle cast(const QString &src, return_value_policy policy, handle parent)
     {
         const QByteArray byteArray = src.toUtf8();
         // TODO find how to use this error parameter.
@@ -61,8 +61,8 @@ template <> struct type_caster<QString>
     }
 };
 
-template <>
-struct type_caster<QByteArray> {
+template <> struct type_caster<QByteArray>
+{
     PYBIND11_TYPE_CASTER(QByteArray, _("QByteArray"));
 
     bool load(handle src, bool)
@@ -81,7 +81,8 @@ struct type_caster<QByteArray> {
         value = QByteArray(buffer, length);
     }
 
-    static handle cast(const QByteArray &src, return_value_policy /* policy */, handle /* handle */) {
+    static handle cast(const QByteArray &src, return_value_policy /* policy */, handle /* handle */)
+    {
         return PyBytes_FromStringAndSize(src.constData(), src.size());
     }
 };
@@ -134,7 +135,7 @@ template <> struct type_caster<QVariant>
             h = pybind11::cast(src.toInt(), policy, handle);
             break;
         case QVariant::UInt:
-            h =  pybind11::cast(src.toUInt(), policy, handle);
+            h = pybind11::cast(src.toUInt(), policy, handle);
             break;
         case QVariant::LongLong:
             h = pybind11::cast(src.toLongLong(), policy, handle);
@@ -267,4 +268,4 @@ template <> struct type_caster<QVariant>
 
 } // namespace detail
 } // namespace pybind11
-#endif // CLOUDCOMPAREPROJECTS_CASTERS_H
+#endif // PYTHON_PLUGIN_CASTERS_H

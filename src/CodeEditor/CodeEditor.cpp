@@ -24,10 +24,10 @@ static const char *const INDENT_STRING = "    ";
 
 static const char *const PYTHON_COMMENT_STR = "# ";
 
-CodeEditor::CodeEditor(QEditorSettings *settings, QWidget *parent)
+CodeEditor::CodeEditor(EditorSettings *settings, QWidget *parent)
     : QPlainTextEdit(parent), m_settings(settings), m_highlighter(new PythonHighlighter(document()))
 {
-    connect(settings, &QEditorSettings::settingsChanged, this, &CodeEditor::updateUsingSettings);
+    connect(settings, &EditorSettings::settingsChanged, this, &CodeEditor::updateUsingSettings);
 
     m_lineNumberArea = new LineNumberArea(this);
     connect(this, &QPlainTextEdit::blockCountChanged, this, &CodeEditor::updateLineNumberAreaWidth);

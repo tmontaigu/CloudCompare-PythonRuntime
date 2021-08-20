@@ -30,6 +30,7 @@ struct PyVenvCfg;
 class QProcess;
 class PythonConfigPaths;
 
+/// Simple representation of a SemVer version
 struct Version
 {
     constexpr Version() = default;
@@ -48,6 +49,7 @@ struct Version
     uint16_t patch{0};
 };
 
+/// Python Version the plugin was compiled against
 constexpr Version PythonVersion(PY_MAJOR_VERSION, PY_MINOR_VERSION, PY_MICRO_VERSION);
 
 /// This class infers the right python home and python path
@@ -74,7 +76,12 @@ class PythonConfig final
     /// Does nothing, as we rely on the system's python to be properly installed
     PythonConfig();
 
+    /// Sets the necessary settings of the QProcess so that
+    /// it uses the correct Python exe.
     void preparePythonProcess(QProcess &pythonProcess) const;
+
+    /// Returns the python home & path stored in
+    /// types that the CPython API can use.
     PythonConfigPaths pythonCompatiblePaths() const;
 
   private:

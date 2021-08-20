@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QPythonREPL</class>
- <widget class="QMainWindow" name="QPythonREPL">
+ <class>PythonREPL</class>
+ <widget class="QMainWindow" name="PythonREPL">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -14,7 +14,7 @@
    <string>CloudCompare - Python REPL</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../CloudCompare-PythonPlugin.qrc">
+   <iconset resource="../../CloudCompare-PythonPlugin.qrc">
     <normaloff>:/CC/plugin/PythonPlugin/images/repl-icon.png</normaloff>:/CC/plugin/PythonPlugin/images/repl-icon.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -77,7 +77,7 @@
   </action>
  </widget>
  <resources>
-  <include location="../CloudCompare-PythonPlugin.qrc"/>
+  <include location="../../CloudCompare-PythonPlugin.qrc"/>
  </resources>
  <connections/>
 </ui>

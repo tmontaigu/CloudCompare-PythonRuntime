@@ -15,15 +15,16 @@
 //#                                                                        #
 //##########################################################################
 
-#pragma once
+#ifndef PYTHON_PLUGIN_H
+#define PYTHON_PLUGIN_H
 
 #include "PythonConfig.h"
 #include "PythonInterpreter.h"
 #include "ccStdPluginInterface.h"
 
 class QListWidget;
-class QPythonEditor;
-class QPythonRepl;
+class PythonEditor;
+class PythonRepl;
 class FileRunner;
 class PackageManager;
 
@@ -64,8 +65,8 @@ class PythonPlugin final : public QObject, public ccStdPluginInterface
     PythonConfig m_config{};
     PythonInterpreter m_interp;
 
-    QPythonRepl *m_repl{nullptr};
-    QPythonEditor *m_editor{nullptr};
+    PythonRepl *m_repl{nullptr};
+    PythonEditor *m_editor{nullptr};
     FileRunner *m_fileRunner{nullptr};
     PackageManager *m_packageManager{nullptr};
 
@@ -77,3 +78,5 @@ class PythonPlugin final : public QObject, public ccStdPluginInterface
     QAction *m_showAboutDialog{nullptr};
     QAction *m_showPackageManager{nullptr};
 };
+
+#endif // PYTHON_PLUGIN_H

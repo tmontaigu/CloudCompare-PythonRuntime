@@ -52,10 +52,7 @@ if(PLUGIN_PYTHON)
   find_package(pybind11 CONFIG REQUIRED)
 
   add_subdirectory(wrapper)
-  add_subdirectory(include)
   add_subdirectory(src)
-  add_subdirectory(ui)
-  add_subdirectory(QCodeEditor)
 
   if(PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
     target_compile_definitions(PythonPlugin PRIVATE -DUSE_EMBEDDED_MODULES)

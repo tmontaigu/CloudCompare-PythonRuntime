@@ -15,8 +15,8 @@
 //#                                                                        #
 //##########################################################################
 
-#ifndef CLOUD_COMPARE_PROJECTS_THREADING_H
-#define CLOUD_COMPARE_PROJECTS_THREADING_H
+#ifndef PYTHON_PLUGIN_THREADING_H
+#define PYTHON_PLUGIN_THREADING_H
 
 #include <QException>
 
@@ -99,4 +99,4 @@ call_fn(PyThreadState *main_state, py::object callable, py::args args, py::kwarg
         throw ThreadException(e);
     }
 }
-#endif // CLOUD_COMPARE_PROJECTS_THREADING_H
+#endif // PYTHON_PLUGIN_THREADING_H

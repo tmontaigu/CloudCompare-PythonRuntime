@@ -25,10 +25,10 @@
 #include "PythonInterpreter.h"
 
 class PythonInterpreter;
-class Ui_QPythonREPL;
+class Ui_PythonREPL;
 class QPlainTextEdit;
 
-class QPythonRepl;
+class PythonRepl;
 
 /// Simple history system for the REPL.
 class History final
@@ -56,31 +56,31 @@ class KeyPressEater final : public QObject
 {
     Q_OBJECT
   public:
-    explicit KeyPressEater(QPythonRepl *repl, QObject *parent = nullptr);
+    explicit KeyPressEater(PythonRepl *repl, QObject *parent = nullptr);
 
   protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
 
   private:
-    QPythonRepl *m_repl{nullptr};
+    PythonRepl *m_repl{nullptr};
 };
 
 /// Homemade REPL (Read Print Eval Loop)
-class QPythonRepl final : public QMainWindow
+class PythonRepl final : public QMainWindow
 {
     friend KeyPressEater;
     Q_OBJECT
 
   public:
-    explicit QPythonRepl(PythonInterpreter *interpreter, QMainWindow *parent = nullptr);
+    explicit PythonRepl(PythonInterpreter *interpreter, QMainWindow *parent = nullptr);
 
     void executeCode(const QString &pythonCode);
 
-    QPythonRepl(const QPythonRepl &) = delete;
-    QPythonRepl(QPythonRepl &&) = delete;
-    QPythonRepl &operator=(const QPythonRepl &) = delete;
-    QPythonRepl &operator=(QPythonRepl &&) = delete;
-    ~QPythonRepl() noexcept override;
+    PythonRepl(const PythonRepl &) = delete;
+    PythonRepl(PythonRepl &&) = delete;
+    PythonRepl &operator=(const PythonRepl &) = delete;
+    PythonRepl &operator=(PythonRepl &&) = delete;
+    ~PythonRepl() noexcept override;
 
   protected:
     QPlainTextEdit *codeEdit();
@@ -93,7 +93,7 @@ class QPythonRepl final : public QMainWindow
   private:
     History m_history{};
     std::string m_buf;
-    Ui_QPythonREPL *m_ui{nullptr};
+    Ui_PythonREPL *m_ui{nullptr};
     PythonInterpreter *m_interpreter{nullptr};
     PythonInterpreter::State m_state;
 };

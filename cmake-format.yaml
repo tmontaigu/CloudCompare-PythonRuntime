@@ -2,3 +2,5 @@ format:
   dangle_parens: True
   max_pargs_hwrap: 4
   line_ending: windows
+  autosort: True
+  enable_sort: True

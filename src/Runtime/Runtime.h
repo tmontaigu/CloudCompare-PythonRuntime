@@ -15,27 +15,16 @@
 //#                                                                        #
 //##########################################################################
 
-#ifndef PYTHON_HIGHLIGHTER_SETTINGS_H
-#define PYTHON_HIGHLIGHTER_SETTINGS_H
+#pragma once
 
-#include <QDialog>
-#include <QVector>
+class ccMainAppInterface;
+class ccCommandLineInterface;
 
-#include "PythonHighlighter.h"
-
-class QColorDialog;
-class QSignalMapper;
-
-class PythonHighlighterSettings final : public QWidget
+namespace Runtime
 {
-    Q_OBJECT
-  public:
-    explicit PythonHighlighterSettings(QWidget *parent = nullptr);
+void setMainAppInterfaceInstance(ccMainAppInterface *appInterface) noexcept(false);
+void unsetMainAppInterfaceInstance() noexcept;
 
-  private:
-    QColorDialog *m_colorDialog;
-    QSignalMapper *m_signalMapper;
-    QVector<QPair<PythonHighlighter::CodeElement, QColor>> m_colors;
-};
-
-#endif // PYTHON_HIGHLIGHTER_SETTINGS_H
+void setCmdLineInterfaceInstance(ccCommandLineInterface *cmdLine) noexcept;
+void unsetCmdLineInterfaceInstance() noexcept;
+} // namespace Runtime

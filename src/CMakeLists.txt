@@ -1,15 +1,32 @@
+add_subdirectory(CodeEditor)
+add_subdirectory(Runtime)
+add_subdirectory(Ui)
+
 target_sources(
   ${PROJECT_NAME}
-  PRIVATE ${CMAKE_CURRENT_LIST_DIR}/AboutDialog.cpp
-          ${CMAKE_CURRENT_LIST_DIR}/Runtime.cpp
-          ${CMAKE_CURRENT_LIST_DIR}/PythonPlugin.cpp
-          ${CMAKE_CURRENT_LIST_DIR}/PythonInterpreter.cpp
-          ${CMAKE_CURRENT_LIST_DIR}/QPythonRepl.cpp
-          ${CMAKE_CURRENT_LIST_DIR}/PythonHighlighterSettings.cpp
-          ${CMAKE_CURRENT_LIST_DIR}/PythonHighlighter.cpp
+  PRIVATE # cmake-format: sortable
+          ${CMAKE_CURRENT_LIST_DIR}/AboutDialog.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/AboutDialog.h
           ${CMAKE_CURRENT_LIST_DIR}/ColorScheme.cpp
-          ${CMAKE_CURRENT_LIST_DIR}/ccGuiPythonInstance.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/ColorScheme.h
           ${CMAKE_CURRENT_LIST_DIR}/FileRunner.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/FileRunner.h
           ${CMAKE_CURRENT_LIST_DIR}/PackageManager.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/PackageManager.h
           ${CMAKE_CURRENT_LIST_DIR}/PythonConfig.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/PythonConfig.h
+          ${CMAKE_CURRENT_LIST_DIR}/PythonHighlighter.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/PythonHighlighter.h
+          ${CMAKE_CURRENT_LIST_DIR}/PythonInterpreter.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/PythonInterpreter.h
+          ${CMAKE_CURRENT_LIST_DIR}/PythonPlugin.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/PythonPlugin.h
+          ${CMAKE_CURRENT_LIST_DIR}/PythonRepl.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/PythonRepl.h
+          ${CMAKE_CURRENT_LIST_DIR}/Utilities.h
+)
+
+target_include_directories(
+  ${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}
+                          ${CMAKE_CURRENT_LIST_DIR}/CodeEditor
 )

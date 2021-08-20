@@ -15,7 +15,7 @@
 //#                                                                        #
 //##########################################################################
 
-#include "QEditorSettings.h"
+#include "EditorSettings.h"
 
 #include <QPushButton>
 #include <QSettings>
@@ -28,38 +28,38 @@ static QString SettingsScopeName()
     return QCoreApplication::applicationName().append(":PythonPlugin.Editor");
 }
 
-QEditorSettings::QEditorSettings() : QDialog(), Ui::QEditorSettings()
+EditorSettings::EditorSettings() : QDialog(), Ui::EditorSettings()
 {
     setupUi();
     connectSignals();
     loadFromSettings();
 }
 
-void QEditorSettings::setupUi()
+void EditorSettings::setupUi()
 {
-    Ui_QEditorSettings::setupUi(this);
+    Ui_EditorSettings::setupUi(this);
     for (const ColorScheme &colorScheme : ColorScheme::AvailableColorSchemes())
     {
         colorSchemeComboBox->addItem(colorScheme.name());
     }
 }
 
-int QEditorSettings::fontSize() const
+int EditorSettings::fontSize() const
 {
     return this->fontSizeSpinBox->value();
 }
 
-bool QEditorSettings::shouldHighlightCurrentLine() const
+bool EditorSettings::shouldHighlightCurrentLine() const
 {
     return m_shouldHighlightCurrentLine;
 }
 
-const ColorScheme &QEditorSettings::colorScheme() const
+const ColorScheme &EditorSettings::colorScheme() const
 {
     return m_colorScheme;
 }
 
-void QEditorSettings::saveChanges()
+void EditorSettings::saveChanges()
 {
     const auto *colorScheme = ColorScheme::ColorSchemeByName(colorSchemeComboBox->currentText());
     Q_ASSERT(colorScheme != nullptr);
@@ -73,25 +73,25 @@ void QEditorSettings::saveChanges()
     Q_EMIT settingsChanged();
 }
 
-void QEditorSettings::saveChangesAndClose()
+void EditorSettings::saveChangesAndClose()
 {
     saveChanges();
     close();
 }
 
-void QEditorSettings::cancel()
+void EditorSettings::cancel()
 {
     setFormValuesToCurrentValues();
     close();
 }
 
-void QEditorSettings::setFormValuesToCurrentValues() const
+void EditorSettings::setFormValuesToCurrentValues() const
 {
     highlightCurrentLineCheckBox->setChecked(m_shouldHighlightCurrentLine);
     colorSchemeComboBox->setCurrentText(m_colorScheme.name());
 }
 
-void QEditorSettings::loadFromSettings()
+void EditorSettings::loadFromSettings()
 {
     const QSettings savedSettings(QCoreApplication::organizationName(), SettingsScopeName());
 
@@ -110,12 +110,12 @@ void QEditorSettings::loadFromSettings()
     setFormValuesToCurrentValues();
 }
 
-void QEditorSettings::connectSignals() const
+void EditorSettings::connectSignals() const
 {
-    connect(buttonBox, &QDialogButtonBox::accepted, this, &QEditorSettings::saveChangesAndClose);
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &EditorSettings::saveChangesAndClose);
     connect(buttonBox->button(QDialogButtonBox::Apply),
             &QPushButton::clicked,
             this,
-            &QEditorSettings::saveChanges);
-    connect(buttonBox, &QDialogButtonBox::rejected, this, &QEditorSettings::cancel);
+            &EditorSettings::saveChanges);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &EditorSettings::cancel);
 }

@@ -15,10 +15,10 @@
 //#                                Thomas Montaigu                         #
 //##########################################################################
 
-#ifndef CODE_EDITOR_H
-#define CODE_EDITOR_H
+#ifndef PYTHON_PLUGIN_CODE_EDITOR_H
+#define PYTHON_PLUGIN_CODE_EDITOR_H
 
-#include "QEditorSettings.h"
+#include "EditorSettings.h"
 #include <QObject>
 #include <QPlainTextEdit>
 
@@ -36,7 +36,7 @@ class CodeEditor final : public QPlainTextEdit
     Q_OBJECT
 
   public:
-    explicit CodeEditor(QEditorSettings *settings, QWidget *parent = nullptr);
+    explicit CodeEditor(EditorSettings *settings, QWidget *parent = nullptr);
 
     void lineNumberAreaPaintEvent(QPaintEvent *event);
 
@@ -84,7 +84,7 @@ class CodeEditor final : public QPlainTextEdit
     QString m_curFile;
     bool m_isUntitled{true};
     QWidget *m_lineNumberArea{nullptr};
-    QEditorSettings *m_settings{nullptr};
+    EditorSettings *m_settings{nullptr};
     PythonHighlighter *m_highlighter;
 };
 
@@ -111,4 +111,4 @@ class LineNumberArea final : public QWidget
     CodeEditor *m_codeEditor;
 };
 
-#endif // CODE_EDITOR_H
+#endif // PYTHON_PLUGIN_CODE_EDITOR_H

@@ -84,7 +84,6 @@ if(PYCC_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
   )
 
   if(DEFINE_PYCC_RUNTIME)
-    target_include_directories(pycc PRIVATE ../../include)
     target_link_libraries(pycc PRIVATE PythonPlugin)
     target_compile_definitions(pycc PRIVATE DEFINE_PYCC_RUNTIME)
   endif()

@@ -14,8 +14,8 @@
 //#                     COPYRIGHT: Thomas Montaigu                         #
 //#                                                                        #
 //##########################################################################
-#ifndef PROJECT_TREE_VIEW_H
-#define PROJECT_TREE_VIEW_H
+#ifndef PYTHON_PLUGIN_PROJECT_TREE_VIEW_H
+#define PYTHON_PLUGIN_PROJECT_TREE_VIEW_H
 
 #include <QFileSystemModel>
 #include <QTreeView>
@@ -70,4 +70,4 @@ class ProjectView final : public QTreeView
     ProjectViewContextMenu *m_contextMenu;
 };
 
-#endif // PROJECT_TREE_VIEW_H
+#endif // PYTHON_PLUGIN_PROJECT_TREE_VIEW_H

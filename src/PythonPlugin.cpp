@@ -17,11 +17,11 @@
 
 #include "PythonPlugin.h"
 #include "AboutDialog.h"
+#include "CodeEditor/PythonEditor.h"
 #include "FileRunner.h"
 #include "PackageManager.h"
-#include "PrivateRuntime.h"
-#include "QPythonEditor.h"
-#include "QPythonRepl.h"
+#include "PythonRepl.h"
+#include "Runtime/Runtime.h"
 #include "Utilities.h"
 
 #include <QDesktopServices>
@@ -37,7 +37,7 @@ PythonPlugin::PythonPlugin(QObject *parent)
     : QObject(parent),
       ccStdPluginInterface(":/CC/plugin/PythonPlugin/info.json"),
       m_interp(nullptr),
-      m_editor(new QPythonEditor(&m_interp))
+      m_editor(new PythonEditor(&m_interp))
 {
     m_interp.initialize(m_config);
 
@@ -128,7 +128,7 @@ void PythonPlugin::showRepl()
     }
     else
     {
-        m_repl = new QPythonRepl(&m_interp);
+        m_repl = new PythonRepl(&m_interp);
         m_repl->show();
     }
 }
@@ -173,8 +173,8 @@ void PythonPlugin::showPackageManager()
 
 PythonPlugin::~PythonPlugin() noexcept
 {
-    Python::unsetMainAppInterfaceInstance();
-    Python::unsetCmdLineInterfaceInstance();
+    Runtime::unsetMainAppInterfaceInstance();
+    Runtime::unsetCmdLineInterfaceInstance();
 }
 
 struct PythonPluginCommand final : public ccCommandLineInterface::Command
@@ -243,13 +243,13 @@ void PythonPlugin::registerCommands(ccCommandLineInterface *cmd)
 {
     cmd->registerCommand(
         ccCommandLineInterface::Command::Shared(new PythonPluginCommand(&m_interp)));
-    Python::setCmdLineInterfaceInstance(cmd);
+    Runtime::setCmdLineInterfaceInstance(cmd);
 }
 
 void PythonPlugin::setMainAppInterface(ccMainAppInterface *app)
 {
     ccStdPluginInterface::setMainAppInterface(app);
-    Python::setMainAppInterfaceInstance(m_app);
+    Runtime::setMainAppInterfaceInstance(m_app);
     m_fileRunner = new FileRunner(&m_interp, m_app->getMainWindow());
 }
 

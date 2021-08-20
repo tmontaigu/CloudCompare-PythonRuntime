@@ -15,13 +15,39 @@
 //#                                                                        #
 //##########################################################################
 
-#ifndef PYTHON_PLUGIN_RUNTIME_H
-#define PYTHON_PLUGIN_RUNTIME_H
+#ifndef PYTHON_PLUGIN_EDITOR_SETTINGS_H
+#define PYTHON_PLUGIN_EDITOR_SETTINGS_H
 
-class ccGuiPythonInstance;
-class ccCommandLineInterface;
+#include <ui_EditorSettings.h>
 
-Q_DECL_EXPORT ccGuiPythonInstance *GetInstance() noexcept;
-Q_DECL_EXPORT ccCommandLineInterface *GetCmdLineInstance() noexcept;
+#include "ColorScheme.h"
 
-#endif // PYTHON_PLUGIN_RUNTIME_H
+class EditorSettings final : public QDialog, public Ui::EditorSettings
+{
+    Q_OBJECT
+  public:
+    EditorSettings();
+
+    int fontSize() const;
+    bool shouldHighlightCurrentLine() const;
+    const ColorScheme &colorScheme() const;
+
+  public:
+  Q_SIGNALS:
+    void settingsChanged();
+
+  protected:
+    void connectSignals() const;
+    void saveChanges();
+    void saveChangesAndClose();
+    void cancel();
+    void setFormValuesToCurrentValues() const;
+    void loadFromSettings();
+    void setupUi();
+
+  private:
+    ColorScheme m_colorScheme = ColorScheme::Default();
+    bool m_shouldHighlightCurrentLine = true;
+};
+
+#endif // PYTHON_PLUGIN_EDITOR_SETTINGS_H

@@ -33,8 +33,6 @@
 #include <ReferenceCloud.h>
 #include <TrueKdTree.h>
 
-#include "casters.h"
-
 namespace py = pybind11;
 using namespace pybind11::literals;
 

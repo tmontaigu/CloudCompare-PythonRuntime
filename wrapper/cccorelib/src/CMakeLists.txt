@@ -1,48 +1,48 @@
 set(cccorelib_sources
-    ${CMAKE_CURRENT_LIST_DIR}/cccorelib.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/cccorelib.h
+    # cmake-format: sortable
     ${CMAKE_CURRENT_LIST_DIR}/AutoSegmentationTools.cpp
     ${CMAKE_CURRENT_LIST_DIR}/BoundingBox.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/CCConst.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/cccorelib.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/cccorelib.h
     ${CMAKE_CURRENT_LIST_DIR}/CCGeom.cpp
     ${CMAKE_CURRENT_LIST_DIR}/CCMath.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/CCConst.cpp
     ${CMAKE_CURRENT_LIST_DIR}/CCMiscTools.cpp
     ${CMAKE_CURRENT_LIST_DIR}/CCShareable.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/CloudSamplingTools.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/GenericIndexedCloudPersist.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/PointCloud.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/GenericOctree.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ChamferDistanceTransform.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/CloudSamplingTools.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Delaynay2dMesh.cpp
     ${CMAKE_CURRENT_LIST_DIR}/DgmOctree.cpp
     ${CMAKE_CURRENT_LIST_DIR}/DgmOctreeReferenceCloud.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/GenericCloud.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/GenericIndexedCloud.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/GenericProgressCallback.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/GeometricalAnalysisTools.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/TrueKdTree.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/StatisticalTestingTools.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/GenericDistribution.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/GenericTriangle.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/SimpleTriangle.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/GenericMesh.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/GenericIndexedMesh.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/SimpleMesh.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/KdTree.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/LocalModel.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/WeibullDistribution.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/ScalarFieldTools.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/ScalarField.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/RegistrationTools.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/ReferenceCloud.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/Polyline.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/PointProjectionTools.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/ManualSegmentationTools.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/NormalDistribution.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/Delaynay2dMesh.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/DistanceComputationTools.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ErrorFunction.cpp
     ${CMAKE_CURRENT_LIST_DIR}/FastMarching.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/DistanceComputationTools.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/GenericCloud.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/GenericDistribution.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/GenericIndexedCloud.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/GenericIndexedCloudPersist.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/GenericIndexedMesh.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/GenericMesh.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/GenericOctree.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/GenericProgressCallback.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/GenericTriangle.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/GeometricalAnalysisTools.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/KdTree.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/LocalModel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ManualSegmentationTools.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/NormalDistribution.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/PointCloud.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/PointProjectionTools.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Polyline.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ReferenceCloud.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/RegistrationTools.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ScalarField.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ScalarFieldTools.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/SimpleMesh.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/SimpleTriangle.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/StatisticalTestingTools.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/TrueKdTree.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/WeibullDistribution.cpp
     ${CMAKE_CURRENT_LIST_DIR}/wrappers.h
-    ${CMAKE_CURRENT_LIST_DIR}/casters.h
     PARENT_SCOPE
 )

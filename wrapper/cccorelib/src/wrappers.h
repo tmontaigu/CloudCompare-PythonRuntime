@@ -15,8 +15,8 @@
 //#                                                                        #
 //##########################################################################
 
-#ifndef CLOUDCOMPAREPROJECTS_WRAPPERS_H
-#define CLOUDCOMPAREPROJECTS_WRAPPERS_H
+#ifndef PYTHON_PLUGIN_WRAPPERS_H
+#define PYTHON_PLUGIN_WRAPPERS_H
 
 #include <CCTypes.h>
 #include <PointCloudTpl.h>
@@ -55,7 +55,8 @@ void addPointsFromArrays(PointCloudType &self,
     }
 
     py::ssize_t numToReserve = self.size() + xs.size();
-    if (numToReserve > std::numeric_limits<unsigned int>::max()) {
+    if (numToReserve > std::numeric_limits<unsigned int>::max())
+    {
         throw std::out_of_range(std::to_string(numToReserve) + " cannot be casted to unsigned int");
     }
     self.reserve(static_cast<unsigned int>(numToReserve));
@@ -159,4 +160,4 @@ void addPointsFromArrays(PointCloudType &self,
         .def("addPoints", &PyCC::addPointsFromArrays<CCCoreLib::PointCloudTpl<T, StringType>>)               \
         .def("__len__", &CCCoreLib::PointCloudTpl<T, StringType>::size);
 
-#endif // CLOUDCOMPAREPROJECTS_WRAPPERS_H
+#endif // PYTHON_PLUGIN_WRAPPERS_H

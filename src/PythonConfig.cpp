@@ -153,7 +153,8 @@ PythonConfig::PythonConfig()
         if (version.major != PythonVersion.major || version.minor != PythonVersion.minor)
         {
             ccLog::Warning(QString("Python environment at %1 is not compatible."
-                                   " Reverting to default environment").arg(m_pythonHome));
+                                   " Reverting to default environment")
+                               .arg(m_pythonHome));
             initBundled();
             return;
         }

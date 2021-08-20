@@ -1,5 +1,5 @@
-#ifndef CHAISCRIPT_CODE_EDITOR_MAIN_WINDOW
-#define CHAISCRIPT_CODE_EDITOR_MAIN_WINDOW
+#ifndef PYTHON_PLUGIN_CODE_EDITOR_MAIN_WINDOW
+#define PYTHON_PLUGIN_CODE_EDITOR_MAIN_WINDOW
 
 //##########################################################################
 //#                                                                        #
@@ -18,10 +18,10 @@
 //#                                Thomas Montaigu                         #
 //##########################################################################
 
-#include <ui_QPythonEditor.h>
+#include <ui_PythonEditor.h>
 
 // Qt
-#include "QEditorSettings.h"
+#include "EditorSettings.h"
 #include <QMainWindow>
 #include <ccLog.h>
 
@@ -39,14 +39,14 @@ class ccMainAppInterface;
 class PythonInterpreter;
 class ProjectViewContextMenu;
 
-class QPythonEditor final : public QMainWindow, public Ui::QPythonEditor
+class PythonEditor final : public QMainWindow, public Ui::PythonEditor
 {
     Q_OBJECT
 
   public:
     static QString SettingsApplicationName();
 
-    explicit QPythonEditor(PythonInterpreter *interpreter);
+    explicit PythonEditor(PythonInterpreter *interpreter);
 
     void changeEvent(QEvent *e) override;
     /// Opens a file
@@ -112,7 +112,7 @@ class QPythonEditor final : public QMainWindow, public Ui::QPythonEditor
     QMdiSubWindow *findChildCodeEditor(const QString &fileName) const;
 
   private: // Members
-    QEditorSettings *m_settings{nullptr};
+    EditorSettings *m_settings{nullptr};
 
     QMdiArea *m_mdiArea{nullptr};
 
@@ -130,4 +130,4 @@ class QPythonEditor final : public QMainWindow, public Ui::QPythonEditor
     QAction *m_windowMenuSeparatorAct{nullptr};
 };
 
-#endif // CHAISCRIPT_CODE_EDITOR_MAIN_WINDOW
+#endif // PYTHON_PLUGIN_CODE_EDITOR_MAIN_WINDOW
