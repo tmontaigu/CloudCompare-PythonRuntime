@@ -14,48 +14,24 @@
 //#                   COPYRIGHT: Thomas Montaigu                           #
 //#                                                                        #
 //##########################################################################
+#ifndef PYTHON_PLUGIN_PYTHON_ACTION_LAUNCHER_H
+#define PYTHON_PLUGIN_PYTHON_ACTION_LAUNCHER_H
 
-#pragma once
+#include <QListWidget>
+#include <QWidget>
 
-class ccMainAppInterface;
-class ccCommandLineInterface;
-
-#include "../../wrapper/pycc/src/casters.h"
-
-namespace py = pybind11;
-
-namespace Runtime
+class PythonActionLauncher : public QWidget
 {
-struct RegisteredFunction
-{
-    explicit RegisteredFunction(const py::dict &dict) noexcept(false)
-    {
-        name = dict["name"].cast<QString>();
-        target = dict["target"];
-    }
+    Q_OBJECT
+  public:
+    explicit PythonActionLauncher(QWidget *parent = nullptr);
 
-    void operator()()
-    {
-        target();
-    }
+  protected:
+    void showEvent(QShowEvent *event) override;
+    void launchAction(QListWidgetItem *item) const;
 
-    bool operator==(const RegisteredFunction &other) const
-    {
-        return name == other.name && target.is(other.target);
-    }
-
-    QString name{};
-    pybind11::object target{};
+  private: // Members
+    QListWidget *m_actions;
 };
 
-std::vector<RegisteredFunction> &registeredFunctions();
-/// This must be called before finalizing the interpreter
-void clearRegisteredFunction();
-
-void setMainAppInterfaceInstance(ccMainAppInterface *appInterface) noexcept(false);
-void unsetMainAppInterfaceInstance() noexcept;
-
-void setCmdLineInterfaceInstance(ccCommandLineInterface *cmdLine) noexcept;
-void unsetCmdLineInterfaceInstance() noexcept;
-
-} // namespace Runtime
+#endif // PYTHON_PLUGIN_PYTHON_ACTION_LAUNCHER_H

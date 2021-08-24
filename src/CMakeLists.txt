@@ -13,6 +13,8 @@ target_sources(
           ${CMAKE_CURRENT_LIST_DIR}/FileRunner.h
           ${CMAKE_CURRENT_LIST_DIR}/PackageManager.cpp
           ${CMAKE_CURRENT_LIST_DIR}/PackageManager.h
+          ${CMAKE_CURRENT_LIST_DIR}/PythonActionLauncher.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/PythonActionLauncher.h
           ${CMAKE_CURRENT_LIST_DIR}/PythonConfig.cpp
           ${CMAKE_CURRENT_LIST_DIR}/PythonConfig.h
           ${CMAKE_CURRENT_LIST_DIR}/PythonHighlighter.cpp

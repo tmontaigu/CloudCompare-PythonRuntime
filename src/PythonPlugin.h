@@ -27,6 +27,7 @@ class PythonEditor;
 class PythonRepl;
 class FileRunner;
 class PackageManager;
+class PythonActionLauncher;
 
 /// "Entry point" of the plugin
 class PythonPlugin final : public QObject, public ccStdPluginInterface
@@ -60,6 +61,7 @@ class PythonPlugin final : public QObject, public ccStdPluginInterface
     void showAboutDialog() const;
     void showFileRunner() const;
     void showPackageManager();
+    void showPythonActionLauncher() const;
     static void showDocumentation();
 
     PythonConfig m_config{};
@@ -69,6 +71,7 @@ class PythonPlugin final : public QObject, public ccStdPluginInterface
     PythonEditor *m_editor{nullptr};
     FileRunner *m_fileRunner{nullptr};
     PackageManager *m_packageManager{nullptr};
+    PythonActionLauncher *m_actionLauncher{nullptr};
 
     /// Actions
     QAction *m_showEditor{nullptr};
@@ -77,6 +80,7 @@ class PythonPlugin final : public QObject, public ccStdPluginInterface
     QAction *m_showFileRunner{nullptr};
     QAction *m_showAboutDialog{nullptr};
     QAction *m_showPackageManager{nullptr};
+    QAction *m_showActionLauncher{nullptr};
 };
 
 #endif // PYTHON_PLUGIN_H

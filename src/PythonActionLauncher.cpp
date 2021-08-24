@@ -14,48 +14,50 @@
 //#                   COPYRIGHT: Thomas Montaigu                           #
 //#                                                                        #
 //##########################################################################
+#include "PythonActionLauncher.h"
 
-#pragma once
+#include <QVBoxLayout>
 
-class ccMainAppInterface;
-class ccCommandLineInterface;
+#undef slots
+#include "PythonStdErrOutRedirect.h"
+#include "Runtime/Runtime.h"
 
-#include "../../wrapper/pycc/src/casters.h"
-
-namespace py = pybind11;
-
-namespace Runtime
+PythonActionLauncher::PythonActionLauncher(QWidget *parent)
+    : QWidget(parent), m_actions(new QListWidget(this))
 {
-struct RegisteredFunction
+    setWindowTitle("ActionLauncher");
+    connect(m_actions, &QListWidget::itemDoubleClicked, this, &PythonActionLauncher::launchAction);
+    setLayout(new QVBoxLayout);
+    layout()->addWidget(m_actions);
+}
+
+void PythonActionLauncher::showEvent(QShowEvent *event)
 {
-    explicit RegisteredFunction(const py::dict &dict) noexcept(false)
+    m_actions->clear();
+    for (const Runtime::RegisteredFunction &f : Runtime::registeredFunctions())
     {
-        name = dict["name"].cast<QString>();
-        target = dict["target"];
+        m_actions->addItem(f.name);
     }
+    QWidget::showEvent(event);
+}
 
-    void operator()()
+void PythonActionLauncher::launchAction(QListWidgetItem *item) const
+{
+    QString actionName = item->text();
+    for (Runtime::RegisteredFunction &f : Runtime::registeredFunctions())
     {
-        target();
+        if (f.name == actionName)
+        {
+            try
+            {
+                PyStdErrOutStreamRedirect scoped_redirect;
+                f();
+            }
+            catch (const std::exception &e)
+            {
+                ccLog::Error("Failed to start Python actions: %s", e.what());
+            }
+            break;
+        }
     }
-
-    bool operator==(const RegisteredFunction &other) const
-    {
-        return name == other.name && target.is(other.target);
-    }
-
-    QString name{};
-    pybind11::object target{};
-};
-
-std::vector<RegisteredFunction> &registeredFunctions();
-/// This must be called before finalizing the interpreter
-void clearRegisteredFunction();
-
-void setMainAppInterfaceInstance(ccMainAppInterface *appInterface) noexcept(false);
-void unsetMainAppInterfaceInstance() noexcept;
-
-void setCmdLineInterfaceInstance(ccCommandLineInterface *cmdLine) noexcept;
-void unsetCmdLineInterfaceInstance() noexcept;
-
-} // namespace Runtime
+}
