@@ -1,3 +1,6 @@
+# PYTHON_PREFIX & PYTHON_LIBRARY_SUFFIX come from pybind11 cmake
+
+# This function sets a global PYTHON_BASE_PREFIX cache variable
 function(getset_python_base_prefix)
     execute_process(
         COMMAND 
@@ -9,22 +12,28 @@ function(getset_python_base_prefix)
     set(PYTHON_BASE_PREFIX "${PYTHON_BASE_PREFIX}" PARENT_SCOPE)
 endfunction()
 
-function(copy_python_venv install_dir)
+function(copy_python_venv INSTALL_DIR)
+    message(DEBUG "Venv copy:
+        PYTHON_BASE_PREFIX: ${PYTHON_BASE_PREFIX}
+        PYTHON_PREFIX:      ${PYTHON_PREFIX}
+        INSTALL_DIR:        ${INSTALL_DIR}")
+    message(DEBUG "COPYING venv from ${PYTHON_BASE_PREFIX} to ${INSTALL_DIR}")
     install(
         DIRECTORY "${PYTHON_BASE_PREFIX}/"
-        DESTINATION "${install_dir}"
+        DESTINATION "${INSTALL_DIR}"
     )
 
     if (NOT "${PYTHON_BASE_PREFIX}" STREQUAL "${PYTHON_PREFIX}")
         install(
             DIRECTORY "${PYTHON_PREFIX}/Lib/site-packages/"
-            DESTINATION "${install_dir}/Lib/site-packages/"
+            DESTINATION "${INSTALL_DIR}/Lib/site-packages/"
         )
     endif()
 endfunction()
 
 
 function (copy_python_dll)
+    message(DEBUG "Python DLL: = ${PYTHON_BASE_PREFIX}/python${PYTHON_LIBRARY_SUFFIX}.dll")
     install(
         FILES "${PYTHON_BASE_PREFIX}/python${PYTHON_LIBRARY_SUFFIX}.dll" 
         DESTINATION ${CLOUDCOMPARE_DEST_FOLDER}
