@@ -57,7 +57,13 @@ if(CCCORELIB_PYTHON_IS_MASTER_PROJECT)
     GIT_TAG be52fc2f9981a80cd457cd914f44f17f6ebf04f1
   )
 
-  FetchContent_MakeAvailable(CCCoreLib)
+  FetchContent_GetProperties(CCCoreLib)
+  string(TOLOWER "CCCoreLib" lcName)
+  if (NOT CCCoreLib_POPULATED)
+    FetchContent_Populate(CCCoreLib)
+    # Non-capitalized names are important
+    add_subdirectory(${${lcName}_SOURCE_DIR} ${${lcName}_BINARY_DIR} EXCLUDE_FROM_ALL)
+  endif ()
 endif()
 
 if(CCCORELIB_PYTHON_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
@@ -96,12 +102,14 @@ if(CCCORELIB_PYTHON_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
         PATTERN "*.exe" EXCLUDE
       )
     elseif(APPLE)
+      install(TARGETS CCCoreLib)
       set_property(
         TARGET cccorelib
         PROPERTY INSTALL_RPATH
                  "@loader_path/../../.." # or "${PYTHON_SITE_PACKAGES}/../..""
       )
     else()
+      install(TARGETS CCCoreLib)
       set_property(
         TARGET cccorelib
         PROPERTY INSTALL_RPATH

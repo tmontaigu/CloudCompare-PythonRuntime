@@ -60,7 +60,12 @@ if(PYCC_IS_MASTER_PROJECT)
     GIT_SHALLOW OFF
   )
 
-  FetchContent_MakeAvailable(CloudCompare)
+  FetchContent_GetProperties(CloudCompare)
+  string(TOLOWER "CloudCompare" lcName)
+  if (NOT CloudCompare_POPULATED)
+    FetchContent_Populate(CloudCompare)
+    add_subdirectory(${${lcName}_SOURCE_DIR} ${${lcName}_BINARY_DIR} EXCLUDE_FROM_ALL)
+  endif()
 endif()
 
 if(PYCC_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
@@ -112,6 +117,7 @@ if(PYCC_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
         PATTERN "*.exe" EXCLUDE
       )
     elseif(APPLE)
+      install(TARGETS QCC_DB_LIB QCC_GL_LIB QCC_IO_LIB CC_FBO_LIB)
       set_property(
         TARGET pycc
         PROPERTY INSTALL_RPATH
@@ -124,6 +130,7 @@ if(PYCC_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
       foreach(target_name IN ITEMS QCC_DB_LIB QCC_GL_LIB QCC_IO_LIB CC_FBO_LIB)
         set_property(TARGET "${target_name}" PROPERTY INSTALL_RPATH "$ORIGIN")
       endforeach()
+      install(TARGETS QCC_DB_LIB QCC_GL_LIB QCC_IO_LIB CC_FBO_LIB)
       set_property(
         TARGET pycc
         PROPERTY INSTALL_RPATH
