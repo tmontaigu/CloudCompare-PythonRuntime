@@ -2,4 +2,5 @@ numpy
 pybind11>=2.6.0
 sphinx
 sphinx-rtd-theme
+breathe
 pytest
