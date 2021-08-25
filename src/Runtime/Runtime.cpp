@@ -38,10 +38,14 @@ using namespace pybind11::literals;
 namespace Runtime
 {
 
+/// Interface that 'class-style' PythonPlugin must implement to be loaded
 class PythonPluginInterface
 {
   public:
     virtual ~PythonPluginInterface(){};
+    /// Called automatically after the plugin is instantiated.
+    /// In this function, the plugin implementer should register actions
+    /// it wishes to expose to the user.
     virtual void registerActions() = 0;
 };
 

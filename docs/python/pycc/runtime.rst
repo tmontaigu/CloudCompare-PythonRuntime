@@ -31,6 +31,13 @@ Runtime
     Returns the :class:`pycc.ccPythonInstance` object if the script is ran from
     the command line mode, otherwise returns `None`.
 
+.. autofunction:: pycc.RegisterAction
+
+
+.. autoclass:: pycc.PythonPluginInterface
+    :members:
+    :undoc-members:
+
 
 .. autofunction:: pycc.RunInThread
 

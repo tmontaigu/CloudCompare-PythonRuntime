@@ -23,6 +23,8 @@ target_sources(
           ${CMAKE_CURRENT_LIST_DIR}/PythonInterpreter.h
           ${CMAKE_CURRENT_LIST_DIR}/PythonPlugin.cpp
           ${CMAKE_CURRENT_LIST_DIR}/PythonPlugin.h
+          ${CMAKE_CURRENT_LIST_DIR}/PythonPluginSettings.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/PythonPluginSettings.h
           ${CMAKE_CURRENT_LIST_DIR}/PythonRepl.cpp
           ${CMAKE_CURRENT_LIST_DIR}/PythonRepl.h
           ${CMAKE_CURRENT_LIST_DIR}/Utilities.h

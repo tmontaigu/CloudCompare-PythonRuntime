@@ -21,6 +21,7 @@
 #include "FileRunner.h"
 #include "PackageManager.h"
 #include "PythonActionLauncher.h"
+#include "PythonPluginSettings.h"
 #include "PythonRepl.h"
 #include "PythonStdErrOutRedirect.h"
 #include "Runtime/Runtime.h"
@@ -33,54 +34,75 @@
 #define signals Q_SIGNALS
 #include <ccCommandLineInterface.h>
 
-static void LoadCustomPythonPlugins()
+static void LoadCustomPythonPlugins(const QString &paths)
 {
-
-    QString pyplgpath = QCoreApplication::applicationDirPath() + "/plugins-python";
-    py::module::import("sys").attr("path").attr("append")(pyplgpath);
-    QDirIterator iter(pyplgpath);
-    while (iter.hasNext())
+    if (paths.isEmpty())
     {
-        iter.next();
-        QFileInfo entry = iter.fileInfo();
-        QString fileName = entry.fileName();
-
-        if (fileName == "." || fileName == ".." || fileName == "__pycache__")
-        {
-            continue;
-        }
-
-        QString nameToImport = fileName;
-        if (!entry.isDir() && fileName.endsWith(".py"))
-        {
-            nameToImport = fileName.left(fileName.size() - 3);
-        }
-
-        const std::string nameToImportStd = nameToImport.toStdString();
-        try
-        {
-            py::module::import(nameToImportStd.c_str());
-            ccLog::Print("[PythonPlugin] Loaded plugin '%s'", nameToImportStd.c_str());
-        }
-        catch (const std::exception &e)
-        {
-            ccLog::Warning(
-                "[PythonPlugin] Failed to load plugin '%s': %s", nameToImportStd.c_str(), e.what());
-        }
+        return;
     }
+#ifdef Q_OS_WIN
+    const QChar sep = ';';
+#else
+    const QChar sep = ':';
+#endif
 
-    py::list subclasses =
-        py::module::import("pycc_runtime").attr("PythonPluginInterface").attr("__subclasses__")();
-    for (auto &subClassType : subclasses)
+    ccLog::Print("[PythonPlugin] Searching for custom plugin");
+    QStringList pluginsPaths = paths.split(sep);
+    py::module::import("sys").attr("path").attr("append")(paths);
+    for (const QString &path : pluginsPaths)
     {
-        try
+        ccLog::Print(QString("[PythonPlugin]     searching in %1").arg(path));
+        QDirIterator iter(path);
+        while (iter.hasNext())
         {
-            auto tmp = subClassType.cast<py::object>();
-            tmp().attr("registerActions")();
+            iter.next();
+            QFileInfo entry = iter.fileInfo();
+            QString fileName = entry.fileName();
+
+            if (fileName == "." || fileName == ".." || fileName == "__pycache__")
+            {
+                continue;
+            }
+
+            QString nameToImport = fileName;
+            if (!entry.isDir() && fileName.endsWith(".py"))
+            {
+                nameToImport = fileName.left(fileName.size() - 3);
+            }
+
+            const std::string nameToImportStd = nameToImport.toStdString();
+            try
+            {
+                py::module::import(nameToImportStd.c_str());
+                ccLog::Print("[PythonPlugin]     Loaded plugin '%s'", nameToImportStd.c_str());
+            }
+            catch (const std::exception &e)
+            {
+                ccLog::Warning("[PythonPlugin]     Failed to load plugin '%s': %s",
+                               nameToImportStd.c_str(),
+                               e.what());
+            }
         }
-        catch (const std::exception &e)
+
+        py::list subClassTypes = py::module::import("pycc_runtime")
+                                     .attr("PythonPluginInterface")
+                                     .attr("__subclasses__")();
+        for (auto &subClassType : subClassTypes)
         {
-            ccLog::Warning("[PythonPlugin] Failed to instantiate plugin: %s", e.what());
+            try
+            {
+                // Here, we create an instance of the plugin,
+                // it will then register the methods it wants to appear as actions
+                // (because we call the "registerActions")
+                // As we keep references to registered methods
+                // we do not need to keep a reference to the actual instance.
+                auto instance = subClassType.cast<py::object>();
+                instance().attr("registerActions")();
+            }
+            catch (const std::exception &e)
+            {
+                ccLog::Warning("[PythonPlugin]     Failed to instantiate plugin: %s", e.what());
+            }
         }
     }
 }
@@ -93,18 +115,10 @@ PythonPlugin::PythonPlugin(QObject *parent)
       m_interp(nullptr),
       m_editor(new PythonEditor(&m_interp)),
       m_fileRunner(new FileRunner(&m_interp)),
-      m_actionLauncher(new PythonActionLauncher)
+      m_actionLauncher(new PythonActionLauncher),
+      m_settings(new PythonPluginSettings)
 {
     m_interp.initialize(m_config);
-
-    try
-    {
-        LoadCustomPythonPlugins();
-    }
-    catch (const std::exception &e)
-    {
-        ccLog::Warning("[PythonPlugin] Failed to load custom python plugins: %e", e.what());
-    }
 
     LogPythonHome();
     LogPythonPath();
@@ -187,13 +201,23 @@ QList<QAction *> PythonPlugin::getActions()
         m_showActionLauncher->setEnabled(enableActions);
     }
 
+    if (!m_showSettings)
+    {
+        m_showSettings = new QAction("Show Settings", this);
+        m_showSettings->setToolTip("Show some settings");
+        m_showActionLauncher->setIcon(QIcon());
+        connect(m_showSettings, &QAction::triggered, this, &PythonPlugin::showSettings);
+        m_showSettings->setEnabled(enableActions);
+    }
+
     return {m_showEditor,
             m_showFileRunner,
             m_showAboutDialog,
             m_showDoc,
             m_showRepl,
             m_showPackageManager,
-            m_showActionLauncher};
+            m_showActionLauncher,
+            m_showSettings};
 }
 
 void PythonPlugin::showRepl()
@@ -252,6 +276,11 @@ void PythonPlugin::showPackageManager()
 void PythonPlugin::showPythonActionLauncher() const
 {
     m_actionLauncher->show();
+}
+
+void PythonPlugin::showSettings() const
+{
+    m_settings->show();
 }
 
 PythonPlugin::~PythonPlugin() noexcept
@@ -333,8 +362,22 @@ void PythonPlugin::setMainAppInterface(ccMainAppInterface *app)
 {
     ccStdPluginInterface::setMainAppInterface(app);
     Runtime::setMainAppInterfaceInstance(m_app);
+
+    // Now that the mainAppInterface is set, we can load custom
+    // python plugins, if we did this earlier, `pycc.GetInstance()`
+    // in python would return `None` and that's bad.
+    try
+    {
+        LoadCustomPythonPlugins(m_settings->pluginsPaths());
+    }
+    catch (const std::exception &e)
+    {
+        ccLog::Warning("[PythonPlugin] Failed to load custom python plugins: %e", e.what());
+    }
+
     m_fileRunner->setParent(m_app->getMainWindow(), Qt::Window);
     m_actionLauncher->setParent(m_app->getMainWindow(), Qt::Window);
+    m_settings->setParent(m_app->getMainWindow(), Qt::Window);
 }
 
 void PythonPlugin::finalizeInterpreter()
