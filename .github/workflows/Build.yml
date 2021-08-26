@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: '2a92607384aba4d35f29e733477ab733f571cfe2'
+          ref: '22f6d835a6f6179130efabcadf46245697fa6eaa'
           submodules: true
 
       - name: Clone PythonPlugin
@@ -88,7 +88,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: '2a92607384aba4d35f29e733477ab733f571cfe2'
+          ref: '22f6d835a6f6179130efabcadf46245697fa6eaa'
           submodules: true
 
       - name: Clone PythonPlugin
@@ -129,7 +129,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: '2a92607384aba4d35f29e733477ab733f571cfe2'
+          ref: '22f6d835a6f6179130efabcadf46245697fa6eaa'
           submodules: true
 
       - name: Clone PythonPlugin

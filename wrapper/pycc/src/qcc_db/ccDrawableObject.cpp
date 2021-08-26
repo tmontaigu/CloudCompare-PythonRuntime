@@ -32,7 +32,7 @@ void define_ccDrawableObject(py::module &m)
         .def("isVisible", &ccDrawableObject::isVisible)
         .def("setVisible", &ccDrawableObject::setVisible, "state"_a)
         .def("toggleVisibility", &ccDrawableObject::toggleVisibility)
-        .def("isVisibilityLocked", &ccDrawableObject::isVisiblityLocked)
+        .def("isVisibilityLocked", &ccDrawableObject::isVisibilityLocked)
         .def("lockVisibility", &ccDrawableObject::lockVisibility)
         .def("isSelected", &ccDrawableObject::isSelected)
         .def("setSelected", &ccDrawableObject::setSelected, "state"_a)
@@ -54,7 +54,7 @@ void define_ccDrawableObject(py::module &m)
         .def("nameShownIn3D", &ccDrawableObject::nameShownIn3D)
         .def("toggleShowName", &ccDrawableObject::toggleShowName)
         // temporary color
-        .def("isColorOverridden", &ccDrawableObject::isColorOverriden)
+        .def("isColorOverridden", &ccDrawableObject::isColorOverridden)
         .def("getTempColor", &ccDrawableObject::getTempColor)
         .def("setTempColor",
              (void (ccDrawableObject::*)(const ccColor::Rgba &, bool))(
