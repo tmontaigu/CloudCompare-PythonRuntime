@@ -1,10 +1,12 @@
 import os
 import subprocess
-
+import platform
 abspath = os.path.dirname(os.path.abspath(__file__))
 
 
 def assert_command_runs(*cmd):
+    if platform.system() == 'Darwin':
+        cmd = ['open', '-a'] + [cmd[0]] + ["--args"] + list(cmd[1:])
     completed_proc = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     if not completed_proc.returncode == 0:
         print(f"CloudCompare exited with return code: {completed_proc.returncode}")

@@ -122,7 +122,6 @@ jobs:
   MacOs-Build:
     name: "macOs Build"
     runs-on: macos-latest
-    if: false
 
     steps:
       - name: Clone CloudCompare
@@ -165,7 +164,7 @@ jobs:
         run: |
           python3 -m pip install pytest
           cd plugins/private/CloudCompare-PythonPlugin
-          python3 -m pytest --cloudcompare_exe ${{ github.workspace }}/install/bin/CloudCompare tests
+          python3 -m pytest --cloudcompare_exe ${{ github.workspace }}/install/CloudCompare/CloudCompare.app tests
 
 
   Windows-Wheels:
