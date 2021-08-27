@@ -66,6 +66,10 @@ __________
     :undoc-members:
     :show-inheritance:
 
+ccQuadric
+_________
 
-
-
+.. autoclass:: pycc.ccQuadric
+    :members:
+    :undoc-members:
+    :show-inheritance:

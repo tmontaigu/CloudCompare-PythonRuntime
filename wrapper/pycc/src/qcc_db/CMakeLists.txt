@@ -29,5 +29,11 @@ set(pycc_db_sources
     ${CMAKE_CURRENT_LIST_DIR}/ccViewportObject.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccViewPortParameters.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qcc_db.cpp
-    PARENT_SCOPE
+        ${CMAKE_CURRENT_LIST_DIR}/ccWaveform.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/ccSubMesh.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/ccRasterGrid.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/ccQuadric.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/ccPolyline.cpp
+
+        PARENT_SCOPE
 )

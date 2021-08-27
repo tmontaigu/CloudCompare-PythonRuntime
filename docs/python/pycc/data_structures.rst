@@ -33,6 +33,7 @@ _________
 PointCloud
 ----------
 
+
 ccGenericPointCloud
 ___________________
 .. seealso::
@@ -57,9 +58,23 @@ _____________
     :show-inheritance:
 
 
+ccPolyline
+__________
+.. seealso::
+
+    C++: :cpp:class:`ccPolyline`
+
+.. autoclass:: pycc.ccPolyline
+    :inherited-members:
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Mesh
 ----
+
+.. inheritance-diagram:: pycc.ccGenericMesh pycc.ccMesh pycc.ccSubMesh
 
 ccGenericMesh
 _____________
@@ -83,3 +98,13 @@ ______
     :undoc-members:
     :show-inheritance:
 
+ccSubMesh
+_________
+.. seealso::
+
+    C++: :cpp:class:`ccSubMesh`
+
+.. autoclass:: pycc.ccSubMesh
+    :members:
+    :undoc-members:
+    :show-inheritance:

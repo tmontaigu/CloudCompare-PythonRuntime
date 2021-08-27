@@ -1,6 +1,7 @@
 Others
 ======
 
+
 ccScalarField
 _____________
 
@@ -132,4 +133,47 @@ __________________
     :undoc-members:
     :show-inheritance:
 
+WaveformDescriptor
+__________________
+.. seealso::
 
+    C++: :cpp:class:`WaveformDescriptor`
+
+.. autoclass:: pycc.WaveformDescriptor
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+ccWaveform
+__________
+.. seealso::
+
+    C++: :cpp:class:`ccWaveform`
+
+.. autoclass:: pycc.ccWaveform
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+ccWaveformProxy
+_______________
+.. seealso::
+
+    C++: :cpp:class:`ccWaveformProxy`
+
+.. autoclass:: pycc.ccWaveformProxy
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+ccRasterGrid
+_______________
+.. seealso::
+
+    C++: :cpp:class:`ccRasterGrid`
+
+.. autoclass:: pycc.ccRasterGrid
+    :members:
+    :undoc-members:
+    :show-inheritance:

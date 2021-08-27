@@ -27,7 +27,7 @@ void define_BoundingBox(py::module &cccorelib)
 {
     py::class_<CCCoreLib::BoundingBox>(cccorelib, "BoundingBox")
         .def(py::init<>())
-        .def(py::init<CCVector3, CCVector3>())
+        .def(py::init<CCVector3, CCVector3>(), "minCorner"_a, "maxCorner"_a)
         .def("clear", &CCCoreLib::BoundingBox::clear)
         .def("add", &CCCoreLib::BoundingBox::add, "aPoint"_a)
         .def("minCorner", [](const CCCoreLib::BoundingBox &self) { return self.minCorner(); })

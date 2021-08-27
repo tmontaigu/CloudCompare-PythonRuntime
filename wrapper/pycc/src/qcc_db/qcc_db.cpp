@@ -52,6 +52,11 @@ void define_ccBBox(py::module &);
 void define_ccSensor(py::module &m);
 void define_ccCameraSensor(py::module &);
 void define_ccColorScale(py::module &);
+void define_ccWaveform(py::module &m);
+void define_ccSubMesh(py::module &m);
+void define_ccRasterGrid(py::module &m);
+void define_ccQuadric(py::module &m);
+void define_ccPolyline(py::module &m);
 
 template <class T> using observer_ptr = std::unique_ptr<T, py::nodelete>;
 
@@ -103,6 +108,7 @@ void define_qcc_db(py::module &m)
     define_ccDish(m);
     define_ccCone(m);
     define_ccCylinder(m);
+    define_ccQuadric(m);
     define_cc2DLabel(m);
     define_ccColorScale(m);
     define_ccViewPortParameters(m);
@@ -110,9 +116,12 @@ void define_qcc_db(py::module &m)
     define_ccBBox(m);
     define_ccSensor(m);
     define_ccCameraSensor(m);
-
+    define_ccSubMesh(m);
+    define_ccWaveform(m);
+    define_ccRasterGrid(m);
     define_ccGenericPointCloud(m);
     define_ccPointCloud(m);
+    define_ccPolyline(m);
 
     define_ccLog(m);
     define_ccProgressDialog(m);

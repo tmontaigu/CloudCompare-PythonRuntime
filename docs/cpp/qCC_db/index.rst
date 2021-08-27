@@ -48,6 +48,14 @@ _____________
    :members:
 
 
+ccPolyline
+__________
+.. seealso::
+
+    Python: :class:`pycc.ccPolyline`
+
+.. doxygenclass:: ccPolyline
+   :members:
 
 Mesh
 ----
@@ -69,6 +77,15 @@ ______
     Python: :class:`pycc.ccMesh`
 
 .. doxygenclass:: ccMesh
+   :members:
+
+ccSubMesh
+_________
+.. seealso::
+
+    Python: :class:`pycc.ccSubMesh`
+
+.. doxygenclass:: ccSubMesh
    :members:
 
 Primitives
@@ -117,6 +134,11 @@ ________
 ccTorus
 _______
 .. doxygenclass:: ccTorus
+   :members:
+
+ccQuadric
+_________
+.. doxygenclass:: ccQuadric
    :members:
 
 Others
@@ -222,3 +244,38 @@ ____________________
 .. doxygenclass:: ccColorScalesManager
    :members:
 
+WaveformDescriptor
+__________________
+.. seealso::
+
+    Python: :class:`pycc.WaveformDescriptor`
+
+.. doxygenclass:: WaveformDescriptor
+   :members:
+
+ccWaveform
+__________
+.. seealso::
+
+    Python: :class:`pycc.ccWaveform`
+
+.. doxygenclass:: ccWaveform
+   :members:
+
+ccWaveformProxy
+_______________
+.. seealso::
+
+    Python: :class:`pycc.ccWaveformProxy`
+
+.. doxygenclass:: ccWaveformProxy
+   :members:
+
+ccRasterGrid
+_______________
+.. seealso::
+
+    Python: :class:`pycc.ccRasterGrid`
+
+.. doxygenstruct:: ccRasterGrid
+   :members:
