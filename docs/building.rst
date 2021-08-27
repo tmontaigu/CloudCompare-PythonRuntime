@@ -22,6 +22,8 @@ The process to build is explained in the sections below.
 Building as Plugin
 ------------------
 
+Supported platforms: [Windows, Linux, macOs]
+
 In the following sections we assume that you know
 how to compile CloudCompare from source, otherwise refer
 to the CloudCompare documentation on how to do.
@@ -96,9 +98,24 @@ _____
 5. Install
 
 
+macOs
+_____
 
-Building as indenpendent wheels
+1. Clone this project in CloudCompare/plugins/private
+2. Make sure you have python3 installed (and Qt)
+3. Install additional dependencies
+
+    In this example, we will use brew
+    ``brew install pybind11``
+
+4. Run cmake with ``-DPLUGIN_PYTHON=ON``
+5. Build
+5. Install
+
+Building as independent wheels
 -------------------------------
+
+Supported platforms: [Windows, Linux, macOs]
 
 It is also possible to build and install the bindings as standard python
 packages to use them in python scripts (run by a standalone python executable
@@ -117,13 +134,17 @@ To do so:
 
 1. Clone this project
 
-2. (Windows) Set path to Qt
+2. Set path to Qt (Windows/macOs)
 
 .. code-block:: PowerShell
 
-    # First set `CMAKE_PREFIX_PATH` with the path to Qt
-    $env:CMAKE_PREFIX_PATH+=";C:\Qt\5.15.2\msvc2019_64
+    # Windows (PowerShell)
+    $env:CMAKE_PREFIX_PATH+=";C:\Qt\5.15.2\msvc2019_64"
 
+.. code-block:: bash
+
+    macOs (bash)
+    export CMAKE_PREFIX_PATH=/usr/local/opt/qt@5
 
 3. Run
 
