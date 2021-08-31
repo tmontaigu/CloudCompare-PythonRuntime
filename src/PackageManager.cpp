@@ -30,6 +30,33 @@
 
 #include <ccLog.h>
 
+#include <ui_InstallDialog.h>
+
+class InstallDialog : public QDialog
+{
+    Q_OBJECT
+  public:
+    explicit InstallDialog(QWidget *parent = nullptr) : QDialog(parent), m_ui(new Ui_InstallDialog)
+    {
+        m_ui->setupUi(this);
+    }
+    bool force() const
+    {
+        return m_ui->forceCheckBox;
+    }
+    bool upgrade() const
+    {
+        return m_ui->updateCheckBox;
+    }
+    QString packageName() const
+    {
+        return m_ui->packageNameEdit->text();
+    }
+
+  private:
+    Ui_InstallDialog *m_ui;
+};
+
 class CommandOutputDialog : public QDialog
 {
     Q_OBJECT
@@ -165,16 +192,28 @@ void PackageManager::refreshInstalledPackagesList()
 
 void PackageManager::handleInstallPackage()
 {
-    bool ok;
-    const QString packageName = QInputDialog::getText(
-        this, "Install Package", "package name", QLineEdit::Normal, QString(), &ok);
+    InstallDialog installDialog(this);
+    if (installDialog.exec() != QDialog::Accepted)
+    {
+        return;
+    };
 
-    if (!ok || packageName.isEmpty())
+    const QString packageName = installDialog.packageName();
+
+    if (packageName.isEmpty())
     {
         return;
     }
 
-    const QStringList arguments = {"-m", "pip", "install", packageName};
+    QStringList arguments = {"-m", "pip", "install", packageName};
+    if (installDialog.force())
+    {
+        arguments.push_back("--force");
+    }
+    if (installDialog.upgrade())
+    {
+        arguments.push_back("--upgrade");
+    }
     executeCommand(arguments);
 
     if (m_pythonProcess->exitCode() != 0)

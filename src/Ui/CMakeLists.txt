@@ -6,6 +6,7 @@ target_sources(
           ${CMAKE_CURRENT_LIST_DIR}/PackageManager.ui
           ${CMAKE_CURRENT_LIST_DIR}/PythonEditor.ui
           ${CMAKE_CURRENT_LIST_DIR}/PythonREPL.ui
+          ${CMAKE_CURRENT_LIST_DIR}/InstallDialog.ui
 )
 
 set_target_properties(
