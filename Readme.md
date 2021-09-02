@@ -10,6 +10,11 @@ is hosted using github pages.
  - Python
  - pybind11
 
+# Windows installer
+
+Windows user can download the [installer](https://u.pcloud.link/publink/show?code=XZjJbdXZYEGTg7gcFAum74E8OPDlEBFQivUk). 
+This requires an installation of CloudCompare 2.12 alpha (from the 30/08) downloadable from the website
+
 # Building & Installing
 
 see [building.rst](docs/building.rst)
