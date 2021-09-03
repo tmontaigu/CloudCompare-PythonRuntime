@@ -317,4 +317,9 @@ void PackageManager::setBusy(bool isBusy)
     m_ui->uninstallBtn->setEnabled(!isBusy);
 }
 
+PackageManager::~PackageManager() noexcept
+{
+    delete m_ui;
+}
+
 #include "PackageManager.moc"

@@ -31,3 +31,8 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent), m_dlg(new Ui_AboutD
     const char *versionStr = Py_GetVersion();
     m_dlg->pythonVersionLabel->setText(QString(versionStr));
 }
+
+AboutDialog::~AboutDialog() noexcept
+{
+    delete m_dlg;
+}

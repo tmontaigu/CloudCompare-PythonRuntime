@@ -35,6 +35,7 @@ class PackageManager final : public QWidget
     Q_OBJECT
   public:
     explicit PackageManager(const PythonConfig &config, QWidget *parent = nullptr);
+    ~PackageManager() noexcept override;
 
   private: // Methods
     void refreshInstalledPackagesList();

@@ -27,6 +27,8 @@ class AboutDialog final : public QDialog
   public:
     explicit AboutDialog(QWidget *parent = nullptr);
 
+    ~AboutDialog() noexcept override;
+
   private:
     Ui_AboutDialog *m_dlg;
 };
