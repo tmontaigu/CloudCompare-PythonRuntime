@@ -30,7 +30,6 @@ using namespace pybind11::literals;
 
 void define_ccObject(py::module &m)
 {
-    // TODO Metadata { get & set }
     py::class_<ccObject>(m, "ccObject")
         .def("getName", &ccObject::getName)
         .def("setName", &ccObject::setName)
