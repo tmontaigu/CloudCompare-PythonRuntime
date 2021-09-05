@@ -25,13 +25,20 @@
      <layout class="QFormLayout" name="formLayout_2">
       <item row="0" column="0">
        <widget class="QLabel" name="label">
+        <property name="toolTip">
+         <string>Enter the path where custom Python plugins are stored. Requires restating CloudCompare when changed</string>
+        </property>
         <property name="text">
          <string>PluginPaths</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEdit"/>
+       <widget class="QLineEdit" name="lineEdit">
+        <property name="toolTip">
+         <string>Enter the path where custom Python plugins are stored. Requires restating CloudCompare when changed</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
