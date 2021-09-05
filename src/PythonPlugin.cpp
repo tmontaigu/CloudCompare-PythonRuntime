@@ -20,7 +20,10 @@
 #include "CodeEditor/PythonEditor.h"
 #include "FileRunner.h"
 #include "PackageManager.h"
+#include "PythonActionLauncher.h"
+#include "PythonPluginSettings.h"
 #include "PythonRepl.h"
+#include "PythonStdErrOutRedirect.h"
 #include "Runtime/Runtime.h"
 #include "Utilities.h"
 
@@ -31,13 +34,89 @@
 #define signals Q_SIGNALS
 #include <ccCommandLineInterface.h>
 
+static void LoadCustomPythonPlugins(const QString &paths)
+{
+    if (paths.isEmpty())
+    {
+        return;
+    }
+#ifdef Q_OS_WIN
+    const QChar sep = ';';
+#else
+    const QChar sep = ':';
+#endif
+
+    ccLog::Print("[PythonPlugin] Searching for custom plugin");
+    QStringList pluginsPaths = paths.split(sep);
+    py::module::import("sys").attr("path").attr("append")(paths);
+    for (const QString &path : pluginsPaths)
+    {
+        ccLog::Print(QString("[PythonPlugin]     searching in %1").arg(path));
+        QDirIterator iter(path);
+        while (iter.hasNext())
+        {
+            iter.next();
+            QFileInfo entry = iter.fileInfo();
+            QString fileName = entry.fileName();
+
+            if (fileName == "." || fileName == ".." || fileName == "__pycache__")
+            {
+                continue;
+            }
+
+            QString nameToImport = fileName;
+            if (!entry.isDir() && fileName.endsWith(".py"))
+            {
+                nameToImport = fileName.left(fileName.size() - 3);
+            }
+
+            const std::string nameToImportStd = nameToImport.toStdString();
+            try
+            {
+                py::module::import(nameToImportStd.c_str());
+                ccLog::Print("[PythonPlugin]     Loaded plugin '%s'", nameToImportStd.c_str());
+            }
+            catch (const std::exception &e)
+            {
+                ccLog::Warning("[PythonPlugin]     Failed to load plugin '%s': %s",
+                               nameToImportStd.c_str(),
+                               e.what());
+            }
+        }
+
+        py::list subClassTypes = py::module::import("pycc_runtime")
+                                     .attr("PythonPluginInterface")
+                                     .attr("__subclasses__")();
+        for (auto &subClassType : subClassTypes)
+        {
+            try
+            {
+                // Here, we create an instance of the plugin,
+                // it will then register the methods it wants to appear as actions
+                // (because we call the "registerActions")
+                // As we keep references to registered methods
+                // we do not need to keep a reference to the actual instance.
+                auto instance = subClassType.cast<py::object>();
+                instance().attr("registerActions")();
+            }
+            catch (const std::exception &e)
+            {
+                ccLog::Warning("[PythonPlugin]     Failed to instantiate plugin: %s", e.what());
+            }
+        }
+    }
+}
+
 // Useful link:
 // https://docs.python.org/3/c-api/init.html#initialization-finalization-and-threads
 PythonPlugin::PythonPlugin(QObject *parent)
     : QObject(parent),
       ccStdPluginInterface(":/CC/plugin/PythonPlugin/info.json"),
       m_interp(nullptr),
-      m_editor(new PythonEditor(&m_interp))
+      m_editor(new PythonEditor(&m_interp)),
+      m_fileRunner(new FileRunner(&m_interp)),
+      m_actionLauncher(new PythonActionLauncher),
+      m_settings(new PythonPluginSettings)
 {
     m_interp.initialize(m_config);
 
@@ -110,12 +189,35 @@ QList<QAction *> PythonPlugin::getActions()
         m_showPackageManager->setEnabled(enableActions);
     }
 
+    if (!m_showActionLauncher)
+    {
+        m_showActionLauncher = new QAction("Show Action Launcher", this);
+        m_showActionLauncher->setToolTip("Launch actions of custom Python plugins");
+        m_showActionLauncher->setIcon(QIcon());
+        connect(m_showActionLauncher,
+                &QAction::triggered,
+                this,
+                &PythonPlugin::showPythonActionLauncher);
+        m_showActionLauncher->setEnabled(enableActions);
+    }
+
+    if (!m_showSettings)
+    {
+        m_showSettings = new QAction("Show Settings", this);
+        m_showSettings->setToolTip("Show some settings");
+        m_showActionLauncher->setIcon(QIcon());
+        connect(m_showSettings, &QAction::triggered, this, &PythonPlugin::showSettings);
+        m_showSettings->setEnabled(enableActions);
+    }
+
     return {m_showEditor,
             m_showFileRunner,
             m_showAboutDialog,
             m_showDoc,
             m_showRepl,
-            m_showPackageManager};
+            m_showPackageManager,
+            m_showActionLauncher,
+            m_showSettings};
 }
 
 void PythonPlugin::showRepl()
@@ -169,6 +271,16 @@ void PythonPlugin::showPackageManager()
     m_packageManager->show();
     m_editor->raise();
     m_editor->activateWindow();
+}
+
+void PythonPlugin::showPythonActionLauncher() const
+{
+    m_actionLauncher->show();
+}
+
+void PythonPlugin::showSettings() const
+{
+    m_settings->show();
 }
 
 PythonPlugin::~PythonPlugin() noexcept
@@ -250,10 +362,29 @@ void PythonPlugin::setMainAppInterface(ccMainAppInterface *app)
 {
     ccStdPluginInterface::setMainAppInterface(app);
     Runtime::setMainAppInterfaceInstance(m_app);
-    m_fileRunner = new FileRunner(&m_interp, m_app->getMainWindow());
+
+    // Now that the mainAppInterface is set, we can load custom
+    // python plugins, if we did this earlier, `pycc.GetInstance()`
+    // in python would return `None` and that's bad.
+    try
+    {
+        LoadCustomPythonPlugins(m_settings->pluginsPaths());
+    }
+    catch (const std::exception &e)
+    {
+        ccLog::Warning("[PythonPlugin] Failed to load custom python plugins: %e", e.what());
+    }
+
+    m_fileRunner->setParent(m_app->getMainWindow(), Qt::Window);
+    m_actionLauncher->setParent(m_app->getMainWindow(), Qt::Window);
+    m_settings->setParent(m_app->getMainWindow(), Qt::Window);
 }
 
 void PythonPlugin::finalizeInterpreter()
 {
+    // We have to clear registered functions before
+    // we finalize the interpreter otherwise our references to
+    // python object would outlive the interpreter
+    Runtime::clearRegisteredFunction();
     m_interp.finalize();
 }

@@ -35,6 +35,56 @@
 namespace py = pybind11;
 using namespace pybind11::literals;
 
+namespace Runtime
+{
+
+/// Interface that 'class-style' PythonPlugin must implement to be loaded
+class PythonPluginInterface
+{
+  public:
+    virtual ~PythonPluginInterface(){};
+    /// Called automatically after the plugin is instantiated.
+    /// In this function, the plugin implementer should register actions
+    /// it wishes to expose to the user.
+    virtual void registerActions() = 0;
+};
+
+// Trampoline to allow Python classes to inherit our interface
+class PythonPluginTrampoline : public PythonPluginInterface
+{
+  public:
+    PythonPluginTrampoline() : PythonPluginInterface() {}
+
+    void registerActions() override
+    {
+        PYBIND11_OVERLOAD_PURE(
+            void, PythonPluginInterface /* Parent class */, registerActions /* function name */);
+    }
+};
+
+static std::vector<RegisteredFunction> s_registeredFunctions;
+
+void RegisterAction(py::kwargs action) noexcept(false)
+{
+    RegisteredFunction newAction(action);
+    auto it = std::find(s_registeredFunctions.begin(), s_registeredFunctions.end(), newAction);
+    if (it != s_registeredFunctions.end())
+    {
+        throw std::runtime_error("This function was already registered");
+    }
+    s_registeredFunctions.push_back(newAction);
+}
+
+std::vector<RegisteredFunction> &registeredFunctions()
+{
+    return s_registeredFunctions;
+}
+
+void clearRegisteredFunction()
+{
+    s_registeredFunctions.clear();
+}
+
 static ccGuiPythonInstance *s_pythonInstance{nullptr};
 
 static ccCommandLineInterface *s_cmdLineInstance{nullptr};
@@ -49,8 +99,6 @@ ccCommandLineInterface *GetCmdLineInstance() noexcept
     return s_cmdLineInstance;
 }
 
-namespace Runtime
-{
 void setMainAppInterfaceInstance(ccMainAppInterface *appInterface) noexcept(false)
 {
     if (s_pythonInstance == nullptr)
@@ -116,6 +164,11 @@ PYBIND11_EMBEDDED_MODULE(pycc_runtime, m)
     define_ccGUIPythonInstance(m);
     define_ccCommandLine(m);
 
+    py::class_<Runtime::PythonPluginInterface, Runtime::PythonPluginTrampoline>(
+        m, "PythonPluginInterface")
+        .def(py::init<>())
+        .def("registerActions", &Runtime::PythonPluginInterface::registerActions);
+
     m.def("ProcessEvents", []() { QCoreApplication::processEvents(); });
 
     m.def(
@@ -144,20 +197,22 @@ PYBIND11_EMBEDDED_MODULE(pycc_runtime, m)
     });
 
     // Use leading __ to give hints that user should not import this in their scripts
-    m.def("GetGUIInstance", &GetInstance, py::return_value_policy::reference);
-    m.def("GetCmdLineInstance", &GetCmdLineInstance, py::return_value_policy::reference);
+    m.def("GetGUIInstance", &Runtime::GetInstance, py::return_value_policy::reference);
+    m.def("GetCmdLineInstance", &Runtime::GetCmdLineInstance, py::return_value_policy::reference);
     m.def(
         "GetInstance",
         []() -> py::object {
-            auto guiInstance = GetInstance();
+            auto guiInstance = Runtime::GetInstance();
             if (guiInstance)
             {
                 return py::cast(guiInstance);
             }
             else
             {
-                return py::cast(GetCmdLineInstance());
+                return py::cast(Runtime::GetCmdLineInstance());
             }
         },
         py::return_value_policy::reference);
+
+    m.def("RegisterAction", &Runtime::RegisterAction);
 }

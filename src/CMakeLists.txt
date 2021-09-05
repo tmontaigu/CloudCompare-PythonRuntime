@@ -13,6 +13,8 @@ target_sources(
           ${CMAKE_CURRENT_LIST_DIR}/FileRunner.h
           ${CMAKE_CURRENT_LIST_DIR}/PackageManager.cpp
           ${CMAKE_CURRENT_LIST_DIR}/PackageManager.h
+          ${CMAKE_CURRENT_LIST_DIR}/PythonActionLauncher.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/PythonActionLauncher.h
           ${CMAKE_CURRENT_LIST_DIR}/PythonConfig.cpp
           ${CMAKE_CURRENT_LIST_DIR}/PythonConfig.h
           ${CMAKE_CURRENT_LIST_DIR}/PythonHighlighter.cpp
@@ -21,6 +23,8 @@ target_sources(
           ${CMAKE_CURRENT_LIST_DIR}/PythonInterpreter.h
           ${CMAKE_CURRENT_LIST_DIR}/PythonPlugin.cpp
           ${CMAKE_CURRENT_LIST_DIR}/PythonPlugin.h
+          ${CMAKE_CURRENT_LIST_DIR}/PythonPluginSettings.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/PythonPluginSettings.h
           ${CMAKE_CURRENT_LIST_DIR}/PythonRepl.cpp
           ${CMAKE_CURRENT_LIST_DIR}/PythonRepl.h
           ${CMAKE_CURRENT_LIST_DIR}/Utilities.h

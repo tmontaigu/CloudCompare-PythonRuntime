@@ -20,6 +20,9 @@ In GUI, there are 3 actions:
     .. image:: ../images/runner-icon.png
 
 
+Scripts
+_______
+
 The typical python script will need to import Python modules that provide access to
 functions and data-structures of cloudcompare:
 
@@ -40,6 +43,38 @@ functions and data-structures of cloudcompare:
 
 
 CC will be an object of type :class:`pycc.ccPythonInstance`.
+
+Plugin
+______
+
+It is also possible to create scripts or module that register actions
+that will then be launch-able from the Ui, a bit like regular C++ plugins do.
+
+In the plugin settings, you can indicate a path where custom python plugin are
+stored. When starting up, the indicated folder will be scanned and all python modules
+(.py files or folders) will be imported, which will allow them to register their actions
+using the :func:`pycc.RegisterAction` function.
+
+
+In the case of a simple ``.py`` module file, it would like like this.
+
+.. code:: Python
+
+    # hello_world_plugin.py
+    import pycc
+
+    pycc.RegisterAction(name="Hello World", target=hello_word_action)
+
+    def hello_world_action():
+        print("Hello from a python plugin")
+
+
+You can also create a `class` plugin by creating a class that implements
+the :class:`pycc.PythonPluginInterface`.
+See `this <https://github.com/tmontaigu/CloudCompare-PythonPlugin/tree/master/script_examples/plugin_examples>`_
+for an example.
+
+
 
 
 Command Line

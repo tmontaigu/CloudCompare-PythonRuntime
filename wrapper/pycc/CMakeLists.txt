@@ -62,9 +62,11 @@ if(PYCC_IS_MASTER_PROJECT)
 
   FetchContent_GetProperties(CloudCompare)
   string(TOLOWER "CloudCompare" lcName)
-  if (NOT CloudCompare_POPULATED)
+  if(NOT CloudCompare_POPULATED)
     FetchContent_Populate(CloudCompare)
-    add_subdirectory(${${lcName}_SOURCE_DIR} ${${lcName}_BINARY_DIR} EXCLUDE_FROM_ALL)
+    add_subdirectory(
+      ${${lcName}_SOURCE_DIR} ${${lcName}_BINARY_DIR} EXCLUDE_FROM_ALL
+    )
   endif()
 endif()
 

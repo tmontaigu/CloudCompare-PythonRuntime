@@ -59,11 +59,13 @@ if(CCCORELIB_PYTHON_IS_MASTER_PROJECT)
 
   FetchContent_GetProperties(CCCoreLib)
   string(TOLOWER "CCCoreLib" lcName)
-  if (NOT CCCoreLib_POPULATED)
+  if(NOT CCCoreLib_POPULATED)
     FetchContent_Populate(CCCoreLib)
     # Non-capitalized names are important
-    add_subdirectory(${${lcName}_SOURCE_DIR} ${${lcName}_BINARY_DIR} EXCLUDE_FROM_ALL)
-  endif ()
+    add_subdirectory(
+      ${${lcName}_SOURCE_DIR} ${${lcName}_BINARY_DIR} EXCLUDE_FROM_ALL
+    )
+  endif()
 endif()
 
 if(CCCORELIB_PYTHON_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
