@@ -1,5 +1,7 @@
 import pycc
 
+from typing import List
+
 
 class CountPlugin(pycc.PythonPluginInterface):
     def __init__(self):
@@ -7,9 +9,11 @@ class CountPlugin(pycc.PythonPluginInterface):
         self.count = 0
         self.app = pycc.GetInstance()
 
-    def registerActions(self):
-        pycc.RegisterAction(name='Print Count', target=self.printCount)
-        pycc.RegisterAction(name='Print Selected Entities', target=self.printSelectedEntities)
+    def getActions(self) -> List[pycc.Action]:
+        return [
+            pycc.Action(name="Print Count", target=self.printCount),
+            pycc.Action(name="Print Selected Entities", target=self.printSelectedEntities),
+        ]
 
     def printCount(self):
         self.count += 1

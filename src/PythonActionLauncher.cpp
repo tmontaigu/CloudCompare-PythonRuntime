@@ -15,49 +15,108 @@
 //#                                                                        #
 //##########################################################################
 #include "PythonActionLauncher.h"
+#include <ui_ActionLauncher.h>
 
 #include <QVBoxLayout>
 
 #undef slots
+#include "PythonPluginManager.h"
 #include "PythonStdErrOutRedirect.h"
-#include "Runtime/Runtime.h"
 
-PythonActionLauncher::PythonActionLauncher(QWidget *parent)
-    : QWidget(parent), m_actions(new QListWidget(this))
+/// Implementation of Model so that, we can handle double clicks on plugin actions
+/// better thant if we used QListWidget
+class PluginListModel final : public QAbstractListModel
+{
+    Q_OBJECT
+
+  public:
+    explicit PluginListModel(const Runtime::RegisteredPlugin *plugin, QObject *parent = nullptr)
+        : QAbstractListModel(parent), plugin(plugin)
+    {
+    }
+
+    int rowCount(const QModelIndex &parent) const override
+    {
+        Q_ASSERT(plugin != nullptr);
+        return static_cast<int>(plugin->actions.size());
+    };
+
+    QVariant data(const QModelIndex &index, int role) const override
+    {
+        Q_ASSERT(plugin != nullptr);
+        if (role != Qt::DisplayRole || !index.isValid() || index.row() >= plugin->actions.size())
+        {
+            return {};
+        }
+        return plugin->actions[index.row()].name;
+    };
+
+    void handleDoubleClick(const QModelIndex &index)
+    {
+        if (!index.isValid())
+        {
+            return;
+        }
+
+        try
+        {
+            py::gil_scoped_acquire scopedGil;
+            PyStdErrOutStreamRedirect scopedRedirect;
+            plugin->actions[index.row()].target();
+        }
+        catch (const std::exception &e)
+        {
+            ccLog::Error("Failed to start Python actions: %s", e.what());
+        }
+    }
+
+  private:
+    const Runtime::RegisteredPlugin *plugin{nullptr};
+};
+
+PythonActionLauncher::PythonActionLauncher(const PythonPluginManager *pluginManager,
+                                           QWidget *parent)
+    : QWidget(parent), m_ui(new Ui_ActionLauncher), m_pluginManager(pluginManager)
 {
     setWindowTitle("ActionLauncher");
-    connect(m_actions, &QListWidget::itemDoubleClicked, this, &PythonActionLauncher::launchAction);
-    setLayout(new QVBoxLayout);
-    layout()->addWidget(m_actions);
+    m_ui->setupUi(this);
 }
 
 void PythonActionLauncher::showEvent(QShowEvent *event)
 {
-    m_actions->clear();
-    for (const Runtime::RegisteredFunction &f : Runtime::registeredFunctions())
-    {
-        m_actions->addItem(f.name);
-    }
+    clearToolBox();
+    populateToolBox();
     QWidget::showEvent(event);
 }
 
-void PythonActionLauncher::launchAction(QListWidgetItem *item) const
+void PythonActionLauncher::clearToolBox()
 {
-    QString actionName = item->text();
-    for (Runtime::RegisteredFunction &f : Runtime::registeredFunctions())
+    QToolBox *toolBox = m_ui->toolBox;
+    for (int i{toolBox->count() - 1}; i >= 0; --i)
     {
-        if (f.name == actionName)
-        {
-            try
-            {
-                PyStdErrOutStreamRedirect scoped_redirect;
-                f();
-            }
-            catch (const std::exception &e)
-            {
-                ccLog::Error("Failed to start Python actions: %s", e.what());
-            }
-            break;
-        }
+        QWidget *widget = toolBox->widget(i);
+        toolBox->removeItem(i);
+        delete widget;
     }
 }
+
+void PythonActionLauncher::populateToolBox()
+{
+    QToolBox *toolBox = m_ui->toolBox;
+    for (const Runtime::RegisteredPlugin &plugin : m_pluginManager->plugins())
+    {
+        if (plugin.actions.empty())
+        {
+            continue;
+        }
+
+        auto *view = new QListView(this);
+        auto *model = new PluginListModel(&plugin, this);
+        connect(view, &QListView::doubleClicked, model, &PluginListModel::handleDoubleClick);
+        view->setModel(model);
+
+        toolBox->addItem(view, plugin.name);
+    }
+}
+
+#include "PythonActionLauncher.moc"

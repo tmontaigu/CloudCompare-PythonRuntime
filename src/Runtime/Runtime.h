@@ -26,35 +26,43 @@ namespace py = pybind11;
 
 namespace Runtime
 {
-/// Stores a python function that was "registered" from a python script/module
-struct RegisteredFunction
+
+struct RegisteredPlugin
 {
-    explicit RegisteredFunction(const py::dict &dict) noexcept(false)
+    struct Action
     {
-        name = dict["name"].cast<QString>();
-        target = dict["target"];
+        Action() = delete;
+        Action(QString name, pybind11::object target)
+            : name(std::move(name)), target(std::move(target))
+        {
+        }
+
+        /// Name to be displayed in the UI
+        QString name{};
+        /// The target python function (or method)
+        pybind11::object target{};
+    };
+
+    static RegisteredPlugin InstanciatePlugin(pybind11::object class_type) noexcept(false)
+    {
+        QString name = class_type.attr("__name__").cast<QString>();
+        pybind11::object instance = class_type();
+        py::list pyActions = instance.attr("getActions")();
+        std::vector<Action> actions;
+        actions.reserve(pyActions.size());
+
+        for (const py::handle &handle : pyActions)
+        {
+            actions.push_back(handle.cast<Runtime::RegisteredPlugin::Action>());
+        }
+
+        return {name, instance, actions};
     }
 
-    /// Shortcut to call the target function
-    void operator()()
-    {
-        target();
-    }
-
-    bool operator==(const RegisteredFunction &other) const
-    {
-        return name == other.name && target.is(other.target);
-    }
-
-    /// Name to be displayed in the UI
-    QString name{};
-    /// The target python function (or method)
-    pybind11::object target{};
+    QString name;
+    pybind11::object instance;
+    std::vector<Action> actions;
 };
-
-std::vector<RegisteredFunction> &registeredFunctions();
-/// This MUST be called before finalizing the interpreter
-void clearRegisteredFunction();
 
 /// Sets the internal pointer to the app interface that python
 /// scripts will be able to access in GUI mode

@@ -20,18 +20,24 @@
 #include <QListWidget>
 #include <QWidget>
 
+class Ui_ActionLauncher;
+class PythonPluginManager;
+
 class PythonActionLauncher : public QWidget
 {
     Q_OBJECT
   public:
-    explicit PythonActionLauncher(QWidget *parent = nullptr);
+    explicit PythonActionLauncher(const PythonPluginManager *pluginManager,
+                                  QWidget *parent = nullptr);
 
   protected:
     void showEvent(QShowEvent *event) override;
-    void launchAction(QListWidgetItem *item) const;
+    void populateToolBox();
+    void clearToolBox();
 
   private: // Members
-    QListWidget *m_actions;
+    Ui_ActionLauncher *m_ui;
+    const PythonPluginManager *m_pluginManager;
 };
 
 #endif // PYTHON_PLUGIN_PYTHON_ACTION_LAUNCHER_H

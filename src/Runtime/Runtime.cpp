@@ -46,7 +46,7 @@ class PythonPluginInterface
     /// Called automatically after the plugin is instantiated.
     /// In this function, the plugin implementer should register actions
     /// it wishes to expose to the user.
-    virtual void registerActions() = 0;
+    virtual std::vector<Runtime::RegisteredPlugin::Action> getActions() = 0;
 };
 
 // Trampoline to allow Python classes to inherit our interface
@@ -55,35 +55,13 @@ class PythonPluginTrampoline : public PythonPluginInterface
   public:
     PythonPluginTrampoline() : PythonPluginInterface() {}
 
-    void registerActions() override
+    std::vector<Runtime::RegisteredPlugin::Action> getActions() override
     {
-        PYBIND11_OVERLOAD_PURE(
-            void, PythonPluginInterface /* Parent class */, registerActions /* function name */);
+        PYBIND11_OVERLOAD_PURE(std::vector<Runtime::RegisteredPlugin::Action>,
+                               PythonPluginInterface /* Parent class */,
+                               registerActions /* function name */);
     }
 };
-
-static std::vector<RegisteredFunction> s_registeredFunctions;
-
-void RegisterAction(py::kwargs action) noexcept(false)
-{
-    RegisteredFunction newAction(action);
-    auto it = std::find(s_registeredFunctions.begin(), s_registeredFunctions.end(), newAction);
-    if (it != s_registeredFunctions.end())
-    {
-        throw std::runtime_error("This function was already registered");
-    }
-    s_registeredFunctions.push_back(newAction);
-}
-
-std::vector<RegisteredFunction> &registeredFunctions()
-{
-    return s_registeredFunctions;
-}
-
-void clearRegisteredFunction()
-{
-    s_registeredFunctions.clear();
-}
 
 static ccGuiPythonInstance *s_pythonInstance{nullptr};
 
@@ -167,7 +145,7 @@ PYBIND11_EMBEDDED_MODULE(pycc_runtime, m)
     py::class_<Runtime::PythonPluginInterface, Runtime::PythonPluginTrampoline>(
         m, "PythonPluginInterface")
         .def(py::init<>())
-        .def("registerActions", &Runtime::PythonPluginInterface::registerActions);
+        .def("getActions", &Runtime::PythonPluginInterface::getActions);
 
     m.def("ProcessEvents", []() { QCoreApplication::processEvents(); });
 
@@ -214,5 +192,6 @@ PYBIND11_EMBEDDED_MODULE(pycc_runtime, m)
         },
         py::return_value_policy::reference);
 
-    m.def("RegisterAction", &Runtime::RegisterAction);
+    py::class_<Runtime::RegisteredPlugin::Action>(m, "Action")
+        .def(py::init<QString, py::object>(), "name"_a, "target"_a);
 }

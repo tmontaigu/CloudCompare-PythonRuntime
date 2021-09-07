@@ -14,40 +14,34 @@
 //#                   COPYRIGHT: Thomas Montaigu                           #
 //#                                                                        #
 //##########################################################################
-#include "PythonPluginSettings.h"
+#ifndef PYTHON_PLUGIN_PYTHON_PLUGIN_MANAGER_H
+#define PYTHON_PLUGIN_PYTHON_PLUGIN_MANAGER_H
 
-#include <QSettings>
-#include <memory>
-#include <ui_PythonPluginSettings.h>
+#include <vector>
 
-static std::unique_ptr<QSettings> LoadOurSettings()
+#include "Runtime/Runtime.h"
+
+/// The Manager class (#OOP) for the plugins,
+/// responsible for loading and storing them
+class PythonPluginManager final
 {
-    return std::make_unique<QSettings>(
-        QCoreApplication::organizationName(),
-        QCoreApplication::applicationName().append(":PythonPlugin.Settings"));
-}
+  public:
+    PythonPluginManager() = default;
 
-PythonPluginSettings::PythonPluginSettings(QWidget *parent)
-    : QDialog(parent), m_ui(new Ui_PythonPluginSettings)
-{
-    m_ui->setupUi(this);
-    connect(this, &QDialog::accepted, this, &PythonPluginSettings::saveSettings);
-    restoreSettings();
-}
+    /// Returns the currently loaded plugins
+    const std::vector<Runtime::RegisteredPlugin> &plugins() const;
 
-void PythonPluginSettings::restoreSettings()
-{
-    std::unique_ptr<QSettings> settings = LoadOurSettings();
-    m_ui->lineEdit->setText(settings->value(QString::fromUtf8("PluginPaths")).value<QString>());
-}
+    /// Loads the plugins from the given path.
+    ///
+    /// A plugin is either a `.py` file or a directory.
+    ///
+    /// \param paths Where we will look for plugins to load
+    void loadPluginsFrom(const QString &paths);
+    /// This MUST be called before finalizing the interpreter
+    void unloadPlugins();
 
-void PythonPluginSettings::saveSettings() const
-{
-    std::unique_ptr<QSettings> settings = LoadOurSettings();
-    settings->setValue(QString::fromUtf8("PluginPaths"), pluginsPaths());
-}
+  private:
+    std::vector<Runtime::RegisteredPlugin> m_plugins;
+};
 
-QString PythonPluginSettings::pluginsPaths() const
-{
-    return m_ui->lineEdit->text();
-}
+#endif // PYTHON_PLUGIN_PYTHON_PLUGIN_MANAGER_H

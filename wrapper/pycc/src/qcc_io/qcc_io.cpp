@@ -83,8 +83,7 @@ void define_qcc_io(py::module &m)
     PyFileIOFilter
         .def_static(
             "LoadFromFile",
-            [](const QString &filename, FileIOFilter::LoadParameters &parameters)
-            {
+            [](const QString &filename, FileIOFilter::LoadParameters &parameters) {
                 CC_FILE_ERROR result = CC_FERR_NO_ERROR;
                 ccHObject *newGroup = FileIOFilter::LoadFromFile(filename, parameters, result);
                 return newGroup;
@@ -95,8 +94,7 @@ void define_qcc_io(py::module &m)
             [](ccHObject *entities,
                const QString &filename,
                const FileIOFilter::SaveParameters &parameters,
-               const QString filterName = QString())
-            {
+               const QString filterName = QString()) {
                 const QString requestedFilterName =
                     filterName.isEmpty() ? QFileInfo(filename).suffix() : filterName;
 
@@ -107,8 +105,9 @@ void define_qcc_io(py::module &m)
                     const auto it =
                         std::find_if(filters.begin(),
                                      filters.end(),
-                                     [&requestedFilterName](const QString &filterString)
-                                     { return filterString.contains(requestedFilterName); });
+                                     [&requestedFilterName](const QString &filterString) {
+                                         return filterString.contains(requestedFilterName);
+                                     });
                     if (it != filters.end())
                     {
                         CC_FILE_ERROR error =
@@ -117,7 +116,8 @@ void define_qcc_io(py::module &m)
                         return;
                     }
                 }
-                throw std::runtime_error(std::string("Unable to find FileFilter for ") + requestedFilterName.toStdString());
+                throw std::runtime_error(std::string("Unable to find FileFilter for ") +
+                                         requestedFilterName.toStdString());
             },
             "entities"_a,
             "filename"_a,

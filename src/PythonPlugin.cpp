@@ -34,79 +34,6 @@
 #define signals Q_SIGNALS
 #include <ccCommandLineInterface.h>
 
-static void LoadCustomPythonPlugins(const QString &paths)
-{
-    if (paths.isEmpty())
-    {
-        return;
-    }
-#ifdef Q_OS_WIN
-    const QChar sep = ';';
-#else
-    const QChar sep = ':';
-#endif
-
-    ccLog::Print("[PythonPlugin] Searching for custom plugin");
-    QStringList pluginsPaths = paths.split(sep);
-    py::module::import("sys").attr("path").attr("append")(paths);
-    for (const QString &path : pluginsPaths)
-    {
-        ccLog::Print(QString("[PythonPlugin]     searching in %1").arg(path));
-        QDirIterator iter(path);
-        while (iter.hasNext())
-        {
-            iter.next();
-            QFileInfo entry = iter.fileInfo();
-            QString fileName = entry.fileName();
-
-            if (fileName == "." || fileName == ".." || fileName == "__pycache__")
-            {
-                continue;
-            }
-
-            QString nameToImport = fileName;
-            if (!entry.isDir() && fileName.endsWith(".py"))
-            {
-                nameToImport = fileName.left(fileName.size() - 3);
-            }
-
-            const std::string nameToImportStd = nameToImport.toStdString();
-            try
-            {
-                py::module::import(nameToImportStd.c_str());
-                ccLog::Print("[PythonPlugin]     Loaded plugin '%s'", nameToImportStd.c_str());
-            }
-            catch (const std::exception &e)
-            {
-                ccLog::Warning("[PythonPlugin]     Failed to load plugin '%s': %s",
-                               nameToImportStd.c_str(),
-                               e.what());
-            }
-        }
-
-        py::list subClassTypes = py::module::import("pycc_runtime")
-                                     .attr("PythonPluginInterface")
-                                     .attr("__subclasses__")();
-        for (auto &subClassType : subClassTypes)
-        {
-            try
-            {
-                // Here, we create an instance of the plugin,
-                // it will then register the methods it wants to appear as actions
-                // (because we call the "registerActions")
-                // As we keep references to registered methods
-                // we do not need to keep a reference to the actual instance.
-                auto instance = subClassType.cast<py::object>();
-                instance().attr("registerActions")();
-            }
-            catch (const std::exception &e)
-            {
-                ccLog::Warning("[PythonPlugin]     Failed to instantiate plugin: %s", e.what());
-            }
-        }
-    }
-}
-
 // Useful link:
 // https://docs.python.org/3/c-api/init.html#initialization-finalization-and-threads
 PythonPlugin::PythonPlugin(QObject *parent)
@@ -115,7 +42,7 @@ PythonPlugin::PythonPlugin(QObject *parent)
       m_interp(nullptr),
       m_editor(new PythonEditor(&m_interp)),
       m_fileRunner(new FileRunner(&m_interp)),
-      m_actionLauncher(new PythonActionLauncher),
+      m_actionLauncher(new PythonActionLauncher(&m_pluginManager)),
       m_settings(new PythonPluginSettings)
 {
     m_interp.initialize(m_config);
@@ -368,7 +295,7 @@ void PythonPlugin::setMainAppInterface(ccMainAppInterface *app)
     // in python would return `None` and that's bad.
     try
     {
-        LoadCustomPythonPlugins(m_settings->pluginsPaths());
+        m_pluginManager.loadPluginsFrom(m_settings->pluginsPaths());
     }
     catch (const std::exception &e)
     {
@@ -385,6 +312,6 @@ void PythonPlugin::finalizeInterpreter()
     // We have to clear registered functions before
     // we finalize the interpreter otherwise our references to
     // python object would outlive the interpreter
-    Runtime::clearRegisteredFunction();
+    m_pluginManager.unloadPlugins();
     m_interp.finalize();
 }

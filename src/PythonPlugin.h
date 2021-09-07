@@ -20,6 +20,7 @@
 
 #include "PythonConfig.h"
 #include "PythonInterpreter.h"
+#include "PythonPluginManager.h"
 #include "ccStdPluginInterface.h"
 
 class QListWidget;
@@ -68,6 +69,7 @@ class PythonPlugin final : public QObject, public ccStdPluginInterface
 
     PythonConfig m_config{};
     PythonInterpreter m_interp;
+    PythonPluginManager m_pluginManager;
 
     PythonRepl *m_repl{nullptr};
     PythonEditor *m_editor{nullptr};

@@ -55,21 +55,7 @@ stored. When starting up, the indicated folder will be scanned and all python mo
 (.py files or folders) will be imported, which will allow them to register their actions
 using the :func:`pycc.RegisterAction` function.
 
-
-In the case of a simple ``.py`` module file, it would like like this.
-
-.. code:: Python
-
-    # hello_world_plugin.py
-    import pycc
-
-    pycc.RegisterAction(name="Hello World", target=hello_word_action)
-
-    def hello_world_action():
-        print("Hello from a python plugin")
-
-
-You can also create a `class` plugin by creating a class that implements
+You can create a `class` plugin by creating a class that implements
 the :class:`pycc.PythonPluginInterface`.
 See `this <https://github.com/tmontaigu/CloudCompare-PythonPlugin/tree/master/script_examples/plugin_examples>`_
 for an example.
