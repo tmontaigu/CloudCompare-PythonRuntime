@@ -48,8 +48,7 @@ void define_ccWaveform(py::module &m)
             "getRange",
             [](const ccWaveform &self,
                const WaveformDescriptor &descriptor,
-               const uint8_t *dataStorage)
-            {
+               const uint8_t *dataStorage) {
                 double min, max;
                 self.getRange(min, max, descriptor, dataStorage);
                 return py::make_tuple(min, max);
@@ -58,8 +57,7 @@ void define_ccWaveform(py::module &m)
             "dataStorage"_a)
         .def(
             "decodeSamples",
-            [](ccWaveform &self, const WaveformDescriptor &descriptor, const uint8_t *dataStorage)
-            {
+            [](ccWaveform &self, const WaveformDescriptor &descriptor, const uint8_t *dataStorage) {
                 std::vector<double> values;
                 self.decodeSamples(values, descriptor, dataStorage);
                 return values;
@@ -91,15 +89,13 @@ void define_ccWaveform(py::module &m)
         .def("getRawSample", &ccWaveformProxy::getRawSample, "i"_a)
         .def("getSample", &ccWaveformProxy::getRawSample, "i"_a)
         .def("getRange",
-             [](const ccWaveformProxy &self)
-             {
+             [](const ccWaveformProxy &self) {
                  double min, max;
                  self.getRange(min, max);
                  return py::make_tuple(min, max);
              })
         .def("decodeSamples",
-             [](const ccWaveformProxy &self)
-             {
+             [](const ccWaveformProxy &self) {
                  std::vector<double> values;
                  self.decodeSamples(values);
                  return values;

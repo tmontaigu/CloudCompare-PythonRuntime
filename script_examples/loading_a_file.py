@@ -19,3 +19,7 @@ obj = pycc.FileIOFilter.LoadFromFile(path, params)
 if obj is not None:
     print("Failed to load the file")
     CC.addToDB(obj)
+
+params = pycc.FileIOFilter.SaveParameters()
+result = pycc.FileIOFilter.SaveToFile(obj, r'savedFromPlugin.bin', params)
+result = pycc.FileIOFilter.SaveToFile(obj.getChild(0), r'savedFromPlugin.laz', params)

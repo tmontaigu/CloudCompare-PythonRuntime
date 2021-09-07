@@ -31,11 +31,13 @@ using namespace pybind11::literals;
 void define_ccPolyline(py::module &m)
 {
     py::class_<ccPolyline, CCCoreLib::Polyline, ccShiftedObject>(m, "ccPolyline")
-        .def(py::init([](CCCoreLib::GenericIndexedCloudPersist *cloud,
-                         unsigned uniqueID = ccUniqueIDGenerator::InvalidUniqueID)
-                      { return new ccPolyline(cloud, uniqueID); }),
-             "associatedCloud"_a,
-             "uniqueID"_a = [](){ return ccUniqueIDGenerator::InvalidUniqueID; }())
+        .def(
+            py::init([](CCCoreLib::GenericIndexedCloudPersist *cloud,
+                        unsigned uniqueID = ccUniqueIDGenerator::InvalidUniqueID) {
+                return new ccPolyline(cloud, uniqueID);
+            }),
+            "associatedCloud"_a,
+            "uniqueID"_a = []() { return ccUniqueIDGenerator::InvalidUniqueID; }())
 
         .def("set2DMode", &ccPolyline::set2DMode, "state"_a)
         .def("is2DMode", &ccPolyline::is2DMode)
@@ -46,8 +48,7 @@ void define_ccPolyline(py::module &m)
         .def("getColor", &ccPolyline::getColor)
         .def(
             "split",
-            [](ccPolyline &self, PointCoordinateType maxEdgeLength)
-            {
+            [](ccPolyline &self, PointCoordinateType maxEdgeLength) {
                 std::vector<ccPolyline *> parts;
                 self.split(maxEdgeLength, parts);
                 return parts;

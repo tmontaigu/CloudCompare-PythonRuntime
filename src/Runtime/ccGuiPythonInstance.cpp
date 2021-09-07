@@ -37,6 +37,7 @@
 
 namespace py = pybind11;
 using namespace pybind11::literals;
+
 static void ThrowForFileError(CC_FILE_ERROR error)
 {
     switch (error)

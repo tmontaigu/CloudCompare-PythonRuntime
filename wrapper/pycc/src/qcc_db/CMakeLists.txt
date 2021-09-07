@@ -21,19 +21,18 @@ set(pycc_db_sources
     ${CMAKE_CURRENT_LIST_DIR}/ccObject.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccPlane.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccPointCloud.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ccPolyline.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccProgressDialog.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ccQuadric.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ccRasterGrid.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccScalarField.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccSensor.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccSphere.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ccSubMesh.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccTorus.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccViewportObject.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccViewPortParameters.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ccWaveform.cpp
     ${CMAKE_CURRENT_LIST_DIR}/qcc_db.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/ccWaveform.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/ccSubMesh.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/ccRasterGrid.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/ccQuadric.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/ccPolyline.cpp
-
-        PARENT_SCOPE
+    PARENT_SCOPE
 )
