@@ -26,14 +26,16 @@ class PythonPluginSettings final : public QDialog
   public:
     explicit PythonPluginSettings(QWidget *parent = nullptr);
 
-    QString pluginsPaths() const;
+    QStringList pluginsPaths() const;
 
   private: // Methods
     void restoreSettings();
     void saveSettings() const;
+    void handleEditPluginsPaths();
 
   private:
     Ui_PythonPluginSettings *m_ui;
+    QStringList m_pluginsPaths;
 };
 
 #endif // PYTHON_PLUGIN_SETTINGS_H

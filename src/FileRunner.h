@@ -19,7 +19,6 @@
 #define PYTHON_PLUGIN_FILE_RUNNER_H
 
 #include <QDialog>
-#include <QWidget>
 
 namespace Ui
 {

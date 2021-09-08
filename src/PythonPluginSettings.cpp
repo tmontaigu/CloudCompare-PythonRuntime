@@ -15,10 +15,58 @@
 //#                                                                        #
 //##########################################################################
 #include "PythonPluginSettings.h"
-
-#include <QSettings>
-#include <memory>
+#include <ui_PathVariableEditor.h>
 #include <ui_PythonPluginSettings.h>
+
+#include <QInputDialog>
+#include <QSettings>
+#include <QStringListModel>
+
+#include <memory>
+
+class PathVariableEditor : public QDialog
+{
+  public:
+    explicit PathVariableEditor(const QStringList &values, QWidget *parent = nullptr)
+        : QDialog(parent), m_model(new QStringListModel), m_ui(new Ui_PathVariableEditor)
+    {
+        m_ui->setupUi(this);
+        m_model->setStringList(values);
+        m_ui->valuesView->setModel(m_model);
+        connect(m_ui->addButton, &QPushButton::clicked, this, &PathVariableEditor::handleAdd);
+        connect(m_ui->deleteButton, &QPushButton::clicked, this, &PathVariableEditor::handleDelete);
+    }
+
+    QStringList stringList() const
+    {
+        return m_model->stringList();
+    }
+
+  private:
+    void handleAdd()
+    {
+        bool ok;
+        QString text = QInputDialog::getText(
+            this, tr("Add Value"), tr("Value: "), QLineEdit::Normal, QString(), &ok);
+
+        if (ok && !text.isEmpty())
+        {
+            int rowCount = m_model->rowCount();
+            m_model->insertRows(rowCount, 1);
+            m_model->setData(m_model->index(rowCount), text);
+        }
+    }
+
+    void handleDelete()
+    {
+        const QModelIndex index = m_ui->valuesView->currentIndex();
+        m_model->removeRow(index.row());
+    }
+
+  private:
+    QStringListModel *m_model;
+    Ui_PathVariableEditor *m_ui;
+};
 
 static std::unique_ptr<QSettings> LoadOurSettings()
 {
@@ -32,13 +80,17 @@ PythonPluginSettings::PythonPluginSettings(QWidget *parent)
 {
     m_ui->setupUi(this);
     connect(this, &QDialog::accepted, this, &PythonPluginSettings::saveSettings);
+    connect(m_ui->editButton,
+            &QPushButton::clicked,
+            this,
+            &PythonPluginSettings::handleEditPluginsPaths);
     restoreSettings();
 }
 
 void PythonPluginSettings::restoreSettings()
 {
     std::unique_ptr<QSettings> settings = LoadOurSettings();
-    m_ui->lineEdit->setText(settings->value(QString::fromUtf8("PluginPaths")).value<QString>());
+    m_pluginsPaths = settings->value(QString::fromUtf8("PluginPaths")).value<QStringList>();
 }
 
 void PythonPluginSettings::saveSettings() const
@@ -47,7 +99,14 @@ void PythonPluginSettings::saveSettings() const
     settings->setValue(QString::fromUtf8("PluginPaths"), pluginsPaths());
 }
 
-QString PythonPluginSettings::pluginsPaths() const
+void PythonPluginSettings::handleEditPluginsPaths()
 {
-    return m_ui->lineEdit->text();
+    PathVariableEditor editor(pluginsPaths(), this);
+    editor.exec();
+    m_pluginsPaths = editor.stringList();
+}
+
+QStringList PythonPluginSettings::pluginsPaths() const
+{
+    return m_pluginsPaths;
 }

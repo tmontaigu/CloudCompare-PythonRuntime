@@ -36,7 +36,8 @@ class PythonPluginManager final
     /// A plugin is either a `.py` file or a directory.
     ///
     /// \param paths Where we will look for plugins to load
-    void loadPluginsFrom(const QString &paths);
+    void loadPluginsFrom(const QStringList &paths);
+
     /// This MUST be called before finalizing the interpreter
     void unloadPlugins();
 

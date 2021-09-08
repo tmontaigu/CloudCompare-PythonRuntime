@@ -27,26 +27,21 @@ const std::vector<Runtime::RegisteredPlugin> &PythonPluginManager::plugins() con
 // Loading python plugins works in 3 steps
 // 1. Add the path from where we want to load the plugin(s) to
 //    the PythonPath (so that wa can import them)
-// 2. Import the file if its a .py file or import directory name
-// 3. instanciate subclasses of our interface for Python Plugin
-void PythonPluginManager::loadPluginsFrom(const QString &paths)
+// 2. Import the file if it's a .py file or import directory name
+// 3. Create instances of subclasses of our interface for Python Plugin
+void PythonPluginManager::loadPluginsFrom(const QStringList &paths)
 {
     if (paths.isEmpty())
     {
         return;
     }
-#ifdef Q_OS_WIN
-    const QChar sep = ';';
-#else
-    const QChar sep = ':';
-#endif
 
     ccLog::Print("[PythonPlugin] Searching for custom plugin");
-    QStringList pluginsPaths = paths.split(sep);
-    py::module::import("sys").attr("path").attr("append")(paths);
-    for (const QString &path : pluginsPaths)
+    py::object appendToPythonSysPath = py::module::import("sys").attr("path").attr("append");
+    for (const QString &path : paths)
     {
-        ccLog::Print(QString("[PythonPlugin]     searching in %1").arg(path));
+        ccLog::Print(QString("[PythonPlugin] Searching in %1").arg(path));
+        appendToPythonSysPath(path);
         QDirIterator iter(path);
         while (iter.hasNext())
         {
@@ -69,11 +64,11 @@ void PythonPluginManager::loadPluginsFrom(const QString &paths)
             try
             {
                 py::module::import(nameToImportStd.c_str());
-                ccLog::Print("[PythonPlugin]     Loaded plugin '%s'", nameToImportStd.c_str());
+                ccLog::Print("[PythonPlugin]\tLoaded plugin '%s'", nameToImportStd.c_str());
             }
             catch (const std::exception &e)
             {
-                ccLog::Warning("[PythonPlugin]     Failed to load plugin '%s': %s",
+                ccLog::Warning("[PythonPlugin]\tFailed to load plugin '%s': %s",
                                nameToImportStd.c_str(),
                                e.what());
             }
@@ -92,7 +87,7 @@ void PythonPluginManager::loadPluginsFrom(const QString &paths)
         }
         catch (const std::exception &e)
         {
-            ccLog::Warning("[PythonPlugin]     Failed to instantiate plugin: %s", e.what());
+            ccLog::Warning("[PythonPlugin]\tFailed to instantiate plugin: %s", e.what());
         }
     }
 }

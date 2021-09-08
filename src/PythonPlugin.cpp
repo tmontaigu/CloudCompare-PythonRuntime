@@ -47,9 +47,6 @@ PythonPlugin::PythonPlugin(QObject *parent)
 {
     m_interp.initialize(m_config);
 
-    LogPythonHome();
-    LogPythonPath();
-
     connect(QCoreApplication::instance(),
             &QCoreApplication::aboutToQuit,
             this,
@@ -285,8 +282,13 @@ void PythonPlugin::registerCommands(ccCommandLineInterface *cmd)
     Runtime::setCmdLineInterfaceInstance(cmd);
 }
 
+// We use this as our last step in the initialization process
+// since many of our stuff relies on the app interface to be valid
 void PythonPlugin::setMainAppInterface(ccMainAppInterface *app)
 {
+    LogPythonHome();
+    LogPythonPath();
+
     ccStdPluginInterface::setMainAppInterface(app);
     Runtime::setMainAppInterfaceInstance(m_app);
 
