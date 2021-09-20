@@ -87,8 +87,7 @@ void define_qcc_io(py::module &m)
                 CC_FILE_ERROR result = CC_FERR_NO_ERROR;
                 ccHObject *newGroup = FileIOFilter::LoadFromFile(filename, parameters, result);
                 return newGroup;
-            },
-            py::return_value_policy::reference)
+            })
         .def_static(
             "SaveToFile",
             [](ccHObject *entities,
