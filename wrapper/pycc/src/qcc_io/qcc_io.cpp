@@ -86,6 +86,7 @@ void define_qcc_io(py::module &m)
             [](const QString &filename, FileIOFilter::LoadParameters &parameters) {
                 CC_FILE_ERROR result = CC_FERR_NO_ERROR;
                 ccHObject *newGroup = FileIOFilter::LoadFromFile(filename, parameters, result);
+                ThrowForFileError(result);
                 return newGroup;
             })
         .def_static(
