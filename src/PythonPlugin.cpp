@@ -42,7 +42,7 @@ PythonPlugin::PythonPlugin(QObject *parent)
       m_interp(nullptr),
       m_editor(new PythonEditor(&m_interp)),
       m_fileRunner(new FileRunner(&m_interp)),
-      m_actionLauncher(new PythonActionLauncher(&m_pluginManager)),
+      m_actionLauncher(new PythonActionLauncher(&m_pluginManager, &m_interp)),
       m_settings(new PythonPluginSettings)
 {
     m_interp.initialize(m_config);

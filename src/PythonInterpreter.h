@@ -67,6 +67,7 @@ class PythonInterpreter final : public QObject
     void executeCodeWithState(const std::string &code,
                               QListWidget *output,
                               PythonInterpreter::State &state);
+    void executeFunction(const pybind11::object &function);
 
   Q_SIGNALS:
     void executionStarted();

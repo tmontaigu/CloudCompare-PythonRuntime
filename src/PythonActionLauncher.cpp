@@ -15,6 +15,7 @@
 //#                                                                        #
 //##########################################################################
 #include "PythonActionLauncher.h"
+#include "PythonInterpreter.h"
 #include <ui_ActionLauncher.h>
 
 #include <QVBoxLayout>
@@ -30,7 +31,7 @@ class PluginListModel final : public QAbstractListModel
     Q_OBJECT
 
   public:
-    explicit PluginListModel(const Runtime::RegisteredPlugin *plugin, QObject *parent = nullptr)
+    explicit PluginListModel(const Runtime::RegisteredPlugin *plugin, PythonActionLauncher *parent)
         : QAbstractListModel(parent), plugin(plugin)
     {
     }
@@ -58,16 +59,9 @@ class PluginListModel final : public QAbstractListModel
             return;
         }
 
-        try
-        {
-            py::gil_scoped_acquire scopedGil;
-            PyStdErrOutStreamRedirect scopedRedirect;
-            plugin->actions[index.row()].target();
-        }
-        catch (const std::exception &e)
-        {
-            ccLog::Error("Failed to start Python actions: %s", e.what());
-        }
+        PythonInterpreter *interpreter =
+            static_cast<PythonActionLauncher *>(parent())->m_interpreter;
+        interpreter->executeFunction(plugin->actions[index.row()].target);
     }
 
   private:
@@ -75,11 +69,19 @@ class PluginListModel final : public QAbstractListModel
 };
 
 PythonActionLauncher::PythonActionLauncher(const PythonPluginManager *pluginManager,
+                                           PythonInterpreter *interpreter,
                                            QWidget *parent)
-    : QWidget(parent), m_ui(new Ui_ActionLauncher), m_pluginManager(pluginManager)
+    : QWidget(parent),
+      m_ui(new Ui_ActionLauncher),
+      m_pluginManager(pluginManager),
+      m_interpreter(interpreter)
 {
     setWindowTitle("ActionLauncher");
     m_ui->setupUi(this);
+    connect(
+        m_interpreter, &PythonInterpreter::executionStarted, this, &PythonActionLauncher::disable);
+    connect(
+        m_interpreter, &PythonInterpreter::executionFinished, this, &PythonActionLauncher::enable);
 }
 
 void PythonActionLauncher::showEvent(QShowEvent *event)
@@ -87,6 +89,15 @@ void PythonActionLauncher::showEvent(QShowEvent *event)
     clearToolBox();
     populateToolBox();
     QWidget::showEvent(event);
+}
+
+void PythonActionLauncher::disable()
+{
+    m_ui->toolBox->setDisabled(true);
+}
+void PythonActionLauncher::enable()
+{
+    m_ui->toolBox->setDisabled(false);
 }
 
 void PythonActionLauncher::clearToolBox()

@@ -125,6 +125,29 @@ void PythonInterpreter::executeCode(const std::string &code, QListWidget *output
     executeCodeWithState(code, output, tmpState);
 }
 
+void PythonInterpreter::executeFunction(const pybind11::object &function)
+{
+    if (m_isExecuting)
+    {
+        return;
+    }
+
+    m_isExecuting = true;
+    Q_EMIT executionStarted();
+    try
+    {
+        py::gil_scoped_acquire scopedGil;
+        PyStdErrOutStreamRedirect scopedRedirect;
+        function();
+    }
+    catch (const std::exception &e)
+    {
+        ccLog::Error("Failed to start Python actions: %s", e.what());
+    }
+    m_isExecuting = false;
+    Q_EMIT executionFinished();
+}
+
 void PythonInterpreter::initialize(const PythonConfig &config)
 {
 #ifdef Q_OS_WIN32
