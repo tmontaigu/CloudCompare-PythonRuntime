@@ -1,6 +1,7 @@
 import os
 import subprocess
 import platform
+
 abspath = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -65,3 +66,8 @@ def test_scalarfield_tools(cloudcompare_exe):
     assert_command_runs(
         cloudcompare_exe, "-SILENT", "-O", f"{abspath}/data/a_cloud.bin", "-PYTHON_SCRIPT",
         os.path.join(abspath, "scripts", "scalarfield.py"))
+
+
+def test_cchobjects_lifetimes(cloudcompare_exe):
+    assert_command_runs(
+        cloudcompare_exe, "-SILENT", "-PYTHON_SCRIPT", os.path.join(abspath, "scripts", "ccHObject_keep_alive.py"))
