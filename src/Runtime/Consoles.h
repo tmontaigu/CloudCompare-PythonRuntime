@@ -115,12 +115,12 @@ class ccConsoleOutput
 };
 
 /// Writes messages to the QListWidget given
-class ConsoleRepl
+class ListWidgetConsole
 {
   public:
-    ConsoleRepl(QListWidget *view, const Qt::GlobalColor color) : m_view(view), m_brush(color) {}
-    ConsoleRepl(QListWidget *view, const QColor &color) : m_view(view), m_brush() {}
-    explicit ConsoleRepl(QListWidget *view) : m_view(view), m_brush() {}
+    ListWidgetConsole(QListWidget *view, const Qt::GlobalColor color) : m_view(view), m_brush(color) {}
+    ListWidgetConsole(QListWidget *view, const QColor &color) : m_view(view), m_brush() {}
+    explicit ListWidgetConsole(QListWidget *view) : m_view(view), m_brush() {}
 
     void write(const char *messagePart)
     {

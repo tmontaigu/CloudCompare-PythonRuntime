@@ -126,12 +126,12 @@ PYBIND11_EMBEDDED_MODULE(ccinternals, m)
         .def("write", &ccConsoleOutput::write)
         .def("flush", &ccConsoleOutput::flush);
 
-    py::class_<ConsoleRepl>(m, "ConsoleREPL")
+    py::class_<ListWidgetConsole>(m, "ListWidgetConsole")
         .def(py::init<QListWidget *, Qt::GlobalColor>())
         .def(py::init<QListWidget *, QColor>())
         .def(py::init<QListWidget *>())
-        .def("write", &ConsoleRepl::write)
-        .def("flush", &ConsoleRepl::flush);
+        .def("write", &ListWidgetConsole::write)
+        .def("flush", &ListWidgetConsole::flush);
 }
 
 void define_ccGUIPythonInstance(py::module &);

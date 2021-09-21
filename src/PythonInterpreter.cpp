@@ -17,6 +17,7 @@
 
 #include "PythonInterpreter.h"
 #include "PythonStdErrOutRedirect.h"
+#include "Runtime/Consoles.h"
 #include "Utilities.h"
 
 #include <pybind11/embed.h>
@@ -65,11 +66,10 @@ bool PythonInterpreter::executeFile(const std::string &filepath)
     bool success{true};
     try
     {
-        py::object pyStdout =
-            py::module::import("ccinternals").attr("ccConsoleOutput")("[PythonStdout] ");
-        py::object pyStderr =
-            py::module::import("ccinternals").attr("ccConsoleOutput")("[PythonStderr] ");
-        PyStdErrOutStreamRedirect r{pyStdout, pyStderr};
+        const auto movePolicy = py::return_value_policy::move;
+        py::object newStdout = py::cast(ccConsoleOutput(), movePolicy);
+        py::object newStderr = py::cast(ccConsoleOutput(), movePolicy);
+        PyStdErrOutStreamRedirect r{newStdout, newStderr};
 
         py::dict globals = CreateGlobals();
         py::eval_file(filepath, globals);
@@ -100,9 +100,9 @@ void PythonInterpreter::executeCodeWithState(const std::string &code,
 
     try
     {
-        py::object newStdout = py::module::import("ccinternals").attr("ConsoleREPL")(output);
-        py::object newStderr =
-            py::module::import("ccinternals").attr("ConsoleREPL")(output, orange);
+        const auto movePolicy = py::return_value_policy::move;
+        py::object newStdout = py::cast(ListWidgetConsole(output), movePolicy);
+        py::object newStderr = py::cast(ListWidgetConsole(output, orange), movePolicy);
         PyStdErrOutStreamRedirect redirect{newStdout, newStderr};
 
         py::exec(code, state.globals, state.locals);
@@ -167,6 +167,9 @@ void PythonInterpreter::initialize(const PythonConfig &config)
     }
 #endif
     py::initialize_interpreter();
+    // Make sure this module is imported
+    // so that we can later easily construct our consoles.
+    py::module::import("ccinternals");
 }
 
 bool PythonInterpreter::IsInitialized()
