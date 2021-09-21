@@ -48,6 +48,8 @@ static py::dict CreateGlobals()
     return globals;
 }
 
+PythonInterpreter::State::State() : globals(CreateGlobals()), locals(){};
+
 //================================================================================
 
 PythonInterpreter::PythonInterpreter(QObject *parent) : QObject(parent) {}
@@ -103,8 +105,7 @@ void PythonInterpreter::executeCodeWithState(const std::string &code,
             py::module::import("ccinternals").attr("ConsoleREPL")(output, orange);
         PyStdErrOutStreamRedirect redirect{newStdout, newStderr};
 
-        py::dict globals = CreateGlobals();
-        py::exec(code, globals);
+        py::exec(code, state.globals, state.locals);
     }
     catch (const std::exception &e)
     {
@@ -142,7 +143,8 @@ void PythonInterpreter::initialize(const PythonConfig &config)
     // https://stackoverflow.com/questions/49784583/numpy-import-fails-on-multiarray-extension-library-when-called-from-embedded-pyt
     // This workaround is weak
 
-    const auto displaydlopenError = []() {
+    const auto displaydlopenError = []()
+    {
         char *error = dlerror();
         if (error)
         {

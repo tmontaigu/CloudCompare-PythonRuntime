@@ -47,7 +47,7 @@ class PythonInterpreter final : public QObject
     /// Variable state
     struct State
     {
-        State() : globals(pybind11::globals()), locals(){};
+        State();
         pybind11::dict globals;
         pybind11::dict locals;
     };
@@ -64,7 +64,9 @@ class PythonInterpreter final : public QObject
   public Q_SLOTS:
     bool executeFile(const std::string &filePath);
     void executeCode(const std::string &code, QListWidget *output);
-    void executeCodeWithState(const std::string &code, QListWidget *output, State &state);
+    void executeCodeWithState(const std::string &code,
+                              QListWidget *output,
+                              PythonInterpreter::State &state);
 
   Q_SIGNALS:
     void executionStarted();
