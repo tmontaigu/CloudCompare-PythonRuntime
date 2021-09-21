@@ -60,6 +60,8 @@ class Q_DECL_EXPORT ccGuiPythonInstance final
                  bool checkDimensions = false,
                  bool autoRedraw = true);
 
+    void removeFromDB(pybind11::object &obj);
+
     void redrawAll(bool only2D = false);
 
     void refreshAll(bool only2D = false);

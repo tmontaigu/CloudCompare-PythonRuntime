@@ -143,12 +143,31 @@ void ccGuiPythonInstance::addToDB(pybind11::object &obj,
 {
     try
     {
-        auto *const hobj = obj.inc_ref().cast<ccHObject *>();
+        auto *const hobj = obj.cast<ccHObject *>();
         m_app->addToDB(hobj, updateZoom, autoExpandDBTree, checkDimensions, autoRedraw);
+        obj.inc_ref();
     }
     catch (const pybind11::cast_error &)
     {
         throw std::runtime_error("Cannot add to the DB a type that does not sub class ccHObject");
+    }
+}
+
+void ccGuiPythonInstance::removeFromDB(pybind11::object &obj)
+{
+    try
+    {
+        auto *const hobj = obj.cast<ccHObject *>();
+        // Python side will take care of deleting it
+        // because if we do delete it now and user tries to use the obj
+        // it'll be a use after free.
+        m_app->removeFromDB(hobj, false /*delete*/);
+        Q_ASSERT(obj.ref_count() >= 2);
+        obj.dec_ref();
+    }
+    catch (const pybind11::cast_error &)
+    {
+        throw std::runtime_error("Cannot remove from the DB a type that does not sub class ccHObject");
     }
 }
 
@@ -232,6 +251,7 @@ void define_ccGUIPythonInstance(py::module &m)
              "checkDimensions"_a = false,
              "autoRedraw"_a = true,
              R"(Adds the object to the GUI DB Tree)")
+        .def("removeFromDB", &ccGuiPythonInstance::removeFromDB, "entity"_a)
         .def("redrawAll", &ccGuiPythonInstance::redrawAll, "only2D"_a = false)
         .def("refreshAll", &ccGuiPythonInstance::refreshAll, "only2D"_a = false)
         .def("enableAll", &ccGuiPythonInstance::enableAll)
