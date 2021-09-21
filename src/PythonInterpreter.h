@@ -24,6 +24,7 @@
 #include <memory>
 
 #undef slots
+#include <pybind11/eval.h>
 #include <pybind11/pybind11.h>
 
 class QListWidget;
@@ -67,11 +68,20 @@ class PythonInterpreter final : public QObject
     void executeCodeWithState(const std::string &code,
                               QListWidget *output,
                               PythonInterpreter::State &state);
+    void executeStatementWithState(const std::string &code,
+                                   QListWidget *output,
+                                   PythonInterpreter::State &state);
     void executeFunction(const pybind11::object &function);
 
   Q_SIGNALS:
     void executionStarted();
     void executionFinished();
+
+  private:
+    template <pybind11::eval_mode mode>
+    void executeCodeString(const std::string &code,
+                           QListWidget *output,
+                           PythonInterpreter::State &state);
 
   private:
     bool m_isExecuting{false};

@@ -85,9 +85,10 @@ bool PythonInterpreter::executeFile(const std::string &filepath)
     return success;
 }
 
-void PythonInterpreter::executeCodeWithState(const std::string &code,
-                                             QListWidget *output,
-                                             State &state)
+template <pybind11::eval_mode mode>
+void PythonInterpreter::executeCodeString(const std::string &code,
+                                          QListWidget *output,
+                                          State &state)
 {
     Q_ASSERT(output != nullptr);
     if (m_isExecuting)
@@ -106,7 +107,7 @@ void PythonInterpreter::executeCodeWithState(const std::string &code,
         py::object newStderr = py::cast(ListWidgetConsole(output, orange), movePolicy);
         PyStdErrOutStreamRedirect redirect{newStdout, newStderr};
 
-        py::exec(code, state.globals, state.locals);
+        py::eval<mode>(code, state.globals, state.locals);
     }
     catch (const std::exception &e)
     {
@@ -117,6 +118,20 @@ void PythonInterpreter::executeCodeWithState(const std::string &code,
 
     m_isExecuting = false;
     Q_EMIT executionFinished();
+}
+
+void PythonInterpreter::executeCodeWithState(const std::string &code,
+                                             QListWidget *output,
+                                             State &state)
+{
+    executeCodeString<py::eval_mode::eval_statements>(code, output, state);
+}
+
+void PythonInterpreter::executeStatementWithState(const std::string &code,
+                                                  QListWidget *output,
+                                                  State &state)
+{
+    executeCodeString<py::eval_mode::eval_single_statement>(code, output, state);
 }
 
 void PythonInterpreter::executeCode(const std::string &code, QListWidget *output)

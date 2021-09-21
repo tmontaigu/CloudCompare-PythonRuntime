@@ -226,7 +226,7 @@ void PythonRepl::executeCode(const QString &pythonCode)
     outputDisplay()->addItem(pythonCode);
     codeEdit()->clear();
     codeEdit()->insertPlainText(replArrows);
-    m_interpreter->executeCodeWithState(m_buf, outputDisplay(), m_state);
+    m_interpreter->executeStatementWithState(m_buf, outputDisplay(), m_state);
     outputDisplay()->scrollToBottom();
 }
 
