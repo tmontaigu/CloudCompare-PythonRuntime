@@ -39,6 +39,15 @@
 
 namespace py = pybind11;
 
+static py::dict CreateGlobals()
+{
+    py::dict globals;
+    globals["__name__"] = "__main__";
+    // Someday we should require pybind11 > 2.6 and use py::detail::ensure_builtins_in_globals ?
+    globals["__builtins__"] = PyEval_GetBuiltins();
+    return globals;
+}
+
 //================================================================================
 
 PythonInterpreter::PythonInterpreter(QObject *parent) : QObject(parent) {}
@@ -59,7 +68,9 @@ bool PythonInterpreter::executeFile(const std::string &filepath)
         py::object pyStderr =
             py::module::import("ccinternals").attr("ccConsoleOutput")("[PythonStderr] ");
         PyStdErrOutStreamRedirect r{pyStdout, pyStderr};
-        py::eval_file(filepath);
+
+        py::dict globals = CreateGlobals();
+        py::eval_file(filepath, globals);
     }
     catch (const std::exception &e)
     {
@@ -91,7 +102,9 @@ void PythonInterpreter::executeCodeWithState(const std::string &code,
         py::object newStderr =
             py::module::import("ccinternals").attr("ConsoleREPL")(output, orange);
         PyStdErrOutStreamRedirect redirect{newStdout, newStderr};
-        py::exec(code);
+
+        py::dict globals = CreateGlobals();
+        py::exec(code, globals);
     }
     catch (const std::exception &e)
     {
