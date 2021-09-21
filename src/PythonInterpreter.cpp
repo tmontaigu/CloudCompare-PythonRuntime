@@ -72,6 +72,7 @@ bool PythonInterpreter::executeFile(const std::string &filepath)
         PyStdErrOutStreamRedirect r{newStdout, newStderr};
 
         py::dict globals = CreateGlobals();
+        globals["__file__"] = filepath;
         py::eval_file(filepath, globals);
     }
     catch (const std::exception &e)
