@@ -54,7 +54,7 @@ void define_ReferenceCloud(py::module &cccorelib)
         .def("getAssociatedCloud",
              static_cast<CCCoreLib::GenericIndexedCloudPersist *(ReferenceCloud::*)()>(
                  &ReferenceCloud::getAssociatedCloud),
-             py::return_value_policy::reference)
+             py::return_value_policy::reference_internal)
         .def("setAssociatedCloud", &ReferenceCloud::setAssociatedCloud, "cloud"_a)
         .def("add", &ReferenceCloud::add, "cloud"_a)
         .def("invalidateBoundingBox", &ReferenceCloud::invalidateBoundingBox);
