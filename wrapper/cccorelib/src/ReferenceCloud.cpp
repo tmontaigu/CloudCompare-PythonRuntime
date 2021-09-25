@@ -29,7 +29,7 @@ using CCCoreLib::ReferenceCloud;
 void define_ReferenceCloud(py::module &cccorelib)
 {
     py::class_<ReferenceCloud, CCCoreLib::GenericIndexedCloudPersist>(cccorelib, "ReferenceCloud")
-        .def(py::init<CCCoreLib::GenericIndexedCloudPersist *>(), "associatedCloud"_a)
+        .def(py::init<CCCoreLib::GenericIndexedCloudPersist *>(), "associatedCloud"_a, py::keep_alive<1, 2>())
         .def("getPointGlobalIndex", &ReferenceCloud::getPointGlobalIndex)
         .def("getCurrentPointCoordinates", &ReferenceCloud::getCurrentPointCoordinates)
         .def("getCurrentPointGlobalIndex", &ReferenceCloud::getCurrentPointGlobalIndex)
@@ -54,7 +54,7 @@ void define_ReferenceCloud(py::module &cccorelib)
         .def("getAssociatedCloud",
              static_cast<CCCoreLib::GenericIndexedCloudPersist *(ReferenceCloud::*)()>(
                  &ReferenceCloud::getAssociatedCloud),
-             py::return_value_policy::reference_internal)
+             py::return_value_policy::reference)
         .def("setAssociatedCloud", &ReferenceCloud::setAssociatedCloud, "cloud"_a)
         .def("add", &ReferenceCloud::add, "cloud"_a)
         .def("invalidateBoundingBox", &ReferenceCloud::invalidateBoundingBox);

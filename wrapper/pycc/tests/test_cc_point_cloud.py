@@ -4,7 +4,7 @@ import numpy as np
 
 def test_cc_point_cloud_from_sequences():
     xs = np.array([1.0, 2.0, 3.0, 4.0, 5.0], pycc.PointCoordinateType)
-    ys =  np.ones(5, pycc.PointCoordinateType) * 18.5
+    ys = np.ones(5, pycc.PointCoordinateType) * 18.5
     zs = np.ones(5, pycc.PointCoordinateType) * 17.33
 
     pc = pycc.ccPointCloud(xs, ys, zs)
