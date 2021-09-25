@@ -47,11 +47,38 @@ void removePatient(py::object &nurse, py::object &patient)
     }
 
     nursePatients.erase(it);
-    if (nursePatients.empty())
+    instance->has_patients = !nursePatients.empty();
+    if (!instance->has_patients)
     {
-        instance->has_patients = false;
+        internals.patients.erase(nurse.ptr());
     }
     patient.dec_ref();
+}
+
+void setDeletable(py::object &object, bool state)
+{
+    auto instance = reinterpret_cast<py::detail::instance *>(object.ptr());
+    instance->owned = state;
+    for (auto &v_h : py::detail::values_and_holders(instance))
+    {
+        if (v_h)
+        {
+            v_h.set_holder_constructed(state);
+        }
+    }
+}
+
+/// This is a hack.
+///
+/// This function creates a py::object from a value
+/// but it makes the object think it does not own the data
+/// so when the ref count reaches 0 it does no call the destructor
+/// unless setDeletable(obj, true) was called in between
+template <typename T> py::object castToFakeOwnedObject(T &&obj)
+{
+    py::object pyObj = py::cast(obj, py::return_value_policy::take_ownership);
+    setDeletable(pyObj, false);
+    return pyObj;
 }
 
 void define_ccObject(py::module &m)
@@ -84,10 +111,15 @@ void define_ccObject(py::module &m)
         // Children management
         .def("getChildrenNumber", &ccHObject::getChildrenNumber)
         .def("getChildCountRecursive", &ccHObject::getChildCountRecursive)
-        .def("getChild",
-             &ccHObject::getChild,
-             "child"_a,
-             py::return_value_policy::reference_internal)
+        .def(
+            "getChild",
+            [](py::object &self, unsigned int index)
+            {
+                auto *child = self.cast<ccHObject *>()->getChild(index);
+                return castToFakeOwnedObject(child);
+            },
+            py::keep_alive<0, 1>(),
+            "child"_a)
         .def("find", &ccHObject::find, "uniqueID"_a, py::return_value_policy::reference_internal)
         .def(
             "detachChild",
@@ -95,17 +127,30 @@ void define_ccObject(py::module &m)
             {
                 self.cast<ccHObject *>()->detachChild(child.cast<ccHObject *>());
                 removePatient(child, self);
+                setDeletable(child, true);
             },
             "child"_a)
+        .def("detachChild", &ccHObject::detachChild, "child"_a)
         .def("detachAllChildren", &ccHObject::detachAllChildren)
         .def("swapChildren", &ccHObject::swapChildren, "firstChildIndex"_a, "secondChildIndex"_a)
         .def("getChildIndex", &ccHObject::getChildIndex, "child"_a)
         .def("getIndex", &ccHObject::getIndex)
-        .def("getFirstChild",
-             &ccHObject::getFirstChild,
-             py::return_value_policy::reference,
-             py::keep_alive<0, 1>())
-        .def("getLastChild", &ccHObject::getLastChild, py::return_value_policy::reference_internal)
+        .def(
+            "getFirstChild",
+            [](ccHObject &self)
+            {
+                ccHObject *child = self.getFirstChild();
+                return castToFakeOwnedObject(child);
+            },
+            py::keep_alive<0, 1>())
+        .def(
+            "getLastChild",
+            [](ccHObject &self)
+            {
+                ccHObject *child = self.getLastChild();
+                return castToFakeOwnedObject(child);
+            },
+            py::keep_alive<0, 1>())
         .def("isAncestorOf", &ccHObject::isAncestorOf, "anObject"_a);
 
     py::class_<ccShiftedObject, ccHObject>(m, "ccShiftedObject")
