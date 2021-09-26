@@ -94,14 +94,14 @@ void define_ccPointCloud(py::module &m)
                      // to the std::vector of points, and we would avoid the const cast
                      auto *ptr = const_cast<CCVector3 *>(self.getPoint(0));
                      auto capsule = py::capsule(ptr, [](void *) {});
-                     py::array a("3f", self.size(), ptr, capsule);
+                     py::array a(py::dtype("3f"), self.size(), ptr, capsule);
                      // Make the array non-writreable to make up for the const cast
                      a.attr("flags").attr("writeable") = false;
                      return a;
                  }
                  else
                  {
-                     return py::array("3f", 0);
+                     return py::array(py::dtype("3f"), 0);
                  }
              })
         .def("__repr__", [](const ccPointCloud &self) {
