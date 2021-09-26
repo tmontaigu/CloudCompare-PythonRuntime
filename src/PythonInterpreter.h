@@ -50,7 +50,7 @@ class PythonInterpreter final : public QObject
     {
         State();
         pybind11::dict globals;
-        pybind11::dict locals;
+        pybind11::object locals;
     };
 
   public:
