@@ -90,7 +90,6 @@ void PythonInterpreter::executeCodeString(const std::string &code,
                                           QListWidget *output,
                                           State &state)
 {
-    Q_ASSERT(output != nullptr);
     if (m_isExecuting)
     {
         return;
@@ -102,18 +101,32 @@ void PythonInterpreter::executeCodeString(const std::string &code,
 
     try
     {
-        const auto movePolicy = py::return_value_policy::move;
-        py::object newStdout = py::cast(ListWidgetConsole(output), movePolicy);
-        py::object newStderr = py::cast(ListWidgetConsole(output, orange), movePolicy);
-        PyStdErrOutStreamRedirect redirect{newStdout, newStderr};
-
-        py::eval<mode>(code, state.globals, state.locals);
+        if (output != nullptr)
+        {
+            const auto movePolicy = py::return_value_policy::move;
+            py::object newStdout = py::cast(ListWidgetConsole(output), movePolicy);
+            py::object newStderr = py::cast(ListWidgetConsole(output, orange), movePolicy);
+            PyStdErrOutStreamRedirect redirect{newStdout, newStderr};
+            py::eval<mode>(code, state.globals, state.locals);
+        }
+        else
+        {
+            PyStdErrOutStreamRedirect redirect;
+            py::eval<mode>(code, state.globals, state.locals);
+        }
     }
     catch (const std::exception &e)
     {
-        auto message = new QListWidgetItem(e.what());
-        message->setForeground(Qt::red);
-        output->addItem(message);
+        if (output)
+        {
+            auto message = new QListWidgetItem(e.what());
+            message->setForeground(Qt::red);
+            output->addItem(message);
+        }
+        else
+        {
+            ccLog::Error(e.what());
+        }
     }
 
     m_isExecuting = false;
