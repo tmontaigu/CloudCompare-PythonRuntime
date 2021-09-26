@@ -64,6 +64,23 @@ if(PLUGIN_PYTHON)
   target_link_libraries(PythonPlugin pybind11::embed)
   set_target_properties(PythonPlugin PROPERTIES CXX_VISIBILITY_PRESET hidden)
 
+  add_custom_target(
+    pytest
+    COMMAND
+      ${PYTHON_EXECUTABLE} -m pytest --cloudcompare_exe
+      ${CMAKE_INSTALL_PREFIX}/${CLOUDCOMPARE_DEST_FOLDER}/CloudCompare.exe
+      ${CMAKE_CURRENT_LIST_DIR}/tests
+  )
+
+  add_custom_target(
+    python_plugin_documentation
+    COMMAND doxygen qCC_db_doxygen_file
+    COMMAND doxygen ./CCCoreLib_doxygen_file
+    COMMAND ${CMAKE_INSTALL_PREFIX}/${CLOUDCOMPARE_DEST_FOLDER}/CloudCompare.exe
+            -SILENT -PYTHON_SCRIPT build_doc.py -b html . _build
+    WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/docs
+  )
+
   if(WIN32)
     manage_windows_install()
   elseif(UNIX AND NOT APPLE)
