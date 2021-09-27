@@ -13,4 +13,6 @@ imported, which is not the case when running sphinx-build
 from sphinx.cmd.build import main
 import sys
 
-main(sys.argv[1:])
+code = main(sys.argv[1:])
+if code != 0:
+    sys.exit(code)

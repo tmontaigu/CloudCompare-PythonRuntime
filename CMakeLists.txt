@@ -64,20 +64,29 @@ if(PLUGIN_PYTHON)
   target_link_libraries(PythonPlugin pybind11::embed)
   set_target_properties(PythonPlugin PROPERTIES CXX_VISIBILITY_PRESET hidden)
 
+
+  if (WIN32)
+    set(CLOUDCOMPARE_EXECUTABLE_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/${CLOUDCOMPARE_DEST_FOLDER}/CloudCompare.exe)
+  elseif(APPLE)
+    set(CLOUDCOMPARE_EXECUTABLE_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/CloudCompare/CloudCompare.app)
+  else()
+    set(CLOUDCOMPARE_EXECUTABLE_INSTALL_PATH ${CMAKE_INSTALL_PREFIX}/bin/CloudCompare)
+  endif()
+
   add_custom_target(
     pytest
     COMMAND
       ${PYTHON_EXECUTABLE} -m pytest --cloudcompare_exe
-      ${CMAKE_INSTALL_PREFIX}/${CLOUDCOMPARE_DEST_FOLDER}/CloudCompare.exe
+      ${CLOUDCOMPARE_EXECUTABLE_INSTALL_PATH}
       ${CMAKE_CURRENT_LIST_DIR}/tests
   )
 
   add_custom_target(
     python_plugin_documentation
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_LIST_DIR}/docs/__build
     COMMAND doxygen qCC_db_doxygen_file
     COMMAND doxygen ./CCCoreLib_doxygen_file
-    COMMAND ${CMAKE_INSTALL_PREFIX}/${CLOUDCOMPARE_DEST_FOLDER}/CloudCompare.exe
-            -SILENT -PYTHON_SCRIPT build_doc.py -b html . _build
+    COMMAND ${CLOUDCOMPARE_EXECUTABLE_INSTALL_PATH} -SILENT -PYTHON_SCRIPT build_doc.py -b html . _build
     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/docs
   )
 

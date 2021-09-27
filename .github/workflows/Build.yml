@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: '22f6d835a6f6179130efabcadf46245697fa6eaa'
+          ref: '4f8c1daf05ea63d2886a4199f02cbc64c21d61dc'
           submodules: true
 
       - name: Clone PythonPlugin
@@ -35,8 +35,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          conda install -c conda-forge qt=5.12.* pybind11 ninja
-          pip install numpy
+          conda install -c conda-forge qt=5.12.* ninja doxygen
+          pip install pytest pybind11 numpy
 
       - name: Configure MSVC console
         uses: ilammy/msvc-dev-cmd@v1
@@ -68,33 +68,39 @@ jobs:
         run: cmake --install build
 
       - name: Run Tests
-        run: |
-          pip install pytest
-          cd plugins/private/CloudCompare-PythonPlugin
-          pytest --cloudcompare_exe ${{ github.workspace }}/install/CloudCompare/CloudCompare.exe tests
+        run: cmake --build build --target pytest
 
   Ubuntu-Build:
     name: "Ubuntu Build"
     runs-on: ubuntu-latest
-
     steps:
-      - name: Install Dependencies
-        run: |
-          sudo apt-get update -qq
-          sudo apt install build-essential cmake ninja-build libqt5svg5-dev libqt5opengl5-dev qt5-default qttools5-dev qttools5-dev-tools pybind11-dev xvfb
-          python3 -m pip install pytest numpy
-
       - name: Clone CloudCompare
         uses: actions/checkout@v2
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: '22f6d835a6f6179130efabcadf46245697fa6eaa'
-          submodules: true
+          ref: '4f8c1daf05ea63d2886a4199f02cbc64c21d61dc'
+          submodules: false
+
+      # Do this until we rely on a CC commit that
+      # have a more recent version of CCCoreLib
+      # so we can build the docs
+      - name: Clone CCCoreLib
+        uses: actions/checkout@v2
+        with:
+          repository: 'CloudCompare/CCCoreLib'
+          path: 'libs/qCC_db/extern/CCCoreLib'
 
       - name: Clone PythonPlugin
         uses: actions/checkout@v2
         with:
           path: 'plugins/private/CloudCompare-PythonPlugin'
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt install -y build-essential cmake ninja-build xvfb doxygen
+          sudo apt install -y libqt5svg5-dev libqt5opengl5-dev qt5-default qttools5-dev qttools5-dev-tools pybind11-dev
+          python3 -m pip install -r plugins/private/CloudCompare-PythonPlugin/requirements-dev.txt
 
       - name: Configure CMake
         shell: pwsh
@@ -115,9 +121,21 @@ jobs:
 
       - name: Run Tests
         run: |
-          cd plugins/private/CloudCompare-PythonPlugin
           export LD_LIBRARY_PATH=/usr/local/lib
-          xvfb-run python3 -m pytest --cloudcompare_exe /usr/local/bin/CloudCompare tests
+          xvfb-run cmake --build build --target pytest
+
+      - name: Build docs
+        run: |
+          export LD_LIBRARY_PATH=/usr/local/lib
+          xvfb-run cmake --build build --target python_plugin_documentation
+
+      - name: Deploy Documentation
+        if: github.ref == 'refs/heads/master'
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          folder: plugins/private/CloudCompare-PythonPlugin/docs/_build
+
 
   MacOs-Build:
     name: "macOs Build"
@@ -128,7 +146,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: '22f6d835a6f6179130efabcadf46245697fa6eaa'
+          ref: '4f8c1daf05ea63d2886a4199f02cbc64c21d61dc'
           submodules: true
 
       - name: Clone PythonPlugin
@@ -161,10 +179,7 @@ jobs:
         run: sudo cmake --install build
 
       - name: Run Tests
-        run: |
-          python3 -m pip install pytest
-          cd plugins/private/CloudCompare-PythonPlugin
-          python3 -m pytest --cloudcompare_exe ${{ github.workspace }}/install/CloudCompare/CloudCompare.app tests
+        run: cmake --build build --target pytest
 
 
   Windows-Wheels:
