@@ -61,6 +61,3 @@ def test_metadata():
 
     obj.setMetaData("double value", 4536.135)
     assert obj.getMetaData("double value") == 4536.135
-
-
-

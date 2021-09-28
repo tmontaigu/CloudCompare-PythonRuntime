@@ -167,7 +167,8 @@ void ccGuiPythonInstance::removeFromDB(pybind11::object &obj)
     }
     catch (const pybind11::cast_error &)
     {
-        throw std::runtime_error("Cannot remove from the DB a type that does not sub class ccHObject");
+        throw std::runtime_error(
+            "Cannot remove from the DB a type that does not sub class ccHObject");
     }
 }
 

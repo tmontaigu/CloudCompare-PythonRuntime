@@ -13,7 +13,7 @@ path_to_las = r"L:\R1_F_0+000_0+050.las"
 las = laspy.read(path_to_las)
 
 # Be aware that CloudCompare stores coordinates on 32 bit floats.
-# To avoid losing too much precision you should 'shift' your coordinates 
+# To avoid losing too much precision you should 'shift' your coordinates
 # if they are 64 bit floats (which is the default in python land)
 
 xs = (las.x - las.header.x_min).astype(pycc.PointCoordinateType)

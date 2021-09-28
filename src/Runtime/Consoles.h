@@ -118,7 +118,9 @@ class ccConsoleOutput
 class ListWidgetConsole
 {
   public:
-    ListWidgetConsole(QListWidget *view, const Qt::GlobalColor color) : m_view(view), m_brush(color) {}
+    ListWidgetConsole(QListWidget *view, const Qt::GlobalColor color) : m_view(view), m_brush(color)
+    {
+    }
     ListWidgetConsole(QListWidget *view, const QColor &color) : m_view(view), m_brush() {}
     explicit ListWidgetConsole(QListWidget *view) : m_view(view), m_brush() {}
 

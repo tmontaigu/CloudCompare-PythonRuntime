@@ -28,4 +28,3 @@ Merge
 
 .. literalinclude:: ../script_examples/merge_script.py
     :language: Python
-

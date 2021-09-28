@@ -242,4 +242,3 @@ ___________
 .. doxygenclass:: CCCoreLib::ScalarField
     :members:
     :project: CCCoreLib
-

@@ -39,5 +39,3 @@ classificationSf.computeMinAndMax()
 
 assert classificationSf.getMax() == 17
 assert classificationSf.getMin() == 17
-
-

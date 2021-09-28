@@ -18,14 +18,14 @@ def main():
 
     print(pc.getNumberOfScalarFields())
 
-    # Create (if it does not exists already) 
+    # Create (if it does not exists already)
     # a scalar field where we store the Labels
     labelsSfIdx = pc.getScalarFieldIndexByName("Labels")
     if labelsSfIdx == -1:
         labelsSfIdx = pc.addScalarField("Labels")
     pc.setCurrentScalarField(labelsSfIdx)
 
-   
+
     numLabels = pycc.RunInThread(
         cccorelib.AutoSegmentationTools.labelConnectedComponents, pc, 11, False)
     print("There are {} labels".format(numLabels))
@@ -33,7 +33,7 @@ def main():
     # If we didn't create the Labels scalar field
     # we would do here:
     # labelsSfIdx = pc.getScalarFieldIndexByName("Default");
-    
+
     labelsSf = pc.getScalarField(labelsSfIdx)
     pointLabels = labelsSf.asArray()
     pointsArray = pc.points()
@@ -42,9 +42,9 @@ def main():
     # print(f"x: {pointsArray[:, 0]}")
     # print(f"y: {pointsArray[:, 1]}")
     # print(f"z: {pointsArray[:, 2]}")
-    
+
     allLabels = np.unique(pointLabels)
-    
+
     for label in allLabels:
         pointsOfLabel = pointsArray[pointLabels == label]
         print(f"Label {label}: {len(pointsOfLabel)} points")

@@ -113,8 +113,7 @@ void define_ccObject(py::module &m)
         .def("getChildCountRecursive", &ccHObject::getChildCountRecursive)
         .def(
             "getChild",
-            [](py::object &self, unsigned int index)
-            {
+            [](py::object &self, unsigned int index) {
                 auto *child = self.cast<ccHObject *>()->getChild(index);
                 return castToFakeOwnedObject(child);
             },
@@ -123,8 +122,7 @@ void define_ccObject(py::module &m)
         .def("find", &ccHObject::find, "uniqueID"_a, py::return_value_policy::reference_internal)
         .def(
             "detachChild",
-            [](py::object &self, py::object &child)
-            {
+            [](py::object &self, py::object &child) {
                 self.cast<ccHObject *>()->detachChild(child.cast<ccHObject *>());
                 removePatient(child, self);
                 setDeletable(child, true);
@@ -137,16 +135,14 @@ void define_ccObject(py::module &m)
         .def("getIndex", &ccHObject::getIndex)
         .def(
             "getFirstChild",
-            [](ccHObject &self)
-            {
+            [](ccHObject &self) {
                 ccHObject *child = self.getFirstChild();
                 return castToFakeOwnedObject(child);
             },
             py::keep_alive<0, 1>())
         .def(
             "getLastChild",
-            [](ccHObject &self)
-            {
+            [](ccHObject &self) {
                 ccHObject *child = self.getLastChild();
                 return castToFakeOwnedObject(child);
             },
@@ -155,12 +151,12 @@ void define_ccObject(py::module &m)
 
     py::class_<ccShiftedObject, ccHObject>(m, "ccShiftedObject")
         .def("setGlobalShift",
-             (void(ccShiftedObject::*)(double, double, double))(&ccShiftedObject::setGlobalShift),
+             (void (ccShiftedObject::*)(double, double, double))(&ccShiftedObject::setGlobalShift),
              "x_"_a,
              "y"_a,
              "z"_a)
         .def("setGlobalShift",
-             (void(ccShiftedObject::*)(const CCVector3d &))(&ccShiftedObject::setGlobalShift),
+             (void (ccShiftedObject::*)(const CCVector3d &))(&ccShiftedObject::setGlobalShift),
              "shift"_a)
         .def("getGlobalShift", &ccShiftedObject::getGlobalShift)
         .def("setGlobalScale", &ccShiftedObject::setGlobalScale, "scale"_a)

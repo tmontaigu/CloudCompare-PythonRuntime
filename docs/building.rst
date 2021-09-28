@@ -8,9 +8,9 @@ There is 2 way in which you can build the project:
 
 When built as CloudCompare plugin, at the end of the process,
 you will have a standard CloudCompare plugin that embeds Python to
-allow running Python script directly in the app and allow scripts to interact with 
+allow running Python script directly in the app and allow scripts to interact with
 the currently running CloudCompare like a regular C++ plugin would.
-The plugin built, also embeds various Python bindings of 
+The plugin built, also embeds various Python bindings of
 CloudCompare's libraries to be used in your script.
 
 When build as standalone packages, you will install the Python bindings
@@ -37,14 +37,14 @@ _______
 
 1. Clone this project into CloudCompare/plugins/private
 2. Create a virtual environment via ``venv`` or ``conda``
-   
+
    .. code-block::
-        
+
        # Python's venv
-       python -m venv .\pyccvenv 
+       python -m venv .\pyccvenv
 
        # Conda environment
-       conda create -n pyccenv 
+       conda create -n pyccenv
 
 3. Activate the environment
 
@@ -57,7 +57,7 @@ _______
        conda activate pyccenv
 
 4. install dependencies
-    
+
    .. code-block::
 
        pip install -r requirements-release.txt
@@ -67,10 +67,10 @@ _______
     To generate the cmake config you have 2 options:
 
     1. Start the cmake generation while still within the activated environment
-    
+
     2. Add ``-DPTYHON_EXECUTABLE="somepath_to_python.exe"``
-       Where ``somepath_to_python.exe`` is the absolute path to the python executable 
-       of the pyccenv created earlier. 
+       Where ``somepath_to_python.exe`` is the absolute path to the python executable
+       of the pyccenv created earlier.
 
        To get it, run: ``python -c "import sys;print(sys.executable)"`` (while in the activated env)
 
@@ -79,7 +79,7 @@ _______
 
 6. Build
 7. Install
-   
+
 
 Linux
 _____
@@ -119,7 +119,7 @@ Supported platforms: [Windows, Linux, macOs]
 
 It is also possible to build and install the bindings as standard python
 packages to use them in python scripts (run by a standalone python executable
-and not the embedded python in the plugin). 
+and not the embedded python in the plugin).
 
 To build as standalone wheels, it is not necessary to clone the repo
 in CloudCompare's `plugins/private` folder.
@@ -172,7 +172,7 @@ Tests works by running CloudCompare in command line mode.
 To run them, you need pytest, and you need to provide to pytest the path the where CloudCompare is installed
 
 .. code-block::
-    
+
     # in CloudCompare/plugins/private/CloudCompare-PythonPlugin:
 
     pytest --cloudcompare_exe "C:\CMakeBuilds\CloudCompare\Release\install\CloudCompare\CloudCompare.exe" tests

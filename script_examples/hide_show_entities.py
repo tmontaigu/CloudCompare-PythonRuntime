@@ -1,4 +1,4 @@
-""" Hides all Selected entities, and re-shows them with a delay 
+""" Hides all Selected entities, and re-shows them with a delay
 """
 import cccorelib
 import pycc

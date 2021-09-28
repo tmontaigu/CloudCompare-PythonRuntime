@@ -14,7 +14,7 @@ In GUI, there are 3 actions:
 *  The editor which allows to create,edit,save python script and most importantly run them.
     .. image:: ../images/python-editor-icon.png
 
-*  The file runner, which shows a small dialog where you can select a file and run it 
+*  The file runner, which shows a small dialog where you can select a file and run it
    whithout having to have the editor openned.
 
     .. image:: ../images/runner-icon.png
@@ -96,5 +96,3 @@ Example:
 
 Python's sys.argv will be equal to:
 ['/path/to/cloudcompare', 'some_positional_arg', '--size', '50']
-
-

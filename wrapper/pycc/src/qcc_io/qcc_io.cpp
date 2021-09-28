@@ -81,14 +81,14 @@ void define_qcc_io(py::module &m)
 
     py::class_<FileIOFilter> PyFileIOFilter(m, "FileIOFilter");
     PyFileIOFilter
-        .def_static(
-            "LoadFromFile",
-            [](const QString &filename, FileIOFilter::LoadParameters &parameters) {
-                CC_FILE_ERROR result = CC_FERR_NO_ERROR;
-                ccHObject *newGroup = FileIOFilter::LoadFromFile(filename, parameters, result);
-                ThrowForFileError(result);
-                return newGroup;
-            })
+        .def_static("LoadFromFile",
+                    [](const QString &filename, FileIOFilter::LoadParameters &parameters) {
+                        CC_FILE_ERROR result = CC_FERR_NO_ERROR;
+                        ccHObject *newGroup =
+                            FileIOFilter::LoadFromFile(filename, parameters, result);
+                        ThrowForFileError(result);
+                        return newGroup;
+                    })
         .def_static(
             "SaveToFile",
             [](ccHObject *entities,

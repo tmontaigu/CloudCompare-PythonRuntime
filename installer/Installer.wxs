@@ -7,22 +7,22 @@
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
 
     <Product
-        Name='CloudCompare-PythonPlugin 0.0.1' 
+        Name='CloudCompare-PythonPlugin 0.0.1'
         Manufacturer='Thomas Montaigu'
-        Id='30898b3e-9391-4790-8f22-0459408a7862' 
+        Id='30898b3e-9391-4790-8f22-0459408a7862'
         UpgradeCode='3e92988a-6d78-4464-bc19-930ccf2a1d5d'
         Language='1033' Codepage='1252' Version='0.0.1'
     >
 
-        <Package 
-            Id='*' 
-            Keywords='Installer' 
+        <Package
+            Id='*'
+            Keywords='Installer'
             Description="CloudCompare-PythonPlugin 0.0.1 Installer"
             Comments='Python Plugin for CloudCompare'
             Manufacturer='Thomas Montaigu'
-            InstallerVersion='200' 
-            Languages='1033' 
-            Compressed='yes' 
+            InstallerVersion='200'
+            Languages='1033'
+            Compressed='yes'
             SummaryCodepage='1252'
             Platform='x64'
         />
@@ -63,6 +63,3 @@
         <UIRef Id="WixUI_ErrorProgressText" />
     </Product>
 </Wix>
-
-
-

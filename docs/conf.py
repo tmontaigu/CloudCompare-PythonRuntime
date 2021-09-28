@@ -67,4 +67,3 @@ html_static_path = ['_static']
 # -- Autodoc config ------------------------------
 autodoc_member_order = "groupwise"
 autodoc_typehints = "description"
-

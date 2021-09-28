@@ -60,27 +60,27 @@
                     try {
                         Object.defineProperty(navigator, "doNotTrack", { value: "unspecified" });
                     } catch (e) {}
-                    
+
             try {
                 window.screenY = 22
             } catch (e) { }
-        
+
             try {
                 window.screenTop = 22
             } catch (e) { }
-        
+
             try {
                 window.top.window.outerHeight = 1186
             } catch (e) { }
-        
+
             try {
                 window.screenX = 1912
             } catch (e) { }
-        
+
             try {
                 window.screenLeft = 1912
             } catch (e) { }
-        
+
             try {
                 window.top.window.outerWidth = window.screen.width
             } catch (e) { }
