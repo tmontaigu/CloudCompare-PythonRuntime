@@ -44,6 +44,7 @@ inline void LogPythonPath()
         if (cPythonPath)
         {
             ccLog::Print("[PythonPlugin] PythonPath is set to: %s", cPythonPath);
+            PyMem_Free(cPythonPath);
         }
         else
         {
