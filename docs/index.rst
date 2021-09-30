@@ -38,12 +38,3 @@ be found on the corresponding C++ function documentation.
    python/pycc/index
    cpp/qCC_db/index
    cpp/CCCoreLib/index
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

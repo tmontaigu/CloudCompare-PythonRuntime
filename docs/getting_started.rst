@@ -15,7 +15,7 @@ In GUI, there are 3 actions:
     .. image:: ../images/python-editor-icon.png
 
 *  The file runner, which shows a small dialog where you can select a file and run it
-   whithout having to have the editor openned.
+   without having to have the editor opened.
 
     .. image:: ../images/runner-icon.png
 
