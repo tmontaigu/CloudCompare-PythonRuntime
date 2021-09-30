@@ -31,7 +31,6 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 
 void define_qcc_db(py::module &m);
-void define_pycc_runtime(py::module &);
 void define_qcc_io(py::module &);
 
 template <class T> using observer_ptr = std::unique_ptr<T, py::nodelete>;
