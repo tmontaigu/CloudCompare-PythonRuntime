@@ -18,13 +18,71 @@
 #include <ui_PathVariableEditor.h>
 #include <ui_PythonPluginSettings.h>
 
-#include <QInputDialog>
+#include <QDialogButtonBox>
+#include <QFileDialog>
+#include <QLineEdit>
+#include <QPushButton>
 #include <QSettings>
 #include <QStringListModel>
 
 #include <memory>
 
-class PathVariableEditor : public QDialog
+/// Simple Dialog that displays a Line Edit with a button next to it
+/// to let the user select a path to a directory
+class PathVariableInputDialog final : public QDialog
+{
+  public:
+    explicit PathVariableInputDialog(QWidget *parent = nullptr)
+        : QDialog(parent),
+          m_pathEdit(new QLineEdit),
+          m_selectPathBtn(new QPushButton),
+          m_dialogBtnBox(new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel))
+    {
+        m_selectPathBtn->setText(QStringLiteral("..."));
+        connect(m_selectPathBtn,
+                &QPushButton::clicked,
+                this,
+                &PathVariableInputDialog::handleSelectPath);
+
+        connect(m_dialogBtnBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
+        connect(m_dialogBtnBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+
+        auto *layout = new QHBoxLayout;
+        layout->addWidget(m_pathEdit);
+        layout->addWidget(m_selectPathBtn);
+
+        auto layout1 = new QVBoxLayout;
+        layout1->addLayout(layout);
+        layout1->addWidget(m_dialogBtnBox);
+
+        setLayout(layout1);
+    }
+
+    QString selectedPath() const
+    {
+        return m_pathEdit->text();
+    }
+
+  private:
+    void handleSelectPath()
+    {
+        QString selectedDir = QFileDialog::getExistingDirectory(
+            this,
+            tr("Select a path to add"),
+            QString(),
+            QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+        m_pathEdit->setText(selectedDir);
+    }
+
+  private:
+    QLineEdit *m_pathEdit;
+    QPushButton *m_selectPathBtn;
+    QDialogButtonBox *m_dialogBtnBox;
+};
+
+/// Dialog that shows the list of Path in which we are looking for plugins.
+/// It lets the user edits the paths, add new ones or delete existing ones.
+class PathVariableEditor final : public QDialog
 {
   public:
     explicit PathVariableEditor(const QStringList &values, QWidget *parent = nullptr)
@@ -45,15 +103,16 @@ class PathVariableEditor : public QDialog
   private:
     void handleAdd()
     {
-        bool ok;
-        QString text = QInputDialog::getText(
-            this, tr("Add Value"), tr("Value: "), QLineEdit::Normal, QString(), &ok);
 
-        if (ok && !text.isEmpty())
+        PathVariableInputDialog dlg;
+        dlg.exec();
+        QString path = dlg.selectedPath();
+
+        if (!path.isEmpty())
         {
             int rowCount = m_model->rowCount();
             m_model->insertRows(rowCount, 1);
-            m_model->setData(m_model->index(rowCount), text);
+            m_model->setData(m_model->index(rowCount), path);
         }
     }
 
