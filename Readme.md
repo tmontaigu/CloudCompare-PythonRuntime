@@ -3,7 +3,7 @@
 Early step attempt at allowing to use Python to automate some stuff in CloudCompare.
 
 The [documentation](https://tmontaigu.github.io/CloudCompare-PythonPlugin/index.html)
-is hosted using github pages.
+is hosted using GitHub pages.
 
 # Dependencies
 
@@ -13,7 +13,7 @@ is hosted using github pages.
 # Windows installer
 
 Windows user can download the [installer](https://u.pcloud.link/publink/show?code=XZjJbdXZYEGTg7gcFAum74E8OPDlEBFQivUk).
-This requires an installation of CloudCompare 2.12 alpha (from the 30/08) downloadable from the website
+This requires an installation of CloudCompare 2.12 alpha (from the 13/01/2022) downloadable from CloudCompare website.
 
 # Building & Installing
 

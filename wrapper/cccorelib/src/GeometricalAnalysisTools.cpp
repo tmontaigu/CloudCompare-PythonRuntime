@@ -40,6 +40,7 @@ void define_GeometricalAnalysisTools(py::module &cccorelib)
                                         "subOptions"_a,
                                         "cloud"_a,
                                         "kernelRadius"_a,
+                                        "roughnessUpDir"_a = nullptr,
                                         "progressCb"_a = nullptr,
                                         "inputOctree"_a = nullptr);
 

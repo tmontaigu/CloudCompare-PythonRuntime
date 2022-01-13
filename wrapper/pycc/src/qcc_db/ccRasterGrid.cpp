@@ -97,6 +97,7 @@ void define_ccRasterGrid(py::module &m)
              &ccRasterGrid::fillWith,
              "cloud"_a,
              "projectionDimension"_a,
+             "maxEdgeLength"_a,
              "projectionType"_a,
              "interpolateEmptyCells"_a,
              "sfInterpolation"_a = ccRasterGrid::ProjectionType::INVALID_PROJECTION_TYPE,
@@ -107,7 +108,7 @@ void define_ccRasterGrid(py::module &m)
              "customCellHeight"_a = 0)
         .def("updateNonEmptyCellCount", &ccRasterGrid::updateNonEmptyCellCount)
         .def("updateCellStats", &ccRasterGrid::updateCellStats)
-        .def("interpolateEmptyCells", &ccRasterGrid::interpolateEmptyCells)
+        .def("interpolateEmptyCells", &ccRasterGrid::interpolateEmptyCells, "maxSquareEdgeLength"_a)
         .def("setValid", &ccRasterGrid::setValid, "state"_a)
         .def("isValid", &ccRasterGrid::isValid)
         .def("computeCellPos", &ccRasterGrid::computeCellPos, "P"_a, "X"_a, "Y"_a)
