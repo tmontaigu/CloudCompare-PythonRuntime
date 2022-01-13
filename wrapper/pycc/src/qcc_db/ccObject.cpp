@@ -19,6 +19,7 @@
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
 
+#include <ccGenericGLDisplay.h>
 #include <ccHObject.h>
 #include <ccObject.h>
 #include <ccShiftedObject.h>
@@ -147,7 +148,21 @@ void define_ccObject(py::module &m)
                 return castToFakeOwnedObject(child);
             },
             py::keep_alive<0, 1>())
-        .def("isAncestorOf", &ccHObject::isAncestorOf, "anObject"_a);
+        .def("isAncestorOf", &ccHObject::isAncestorOf, "anObject"_a)
+        // bounding-box
+        .def("getDisplayBB_recursive",
+             &ccHObject::getDisplayBB_recursive,
+             "relative"_a,
+             "display"_a = nullptr)
+
+        // display
+        .def("applyGLTransformation_recursive",
+             &ccHObject::applyGLTransformation_recursive,
+             "trans"_a = nullptr)
+        .def("getUniqueIDForDisplay", &ccHObject::getUniqueIDForDisplay)
+        .def("getGLTransformationHistory", &ccHObject::getGLTransformationHistory)
+        .def("setGLTransformationHistory", &ccHObject::setGLTransformationHistory, "mat"_a)
+        .def("resetGLTransformationHistory", &ccHObject::resetGLTransformationHistory);
 
     py::class_<ccShiftedObject, ccHObject>(m, "ccShiftedObject")
         .def("setGlobalShift",

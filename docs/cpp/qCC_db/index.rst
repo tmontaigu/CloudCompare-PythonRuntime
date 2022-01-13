@@ -272,10 +272,30 @@ _______________
    :members:
 
 ccRasterGrid
-_______________
+_____________
 .. seealso::
 
     Python: :class:`pycc.ccRasterGrid`
 
 .. doxygenstruct:: ccRasterGrid
    :members:
+
+
+ccGLMatrix
+__________
+.. seealso::
+
+    Python: :class:`pycc.ccGLMatrix`
+
+.. doxygenclass:: ccGLMatrix
+   :members:
+
+ccGLMatrixd
+___________
+.. seealso::
+
+    Python: :class:`pycc.ccGLMatrixd`
+
+.. doxygenclass:: ccGLMatrixd
+   :members:
+

@@ -133,6 +133,30 @@ __________________
     :undoc-members:
     :show-inheritance:
 
+ccGLMatrix
+__________
+.. seealso::
+
+    C++: :cpp:class:`ccGLMatrix`
+
+.. autoclass:: pycc.ccGLMatrix
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+ccGLMatrixd
+___________
+.. seealso::
+
+    C++: :cpp:class:`ccGLMatrixd`
+
+.. autoclass:: pycc.ccGLMatrixd
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 WaveformDescriptor
 __________________
 .. seealso::
