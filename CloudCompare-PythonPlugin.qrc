@@ -5,6 +5,11 @@
         <file>images/runner-icon.png</file>
         <file>images/python-editor-icon.png</file>
         <file>images/geo-sat-logo.svg</file>
+        <file>images/settings-icon.png</file>
+        <file>images/launcher-icon.png</file>
+        <file>images/package-manager-icon.png</file>
+        <file>images/documentation-icon.png</file>
+        <file>images/about-icon.png</file>
 
         <file>info.json</file>
 

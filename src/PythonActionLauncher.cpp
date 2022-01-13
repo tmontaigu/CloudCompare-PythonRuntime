@@ -16,8 +16,10 @@
 //##########################################################################
 #include "PythonActionLauncher.h"
 #include "PythonInterpreter.h"
+#include "Resources.h"
 #include <ui_ActionLauncher.h>
 
+#include <QIcon>
 #include <QVBoxLayout>
 
 #undef slots
@@ -82,6 +84,8 @@ PythonActionLauncher::PythonActionLauncher(const PythonPluginManager *pluginMana
         m_interpreter, &PythonInterpreter::executionStarted, this, &PythonActionLauncher::disable);
     connect(
         m_interpreter, &PythonInterpreter::executionFinished, this, &PythonActionLauncher::enable);
+
+    setWindowIcon(QIcon(ACTION_LAUNCHER_ICON_PATH));
 }
 
 void PythonActionLauncher::showEvent(QShowEvent *event)

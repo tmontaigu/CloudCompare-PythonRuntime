@@ -19,6 +19,7 @@
 
 #include "FileRunner.h"
 #include "PythonInterpreter.h"
+#include "Resources.h"
 
 #include <QFileDialog>
 #include <QProgressBar>
@@ -54,8 +55,8 @@ FileRunner::FileRunner(PythonInterpreter *interp, QWidget *parent)
     m_ui->setupUi(this);
     m_ui->runFileBtn->setEnabled(false);
     m_ui->runFileBtn->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowRight));
-    setWindowIcon(QIcon(":/CC/plugin/PythonPlugin/images/runner-icon.png"));
     m_busyWidget = CreateBusyWidget(this);
+    setWindowIcon(QIcon(RUNNER_ICON_PATH));
 
     connect(m_ui->selectFileBtn, &QPushButton::clicked, this, &FileRunner::selectFile);
     connect(m_ui->runFileBtn, &QPushButton::clicked, this, &FileRunner::runFile);

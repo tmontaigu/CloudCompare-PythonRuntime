@@ -16,9 +16,11 @@
 //##########################################################################
 #include "PackageManager.h"
 #include "PythonInterpreter.h"
+#include "Resources.h"
 
 #include <QDialog>
 #include <QDir>
+#include <QIcon>
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QPlainTextEdit>
@@ -98,6 +100,8 @@ PackageManager::PackageManager(const PythonConfig &config, QWidget *parent)
     connect(m_pythonProcess,
             static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
             [this](int, QProcess::ExitStatus) { setBusy(false); });
+
+    setWindowIcon(QIcon(PACKAGE_MANAGER_ICON_PATH));
 
     m_ui->installedPackagesView->setColumnCount(2);
     m_ui->installedPackagesView->setEditTriggers(QAbstractItemView::NoEditTriggers);

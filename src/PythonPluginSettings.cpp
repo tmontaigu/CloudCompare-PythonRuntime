@@ -15,11 +15,13 @@
 //#                                                                        #
 //##########################################################################
 #include "PythonPluginSettings.h"
+#include "Resources.h"
 #include <ui_PathVariableEditor.h>
 #include <ui_PythonPluginSettings.h>
 
 #include <QDialogButtonBox>
 #include <QFileDialog>
+#include <QIcon>
 #include <QLineEdit>
 #include <QPushButton>
 #include <QSettings>
@@ -104,7 +106,7 @@ class PathVariableEditor final : public QDialog
     void handleAdd()
     {
 
-        PathVariableInputDialog dlg;
+        PathVariableInputDialog dlg(this);
         dlg.exec();
         QString path = dlg.selectedPath();
 
@@ -138,6 +140,8 @@ PythonPluginSettings::PythonPluginSettings(QWidget *parent)
     : QDialog(parent), m_ui(new Ui_PythonPluginSettings)
 {
     m_ui->setupUi(this);
+    setWindowIcon(QIcon(SETTINGS_ICON_PATH));
+
     connect(this, &QDialog::accepted, this, &PythonPluginSettings::saveSettings);
     connect(m_ui->editButton,
             &QPushButton::clicked,

@@ -24,6 +24,7 @@
 #include "PythonPluginSettings.h"
 #include "PythonRepl.h"
 #include "PythonStdErrOutRedirect.h"
+#include "Resources.h"
 #include "Runtime/Runtime.h"
 #include "Utilities.h"
 
@@ -61,7 +62,7 @@ QList<QAction *> PythonPlugin::getActions()
     {
         m_showEditor = new QAction("Show Editor", this);
         m_showEditor->setToolTip("Show the code editor window");
-        m_showEditor->setIcon(QIcon(":/CC/plugin/PythonPlugin/images/python-editor-icon.png"));
+        m_showEditor->setIcon(QIcon(EDITOR_ICON_PATH));
         connect(m_showEditor, &QAction::triggered, this, &PythonPlugin::showEditor);
         m_showEditor->setEnabled(enableActions);
     }
@@ -70,7 +71,7 @@ QList<QAction *> PythonPlugin::getActions()
     {
         m_showRepl = new QAction("Show REPL", this);
         m_showRepl->setToolTip("Show the Python REPL");
-        m_showRepl->setIcon(QIcon(":/CC/plugin/PythonPlugin/images/repl-icon.png"));
+        m_showRepl->setIcon(QIcon(REPL_ICON_PATH));
         connect(m_showRepl, &QAction::triggered, this, &PythonPlugin::showRepl);
         m_showRepl->setEnabled(enableActions);
     }
@@ -78,9 +79,8 @@ QList<QAction *> PythonPlugin::getActions()
     if (!m_showDoc)
     {
         m_showDoc = new QAction("Show Documentation", this);
-        m_showDoc->setToolTip("Show local documentation in your web browser");
-        m_showDoc->setIcon(
-            m_app->getMainWindow()->style()->standardIcon(QStyle::SP_FileDialogInfoView));
+        m_showDoc->setToolTip("Open online documentation in your web browser");
+        m_showDoc->setIcon(QIcon(DOCUMENTATION_ICON_PATH));
         connect(m_showDoc, &QAction::triggered, &PythonPlugin::showDocumentation);
         m_showDoc->setEnabled(enableActions);
     }
@@ -89,8 +89,7 @@ QList<QAction *> PythonPlugin::getActions()
     {
         m_showAboutDialog = new QAction("About", this);
         m_showAboutDialog->setToolTip("About this plugin");
-        m_showAboutDialog->setIcon(
-            m_app->getMainWindow()->style()->standardIcon(QStyle::SP_MessageBoxQuestion));
+        m_showAboutDialog->setIcon(QIcon(ABOUT_ICON_PATH));
         connect(m_showAboutDialog, &QAction::triggered, this, &PythonPlugin::showAboutDialog);
         m_showAboutDialog->setEnabled(enableActions);
     }
@@ -99,7 +98,7 @@ QList<QAction *> PythonPlugin::getActions()
     {
         m_showFileRunner = new QAction("File Runner", this);
         m_showFileRunner->setToolTip("Small widget to select and run a script");
-        m_showFileRunner->setIcon(QIcon(":/CC/plugin/PythonPlugin/images/runner-icon.png"));
+        m_showFileRunner->setIcon(QIcon(RUNNER_ICON_PATH));
         connect(m_showFileRunner, &QAction::triggered, this, &PythonPlugin::showFileRunner);
         m_showFileRunner->setEnabled(enableActions);
     }
@@ -108,7 +107,7 @@ QList<QAction *> PythonPlugin::getActions()
     {
         m_showPackageManager = new QAction("Package Manager", this);
         m_showPackageManager->setToolTip("Manage packages with pip");
-        m_showPackageManager->setIcon(QIcon());
+        m_showPackageManager->setIcon(QIcon(PACKAGE_MANAGER_ICON_PATH));
         connect(m_showPackageManager, &QAction::triggered, this, &PythonPlugin::showPackageManager);
         m_showPackageManager->setEnabled(enableActions);
     }
@@ -116,8 +115,8 @@ QList<QAction *> PythonPlugin::getActions()
     if (!m_showActionLauncher)
     {
         m_showActionLauncher = new QAction("Show Action Launcher", this);
+        m_showActionLauncher->setIcon(QIcon(ACTION_LAUNCHER_ICON_PATH));
         m_showActionLauncher->setToolTip("Launch actions of custom Python plugins");
-        m_showActionLauncher->setIcon(QIcon());
         connect(m_showActionLauncher,
                 &QAction::triggered,
                 this,
@@ -128,8 +127,8 @@ QList<QAction *> PythonPlugin::getActions()
     if (!m_showSettings)
     {
         m_showSettings = new QAction("Show Settings", this);
+        m_showSettings->setIcon(QIcon(SETTINGS_ICON_PATH));
         m_showSettings->setToolTip("Show some settings");
-        m_showActionLauncher->setIcon(QIcon());
         connect(m_showSettings, &QAction::triggered, this, &PythonPlugin::showSettings);
         m_showSettings->setEnabled(enableActions);
     }

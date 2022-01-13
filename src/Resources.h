@@ -14,27 +14,21 @@
 //#                   COPYRIGHT: Thomas Montaigu                           #
 //#                                                                        #
 //##########################################################################
+#ifndef PYTHON_PLUGIN_RESOURCES_H
+#define PYTHON_PLUGIN_RESOURCES_H
 
-#include "AboutDialog.h"
-#include "Resources.h"
+#include <QStringLiteral>
 
-#include <ui_AboutDialog.h>
+#define ABOUT_ICON_PATH QStringLiteral(":/CC/plugin/PythonPlugin/images/about-icon.png")
+#define EDITOR_ICON_PATH QStringLiteral(":/CC/plugin/PythonPlugin/images/python-editor-icon.png")
+#define REPL_ICON_PATH QStringLiteral(":/CC/plugin/PythonPlugin/images/repl-icon.png")
+#define DOCUMENTATION_ICON_PATH                                                                    \
+    QStringLiteral(":/CC/plugin/PythonPlugin/images/documentation-icon.png")
+#define RUNNER_ICON_PATH QStringLiteral(":/CC/plugin/PythonPlugin/images/runner-icon.png")
+#define PACKAGE_MANAGER_ICON_PATH                                                                  \
+    QStringLiteral(":/CC/plugin/PythonPlugin/images/package-manager-icon.png")
+#define ACTION_LAUNCHER_ICON_PATH                                                                  \
+    QStringLiteral(":/CC/plugin/PythonPlugin/images/launcher-icon.png")
+#define SETTINGS_ICON_PATH QStringLiteral(":/CC/plugin/PythonPlugin/images/settings-icon.png")
 
-#undef slots
-#include <pybind11/pybind11.h>
-
-AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent), m_dlg(new Ui_AboutDialog)
-{
-    m_dlg->setupUi(this);
-    setWindowIcon(QIcon(ABOUT_ICON_PATH));
-
-    connect(m_dlg->okBtn, &QPushButton::clicked, this, &QDialog::close);
-
-    const char *versionStr = Py_GetVersion();
-    m_dlg->pythonVersionLabel->setText(QString(versionStr));
-}
-
-AboutDialog::~AboutDialog() noexcept
-{
-    delete m_dlg;
-}
+#endif // PYTHON_PLUGIN_RESOURCES_H
