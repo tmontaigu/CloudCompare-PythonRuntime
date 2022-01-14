@@ -20,33 +20,11 @@
 #include "FileRunner.h"
 #include "PythonInterpreter.h"
 #include "Resources.h"
+#include "WaitingSpinnerWidget.h"
 
 #include <QFileDialog>
-#include <QProgressBar>
 #include <QResizeEvent>
 #include <QStyle>
-
-/// Simple widget that grays out the view of its parent
-/// and shows a waiting bar, to give visual feedback that a script is running
-static QWidget *CreateBusyWidget(QWidget *parent)
-{
-    auto *w = new QWidget(parent);
-    w->hide();
-    w->setBaseSize(parent->size());
-    w->setStyleSheet("background-color: rgba(125, 125, 125, 85%)");
-
-    auto *bar = new QProgressBar(w);
-    bar->setStyleSheet("");
-    bar->setRange(0, 0);
-
-    auto *layout = new QHBoxLayout;
-    layout->addStretch();
-    layout->addWidget(bar);
-    layout->addStretch();
-    w->setLayout(layout);
-
-    return w;
-}
 
 FileRunner::FileRunner(PythonInterpreter *interp, QWidget *parent)
     : QDialog(parent), m_interpreter(interp), m_busyWidget(nullptr), m_ui(new Ui::FileRunner)
@@ -55,8 +33,8 @@ FileRunner::FileRunner(PythonInterpreter *interp, QWidget *parent)
     m_ui->setupUi(this);
     m_ui->runFileBtn->setEnabled(false);
     m_ui->runFileBtn->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowRight));
-    m_busyWidget = CreateBusyWidget(this);
     setWindowIcon(QIcon(RUNNER_ICON_PATH));
+    m_busyWidget = new WaitingSpinnerWidget(this);
 
     connect(m_ui->selectFileBtn, &QPushButton::clicked, this, &FileRunner::selectFile);
     connect(m_ui->runFileBtn, &QPushButton::clicked, this, &FileRunner::runFile);
@@ -67,8 +45,10 @@ FileRunner::FileRunner(PythonInterpreter *interp, QWidget *parent)
 
 void FileRunner::selectFile()
 {
-    m_filePath = QFileDialog::getOpenFileName(
-        this, "Select Python Script", QString(), "Python Script (*.py)");
+    m_filePath = QFileDialog::getOpenFileName(this,
+                                              QStringLiteral("Select Python Script"),
+                                              QString(),
+                                              QStringLiteral("Python Script (*.py)"));
     m_ui->filePathLabel->setText(m_filePath);
     m_ui->runFileBtn->setEnabled(!m_filePath.isEmpty());
 }
@@ -85,13 +65,13 @@ void FileRunner::runFile() const
 void FileRunner::pythonExecutionStarted()
 {
     setEnabled(false);
-    m_busyWidget->show();
+    m_busyWidget->start();
 }
 
 void FileRunner::pythonExecutionEnded()
 {
     setEnabled(true);
-    m_busyWidget->hide();
+    m_busyWidget->stop();
 }
 
 FileRunner::~FileRunner() noexcept

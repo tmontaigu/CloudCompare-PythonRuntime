@@ -31,6 +31,8 @@ target_sources(
           ${CMAKE_CURRENT_LIST_DIR}/PythonRepl.h
           ${CMAKE_CURRENT_LIST_DIR}/Resources.h
           ${CMAKE_CURRENT_LIST_DIR}/Utilities.h
+          ${CMAKE_CURRENT_LIST_DIR}/WaitingSpinnerWidget.cpp
+          ${CMAKE_CURRENT_LIST_DIR}/WaitingSpinnerWidget.h
 )
 
 target_include_directories(

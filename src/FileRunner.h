@@ -25,6 +25,7 @@ namespace Ui
 class FileRunner;
 }
 
+class WaitingSpinnerWidget;
 class PythonInterpreter;
 
 /// The File Runner is a small widget that let the user pick a .py file
@@ -53,7 +54,7 @@ class FileRunner final : public QDialog
 
   private:
     PythonInterpreter *m_interpreter;
-    QWidget *m_busyWidget;
+    WaitingSpinnerWidget *m_busyWidget;
     Ui::FileRunner *m_ui;
     QString m_filePath;
 };
