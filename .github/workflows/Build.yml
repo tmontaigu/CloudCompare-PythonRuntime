@@ -30,7 +30,7 @@ jobs:
         with:
           activate-environment: CloudCompareDev
           auto-activate-base: false
-          python-version: "3.7"
+          python-version: "3.8"
           miniconda-version: 'latest'
 
       - name: Install Dependencies

@@ -19,12 +19,11 @@
 
 #include <QApplication>
 #include <QDir>
+#include <QMessageBox>
 #include <QProcess>
 #include <QTextCodec>
 #include <QVector>
 #include <QtGlobal>
-
-#include <stdexcept>
 
 //================================================================================
 
@@ -39,6 +38,11 @@ Version::Version(const QStringRef &versionStr) : Version()
     }
 }
 
+bool Version::isCompatibleWithCompiledVersion() const
+{
+    return major == PythonVersion.major && minor == PythonVersion.minor;
+}
+
 bool Version::operator==(const Version &other) const
 {
     return major == other.major && minor == other.minor && patch == other.patch;
@@ -47,6 +51,7 @@ bool Version::operator==(const Version &other) const
 static Version GetPythonExeVersion(QProcess &pythonProcess)
 {
     pythonProcess.setArguments({"--version"});
+    pythonProcess.start(QIODevice::ReadOnly);
     pythonProcess.waitForFinished();
 
     const QString versionStr =
@@ -129,41 +134,7 @@ const wchar_t *PythonConfigPaths::pythonPath() const
 PythonConfig::PythonConfig()
 {
 #ifdef Q_OS_WIN32
-    const char *condaPrefix = std::getenv("CONDA_PREFIX");
-    const char *venvPrefix = std::getenv("VIRTUAL_ENV");
-    if (condaPrefix || venvPrefix)
-    {
-        if (condaPrefix)
-        {
-            initCondaEnv(condaPrefix);
-        }
-        else if (venvPrefix)
-        {
-            initVenv(venvPrefix);
-        }
-
-#ifndef USE_EMBEDDED_MODULES
-        m_pythonPath.append(QApplication::applicationDirPath() +
-                            "/plugins/Python/Lib/site-packages");
-#endif
-        QProcess pythonProcess;
-        preparePythonProcess(pythonProcess);
-        const Version version = GetPythonExeVersion(pythonProcess);
-
-        if (version.major != PythonVersion.major || version.minor != PythonVersion.minor)
-        {
-            ccLog::Warning(QString("Python environment at %1 is not compatible."
-                                   " Reverting to default environment")
-                               .arg(m_pythonHome));
-            initBundled();
-            return;
-        }
-    }
-    else
-    {
-        initBundled();
-        return;
-    }
+    initBundled();
 #else
     // On Non windows platform
     // We do nothing, and rely on system's python installation
@@ -172,11 +143,50 @@ PythonConfig::PythonConfig()
 }
 
 #ifdef Q_OS_WIN32
+void PythonConfig::initBundled()
+{
+    const QString pythonEnvDirPath(QApplication::applicationDirPath() + "/plugins/Python");
+    initFromLocation(pythonEnvDirPath);
+}
+#endif
+
+void PythonConfig::initFromLocation(const QString &prefix)
+{
+    QDir envRoot(prefix);
+
+    if (!envRoot.exists())
+    {
+        m_pythonHome = QString();
+        m_pythonPath = QString();
+        m_type = Type::Unknown;
+        return;
+    }
+
+    if (envRoot.exists("pyenv.cfg"))
+    {
+        initVenv(envRoot.path());
+    }
+    else if (envRoot.exists("conda-meta"))
+    {
+        initCondaEnv(envRoot.path());
+    }
+    else
+    {
+        m_pythonHome = envRoot.path();
+        m_pythonPath = QString("%1/DLLs;%1/lib;%1/Lib/site-packages;").arg(m_pythonHome);
+        m_type = Type::Unknown;
+    }
+}
+
 void PythonConfig::initCondaEnv(const QString &condaPrefix)
 {
     m_type = Type::Conda;
     m_pythonHome = condaPrefix;
     m_pythonPath = QString("%1/DLLs;%1/lib;%1/Lib/site-packages;").arg(condaPrefix);
+
+#ifndef USE_EMBEDDED_MODULES
+    m_pythonPath.append(QApplication::applicationDirPath() + "/plugins/Python/Lib/site-packages");
+#endif
 }
 
 void PythonConfig::initVenv(const QString &venvPrefix)
@@ -190,44 +200,35 @@ void PythonConfig::initVenv(const QString &venvPrefix)
     {
         m_pythonPath.append(QString("%1/Lib/site-packages").arg(cfg.home));
     }
-}
 
-void PythonConfig::initBundled()
-{
-    const QDir pythonEnvDirPath(QApplication::applicationDirPath() + "/plugins/Python");
-    if (pythonEnvDirPath.exists())
-    {
-        if (pythonEnvDirPath.exists("pyenv.cfg"))
-        {
-            initVenv(pythonEnvDirPath.path());
-        }
-        else if (pythonEnvDirPath.exists("conda-meta"))
-        {
-            initCondaEnv(pythonEnvDirPath.path());
-        }
-        else
-        {
-            m_pythonHome = pythonEnvDirPath.path();
-            m_pythonPath = QString("%1/DLLs;%1/lib;%1/Lib/site-packages;").arg(m_pythonHome);
-            m_type = Type::Unknown;
-        }
-    }
-}
+#ifndef USE_EMBEDDED_MODULES
+    m_pythonPath.append(QApplication::applicationDirPath() + "/plugins/Python/Lib/site-packages");
 #endif
+}
 
 void PythonConfig::preparePythonProcess(QProcess &pythonProcess) const
 {
-    if (m_type == Type::System)
+    switch (m_type)
     {
-        pythonProcess.setProgram(QStringLiteral("python"));
-    }
-    else
-    {
+
+    case Type::Venv:
+#ifdef Q_OS_WIN
+        pythonProcess.setProgram(QString("%1/Scripts/python.exe").arg(m_pythonHome));
+#else
+        pythonProcess.setProgram(QString("%1/python").arg(m_pythonHome));
+#endif
+        break;
+    case Type::Conda:
 #ifdef Q_OS_WIN
         pythonProcess.setProgram(QString("%1/python.exe").arg(m_pythonHome));
 #else
         pythonProcess.setProgram(QString("%1/python").arg(m_pythonHome));
 #endif
+        break;
+    case Type::System:
+    default:
+        pythonProcess.setProgram(QStringLiteral("python"));
+        break;
     }
 
     // Conda env have SSL related libraries stored in a part that is not
@@ -248,4 +249,69 @@ PythonConfigPaths PythonConfig::pythonCompatiblePaths() const
     paths.m_pythonHome.reset(QStringToWcharArray(m_pythonHome));
     paths.m_pythonPath.reset(QStringToWcharArray(m_pythonPath));
     return paths;
+}
+
+Version PythonConfig::getVersion() const
+{
+    QProcess pythonProcess;
+    preparePythonProcess(pythonProcess);
+    return GetPythonExeVersion(pythonProcess);
+}
+
+bool PythonConfig::validateAndDisplayErrors(QWidget *parent) const
+{
+    Version envVersion = getVersion();
+    if (envVersion.isNull())
+    {
+        // This hints that the selected directory is likely not valid.
+        QMessageBox::critical(
+            parent,
+            "Invalid Python Environment",
+            "The selected directory does not seems to be a valid python environment");
+        return false;
+    }
+
+    if (!envVersion.isCompatibleWithCompiledVersion())
+    {
+        QMessageBox::critical(
+            parent,
+            "Incompatible Python Environment",
+            QString("The selected directory does not contain a Python Environment that is "
+                    "compatible. Expected a python version like %1.%2.x, selected environment "
+                    "has version %3.%4.%5")
+                .arg(QString::number(PythonVersion.major),
+                     QString::number(PythonVersion.minor),
+                     QString::number(envVersion.major),
+                     QString::number(envVersion.minor),
+                     QString::number(envVersion.patch)));
+        return false;
+    }
+
+    return true;
+}
+
+bool PythonConfig::IsInsideEnvironment()
+{
+    return qEnvironmentVariableIsSet("CONDA_PREFIX") || qEnvironmentVariableIsSet("VIRTUAL_ENV");
+}
+
+PythonConfig PythonConfig::fromContainingEnvironment()
+{
+    PythonConfig config;
+
+    QString root = qEnvironmentVariable("CONDA_PREFIX");
+    if (!root.isEmpty())
+    {
+        config.initCondaEnv(root);
+        return config;
+    }
+
+    root = qEnvironmentVariable("VIRTUAL_ENV");
+    if (!root.isEmpty())
+    {
+        config.initVenv(root);
+        return config;
+    }
+
+    return config;
 }

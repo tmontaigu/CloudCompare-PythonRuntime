@@ -29,6 +29,7 @@
 struct PyVenvCfg;
 class QProcess;
 class PythonConfigPaths;
+class QWidget;
 
 /// Simple representation of a SemVer version
 struct Version
@@ -41,6 +42,24 @@ struct Version
     }
 
     explicit Version(const QStringRef &versionStr);
+
+    /// Checks whether the Python version number described by
+    /// this instance is compatible with the Python version the plugin
+    /// was compiled with.
+    ///
+    /// As explained in https://docs.python.org/3/c-api/stable.html#stable:
+    /// CPython’s Application Binary Interface (ABI) is forward- and backwards-compatible
+    /// across a minor release.
+    /// So, code compiled for Python 3.10.0 will work on 3.10.8 and vice versa,
+    /// but will need to be compiled separately for 3.9.x and 3.10.x.
+    ///
+    /// \return True if the version is compatible.
+    bool isCompatibleWithCompiledVersion() const;
+
+    bool isNull() const
+    {
+        return major == 0 && minor == 0 && patch == 0;
+    };
 
     bool operator==(const Version &other) const;
 
@@ -76,6 +95,11 @@ class PythonConfig final
     /// Does nothing, as we rely on the system's python to be properly installed
     PythonConfig();
 
+    Type type() const
+    {
+        return m_type;
+    }
+
     /// Sets the necessary settings of the QProcess so that
     /// it uses the correct Python exe.
     void preparePythonProcess(QProcess &pythonProcess) const;
@@ -84,16 +108,39 @@ class PythonConfig final
     /// types that the CPython API can use.
     PythonConfigPaths pythonCompatiblePaths() const;
 
-  private:
+    /// Calls the python.exe of this environment / config
+    /// to get its version.
+    ///
+    /// \return The version returned by the python process
+    ///         If the python process failed for whatever reason
+    ///         the version will be {0, 0, 0}
+    Version getVersion() const;
+
+    /// Does some basic validation (check is python executable exists
+    /// and checks if its version is compatible) and displays a GUI with
+    /// a message describing the error to the user.
+    ///
+    /// \param parent parent for the GUI to be displayed, can be nullptr
+    /// \return true if the config passes the validation
+    ///         (meaning no error where displayed to the user)
+    bool validateAndDisplayErrors(QWidget *parent = nullptr) const;
+
+    static bool IsInsideEnvironment();
+    static PythonConfig fromContainingEnvironment();
+
 #ifdef Q_OS_WIN32
     /// Initialize the paths to point to where the Python
     /// environment was bundled on a Windows installation
     void initBundled();
+#endif
+    /// Initialize from the path to an environment.
+    /// Will try to guess if the environment is a conda env
+    /// or a python venv
+    void initFromLocation(const QString &prefix);
     /// Initialize the paths to use the conda environment stored at condaPrefix
     void initCondaEnv(const QString &condaPrefix);
     /// Initialize the paths to use the python venv stored at venvPrefix.
     void initVenv(const QString &venvPrefix);
-#endif
 
   private:
     QString m_pythonHome{};

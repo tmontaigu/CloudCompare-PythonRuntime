@@ -25,6 +25,7 @@
 #include <QApplication>
 #include <QDir>
 #include <QListWidgetItem>
+#include <QMessageBox>
 #include <QTextCodec>
 
 #include <ccLog.h>
@@ -178,16 +179,7 @@ void PythonInterpreter::executeFunction(const pybind11::object &function)
 
 void PythonInterpreter::initialize(const PythonConfig &config)
 {
-#ifdef Q_OS_WIN32
-    m_config = config.pythonCompatiblePaths();
-    Q_ASSERT(m_config.isSet());
-#if PY_MINOR_VERSION == 6
-    Py_SetPythonHome(const_cast<wchar_t *>(m_config.pythonHome()));
-#else
-    Py_SetPythonHome(m_config.pythonHome());
-#endif
-    Py_SetPath(m_config.pythonPath());
-#endif
+
 #ifdef Q_OS_UNIX
     // Work-around issue: undefined symbol: PyExc_RecursionError
     // when trying to import numpy in the intepreter
@@ -195,7 +187,8 @@ void PythonInterpreter::initialize(const PythonConfig &config)
     // https://stackoverflow.com/questions/49784583/numpy-import-fails-on-multiarray-extension-library-when-called-from-embedded-pyt
     // This workaround is weak
 
-    const auto displaydlopenError = []() {
+    const auto displaydlopenError = []()
+    {
         char *error = dlerror();
         if (error)
         {
@@ -217,7 +210,63 @@ void PythonInterpreter::initialize(const PythonConfig &config)
         }
     }
 #endif
-    py::initialize_interpreter();
+    if (config.type() != PythonConfig::Type::System)
+    {
+        // We use PEP 0587 to init the interpreter.
+        // The changes introduced in this PEP allows to handle the error
+        // when the interpreter could not be initialized.
+        //
+        // Before that the python interpreter would simply exit the program
+        // and that could be a bad user experience
+        //
+        // https://www.python.org/dev/peps/pep-0587/
+        // https://docs.python.org/3/c-api/init_config.html#init-python-config
+        m_config = config.pythonCompatiblePaths();
+        if (!m_config.isSet())
+        {
+            throw std::runtime_error(
+                "internal error: Config is not system python, but neither paths nor home is set");
+        }
+
+        PyStatus status;
+
+        PyConfig pyConfig;
+        PyConfig_InitPythonConfig(&pyConfig);
+        pyConfig.isolated = 1;
+
+        status = PyConfig_SetString(&pyConfig, &pyConfig.home, m_config.pythonHome());
+        if (PyStatus_Exception(status))
+        {
+            PyConfig_Clear(&pyConfig);
+            throw std::runtime_error(status.err_msg);
+        }
+
+        status = PyConfig_SetString(&pyConfig, &pyConfig.pythonpath_env, m_config.pythonPath());
+        if (PyStatus_Exception(status))
+        {
+            PyConfig_Clear(&pyConfig);
+            throw std::runtime_error(status.err_msg);
+        }
+
+        status = PyConfig_Read(&pyConfig);
+        if (PyStatus_Exception(status))
+        {
+            PyConfig_Clear(&pyConfig);
+            throw std::runtime_error(status.err_msg);
+        }
+
+        status = Py_InitializeFromConfig(&pyConfig);
+        if (PyStatus_Exception(status))
+        {
+            PyConfig_Clear(&pyConfig);
+            throw std::runtime_error(status.err_msg);
+        }
+    }
+    else
+    {
+        Py_Initialize();
+    }
+
     // Make sure this module is imported
     // so that we can later easily construct our consoles.
     py::module::import("ccinternals");

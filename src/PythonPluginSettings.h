@@ -17,6 +17,8 @@
 #ifndef PYTHON_PLUGIN_SETTINGS_H
 #define PYTHON_PLUGIN_SETTINGS_H
 
+#include <PythonConfig.h>
+
 #include <QDialog>
 
 class Ui_PythonPluginSettings;
@@ -27,11 +29,18 @@ class PythonPluginSettings final : public QDialog
     explicit PythonPluginSettings(QWidget *parent = nullptr);
 
     QStringList pluginsPaths() const;
+    PythonConfig pythonEnvConfig() const;
+    bool isDefaultPythonEnv() const;
 
   private: // Methods
+    QString selectedEnvType() const;
+    QString localEnvPath() const;
+
     void restoreSettings();
     void saveSettings() const;
     void handleEditPluginsPaths();
+    void handleEnvComboBoxChange(const QString &envTypeName);
+    void handleSelectLocalEnv();
 
   private:
     Ui_PythonPluginSettings *m_ui;

@@ -16,6 +16,7 @@
 //##########################################################################
 #include "PythonPluginSettings.h"
 #include "Resources.h"
+
 #include <ui_PathVariableEditor.h>
 #include <ui_PythonPluginSettings.h>
 
@@ -23,9 +24,11 @@
 #include <QFileDialog>
 #include <QIcon>
 #include <QLineEdit>
+#include <QMessageBox>
 #include <QPushButton>
 #include <QSettings>
 #include <QStringListModel>
+#include <QtGlobal>
 
 #include <memory>
 
@@ -140,26 +143,71 @@ PythonPluginSettings::PythonPluginSettings(QWidget *parent)
     : QDialog(parent), m_ui(new Ui_PythonPluginSettings)
 {
     m_ui->setupUi(this);
+    m_ui->localEnvSettingsWidget->hide();
+#if defined(Q_OS_WIN)
+    m_ui->envTypeComboBox->addItem("Bundled");
+#else
+    m_ui->envTypeComboBox->addItem("System");
+#endif
+    m_ui->envTypeComboBox->addItem("Local");
     setWindowIcon(QIcon(SETTINGS_ICON_PATH));
 
     connect(this, &QDialog::accepted, this, &PythonPluginSettings::saveSettings);
+    connect(this, &QDialog::accepted, this, [this]() { m_ui->informationLabel->hide(); });
+    connect(this, &QDialog::rejected, this, [this]() { m_ui->informationLabel->hide(); });
     connect(m_ui->editButton,
             &QPushButton::clicked,
             this,
             &PythonPluginSettings::handleEditPluginsPaths);
+    connect(m_ui->envTypeComboBox,
+            &QComboBox::currentTextChanged,
+            this,
+            &PythonPluginSettings::handleEnvComboBoxChange);
+    connect(m_ui->localEnvSelectBtn,
+            &QPushButton::clicked,
+            this,
+            &PythonPluginSettings::handleSelectLocalEnv);
     restoreSettings();
+    m_ui->informationLabel->hide();
+}
+
+QString PythonPluginSettings::selectedEnvType() const
+{
+    return m_ui->envTypeComboBox->currentText();
+}
+
+QString PythonPluginSettings::localEnvPath() const
+{
+    if (selectedEnvType() == "Local")
+    {
+        return m_ui->localEnvPathLabel->text();
+    }
+    return {};
 }
 
 void PythonPluginSettings::restoreSettings()
 {
     std::unique_ptr<QSettings> settings = LoadOurSettings();
-    m_pluginsPaths = settings->value(QString::fromUtf8("PluginPaths")).value<QStringList>();
+    m_pluginsPaths = settings->value(QStringLiteral("PluginPaths")).value<QStringList>();
+
+    const QString envType = settings->value(QStringLiteral("EnvType")).toString();
+    int index = m_ui->envTypeComboBox->findText(envType);
+    index = (index == -1) ? 0 : index;
+    m_ui->envTypeComboBox->setCurrentIndex(index);
+
+    if (selectedEnvType() == "Local")
+    {
+        const QString localEnvPath = settings->value(QStringLiteral("EnvPath")).toString();
+        m_ui->localEnvPathLabel->setText(localEnvPath);
+    }
 }
 
 void PythonPluginSettings::saveSettings() const
 {
     std::unique_ptr<QSettings> settings = LoadOurSettings();
-    settings->setValue(QString::fromUtf8("PluginPaths"), pluginsPaths());
+    settings->setValue(QStringLiteral("PluginPaths"), pluginsPaths());
+    settings->setValue(QStringLiteral("EnvType"), selectedEnvType());
+    settings->setValue(QStringLiteral("EnvPath"), localEnvPath());
 }
 
 void PythonPluginSettings::handleEditPluginsPaths()
@@ -167,9 +215,75 @@ void PythonPluginSettings::handleEditPluginsPaths()
     PathVariableEditor editor(pluginsPaths(), this);
     editor.exec();
     m_pluginsPaths = editor.stringList();
+    m_ui->informationLabel->show();
+}
+
+void PythonPluginSettings::handleEnvComboBoxChange(const QString &envTypeName)
+{
+    if (envTypeName == "Local")
+    {
+        m_ui->localEnvSettingsWidget->show();
+    }
+    else
+    {
+        m_ui->localEnvSettingsWidget->hide();
+    }
+    m_ui->informationLabel->show();
+}
+
+void PythonPluginSettings::handleSelectLocalEnv()
+{
+    QString selectedDir = QFileDialog::getExistingDirectory(this, "Python Environment Root");
+    if (!selectedDir.isEmpty())
+    {
+        PythonConfig config;
+        config.initFromLocation(selectedDir);
+
+        bool isEnvValid = config.validateAndDisplayErrors(this);
+        if (!isEnvValid)
+        {
+            m_ui->envTypeComboBox->setCurrentIndex(0);
+        }
+        else
+        {
+            m_ui->localEnvPathLabel->setText(selectedDir);
+        }
+    }
 }
 
 QStringList PythonPluginSettings::pluginsPaths() const
 {
     return m_pluginsPaths;
+}
+
+PythonConfig PythonPluginSettings::pythonEnvConfig() const
+{
+    if (selectedEnvType() == "System")
+    {
+        return {};
+    }
+#if defined(Q_OS_WINDOWS)
+    if (selectedEnvType() == "Bundled")
+    {
+        PythonConfig config;
+        config.initBundled();
+        return config;
+    }
+#endif
+    else if (selectedEnvType() == "Local")
+    {
+        PythonConfig config;
+        config.initFromLocation(localEnvPath());
+        return config;
+    }
+    else
+    {
+        Q_ASSERT(false);
+        return {};
+    }
+}
+
+bool PythonPluginSettings::isDefaultPythonEnv() const
+{
+    return m_ui->envTypeComboBox->currentIndex() == 0;
 }

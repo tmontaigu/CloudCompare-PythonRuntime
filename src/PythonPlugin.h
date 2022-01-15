@@ -71,12 +71,12 @@ class PythonPlugin final : public QObject, public ccStdPluginInterface
     PythonInterpreter m_interp;
     PythonPluginManager m_pluginManager;
 
+    PythonPluginSettings *m_settings{nullptr};
     PythonRepl *m_repl{nullptr};
     PythonEditor *m_editor{nullptr};
     FileRunner *m_fileRunner{nullptr};
     PackageManager *m_packageManager{nullptr};
     PythonActionLauncher *m_actionLauncher{nullptr};
-    PythonPluginSettings *m_settings{nullptr};
 
     /// Actions
     QAction *m_showEditor{nullptr};

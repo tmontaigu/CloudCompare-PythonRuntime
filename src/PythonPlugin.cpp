@@ -40,13 +40,49 @@
 PythonPlugin::PythonPlugin(QObject *parent)
     : QObject(parent),
       ccStdPluginInterface(":/CC/plugin/PythonPlugin/info.json"),
+      m_settings(new PythonPluginSettings),
       m_interp(nullptr),
       m_editor(new PythonEditor(&m_interp)),
       m_fileRunner(new FileRunner(&m_interp)),
-      m_actionLauncher(new PythonActionLauncher(&m_pluginManager, &m_interp)),
-      m_settings(new PythonPluginSettings)
+      m_actionLauncher(new PythonActionLauncher(&m_pluginManager, &m_interp))
 {
-    m_interp.initialize(m_config);
+    PythonConfig config;
+    bool isDefaultPythonEnv;
+
+    if (PythonConfig::IsInsideEnvironment())
+    {
+        config = PythonConfig::fromContainingEnvironment();
+        isDefaultPythonEnv = false;
+        ccLog::Print("CloudCompare loaded from within a venv or conda env, trying to use it for "
+                     "the Python plugin");
+    }
+    else
+    {
+        config = m_settings->pythonEnvConfig();
+        isDefaultPythonEnv = m_settings->isDefaultPythonEnv();
+    }
+
+    if (!isDefaultPythonEnv)
+    {
+        bool seemsValid = config.validateAndDisplayErrors();
+        if (!seemsValid)
+        {
+            ccLog::Error("Falling back to default Python configuration due to previous errors");
+            config = PythonConfig();
+        }
+    }
+
+    try
+    {
+        m_interp.initialize(config);
+    }
+    catch (const std::exception &e)
+    {
+        ccLog::Error("Failed to initialize Python: '%s'", e.what());
+        return;
+    }
+
+    m_config = config;
 
     connect(QCoreApplication::instance(),
             &QCoreApplication::aboutToQuit,
@@ -56,7 +92,7 @@ PythonPlugin::PythonPlugin(QObject *parent)
 
 QList<QAction *> PythonPlugin::getActions()
 {
-    const bool enableActions = PythonInterpreter::IsInitialized();
+    const bool isPythonProperlyInitialized = PythonInterpreter::IsInitialized();
 
     if (!m_showEditor)
     {
@@ -64,7 +100,7 @@ QList<QAction *> PythonPlugin::getActions()
         m_showEditor->setToolTip("Show the code editor window");
         m_showEditor->setIcon(QIcon(EDITOR_ICON_PATH));
         connect(m_showEditor, &QAction::triggered, this, &PythonPlugin::showEditor);
-        m_showEditor->setEnabled(enableActions);
+        m_showEditor->setEnabled(isPythonProperlyInitialized);
     }
 
     if (!m_showRepl)
@@ -73,7 +109,7 @@ QList<QAction *> PythonPlugin::getActions()
         m_showRepl->setToolTip("Show the Python REPL");
         m_showRepl->setIcon(QIcon(REPL_ICON_PATH));
         connect(m_showRepl, &QAction::triggered, this, &PythonPlugin::showRepl);
-        m_showRepl->setEnabled(enableActions);
+        m_showRepl->setEnabled(isPythonProperlyInitialized);
     }
 
     if (!m_showDoc)
@@ -82,7 +118,7 @@ QList<QAction *> PythonPlugin::getActions()
         m_showDoc->setToolTip("Open online documentation in your web browser");
         m_showDoc->setIcon(QIcon(DOCUMENTATION_ICON_PATH));
         connect(m_showDoc, &QAction::triggered, &PythonPlugin::showDocumentation);
-        m_showDoc->setEnabled(enableActions);
+        m_showDoc->setEnabled(isPythonProperlyInitialized);
     }
 
     if (!m_showAboutDialog)
@@ -91,7 +127,7 @@ QList<QAction *> PythonPlugin::getActions()
         m_showAboutDialog->setToolTip("About this plugin");
         m_showAboutDialog->setIcon(QIcon(ABOUT_ICON_PATH));
         connect(m_showAboutDialog, &QAction::triggered, this, &PythonPlugin::showAboutDialog);
-        m_showAboutDialog->setEnabled(enableActions);
+        m_showAboutDialog->setEnabled(isPythonProperlyInitialized);
     }
 
     if (!m_showFileRunner)
@@ -100,7 +136,7 @@ QList<QAction *> PythonPlugin::getActions()
         m_showFileRunner->setToolTip("Small widget to select and run a script");
         m_showFileRunner->setIcon(QIcon(RUNNER_ICON_PATH));
         connect(m_showFileRunner, &QAction::triggered, this, &PythonPlugin::showFileRunner);
-        m_showFileRunner->setEnabled(enableActions);
+        m_showFileRunner->setEnabled(isPythonProperlyInitialized);
     }
 
     if (!m_showPackageManager)
@@ -109,7 +145,7 @@ QList<QAction *> PythonPlugin::getActions()
         m_showPackageManager->setToolTip("Manage packages with pip");
         m_showPackageManager->setIcon(QIcon(PACKAGE_MANAGER_ICON_PATH));
         connect(m_showPackageManager, &QAction::triggered, this, &PythonPlugin::showPackageManager);
-        m_showPackageManager->setEnabled(enableActions);
+        m_showPackageManager->setEnabled(isPythonProperlyInitialized);
     }
 
     if (!m_showActionLauncher)
@@ -121,7 +157,7 @@ QList<QAction *> PythonPlugin::getActions()
                 &QAction::triggered,
                 this,
                 &PythonPlugin::showPythonActionLauncher);
-        m_showActionLauncher->setEnabled(enableActions);
+        m_showActionLauncher->setEnabled(isPythonProperlyInitialized);
     }
 
     if (!m_showSettings)
@@ -130,7 +166,8 @@ QList<QAction *> PythonPlugin::getActions()
         m_showSettings->setIcon(QIcon(SETTINGS_ICON_PATH));
         m_showSettings->setToolTip("Show some settings");
         connect(m_showSettings, &QAction::triggered, this, &PythonPlugin::showSettings);
-        m_showSettings->setEnabled(enableActions);
+        // Settings do not need Python to be initialized in a valid state
+        m_showSettings->setEnabled(true);
     }
 
     return {m_showEditor,
