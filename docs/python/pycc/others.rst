@@ -4,6 +4,9 @@ Others
 
 ccScalarField
 _____________
+.. seealso::
+
+    C++: :cpp:class:`ccScalarField`
 
 .. autoclass:: pycc.ccScalarField
     :members:
