@@ -1,39 +1,22 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Building from sources &mdash; CloudCompare-PythonPlugin  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-
-  
-  
-  
-  
-
-  
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Getting Started" href="getting_started.html" />
@@ -42,29 +25,13 @@
 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> CloudCompare-PythonPlugin
-          
-
-          
+            <a href="index.html" class="icon icon-home"> CloudCompare-PythonPlugin
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -72,27 +39,17 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Plugin Documentation</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugin Documentation</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Building from sources</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#building-as-plugin">Building as Plugin</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#windows">Windows</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#linux">Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#macos">macOs</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#building-as-indenpendent-wheels">Building as indenpendent wheels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-as-independent-wheels">Building as independent wheels</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#other-development-related-things">Other development related things</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#running-the-tests">Running the tests</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#building-the-documentation">Building the documentation</a></li>
@@ -103,85 +60,68 @@
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 </ul>
-<p class="caption"><span class="caption-text">APIs Documentation</span></p>
+<p class="caption" role="heading"><span class="caption-text">APIs Documentation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="cccorelib/index.html">cccorelib</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pycc/index.html">pycc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/cccorelib/index.html">cccorelib (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/pycc/index.html">pycc (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpp/qCC_db/index.html">qCC_db (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpp/CCCoreLib/index.html">CCCoreLib (C++)</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">CloudCompare-PythonPlugin</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Building from sources</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="_sources/building.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="building-from-sources">
-<h1>Building from sources<a class="headerlink" href="#building-from-sources" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="building-as-plugin">
-<h2>Building as Plugin<a class="headerlink" href="#building-as-plugin" title="Permalink to this headline">¶</a></h2>
+             
+  <section id="building-from-sources">
+<h1>Building from sources<a class="headerlink" href="#building-from-sources" title="Permalink to this headline"></a></h1>
+<p>There is 2 way in which you can build the project:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>As a CloudCompare Plugin</p></li>
+<li><p>As “standalone” Python packages</p></li>
+</ol>
+</div></blockquote>
+<p>When built as CloudCompare plugin, at the end of the process,
+you will have a standard CloudCompare plugin that embeds Python to
+allow running Python script directly in the app and allow scripts to interact with
+the currently running CloudCompare like a regular C++ plugin would.
+The plugin built, also embeds various Python bindings of
+CloudCompare’s libraries to be used in your script.</p>
+<p>When build as standalone packages, you will install the Python bindings
+of the CloudCompare’s libraries in your Python environment.</p>
+<p>The process to build is explained in the sections below.</p>
+<section id="building-as-plugin">
+<h2>Building as Plugin<a class="headerlink" href="#building-as-plugin" title="Permalink to this headline"></a></h2>
+<p>Supported platforms: [Windows, Linux, macOs]</p>
 <p>In the following sections we assume that you know
 how to compile CloudCompare from source, otherwise refer
 to the CloudCompare documentation on how to do.</p>
 <p>To Compile this plugin you need to have Python installed.</p>
-<div class="section" id="windows">
-<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
+<p>This plugin is known to compile and work with CloudCompare
+commit <cite>d5aa6c507d1e0db8ea6e6b9d277c9ff0edab3f1e</cite>.</p>
+<p>Python 3.8 or more is required to build as a plugin.</p>
+<section id="windows">
+<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this headline"></a></h3>
 <ol class="arabic">
 <li><p>Clone this project into CloudCompare/plugins/private</p></li>
 <li><p>Create a virtual environment via <code class="docutils literal notranslate"><span class="pre">venv</span></code> or <code class="docutils literal notranslate"><span class="pre">conda</span></code></p>
@@ -224,9 +164,9 @@ of the pyccenv created earlier.</p>
 <li><p>Build</p></li>
 <li><p>Install</p></li>
 </ol>
-</div>
-<div class="section" id="linux">
-<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="linux">
+<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this headline"></a></h3>
 <ol class="arabic">
 <li><p>Clone this project in CloudCompare/plugins/private</p></li>
 <li><p>Install additional dependencies</p>
@@ -239,30 +179,69 @@ of the pyccenv created earlier.</p>
 <li><p>Build</p></li>
 <li><p>Install</p></li>
 </ol>
-</div>
-</div>
-<div class="section" id="building-as-indenpendent-wheels">
-<h2>Building as indenpendent wheels<a class="headerlink" href="#building-as-indenpendent-wheels" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="macos">
+<h3>macOs<a class="headerlink" href="#macos" title="Permalink to this headline"></a></h3>
+<ol class="arabic">
+<li><p>Clone this project in CloudCompare/plugins/private</p></li>
+<li><p>Make sure you have python3 installed (and Qt)</p></li>
+<li><p>Install additional dependencies</p>
+<blockquote>
+<div><p>In this example, we will use brew
+<code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">install</span> <span class="pre">pybind11</span></code></p>
+</div></blockquote>
+</li>
+<li><p>Run cmake with <code class="docutils literal notranslate"><span class="pre">-DPLUGIN_PYTHON=ON</span></code></p></li>
+</ol>
+<p>5. Build
+5. Install</p>
+</section>
+</section>
+<section id="building-as-independent-wheels">
+<h2>Building as independent wheels<a class="headerlink" href="#building-as-independent-wheels" title="Permalink to this headline"></a></h2>
+<p>Supported platforms: [Windows, Linux, macOs]</p>
 <p>It is also possible to build and install the bindings as standard python
 packages to use them in python scripts (run by a standalone python executable
 and not the embedded python in the plugin).</p>
+<p>To build as standalone wheels, it is not necessary to clone the repo
+in CloudCompare’s <cite>plugins/private</cite> folder.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>To be able to pip install from source, you need pip version &gt;= 21.1
+Run  <cite>pip install –upgrade pip</cite> to get the latest version</p>
+</div>
 <p>To do so:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Building the wheels
-
-<span class="go">pip wheel --no-deps wrapper/cccorelib</span>
-<span class="go">pip wheel --no-deps wrapper/pycc</span>
-
-<span class="gp">#</span> Installing directly
-
-<span class="go">pip install wrapper/cccorelib</span>
-<span class="go">pip install wrapper/pycc</span>
+<ol class="arabic simple">
+<li><p>Clone this project</p></li>
+<li><p>Set path to Qt (Windows/macOs)</p></li>
+</ol>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="c"># Windows (PowerShell)</span>
+<span class="nv">$env:CMAKE_PREFIX_PATH</span><span class="p">+=</span><span class="s2">&quot;;C:\Qt\5.15.2\msvc2019_64&quot;</span>
 </pre></div>
 </div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>macOs <span class="o">(</span>bash<span class="o">)</span>
+<span class="nb">export</span> <span class="nv">CMAKE_PREFIX_PATH</span><span class="o">=</span>/usr/local/opt/qt@5
+</pre></div>
 </div>
-<div class="section" id="other-development-related-things">
-<h2>Other development related things<a class="headerlink" href="#other-development-related-things" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="running-the-tests">
-<h3>Running the tests<a class="headerlink" href="#running-the-tests" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple" start="3">
+<li><p>Run</p></li>
+</ol>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>Building the wheels
+
+<span class="go">pip wheel --no-deps wrapper/cccorelib</span>
+<span class="go">pip wheel --use-feature=in-tree-build --no-deps wrapper/pycc</span>
+
+<span class="gp"># </span>Installing directly
+
+<span class="go">pip install wrapper/cccorelib</span>
+<span class="go">pip install --use-feature=in-tree-build wrapper/pycc</span>
+</pre></div>
+</div>
+</section>
+<section id="other-development-related-things">
+<h2>Other development related things<a class="headerlink" href="#other-development-related-things" title="Permalink to this headline"></a></h2>
+<section id="running-the-tests">
+<h3>Running the tests<a class="headerlink" href="#running-the-tests" title="Permalink to this headline"></a></h3>
 <p>Tests works by running CloudCompare in command line mode.
 To run them, you need pytest, and you need to provide to pytest the path the where CloudCompare is installed</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in CloudCompare/plugins/private/CloudCompare-PythonPlugin:</span>
@@ -270,9 +249,9 @@ To run them, you need pytest, and you need to provide to pytest the path the whe
 <span class="n">pytest</span> <span class="o">--</span><span class="n">cloudcompare_exe</span> <span class="s2">&quot;C:\CMakeBuilds\CloudCompare\Release\install\CloudCompare\CloudCompare.exe&quot;</span> <span class="n">tests</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="building-the-documentation">
-<h3>Building the documentation<a class="headerlink" href="#building-the-documentation" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="building-the-documentation">
+<h3>Building the documentation<a class="headerlink" href="#building-the-documentation" title="Permalink to this headline"></a></h3>
 <p>Building the documentation also works by running CloudCompare in command line mode.
 To build the documentation:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">docs</span>
@@ -281,64 +260,39 @@ To build the documentation:</p>
 </div>
 <p>Which by default will build the docs in HTML in docs/_build. Open docs/_build/index.html to view it.
 (The output dir can be changed using the <cite>-OutputDir</cite> option)</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="getting_started.html" class="btn btn-neutral float-right" title="Getting Started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="index.html" class="btn btn-neutral float-left" title="CloudCompare-PythonPlugin" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="CloudCompare-PythonPlugin" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="getting_started.html" class="btn btn-neutral float-right" title="Getting Started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        
-        &copy; Copyright 2020, Thomas Montaigu
-
-    </p>
+    <p>&#169; Copyright 2020, Thomas Montaigu.</p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

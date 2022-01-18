@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CCCoreLib Data Structures &amp; Interfaces &mdash; CloudCompare-PythonPlugin  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Others" href="others.html" />
+    <link rel="prev" title="CCCoreLib Tools" href="tools.html" />
+<link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> CloudCompare-PythonPlugin
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plugin Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../building.html">Building from sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">APIs Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">cccorelib (Python)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="tools.html">CCCoreLib Tools</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">CCCoreLib Data Structures &amp; Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#vectors">Vectors</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ccvector3">CCVector3</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pointclouds">PointClouds</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#genericcloud">GenericCloud</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genericindexedcloud">GenericIndexedCloud</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genericindexedcloudpersist">GenericIndexedCloudPersist</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pointcloud">PointCloud</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#referencecloud">ReferenceCloud</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#meshes">Meshes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#generictriangle">GenericTriangle</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genericmesh">GenericMesh</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genericindexedmesh">GenericIndexedMesh</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#delaunay2dmesh">Delaunay2dMesh</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#polyline">Polyline</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#simpletriangle">SimpleTriangle</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#simplemesh">SimpleMesh</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#kdtrees">KdTrees</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kdtree">KDTree</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#truekdtree">TrueKdTree</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#octrees">Octrees</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#genericoctree">GenericOctree</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dgmoctree">DgmOctree</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dgmoctreereferencecloud">DgmOctreeReferenceCloud</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#others">Others</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#boundingbox">BoundingBox</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scalarfield">ScalarField</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="others.html">Others</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../pycc/index.html">pycc (Python)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cpp/qCC_db/index.html">qCC_db (C++)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cpp/CCCoreLib/index.html">CCCoreLib (C++)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">CloudCompare-PythonPlugin</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">cccorelib (Python)</a> &raquo;</li>
+      <li>CCCoreLib Data Structures &amp; Interfaces</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/python/cccorelib/data_structures.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cccorelib-data-structures-interfaces">
+<h1>CCCoreLib Data Structures &amp; Interfaces<a class="headerlink" href="#cccorelib-data-structures-interfaces" title="Permalink to this headline"></a></h1>
+<section id="vectors">
+<h2>Vectors<a class="headerlink" href="#vectors" title="Permalink to this headline"></a></h2>
+<section id="ccvector3">
+<h3>CCVector3<a class="headerlink" href="#ccvector3" title="Permalink to this headline"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::CCVector3</span></code></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.CCVector3">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">CCVector3</span></span><a class="headerlink" href="#cccorelib.CCVector3" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.CCVector3.__add__">
+<span class="sig-name descname"><span class="pre">__add__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></span><a class="headerlink" href="#cccorelib.CCVector3.__add__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.CCVector3.__div__">
+<span class="sig-name descname"><span class="pre">__div__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></span><a class="headerlink" href="#cccorelib.CCVector3.__div__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.CCVector3.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cccorelib.CCVector3.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>__init__(self: cccorelib.CCVector3) -&gt; None</p></li>
+<li><p>__init__(self: cccorelib.CCVector3, arg0: float, arg1: float, arg2: float) -&gt; None</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.CCVector3.__mul__">
+<span class="sig-name descname"><span class="pre">__mul__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></span><a class="headerlink" href="#cccorelib.CCVector3.__mul__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.CCVector3.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#cccorelib.CCVector3.__repr__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.CCVector3.__sub__">
+<span class="sig-name descname"><span class="pre">__sub__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></span><a class="headerlink" href="#cccorelib.CCVector3.__sub__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cccorelib.CCVector3.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cccorelib'</span></em><a class="headerlink" href="#cccorelib.CCVector3.__module__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="pointclouds">
+<h2>PointClouds<a class="headerlink" href="#pointclouds" title="Permalink to this headline"></a></h2>
+<section id="genericcloud">
+<h3>GenericCloud<a class="headerlink" href="#genericcloud" title="Permalink to this headline"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <a class="reference internal" href="../../cpp/CCCoreLib/data_structures.html#_CPPv4N9CCCoreLib12GenericCloudE" title="CCCoreLib::GenericCloud"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::GenericCloud</span></code></a></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.GenericCloud">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">GenericCloud</span></span><a class="headerlink" href="#cccorelib.GenericCloud" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.GenericCloud.enableScalarField">
+<span class="sig-name descname"><span class="pre">enableScalarField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericCloud" title="cccorelib.GenericCloud"><span class="pre">cccorelib.GenericCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.GenericCloud.enableScalarField" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.GenericCloud.forEach">
+<span class="sig-name descname"><span class="pre">forEach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericCloud" title="cccorelib.GenericCloud"><span class="pre">cccorelib.GenericCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.GenericCloud.forEach" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.GenericCloud.getBoundingBox">
+<span class="sig-name descname"><span class="pre">getBoundingBox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericCloud" title="cccorelib.GenericCloud"><span class="pre">cccorelib.GenericCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bbMin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bbMax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.GenericCloud.getBoundingBox" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.GenericCloud.getNextPoint">
+<span class="sig-name descname"><span class="pre">getNextPoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericCloud" title="cccorelib.GenericCloud"><span class="pre">cccorelib.GenericCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></span><a class="headerlink" href="#cccorelib.GenericCloud.getNextPoint" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.GenericCloud.getPointScalarValue">
+<span class="sig-name descname"><span class="pre">getPointScalarValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericCloud" title="cccorelib.GenericCloud"><span class="pre">cccorelib.GenericCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointIndex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cccorelib.GenericCloud.getPointScalarValue" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.GenericCloud.isScalarFieldEnabled">
+<span class="sig-name descname"><span class="pre">isScalarFieldEnabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericCloud" title="cccorelib.GenericCloud"><span class="pre">cccorelib.GenericCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.GenericCloud.isScalarFieldEnabled" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.GenericCloud.placeIteratorAtBeginning">
+<span class="sig-name descname"><span class="pre">placeIteratorAtBeginning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericCloud" title="cccorelib.GenericCloud"><span class="pre">cccorelib.GenericCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.GenericCloud.placeIteratorAtBeginning" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.GenericCloud.setPointScalarValue">
+<span class="sig-name descname"><span class="pre">setPointScalarValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericCloud" title="cccorelib.GenericCloud"><span class="pre">cccorelib.GenericCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointIndex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.GenericCloud.setPointScalarValue" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.GenericCloud.size">
+<span class="sig-name descname"><span class="pre">size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericCloud" title="cccorelib.GenericCloud"><span class="pre">cccorelib.GenericCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cccorelib.GenericCloud.size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.GenericCloud.testVisibility">
+<span class="sig-name descname"><span class="pre">testVisibility</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericCloud" title="cccorelib.GenericCloud"><span class="pre">cccorelib.GenericCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">P</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cccorelib.GenericCloud.testVisibility" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="genericindexedcloud">
+<h3>GenericIndexedCloud<a class="headerlink" href="#genericindexedcloud" title="Permalink to this headline"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <a class="reference internal" href="../../cpp/CCCoreLib/data_structures.html#_CPPv4N9CCCoreLib19GenericIndexedCloudE" title="CCCoreLib::GenericIndexedCloud"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::GenericIndexedCloud</span></code></a></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.GenericIndexedCloud">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">GenericIndexedCloud</span></span><a class="headerlink" href="#cccorelib.GenericIndexedCloud" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cccorelib.GenericCloud" title="cccorelib.GenericCloud"><code class="xref py py-class docutils literal notranslate"><span class="pre">cccorelib.GenericCloud</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.GenericIndexedCloud.getPoint">
+<span class="sig-name descname"><span class="pre">getPoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cccorelib.GenericIndexedCloud.getPoint" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>getPoint(self: cccorelib.GenericIndexedCloud, arg0: int) -&gt; cccorelib.CCVector3</p></li>
+<li><p>getPoint(self: cccorelib.GenericIndexedCloud, arg0: int, arg1: cccorelib.CCVector3) -&gt; None</p></li>
+</ol>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="genericindexedcloudpersist">
+<h3>GenericIndexedCloudPersist<a class="headerlink" href="#genericindexedcloudpersist" title="Permalink to this headline"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <a class="reference internal" href="../../cpp/CCCoreLib/data_structures.html#_CPPv4N9CCCoreLib26GenericIndexedCloudPersistE" title="CCCoreLib::GenericIndexedCloudPersist"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::GenericIndexedCloudPersist</span></code></a></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.GenericIndexedCloudPersist">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">GenericIndexedCloudPersist</span></span><a class="headerlink" href="#cccorelib.GenericIndexedCloudPersist" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cccorelib.GenericIndexedCloud" title="cccorelib.GenericIndexedCloud"><code class="xref py py-class docutils literal notranslate"><span class="pre">cccorelib.GenericIndexedCloud</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.GenericIndexedCloudPersist.getPointPersistentPtr">
+<span class="sig-name descname"><span class="pre">getPointPersistentPtr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericIndexedCloudPersist" title="cccorelib.GenericIndexedCloudPersist"><span class="pre">cccorelib.GenericIndexedCloudPersist</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></span><a class="headerlink" href="#cccorelib.GenericIndexedCloudPersist.getPointPersistentPtr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="pointcloud">
+<h3>PointCloud<a class="headerlink" href="#pointcloud" title="Permalink to this headline"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <a class="reference internal" href="../../cpp/CCCoreLib/data_structures.html#_CPPv4N9CCCoreLib10PointCloudE" title="CCCoreLib::PointCloud"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::PointCloud</span></code></a></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.PointCloud">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">PointCloud</span></span><a class="headerlink" href="#cccorelib.PointCloud" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">cccorelib.__pointCloudTplCCCoreLib</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.PointCloud.addNormal">
+<span class="sig-name descname"><span class="pre">addNormal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.PointCloud" title="cccorelib.PointCloud"><span class="pre">cccorelib.PointCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">normal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.PointCloud.addNormal" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.PointCloud.reserveNormals">
+<span class="sig-name descname"><span class="pre">reserveNormals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.PointCloud" title="cccorelib.PointCloud"><span class="pre">cccorelib.PointCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">newCount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.PointCloud.reserveNormals" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="referencecloud">
+<h3>ReferenceCloud<a class="headerlink" href="#referencecloud" title="Permalink to this headline"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <a class="reference internal" href="../../cpp/CCCoreLib/data_structures.html#_CPPv4N9CCCoreLib14ReferenceCloudE" title="CCCoreLib::ReferenceCloud"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::ReferenceCloud</span></code></a></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.ReferenceCloud">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">ReferenceCloud</span></span><a class="headerlink" href="#cccorelib.ReferenceCloud" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cccorelib.GenericIndexedCloudPersist" title="cccorelib.GenericIndexedCloudPersist"><code class="xref py py-class docutils literal notranslate"><span class="pre">cccorelib.GenericIndexedCloudPersist</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ReferenceCloud.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cloud</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.ReferenceCloud.add" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ReferenceCloud.addPointIndex">
+<span class="sig-name descname"><span class="pre">addPointIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cccorelib.ReferenceCloud.addPointIndex" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>addPointIndex(self: cccorelib.ReferenceCloud, unsigned: int) -&gt; bool</p></li>
+<li><p>addPointIndex(self: cccorelib.ReferenceCloud, firstIndex: int, lastIndex: int) -&gt; bool</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ReferenceCloud.capacity">
+<span class="sig-name descname"><span class="pre">capacity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cccorelib.ReferenceCloud.capacity" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ReferenceCloud.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">releaseMemory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ReferenceCloud.clear" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ReferenceCloud.forwardIterator">
+<span class="sig-name descname"><span class="pre">forwardIterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ReferenceCloud.forwardIterator" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ReferenceCloud.getAssociatedCloud">
+<span class="sig-name descname"><span class="pre">getAssociatedCloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cccorelib.GenericIndexedCloudPersist" title="cccorelib.GenericIndexedCloudPersist"><span class="pre">cccorelib.GenericIndexedCloudPersist</span></a></span></span><a class="headerlink" href="#cccorelib.ReferenceCloud.getAssociatedCloud" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ReferenceCloud.getCurrentPointCoordinates">
+<span class="sig-name descname"><span class="pre">getCurrentPointCoordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></span><a class="headerlink" href="#cccorelib.ReferenceCloud.getCurrentPointCoordinates" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ReferenceCloud.getCurrentPointGlobalIndex">
+<span class="sig-name descname"><span class="pre">getCurrentPointGlobalIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cccorelib.ReferenceCloud.getCurrentPointGlobalIndex" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ReferenceCloud.getCurrentPointScalarValue">
+<span class="sig-name descname"><span class="pre">getCurrentPointScalarValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cccorelib.ReferenceCloud.getCurrentPointScalarValue" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ReferenceCloud.getPointGlobalIndex">
+<span class="sig-name descname"><span class="pre">getPointGlobalIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cccorelib.ReferenceCloud.getPointGlobalIndex" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ReferenceCloud.invalidateBoundingBox">
+<span class="sig-name descname"><span class="pre">invalidateBoundingBox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ReferenceCloud.invalidateBoundingBox" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ReferenceCloud.removeCurrentPointGlobalIndex">
+<span class="sig-name descname"><span class="pre">removeCurrentPointGlobalIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ReferenceCloud.removeCurrentPointGlobalIndex" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ReferenceCloud.removePointGlobalIndex">
+<span class="sig-name descname"><span class="pre">removePointGlobalIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">localIndex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ReferenceCloud.removePointGlobalIndex" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ReferenceCloud.reserve">
+<span class="sig-name descname"><span class="pre">reserve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.ReferenceCloud.reserve" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ReferenceCloud.resize">
+<span class="sig-name descname"><span class="pre">resize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.ReferenceCloud.resize" title="Permalink to this definition"></a></dt>
+<dd><p>_n</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ReferenceCloud.setAssociatedCloud">
+<span class="sig-name descname"><span class="pre">setAssociatedCloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cloud</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericIndexedCloudPersist" title="cccorelib.GenericIndexedCloudPersist"><span class="pre">cccorelib.GenericIndexedCloudPersist</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ReferenceCloud.setAssociatedCloud" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ReferenceCloud.setCurrentPointScalarValue">
+<span class="sig-name descname"><span class="pre">setCurrentPointScalarValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ReferenceCloud.setCurrentPointScalarValue" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ReferenceCloud.setPointIndex">
+<span class="sig-name descname"><span class="pre">setPointIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">firstIndex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lastIndex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ReferenceCloud.setPointIndex" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ReferenceCloud.swap">
+<span class="sig-name descname"><span class="pre">swap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ReferenceCloud.swap" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="meshes">
+<h2>Meshes<a class="headerlink" href="#meshes" title="Permalink to this headline"></a></h2>
+<section id="generictriangle">
+<h3>GenericTriangle<a class="headerlink" href="#generictriangle" title="Permalink to this headline"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <a class="reference internal" href="../../cpp/CCCoreLib/data_structures.html#_CPPv4N9CCCoreLib15GenericTriangleE" title="CCCoreLib::GenericTriangle"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::GenericTriangle</span></code></a></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.GenericTriangle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">GenericTriangle</span></span><a class="headerlink" href="#cccorelib.GenericTriangle" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="genericmesh">
+<h3>GenericMesh<a class="headerlink" href="#genericmesh" title="Permalink to this headline"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <a class="reference internal" href="../../cpp/CCCoreLib/data_structures.html#_CPPv4N9CCCoreLib11GenericMeshE" title="CCCoreLib::GenericMesh"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::GenericMesh</span></code></a></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.GenericMesh">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">GenericMesh</span></span><a class="headerlink" href="#cccorelib.GenericMesh" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.GenericMesh.forEach">
+<span class="sig-name descname"><span class="pre">forEach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">cccorelib.GenericMesh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action:</span> <span class="pre">std::function&lt;void</span> <span class="pre">__cdecl(CCCoreLib::GenericTriangle</span> <span class="pre">&amp;</span> <span class="pre">__ptr64)&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.GenericMesh.forEach" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.GenericMesh.getBoundingBox">
+<span class="sig-name descname"><span class="pre">getBoundingBox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericMesh" title="cccorelib.GenericMesh"><span class="pre">cccorelib.GenericMesh</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bbMin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bbMax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.GenericMesh.getBoundingBox" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.GenericMesh.placeIteratorAtBeginning">
+<span class="sig-name descname"><span class="pre">placeIteratorAtBeginning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericMesh" title="cccorelib.GenericMesh"><span class="pre">cccorelib.GenericMesh</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.GenericMesh.placeIteratorAtBeginning" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.GenericMesh.size">
+<span class="sig-name descname"><span class="pre">size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericMesh" title="cccorelib.GenericMesh"><span class="pre">cccorelib.GenericMesh</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cccorelib.GenericMesh.size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="genericindexedmesh">
+<h3>GenericIndexedMesh<a class="headerlink" href="#genericindexedmesh" title="Permalink to this headline"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <a class="reference internal" href="../../cpp/CCCoreLib/data_structures.html#_CPPv4N9CCCoreLib18GenericIndexedMeshE" title="CCCoreLib::GenericIndexedMesh"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::GenericIndexedMesh</span></code></a></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.GenericIndexedMesh">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">GenericIndexedMesh</span></span><a class="headerlink" href="#cccorelib.GenericIndexedMesh" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cccorelib.GenericMesh" title="cccorelib.GenericMesh"><code class="xref py py-class docutils literal notranslate"><span class="pre">cccorelib.GenericMesh</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.GenericIndexedMesh.getNextTriangleVertIndexes">
+<span class="sig-name descname"><span class="pre">getNextTriangleVertIndexes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericIndexedMesh" title="cccorelib.GenericIndexedMesh"><span class="pre">cccorelib.GenericIndexedMesh</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">cccorelib.VerticesIndexes</span></span></span><a class="headerlink" href="#cccorelib.GenericIndexedMesh.getNextTriangleVertIndexes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.GenericIndexedMesh.getTriangleVertIndexes">
+<span class="sig-name descname"><span class="pre">getTriangleVertIndexes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericIndexedMesh" title="cccorelib.GenericIndexedMesh"><span class="pre">cccorelib.GenericIndexedMesh</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">triangleIndex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">cccorelib.VerticesIndexes</span></span></span><a class="headerlink" href="#cccorelib.GenericIndexedMesh.getTriangleVertIndexes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.GenericIndexedMesh.getTriangleVertices">
+<span class="sig-name descname"><span class="pre">getTriangleVertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericIndexedMesh" title="cccorelib.GenericIndexedMesh"><span class="pre">cccorelib.GenericIndexedMesh</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">triangleIndex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.GenericIndexedMesh.getTriangleVertices" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="delaunay2dmesh">
+<h3>Delaunay2dMesh<a class="headerlink" href="#delaunay2dmesh" title="Permalink to this headline"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <a class="reference internal" href="../../cpp/CCCoreLib/data_structures.html#_CPPv4N9CCCoreLib14Delaunay2dMeshE" title="CCCoreLib::Delaunay2dMesh"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::Delaunay2dMesh</span></code></a></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.Delaunay2dMesh">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">Delaunay2dMesh</span></span><a class="headerlink" href="#cccorelib.Delaunay2dMesh" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cccorelib.GenericIndexedMesh" title="cccorelib.GenericIndexedMesh"><code class="xref py py-class docutils literal notranslate"><span class="pre">cccorelib.GenericIndexedMesh</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.Delaunay2dMesh.Available">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Available</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.Delaunay2dMesh.Available" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.Delaunay2dMesh.TesselateContour">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TesselateContour</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cccorelib.Delaunay2dMesh.TesselateContour" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>TesselateContour(contourPoints: cccorelib.CCVector2List) -&gt; cccorelib.Delaunay2dMesh</p></li>
+<li><p>TesselateContour(contourPoints: cccorelib.GenericIndexedCloudPersist, flatDimension: int = -1) -&gt; cccorelib.Delaunay2dMesh</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.Delaunay2dMesh.buildMesh">
+<span class="sig-name descname"><span class="pre">buildMesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cccorelib.Delaunay2dMesh.buildMesh" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>buildMesh(self: cccorelib.Delaunay2dMesh, points2D: cccorelib.CCVector2List, pointCountToUse: int, outputErrorStr: str) -&gt; bool</p></li>
+<li><p>buildMesh(self: cccorelib.Delaunay2dMesh, points2D: cccorelib.CCVector2List, segments2D: std::vector&lt;int,std::allocator&lt;int&gt; &gt;, outputErrorStr: str) -&gt; bool</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.Delaunay2dMesh.getAssociatedCloud">
+<span class="sig-name descname"><span class="pre">getAssociatedCloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.Delaunay2dMesh" title="cccorelib.Delaunay2dMesh"><span class="pre">cccorelib.Delaunay2dMesh</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cccorelib.GenericIndexedCloud" title="cccorelib.GenericIndexedCloud"><span class="pre">cccorelib.GenericIndexedCloud</span></a></span></span><a class="headerlink" href="#cccorelib.Delaunay2dMesh.getAssociatedCloud" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.Delaunay2dMesh.getTriangleVertIndexesArray">
+<span class="sig-name descname"><span class="pre">getTriangleVertIndexesArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cccorelib.Delaunay2dMesh.getTriangleVertIndexesArray" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>getTriangleVertIndexesArray(self: cccorelib.Delaunay2dMesh) -&gt; int</p></li>
+<li><p>getTriangleVertIndexesArray(self: cccorelib.Delaunay2dMesh, maxEdgeLength: float) -&gt; bool</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.Delaunay2dMesh.linkMeshWith">
+<span class="sig-name descname"><span class="pre">linkMeshWith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.Delaunay2dMesh" title="cccorelib.Delaunay2dMesh"><span class="pre">cccorelib.Delaunay2dMesh</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">aCloud</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericIndexedCloud" title="cccorelib.GenericIndexedCloud"><span class="pre">cccorelib.GenericIndexedCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">passOwnership</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.Delaunay2dMesh.linkMeshWith" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.Delaunay2dMesh.removeOuterTriangles">
+<span class="sig-name descname"><span class="pre">removeOuterTriangles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.Delaunay2dMesh" title="cccorelib.Delaunay2dMesh"><span class="pre">cccorelib.Delaunay2dMesh</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertices2D</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">cccorelib.CCVector2List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polygon2D</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">cccorelib.CCVector2List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">removeOutside</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.Delaunay2dMesh.removeOuterTriangles" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cccorelib.Delaunay2dMesh.USE_ALL_POINTS">
+<span class="sig-name descname"><span class="pre">USE_ALL_POINTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#cccorelib.Delaunay2dMesh.USE_ALL_POINTS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="polyline">
+<h3>Polyline<a class="headerlink" href="#polyline" title="Permalink to this headline"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <a class="reference internal" href="../../cpp/CCCoreLib/data_structures.html#_CPPv4N9CCCoreLib8PolylineE" title="CCCoreLib::Polyline"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::Polyline</span></code></a></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.Polyline">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">Polyline</span></span><a class="headerlink" href="#cccorelib.Polyline" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><code class="xref py py-class docutils literal notranslate"><span class="pre">cccorelib.ReferenceCloud</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.Polyline.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.Polyline" title="cccorelib.Polyline"><span class="pre">cccorelib.Polyline</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">unusedParam</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.Polyline.clear" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.Polyline.isClosed">
+<span class="sig-name descname"><span class="pre">isClosed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.Polyline" title="cccorelib.Polyline"><span class="pre">cccorelib.Polyline</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.Polyline.isClosed" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.Polyline.setClosed">
+<span class="sig-name descname"><span class="pre">setClosed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.Polyline" title="cccorelib.Polyline"><span class="pre">cccorelib.Polyline</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.Polyline.setClosed" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="simpletriangle">
+<h3>SimpleTriangle<a class="headerlink" href="#simpletriangle" title="Permalink to this headline"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <a class="reference internal" href="../../cpp/CCCoreLib/data_structures.html#_CPPv4N9CCCoreLib14SimpleTriangleE" title="CCCoreLib::SimpleTriangle"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::SimpleTriangle</span></code></a></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.SimpleTriangle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">SimpleTriangle</span></span><a class="headerlink" href="#cccorelib.SimpleTriangle" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cccorelib.GenericTriangle" title="cccorelib.GenericTriangle"><code class="xref py py-class docutils literal notranslate"><span class="pre">cccorelib.GenericTriangle</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="cccorelib.SimpleTriangle.A">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">A</span></span><a class="headerlink" href="#cccorelib.SimpleTriangle.A" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cccorelib.SimpleTriangle.B">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">B</span></span><a class="headerlink" href="#cccorelib.SimpleTriangle.B" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cccorelib.SimpleTriangle.C">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">C</span></span><a class="headerlink" href="#cccorelib.SimpleTriangle.C" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="simplemesh">
+<h3>SimpleMesh<a class="headerlink" href="#simplemesh" title="Permalink to this headline"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <a class="reference internal" href="../../cpp/CCCoreLib/data_structures.html#_CPPv4N9CCCoreLib10SimpleMeshE" title="CCCoreLib::SimpleMesh"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::SimpleMesh</span></code></a></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.SimpleMesh">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">SimpleMesh</span></span><a class="headerlink" href="#cccorelib.SimpleMesh" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cccorelib.GenericIndexedMesh" title="cccorelib.GenericIndexedMesh"><code class="xref py py-class docutils literal notranslate"><span class="pre">cccorelib.GenericIndexedMesh</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.SimpleMesh.addTriangle">
+<span class="sig-name descname"><span class="pre">addTriangle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.SimpleMesh" title="cccorelib.SimpleMesh"><span class="pre">cccorelib.SimpleMesh</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">i1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.SimpleMesh.addTriangle" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.SimpleMesh.capacity">
+<span class="sig-name descname"><span class="pre">capacity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.SimpleMesh" title="cccorelib.SimpleMesh"><span class="pre">cccorelib.SimpleMesh</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cccorelib.SimpleMesh.capacity" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.SimpleMesh.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.SimpleMesh" title="cccorelib.SimpleMesh"><span class="pre">cccorelib.SimpleMesh</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.SimpleMesh.clear" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.SimpleMesh.reserve">
+<span class="sig-name descname"><span class="pre">reserve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.SimpleMesh" title="cccorelib.SimpleMesh"><span class="pre">cccorelib.SimpleMesh</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.SimpleMesh.reserve" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.SimpleMesh.resize">
+<span class="sig-name descname"><span class="pre">resize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.SimpleMesh" title="cccorelib.SimpleMesh"><span class="pre">cccorelib.SimpleMesh</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.SimpleMesh.resize" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.SimpleMesh.vertices">
+<span class="sig-name descname"><span class="pre">vertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.SimpleMesh" title="cccorelib.SimpleMesh"><span class="pre">cccorelib.SimpleMesh</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cccorelib.GenericIndexedCloud" title="cccorelib.GenericIndexedCloud"><span class="pre">cccorelib.GenericIndexedCloud</span></a></span></span><a class="headerlink" href="#cccorelib.SimpleMesh.vertices" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="kdtrees">
+<h2>KdTrees<a class="headerlink" href="#kdtrees" title="Permalink to this headline"></a></h2>
+<section id="kdtree">
+<h3>KDTree<a class="headerlink" href="#kdtree" title="Permalink to this headline"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <a class="reference internal" href="../../cpp/CCCoreLib/data_structures.html#_CPPv4N9CCCoreLib6KDTreeE" title="CCCoreLib::KDTree"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::KDTree</span></code></a></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.KDTree">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">KDTree</span></span><a class="headerlink" href="#cccorelib.KDTree" title="Permalink to this definition"></a></dt>
+<dd><dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.KDTree.IndicesVector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IndicesVector</span></span><a class="headerlink" href="#cccorelib.KDTree.IndicesVector" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.KDTree.IndicesVector.append">
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.KDTree.IndicesVector" title="cccorelib.KDTree.IndicesVector"><span class="pre">cccorelib.KDTree.IndicesVector</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.KDTree.IndicesVector.append" title="Permalink to this definition"></a></dt>
+<dd><p>Add an item to the end of the list</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.KDTree.IndicesVector.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.KDTree.IndicesVector" title="cccorelib.KDTree.IndicesVector"><span class="pre">cccorelib.KDTree.IndicesVector</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.KDTree.IndicesVector.clear" title="Permalink to this definition"></a></dt>
+<dd><p>Clear the contents</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.KDTree.IndicesVector.count">
+<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.KDTree.IndicesVector" title="cccorelib.KDTree.IndicesVector"><span class="pre">cccorelib.KDTree.IndicesVector</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cccorelib.KDTree.IndicesVector.count" title="Permalink to this definition"></a></dt>
+<dd><p>Return the number of times <code class="docutils literal notranslate"><span class="pre">x</span></code> appears in the list</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.KDTree.IndicesVector.extend">
+<span class="sig-name descname"><span class="pre">extend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cccorelib.KDTree.IndicesVector.extend" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>extend(self: cccorelib.KDTree.IndicesVector, L: cccorelib.KDTree.IndicesVector) -&gt; None</p></li>
+</ol>
+<p>Extend the list by appending all the items in the given list</p>
+<ol class="arabic simple" start="2">
+<li><p>extend(self: cccorelib.KDTree.IndicesVector, L: Iterable) -&gt; None</p></li>
+</ol>
+<p>Extend the list by appending all the items in the given list</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.KDTree.IndicesVector.insert">
+<span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.KDTree.IndicesVector" title="cccorelib.KDTree.IndicesVector"><span class="pre">cccorelib.KDTree.IndicesVector</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.KDTree.IndicesVector.insert" title="Permalink to this definition"></a></dt>
+<dd><p>Insert an item at a given position.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.KDTree.IndicesVector.pop">
+<span class="sig-name descname"><span class="pre">pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cccorelib.KDTree.IndicesVector.pop" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>pop(self: cccorelib.KDTree.IndicesVector) -&gt; int</p></li>
+</ol>
+<p>Remove and return the last item</p>
+<ol class="arabic simple" start="2">
+<li><p>pop(self: cccorelib.KDTree.IndicesVector, i: int) -&gt; int</p></li>
+</ol>
+<p>Remove and return the item at index <code class="docutils literal notranslate"><span class="pre">i</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.KDTree.IndicesVector.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.KDTree.IndicesVector" title="cccorelib.KDTree.IndicesVector"><span class="pre">cccorelib.KDTree.IndicesVector</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.KDTree.IndicesVector.remove" title="Permalink to this definition"></a></dt>
+<dd><p>Remove the first item from the list whose value is x. It is an error if there is no such item.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.KDTree.buildFromCloud">
+<span class="sig-name descname"><span class="pre">buildFromCloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.KDTree" title="cccorelib.KDTree"><span class="pre">cccorelib.KDTree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cloud</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericIndexedCloud" title="cccorelib.GenericIndexedCloud"><span class="pre">cccorelib.GenericIndexedCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">progressCb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="others.html#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.KDTree.buildFromCloud" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.KDTree.findNearestNeighbour">
+<span class="sig-name descname"><span class="pre">findNearestNeighbour</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.KDTree" title="cccorelib.KDTree"><span class="pre">cccorelib.KDTree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">queryPoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxDist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#cccorelib.KDTree.findNearestNeighbour" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.KDTree.findPointBelowDistance">
+<span class="sig-name descname"><span class="pre">findPointBelowDistance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.KDTree" title="cccorelib.KDTree"><span class="pre">cccorelib.KDTree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">queryPoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxDist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.KDTree.findPointBelowDistance" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.KDTree.findPointsLyingToDistance">
+<span class="sig-name descname"><span class="pre">findPointsLyingToDistance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.KDTree" title="cccorelib.KDTree"><span class="pre">cccorelib.KDTree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">queryPoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.KDTree.IndicesVector" title="cccorelib.KDTree.IndicesVector"><span class="pre">cccorelib.KDTree.IndicesVector</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cccorelib.KDTree.findPointsLyingToDistance" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.KDTree.getAssociatedCloud">
+<span class="sig-name descname"><span class="pre">getAssociatedCloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.KDTree" title="cccorelib.KDTree"><span class="pre">cccorelib.KDTree</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cccorelib.GenericIndexedCloud" title="cccorelib.GenericIndexedCloud"><span class="pre">cccorelib.GenericIndexedCloud</span></a></span></span><a class="headerlink" href="#cccorelib.KDTree.getAssociatedCloud" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="truekdtree">
+<h3>TrueKdTree<a class="headerlink" href="#truekdtree" title="Permalink to this headline"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <a class="reference internal" href="../../cpp/CCCoreLib/data_structures.html#_CPPv4N9CCCoreLib10TrueKdTreeE" title="CCCoreLib::TrueKdTree"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::TrueKdTree</span></code></a></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.TrueKdTree">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">TrueKdTree</span></span><a class="headerlink" href="#cccorelib.TrueKdTree" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.TrueKdTree.associatedCloud">
+<span class="sig-name descname"><span class="pre">associatedCloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.TrueKdTree" title="cccorelib.TrueKdTree"><span class="pre">cccorelib.TrueKdTree</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cccorelib.GenericIndexedCloudPersist" title="cccorelib.GenericIndexedCloudPersist"><span class="pre">cccorelib.GenericIndexedCloudPersist</span></a></span></span><a class="headerlink" href="#cccorelib.TrueKdTree.associatedCloud" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.TrueKdTree.build">
+<span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">cccorelib.TrueKdTree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxError:</span> <span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errorMeasure:</span> <span class="pre">cccorelib.DistanceComputationTools.ERRPOR_MEASURES</span> <span class="pre">=</span> <span class="pre">&lt;ERRPOR_MEASURES.RMS:</span> <span class="pre">0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minPointCountPerCell:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxPointCountPerCell:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progressCb:</span> <span class="pre">cccorelib.GenericProgressCallback</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.TrueKdTree.build" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.TrueKdTree.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.TrueKdTree" title="cccorelib.TrueKdTree"><span class="pre">cccorelib.TrueKdTree</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.TrueKdTree.clear" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.TrueKdTree.getLeaves">
+<span class="sig-name descname"><span class="pre">getLeaves</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.TrueKdTree" title="cccorelib.TrueKdTree"><span class="pre">cccorelib.TrueKdTree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">leaves</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">cccorelib.TrueKdTree.LeafVector</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.TrueKdTree.getLeaves" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.TrueKdTree.getMaxErrorType">
+<span class="sig-name descname"><span class="pre">getMaxErrorType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.TrueKdTree" title="cccorelib.TrueKdTree"><span class="pre">cccorelib.TrueKdTree</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="tools.html#cccorelib.DistanceComputationTools.ERRPOR_MEASURES" title="cccorelib.DistanceComputationTools.ERRPOR_MEASURES"><span class="pre">cccorelib.DistanceComputationTools.ERRPOR_MEASURES</span></a></span></span><a class="headerlink" href="#cccorelib.TrueKdTree.getMaxErrorType" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="octrees">
+<h2>Octrees<a class="headerlink" href="#octrees" title="Permalink to this headline"></a></h2>
+<section id="genericoctree">
+<h3>GenericOctree<a class="headerlink" href="#genericoctree" title="Permalink to this headline"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <a class="reference internal" href="../../cpp/CCCoreLib/data_structures.html#_CPPv4N9CCCoreLib13GenericOctreeE" title="CCCoreLib::GenericOctree"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::GenericOctree</span></code></a></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.GenericOctree">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">GenericOctree</span></span><a class="headerlink" href="#cccorelib.GenericOctree" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+</dd></dl>
+
+</section>
+<section id="dgmoctree">
+<h3>DgmOctree<a class="headerlink" href="#dgmoctree" title="Permalink to this headline"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <a class="reference internal" href="../../cpp/CCCoreLib/data_structures.html#_CPPv4N9CCCoreLib9DgmOctreeE" title="CCCoreLib::DgmOctree"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::DgmOctree</span></code></a></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">DgmOctree</span></span><a class="headerlink" href="#cccorelib.DgmOctree" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cccorelib.GenericOctree" title="cccorelib.GenericOctree"><code class="xref py py-class docutils literal notranslate"><span class="pre">cccorelib.GenericOctree</span></code></a></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.CellDescriptor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CellDescriptor</span></span><a class="headerlink" href="#cccorelib.DgmOctree.CellDescriptor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.CellDescriptor.center">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">center</span></span><a class="headerlink" href="#cccorelib.DgmOctree.CellDescriptor.center" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.CellDescriptor.index">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">index</span></span><a class="headerlink" href="#cccorelib.DgmOctree.CellDescriptor.index" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NearestNeighboursSearchStruct">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NearestNeighboursSearchStruct</span></span><a class="headerlink" href="#cccorelib.DgmOctree.NearestNeighboursSearchStruct" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NearestNeighboursSearchStruct.alreadyVisitedNeighbourhoodSize">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">alreadyVisitedNeighbourhoodSize</span></span><a class="headerlink" href="#cccorelib.DgmOctree.NearestNeighboursSearchStruct.alreadyVisitedNeighbourhoodSize" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NearestNeighboursSearchStruct.cellCenter">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cellCenter</span></span><a class="headerlink" href="#cccorelib.DgmOctree.NearestNeighboursSearchStruct.cellCenter" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NearestNeighboursSearchStruct.cellPos">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cellPos</span></span><a class="headerlink" href="#cccorelib.DgmOctree.NearestNeighboursSearchStruct.cellPos" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NearestNeighboursSearchStruct.level">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">level</span></span><a class="headerlink" href="#cccorelib.DgmOctree.NearestNeighboursSearchStruct.level" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NearestNeighboursSearchStruct.maxSearchSquareDistd">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">maxSearchSquareDistd</span></span><a class="headerlink" href="#cccorelib.DgmOctree.NearestNeighboursSearchStruct.maxSearchSquareDistd" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NearestNeighboursSearchStruct.minNumberOfNeighbors">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">minNumberOfNeighbors</span></span><a class="headerlink" href="#cccorelib.DgmOctree.NearestNeighboursSearchStruct.minNumberOfNeighbors" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NearestNeighboursSearchStruct.minimalCellsSetToVisit">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">minimalCellsSetToVisit</span></span><a class="headerlink" href="#cccorelib.DgmOctree.NearestNeighboursSearchStruct.minimalCellsSetToVisit" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NearestNeighboursSearchStruct.pointsInNeighbourhood">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pointsInNeighbourhood</span></span><a class="headerlink" href="#cccorelib.DgmOctree.NearestNeighboursSearchStruct.pointsInNeighbourhood" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NearestNeighboursSearchStruct.queryPoint">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">queryPoint</span></span><a class="headerlink" href="#cccorelib.DgmOctree.NearestNeighboursSearchStruct.queryPoint" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NearestNeighboursSearchStruct.theNearestPointIndex">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">theNearestPointIndex</span></span><a class="headerlink" href="#cccorelib.DgmOctree.NearestNeighboursSearchStruct.theNearestPointIndex" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NeighbourCellsSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NeighbourCellsSet</span></span><a class="headerlink" href="#cccorelib.DgmOctree.NeighbourCellsSet" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NeighbourCellsSet.append">
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree.NeighbourCellsSet" title="cccorelib.DgmOctree.NeighbourCellsSet"><span class="pre">cccorelib.DgmOctree.NeighbourCellsSet</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree.CellDescriptor" title="cccorelib.DgmOctree.CellDescriptor"><span class="pre">cccorelib.DgmOctree.CellDescriptor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.DgmOctree.NeighbourCellsSet.append" title="Permalink to this definition"></a></dt>
+<dd><p>Add an item to the end of the list</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NeighbourCellsSet.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree.NeighbourCellsSet" title="cccorelib.DgmOctree.NeighbourCellsSet"><span class="pre">cccorelib.DgmOctree.NeighbourCellsSet</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.DgmOctree.NeighbourCellsSet.clear" title="Permalink to this definition"></a></dt>
+<dd><p>Clear the contents</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NeighbourCellsSet.extend">
+<span class="sig-name descname"><span class="pre">extend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cccorelib.DgmOctree.NeighbourCellsSet.extend" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>extend(self: cccorelib.DgmOctree.NeighbourCellsSet, L: cccorelib.DgmOctree.NeighbourCellsSet) -&gt; None</p></li>
+</ol>
+<p>Extend the list by appending all the items in the given list</p>
+<ol class="arabic simple" start="2">
+<li><p>extend(self: cccorelib.DgmOctree.NeighbourCellsSet, L: Iterable) -&gt; None</p></li>
+</ol>
+<p>Extend the list by appending all the items in the given list</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NeighbourCellsSet.insert">
+<span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree.NeighbourCellsSet" title="cccorelib.DgmOctree.NeighbourCellsSet"><span class="pre">cccorelib.DgmOctree.NeighbourCellsSet</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree.CellDescriptor" title="cccorelib.DgmOctree.CellDescriptor"><span class="pre">cccorelib.DgmOctree.CellDescriptor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.DgmOctree.NeighbourCellsSet.insert" title="Permalink to this definition"></a></dt>
+<dd><p>Insert an item at a given position.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NeighbourCellsSet.pop">
+<span class="sig-name descname"><span class="pre">pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cccorelib.DgmOctree.NeighbourCellsSet.pop" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>pop(self: cccorelib.DgmOctree.NeighbourCellsSet) -&gt; cccorelib.DgmOctree.CellDescriptor</p></li>
+</ol>
+<p>Remove and return the last item</p>
+<ol class="arabic simple" start="2">
+<li><p>pop(self: cccorelib.DgmOctree.NeighbourCellsSet, i: int) -&gt; cccorelib.DgmOctree.CellDescriptor</p></li>
+</ol>
+<p>Remove and return the item at index <code class="docutils literal notranslate"><span class="pre">i</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NeighboursSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NeighboursSet</span></span><a class="headerlink" href="#cccorelib.DgmOctree.NeighboursSet" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NeighboursSet.append">
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree.NeighboursSet" title="cccorelib.DgmOctree.NeighboursSet"><span class="pre">cccorelib.DgmOctree.NeighboursSet</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree.PointDescriptor" title="cccorelib.DgmOctree.PointDescriptor"><span class="pre">cccorelib.DgmOctree.PointDescriptor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.DgmOctree.NeighboursSet.append" title="Permalink to this definition"></a></dt>
+<dd><p>Add an item to the end of the list</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NeighboursSet.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree.NeighboursSet" title="cccorelib.DgmOctree.NeighboursSet"><span class="pre">cccorelib.DgmOctree.NeighboursSet</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.DgmOctree.NeighboursSet.clear" title="Permalink to this definition"></a></dt>
+<dd><p>Clear the contents</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NeighboursSet.extend">
+<span class="sig-name descname"><span class="pre">extend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cccorelib.DgmOctree.NeighboursSet.extend" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>extend(self: cccorelib.DgmOctree.NeighboursSet, L: cccorelib.DgmOctree.NeighboursSet) -&gt; None</p></li>
+</ol>
+<p>Extend the list by appending all the items in the given list</p>
+<ol class="arabic simple" start="2">
+<li><p>extend(self: cccorelib.DgmOctree.NeighboursSet, L: Iterable) -&gt; None</p></li>
+</ol>
+<p>Extend the list by appending all the items in the given list</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NeighboursSet.insert">
+<span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree.NeighboursSet" title="cccorelib.DgmOctree.NeighboursSet"><span class="pre">cccorelib.DgmOctree.NeighboursSet</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree.PointDescriptor" title="cccorelib.DgmOctree.PointDescriptor"><span class="pre">cccorelib.DgmOctree.PointDescriptor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.DgmOctree.NeighboursSet.insert" title="Permalink to this definition"></a></dt>
+<dd><p>Insert an item at a given position.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NeighboursSet.pop">
+<span class="sig-name descname"><span class="pre">pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cccorelib.DgmOctree.NeighboursSet.pop" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>pop(self: cccorelib.DgmOctree.NeighboursSet) -&gt; cccorelib.DgmOctree.PointDescriptor</p></li>
+</ol>
+<p>Remove and return the last item</p>
+<ol class="arabic simple" start="2">
+<li><p>pop(self: cccorelib.DgmOctree.NeighboursSet, i: int) -&gt; cccorelib.DgmOctree.PointDescriptor</p></li>
+</ol>
+<p>Remove and return the item at index <code class="docutils literal notranslate"><span class="pre">i</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.PointDescriptor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PointDescriptor</span></span><a class="headerlink" href="#cccorelib.DgmOctree.PointDescriptor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.PointDescriptor.distComp">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distComp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree.PointDescriptor" title="cccorelib.DgmOctree.PointDescriptor"><span class="pre">cccorelib.DgmOctree.PointDescriptor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree.PointDescriptor" title="cccorelib.DgmOctree.PointDescriptor"><span class="pre">cccorelib.DgmOctree.PointDescriptor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.DgmOctree.PointDescriptor.distComp" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.PointDescriptor.point">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">point</span></span><a class="headerlink" href="#cccorelib.DgmOctree.PointDescriptor.point" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.PointDescriptor.pointIndex">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pointIndex</span></span><a class="headerlink" href="#cccorelib.DgmOctree.PointDescriptor.pointIndex" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.PointDescriptor.squareDistd">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">squareDistd</span></span><a class="headerlink" href="#cccorelib.DgmOctree.PointDescriptor.squareDistd" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.GET_BIT_SHIFT">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GET_BIT_SHIFT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cccorelib.DgmOctree.GET_BIT_SHIFT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.OCTREE_LENGTH">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">OCTREE_LENGTH</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cccorelib.DgmOctree.OCTREE_LENGTH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.build">
+<span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cccorelib.DgmOctree.build" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>build(self: cccorelib.DgmOctree, progressCb: cccorelib.GenericProgressCallback = None) -&gt; int</p></li>
+<li><p>build(self: cccorelib.DgmOctree, octreeMin: cccorelib.CCVector3, octreeMax: cccorelib.CCVector3, pointsMinFilter: cccorelib.CCVector3 = None, pointsMaxFilter: cccorelib.CCVector3 = None, progressCb: cccorelib.GenericProgressCallback = None) -&gt; int</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree" title="cccorelib.DgmOctree"><span class="pre">cccorelib.DgmOctree</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.DgmOctree.clear" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.getBoundingBox">
+<span class="sig-name descname"><span class="pre">getBoundingBox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree" title="cccorelib.DgmOctree"><span class="pre">cccorelib.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bbMin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bbMax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.DgmOctree.getBoundingBox" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.getCellSize">
+<span class="sig-name descname"><span class="pre">getCellSize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree" title="cccorelib.DgmOctree"><span class="pre">cccorelib.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cccorelib.DgmOctree.getCellSize" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.getMaxFillIndexes">
+<span class="sig-name descname"><span class="pre">getMaxFillIndexes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree" title="cccorelib.DgmOctree"><span class="pre">cccorelib.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cccorelib.DgmOctree.getMaxFillIndexes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.getMinFillIndexes">
+<span class="sig-name descname"><span class="pre">getMinFillIndexes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree" title="cccorelib.DgmOctree"><span class="pre">cccorelib.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cccorelib.DgmOctree.getMinFillIndexes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.getNumberOfProjectedPoints">
+<span class="sig-name descname"><span class="pre">getNumberOfProjectedPoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree" title="cccorelib.DgmOctree"><span class="pre">cccorelib.DgmOctree</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cccorelib.DgmOctree.getNumberOfProjectedPoints" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.getOctreeMaxs">
+<span class="sig-name descname"><span class="pre">getOctreeMaxs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree" title="cccorelib.DgmOctree"><span class="pre">cccorelib.DgmOctree</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></span><a class="headerlink" href="#cccorelib.DgmOctree.getOctreeMaxs" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.getOctreeMins">
+<span class="sig-name descname"><span class="pre">getOctreeMins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree" title="cccorelib.DgmOctree"><span class="pre">cccorelib.DgmOctree</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></span><a class="headerlink" href="#cccorelib.DgmOctree.getOctreeMins" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.INVALID_CELL_CODE">
+<span class="sig-name descname"><span class="pre">INVALID_CELL_CODE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">18446744073709551615</span></em><a class="headerlink" href="#cccorelib.DgmOctree.INVALID_CELL_CODE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.MAX_OCTREE_LENGTH">
+<span class="sig-name descname"><span class="pre">MAX_OCTREE_LENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2097152</span></em><a class="headerlink" href="#cccorelib.DgmOctree.MAX_OCTREE_LENGTH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.MAX_OCTREE_LEVEL">
+<span class="sig-name descname"><span class="pre">MAX_OCTREE_LEVEL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">21</span></em><a class="headerlink" href="#cccorelib.DgmOctree.MAX_OCTREE_LEVEL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="dgmoctreereferencecloud">
+<h3>DgmOctreeReferenceCloud<a class="headerlink" href="#dgmoctreereferencecloud" title="Permalink to this headline"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <a class="reference internal" href="../../cpp/CCCoreLib/data_structures.html#_CPPv4N9CCCoreLib23DgmOctreeReferenceCloudE" title="CCCoreLib::DgmOctreeReferenceCloud"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::DgmOctreeReferenceCloud</span></code></a></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.DgmOctreeReferenceCloud">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">DgmOctreeReferenceCloud</span></span><a class="headerlink" href="#cccorelib.DgmOctreeReferenceCloud" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cccorelib.GenericIndexedCloudPersist" title="cccorelib.GenericIndexedCloudPersist"><code class="xref py py-class docutils literal notranslate"><span class="pre">cccorelib.GenericIndexedCloudPersist</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctreeReferenceCloud.forwardIterator">
+<span class="sig-name descname"><span class="pre">forwardIterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctreeReferenceCloud" title="cccorelib.DgmOctreeReferenceCloud"><span class="pre">cccorelib.DgmOctreeReferenceCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.DgmOctreeReferenceCloud.forwardIterator" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="others">
+<h2>Others<a class="headerlink" href="#others" title="Permalink to this headline"></a></h2>
+<section id="boundingbox">
+<h3>BoundingBox<a class="headerlink" href="#boundingbox" title="Permalink to this headline"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::BoundingBox</span></code></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.BoundingBox">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">BoundingBox</span></span><a class="headerlink" href="#cccorelib.BoundingBox" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.BoundingBox.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.BoundingBox" title="cccorelib.BoundingBox"><span class="pre">cccorelib.BoundingBox</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">aPoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.BoundingBox.add" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.BoundingBox.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.BoundingBox" title="cccorelib.BoundingBox"><span class="pre">cccorelib.BoundingBox</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.BoundingBox.clear" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.BoundingBox.computeVolume">
+<span class="sig-name descname"><span class="pre">computeVolume</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.BoundingBox" title="cccorelib.BoundingBox"><span class="pre">cccorelib.BoundingBox</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cccorelib.BoundingBox.computeVolume" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.BoundingBox.contains">
+<span class="sig-name descname"><span class="pre">contains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.BoundingBox" title="cccorelib.BoundingBox"><span class="pre">cccorelib.BoundingBox</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">P</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.BoundingBox.contains" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.BoundingBox.getCenter">
+<span class="sig-name descname"><span class="pre">getCenter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.BoundingBox" title="cccorelib.BoundingBox"><span class="pre">cccorelib.BoundingBox</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></span><a class="headerlink" href="#cccorelib.BoundingBox.getCenter" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.BoundingBox.getDiagNorm">
+<span class="sig-name descname"><span class="pre">getDiagNorm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.BoundingBox" title="cccorelib.BoundingBox"><span class="pre">cccorelib.BoundingBox</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cccorelib.BoundingBox.getDiagNorm" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.BoundingBox.getDiagNormd">
+<span class="sig-name descname"><span class="pre">getDiagNormd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.BoundingBox" title="cccorelib.BoundingBox"><span class="pre">cccorelib.BoundingBox</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cccorelib.BoundingBox.getDiagNormd" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.BoundingBox.getDiagVec">
+<span class="sig-name descname"><span class="pre">getDiagVec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.BoundingBox" title="cccorelib.BoundingBox"><span class="pre">cccorelib.BoundingBox</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></span><a class="headerlink" href="#cccorelib.BoundingBox.getDiagVec" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.BoundingBox.getMaxBoxDim">
+<span class="sig-name descname"><span class="pre">getMaxBoxDim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.BoundingBox" title="cccorelib.BoundingBox"><span class="pre">cccorelib.BoundingBox</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cccorelib.BoundingBox.getMaxBoxDim" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.BoundingBox.getMinBoxDim">
+<span class="sig-name descname"><span class="pre">getMinBoxDim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.BoundingBox" title="cccorelib.BoundingBox"><span class="pre">cccorelib.BoundingBox</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cccorelib.BoundingBox.getMinBoxDim" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.BoundingBox.isValid">
+<span class="sig-name descname"><span class="pre">isValid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.BoundingBox" title="cccorelib.BoundingBox"><span class="pre">cccorelib.BoundingBox</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.BoundingBox.isValid" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.BoundingBox.maxCorner">
+<span class="sig-name descname"><span class="pre">maxCorner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.BoundingBox" title="cccorelib.BoundingBox"><span class="pre">cccorelib.BoundingBox</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></span><a class="headerlink" href="#cccorelib.BoundingBox.maxCorner" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.BoundingBox.minCorner">
+<span class="sig-name descname"><span class="pre">minCorner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.BoundingBox" title="cccorelib.BoundingBox"><span class="pre">cccorelib.BoundingBox</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></span><a class="headerlink" href="#cccorelib.BoundingBox.minCorner" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.BoundingBox.minDistTo">
+<span class="sig-name descname"><span class="pre">minDistTo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.BoundingBox" title="cccorelib.BoundingBox"><span class="pre">cccorelib.BoundingBox</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">box</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.BoundingBox" title="cccorelib.BoundingBox"><span class="pre">cccorelib.BoundingBox</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cccorelib.BoundingBox.minDistTo" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.BoundingBox.setValidity">
+<span class="sig-name descname"><span class="pre">setValidity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.BoundingBox" title="cccorelib.BoundingBox"><span class="pre">cccorelib.BoundingBox</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.BoundingBox.setValidity" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="scalarfield">
+<h3>ScalarField<a class="headerlink" href="#scalarfield" title="Permalink to this headline"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <a class="reference internal" href="../../cpp/CCCoreLib/data_structures.html#_CPPv4N9CCCoreLib11ScalarFieldE" title="CCCoreLib::ScalarField"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::ScalarField</span></code></a></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cccorelib.ScalarField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">ScalarField</span></span><a class="headerlink" href="#cccorelib.ScalarField" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">cccorelib.CCShareable</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ScalarField.NaN">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NaN</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.NaN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ScalarField.ValidValue">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ValidValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.ValidValue" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ScalarField.addElement">
+<span class="sig-name descname"><span class="pre">addElement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.addElement" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ScalarField.asArray">
+<span class="sig-name descname"><span class="pre">asArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float32</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cccorelib.ScalarField.asArray" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ScalarField.computeMeanAndVariance">
+<span class="sig-name descname"><span class="pre">computeMeanAndVariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.computeMeanAndVariance" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ScalarField.computeMinAndMax">
+<span class="sig-name descname"><span class="pre">computeMinAndMax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.computeMinAndMax" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ScalarField.fill">
+<span class="sig-name descname"><span class="pre">fill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillValue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.fill" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ScalarField.flagValueAsInvalid">
+<span class="sig-name descname"><span class="pre">flagValueAsInvalid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.flagValueAsInvalid" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ScalarField.getMax">
+<span class="sig-name descname"><span class="pre">getMax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.getMax" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ScalarField.getMin">
+<span class="sig-name descname"><span class="pre">getMin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.getMin" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ScalarField.getName">
+<span class="sig-name descname"><span class="pre">getName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.getName" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ScalarField.getValue">
+<span class="sig-name descname"><span class="pre">getValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.getValue" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ScalarField.reserveSafe">
+<span class="sig-name descname"><span class="pre">reserveSafe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.reserveSafe" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ScalarField.resizeSafe">
+<span class="sig-name descname"><span class="pre">resizeSafe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initNewElements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valueForNewElements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.resizeSafe" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ScalarField.setName">
+<span class="sig-name descname"><span class="pre">setName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.setName" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ScalarField.setValue">
+<span class="sig-name descname"><span class="pre">setValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.setValue" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ScalarField.size">
+<span class="sig-name descname"><span class="pre">size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tools.html" class="btn btn-neutral float-left" title="CCCoreLib Tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="others.html" class="btn btn-neutral float-right" title="Others" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Thomas Montaigu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
