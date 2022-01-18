@@ -39,8 +39,8 @@ void define_ccColorScale(py::module &m)
         .def("getColor", &ccColorScaleElement::getColor)
         .def_static("IsSmaller", &ccColorScaleElement::IsSmaller, "e1"_a, "e2"_a);
 
-    py::class_<ccColorScale>(m, "ccColorScale")
-        .def(py::init<const QString &, const QString &>(), "name"_a, "uuid"_a = QString())
+    py::class_<ccColorScale> pyColorScale(m, "ccColorScale");
+    pyColorScale.def(py::init<const QString &, const QString &>(), "name"_a, "uuid"_a = QString())
         .def_property_readonly_static("MIN_STEPS", [] { return ccColorScale::MIN_STEPS; })
         .def_property_readonly_static("DEFAULT_STEPS", [] { return ccColorScale::DEFAULT_STEPS; })
         .def_property_readonly_static("MAX_STEPS", [] { return ccColorScale::MAX_STEPS; })
@@ -90,5 +90,8 @@ void define_ccColorScale(py::module &m)
              "steps"_a,
              "outOfRangeColor"_a = nullptr)
         .def("getColorByIndex", &ccColorScale::getColorByIndex, "index"_a);
-    // TODO def shared & save load from XML
+    // TODO save load from XML
+
+    // Thanks https://github.com/pybind/pybind11/issues/820#issuecomment-297894565
+    py::class_<ccColorScale::Shared>(pyColorScale, "Shared");
 }

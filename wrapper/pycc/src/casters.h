@@ -18,9 +18,11 @@
 #ifndef PYTHON_PLUGIN_CASTERS_H
 #define PYTHON_PLUGIN_CASTERS_H
 
+#include <QSharedPointer>
 #include <QString>
 #include <QVariant>
 
+#include <ccColorScale.h>
 #include <ccLog.h>
 
 // clang-format off
@@ -28,6 +30,9 @@
 #include <pybind11/pybind11.h>
 #include <Python.h>
 // clang-format on
+
+PYBIND11_DECLARE_HOLDER_TYPE(T, QSharedPointer<T>);
+PYBIND11_MAKE_OPAQUE(QSharedPointer<ccColorScale>);
 
 namespace pybind11
 {
