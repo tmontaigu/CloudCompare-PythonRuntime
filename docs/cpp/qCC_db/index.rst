@@ -231,16 +231,31 @@ __________________________
 
 ccColorScaleElement
 ___________________
+.. seealso::
+
+    Python: :class:`pycc.ccColorScaleElement`
+
+
 .. doxygenclass:: ccColorScaleElement
    :members:
 
 ccColorScale
 ____________
+.. seealso::
+
+    Python: :class:`pycc.ccColorScale`
+
+
 .. doxygenclass:: ccColorScale
    :members:
 
 ccColorScalesManager
 ____________________
+.. seealso::
+
+    Python: :class:`pycc.ccColorScalesManager`
+
+
 .. doxygenclass:: ccColorScalesManager
    :members:
 

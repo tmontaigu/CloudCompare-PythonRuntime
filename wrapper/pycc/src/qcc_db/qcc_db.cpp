@@ -52,6 +52,7 @@ void define_ccBBox(py::module &);
 void define_ccSensor(py::module &m);
 void define_ccCameraSensor(py::module &);
 void define_ccColorScale(py::module &);
+void define_ccColorScalesManager(py::module &);
 void define_ccWaveform(py::module &m);
 void define_ccSubMesh(py::module &m);
 void define_ccRasterGrid(py::module &m);
@@ -111,6 +112,7 @@ void define_qcc_db(py::module &m)
     define_ccQuadric(m);
     define_cc2DLabel(m);
     define_ccColorScale(m);
+    define_ccColorScalesManager(m);
     define_ccViewPortParameters(m);
     define_ccViewportObject(m);
     define_ccBBox(m);

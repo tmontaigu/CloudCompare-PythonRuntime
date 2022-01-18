@@ -46,6 +46,10 @@ ______________
 
 ccColorScaleElement
 ___________________
+.. seealso::
+
+    C++: :cpp:class:`ccColorScaleElement`
+
 
 .. autoclass:: pycc.ccColorScaleElement
     :members:
@@ -53,14 +57,28 @@ ___________________
     :show-inheritance:
 
 
-
 ccColorScale
 ____________
+.. seealso::
+
+    C++: :cpp:class:`ccColorScale`
 
 .. autoclass:: pycc.ccColorScale
     :members:
     :undoc-members:
     :show-inheritance:
+
+ccColorScalesManager
+____________________
+.. seealso::
+
+    C++: :cpp:class:`ccColorScalesManager`
+
+.. autoclass:: pycc.ccColorScalesManager
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 
 ccGlobalShiftManager

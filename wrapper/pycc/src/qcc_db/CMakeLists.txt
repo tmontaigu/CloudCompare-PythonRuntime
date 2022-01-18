@@ -5,6 +5,7 @@ set(pycc_db_sources
     ${CMAKE_CURRENT_LIST_DIR}/ccBox.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccCameraSensor.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccColorScale.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ccColorScalesManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccCone.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccCylinder.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccDish.cpp
