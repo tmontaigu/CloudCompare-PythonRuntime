@@ -68,7 +68,7 @@ PythonPlugin::PythonPlugin(QObject *parent)
         if (!seemsValid)
         {
             ccLog::Error("Falling back to default Python configuration due to previous errors");
-            config = PythonConfig();
+            config.initDefault();
         }
     }
 

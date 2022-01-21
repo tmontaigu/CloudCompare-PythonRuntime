@@ -260,7 +260,9 @@ PythonConfig PythonPluginSettings::pythonEnvConfig() const
 {
     if (selectedEnvType() == "System")
     {
-        return {};
+        PythonConfig config;
+        config.initDefault();
+        return config;
     }
 #if defined(Q_OS_WINDOWS)
     if (selectedEnvType() == "Bundled")

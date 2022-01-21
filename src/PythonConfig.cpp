@@ -18,6 +18,7 @@
 #include "Utilities.h"
 
 #include <QApplication>
+#include <QDebug>
 #include <QDir>
 #include <QMessageBox>
 #include <QProcess>
@@ -131,7 +132,8 @@ const wchar_t *PythonConfigPaths::pythonPath() const
 }
 
 //================================================================================
-PythonConfig::PythonConfig()
+
+void PythonConfig::initDefault()
 {
 #ifdef Q_OS_WIN32
     initBundled();
@@ -162,13 +164,43 @@ void PythonConfig::initFromLocation(const QString &prefix)
         return;
     }
 
-    if (envRoot.exists("pyenv.cfg"))
+    if (envRoot.exists("pyvenv.cfg"))
     {
-        initVenv(envRoot.path());
+#if defined(Q_OS_WINDOWS)
+        QString pythonExePath = QString("%1/Scripts/python.exe").arg(prefix);
+#else
+        QString pythonExePath = QString("%1/bin/python").arg(prefix);
+#endif
+        initFromPythonExecutable(pythonExePath);
+        if (m_pythonHome.isEmpty() && m_pythonPath.isEmpty())
+        {
+            qDebug() << "Failed to get paths info from python executable at (venv)"
+                     << pythonExePath;
+            initVenv(envRoot.path());
+        }
+        else
+        {
+            m_type = Type::Venv;
+        }
     }
     else if (envRoot.exists("conda-meta"))
     {
-        initCondaEnv(envRoot.path());
+#if defined(Q_OS_WINDOWS)
+        QString pythonExePath = QString("%1/python.exe").arg(prefix);
+#else
+        QString pythonExePath = QString("%1/python").arg(prefix);
+#endif
+        initFromPythonExecutable(pythonExePath);
+        if (m_pythonHome.isEmpty() && m_pythonPath.isEmpty())
+        {
+            qDebug() << "Failed to get paths info from python executable at (conda)"
+                     << pythonExePath;
+            initCondaEnv(envRoot.path());
+        }
+        else
+        {
+            m_type = Type::Conda;
+        }
     }
     else
     {
@@ -210,12 +242,12 @@ void PythonConfig::preparePythonProcess(QProcess &pythonProcess) const
 {
     switch (m_type)
     {
-
+    case Type::Unknown:
     case Type::Venv:
 #ifdef Q_OS_WIN
         pythonProcess.setProgram(QString("%1/Scripts/python.exe").arg(m_pythonHome));
 #else
-        pythonProcess.setProgram(QString("%1/python").arg(m_pythonHome));
+        pythonProcess.setProgram(QString("%1/bin/python").arg(m_pythonHome));
 #endif
         break;
     case Type::Conda:
@@ -314,4 +346,33 @@ PythonConfig PythonConfig::fromContainingEnvironment()
     }
 
     return config;
+}
+
+void PythonConfig::initFromPythonExecutable(const QString &pythonExecutable)
+{
+    m_type = Type::Unknown;
+
+    const QString pythonPathScript = QStringLiteral(
+        "import os;import sys;print(os.pathsep.join(sys.path[1:]), sys.prefix, end='')");
+
+    QProcess pythonProcess;
+    pythonProcess.setProgram(pythonExecutable);
+    pythonProcess.setArguments({"-c", pythonPathScript});
+    pythonProcess.start(QIODevice::ReadOnly);
+    pythonProcess.waitForFinished();
+
+    const QString result =
+        QTextCodec::codecForName("utf-8")->toUnicode(pythonProcess.readAllStandardOutput());
+
+    QStringList pathsAndHome = result.split(' ');
+
+    if (pathsAndHome.size() != 2)
+    {
+        qWarning() << "'" << pathsAndHome
+                   << "' could not be parsed as a list if paths and a home path";
+        return;
+    }
+
+    m_pythonPath = pathsAndHome.takeFirst();
+    m_pythonHome = pathsAndHome.takeFirst();
 }

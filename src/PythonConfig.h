@@ -93,7 +93,7 @@ class PythonConfig final
     ///
     /// # Other Platforms
     /// Does nothing, as we rely on the system's python to be properly installed
-    PythonConfig();
+    PythonConfig() = default;
 
     Type type() const
     {
@@ -128,6 +128,7 @@ class PythonConfig final
     static bool IsInsideEnvironment();
     static PythonConfig fromContainingEnvironment();
 
+    void initDefault();
 #ifdef Q_OS_WIN32
     /// Initialize the paths to point to where the Python
     /// environment was bundled on a Windows installation
@@ -141,6 +142,8 @@ class PythonConfig final
     void initCondaEnv(const QString &condaPrefix);
     /// Initialize the paths to use the python venv stored at venvPrefix.
     void initVenv(const QString &venvPrefix);
+
+    void initFromPythonExecutable(const QString &pythonExecutable);
 
   private:
     QString m_pythonHome{};
