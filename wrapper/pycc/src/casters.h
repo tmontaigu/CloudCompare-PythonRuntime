@@ -84,6 +84,7 @@ template <> struct type_caster<QByteArray>
             std::runtime_error("Unable to extract bytes contents!");
         }
         value = QByteArray(buffer, length);
+        return true;
     }
 
     static handle cast(const QByteArray &src, return_value_policy /* policy */, handle /* handle */)
