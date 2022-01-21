@@ -35,6 +35,7 @@ static QString FileKey()
     return QStringLiteral("file");
 }
 
+
 PythonEditor::PythonEditor(PythonInterpreter *interpreter)
     : Ui::PythonEditor(), m_settings(new EditorSettings), m_mdiArea(new QMdiArea(this))
 {
@@ -210,7 +211,7 @@ void PythonEditor::updateRecentFileActions()
     QSettings settings(QCoreApplication::organizationName(), SettingsApplicationName());
 
     const QStringList recentFiles = readRecentFiles(settings);
-    const int count = qMin(MaxRecentFiles, recentFiles.size());
+    const int count = qMin(MAX_RECENT_FILES, recentFiles.size());
     int i = 0;
     for (; i < count; ++i)
     {
@@ -219,7 +220,7 @@ void PythonEditor::updateRecentFileActions()
         m_recentFileActs[i]->setData(recentFiles.at(i));
         m_recentFileActs[i]->setVisible(true);
     }
-    for (; i < MaxRecentFiles; ++i)
+    for (; i < MAX_RECENT_FILES; ++i)
     {
         m_recentFileActs[i]->setVisible(false);
     }

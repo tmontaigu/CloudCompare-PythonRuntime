@@ -39,6 +39,8 @@ class ccMainAppInterface;
 class PythonInterpreter;
 class ProjectViewContextMenu;
 
+#define MAX_RECENT_FILES 10
+
 class PythonEditor final : public QMainWindow, public Ui::PythonEditor
 {
     Q_OBJECT
@@ -93,8 +95,6 @@ class PythonEditor final : public QMainWindow, public Ui::PythonEditor
     CodeEditor *createChildCodeEditor();
 
   private:
-    static const int MaxRecentFiles = 10;
-
     static bool HasRecentFiles();
 
     // Initialization functions
@@ -118,7 +118,7 @@ class PythonEditor final : public QMainWindow, public Ui::PythonEditor
 
     QMenu *m_windowMenu{nullptr};
 
-    QAction *m_recentFileActs[MaxRecentFiles] = {nullptr};
+    QAction *m_recentFileActs[MAX_RECENT_FILES] = {nullptr};
     QAction *m_recentFileSeparator{nullptr};
     QAction *m_recentFileSubMenuAct{nullptr};
     QAction *m_closeAct{nullptr};
