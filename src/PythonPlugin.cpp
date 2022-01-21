@@ -266,6 +266,11 @@ struct PythonPluginCommand final : public ccCommandLineInterface::Command
             return false;
         }
 
+        if (!Py_IsInitialized())
+        {
+            return cmd.error("[PythonPlugin] Python is not properly initialized");
+        }
+
         PySys_SetArgvEx(static_cast<int>(args.pythonArgv.size()), args.pythonArgv.data(), 1);
         const bool success = interpreter->executeFile(qPrintable(args.filepath));
 
