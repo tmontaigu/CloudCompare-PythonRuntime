@@ -30,7 +30,7 @@
 
 #include <ccLog.h>
 
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX
 #include <cstdio>
 #include <dlfcn.h>
 #endif
@@ -180,7 +180,7 @@ void PythonInterpreter::executeFunction(const pybind11::object &function)
 void PythonInterpreter::initialize(const PythonConfig &config)
 {
 
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX
     // Work-around issue: undefined symbol: PyExc_RecursionError
     // when trying to import numpy in the intepreter
     // e.g: https://github.com/numpy/numpy/issues/14946
@@ -282,7 +282,7 @@ void PythonInterpreter::finalize()
     if (Py_IsInitialized())
     {
         py::finalize_interpreter();
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX
         if (m_libPythonHandle)
         {
             dlclose(m_libPythonHandle);
