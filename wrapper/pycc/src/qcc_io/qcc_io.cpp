@@ -130,9 +130,9 @@ void define_qcc_io(py::module &m)
         .def_readwrite("alwaysDisplayLoadDialog",
                        &FileIOFilter::LoadParameters::alwaysDisplayLoadDialog)
         .def_readwrite("coordinatesShiftEnabled",
-                       &FileIOFilter::LoadParameters::coordinatesShiftEnabled)
+                       &FileIOFilter::LoadParameters::_coordinatesShiftEnabled)
         .def_readwrite("coordinatesShift",
-                       &FileIOFilter::LoadParameters::coordinatesShift,
+                       &FileIOFilter::LoadParameters::_coordinatesShift,
                        py::return_value_policy::reference)
         .def_readwrite("preserveShiftOnSave", &FileIOFilter::LoadParameters::preserveShiftOnSave)
         .def_readwrite("autoComputeNormals", &FileIOFilter::LoadParameters::autoComputeNormals)

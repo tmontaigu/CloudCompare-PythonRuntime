@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: 'd5aa6c507d1e0db8ea6e6b9d277c9ff0edab3f1e'
+          ref: 'b64aa418a46d9404fd9cf63db697e076af99e67c'
           submodules: true
 
       - name: Clone PythonPlugin
@@ -78,7 +78,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: 'd5aa6c507d1e0db8ea6e6b9d277c9ff0edab3f1e'
+          ref: 'b64aa418a46d9404fd9cf63db697e076af99e67c'
           submodules: false
 
       # Do this until we rely on a CC commit that
@@ -146,7 +146,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: 'd5aa6c507d1e0db8ea6e6b9d277c9ff0edab3f1e'
+          ref: 'b64aa418a46d9404fd9cf63db697e076af99e67c'
           submodules: true
 
       - name: Clone PythonPlugin
