@@ -133,6 +133,34 @@ const wchar_t *PythonConfigPaths::pythonPath() const
 
 //================================================================================
 
+static QString PathToPythonExecutableInEnv(PythonConfig::Type envType, const QString &envRoot)
+{
+#if defined(Q_OS_WINDOWS)
+    switch (envType)
+    {
+    case PythonConfig::Type::Conda:
+        return envRoot + "/python.exe";
+    case PythonConfig::Type::Venv:
+    case PythonConfig::Type::Unknown:
+        return envRoot + "/Scripts/python.exe";
+    case PythonConfig::Type::System:
+        return "python.exe";
+    }
+#else
+    switch (envType)
+    {
+    case PythonConfig::Type::Conda:
+        return envRoot + "/python";
+    case PythonConfig::Type::Venv:
+    case PythonConfig::Type::Unknown:
+        return envRoot + "/bin/python";
+    case PythonConfig::Type::System:
+        return "python";
+    }
+#endif
+    return {};
+}
+
 void PythonConfig::initDefault()
 {
 #ifdef Q_OS_WIN32
@@ -166,11 +194,7 @@ void PythonConfig::initFromLocation(const QString &prefix)
 
     if (envRoot.exists("pyvenv.cfg"))
     {
-#if defined(Q_OS_WINDOWS)
-        QString pythonExePath = QString("%1/Scripts/python.exe").arg(prefix);
-#else
-        QString pythonExePath = QString("%1/bin/python").arg(prefix);
-#endif
+        QString pythonExePath = PathToPythonExecutableInEnv(Type::Venv, prefix);
         initFromPythonExecutable(pythonExePath);
         if (m_pythonHome.isEmpty() && m_pythonPath.isEmpty())
         {
@@ -185,11 +209,7 @@ void PythonConfig::initFromLocation(const QString &prefix)
     }
     else if (envRoot.exists("conda-meta"))
     {
-#if defined(Q_OS_WINDOWS)
-        QString pythonExePath = QString("%1/python.exe").arg(prefix);
-#else
-        QString pythonExePath = QString("%1/python").arg(prefix);
-#endif
+        QString pythonExePath = PathToPythonExecutableInEnv(Type::Conda, prefix);
         initFromPythonExecutable(pythonExePath);
         if (m_pythonHome.isEmpty() && m_pythonPath.isEmpty())
         {
@@ -240,28 +260,8 @@ void PythonConfig::initVenv(const QString &venvPrefix)
 
 void PythonConfig::preparePythonProcess(QProcess &pythonProcess) const
 {
-    switch (m_type)
-    {
-    case Type::Unknown:
-    case Type::Venv:
-#ifdef Q_OS_WIN
-        pythonProcess.setProgram(QString("%1/Scripts/python.exe").arg(m_pythonHome));
-#else
-        pythonProcess.setProgram(QString("%1/bin/python").arg(m_pythonHome));
-#endif
-        break;
-    case Type::Conda:
-#ifdef Q_OS_WIN
-        pythonProcess.setProgram(QString("%1/python.exe").arg(m_pythonHome));
-#else
-        pythonProcess.setProgram(QString("%1/python").arg(m_pythonHome));
-#endif
-        break;
-    case Type::System:
-    default:
-        pythonProcess.setProgram(QStringLiteral("python"));
-        break;
-    }
+    const QString pythonExePath = PathToPythonExecutableInEnv(type(), m_pythonHome);
+    pythonProcess.setProgram(pythonExePath);
 
     // Conda env have SSL related libraries stored in a part that is not
     // in the path of the python exe, we have to add it ourselves.
@@ -334,14 +334,16 @@ PythonConfig PythonConfig::fromContainingEnvironment()
     QString root = qEnvironmentVariable("CONDA_PREFIX");
     if (!root.isEmpty())
     {
-        config.initCondaEnv(root);
+        const QString pythonExePath = PathToPythonExecutableInEnv(Type::Conda, root);
+        config.initFromPythonExecutable(pythonExePath);
         return config;
     }
 
     root = qEnvironmentVariable("VIRTUAL_ENV");
     if (!root.isEmpty())
     {
-        config.initVenv(root);
+        const QString pythonExePath = PathToPythonExecutableInEnv(Type::Venv, root);
+        config.initFromPythonExecutable(pythonExePath);
         return config;
     }
 
