@@ -180,6 +180,8 @@ void PythonInterpreter::executeFunction(const pybind11::object &function)
 void PythonInterpreter::initialize(const PythonConfig &config)
 {
 
+    plgDebug() << "Initializing the interpreter with: " << config;
+
 #ifdef Q_OS_LINUX
     // Work-around issue: undefined symbol: PyExc_RecursionError
     // when trying to import numpy in the intepreter
@@ -192,7 +194,7 @@ void PythonInterpreter::initialize(const PythonConfig &config)
         char *error = dlerror();
         if (error)
         {
-            ccLog::Warning("[PythonPlugin] dlopen error:", error);
+            plgWarning() << "dlopen error: " << error;
         }
     };
 
@@ -222,12 +224,6 @@ void PythonInterpreter::initialize(const PythonConfig &config)
         // https://www.python.org/dev/peps/pep-0587/
         // https://docs.python.org/3/c-api/init_config.html#init-python-config
         m_config = config.pythonCompatiblePaths();
-        if (!m_config.isSet())
-        {
-            throw std::runtime_error(
-                "internal error: Config is not system python, but neither paths nor home is set");
-        }
-
         PyStatus status;
 
         PyConfig pyConfig;

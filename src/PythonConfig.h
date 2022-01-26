@@ -100,6 +100,26 @@ class PythonConfig final
         return m_type;
     }
 
+    template <class ostream> friend ostream &operator<<(ostream &o, Type type)
+    {
+        switch (type)
+        {
+        case Type::Venv:
+            o << "Venv";
+            break;
+        case Type::Conda:
+            o << "Conda";
+            break;
+        case Type::System:
+            o << "System";
+            break;
+        case Type::Unknown:
+            o << "Unknown";
+            break;
+        }
+        return o;
+    }
+
     /// Sets the necessary settings of the QProcess so that
     /// it uses the correct Python exe.
     void preparePythonProcess(QProcess &pythonProcess) const;
@@ -144,6 +164,13 @@ class PythonConfig final
     void initVenv(const QString &venvPrefix);
 
     void initFromPythonExecutable(const QString &pythonExecutable);
+
+    template <class ostream> friend ostream &operator<<(ostream &o, const PythonConfig &config)
+    {
+        o << "PythonConfig { type: " << config.m_type << ", home: '" << config.m_pythonHome
+          << "', path: '" << config.m_pythonPath << "'}";
+        return o;
+    }
 
   private:
     QString m_pythonHome{};

@@ -53,8 +53,8 @@ PythonPlugin::PythonPlugin(QObject *parent)
     {
         config = PythonConfig::fromContainingEnvironment();
         isDefaultPythonEnv = false;
-        ccLog::Print("CloudCompare loaded from within a venv or conda env, trying to use it for "
-                     "the Python plugin");
+        plgPrint() << "CloudCompare was loaded from within a " << config.type() << "env. "
+            << "Will try to use it";
     }
     else
     {
@@ -67,7 +67,7 @@ PythonPlugin::PythonPlugin(QObject *parent)
         bool seemsValid = config.validateAndDisplayErrors();
         if (!seemsValid)
         {
-            ccLog::Error("Falling back to default Python configuration due to previous errors");
+            plgError() << "Falling back to default Python configuration due to previous errors";
             config.initDefault();
         }
     }
@@ -78,7 +78,7 @@ PythonPlugin::PythonPlugin(QObject *parent)
     }
     catch (const std::exception &e)
     {
-        ccLog::Error("Failed to initialize Python: '%s'", e.what());
+        plgError() << "Failed to initialize Python: " << e.what();
         return;
     }
 

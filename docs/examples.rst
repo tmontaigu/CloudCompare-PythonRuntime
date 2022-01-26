@@ -28,3 +28,19 @@ Merge
 
 .. literalinclude:: ../script_examples/merge_script.py
     :language: Python
+
+
+Using OpenGL Transformations
+----------------------------
+
+Translation
+___________
+
+.. literalinclude:: ../script_examples/gl-translation.py
+    :language: Python
+
+Rotation
+________
+
+.. literalinclude:: ../script_examples/gl-rotation.py
+    :language: Python

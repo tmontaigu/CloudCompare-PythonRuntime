@@ -336,6 +336,7 @@ PythonConfig PythonConfig::fromContainingEnvironment()
     {
         const QString pythonExePath = PathToPythonExecutableInEnv(Type::Conda, root);
         config.initFromPythonExecutable(pythonExePath);
+        config.m_type = Type::Conda;
         return config;
     }
 
@@ -344,6 +345,7 @@ PythonConfig PythonConfig::fromContainingEnvironment()
     {
         const QString pythonExePath = PathToPythonExecutableInEnv(Type::Venv, root);
         config.initFromPythonExecutable(pythonExePath);
+        config.m_type = Type::Venv;
         return config;
     }
 
@@ -377,4 +379,8 @@ void PythonConfig::initFromPythonExecutable(const QString &pythonExecutable)
 
     m_pythonPath = pathsAndHome.takeFirst();
     m_pythonHome = pathsAndHome.takeFirst();
+
+#ifndef USE_EMBEDDED_MODULES
+    m_pythonPath.append(QApplication::applicationDirPath() + "/plugins/Python/Lib/site-packages");
+#endif
 }

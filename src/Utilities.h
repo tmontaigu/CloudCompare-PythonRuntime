@@ -24,6 +24,71 @@
 
 #include <ccLog.h>
 
+template <enum ccLog::MessageLevelFlags level> class ccLogger
+{
+  public:
+    ccLogger() : m_message()
+    {
+        m_message.reserve(255);
+    }
+
+    virtual ~ccLogger() {
+        flush();
+    }
+
+    inline ccLogger& operator<<(const QString& message) {
+        m_message += message;
+        return *this;
+    }
+
+    inline ccLogger &operator<<(const char *message)
+    {
+        m_message += message;
+        return *this;
+    }
+
+    inline ccLogger &operator<<(int value)
+    {
+        m_message += QString::number(value);
+        return *this;
+    }
+
+    void flush() {
+        ccLog::LogMessage(m_message, level);
+        m_message.clear();
+    }
+
+  protected:
+    QString m_message;
+};
+
+using ccPrint = ccLogger<ccLog::LOG_STANDARD>;
+using ccDebug = ccLogger<ccLog::LOG_DEBUG>;
+using ccWarning = ccLogger<ccLog::LOG_WARNING>;
+using ccError = ccLogger<ccLog::LOG_ERROR>;
+
+template <enum ccLog::MessageLevelFlags level>
+class PluginLogger : public ccLogger<level> {
+  public:
+    PluginLogger() : ccLogger<level>() {
+        this->m_message += "[PythonPlugin]";
+
+    }
+
+//    friend PluginLogger& endl(PluginLogger<level>& logger) {
+//        logger.flush();
+//        return logger;
+//    }
+
+};
+
+
+
+using plgPrint = PluginLogger<ccLog::LOG_STANDARD>;
+using plgDebug = PluginLogger<ccLog::LOG_DEBUG>;
+using plgWarning = PluginLogger<ccLog::LOG_WARNING>;
+using plgError = PluginLogger<ccLog::LOG_ERROR>;
+
 /// Returns a newly allocated array (null terminated) from a QString
 inline wchar_t *QStringToWcharArray(const QString &string)
 {
@@ -79,4 +144,6 @@ inline void LogPythonHome()
         ccLog::Print("[PythonPlugin] PythonHome is not set");
     }
 }
+
+
 #endif // PYTHON_PLUGIN_UTILITIES_H

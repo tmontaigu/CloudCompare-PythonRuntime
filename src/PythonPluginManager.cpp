@@ -15,6 +15,7 @@
 //#                                                                        #
 //##########################################################################
 #include "PythonPluginManager.h"
+#include "Utilities.h"
 
 #include <QDirIterator>
 #include <QFileInfo>
@@ -36,11 +37,11 @@ void PythonPluginManager::loadPluginsFrom(const QStringList &paths)
         return;
     }
 
-    ccLog::Print("[PythonPlugin] Searching for custom plugin");
+    plgPrint() << "Searching for custom plugin";
     py::object appendToPythonSysPath = py::module::import("sys").attr("path").attr("append");
     for (const QString &path : paths)
     {
-        ccLog::Print(QString("[PythonPlugin] Searching in %1").arg(path));
+        plgPrint() << "Searching in " << path;
         appendToPythonSysPath(path);
         QDirIterator iter(path);
         while (iter.hasNext())
@@ -64,13 +65,11 @@ void PythonPluginManager::loadPluginsFrom(const QStringList &paths)
             try
             {
                 py::module::import(nameToImportStd.c_str());
-                ccLog::Print("[PythonPlugin]\tLoaded plugin '%s'", nameToImportStd.c_str());
+                plgDebug() << "\tLoaded python module '"<< nameToImportStd.c_str() << "'";
             }
             catch (const std::exception &e)
             {
-                ccLog::Warning("[PythonPlugin]\tFailed to load plugin '%s': %s",
-                               nameToImportStd.c_str(),
-                               e.what());
+                plgWarning() << "\tFailed to python module '" << nameToImportStd.c_str() << e.what();
             }
         }
     }
@@ -79,15 +78,21 @@ void PythonPluginManager::loadPluginsFrom(const QStringList &paths)
         py::module::import("pycc_runtime").attr("PythonPluginInterface").attr("__subclasses__")();
     for (auto &subClassType : subClassTypes)
     {
+        QString pluginName;
+        if (hasattr(subClassType, "__name__"))
+        {
+            pluginName = subClassType.attr("__name__").cast<QString>();
+        }
         try
         {
             Runtime::RegisteredPlugin plugin =
                 Runtime::RegisteredPlugin::InstanciatePlugin(subClassType.cast<py::object>());
             m_plugins.push_back(plugin);
+            plgPrint() << "\tLoaded plugin: '" << pluginName << "'";
         }
         catch (const std::exception &e)
         {
-            ccLog::Warning("[PythonPlugin]\tFailed to instantiate plugin: %s", e.what());
+            plgWarning()  << "\tFailed to instantiate plugin named '" << pluginName << "'\nThe error was:\n" << e.what();
         }
     }
 }
