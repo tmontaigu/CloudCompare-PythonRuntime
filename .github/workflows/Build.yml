@@ -79,16 +79,7 @@ jobs:
         with:
           repository: 'CloudCompare/CloudCompare'
           ref: 'b64aa418a46d9404fd9cf63db697e076af99e67c'
-          submodules: false
-
-      # Do this until we rely on a CC commit that
-      # have a more recent version of CCCoreLib
-      # so we can build the docs
-      - name: Clone CCCoreLib
-        uses: actions/checkout@v2
-        with:
-          repository: 'CloudCompare/CCCoreLib'
-          path: 'libs/qCC_db/extern/CCCoreLib'
+          submodules: true
 
       - name: Clone PythonPlugin
         uses: actions/checkout@v2
