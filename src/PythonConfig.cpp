@@ -26,6 +26,12 @@
 #include <QVector>
 #include <QtGlobal>
 
+#if !defined(USE_EMBEDDED_MODULES) && defined(Q_OS_WINDOWS)
+static QString WindowsBundledSitePackagesPath() {
+   return  QDir::listSeparator() + QApplication::applicationDirPath() + "/plugins/Python/Lib/site-packages";
+}
+#endif
+
 //================================================================================
 
 Version::Version(const QStringRef &versionStr) : Version()
@@ -227,6 +233,10 @@ void PythonConfig::initFromLocation(const QString &prefix)
         m_pythonHome = envRoot.path();
         m_pythonPath = QString("%1/DLLs;%1/lib;%1/Lib/site-packages;").arg(m_pythonHome);
         m_type = Type::Unknown;
+
+#if !defined(USE_EMBEDDED_MODULES) && defined(Q_OS_WINDOWS)
+        m_pythonPath.append(WindowsBundledSitePackagesPath());
+#endif
     }
 }
 
@@ -236,8 +246,8 @@ void PythonConfig::initCondaEnv(const QString &condaPrefix)
     m_pythonHome = condaPrefix;
     m_pythonPath = QString("%1/DLLs;%1/lib;%1/Lib/site-packages;").arg(condaPrefix);
 
-#ifndef USE_EMBEDDED_MODULES
-    m_pythonPath.append(QApplication::applicationDirPath() + "/plugins/Python/Lib/site-packages");
+#if !defined(USE_EMBEDDED_MODULES) && defined(Q_OS_WINDOWS)
+    m_pythonPath.append(WindowsBundledSitePackagesPath());
 #endif
 }
 
@@ -253,8 +263,8 @@ void PythonConfig::initVenv(const QString &venvPrefix)
         m_pythonPath.append(QString("%1/Lib/site-packages").arg(cfg.home));
     }
 
-#ifndef USE_EMBEDDED_MODULES
-    m_pythonPath.append(QApplication::applicationDirPath() + "/plugins/Python/Lib/site-packages");
+#if !defined(USE_EMBEDDED_MODULES) && defined(Q_OS_WINDOWS)
+    m_pythonPath.append(WindowsBundledSitePackagesPath());
 #endif
 }
 
@@ -269,7 +279,7 @@ void PythonConfig::preparePythonProcess(QProcess &pythonProcess) const
     {
         const QString additionalPath = QString("%1/Library/bin").arg(m_pythonHome);
         QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-        QString path = env.value("PATH").append(';').append(additionalPath);
+        QString path = env.value("PATH").append(QDir::listSeparator()).append(additionalPath);
         env.insert("PATH", path);
         pythonProcess.setProcessEnvironment(env);
     }
@@ -380,7 +390,7 @@ void PythonConfig::initFromPythonExecutable(const QString &pythonExecutable)
     m_pythonPath = pathsAndHome.takeFirst();
     m_pythonHome = pathsAndHome.takeFirst();
 
-#ifndef USE_EMBEDDED_MODULES
-    m_pythonPath.append(QApplication::applicationDirPath() + "/plugins/Python/Lib/site-packages");
+#if !defined(USE_EMBEDDED_MODULES) && defined(Q_OS_WINDOWS)
+    m_pythonPath.append(WindowsBundledSitePackagesPath());
 #endif
 }
