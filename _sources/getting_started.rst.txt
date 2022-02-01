@@ -16,9 +16,11 @@ In GUI, there are 3 actions:
 
 *  The file runner, which shows a small dialog where you can select a file and run it
    without having to have the editor opened.
-
     .. image:: ../images/runner-icon.png
 
+*  The action launcher which shows the list plugins written in Python and their registered actions
+   that you can use.
+    .. image:: ../images/launcher-icon.png
 
 Scripts
 _______

@@ -49,6 +49,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#loading-a-file">Loading a file</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sub-sampling">Sub sampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#merge">Merge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-opengl-transformations">Using OpenGL Transformations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#translation">Translation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rotation">Rotation</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -273,6 +278,91 @@
     <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
+</section>
+<section id="using-opengl-transformations">
+<h2>Using OpenGL Transformations<a class="headerlink" href="#using-opengl-transformations" title="Permalink to this headline"></a></h2>
+<section id="translation">
+<h3>Translation<a class="headerlink" href="#translation" title="Permalink to this headline"></a></h3>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">This scripts applies a translation of the first selected entity.</span>
+<span class="sd">It&#39;s an OpenGL translation, so coordinates are not changed, its just visual</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">pycc</span>
+<span class="kn">import</span> <span class="nn">cccorelib</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+
+<span class="n">entity</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">GetInstance</span><span class="p">()</span><span class="o">.</span><span class="n">getSelectedEntities</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Translating the entity</span>
+
+<span class="n">glMat</span> <span class="o">=</span> <span class="n">entity</span><span class="o">.</span><span class="n">getGLTransformation</span><span class="p">()</span>
+<span class="n">translation</span> <span class="o">=</span> <span class="n">glMat</span><span class="o">.</span><span class="n">getTranslationAsVec3D</span><span class="p">()</span>
+<span class="n">translation</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="mf">10.0</span>
+<span class="n">glMat</span><span class="o">.</span><span class="n">setTranslation</span><span class="p">(</span><span class="n">translation</span><span class="p">)</span>
+
+<span class="n">entity</span><span class="o">.</span><span class="n">setGLTransformation</span><span class="p">(</span><span class="n">glMat</span><span class="p">)</span>
+<span class="n">entity</span><span class="o">.</span><span class="n">applyGLTransformation_recursive</span><span class="p">()</span>
+<span class="n">pycc</span><span class="o">.</span><span class="n">GetInstance</span><span class="p">()</span><span class="o">.</span><span class="n">redrawAll</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="rotation">
+<h3>Rotation<a class="headerlink" href="#rotation" title="Permalink to this headline"></a></h3>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">This scripts applies a rotation of the first selected entity.</span>
+<span class="sd">It&#39;s an OpenGL rotation, so coordinates are not changed, its just visual</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">pycc</span>
+<span class="kn">import</span> <span class="nn">cccorelib</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+
+<span class="n">entity</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">GetInstance</span><span class="p">()</span><span class="o">.</span><span class="n">getSelectedEntities</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Rotating the entity around its center</span>
+<span class="c1"># Rotation always happen in OpenGL`s origin which is probably not</span>
+<span class="c1"># the center of our object</span>
+<span class="c1">#</span>
+<span class="c1"># So we have to:</span>
+<span class="c1"># 1 - Translate the matrix by -center of the object</span>
+<span class="c1"># 2 - Rotate the matrix by the desired amount</span>
+<span class="c1"># 3 - Translate the matrix by centre of the object</span>
+
+<span class="n">center</span> <span class="o">=</span> <span class="n">entity</span><span class="o">.</span><span class="n">getDisplayBB_recursive</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">getCenter</span><span class="p">()</span>
+
+<span class="c1"># 1</span>
+<span class="n">glTrans</span> <span class="o">=</span> <span class="n">entity</span><span class="o">.</span><span class="n">getGLTransformation</span><span class="p">()</span>
+<span class="n">translation</span> <span class="o">=</span> <span class="n">glTrans</span><span class="o">.</span><span class="n">getTranslationAsVec3D</span><span class="p">()</span>
+<span class="n">translation</span> <span class="o">=</span> <span class="n">translation</span> <span class="o">-</span> <span class="n">center</span>
+<span class="n">glTrans</span><span class="o">.</span><span class="n">setTranslation</span><span class="p">(</span><span class="n">translation</span><span class="p">)</span>
+
+<span class="n">entity</span><span class="o">.</span><span class="n">setGLTransformation</span><span class="p">(</span><span class="n">glTrans</span><span class="p">)</span>
+<span class="n">entity</span><span class="o">.</span><span class="n">applyGLTransformation_recursive</span><span class="p">()</span>
+
+<span class="c1"># 2 &amp; 3</span>
+<span class="n">glRot</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccGLMatrix</span><span class="p">()</span>
+<span class="n">glRot</span><span class="o">.</span><span class="n">initFromParameters</span><span class="p">(</span>
+    <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">45</span><span class="p">),</span>
+    <span class="n">cccorelib</span><span class="o">.</span><span class="n">CCVector3</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+    <span class="n">cccorelib</span><span class="o">.</span><span class="n">CCVector3</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+<span class="p">)</span>
+ 
+<span class="n">glMat</span> <span class="o">=</span> <span class="n">entity</span><span class="o">.</span><span class="n">getGLTransformation</span><span class="p">()</span>
+<span class="n">glMat</span> <span class="o">=</span> <span class="n">glMat</span> <span class="o">*</span> <span class="n">glRot</span><span class="p">;</span>
+
+<span class="n">translation</span> <span class="o">=</span> <span class="n">glMat</span><span class="o">.</span><span class="n">getTranslationAsVec3D</span><span class="p">()</span>
+<span class="n">translation</span> <span class="o">=</span> <span class="n">translation</span> <span class="o">+</span> <span class="n">center</span>
+<span class="n">glMat</span><span class="o">.</span><span class="n">setTranslation</span><span class="p">(</span><span class="n">translation</span><span class="p">)</span>
+
+<span class="n">entity</span><span class="o">.</span><span class="n">setGLTransformation</span><span class="p">(</span><span class="n">glMat</span><span class="p">)</span>
+<span class="n">entity</span><span class="o">.</span><span class="n">applyGLTransformation_recursive</span><span class="p">()</span>
+
+<span class="n">pycc</span><span class="o">.</span><span class="n">GetInstance</span><span class="p">()</span><span class="o">.</span><span class="n">redrawAll</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 
