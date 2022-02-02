@@ -97,6 +97,16 @@ if(PLUGIN_PYTHON)
     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/docs
   )
 
+  if(WIN32 AND (CMAKE_BUILD_TYPE STREQUAL Release))
+    add_custom_target(
+      python_plugin_installer
+      COMMENT "Building MSI installer..."
+      COMMAND pwsh ./Create-Installer.ps1
+              "${CMAKE_INSTALL_PREFIX}/${CLOUDCOMPARE_DEST_FOLDER}"
+      WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/installer
+    )
+  endif()
+
   if(WIN32)
     manage_windows_install()
   elseif(UNIX AND NOT APPLE)

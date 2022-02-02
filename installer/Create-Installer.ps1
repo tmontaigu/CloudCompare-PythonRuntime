@@ -57,6 +57,7 @@ Write-Host ""
     .\Installer.wxs `
     .\PythonEnvironment.wxs `
 
+$OutputInstallerName = "CloudCompare-PythonPlugin-Setup-$LocalizationName-Python$PythonDllSuffix-$EnvTypeName.msi"
 
 &light `
     -ext WixUIExtension `
@@ -70,8 +71,9 @@ Write-Host ""
     -dWixUIDialogBmp="UiBanner.bmp" `
     -cultures:$LocalizationSwitch `
     -loc $LocalizationFile `
-    -o "CloudCompare-PythonPlugin-Setup-$LocalizationName-Python$PythonDllSuffix-$EnvTypeName.msi"
+    -o $OutputInstallerName
 
+Write-Host "Installer created at " (Join-Path $pwd $OutputInstallerName)
 
 # The heat command is taken from https://stackoverflow.com/questions/26550763/wix-how-to-copy-a-directory-to-install-folder
 # Basically:
