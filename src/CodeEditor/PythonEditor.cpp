@@ -35,7 +35,6 @@ static QString FileKey()
     return QStringLiteral("file");
 }
 
-
 PythonEditor::PythonEditor(PythonInterpreter *interpreter)
     : Ui::PythonEditor(), m_settings(new EditorSettings), m_mdiArea(new QMdiArea(this))
 {

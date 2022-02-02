@@ -27,8 +27,10 @@
 #include <QtGlobal>
 
 #if !defined(USE_EMBEDDED_MODULES) && defined(Q_OS_WINDOWS)
-static QString WindowsBundledSitePackagesPath() {
-   return  QDir::listSeparator() + QApplication::applicationDirPath() + "/plugins/Python/Lib/site-packages";
+static QString WindowsBundledSitePackagesPath()
+{
+    return QDir::listSeparator() + QApplication::applicationDirPath() +
+           "/plugins/Python/Lib/site-packages";
 }
 #endif
 

@@ -65,11 +65,12 @@ void PythonPluginManager::loadPluginsFrom(const QStringList &paths)
             try
             {
                 py::module::import(nameToImportStd.c_str());
-                plgDebug() << "\tLoaded python module '"<< nameToImportStd.c_str() << "'";
+                plgDebug() << "\tLoaded python module '" << nameToImportStd.c_str() << "'";
             }
             catch (const std::exception &e)
             {
-                plgWarning() << "\tFailed to python module '" << nameToImportStd.c_str() << e.what();
+                plgWarning() << "\tFailed to python module '" << nameToImportStd.c_str()
+                             << e.what();
             }
         }
     }
@@ -92,7 +93,9 @@ void PythonPluginManager::loadPluginsFrom(const QStringList &paths)
         }
         catch (const std::exception &e)
         {
-            plgWarning()  << "\tFailed to instantiate plugin named '" << pluginName << "'\nThe error was:\n" << e.what();
+            plgWarning() << "\tFailed to instantiate plugin named '" << pluginName
+                         << "'\nThe error was:\n"
+                         << e.what();
         }
     }
 }

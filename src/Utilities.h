@@ -32,11 +32,13 @@ template <enum ccLog::MessageLevelFlags level> class ccLogger
         m_message.reserve(255);
     }
 
-    virtual ~ccLogger() {
+    virtual ~ccLogger()
+    {
         flush();
     }
 
-    inline ccLogger& operator<<(const QString& message) {
+    inline ccLogger &operator<<(const QString &message)
+    {
         m_message += message;
         return *this;
     }
@@ -53,7 +55,8 @@ template <enum ccLog::MessageLevelFlags level> class ccLogger
         return *this;
     }
 
-    void flush() {
+    void flush()
+    {
         ccLog::LogMessage(m_message, level);
         m_message.clear();
     }
@@ -67,22 +70,19 @@ using ccDebug = ccLogger<ccLog::LOG_DEBUG>;
 using ccWarning = ccLogger<ccLog::LOG_WARNING>;
 using ccError = ccLogger<ccLog::LOG_ERROR>;
 
-template <enum ccLog::MessageLevelFlags level>
-class PluginLogger : public ccLogger<level> {
+template <enum ccLog::MessageLevelFlags level> class PluginLogger : public ccLogger<level>
+{
   public:
-    PluginLogger() : ccLogger<level>() {
+    PluginLogger() : ccLogger<level>()
+    {
         this->m_message += "[PythonPlugin]";
-
     }
 
-//    friend PluginLogger& endl(PluginLogger<level>& logger) {
-//        logger.flush();
-//        return logger;
-//    }
-
+    //    friend PluginLogger& endl(PluginLogger<level>& logger) {
+    //        logger.flush();
+    //        return logger;
+    //    }
 };
-
-
 
 using plgPrint = PluginLogger<ccLog::LOG_STANDARD>;
 using plgDebug = PluginLogger<ccLog::LOG_DEBUG>;
@@ -144,6 +144,5 @@ inline void LogPythonHome()
         ccLog::Print("[PythonPlugin] PythonHome is not set");
     }
 }
-
 
 #endif // PYTHON_PLUGIN_UTILITIES_H

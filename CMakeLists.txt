@@ -87,10 +87,11 @@ if(PLUGIN_PYTHON)
 
   add_custom_target(
     python_plugin_documentation
+    COMMENT "Generating plugin documentation"
     COMMAND ${CMAKE_COMMAND} -E make_directory
             ${CMAKE_CURRENT_LIST_DIR}/docs/__build
-    COMMAND doxygen qCC_db_doxygen_file
     COMMAND doxygen ./CCCoreLib_doxygen_file
+    COMMAND doxygen ./qCC_db_doxygen_file
     COMMAND ${CLOUDCOMPARE_EXECUTABLE_INSTALL_PATH} -SILENT -PYTHON_SCRIPT
             build_doc.py -b html . _build
     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/docs
