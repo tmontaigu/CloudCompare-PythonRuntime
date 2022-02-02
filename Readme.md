@@ -13,7 +13,7 @@ is hosted using GitHub pages.
 # Windows installer
 
 Windows user can download the [installer](https://u.pcloud.link/publink/show?code=XZHs7GXZjPafaI6pquRQOwSP1f1g8BJE6Qcy).
-This requires an installation of CloudCompare 2.12 alpha (from the 13/01/2022) downloadable from CloudCompare website.
+This requires an installation of CloudCompare 2.12 alpha (from the 27/01/2022) downloadable from CloudCompare website.
 
 # Building & Installing
 
