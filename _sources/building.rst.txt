@@ -32,7 +32,7 @@ to the CloudCompare documentation on how to do.
 To Compile this plugin you need to have Python installed.
 
 This plugin is known to compile and work with CloudCompare
-commit `b64aa418a46d9404fd9cf63db697e076af99e67c`.
+commit `d624e0dd7325f9bd43004376ce83529f7c123b88`.
 
 Python 3.8 or more is required to build as a plugin.
 
@@ -168,6 +168,8 @@ To do so:
 Other development related things
 --------------------------------
 
+This section is only interesting for maintainers.
+
 
 Running the tests
 _________________
@@ -194,3 +196,41 @@ To build the documentation:
 
 Which by default will build the docs in HTML in docs/_build. Open docs/_build/index.html to view it.
 (The output dir can be changed using the `-OutputDir` option)
+
+
+Building the Windows Installer
+______________________________
+
+Building the Windows installer requires the following:
+
+ - `PowerShell Core`_ (To run the creation script).
+ - `Wix Toolset`_ version 3.x (The actual toolset that creates the installer)
+ - Your custom built CloudCompare (with the Python Plugin) must have been installed.
+   In other words the install target (``cmake --install .``) must have been done.
+
+
+To create the installer, go in the ``installer`` directory and start the ``./Create-Installer.ps1`` script
+and give it as the first positional argument the absolute path to the directory where your custom built CC
+was installed.
+
+Example:
+
+.. code-block::
+
+    # in "installer" folder:
+    ./Create-Installer "C:\CMakeBuilds\CloudCompare\Release\install\CloudCompare"
+    # or
+    pwsh ./Create-Installer "C:\CMakeBuilds\CloudCompare\Release\install\CloudCompare"
+
+.. note::
+
+    A custom cmake target (that can be launched from your IDE or command line)
+    is available in Release build to create the installer for you
+    (it simply calls the script with the correct parameters).
+
+    .. code-block::
+
+        cmake --build build_dir --target python_plugin_installer .
+
+.. _PowerShell Core: https://github.com/PowerShell/PowerShell
+.. _Wix Toolset: https://wixtoolset.org/

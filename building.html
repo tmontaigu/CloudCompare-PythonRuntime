@@ -53,6 +53,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#other-development-related-things">Other development related things</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#running-the-tests">Running the tests</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#building-the-documentation">Building the documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#building-the-windows-installer">Building the Windows Installer</a></li>
 </ul>
 </li>
 </ul>
@@ -118,7 +119,7 @@ how to compile CloudCompare from source, otherwise refer
 to the CloudCompare documentation on how to do.</p>
 <p>To Compile this plugin you need to have Python installed.</p>
 <p>This plugin is known to compile and work with CloudCompare
-commit <cite>b64aa418a46d9404fd9cf63db697e076af99e67c</cite>.</p>
+commit <cite>d624e0dd7325f9bd43004376ce83529f7c123b88</cite>.</p>
 <p>Python 3.8 or more is required to build as a plugin.</p>
 <section id="windows">
 <h3>Windows<a class="headerlink" href="#windows" title="Permalink to this headline"></a></h3>
@@ -240,6 +241,7 @@ Run  <cite>pip install –upgrade pip</cite> to get the latest version</p>
 </section>
 <section id="other-development-related-things">
 <h2>Other development related things<a class="headerlink" href="#other-development-related-things" title="Permalink to this headline"></a></h2>
+<p>This section is only interesting for maintainers.</p>
 <section id="running-the-tests">
 <h3>Running the tests<a class="headerlink" href="#running-the-tests" title="Permalink to this headline"></a></h3>
 <p>Tests works by running CloudCompare in command line mode.
@@ -260,6 +262,37 @@ To build the documentation:</p>
 </div>
 <p>Which by default will build the docs in HTML in docs/_build. Open docs/_build/index.html to view it.
 (The output dir can be changed using the <cite>-OutputDir</cite> option)</p>
+</section>
+<section id="building-the-windows-installer">
+<h3>Building the Windows Installer<a class="headerlink" href="#building-the-windows-installer" title="Permalink to this headline"></a></h3>
+<p>Building the Windows installer requires the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/PowerShell/PowerShell">PowerShell Core</a> (To run the creation script).</p></li>
+<li><p><a class="reference external" href="https://wixtoolset.org/">Wix Toolset</a> version 3.x (The actual toolset that creates the installer)</p></li>
+<li><p>Your custom built CloudCompare (with the Python Plugin) must have been installed.
+In other words the install target (<code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--install</span> <span class="pre">.</span></code>) must have been done.</p></li>
+</ul>
+</div></blockquote>
+<p>To create the installer, go in the <code class="docutils literal notranslate"><span class="pre">installer</span></code> directory and start the <code class="docutils literal notranslate"><span class="pre">./Create-Installer.ps1</span></code> script
+and give it as the first positional argument the absolute path to the directory where your custom built CC
+was installed.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in &quot;installer&quot; folder:</span>
+<span class="o">./</span><span class="n">Create</span><span class="o">-</span><span class="n">Installer</span> <span class="s2">&quot;C:\CMakeBuilds\CloudCompare\Release\install\CloudCompare&quot;</span>
+<span class="c1"># or</span>
+<span class="n">pwsh</span> <span class="o">./</span><span class="n">Create</span><span class="o">-</span><span class="n">Installer</span> <span class="s2">&quot;C:\CMakeBuilds\CloudCompare\Release\install\CloudCompare&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A custom cmake target (that can be launched from your IDE or command line)
+is available in Release build to create the installer for you
+(it simply calls the script with the correct parameters).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cmake</span> <span class="o">--</span><span class="n">build</span> <span class="n">build_dir</span> <span class="o">--</span><span class="n">target</span> <span class="n">python_plugin_installer</span> <span class="o">.</span>
+</pre></div>
+</div>
+</div>
 </section>
 </section>
 </section>
