@@ -145,7 +145,7 @@ void addPointsFromArrays(PointCloudType &self,
                     }                                                                                        \
                     auto values_u = values.unchecked<1>();                                                   \
                     CCCoreLib::ScalarField *sf = self.getScalarField(idx);                                   \
-                    for (ssize_t i{0}; i < values.size(); ++i)                                               \
+                    for (py::ssize_t i{0}; i < values.size(); ++i)                                           \
                     {                                                                                        \
                         (*sf)[i] = values_u(i);                                                              \
                     }                                                                                        \

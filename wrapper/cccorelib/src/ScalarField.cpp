@@ -58,9 +58,11 @@ void define_ScalarField(py::module &cccorelib)
         .def("addElement", &CCCoreLib::ScalarField::addElement, "value"_a)
         .def("asArray", [](CCCoreLib::ScalarField &self) { return PyCC::VectorAsNumpyArray(self); })
         .def("__getitem__",
-             [](const CCCoreLib::ScalarField &self, ssize_t index) { return self.at(index % self.size()); })
+             [](const CCCoreLib::ScalarField &self, py::ssize_t index) {
+                 return self.at(index % self.size());
+             })
         .def("__setitem__",
-             [](CCCoreLib::ScalarField &self, ssize_t index, ScalarType value) {
+             [](CCCoreLib::ScalarField &self, py::ssize_t index, ScalarType value) {
                  self.at(index % self.size()) = value;
              })
         .def("__repr__", [](const CCCoreLib::ScalarField &self) {
