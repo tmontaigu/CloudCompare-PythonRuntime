@@ -23,6 +23,10 @@
 #include "PythonPluginManager.h"
 #include "ccStdPluginInterface.h"
 
+#include <map>
+#include <vector>
+#include <iostream>
+
 class QListWidget;
 class PythonEditor;
 class PythonRepl;
@@ -50,6 +54,8 @@ class PythonPlugin final : public QObject, public ccStdPluginInterface
 
     void setMainAppInterface(ccMainAppInterface *app) override;
 
+    void stop() override;
+
     PythonPlugin(const PythonPlugin &) = delete;
     PythonPlugin(PythonPlugin &&) = delete;
     PythonPlugin &operator=(const PythonPlugin &) = delete;
@@ -66,6 +72,12 @@ class PythonPlugin final : public QObject, public ccStdPluginInterface
     void showPythonActionLauncher() const;
     void showSettings() const;
     static void showDocumentation();
+
+    //Script list function
+    void addScriptAction();
+    void addScript(QString path);
+    void executeScript(QString path);
+    void removeScript(QString name, QAction* self);
 
     PythonConfig m_config{};
     PythonInterpreter m_interp;
@@ -87,6 +99,16 @@ class PythonPlugin final : public QObject, public ccStdPluginInterface
     QAction *m_showPackageManager{nullptr};
     QAction *m_showActionLauncher{nullptr};
     QAction *m_showSettings{nullptr};
+
+    /// Script list submenu
+    QMenu *m_drawScriptRegister{nullptr};
+
+    /// Variable for script list submenu
+    QAction *m_addScript{nullptr};
+    QMenu *m_removeScript{nullptr};
+    std::map<QString, QAction*> m_scriptList;
+    QStringList m_savedPath;
+    QString m_saveFilePath;
 };
 
 #endif // PYTHON_PLUGIN_H

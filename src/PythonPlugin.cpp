@@ -34,6 +34,12 @@
 #define slots Q_SLOTS
 #define signals Q_SIGNALS
 #include <ccCommandLineInterface.h>
+#include <QFileDialog>
+#include <QDialog>
+#include <QSettings>
+#include <functional>
+#include <QFile>
+#include <algorithm>
 
 // Useful link:
 // https://docs.python.org/3/c-api/init.html#initialization-finalization-and-threads
@@ -88,6 +94,20 @@ PythonPlugin::PythonPlugin(QObject *parent)
             &QCoreApplication::aboutToQuit,
             this,
             &PythonPlugin::finalizeInterpreter);
+}
+
+static std::unique_ptr<QSettings> LoadSettings()
+{
+    return std::make_unique<QSettings>(
+        QCoreApplication::organizationName(),
+        QCoreApplication::applicationName().append(":PythonPlugin.Settings"));
+}
+
+void PythonPlugin::stop() {
+
+    //On software exit, the script list needs to be saved in a txt file
+    std::unique_ptr<QSettings> settings = LoadSettings();
+    settings->setValue(QStringLiteral("RegisterListPath"), m_savedPath);
 }
 
 QList<QAction *> PythonPlugin::getActions()
@@ -169,6 +189,37 @@ QList<QAction *> PythonPlugin::getActions()
         // Settings do not need Python to be initialized in a valid state
         m_showSettings->setEnabled(true);
     }
+    if (!m_drawScriptRegister) 
+    {
+        m_drawScriptRegister = new QMenu("Script Register");
+        m_drawScriptRegister->setToolTip("Show all registered script");
+        m_drawScriptRegister->setEnabled(true);
+
+        m_addScript = new QAction("Add Script");
+        m_addScript->setToolTip("Add Script");
+        connect(m_addScript, &QAction::triggered, this, &PythonPlugin::addScriptAction);
+        m_addScript->setEnabled(true);
+
+        m_removeScript = new QMenu("Remove Script");
+        m_removeScript->setToolTip("Remove Script");
+        m_removeScript->setEnabled(false);
+
+        m_drawScriptRegister->addAction(m_addScript);
+        m_drawScriptRegister->addMenu(m_removeScript);
+        m_drawScriptRegister->addSeparator();
+
+        std::unique_ptr<QSettings> settings = LoadSettings();
+        QStringList loaded_paths = settings->value(QStringLiteral("RegisterListPath")).value<QStringList>();
+
+        for (QString path : loaded_paths)
+        {
+            QFileInfo fi(path);
+            if (!fi.exists())
+                plgPrint() << "Script registered \"" << path << "\" doesn't exist.";
+            else
+                addScript(path);
+        }
+    }
 
     return {m_showEditor,
             m_showFileRunner,
@@ -177,7 +228,8 @@ QList<QAction *> PythonPlugin::getActions()
             m_showRepl,
             m_showPackageManager,
             m_showActionLauncher,
-            m_showSettings};
+            m_showSettings,
+            m_drawScriptRegister->menuAction()};
 }
 
 void PythonPlugin::showRepl()
@@ -203,6 +255,78 @@ void PythonPlugin::showEditor() const
         m_editor->raise();
         m_editor->activateWindow();
     }
+}
+
+void PythonPlugin::addScriptAction() 
+{
+    if(m_scriptList.empty())
+        m_removeScript->setEnabled(true);
+
+    QString filePath = QFileDialog::getOpenFileName(m_drawScriptRegister,
+                                              QStringLiteral("Select Python Script"),
+                                              QString(),
+                                              QStringLiteral("Python Script (*.py)"));
+    addScript(filePath);
+}
+
+void PythonPlugin::addScript(QString path) {
+    if(m_scriptList.empty())
+        m_removeScript->setEnabled(true);
+
+    QFileInfo fi(path);
+
+    //Doesn't add if file doesn't exist or if it's already present.
+    if (!fi.exists() || m_savedPath.contains(path))
+        return;
+
+    QString fileName = fi.baseName();  
+
+    auto* newScript= new QAction(fileName);
+    newScript->setToolTip(fileName);
+    auto* removeNewScript = new QAction(fileName);
+    removeNewScript->setToolTip(fileName);
+
+    connect(newScript, &QAction::triggered, [this,path]()
+    {
+        executeScript(path);
+    });
+    newScript->setEnabled(true);
+    connect(removeNewScript, &QAction::triggered, [this,fileName,removeNewScript,path]()
+    {
+        removeScript(fileName,removeNewScript);
+
+        //prepare to save script list
+        auto pos = std::find(m_savedPath.begin(), m_savedPath.end(), path);
+        if (pos != m_savedPath.end()){
+            m_savedPath.erase(pos);
+        }
+    });
+    removeNewScript->setEnabled(true);
+
+    m_scriptList.insert({fileName, newScript});
+    m_drawScriptRegister->addAction(newScript);
+    m_removeScript->addAction(removeNewScript);
+
+    //prepare to save script list
+    m_savedPath.push_back(path);
+}
+
+void PythonPlugin::executeScript(QString path)
+{
+    const std::string path_str = path.toStdString();
+    m_interp.executeFile(path_str);
+}
+
+void PythonPlugin::removeScript(QString name, QAction* self)
+{
+    QAction* script = m_scriptList[name];
+    m_drawScriptRegister->removeAction(script);
+    m_removeScript->removeAction(self);
+    m_scriptList.erase(name);
+    delete script;
+    delete self;
+    if(m_scriptList.empty())
+        m_removeScript->setEnabled(false);
 }
 
 void PythonPlugin::showFileRunner() const
