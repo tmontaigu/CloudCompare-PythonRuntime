@@ -78,24 +78,48 @@ if(PLUGIN_PYTHON)
     )
   endif()
 
-  add_custom_target(
-    pytest
-    COMMAND
-      ${PYTHON_EXECUTABLE} -m pytest --cloudcompare_exe
-      ${CLOUDCOMPARE_EXECUTABLE_INSTALL_PATH} ${CMAKE_CURRENT_LIST_DIR}/tests
-  )
+  if (WIN32 OR APPLE)
+    add_custom_target(
+            pytest
+            COMMAND
+            ${PYTHON_EXECUTABLE} -m pytest --cloudcompare_exe
+            ${CLOUDCOMPARE_EXECUTABLE_INSTALL_PATH} ${CMAKE_CURRENT_LIST_DIR}/tests
+    )
+  else()
+      set(CC_PLUGIN_PATH_VALUE "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/cloudcompare/plugins")
+      add_custom_target(
+              pytest
+              COMMAND
+              ${CMAKE_COMMAND} -E env CC_PLUGIN_PATH=${CC_PLUGIN_PATH_VALUE}
+              ${PYTHON_EXECUTABLE} -m pytest --cloudcompare_exe ${CLOUDCOMPARE_EXECUTABLE_INSTALL_PATH} ${CMAKE_CURRENT_LIST_DIR}/tests
+      )
+  endif()
 
-  add_custom_target(
-    python_plugin_documentation
-    COMMENT "Generating plugin documentation"
-    COMMAND ${CMAKE_COMMAND} -E make_directory
+  if (WIN32 OR APPLE)
+    add_custom_target(
+            python_plugin_documentation
+            COMMAND ${CMAKE_COMMAND} -E make_directory
             ${CMAKE_CURRENT_LIST_DIR}/docs/__build
-    COMMAND doxygen ./CCCoreLib_doxygen_file
-    COMMAND doxygen ./qCC_db_doxygen_file
-    COMMAND ${CLOUDCOMPARE_EXECUTABLE_INSTALL_PATH} -SILENT -PYTHON_SCRIPT
+            COMMAND doxygen qCC_db_doxygen_file
+            COMMAND doxygen ./CCCoreLib_doxygen_file
+            COMMAND ${CLOUDCOMPARE_EXECUTABLE_INSTALL_PATH} -SILENT -PYTHON_SCRIPT
             build_doc.py -b html . _build
-    WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/docs
-  )
+            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/docs
+    )
+  else()
+    add_custom_target(
+            python_plugin_documentation
+            COMMAND ${CMAKE_COMMAND} -E make_directory
+            ${CMAKE_CURRENT_LIST_DIR}/docs/__build
+            COMMAND doxygen qCC_db_doxygen_file
+            COMMAND doxygen ./CCCoreLib_doxygen_file
+            COMMAND
+            ${CMAKE_COMMAND} -E env CC_PLUGIN_PATH=${CC_PLUGIN_PATH_VALUE}
+            ${CLOUDCOMPARE_EXECUTABLE_INSTALL_PATH} -SILENT -PYTHON_SCRIPT
+            build_doc.py -b html . _build
+            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/docs
+    )
+  endif()
 
   if(WIN32 AND (CMAKE_BUILD_TYPE STREQUAL Release))
     add_custom_target(
