@@ -113,12 +113,13 @@ jobs:
       - name: Run Tests
         run: |
           export LD_LIBRARY_PATH=/usr/local/lib
-          xvfb-run cmake --build build --target pytest
+          xvfb-run python3 -m pytest plugins/private/CloudCompare-PythonPlugin/tests --cloudcompare_exe /usr/local/bin/CloudCompare
 
       - name: Build docs
         run: |
           export LD_LIBRARY_PATH=/usr/local/lib
-          xvfb-run cmake --build build --target python_plugin_documentation
+          cd plugins/private/CloudCompare-PythonPlugin/docs
+          xvfb-run /usr/local/bin/CloudCompare -SILENT -PYTHON_SCRIPT build_doc.py -b html . _build
 
       - name: Deploy Documentation
         if: github.ref == 'refs/heads/master'
