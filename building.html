@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Building from sources &mdash; CloudCompare-PythonPlugin  documentation</title>
@@ -15,6 +15,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -94,7 +95,7 @@
            <div itemprop="articleBody">
              
   <section id="building-from-sources">
-<h1>Building from sources<a class="headerlink" href="#building-from-sources" title="Permalink to this headline"></a></h1>
+<h1>Building from sources<a class="headerlink" href="#building-from-sources" title="Permalink to this heading"></a></h1>
 <p>There is 2 way in which you can build the project:</p>
 <blockquote>
 <div><ol class="arabic simple">
@@ -112,17 +113,17 @@ CloudCompare’s libraries to be used in your script.</p>
 of the CloudCompare’s libraries in your Python environment.</p>
 <p>The process to build is explained in the sections below.</p>
 <section id="building-as-plugin">
-<h2>Building as Plugin<a class="headerlink" href="#building-as-plugin" title="Permalink to this headline"></a></h2>
+<h2>Building as Plugin<a class="headerlink" href="#building-as-plugin" title="Permalink to this heading"></a></h2>
 <p>Supported platforms: [Windows, Linux, macOs]</p>
 <p>In the following sections we assume that you know
 how to compile CloudCompare from source, otherwise refer
 to the CloudCompare documentation on how to do.</p>
 <p>To Compile this plugin you need to have Python installed.</p>
 <p>This plugin is known to compile and work with CloudCompare
-commit <cite>d624e0dd7325f9bd43004376ce83529f7c123b88</cite>.</p>
+commit <cite>v2.12.2</cite>.</p>
 <p>Python 3.8 or more is required to build as a plugin.</p>
 <section id="windows">
-<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this headline"></a></h3>
+<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this heading"></a></h3>
 <ol class="arabic">
 <li><p>Clone this project into CloudCompare/plugins/private</p></li>
 <li><p>Create a virtual environment via <code class="docutils literal notranslate"><span class="pre">venv</span></code> or <code class="docutils literal notranslate"><span class="pre">conda</span></code></p>
@@ -167,7 +168,7 @@ of the pyccenv created earlier.</p>
 </ol>
 </section>
 <section id="linux">
-<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this headline"></a></h3>
+<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this heading"></a></h3>
 <ol class="arabic">
 <li><p>Clone this project in CloudCompare/plugins/private</p></li>
 <li><p>Install additional dependencies</p>
@@ -182,7 +183,7 @@ of the pyccenv created earlier.</p>
 </ol>
 </section>
 <section id="macos">
-<h3>macOs<a class="headerlink" href="#macos" title="Permalink to this headline"></a></h3>
+<h3>macOs<a class="headerlink" href="#macos" title="Permalink to this heading"></a></h3>
 <ol class="arabic">
 <li><p>Clone this project in CloudCompare/plugins/private</p></li>
 <li><p>Make sure you have python3 installed (and Qt)</p></li>
@@ -199,7 +200,7 @@ of the pyccenv created earlier.</p>
 </section>
 </section>
 <section id="building-as-independent-wheels">
-<h2>Building as independent wheels<a class="headerlink" href="#building-as-independent-wheels" title="Permalink to this headline"></a></h2>
+<h2>Building as independent wheels<a class="headerlink" href="#building-as-independent-wheels" title="Permalink to this heading"></a></h2>
 <p>Supported platforms: [Windows, Linux, macOs]</p>
 <p>It is also possible to build and install the bindings as standard python
 packages to use them in python scripts (run by a standalone python executable
@@ -230,20 +231,20 @@ Run  <cite>pip install –upgrade pip</cite> to get the latest version</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> Building the wheels
 
 <span class="go">pip wheel --no-deps wrapper/cccorelib</span>
-<span class="go">pip wheel --use-feature=in-tree-build --no-deps wrapper/pycc</span>
+<span class="go">pip wheel --no-deps wrapper/pycc</span>
 
 <span class="gp">#</span> Installing directly
 
 <span class="go">pip install wrapper/cccorelib</span>
-<span class="go">pip install --use-feature=in-tree-build wrapper/pycc</span>
+<span class="go">pip install wrapper/pycc</span>
 </pre></div>
 </div>
 </section>
 <section id="other-development-related-things">
-<h2>Other development related things<a class="headerlink" href="#other-development-related-things" title="Permalink to this headline"></a></h2>
+<h2>Other development related things<a class="headerlink" href="#other-development-related-things" title="Permalink to this heading"></a></h2>
 <p>This section is only interesting for maintainers.</p>
 <section id="running-the-tests">
-<h3>Running the tests<a class="headerlink" href="#running-the-tests" title="Permalink to this headline"></a></h3>
+<h3>Running the tests<a class="headerlink" href="#running-the-tests" title="Permalink to this heading"></a></h3>
 <p>Tests works by running CloudCompare in command line mode.
 To run them, you need pytest, and you need to provide to pytest the path the where CloudCompare is installed</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in CloudCompare/plugins/private/CloudCompare-PythonPlugin:</span>
@@ -253,7 +254,7 @@ To run them, you need pytest, and you need to provide to pytest the path the whe
 </div>
 </section>
 <section id="building-the-documentation">
-<h3>Building the documentation<a class="headerlink" href="#building-the-documentation" title="Permalink to this headline"></a></h3>
+<h3>Building the documentation<a class="headerlink" href="#building-the-documentation" title="Permalink to this heading"></a></h3>
 <p>Building the documentation also works by running CloudCompare in command line mode.
 To build the documentation:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">docs</span>
@@ -264,7 +265,7 @@ To build the documentation:</p>
 (The output dir can be changed using the <cite>-OutputDir</cite> option)</p>
 </section>
 <section id="building-the-windows-installer">
-<h3>Building the Windows Installer<a class="headerlink" href="#building-the-windows-installer" title="Permalink to this headline"></a></h3>
+<h3>Building the Windows Installer<a class="headerlink" href="#building-the-windows-installer" title="Permalink to this heading"></a></h3>
 <p>Building the Windows installer requires the following:</p>
 <blockquote>
 <div><ul class="simple">

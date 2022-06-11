@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Getting Started &mdash; CloudCompare-PythonPlugin  documentation</title>
@@ -15,6 +15,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -87,10 +88,10 @@
            <div itemprop="articleBody">
              
   <section id="getting-started">
-<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h1>
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading"></a></h1>
 <p>This plugin allows to run scripts in the 2 _CloudCompares_ ‘modes’: GUI &amp; CommandLine.</p>
 <section id="gui">
-<h2>GUI<a class="headerlink" href="#gui" title="Permalink to this headline"></a></h2>
+<h2>GUI<a class="headerlink" href="#gui" title="Permalink to this heading"></a></h2>
 <p>In GUI, there are 3 actions:</p>
 <ul>
 <li><dl>
@@ -117,7 +118,7 @@ that you can use.</p>
 </li>
 </ul>
 <section id="scripts">
-<h3>Scripts<a class="headerlink" href="#scripts" title="Permalink to this headline"></a></h3>
+<h3>Scripts<a class="headerlink" href="#scripts" title="Permalink to this heading"></a></h3>
 <p>The typical python script will need to import Python modules that provide access to
 functions and data-structures of cloudcompare:</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># cccorelib contains definitions of tools, such as Cloud2Cloud distance,</span>
@@ -137,7 +138,7 @@ functions and data-structures of cloudcompare:</p>
 <p>CC will be an object of type <a class="reference internal" href="python/pycc/runtime.html#pycc.ccPythonInstance" title="pycc.ccPythonInstance"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccPythonInstance</span></code></a>.</p>
 </section>
 <section id="plugin">
-<h3>Plugin<a class="headerlink" href="#plugin" title="Permalink to this headline"></a></h3>
+<h3>Plugin<a class="headerlink" href="#plugin" title="Permalink to this heading"></a></h3>
 <p>It is also possible to create scripts or module that register actions
 that will then be launch-able from the Ui, a bit like regular C++ plugins do.</p>
 <p>In the plugin settings, you can indicate a path where custom python plugin are
@@ -151,7 +152,7 @@ for an example.</p>
 </section>
 </section>
 <section id="command-line">
-<h2>Command Line<a class="headerlink" href="#command-line" title="Permalink to this headline"></a></h2>
+<h2>Command Line<a class="headerlink" href="#command-line" title="Permalink to this heading"></a></h2>
 <p>Similarly a commandline script will start with the following lines:</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cccorelib</span>
 <span class="kn">import</span> <span class="nn">pycc</span>

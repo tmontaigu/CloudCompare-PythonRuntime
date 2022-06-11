@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Others &mdash; CloudCompare-PythonPlugin  documentation</title>
@@ -15,6 +15,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -89,153 +90,28 @@
            <div itemprop="articleBody">
              
   <section id="others">
-<h1>Others<a class="headerlink" href="#others" title="Permalink to this headline"></a></h1>
+<h1>Others<a class="headerlink" href="#others" title="Permalink to this heading"></a></h1>
 <section id="genericprogresscallback">
-<h2>GenericProgressCallback<a class="headerlink" href="#genericprogresscallback" title="Permalink to this headline"></a></h2>
+<h2>GenericProgressCallback<a class="headerlink" href="#genericprogresscallback" title="Permalink to this heading"></a></h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p>Python: <a class="reference internal" href="../../python/cccorelib/others.html#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><code class="xref py py-class docutils literal notranslate"><span class="pre">cccorelib.GenericProgressCallback</span></code></a></p>
 </div>
-<dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N9CCCoreLib23GenericProgressCallbackE">
-<span id="_CPPv3N9CCCoreLib23GenericProgressCallbackE"></span><span id="_CPPv2N9CCCoreLib23GenericProgressCallbackE"></span><span id="CCCoreLib::GenericProgressCallback"></span><span class="target" id="class_c_c_core_lib_1_1_generic_progress_callback"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">CCCoreLib</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">GenericProgressCallback</span></span></span><a class="headerlink" href="#_CPPv4N9CCCoreLib23GenericProgressCallbackE" title="Permalink to this definition"></a><br /></dt>
-<dd><p>A generic progress indicator interface to notify algorithms progress to the client application. </p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N9CCCoreLib23GenericProgressCallbackD0Ev">
-<span id="_CPPv3N9CCCoreLib23GenericProgressCallbackD0Ev"></span><span id="_CPPv2N9CCCoreLib23GenericProgressCallbackD0Ev"></span><span id="CCCoreLib::GenericProgressCallback::~GenericProgressCallback"></span><span class="target" id="class_c_c_core_lib_1_1_generic_progress_callback_1aa6dbe6cbcd5003c4e5f8754f800331b7"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">~GenericProgressCallback</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">default</span></span><a class="headerlink" href="#_CPPv4N9CCCoreLib23GenericProgressCallbackD0Ev" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Default destructor. </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N9CCCoreLib23GenericProgressCallback6updateEf">
-<span id="_CPPv3N9CCCoreLib23GenericProgressCallback6updateEf"></span><span id="_CPPv2N9CCCoreLib23GenericProgressCallback6updateEf"></span><span id="CCCoreLib::GenericProgressCallback::update__float"></span><span class="target" id="class_c_c_core_lib_1_1_generic_progress_callback_1a8a46a2dbe2d634c38cdaff059828c140"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">update</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">percent</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><a class="headerlink" href="#_CPPv4N9CCCoreLib23GenericProgressCallback6updateEf" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Notifies the algorithm progress. </p>
-<p>The notification is sent by the running algorithm (on the library side). This virtual method shouldn’t be called too often, as the real process behind it is unspecified and may be time consuming. Ideally it shouldn’t be called more than a few hundreds time. </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>percent</strong> – current progress, between 0.0 and 100.0 </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N9CCCoreLib23GenericProgressCallback14setMethodTitleEPKc">
-<span id="_CPPv3N9CCCoreLib23GenericProgressCallback14setMethodTitleEPKc"></span><span id="_CPPv2N9CCCoreLib23GenericProgressCallback14setMethodTitleEPKc"></span><span id="CCCoreLib::GenericProgressCallback::setMethodTitle__cCP"></span><span class="target" id="class_c_c_core_lib_1_1_generic_progress_callback_1a18a0ca896c9647774a6d9b5ef6b427df"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setMethodTitle</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">methodTitle</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><a class="headerlink" href="#_CPPv4N9CCCoreLib23GenericProgressCallback14setMethodTitleEPKc" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Notifies the algorithm title. </p>
-<p>The notification is sent by the ongoing algorithm (on the library side). </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>methodTitle</strong> – the algorithm title </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N9CCCoreLib23GenericProgressCallback7setInfoEPKc">
-<span id="_CPPv3N9CCCoreLib23GenericProgressCallback7setInfoEPKc"></span><span id="_CPPv2N9CCCoreLib23GenericProgressCallback7setInfoEPKc"></span><span id="CCCoreLib::GenericProgressCallback::setInfo__cCP"></span><span class="target" id="class_c_c_core_lib_1_1_generic_progress_callback_1a94a0b980a6de3b597aa78513dfe7d137"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setInfo</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">infoStr</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><a class="headerlink" href="#_CPPv4N9CCCoreLib23GenericProgressCallback7setInfoEPKc" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Notifies some information about the ongoing process. </p>
-<p>The notification is sent by the ongoing algorithm (on the library side). </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>infoStr</strong> – some textual information about the ongoing process </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N9CCCoreLib23GenericProgressCallback5startEv">
-<span id="_CPPv3N9CCCoreLib23GenericProgressCallback5startEv"></span><span id="_CPPv2N9CCCoreLib23GenericProgressCallback5startEv"></span><span id="CCCoreLib::GenericProgressCallback::start"></span><span class="target" id="class_c_c_core_lib_1_1_generic_progress_callback_1a985359b4fa46c1ae08966276954732f6"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">start</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><a class="headerlink" href="#_CPPv4N9CCCoreLib23GenericProgressCallback5startEv" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Notifies the fact that every information has been sent and that the process begins. </p>
-<p>Once <a class="reference internal" href="#class_c_c_core_lib_1_1_generic_progress_callback_1a985359b4fa46c1ae08966276954732f6"><span class="std std-ref">start()</span></a> is called, the progress bar and other informations could be displayed (for example). </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N9CCCoreLib23GenericProgressCallback4stopEv">
-<span id="_CPPv3N9CCCoreLib23GenericProgressCallback4stopEv"></span><span id="_CPPv2N9CCCoreLib23GenericProgressCallback4stopEv"></span><span id="CCCoreLib::GenericProgressCallback::stop"></span><span class="target" id="class_c_c_core_lib_1_1_generic_progress_callback_1a464b486e5ff36b5674e66db71ceb6be6"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">stop</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><a class="headerlink" href="#_CPPv4N9CCCoreLib23GenericProgressCallback4stopEv" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Notifies the fact that the process has ended. </p>
-<p>Once end() is called, the progress bar and other informations could be hidden (for example). </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N9CCCoreLib23GenericProgressCallback17isCancelRequestedEv">
-<span id="_CPPv3N9CCCoreLib23GenericProgressCallback17isCancelRequestedEv"></span><span id="_CPPv2N9CCCoreLib23GenericProgressCallback17isCancelRequestedEv"></span><span id="CCCoreLib::GenericProgressCallback::isCancelRequested"></span><span class="target" id="class_c_c_core_lib_1_1_generic_progress_callback_1aabf30128085c2895863793f068de45a6"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isCancelRequested</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><a class="headerlink" href="#_CPPv4N9CCCoreLib23GenericProgressCallback17isCancelRequestedEv" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Checks if the process should be canceled. </p>
-<p>This method is called by some process from time to time to know if it should halt before its normal ending. This is a way for the client application to cancel an ongoing process (but it won’t work with all algorithms). Process results may be incomplete/void. The cancel requirement mechanism must be implemented (typically a simple “cancel()” method that will be called by the client application). </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK9CCCoreLib23GenericProgressCallback15textCanBeEditedEv">
-<span id="_CPPv3NK9CCCoreLib23GenericProgressCallback15textCanBeEditedEv"></span><span id="_CPPv2NK9CCCoreLib23GenericProgressCallback15textCanBeEditedEv"></span><span id="CCCoreLib::GenericProgressCallback::textCanBeEditedC"></span><span class="target" id="class_c_c_core_lib_1_1_generic_progress_callback_1af50b00632129765f4838b7934d16fa19"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">textCanBeEdited</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9CCCoreLib23GenericProgressCallback15textCanBeEditedEv" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Returns whether the dialog title and info can be updated or not. </p>
-</dd></dl>
-
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenclass: Cannot find file: /home/runner/work/CloudCompare-PythonPlugin/CloudCompare-PythonPlugin/plugins/private/CloudCompare-PythonPlugin/docs/__build/CCCoreLib/xml/index.xml</p>
 </div>
-</dd></dl>
-
 </section>
 <section id="normalizedprogress">
-<h2>NormalizedProgress<a class="headerlink" href="#normalizedprogress" title="Permalink to this headline"></a></h2>
+<h2>NormalizedProgress<a class="headerlink" href="#normalizedprogress" title="Permalink to this heading"></a></h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p>Python: <a class="reference internal" href="../../python/cccorelib/others.html#cccorelib.NormalizedProgress" title="cccorelib.NormalizedProgress"><code class="xref py py-class docutils literal notranslate"><span class="pre">cccorelib.NormalizedProgress</span></code></a></p>
 </div>
-<dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N9CCCoreLib18NormalizedProgressE">
-<span id="_CPPv3N9CCCoreLib18NormalizedProgressE"></span><span id="_CPPv2N9CCCoreLib18NormalizedProgressE"></span><span id="CCCoreLib::NormalizedProgress"></span><span class="target" id="class_c_c_core_lib_1_1_normalized_progress"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">CCCoreLib</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">NormalizedProgress</span></span></span><a class="headerlink" href="#_CPPv4N9CCCoreLib18NormalizedProgressE" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Efficient management of progress based on a total number of steps different than 100. </p>
-<p>DGM: can now be associated to a null ‘callback’ pointer to simplify the client code. </p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N9CCCoreLib18NormalizedProgress18NormalizedProgressEP23GenericProgressCallbackjj">
-<span id="_CPPv3N9CCCoreLib18NormalizedProgress18NormalizedProgressEP23GenericProgressCallbackjj"></span><span id="_CPPv2N9CCCoreLib18NormalizedProgress18NormalizedProgressEP23GenericProgressCallbackjj"></span><span id="CCCoreLib::NormalizedProgress::NormalizedProgress__GenericProgressCallbackP.unsigned.unsigned"></span><span class="target" id="class_c_c_core_lib_1_1_normalized_progress_1a12be9057b10dbc1b1f94d78526e3239e"></span><span class="sig-name descname"><span class="n"><span class="pre">NormalizedProgress</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N9CCCoreLib23GenericProgressCallbackE" title="CCCoreLib::GenericProgressCallback"><span class="n"><span class="pre">GenericProgressCallback</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">totalSteps</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">totalPercentage</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">100</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CCCoreLib18NormalizedProgress18NormalizedProgressEP23GenericProgressCallbackjj" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Default constructor. </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>callback</strong> – associated <a class="reference internal" href="#class_c_c_core_lib_1_1_generic_progress_callback"><span class="std std-ref">GenericProgressCallback</span></a> instance (can be null) </p></li>
-<li><p><strong>totalSteps</strong> – total number of steps (&gt; 0) </p></li>
-<li><p><strong>totalPercentage</strong> – equivalent percentage (&gt; 0) </p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N9CCCoreLib18NormalizedProgressD0Ev">
-<span id="_CPPv3N9CCCoreLib18NormalizedProgressD0Ev"></span><span id="_CPPv2N9CCCoreLib18NormalizedProgressD0Ev"></span><span id="CCCoreLib::NormalizedProgress::~NormalizedProgress"></span><span class="target" id="class_c_c_core_lib_1_1_normalized_progress_1aee7cec44fd939695c0cd26aa6d3a53c1"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">~NormalizedProgress</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CCCoreLib18NormalizedProgressD0Ev" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Destructor. </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N9CCCoreLib18NormalizedProgress5scaleEjjb">
-<span id="_CPPv3N9CCCoreLib18NormalizedProgress5scaleEjjb"></span><span id="_CPPv2N9CCCoreLib18NormalizedProgress5scaleEjjb"></span><span id="CCCoreLib::NormalizedProgress::scale__unsigned.unsigned.b"></span><span class="target" id="class_c_c_core_lib_1_1_normalized_progress_1a194332cfb5ff6847dc1112df266ec7a4"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">scale</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">totalSteps</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">totalPercentage</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">100</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">updateCurrentProgress</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CCCoreLib18NormalizedProgress5scaleEjjb" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Scales inner parameters so that ‘totalSteps’ calls of the ‘oneStep’ method correspond to ‘totalPercentage’ percents. </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N9CCCoreLib18NormalizedProgress5resetEv">
-<span id="_CPPv3N9CCCoreLib18NormalizedProgress5resetEv"></span><span id="_CPPv2N9CCCoreLib18NormalizedProgress5resetEv"></span><span id="CCCoreLib::NormalizedProgress::reset"></span><span class="target" id="class_c_c_core_lib_1_1_normalized_progress_1a9c378340a4190e8d8ad40276e366b4ba"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reset</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CCCoreLib18NormalizedProgress5resetEv" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Resets progress state. </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N9CCCoreLib18NormalizedProgress7oneStepEv">
-<span id="_CPPv3N9CCCoreLib18NormalizedProgress7oneStepEv"></span><span id="_CPPv2N9CCCoreLib18NormalizedProgress7oneStepEv"></span><span id="CCCoreLib::NormalizedProgress::oneStep"></span><span class="target" id="class_c_c_core_lib_1_1_normalized_progress_1a9200e032569fba78cf5c675a13331861"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">oneStep</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CCCoreLib18NormalizedProgress7oneStepEv" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Increments total progress value of a single unit. </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N9CCCoreLib18NormalizedProgress5stepsEj">
-<span id="_CPPv3N9CCCoreLib18NormalizedProgress5stepsEj"></span><span id="_CPPv2N9CCCoreLib18NormalizedProgress5stepsEj"></span><span id="CCCoreLib::NormalizedProgress::steps__unsigned"></span><span class="target" id="class_c_c_core_lib_1_1_normalized_progress_1afb02ee2317670acc14b4b92dcde1f2ab"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">steps</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">n</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9CCCoreLib18NormalizedProgress5stepsEj" title="Permalink to this definition"></a><br /></dt>
-<dd><p>Increments total progress value of more than a single unit. </p>
-</dd></dl>
-
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenclass: Cannot find file: /home/runner/work/CloudCompare-PythonPlugin/CloudCompare-PythonPlugin/plugins/private/CloudCompare-PythonPlugin/docs/__build/CCCoreLib/xml/index.xml</p>
 </div>
-</dd></dl>
-
 </section>
 </section>
 

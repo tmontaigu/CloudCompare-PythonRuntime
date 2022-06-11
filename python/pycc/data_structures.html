@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CloudCompare Data Structures &amp; Interfaces &mdash; CloudCompare-PythonPlugin  documentation</title>
@@ -15,6 +15,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -105,19 +106,19 @@
            <div itemprop="articleBody">
              
   <section id="cloudcompare-data-structures-interfaces">
-<h1>CloudCompare Data Structures &amp; Interfaces<a class="headerlink" href="#cloudcompare-data-structures-interfaces" title="Permalink to this headline"></a></h1>
+<h1>CloudCompare Data Structures &amp; Interfaces<a class="headerlink" href="#cloudcompare-data-structures-interfaces" title="Permalink to this heading"></a></h1>
 <section id="base">
-<h2>Base<a class="headerlink" href="#base" title="Permalink to this headline"></a></h2>
+<h2>Base<a class="headerlink" href="#base" title="Permalink to this heading"></a></h2>
 <section id="ccobject">
-<h3>ccObject<a class="headerlink" href="#ccobject" title="Permalink to this headline"></a></h3>
+<h3>ccObject<a class="headerlink" href="#ccobject" title="Permalink to this heading"></a></h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>C++: <a class="reference internal" href="../../cpp/qCC_db/index.html#_CPPv48ccObject" title="ccObject"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccObject</span></code></a></p>
+<p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccObject</span></code></p>
 </div>
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccObject">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccObject</span></span><a class="headerlink" href="#pycc.ccObject" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccObject.getMetaData">
 <span class="sig-name descname"><span class="pre">getMetaData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccObject" title="pycc.ccObject"><span class="pre">pycc.ccObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QVariant</span></span></span><a class="headerlink" href="#pycc.ccObject.getMetaData" title="Permalink to this definition"></a></dt>
@@ -197,15 +198,15 @@
 
 </section>
 <section id="cchobject">
-<h3>ccHObject<a class="headerlink" href="#cchobject" title="Permalink to this headline"></a></h3>
+<h3>ccHObject<a class="headerlink" href="#cchobject" title="Permalink to this heading"></a></h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>C++: <a class="reference internal" href="../../cpp/qCC_db/index.html#_CPPv49ccHObject" title="ccHObject"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccHObject</span></code></a></p>
+<p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccHObject</span></code></p>
 </div>
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccHObject">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccHObject</span></span><a class="headerlink" href="#pycc.ccHObject" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pycc.ccObject" title="pycc.ccObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccObject</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccDrawableObject</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="#pycc.ccObject" title="pycc.ccObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccObject</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ccDrawableObject</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccHObject.applyGLTransformation_recursive">
 <span class="sig-name descname"><span class="pre">applyGLTransformation_recursive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">pycc.ccHObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">trans</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="others.html#pycc.ccGLMatrix" title="pycc.ccGLMatrix"><span class="pre">pycc.ccGLMatrix</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccHObject.applyGLTransformation_recursive" title="Permalink to this definition"></a></dt>
@@ -316,17 +317,17 @@
 </section>
 </section>
 <section id="pointcloud">
-<h2>PointCloud<a class="headerlink" href="#pointcloud" title="Permalink to this headline"></a></h2>
+<h2>PointCloud<a class="headerlink" href="#pointcloud" title="Permalink to this heading"></a></h2>
 <section id="ccgenericpointcloud">
-<h3>ccGenericPointCloud<a class="headerlink" href="#ccgenericpointcloud" title="Permalink to this headline"></a></h3>
+<h3>ccGenericPointCloud<a class="headerlink" href="#ccgenericpointcloud" title="Permalink to this heading"></a></h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>C++: <a class="reference internal" href="../../cpp/qCC_db/index.html#_CPPv419ccGenericPointCloud" title="ccGenericPointCloud"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccGenericPointCloud</span></code></a></p>
+<p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccGenericPointCloud</span></code></p>
 </div>
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccGenericPointCloud">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccGenericPointCloud</span></span><a class="headerlink" href="#pycc.ccGenericPointCloud" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccShiftedObject</span></code>, <a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.GenericIndexedCloudPersist" title="cccorelib.GenericIndexedCloudPersist"><code class="xref py py-class docutils literal notranslate"><span class="pre">cccorelib.GenericIndexedCloudPersist</span></code></a></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ccShiftedObject</span></code>, <a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.GenericIndexedCloudPersist" title="cccorelib.GenericIndexedCloudPersist"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericIndexedCloudPersist</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccGenericPointCloud.clear">
 <span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGenericPointCloud" title="pycc.ccGenericPointCloud"><span class="pre">pycc.ccGenericPointCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccGenericPointCloud.clear" title="Permalink to this definition"></a></dt>
@@ -341,15 +342,15 @@
 
 </section>
 <section id="ccpointcloud">
-<h3>ccPointCloud<a class="headerlink" href="#ccpointcloud" title="Permalink to this headline"></a></h3>
+<h3>ccPointCloud<a class="headerlink" href="#ccpointcloud" title="Permalink to this heading"></a></h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>C++: <a class="reference internal" href="../../cpp/qCC_db/index.html#_CPPv412ccPointCloud" title="ccPointCloud"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccPointCloud</span></code></a></p>
+<p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccPointCloud</span></code></p>
 </div>
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccPointCloud">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccPointCloud</span></span><a class="headerlink" href="#pycc.ccPointCloud" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.__ccGenericPointCloudTpl</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">__ccGenericPointCloudTpl</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPointCloud.addClipPlanes">
 <span class="sig-name descname"><span class="pre">addClipPlanes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pycc.ccDrawableObject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plane</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ccClipPlane</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccPointCloud.addClipPlanes" title="Permalink to this definition"></a></dt>
@@ -1034,15 +1035,15 @@
 
 </section>
 <section id="ccpolyline">
-<h3>ccPolyline<a class="headerlink" href="#ccpolyline" title="Permalink to this headline"></a></h3>
+<h3>ccPolyline<a class="headerlink" href="#ccpolyline" title="Permalink to this heading"></a></h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>C++: <a class="reference internal" href="../../cpp/qCC_db/index.html#_CPPv410ccPolyline" title="ccPolyline"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccPolyline</span></code></a></p>
+<p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccPolyline</span></code></p>
 </div>
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccPolyline">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccPolyline</span></span><a class="headerlink" href="#pycc.ccPolyline" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.Polyline" title="cccorelib.Polyline"><code class="xref py py-class docutils literal notranslate"><span class="pre">cccorelib.Polyline</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccShiftedObject</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.Polyline" title="cccorelib.Polyline"><code class="xref py py-class docutils literal notranslate"><span class="pre">Polyline</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ccShiftedObject</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPolyline.add">
 <span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cloud</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccPolyline.add" title="Permalink to this definition"></a></dt>
@@ -1749,7 +1750,7 @@
 </section>
 </section>
 <section id="mesh">
-<h2>Mesh<a class="headerlink" href="#mesh" title="Permalink to this headline"></a></h2>
+<h2>Mesh<a class="headerlink" href="#mesh" title="Permalink to this heading"></a></h2>
 digraph inheritance4c34c5f181 {
 bgcolor=transparent;
 rankdir=LR;
@@ -1775,15 +1776,15 @@ size=&quot;8.0, 12.0&quot;;
   &quot;pycc.ccGenericMesh&quot; -&gt; &quot;pycc.ccSubMesh&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
 }
 <section id="ccgenericmesh">
-<h3>ccGenericMesh<a class="headerlink" href="#ccgenericmesh" title="Permalink to this headline"></a></h3>
+<h3>ccGenericMesh<a class="headerlink" href="#ccgenericmesh" title="Permalink to this heading"></a></h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>C++: <a class="reference internal" href="../../cpp/qCC_db/index.html#_CPPv413ccGenericMesh" title="ccGenericMesh"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccGenericMesh</span></code></a></p>
+<p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccGenericMesh</span></code></p>
 </div>
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccGenericMesh">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccGenericMesh</span></span><a class="headerlink" href="#pycc.ccGenericMesh" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.GenericIndexedMesh" title="cccorelib.GenericIndexedMesh"><code class="xref py py-class docutils literal notranslate"><span class="pre">cccorelib.GenericIndexedMesh</span></code></a>, <a class="reference internal" href="#pycc.ccHObject" title="pycc.ccHObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccHObject</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.GenericIndexedMesh" title="cccorelib.GenericIndexedMesh"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericIndexedMesh</span></code></a>, <a class="reference internal" href="#pycc.ccHObject" title="pycc.ccHObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccHObject</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccGenericMesh.capacity">
 <span class="sig-name descname"><span class="pre">capacity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGenericMesh" title="pycc.ccGenericMesh"><span class="pre">pycc.ccGenericMesh</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#pycc.ccGenericMesh.capacity" title="Permalink to this definition"></a></dt>
@@ -1858,15 +1859,15 @@ size=&quot;8.0, 12.0&quot;;
 
 </section>
 <section id="ccmesh">
-<h3>ccMesh<a class="headerlink" href="#ccmesh" title="Permalink to this headline"></a></h3>
+<h3>ccMesh<a class="headerlink" href="#ccmesh" title="Permalink to this heading"></a></h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>C++: <a class="reference internal" href="../../cpp/qCC_db/index.html#_CPPv46ccMesh" title="ccMesh"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccMesh</span></code></a></p>
+<p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccMesh</span></code></p>
 </div>
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccMesh">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccMesh</span></span><a class="headerlink" href="#pycc.ccMesh" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pycc.ccGenericMesh" title="pycc.ccGenericMesh"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccGenericMesh</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pycc.ccGenericMesh" title="pycc.ccGenericMesh"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccGenericMesh</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccMesh.setAssociatedCloud">
 <span class="sig-name descname"><span class="pre">setAssociatedCloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccMesh" title="pycc.ccMesh"><span class="pre">pycc.ccMesh</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cloud</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGenericPointCloud" title="pycc.ccGenericPointCloud"><span class="pre">ccGenericPointCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccMesh.setAssociatedCloud" title="Permalink to this definition"></a></dt>
@@ -1876,15 +1877,15 @@ size=&quot;8.0, 12.0&quot;;
 
 </section>
 <section id="ccsubmesh">
-<h3>ccSubMesh<a class="headerlink" href="#ccsubmesh" title="Permalink to this headline"></a></h3>
+<h3>ccSubMesh<a class="headerlink" href="#ccsubmesh" title="Permalink to this heading"></a></h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>C++: <a class="reference internal" href="../../cpp/qCC_db/index.html#_CPPv49ccSubMesh" title="ccSubMesh"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccSubMesh</span></code></a></p>
+<p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccSubMesh</span></code></p>
 </div>
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccSubMesh">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccSubMesh</span></span><a class="headerlink" href="#pycc.ccSubMesh" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pycc.ccGenericMesh" title="pycc.ccGenericMesh"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccGenericMesh</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pycc.ccGenericMesh" title="pycc.ccGenericMesh"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccGenericMesh</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccSubMesh.addTriangleIndex">
 <span class="sig-name descname"><span class="pre">addTriangleIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycc.ccSubMesh.addTriangleIndex" title="Permalink to this definition"></a></dt>
