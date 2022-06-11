@@ -127,6 +127,7 @@ if(PLUGIN_PYTHON)
       COMMENT "Building MSI installer..."
       COMMAND pwsh ./Create-Installer.ps1
               "${CMAKE_INSTALL_PREFIX}/${CLOUDCOMPARE_DEST_FOLDER}"
+      USES_TERMINAL
       WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/installer
     )
   endif()

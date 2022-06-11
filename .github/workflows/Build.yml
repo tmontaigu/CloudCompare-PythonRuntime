@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: 'd624e0dd7325f9bd43004376ce83529f7c123b88'
+          ref: 'v2.12.2'
           submodules: true
 
       - name: Clone PythonPlugin
@@ -78,7 +78,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: 'd624e0dd7325f9bd43004376ce83529f7c123b88'
+          ref: 'v2.12.2'
           submodules: true
 
       - name: Clone PythonPlugin
@@ -138,7 +138,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: 'd624e0dd7325f9bd43004376ce83529f7c123b88'
+          ref: 'v2.12.2'
           submodules: true
 
       - name: Clone PythonPlugin
@@ -210,7 +210,7 @@ jobs:
         working-directory: "./wrapper"
         run: |
           pip install --upgrade pip
-          pip install -v --use-feature=in-tree-build .\pycc
+          pip install -v .\pycc
 
       - name: test cccorelib & cccorelib
         run: |
@@ -239,7 +239,7 @@ jobs:
         working-directory: "./wrapper"
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install -v --use-feature=in-tree-build ./pycc
+          python3 -m pip install -v ./pycc
 
       - name: test cccorelib & pycc
         run: |
@@ -268,7 +268,7 @@ jobs:
       - name: pip install pycc
         working-directory: "./wrapper"
         run: |
-          python3 -m pip install -v --use-feature=in-tree-build ./pycc
+          python3 -m pip install -v ./pycc
 
       - name: test cccorelib & pycc
         run: |

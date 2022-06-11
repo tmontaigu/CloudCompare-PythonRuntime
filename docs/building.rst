@@ -32,7 +32,7 @@ to the CloudCompare documentation on how to do.
 To Compile this plugin you need to have Python installed.
 
 This plugin is known to compile and work with CloudCompare
-commit `d624e0dd7325f9bd43004376ce83529f7c123b88`.
+commit `v2.12.2`.
 
 Python 3.8 or more is required to build as a plugin.
 
@@ -157,12 +157,12 @@ To do so:
     # Building the wheels
 
     pip wheel --no-deps wrapper/cccorelib
-    pip wheel --use-feature=in-tree-build --no-deps wrapper/pycc
+    pip wheel --no-deps wrapper/pycc
 
     # Installing directly
 
     pip install wrapper/cccorelib
-    pip install --use-feature=in-tree-build wrapper/pycc
+    pip install wrapper/pycc
 
 
 Other development related things

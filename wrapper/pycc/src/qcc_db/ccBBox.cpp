@@ -29,7 +29,7 @@ void define_ccBBox(py::module &m)
 {
     py::class_<ccBBox, CCCoreLib::BoundingBox>(m, "ccBBox")
         .def(py::init<>())
-        .def(py::init<const CCVector3 &, const CCVector3 &>(), "bbMinCorner"_a, "bbMaxCorner"_a)
+        .def(py::init<const CCVector3 &, const CCVector3 &, bool>(), "bbMinCorner"_a, "bbMaxCorner"_a, "valid"_a)
         .def(
             "__mul__", [](ccBBox &self, ccGLMatrix &mat) { return self * mat; }, py::is_operator())
         .def(

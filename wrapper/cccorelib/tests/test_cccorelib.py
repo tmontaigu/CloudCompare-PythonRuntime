@@ -1,8 +1,8 @@
 from cccorelib import BoundingBox, CCVector3
 
 def test_min_max_corners():
-	boxA = BoundingBox(CCVector3(-1, -1, -1), CCVector3(0, 0, 0))
-	boxB = BoundingBox(CCVector3(0, 0, 0), CCVector3(1, 1, 1))
+	boxA = BoundingBox(CCVector3(-1, -1, -1), CCVector3(0, 0, 0), True)
+	boxB = BoundingBox(CCVector3(0, 0, 0), CCVector3(1, 1, 1), True)
 
 	box3 = boxA + boxB
 
@@ -21,7 +21,7 @@ def test_min_max_corners():
 
 def test_null_box():
 	nullBox = BoundingBox()
-	nullBox += BoundingBox(CCVector3(0, 0, 0), CCVector3(1, 1, 1))
+	nullBox += BoundingBox(CCVector3(0, 0, 0), CCVector3(1, 1, 1), True)
 	assert nullBox.maxCorner().x == 1.0
 	assert nullBox.maxCorner().y == 1.0
 	assert nullBox.maxCorner().z == 1.0
