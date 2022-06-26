@@ -6,7 +6,7 @@ option(PLUGIN_PYTHON "Install Python Plugin" OFF)
 if(PLUGIN_PYTHON)
   project(PythonPlugin)
 
-  addplugin(NAME ${PROJECT_NAME})
+  AddPlugin(NAME ${PROJECT_NAME})
 
   # set_project_warnings(${PROJECT_NAME})
 
@@ -76,6 +76,7 @@ if(PLUGIN_PYTHON)
     set(CLOUDCOMPARE_EXECUTABLE_INSTALL_PATH
         ${CMAKE_INSTALL_PREFIX}/bin/CloudCompare
     )
+    set(CC_PLUGIN_PATH_VALUE "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/cloudcompare/plugins")
   endif()
 
   if (WIN32 OR APPLE)
@@ -86,7 +87,6 @@ if(PLUGIN_PYTHON)
             ${CLOUDCOMPARE_EXECUTABLE_INSTALL_PATH} ${CMAKE_CURRENT_LIST_DIR}/tests
     )
   else()
-      set(CC_PLUGIN_PATH_VALUE "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/cloudcompare/plugins")
       add_custom_target(
               pytest
               COMMAND
@@ -95,42 +95,8 @@ if(PLUGIN_PYTHON)
       )
   endif()
 
-  if (WIN32 OR APPLE)
-    add_custom_target(
-            python_plugin_documentation
-            COMMAND ${CMAKE_COMMAND} -E make_directory
-            ${CMAKE_CURRENT_LIST_DIR}/docs/__build
-            COMMAND doxygen qCC_db_doxygen_file
-            COMMAND doxygen ./CCCoreLib_doxygen_file
-            COMMAND ${CLOUDCOMPARE_EXECUTABLE_INSTALL_PATH} -SILENT -PYTHON_SCRIPT
-            build_doc.py -b html . _build
-            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/docs
-    )
-  else()
-    add_custom_target(
-            python_plugin_documentation
-            COMMAND ${CMAKE_COMMAND} -E make_directory
-            ${CMAKE_CURRENT_LIST_DIR}/docs/__build
-            COMMAND doxygen qCC_db_doxygen_file
-            COMMAND doxygen ./CCCoreLib_doxygen_file
-            COMMAND
-            ${CMAKE_COMMAND} -E env CC_PLUGIN_PATH=${CC_PLUGIN_PATH_VALUE}
-            ${CLOUDCOMPARE_EXECUTABLE_INSTALL_PATH} -SILENT -PYTHON_SCRIPT
-            build_doc.py -b html . _build
-            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/docs
-    )
-  endif()
-
-  if(WIN32 AND (CMAKE_BUILD_TYPE STREQUAL Release))
-    add_custom_target(
-      python_plugin_installer
-      COMMENT "Building MSI installer..."
-      COMMAND pwsh ./Create-Installer.ps1
-              "${CMAKE_INSTALL_PREFIX}/${CLOUDCOMPARE_DEST_FOLDER}"
-      USES_TERMINAL
-      WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/installer
-    )
-  endif()
+  add_subdirectory(docs)
+  add_subdirectory(installer)
 
   if(WIN32)
     manage_windows_install()
