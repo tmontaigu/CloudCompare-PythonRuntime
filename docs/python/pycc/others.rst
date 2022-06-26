@@ -33,8 +33,22 @@ ______
 
 ccSensor
 ________
+.. seealso::
+
+    C++: :cpp:class:`ccSensor`
 
 .. autoclass:: pycc.ccSensor
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+ccGBLSensor
+___________
+.. seealso::
+
+    C++: :cpp:class:`ccGBLSensor`
+
+.. autoclass:: pycc.ccGBLSensor
     :members:
     :undoc-members:
     :show-inheritance:

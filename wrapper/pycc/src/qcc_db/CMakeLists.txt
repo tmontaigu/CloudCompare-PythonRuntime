@@ -10,6 +10,7 @@ set(pycc_db_sources
     ${CMAKE_CURRENT_LIST_DIR}/ccCylinder.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccDish.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccDrawableObject.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ccGBLSensor.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccGenericGLDisplay.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccGenericMesh.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccGenericPointCloud.cpp

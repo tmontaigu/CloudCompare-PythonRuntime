@@ -17,7 +17,8 @@
 
 #include <pybind11/pybind11.h>
 
-#include <ccCameraSensor.h>
+#include <ccSensor.h>
+#include<ccGenericGLDisplay.h>
 
 #include "../casters.h"
 

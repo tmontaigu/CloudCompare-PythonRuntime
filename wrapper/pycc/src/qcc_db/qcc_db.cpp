@@ -33,6 +33,7 @@ void define_ccGenericGLDisplay(py::module &);
 void define_ccGLWindow(py::module &);
 void define_ccGenericMesh(py::module &);
 void define_ccMesh(py::module &);
+void define_ccGBLSensor(py::module &);
 void define_ccGenericPrimitive(py::module &);
 void define_ccSphere(py::module &);
 void define_ccGLMatrix(py::module &);
@@ -117,6 +118,7 @@ void define_qcc_db(py::module &m)
     define_ccViewportObject(m);
     define_ccBBox(m);
     define_ccSensor(m);
+    define_ccGBLSensor(m);
     define_ccCameraSensor(m);
     define_ccSubMesh(m);
     define_ccWaveform(m);
