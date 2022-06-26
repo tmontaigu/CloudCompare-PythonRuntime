@@ -59,6 +59,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#cc2dlabel">cc2DLabel</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ccbbox">ccBBox</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ccsensor">ccSensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ccgblsensor">ccGBLSensor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#cccamerasensor">ccCameraSensor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#cccolorscaleelement">ccColorScaleElement</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#cccolorscale">ccColorScale</a></li>
@@ -498,6 +499,10 @@
 </section>
 <section id="ccsensor">
 <h2>ccSensor<a class="headerlink" href="#ccsensor" title="Permalink to this heading"></a></h2>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccSensor</span></code></p>
+</div>
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccSensor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccSensor</span></span><a class="headerlink" href="#pycc.ccSensor" title="Permalink to this definition"></a></dt>
@@ -575,12 +580,438 @@
 </dd></dl>
 
 </section>
+<section id="ccgblsensor">
+<h2>ccGBLSensor<a class="headerlink" href="#ccgblsensor" title="Permalink to this heading"></a></h2>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccGBLSensor</span></code></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccGBLSensor</span></span><a class="headerlink" href="#pycc.ccGBLSensor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycc.ccSensor" title="pycc.ccSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccSensor</span></code></a></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.ROTATION_ORDER">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ROTATION_ORDER</span></span><a class="headerlink" href="#pycc.ccGBLSensor.ROTATION_ORDER" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_object</span></code></p>
+<p>Members:</p>
+<p>YAW_THEN_PITCH</p>
+<p>PITCH_THEN_YAW</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.ROTATION_ORDER.PITCH_THEN_YAW">
+<span class="sig-name descname"><span class="pre">PITCH_THEN_YAW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ROTATION_ORDER.PITCH_THEN_YAW</span></em><a class="headerlink" href="#pycc.ccGBLSensor.ROTATION_ORDER.PITCH_THEN_YAW" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.ROTATION_ORDER.YAW_THEN_PITCH">
+<span class="sig-name descname"><span class="pre">YAW_THEN_PITCH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ROTATION_ORDER.YAW_THEN_PITCH</span></em><a class="headerlink" href="#pycc.ccGBLSensor.ROTATION_ORDER.YAW_THEN_PITCH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.ROTATION_ORDER.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pycc.ccGBLSensor.ROTATION_ORDER.name" title="Permalink to this definition"></a></dt>
+<dd><p>handle) -&gt; str</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(self</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.GetErrorString">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetErrorString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">errorCode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QString</span></span></span><a class="headerlink" href="#pycc.ccGBLSensor.GetErrorString" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.computeAutoParameters">
+<span class="sig-name descname"><span class="pre">computeAutoParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGBLSensor" title="pycc.ccGBLSensor"><span class="pre">pycc.ccGBLSensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">theCloud</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.GenericCloud" title="cccorelib.GenericCloud"><span class="pre">cccorelib.GenericCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccGBLSensor.computeAutoParameters" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.getMaxPitch">
+<span class="sig-name descname"><span class="pre">getMaxPitch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGBLSensor" title="pycc.ccGBLSensor"><span class="pre">pycc.ccGBLSensor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#pycc.ccGBLSensor.getMaxPitch" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.getMaxYaw">
+<span class="sig-name descname"><span class="pre">getMaxYaw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGBLSensor" title="pycc.ccGBLSensor"><span class="pre">pycc.ccGBLSensor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#pycc.ccGBLSensor.getMaxYaw" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.getMinPitch">
+<span class="sig-name descname"><span class="pre">getMinPitch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGBLSensor" title="pycc.ccGBLSensor"><span class="pre">pycc.ccGBLSensor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#pycc.ccGBLSensor.getMinPitch" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.getMinYaw">
+<span class="sig-name descname"><span class="pre">getMinYaw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGBLSensor" title="pycc.ccGBLSensor"><span class="pre">pycc.ccGBLSensor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#pycc.ccGBLSensor.getMinYaw" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.getPitchStep">
+<span class="sig-name descname"><span class="pre">getPitchStep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGBLSensor" title="pycc.ccGBLSensor"><span class="pre">pycc.ccGBLSensor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#pycc.ccGBLSensor.getPitchStep" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.getRotationOrder">
+<span class="sig-name descname"><span class="pre">getRotationOrder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGBLSensor" title="pycc.ccGBLSensor"><span class="pre">pycc.ccGBLSensor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycc.ccGBLSensor.ROTATION_ORDER" title="pycc.ccGBLSensor.ROTATION_ORDER"><span class="pre">pycc.ccGBLSensor.ROTATION_ORDER</span></a></span></span><a class="headerlink" href="#pycc.ccGBLSensor.getRotationOrder" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.getSensorRange">
+<span class="sig-name descname"><span class="pre">getSensorRange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGBLSensor" title="pycc.ccGBLSensor"><span class="pre">pycc.ccGBLSensor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#pycc.ccGBLSensor.getSensorRange" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.getUncertainty">
+<span class="sig-name descname"><span class="pre">getUncertainty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGBLSensor" title="pycc.ccGBLSensor"><span class="pre">pycc.ccGBLSensor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#pycc.ccGBLSensor.getUncertainty" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.getYawStep">
+<span class="sig-name descname"><span class="pre">getYawStep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGBLSensor" title="pycc.ccGBLSensor"><span class="pre">pycc.ccGBLSensor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#pycc.ccGBLSensor.getYawStep" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.pitchIsShifted">
+<span class="sig-name descname"><span class="pre">pitchIsShifted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGBLSensor" title="pycc.ccGBLSensor"><span class="pre">pycc.ccGBLSensor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccGBLSensor.pitchIsShifted" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.projectPoint">
+<span class="sig-name descname"><span class="pre">projectPoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGBLSensor" title="pycc.ccGBLSensor"><span class="pre">pycc.ccGBLSensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sourcePoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">posIndex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#pycc.ccGBLSensor.projectPoint" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.setPitchRange">
+<span class="sig-name descname"><span class="pre">setPitchRange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGBLSensor" title="pycc.ccGBLSensor"><span class="pre">pycc.ccGBLSensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">minPhi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxPhi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccGBLSensor.setPitchRange" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.setPitchStep">
+<span class="sig-name descname"><span class="pre">setPitchStep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGBLSensor" title="pycc.ccGBLSensor"><span class="pre">pycc.ccGBLSensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dPhi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccGBLSensor.setPitchStep" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.setRotationOrder">
+<span class="sig-name descname"><span class="pre">setRotationOrder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGBLSensor" title="pycc.ccGBLSensor"><span class="pre">pycc.ccGBLSensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotOrder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGBLSensor.ROTATION_ORDER" title="pycc.ccGBLSensor.ROTATION_ORDER"><span class="pre">pycc.ccGBLSensor.ROTATION_ORDER</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccGBLSensor.setRotationOrder" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.setSensorRange">
+<span class="sig-name descname"><span class="pre">setSensorRange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGBLSensor" title="pycc.ccGBLSensor"><span class="pre">pycc.ccGBLSensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccGBLSensor.setSensorRange" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.setUncertainty">
+<span class="sig-name descname"><span class="pre">setUncertainty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGBLSensor" title="pycc.ccGBLSensor"><span class="pre">pycc.ccGBLSensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">u</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccGBLSensor.setUncertainty" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.setYawRange">
+<span class="sig-name descname"><span class="pre">setYawRange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGBLSensor" title="pycc.ccGBLSensor"><span class="pre">pycc.ccGBLSensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">minTheta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxTheta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccGBLSensor.setYawRange" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.setYawStep">
+<span class="sig-name descname"><span class="pre">setYawStep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGBLSensor" title="pycc.ccGBLSensor"><span class="pre">pycc.ccGBLSensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dTheta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccGBLSensor.setYawStep" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.yawIsShifted">
+<span class="sig-name descname"><span class="pre">yawIsShifted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGBLSensor" title="pycc.ccGBLSensor"><span class="pre">pycc.ccGBLSensor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccGBLSensor.yawIsShifted" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.PITCH_THEN_YAW">
+<span class="sig-name descname"><span class="pre">PITCH_THEN_YAW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ROTATION_ORDER.PITCH_THEN_YAW</span></em><a class="headerlink" href="#pycc.ccGBLSensor.PITCH_THEN_YAW" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccGBLSensor.YAW_THEN_PITCH">
+<span class="sig-name descname"><span class="pre">YAW_THEN_PITCH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">ROTATION_ORDER.YAW_THEN_PITCH</span></em><a class="headerlink" href="#pycc.ccGBLSensor.YAW_THEN_PITCH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="cccamerasensor">
 <h2>ccCameraSensor<a class="headerlink" href="#cccamerasensor" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccCameraSensor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccCameraSensor</span></span><a class="headerlink" href="#pycc.ccCameraSensor" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pycc.ccSensor" title="pycc.ccSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccSensor</span></code></a></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.BrownDistortionParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BrownDistortionParameters</span></span><a class="headerlink" href="#pycc.ccCameraSensor.BrownDistortionParameters" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycc.ccCameraSensor.LensDistortionParameters" title="pycc.ccCameraSensor.LensDistortionParameters"><code class="xref py py-class docutils literal notranslate"><span class="pre">LensDistortionParameters</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.BrownDistortionParameters.K_BrownParams">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">K_BrownParams</span></span><a class="headerlink" href="#pycc.ccCameraSensor.BrownDistortionParameters.K_BrownParams" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.BrownDistortionParameters.P_BrownParams">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">P_BrownParams</span></span><a class="headerlink" href="#pycc.ccCameraSensor.BrownDistortionParameters.P_BrownParams" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.BrownDistortionParameters.linearDisparityParams">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">linearDisparityParams</span></span><a class="headerlink" href="#pycc.ccCameraSensor.BrownDistortionParameters.linearDisparityParams" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.BrownDistortionParameters.principalPointOffset">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">principalPointOffset</span></span><a class="headerlink" href="#pycc.ccCameraSensor.BrownDistortionParameters.principalPointOffset" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.DistortionModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DistortionModel</span></span><a class="headerlink" href="#pycc.ccCameraSensor.DistortionModel" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_object</span></code></p>
+<p>Members:</p>
+<p>NO_DISTORTION_MODEL</p>
+<p>SIMPLE_RADIAL_DISTORTION</p>
+<p>BROWN_DISTORTION</p>
+<p>EXTENDED_RADIAL_DISTORTION</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.DistortionModel.BROWN_DISTORTION">
+<span class="sig-name descname"><span class="pre">BROWN_DISTORTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">DistortionModel.BROWN_DISTORTION</span></em><a class="headerlink" href="#pycc.ccCameraSensor.DistortionModel.BROWN_DISTORTION" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.DistortionModel.EXTENDED_RADIAL_DISTORTION">
+<span class="sig-name descname"><span class="pre">EXTENDED_RADIAL_DISTORTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">DistortionModel.EXTENDED_RADIAL_DISTORTION</span></em><a class="headerlink" href="#pycc.ccCameraSensor.DistortionModel.EXTENDED_RADIAL_DISTORTION" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.DistortionModel.NO_DISTORTION_MODEL">
+<span class="sig-name descname"><span class="pre">NO_DISTORTION_MODEL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">DistortionModel.NO_DISTORTION_MODEL</span></em><a class="headerlink" href="#pycc.ccCameraSensor.DistortionModel.NO_DISTORTION_MODEL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.DistortionModel.SIMPLE_RADIAL_DISTORTION">
+<span class="sig-name descname"><span class="pre">SIMPLE_RADIAL_DISTORTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">DistortionModel.SIMPLE_RADIAL_DISTORTION</span></em><a class="headerlink" href="#pycc.ccCameraSensor.DistortionModel.SIMPLE_RADIAL_DISTORTION" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.DistortionModel.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pycc.ccCameraSensor.DistortionModel.name" title="Permalink to this definition"></a></dt>
+<dd><p>handle) -&gt; str</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(self</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.ExtendedRadialDistortionParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ExtendedRadialDistortionParameters</span></span><a class="headerlink" href="#pycc.ccCameraSensor.ExtendedRadialDistortionParameters" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycc.ccCameraSensor.RadialDistortionParameters" title="pycc.ccCameraSensor.RadialDistortionParameters"><code class="xref py py-class docutils literal notranslate"><span class="pre">RadialDistortionParameters</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.ExtendedRadialDistortionParameters.k3">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">k3</span></span><a class="headerlink" href="#pycc.ccCameraSensor.ExtendedRadialDistortionParameters.k3" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.FrustumInformation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FrustumInformation</span></span><a class="headerlink" href="#pycc.ccCameraSensor.FrustumInformation" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.FrustumInformation.initFrustumCorners">
+<span class="sig-name descname"><span class="pre">initFrustumCorners</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCameraSensor.FrustumInformation" title="pycc.ccCameraSensor.FrustumInformation"><span class="pre">pycc.ccCameraSensor.FrustumInformation</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccCameraSensor.FrustumInformation.initFrustumCorners" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.FrustumInformation.initFrustumHull">
+<span class="sig-name descname"><span class="pre">initFrustumHull</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCameraSensor.FrustumInformation" title="pycc.ccCameraSensor.FrustumInformation"><span class="pre">pycc.ccCameraSensor.FrustumInformation</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccCameraSensor.FrustumInformation.initFrustumHull" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.FrustumInformation.center">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">center</span></span><a class="headerlink" href="#pycc.ccCameraSensor.FrustumInformation.center" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.FrustumInformation.drawFrustum">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">drawFrustum</span></span><a class="headerlink" href="#pycc.ccCameraSensor.FrustumInformation.drawFrustum" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.FrustumInformation.drawSidePlanes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">drawSidePlanes</span></span><a class="headerlink" href="#pycc.ccCameraSensor.FrustumInformation.drawSidePlanes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.FrustumInformation.frustumCorners">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">frustumCorners</span></span><a class="headerlink" href="#pycc.ccCameraSensor.FrustumInformation.frustumCorners" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.FrustumInformation.frustumHull">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">frustumHull</span></span><a class="headerlink" href="#pycc.ccCameraSensor.FrustumInformation.frustumHull" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.FrustumInformation.isComputed">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">isComputed</span></span><a class="headerlink" href="#pycc.ccCameraSensor.FrustumInformation.isComputed" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.IntrinsicParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IntrinsicParameters</span></span><a class="headerlink" href="#pycc.ccCameraSensor.IntrinsicParameters" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.IntrinsicParameters.GetKinectDefaults">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetKinectDefaults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCameraSensor.IntrinsicParameters" title="pycc.ccCameraSensor.IntrinsicParameters"><span class="pre">pycc.ccCameraSensor.IntrinsicParameters</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccCameraSensor.IntrinsicParameters.GetKinectDefaults" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.IntrinsicParameters.horizFocal_pix">
+<span class="sig-name descname"><span class="pre">horizFocal_pix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCameraSensor.IntrinsicParameters" title="pycc.ccCameraSensor.IntrinsicParameters"><span class="pre">pycc.ccCameraSensor.IntrinsicParameters</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#pycc.ccCameraSensor.IntrinsicParameters.horizFocal_pix" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.IntrinsicParameters.arrayHeight">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">arrayHeight</span></span><a class="headerlink" href="#pycc.ccCameraSensor.IntrinsicParameters.arrayHeight" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.IntrinsicParameters.arrayWidth">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">arrayWidth</span></span><a class="headerlink" href="#pycc.ccCameraSensor.IntrinsicParameters.arrayWidth" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.IntrinsicParameters.pixelSize_mm">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pixelSize_mm</span></span><a class="headerlink" href="#pycc.ccCameraSensor.IntrinsicParameters.pixelSize_mm" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.IntrinsicParameters.skew">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">skew</span></span><a class="headerlink" href="#pycc.ccCameraSensor.IntrinsicParameters.skew" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.IntrinsicParameters.vFOV_rad">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vFOV_rad</span></span><a class="headerlink" href="#pycc.ccCameraSensor.IntrinsicParameters.vFOV_rad" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.IntrinsicParameters.vertFocal_pix">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vertFocal_pix</span></span><a class="headerlink" href="#pycc.ccCameraSensor.IntrinsicParameters.vertFocal_pix" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.IntrinsicParameters.zFar_mm">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">zFar_mm</span></span><a class="headerlink" href="#pycc.ccCameraSensor.IntrinsicParameters.zFar_mm" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.IntrinsicParameters.zNear_mm">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">zNear_mm</span></span><a class="headerlink" href="#pycc.ccCameraSensor.IntrinsicParameters.zNear_mm" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.LensDistortionParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LensDistortionParameters</span></span><a class="headerlink" href="#pycc.ccCameraSensor.LensDistortionParameters" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.LensDistortionParameters.getModel">
+<span class="sig-name descname"><span class="pre">getModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCameraSensor.LensDistortionParameters" title="pycc.ccCameraSensor.LensDistortionParameters"><span class="pre">pycc.ccCameraSensor.LensDistortionParameters</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycc.ccCameraSensor.DistortionModel" title="pycc.ccCameraSensor.DistortionModel"><span class="pre">pycc.ccCameraSensor.DistortionModel</span></a></span></span><a class="headerlink" href="#pycc.ccCameraSensor.LensDistortionParameters.getModel" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.RadialDistortionParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RadialDistortionParameters</span></span><a class="headerlink" href="#pycc.ccCameraSensor.RadialDistortionParameters" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycc.ccCameraSensor.LensDistortionParameters" title="pycc.ccCameraSensor.LensDistortionParameters"><code class="xref py py-class docutils literal notranslate"><span class="pre">LensDistortionParameters</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.RadialDistortionParameters.k1">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">k1</span></span><a class="headerlink" href="#pycc.ccCameraSensor.RadialDistortionParameters.k1" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.RadialDistortionParameters.k2">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">k2</span></span><a class="headerlink" href="#pycc.ccCameraSensor.RadialDistortionParameters.k2" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.getHorizFocal_pix">
+<span class="sig-name descname"><span class="pre">getHorizFocal_pix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycc.ccCameraSensor.getHorizFocal_pix" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>getHorizFocal_pix(self: pycc.ccCameraSensor) -&gt; float</p></li>
+<li><p>getHorizFocal_pix(self: pycc.ccCameraSensor) -&gt; float</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.getIntrinsicParameters">
+<span class="sig-name descname"><span class="pre">getIntrinsicParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycc.ccCameraSensor.getIntrinsicParameters" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>getIntrinsicParameters(self: pycc.ccCameraSensor) -&gt; pycc.ccCameraSensor.IntrinsicParameters</p></li>
+<li><p>getIntrinsicParameters(self: pycc.ccCameraSensor) -&gt; pycc.ccCameraSensor.LensDistortionParameters</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.getVerticalFov_rad">
+<span class="sig-name descname"><span class="pre">getVerticalFov_rad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCameraSensor" title="pycc.ccCameraSensor"><span class="pre">pycc.ccCameraSensor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#pycc.ccCameraSensor.getVerticalFov_rad" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.setIntrinsicParameters">
+<span class="sig-name descname"><span class="pre">setIntrinsicParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCameraSensor" title="pycc.ccCameraSensor"><span class="pre">pycc.ccCameraSensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCameraSensor.IntrinsicParameters" title="pycc.ccCameraSensor.IntrinsicParameters"><span class="pre">pycc.ccCameraSensor.IntrinsicParameters</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccCameraSensor.setIntrinsicParameters" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.setVertFocal_pix">
+<span class="sig-name descname"><span class="pre">setVertFocal_pix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCameraSensor" title="pycc.ccCameraSensor"><span class="pre">pycc.ccCameraSensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertFocal_pix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccCameraSensor.setVertFocal_pix" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.setVerticalFov_rad">
+<span class="sig-name descname"><span class="pre">setVerticalFov_rad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCameraSensor" title="pycc.ccCameraSensor"><span class="pre">pycc.ccCameraSensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fov_rad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccCameraSensor.setVerticalFov_rad" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.BROWN_DISTORTION">
+<span class="sig-name descname"><span class="pre">BROWN_DISTORTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">DistortionModel.BROWN_DISTORTION</span></em><a class="headerlink" href="#pycc.ccCameraSensor.BROWN_DISTORTION" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.EXTENDED_RADIAL_DISTORTION">
+<span class="sig-name descname"><span class="pre">EXTENDED_RADIAL_DISTORTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">DistortionModel.EXTENDED_RADIAL_DISTORTION</span></em><a class="headerlink" href="#pycc.ccCameraSensor.EXTENDED_RADIAL_DISTORTION" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.NO_DISTORTION_MODEL">
+<span class="sig-name descname"><span class="pre">NO_DISTORTION_MODEL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">DistortionModel.NO_DISTORTION_MODEL</span></em><a class="headerlink" href="#pycc.ccCameraSensor.NO_DISTORTION_MODEL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccCameraSensor.SIMPLE_RADIAL_DISTORTION">
+<span class="sig-name descname"><span class="pre">SIMPLE_RADIAL_DISTORTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">DistortionModel.SIMPLE_RADIAL_DISTORTION</span></em><a class="headerlink" href="#pycc.ccCameraSensor.SIMPLE_RADIAL_DISTORTION" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </section>

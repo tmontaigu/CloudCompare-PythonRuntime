@@ -218,6 +218,11 @@ ________
 .. doxygenclass:: ccSensor
    :members:
 
+ccGBLSensor
+___________
+.. doxygenclass:: ccGBLSensor
+   :members:
+
 ccCameraSensor
 ______________
 .. doxygenclass:: ccCameraSensor
