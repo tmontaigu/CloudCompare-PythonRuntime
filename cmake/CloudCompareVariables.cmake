@@ -1,0 +1,16 @@
+if(WIN32)
+  set(CLOUDCOMPARE_EXECUTABLE_INSTALL_PATH
+      ${CMAKE_INSTALL_PREFIX}/${CLOUDCOMPARE_DEST_FOLDER}/CloudCompare.exe
+  )
+elseif(APPLE)
+  set(CLOUDCOMPARE_EXECUTABLE_INSTALL_PATH
+      ${CMAKE_INSTALL_PREFIX}/CloudCompare/CloudCompare.app
+  )
+else()
+  set(CLOUDCOMPARE_EXECUTABLE_INSTALL_PATH
+      ${CMAKE_INSTALL_PREFIX}/bin/CloudCompare
+  )
+  set(CC_PLUGIN_PATH_VALUE
+      "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/cloudcompare/plugins"
+  )
+endif()

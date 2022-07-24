@@ -190,7 +190,10 @@ jobs:
           miniconda-version: 'latest'
 
       - name: Install Dependencies
-        run: conda install -c conda-forge qt=5.12.*
+        run: |
+          conda install -c conda-forge qt=5.12.*
+          python -m pip install --upgrade pip
+
 
       - name: Configure MSVC console
         uses: ilammy/msvc-dev-cmd@v1
@@ -209,7 +212,6 @@ jobs:
       - name: pip install pycc
         working-directory: "./wrapper"
         run: |
-          pip install --upgrade pip
           pip install -v .\pycc
 
       - name: test cccorelib & cccorelib
@@ -230,6 +232,8 @@ jobs:
           sudo apt-get update -qq
           sudo apt install build-essential cmake ninja-build libqt5svg5-dev libqt5opengl5-dev qt5-default qttools5-dev qttools5-dev-tools pybind11-dev xvfb
           python3 -m pip install pytest
+          python3 -m pip install --upgrade pip
+
 
       - name: pip install cccorelib
         working-directory: "./wrapper"
@@ -238,7 +242,6 @@ jobs:
       - name: pip install pycc
         working-directory: "./wrapper"
         run: |
-          python3 -m pip install --upgrade pip
           python3 -m pip install -v ./pycc
 
       - name: test cccorelib & pycc

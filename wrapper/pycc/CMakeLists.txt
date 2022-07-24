@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.14)
 project(pycc LANGUAGES CXX)
 
+include("${CMAKE_CURRENT_LIST_DIR}/../../cmake/Helpers.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/../../cmake/PythonEnvHelper.cmake")
+
 # MASTER_PROJECT means that this CMakeLists is the top level CMakeLists which in
 # our case means that this project is not built as a part of the PythonPlugin
 # but as a standalone wheel
@@ -17,34 +20,12 @@ add_subdirectory(src)
 if(PYCC_IS_MASTER_PROJECT)
   if(WIN32)
     if(NOT PYTHON_EXECUTABLE)
-      if(DEFINED ENV{CONDA_PREFIX})
-        list(INSERT CMAKE_PREFIX_PATH 0
-             "$ENV{CONDA_PREFIX}/Library/share/cmake"
-        )
-        set(PYTHON_EXECUTABLE "$ENV{CONDA_PREFIX}/python.exe")
-      elseif(DEFINED ENV{VIRTUAL_ENV})
-        set(PYTHON_EXECUTABLE "$ENV{VENV_PREFIX}/Scripts/python.exe")
-      endif()
+      set_python_executable_from_current_venv()
     endif()
   endif()
 
   if(PYTHON_EXECUTABLE)
-    execute_process(
-      COMMAND "${PYTHON_EXECUTABLE}" "-m" "pybind11" "--cmake"
-      RESULT_VARIABLE _PYTHON_SUCCESS
-      OUTPUT_VARIABLE PYBIND11_CMAKE_MODULES_PATH
-    )
-
-    if(_PYTHON_SUCCESS MATCHES 0)
-      string(REGEX REPLACE "\n" "" PYBIND11_CMAKE_MODULES_PATH
-                           ${PYBIND11_CMAKE_MODULES_PATH}
-      )
-      list(INSERT CMAKE_PREFIX_PATH 0 "${PYBIND11_CMAKE_MODULES_PATH}")
-    else()
-      message(
-        WARNING "Failed to get pybind11 cmake prefix path ${_PYTHON_SUCCESS}"
-      )
-    endif()
+    ensure_pybind11_cmake_module_is_in_path()
   endif()
 
   include(FetchContent)
@@ -61,26 +42,17 @@ if(PYCC_IS_MASTER_PROJECT)
   )
 
   FetchContent_GetProperties(CloudCompare)
-  string(TOLOWER "CloudCompare" lcName)
+  string(TOLOWER "CloudCompare" lowerCaseName)
   if(NOT CloudCompare_POPULATED)
     FetchContent_Populate(CloudCompare)
     add_subdirectory(
-      ${${lcName}_SOURCE_DIR} ${${lcName}_BINARY_DIR} EXCLUDE_FROM_ALL
+      ${${lowerCaseName}_SOURCE_DIR} ${${lowerCaseName}_BINARY_DIR}
+      EXCLUDE_FROM_ALL
     )
   endif()
 endif()
 
 if(PYCC_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
-  function(run_windeployqt TARGET_NAME FILE_PATH)
-    add_custom_command(
-      TARGET ${TARGET_NAME}
-      POST_BUILD
-      COMMAND "${CMAKE_COMMAND}" -E make_directory deployqt
-      COMMAND "${WINDEPLOYQT_EXECUTABLE}" "${FILE_PATH}" --dir
-              "${CMAKE_CURRENT_BINARY_DIR}/deployqt"
-    )
-  endfunction()
-
   find_package(pybind11 CONFIG REQUIRED)
 
   pybind11_add_module(pycc ${pycc_sources})
@@ -105,7 +77,6 @@ if(PYCC_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
                 CC_FBO_LIB
         RUNTIME DESTINATION pycc
       )
-      find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
       # Just to be sure we have everything
       run_windeployqt(pycc "$<TARGET_FILE:CCCoreLib>")
       run_windeployqt(pycc "$<TARGET_FILE:QCC_DB_LIB>")
