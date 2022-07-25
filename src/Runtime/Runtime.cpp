@@ -124,6 +124,7 @@ PYBIND11_EMBEDDED_MODULE(ccinternals, m)
         .def(py::init<>())
         .def(py::init<const char *>(), "prefix"_a)
         .def("write", &ccConsoleOutput::write)
+        .def("isatty", &ccConsoleOutput::isatty)
         .def("flush", &ccConsoleOutput::flush);
 
     py::class_<ListWidgetConsole>(m, "ListWidgetConsole")
@@ -131,6 +132,7 @@ PYBIND11_EMBEDDED_MODULE(ccinternals, m)
         .def(py::init<QListWidget *, QColor>())
         .def(py::init<QListWidget *>())
         .def("write", &ListWidgetConsole::write)
+        .def("isatty", &ListWidgetConsole::isatty)
         .def("flush", &ListWidgetConsole::flush);
 }
 

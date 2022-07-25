@@ -95,6 +95,10 @@ class ccConsoleOutput
         m_output.write(messagePart);
     }
 
+    bool isatty() const {
+        return false;
+    }
+
     void flush() const
     {
         m_output.flush();
@@ -128,6 +132,11 @@ class ListWidgetConsole
     {
         m_output.write(messagePart);
     }
+    bool isatty() const
+    {
+        return false;
+    }
+
     void flush() const
     {
         m_output.flush();

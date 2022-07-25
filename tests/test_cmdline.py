@@ -71,3 +71,8 @@ def test_scalarfield_tools(cloudcompare_exe):
 def test_cchobjects_lifetimes(cloudcompare_exe):
     assert_command_runs(
         cloudcompare_exe, "-SILENT", "-PYTHON_SCRIPT", os.path.join(abspath, "scripts", "ccHObject_keep_alive.py"))
+
+
+def test_pycc_tests(cloudcompare_exe):
+    assert_command_runs(
+        cloudcompare_exe, "-SILENT", "-PYTHON_SCRIPT", os.path.join(abspath, "pytest_runner.py"))
