@@ -8,3 +8,5 @@ docs/_build
 .cache
 compile_commands.json
 wrapper/pycc/pycc.egg-info
+
+venv
