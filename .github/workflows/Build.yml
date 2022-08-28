@@ -102,6 +102,7 @@ jobs:
             -B build `
             -DPLUGIN_PYTHON=ON `
             -DCMAKE_BUILD_TYPE=Release `
+            -DPLUGIN_STANDARD_QM3C2=ON `
             .
 
       - name: Build
@@ -113,7 +114,7 @@ jobs:
       - name: Run Tests
         run: |
           export LD_LIBRARY_PATH=/usr/local/lib
-          xvfb-run python3 -m pytest plugins/private/CloudCompare-PythonPlugin/tests --cloudcompare_exe /usr/local/bin/CloudCompare
+          xvfb-run python3 -m pytest plugins/private/CloudCompare-PythonPlugin/tests --cloudcompare_exe /usr/local/bin/CloudCompare --verbose
 
       - name: Build docs
         run: |
@@ -230,26 +231,35 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update -qq
-          sudo apt install build-essential cmake ninja-build libqt5svg5-dev libqt5opengl5-dev qt5-default qttools5-dev qttools5-dev-tools pybind11-dev xvfb
-          python3 -m pip install pytest
-          python3 -m pip install --upgrade pip
+          sudo apt install build-essential cmake ninja-build libqt5svg5-dev libqt5opengl5-dev qttools5-dev qttools5-dev-tools python3-dev xvfb
+          python3 -m venv venv
+          source venv/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install pytest
 
 
       - name: pip install cccorelib
-        working-directory: "./wrapper"
-        run: python3 -m pip install -v ./cccorelib
+        run: |
+          source venv/bin/activate
+          python -m pip install -v ./wrapper/cccorelib
 
       - name: pip install pycc
-        working-directory: "./wrapper"
         run: |
-          python3 -m pip install -v ./pycc
+          source venv/bin/activate
+          python -m pip install -v ./wrapper/pycc
+        env:
+          SKBUILD_CONFIGURE_OPTIONS: "-DPLUGIN_STANDARD_QM3C2=ON"
 
-      - name: test cccorelib & pycc
+      - name: test cccorelib
         run: |
-          python3 -m pytest wrapper/cccorelib/tests
-          python3 -m pytest wrapper/pycc/tests
+          source venv/bin/activate
+          python -m pytest -v wrapper/cccorelib/tests
 
-
+      - name: test pycc
+        run: |
+          source venv/bin/activate
+          xvfb-run python -m pytest -v wrapper/pycc/tests
+    
   MacOs-Wheels:
     name: "macOs Wheels"
     runs-on: macos-latest
@@ -265,19 +275,16 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install pytest
           echo "CMAKE_PREFIX_PATH=/usr/local/opt/qt@5" >> $GITHUB_ENV
-
       - name: pip install cccorelib
         working-directory: "./wrapper"
         run: |
           source ../venv/bin/activate
           python -m pip install -v ./cccorelib
-
       - name: pip install pycc
         working-directory: "./wrapper"
         run: |
           source ../venv/bin/activate
           python -m pip install -v ./pycc
-
       - name: test cccorelib & pycc
         run: |
           source venv/bin/activate

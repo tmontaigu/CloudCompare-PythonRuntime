@@ -206,6 +206,10 @@ void ccGuiPythonInstance::freezeUI(bool state)
 {
     m_app->freezeUI(state);
 }
+ccMainAppInterface *ccGuiPythonInstance::app()
+{
+    return m_app;
+}
 
 void define_ccGUIPythonInstance(py::module &m)
 {
@@ -259,6 +263,7 @@ void define_ccGUIPythonInstance(py::module &m)
         .def("disableAll", &ccGuiPythonInstance::disableAll)
         .def("updateUI", &ccGuiPythonInstance::updateUI)
         .def("freezeUI", &ccGuiPythonInstance::freezeUI, "state"_a)
+        .def("app", &ccGuiPythonInstance::app)
         .def("loadFile",
              &ccGuiPythonInstance::loadFile,
              py::return_value_policy::reference,

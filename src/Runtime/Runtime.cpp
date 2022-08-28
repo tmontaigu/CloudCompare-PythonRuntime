@@ -141,6 +141,8 @@ void define_ccCommandLine(py::module &);
 
 PYBIND11_EMBEDDED_MODULE(pycc_runtime, m)
 {
+    py::class_<ccMainAppInterface>(m, "ccMainAppInterface");
+
     define_ccGUIPythonInstance(m);
     define_ccCommandLine(m);
 

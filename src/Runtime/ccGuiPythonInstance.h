@@ -76,6 +76,8 @@ class Q_DECL_EXPORT ccGuiPythonInstance final
 
     ccHObject *loadFile(const char *filename, FileIOFilter::LoadParameters &parameters);
 
+    ccMainAppInterface *app();
+
   private:
     ccMainAppInterface *m_app;
 };

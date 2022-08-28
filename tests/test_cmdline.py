@@ -76,3 +76,9 @@ def test_cchobjects_lifetimes(cloudcompare_exe):
 def test_pycc_tests(cloudcompare_exe):
     assert_command_runs(
         cloudcompare_exe, "-SILENT", "-PYTHON_SCRIPT", os.path.join(abspath, "pytest_runner.py"))
+
+
+def test_can_call_m3c2_plugin(cloudcompare_exe):
+    assert_command_runs(
+        cloudcompare_exe, "-SILENT", "-O", f"{abspath}/data/a_cloud.bin", "-PYTHON_SCRIPT",
+        os.path.join(abspath, "scripts", "m3c2_plugin.py"))

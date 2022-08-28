@@ -88,7 +88,8 @@ void define_qcc_io(py::module &m)
                             FileIOFilter::LoadFromFile(filename, parameters, result);
                         ThrowForFileError(result);
                         return newGroup;
-                    })
+                    },
+            py::return_value_policy::take_ownership)
         .def_static(
             "SaveToFile",
             [](ccHObject *entities,

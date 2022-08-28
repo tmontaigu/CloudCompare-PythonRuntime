@@ -158,7 +158,6 @@ static QString PathToPythonExecutableInEnv(PythonConfig::Type envType, const QSt
     switch (envType)
     {
     case PythonConfig::Type::Conda:
-        return envRoot + "/python";
     case PythonConfig::Type::Venv:
     case PythonConfig::Type::Unknown:
         return envRoot + "/bin/python";

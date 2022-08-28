@@ -4,6 +4,7 @@ project(pycc LANGUAGES CXX)
 include("${CMAKE_CURRENT_LIST_DIR}/../../cmake/Helpers.cmake")
 include("${CMAKE_CURRENT_LIST_DIR}/../../cmake/PythonEnvHelper.cmake")
 
+
 # MASTER_PROJECT means that this CMakeLists is the top level CMakeLists which in
 # our case means that this project is not built as a part of the PythonPlugin
 # but as a standalone wheel
@@ -15,15 +16,14 @@ else()
   option(DEFINE_PYCC_RUNTIME "Should the runtime functions be included" ON)
 endif()
 
-add_subdirectory(src)
 
 if(PYCC_IS_MASTER_PROJECT)
-  if(WIN32)
-    if(NOT PYTHON_EXECUTABLE)
-      set_python_executable_from_current_venv()
-    endif()
+  message(DEBUG "PYTHON_EXECUTABLE: ${PYTHON_EXECUTABLE}")
+  if(NOT PYTHON_EXECUTABLE)
+    set_python_executable_from_current_venv()
   endif()
 
+  message(DEBUG "PYTHON_EXECUTABLE: ${PYTHON_EXECUTABLE}")
   if(PYTHON_EXECUTABLE)
     ensure_pybind11_cmake_module_is_in_path()
   endif()
@@ -45,6 +45,7 @@ if(PYCC_IS_MASTER_PROJECT)
   string(TOLOWER "CloudCompare" lowerCaseName)
   if(NOT CloudCompare_POPULATED)
     FetchContent_Populate(CloudCompare)
+    set(CLOUDCOMPARE_SOURCES_ROOT ${${lowerCaseName}_SOURCE_DIR})
     add_subdirectory(
       ${${lowerCaseName}_SOURCE_DIR} ${${lowerCaseName}_BINARY_DIR}
       EXCLUDE_FROM_ALL
@@ -52,8 +53,13 @@ if(PYCC_IS_MASTER_PROJECT)
   endif()
 endif()
 
+find_package(pybind11 CONFIG REQUIRED)
+
+add_subdirectory(src)
+add_subdirectory(plugins)
+
+
 if(PYCC_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
-  find_package(pybind11 CONFIG REQUIRED)
 
   pybind11_add_module(pycc ${pycc_sources})
   target_link_libraries(pycc PRIVATE QCC_DB_LIB QCC_GL_LIB QCC_IO_LIB)
@@ -68,6 +74,8 @@ if(PYCC_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
   endif()
 
   if(PYCC_IS_MASTER_PROJECT)
+    target_compile_definitions(pycc PRIVATE PYCC_STAND_ALONE)
+
     if(WIN32)
       install(
         TARGETS QCC_DB_LIB
