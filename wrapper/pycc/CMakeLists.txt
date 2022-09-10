@@ -91,6 +91,11 @@ if(PYCC_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
       run_windeployqt(pycc "$<TARGET_FILE:QCC_GL_LIB>")
       run_windeployqt(pycc "$<TARGET_FILE:QCC_IO_LIB>")
       run_windeployqt(pycc "$<TARGET_FILE:pycc>")
+
+      if (PYCC_PLUGIN_WRAPPER_LIST)
+        run_windeployqt(pycc "$<TARGET_FILE:CCPluginAPI>")
+      endif()
+
       install(
         DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/deployqt/"
         DESTINATION pycc

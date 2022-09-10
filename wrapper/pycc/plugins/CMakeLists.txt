@@ -1,18 +1,35 @@
-
 # Depending of if pycc is being built as a stand-alone python module
 # or a CloudCompare's plugin, the path to the C++ plugins is not the same
 # since in one case CloudCompare's sources are somewere in the build dir (cmake handles that)
 # or pycc's sources are within CloudCompare's sources.
 if (PYCC_IS_MASTER_PROJECT)
     get_filename_component(STANDARD_PLUGINS_ROOT_DIR "${CLOUDCOMPARE_SOURCES_ROOT}/plugins/core/Standard" ABSOLUTE BASE_DIR ${CMAKE_CURRENT_LIST_DIR})
-    include(GNUInstallDirs)
-    set(LINUX_INSTALL_SHARED_DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}/cloudcompare")
 else()
     get_filename_component(STANDARD_PLUGINS_ROOT_DIR "../../../../../core/Standard" ABSOLUTE BASE_DIR ${CMAKE_CURRENT_LIST_DIR})
 endif()
 
-set(LINUX_INSTALL_PLUGINS "${LINUX_INSTALL_SHARED_DESTINATION}/plugins")
-set(LINUX_INSTALL_PLUGIN_WRAPPERS "${LINUX_INSTALL_SHARED_DESTINATION}/plugins-python")
+
+if (UNIX AND NOT APPLE)
+    if (PYCC_IS_MASTER_PROJECT)
+        include(GNUInstallDirs)
+        # This is normally defined by CloudCompare's CMakeLists
+        set(LINUX_INSTALL_SHARED_DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}/cloudcompare")
+    endif()
+
+    set(INSTALL_PLUGINS_PATH "${LINUX_INSTALL_SHARED_DESTINATION}/plugins")
+    set(INSTALL_PLUGINS_WRAPPERS_PATH "${LINUX_INSTALL_SHARED_DESTINATION}/plugins-python")
+elseif(WIN32)
+    if (PYCC_IS_MASTER_PROJECT)
+        set(INSTALL_PLUGINS_PATH "pycc/plugins-python")
+        set(INSTALL_PLUGINS_WRAPPERS_PATH "pycc/plugins-python")
+    else()
+        set(INSTALL_PLUGINS_PATH "${CLOUDCOMPARE_DEST_FOLDER}/plugins")
+        set(INSTALL_PLUGINS_WRAPPERS_PATH "${CLOUDCOMPARE_DEST_FOLDER}/plugins-python")
+    endif()
+endif()
+
+message(DEBUG "INSTALL_PLUGINS_PATH: ${INSTALL_PLUGINS_PATH}")
+message(DEBUG "INSTALL_PLUGINS_WRAPPERS_PATH: ${INSTALL_PLUGINS_WRAPPERS_PATH}")
 
 set(PYCC_PLUGIN_WRAPPER_LIST "" CACHE INTERNAL "Internal plugin wrapper list")
 
@@ -48,7 +65,7 @@ function(AddPluginWrapper)
     # Install the wrapper
     install(
             TARGETS ${PLUGIN_WRAPPER_NAME}
-            LIBRARY DESTINATION "${LINUX_INSTALL_PLUGIN_WRAPPERS}"
+            LIBRARY DESTINATION "${INSTALL_PLUGINS_WRAPPERS_PATH}"
     )
 
     # Install the plugin itself if stand alone package
@@ -56,30 +73,33 @@ function(AddPluginWrapper)
     if(PYCC_IS_MASTER_PROJECT)
         install(
                 TARGETS ${PLUGIN_WRAPPER_WRAPPED}
-                LIBRARY DESTINATION ${LINUX_INSTALL_PLUGINS}
+                LIBRARY DESTINATION ${INSTALL_PLUGINS_PATH}
+                RUNTIME DESTINATION ${INSTALL_PLUGINS_PATH}
         )
 
-        # Change the RPATH
-        # The C++ plugin is in $envPrefix/libdir/cloudcompare/plugins
-        # and is linked to libs in 
-        # - $envPrefix/libdir (where Qt / other CloudCompare stuff is)
-        set_property(
-            TARGET ${PLUGIN_WRAPPER_WRAPPED}
-            PROPERTY INSTALL_RPATH
-            "$ORIGIN/../.."
-        )
-
-        # Change the RPATH
-        # The Python plugin wrapper is in $envPrefix/libdir/cloudcompare/plugins-python
-        # and is linked to libs in 
-        # - $envPrefix/libdir/cloudcompare/plugins (where the plugin it wraps is)
-        # - $envPrefix/libdir (where Qt / other CloudCompare stuff is)
-        set_property(
-                TARGET ${PLUGIN_WRAPPER_NAME}
+        if (UNIX AND NOT APPLE)
+            # Change the RPATH
+            # The C++ plugin is in $envPrefix/libdir/cloudcompare/plugins
+            # and is linked to libs in 
+            # - $envPrefix/libdir (where Qt / other CloudCompare stuff is)
+            set_property(
+                TARGET ${PLUGIN_WRAPPER_WRAPPED}
                 PROPERTY INSTALL_RPATH
                 "$ORIGIN/../.."
-                "$ORIGIN/../plugins"
-        )
+            )
+
+            # Change the RPATH
+            # The Python plugin wrapper is in $envPrefix/libdir/cloudcompare/plugins-python
+            # and is linked to libs in 
+            # - $envPrefix/libdir/cloudcompare/plugins (where the plugin it wraps is)
+            # - $envPrefix/libdir (where Qt / other CloudCompare stuff is)
+            set_property(
+                    TARGET ${PLUGIN_WRAPPER_NAME}
+                    PROPERTY INSTALL_RPATH
+                    "$ORIGIN/../.."
+                    "$ORIGIN/../plugins"
+            )
+        endif()
     endif()
 endfunction()
 
@@ -91,8 +111,15 @@ endif()
 # In standalone mode, some libs have to be installed
 # by us.
 if(PYCC_IS_MASTER_PROJECT AND PYCC_PLUGIN_WRAPPER_LIST)
-    install(
+    if (UNIX AND NOT APPLE)
+        install(
+                TARGETS CCPluginAPI
+                LIBRARY DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}
+        )
+    else()
+        install(
             TARGETS CCPluginAPI
-            LIBRARY DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}
-    )
+            RUNTIME DESTINATION ${INSTALL_PLUGINS_PATH}
+        )
+    endif()
 endif()

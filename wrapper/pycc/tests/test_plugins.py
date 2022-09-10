@@ -8,6 +8,10 @@ try:
 except ImportError:
     qM3C2 = None
 else:
+    # This also works:
+    # from PyQt5.QtWidgets import QApplication
+    # import sys
+    #_app = QApplication(sys.argv)
     pycc.InitQApplication();
 
 

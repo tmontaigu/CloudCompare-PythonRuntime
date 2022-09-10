@@ -59,6 +59,7 @@ jobs:
             -DCMAKE_INSTALL_PREFIX=install `
             -DPLUGIN_PYTHON=ON `
             -DPLUGIN_PYTHON_USE_EMBEDDED_MODULES=${{ matrix.use_embedded_modules }} `
+            -DPLUGIN_STANDARD_QM3C2=ON `
             .
 
       - name: Build
@@ -194,7 +195,7 @@ jobs:
         run: |
           conda install -c conda-forge qt=5.12.*
           python -m pip install --upgrade pip
-
+          pip install pytest
 
       - name: Configure MSVC console
         uses: ilammy/msvc-dev-cmd@v1
@@ -214,12 +215,15 @@ jobs:
         working-directory: "./wrapper"
         run: |
           pip install -v .\pycc
+        env: 
+          SKBUILD_CONFIGURE_OPTIONS: "-DPLUGIN_STANDARD_QM3C2=ON"
 
-      - name: test cccorelib & cccorelib
-        run: |
-          pip install pytest
-          pytest wrapper\cccorelib\tests
-          pytest wrapper\pycc\tests
+      - name: test cccorelib
+        run: pytest -v wrapper\cccorelib\tests
+
+      - name: test pycc
+        run: pytest -v wrapper\pycc\tests
+          
 
   Ubuntu-Wheels:
     name: "Ubuntu Wheels"

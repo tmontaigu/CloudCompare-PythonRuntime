@@ -29,3 +29,5 @@ def main():
 if __name__ == '__main__':
     if qM3C2 is not None:
         main()
+    else:
+        exit(125)

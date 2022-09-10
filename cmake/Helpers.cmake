@@ -42,9 +42,6 @@ function(copy_python_dll)
 endfunction()
 
 function(manage_windows_install)
-  set(CC_PYTHON_ENV_NAME "Python")
-  set(CC_PLUGIN_INSTALL_DIR ${CLOUDCOMPARE_DEST_FOLDER}/plugins)
-  set(CC_PYTHON_INSTALL_DIR "${CC_PLUGIN_INSTALL_DIR}/${CC_PYTHON_ENV_NAME}")
 
   getset_python_base_prefix()
 

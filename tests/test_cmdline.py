@@ -9,7 +9,9 @@ def assert_command_runs(*cmd):
     if platform.system() == 'Darwin':
         cmd = ['open', '-a'] + [cmd[0]] + ["--args"] + list(cmd[1:])
     completed_proc = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    if not completed_proc.returncode == 0:
+    if completed_proc.returncode == 125:
+         pytest.skip("test skipped")
+    elif completed_proc.returncode != 0:
         print(f"CloudCompare exited with return code: {completed_proc.returncode}")
         print(completed_proc.stdout.decode())
         assert False, "CloudCompare did not execute successfully"
