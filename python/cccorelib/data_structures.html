@@ -688,6 +688,12 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.KDTree.IndicesVector.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.KDTree.IndicesVector" title="cccorelib.KDTree.IndicesVector"><span class="pre">cccorelib.KDTree.IndicesVector</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.KDTree.IndicesVector.clear" title="Permalink to this definition"></a></dt>
+<dd><p>Clear the contents</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.KDTree.IndicesVector.count">
 <span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.KDTree.IndicesVector" title="cccorelib.KDTree.IndicesVector"><span class="pre">cccorelib.KDTree.IndicesVector</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cccorelib.KDTree.IndicesVector.count" title="Permalink to this definition"></a></dt>
 <dd><p>Return the number of times <code class="docutils literal notranslate"><span class="pre">x</span></code> appears in the list</p>
@@ -702,7 +708,7 @@
 </ol>
 <p>Extend the list by appending all the items in the given list</p>
 <ol class="arabic simple" start="2">
-<li><p>extend(self: cccorelib.KDTree.IndicesVector, L: iterable) -&gt; None</p></li>
+<li><p>extend(self: cccorelib.KDTree.IndicesVector, L: Iterable) -&gt; None</p></li>
 </ol>
 <p>Extend the list by appending all the items in the given list</p>
 </dd></dl>
@@ -779,7 +785,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.TrueKdTree.build">
-<span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.TrueKdTree" title="cccorelib.TrueKdTree"><span class="pre">cccorelib.TrueKdTree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxError</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errorMeasure</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="tools.html#cccorelib.DistanceComputationTools.ERRPOR_MEASURES" title="cccorelib.DistanceComputationTools.ERRPOR_MEASURES"><span class="pre">cccorelib.DistanceComputationTools.ERRPOR_MEASURES</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">ERRPOR_MEASURES.RMS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minPointCountPerCell</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxPointCountPerCell</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progressCb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="others.html#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.TrueKdTree.build" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">cccorelib.TrueKdTree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxError:</span> <span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errorMeasure:</span> <span class="pre">cccorelib.DistanceComputationTools.ERRPOR_MEASURES</span> <span class="pre">=</span> <span class="pre">&lt;ERRPOR_MEASURES.RMS:</span> <span class="pre">0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minPointCountPerCell:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxPointCountPerCell:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progressCb:</span> <span class="pre">cccorelib.GenericProgressCallback</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.TrueKdTree.build" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -909,6 +915,12 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NeighbourCellsSet.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree.NeighbourCellsSet" title="cccorelib.DgmOctree.NeighbourCellsSet"><span class="pre">cccorelib.DgmOctree.NeighbourCellsSet</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.DgmOctree.NeighbourCellsSet.clear" title="Permalink to this definition"></a></dt>
+<dd><p>Clear the contents</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.DgmOctree.NeighbourCellsSet.extend">
 <span class="sig-name descname"><span class="pre">extend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cccorelib.DgmOctree.NeighbourCellsSet.extend" title="Permalink to this definition"></a></dt>
 <dd><p>Overloaded function.</p>
@@ -917,7 +929,7 @@
 </ol>
 <p>Extend the list by appending all the items in the given list</p>
 <ol class="arabic simple" start="2">
-<li><p>extend(self: cccorelib.DgmOctree.NeighbourCellsSet, L: iterable) -&gt; None</p></li>
+<li><p>extend(self: cccorelib.DgmOctree.NeighbourCellsSet, L: Iterable) -&gt; None</p></li>
 </ol>
 <p>Extend the list by appending all the items in the given list</p>
 </dd></dl>
@@ -955,6 +967,12 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.DgmOctree.NeighboursSet.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.DgmOctree.NeighboursSet" title="cccorelib.DgmOctree.NeighboursSet"><span class="pre">cccorelib.DgmOctree.NeighboursSet</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.DgmOctree.NeighboursSet.clear" title="Permalink to this definition"></a></dt>
+<dd><p>Clear the contents</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.DgmOctree.NeighboursSet.extend">
 <span class="sig-name descname"><span class="pre">extend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cccorelib.DgmOctree.NeighboursSet.extend" title="Permalink to this definition"></a></dt>
 <dd><p>Overloaded function.</p>
@@ -963,7 +981,7 @@
 </ol>
 <p>Extend the list by appending all the items in the given list</p>
 <ol class="arabic simple" start="2">
-<li><p>extend(self: cccorelib.DgmOctree.NeighboursSet, L: iterable) -&gt; None</p></li>
+<li><p>extend(self: cccorelib.DgmOctree.NeighboursSet, L: Iterable) -&gt; None</p></li>
 </ol>
 <p>Extend the list by appending all the items in the given list</p>
 </dd></dl>
@@ -1229,7 +1247,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.ScalarField.asArray">
-<span class="sig-name descname"><span class="pre">asArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">float32</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cccorelib.ScalarField.asArray" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">asArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float32</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cccorelib.ScalarField.asArray" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
