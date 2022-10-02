@@ -260,20 +260,26 @@ jobs:
       - name: Install Dependencies
         run: |
           brew install qt@5 ninja
-          python3 -m pip install --upgrade pip
-          python3 -m pip install pytest
+          python3 -m venv venv
+          source venv/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install pytest
           echo "CMAKE_PREFIX_PATH=/usr/local/opt/qt@5" >> $GITHUB_ENV
 
       - name: pip install cccorelib
         working-directory: "./wrapper"
-        run: python3 -m pip install -v ./cccorelib
+        run: |
+          source ../venv/bin/activate
+          python -m pip install -v ./cccorelib
 
       - name: pip install pycc
         working-directory: "./wrapper"
         run: |
-          python3 -m pip install -v ./pycc
+          source ../venv/bin/activate
+          python -m pip install -v ./pycc
 
       - name: test cccorelib & pycc
         run: |
-          python3 -m pytest wrapper/cccorelib/tests
-          python3 -m pytest wrapper/pycc/tests
+          source venv/bin/activate
+          python -m pytest wrapper/cccorelib/tests
+          python -m pytest wrapper/pycc/tests
