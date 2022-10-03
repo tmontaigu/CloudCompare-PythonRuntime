@@ -191,6 +191,17 @@ ___________
     :undoc-members:
     :show-inheritance:
 
+ccIndexedTransformation
+_______________________
+.. seealso::
+
+    C++: :cpp:class:`ccIndexedTransformation`
+
+.. autoclass:: pycc.ccIndexedTransformation
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 WaveformDescriptor
 __________________

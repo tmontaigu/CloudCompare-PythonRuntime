@@ -74,6 +74,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#ccgenericgldisplay">ccGenericGLDisplay</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ccglmatrix">ccGLMatrix</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ccglmatrixd">ccGLMatrixd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ccindexedtransformation">ccIndexedTransformation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#waveformdescriptor">WaveformDescriptor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ccwaveform">ccWaveform</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ccwaveformproxy">ccWaveformProxy</a></li>
@@ -524,7 +525,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccSensor.getAbsoluteTransformation">
-<span class="sig-name descname"><span class="pre">getAbsoluteTransformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccSensor" title="pycc.ccSensor"><span class="pre">pycc.ccSensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">trans</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ccIndexedTransformation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccSensor.getAbsoluteTransformation" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getAbsoluteTransformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccSensor" title="pycc.ccSensor"><span class="pre">pycc.ccSensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">trans</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccIndexedTransformation" title="pycc.ccIndexedTransformation"><span class="pre">pycc.ccIndexedTransformation</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccSensor.getAbsoluteTransformation" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -539,7 +540,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccSensor.getActiveAbsoluteTransformation">
-<span class="sig-name descname"><span class="pre">getActiveAbsoluteTransformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccSensor" title="pycc.ccSensor"><span class="pre">pycc.ccSensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">trans</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ccIndexedTransformation</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccSensor.getActiveAbsoluteTransformation" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getActiveAbsoluteTransformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccSensor" title="pycc.ccSensor"><span class="pre">pycc.ccSensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">trans</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccIndexedTransformation" title="pycc.ccIndexedTransformation"><span class="pre">pycc.ccIndexedTransformation</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccSensor.getActiveAbsoluteTransformation" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -2086,6 +2087,11 @@
 <dd></dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGLMatrix.asArray">
+<span class="sig-name descname"><span class="pre">asArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGLMatrix" title="pycc.ccGLMatrix"><span class="pre">pycc.ccGLMatrix</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float32</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pycc.ccGLMatrix.asArray" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccGLMatrix.clearTranslation">
 <span class="sig-name descname"><span class="pre">clearTranslation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGLMatrix" title="pycc.ccGLMatrix"><span class="pre">pycc.ccGLMatrix</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccGLMatrix.clearTranslation" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -2209,6 +2215,11 @@
 <dd></dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccGLMatrixd.asArray">
+<span class="sig-name descname"><span class="pre">asArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGLMatrixd" title="pycc.ccGLMatrixd"><span class="pre">pycc.ccGLMatrixd</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pycc.ccGLMatrixd.asArray" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccGLMatrixd.clearTranslation">
 <span class="sig-name descname"><span class="pre">clearTranslation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGLMatrixd" title="pycc.ccGLMatrixd"><span class="pre">pycc.ccGLMatrixd</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccGLMatrixd.clearTranslation" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -2301,6 +2312,44 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccGLMatrixd.zRotation">
 <span class="sig-name descname"><span class="pre">zRotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGLMatrixd" title="pycc.ccGLMatrixd"><span class="pre">pycc.ccGLMatrixd</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ccGLMatrixTpl&lt;double&gt;</span></span></span><a class="headerlink" href="#pycc.ccGLMatrixd.zRotation" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="ccindexedtransformation">
+<h2>ccIndexedTransformation<a class="headerlink" href="#ccindexedtransformation" title="Permalink to this heading"></a></h2>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccIndexedTransformation</span></code></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycc.ccIndexedTransformation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccIndexedTransformation</span></span><a class="headerlink" href="#pycc.ccIndexedTransformation" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycc.ccGLMatrix" title="pycc.ccGLMatrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccGLMatrix</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccIndexedTransformation.Interpolate">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Interpolate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interpIndex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trans1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccIndexedTransformation" title="pycc.ccIndexedTransformation"><span class="pre">pycc.ccIndexedTransformation</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">trans2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccIndexedTransformation" title="pycc.ccIndexedTransformation"><span class="pre">pycc.ccIndexedTransformation</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycc.ccIndexedTransformation" title="pycc.ccIndexedTransformation"><span class="pre">pycc.ccIndexedTransformation</span></a></span></span><a class="headerlink" href="#pycc.ccIndexedTransformation.Interpolate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccIndexedTransformation.getIndex">
+<span class="sig-name descname"><span class="pre">getIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccIndexedTransformation" title="pycc.ccIndexedTransformation"><span class="pre">pycc.ccIndexedTransformation</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#pycc.ccIndexedTransformation.getIndex" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccIndexedTransformation.inverse">
+<span class="sig-name descname"><span class="pre">inverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccIndexedTransformation" title="pycc.ccIndexedTransformation"><span class="pre">pycc.ccIndexedTransformation</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycc.ccIndexedTransformation" title="pycc.ccIndexedTransformation"><span class="pre">pycc.ccIndexedTransformation</span></a></span></span><a class="headerlink" href="#pycc.ccIndexedTransformation.inverse" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccIndexedTransformation.setIndex">
+<span class="sig-name descname"><span class="pre">setIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccIndexedTransformation" title="pycc.ccIndexedTransformation"><span class="pre">pycc.ccIndexedTransformation</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccIndexedTransformation.setIndex" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccIndexedTransformation.transposed">
+<span class="sig-name descname"><span class="pre">transposed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccIndexedTransformation" title="pycc.ccIndexedTransformation"><span class="pre">pycc.ccIndexedTransformation</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycc.ccIndexedTransformation" title="pycc.ccIndexedTransformation"><span class="pre">pycc.ccIndexedTransformation</span></a></span></span><a class="headerlink" href="#pycc.ccIndexedTransformation.transposed" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
