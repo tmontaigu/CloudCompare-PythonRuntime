@@ -35,13 +35,25 @@ namespace PyCC
 {
 inline void NoOpDelete(void *) {}
 
+template <class T> py::array_t<T> SpanAsNumpyArray(T *data, py::array::ShapeContainer shape)
+{
+    auto capsule = py::capsule(data, NoOpDelete);
+    return py::array(shape, data, capsule);
+}
+
+template <class T> py::array_t<T> SpanAsNumpyArray(T *data, size_t len)
+{
+    auto capsule = py::capsule(data, NoOpDelete);
+    return py::array(len, data, capsule);
+}
+
 template <class T> py::array_t<T> VectorAsNumpyArray(std::vector<T> &vector)
 {
     // https://stackoverflow.com/questions/44659924/returning-numpy-arrays-via-pybind11
     // https://github.com/pybind/pybind11/issues/1042
-    auto capsule = py::capsule(vector.data(), NoOpDelete);
-    return py::array(vector.size(), vector.data(), capsule);
+   return SpanAsNumpyArray(vector.data(), vector.size());
 }
+
 
 template <class PointCloudType>
 void addPointsFromArrays(PointCloudType &self,

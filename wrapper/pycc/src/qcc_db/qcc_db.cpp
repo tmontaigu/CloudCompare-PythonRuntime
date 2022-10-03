@@ -37,6 +37,7 @@ void define_ccGBLSensor(py::module &);
 void define_ccGenericPrimitive(py::module &);
 void define_ccSphere(py::module &);
 void define_ccGLMatrix(py::module &);
+void define_ccIndexedTransformation(py::module &m);
 void define_ccPlane(py::module &);
 void define_ccTorus(py::module &);
 void define_ccBox(py::module &);
@@ -77,6 +78,7 @@ void define_qcc_db(py::module &m)
 
     define_ccScalarField(m);
     define_ccGLMatrix(m);
+    define_ccIndexedTransformation(m);
     define_ccInteractor(m);
 
     define_ccDrawableObject(m);

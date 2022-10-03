@@ -320,6 +320,16 @@ ___________
    :members:
 
 
+ccIndexedTransformation
+_______________________
+.. seealso::
+
+    Python: :class:`pycc.ccIndexedTransformation`
+
+.. doxygenclass:: ccIndexedTransformation
+   :members:
+
+
 ccScalarField
 _____________
 .. seealso::
