@@ -34,41 +34,56 @@
 
         <Property Id="SOURCEDIRECTORY" Value="Python" />
 
+        <!-- Our directory structure -->
         <Directory Id='TARGETDIR' Name='SourceDir'>
             <Directory Id='ProgramFiles64Folder' Name='PFiles'>
                     <Directory Id='CLOUDCOMPAREDIR' Name='CloudCompare'>
-                        <Component Id='OfficialPythonDLL' Guid='fd589986-9e18-491c-9272-a2ead3a573b9' Win64="yes" >
-                            <File Id='PythonDll' Name='python$(var.PythonSuffix).dll' DiskId='1' Source='$(var.SourceInstallPath)/python$(var.PythonSuffix).dll' KeyPath='yes'/>
-                        </Component>
-
                         <Directory Id='PLUGINSDIR' Name='plugins'>
-                            <Component Id='PythonPlugin' Guid='9d8bbbc0-40d9-4fb8-ac2b-17891ce43cdf' Win64="yes" >
-                                <File Id='PluginDLL' Name='PythonPlugin.dll' DiskId='1' Source='$(var.SourcePluginPath)/PythonPlugin.dll' KeyPath='yes'/>
-                            </Component>
-
-                            <?if $(var.PLUGIN_STANDARD_QM3C2) = "ON" ?>
-                                <Component Id='QM3C2_PLUGIN' Guid='20791491-83e8-4b31-af9f-9e864cfb59c6' Win64="yes">
-                                    <File Id='QM3C2_PLUGIN_DLL' Name='QM3C2_PLUGIN.dll' DiskId='1'
-                                          Source='$(var.SourcePluginPath)/QM3C2_PLUGIN.dll' KeyPath='yes'/>
-                                </Component>
-                            <?endif?>
-
                             <Directory Id='PythonEnvironmentDir' Name="Python"/>
                         </Directory>
 
                         <?if $(var.PLUGIN_STANDARD_QM3C2) = "ON" ?>
-                            <Directory Id='PYTHONPLUGINSDIR' Name='plugins-python'>
-                                <Component Id='QM3C2_PLUGIN_WRAPPER' Guid='22964a74-bcb4-4898-a3fd-be2b261d9e76' Win64="yes">
-                                    <File Id='QM3C2_PLUGIN_WRAPPER_PYD' Name='pym3c2.cp$(var.PythonSuffix)-win_amd64.pyd' DiskId='1'
-                                          Source='$(var.SourceInstallPath)/plugins-python/pym3c2.cp$(var.PythonSuffix)-win_amd64.pyd' KeyPath='yes'/>
-                                </Component>
-                            </Directory>
+                            <Directory Id='PYTHONPLUGINSDIR' Name='plugins-python'/>
                         <?endif?>
                     </Directory>
             </Directory>
         </Directory>
 
+        <!-- Files to put int our installer  -->
+        <DirectoryRef Id="CLOUDCOMPAREDIR">
+            <Component Id='OfficialPythonDLL' Guid='fd589986-9e18-491c-9272-a2ead3a573b9' Win64="yes">
+                <File Id='PythonDll' Name='python$(var.PythonSuffix).dll' DiskId='1'
+                      Source='$(var.SourceInstallPath)/python$(var.PythonSuffix).dll' KeyPath='yes'/>
+            </Component>
+        </DirectoryRef>
 
+        <DirectoryRef Id="PLUGINSDIR">
+            <Component Id='PythonPlugin' Guid='9d8bbbc0-40d9-4fb8-ac2b-17891ce43cdf' Win64="yes">
+                <File Id='PluginDLL' Name='PythonPlugin.dll' DiskId='1'
+                      Source='$(var.SourcePluginPath)/PythonPlugin.dll' KeyPath='yes'/>
+            </Component>
+        </DirectoryRef>
+
+        <?if $(var.PLUGIN_STANDARD_QM3C2) = "ON" ?>
+            <DirectoryRef Id="PLUGINSDIR">
+                <Component Id='QM3C2_PLUGIN' Guid='20791491-83e8-4b31-af9f-9e864cfb59c6' Win64="yes">
+                    <File Id='QM3C2_PLUGIN_DLL' Name='QM3C2_PLUGIN.dll' DiskId='1'
+                          Source='$(var.SourcePluginPath)/QM3C2_PLUGIN.dll' KeyPath='yes'/>
+                </Component>
+            </DirectoryRef>
+
+            <DirectoryRef Id='PYTHONPLUGINSDIR'>
+                <Component Id='QM3C2_PLUGIN_WRAPPER' Guid='22964a74-bcb4-4898-a3fd-be2b261d9e76' Win64="yes">
+                    <File Id='QM3C2_PLUGIN_WRAPPER_PYD' Name='pym3c2.cp$(var.PythonSuffix)-win_amd64.pyd' DiskId='1'
+                          Source='$(var.SourceInstallPath)/plugins-python/pym3c2.cp$(var.PythonSuffix)-win_amd64.pyd'
+                          KeyPath='yes'/>
+                </Component>
+            </DirectoryRef>
+        <?endif?>
+
+
+
+        <!-- Our features -->
         <Feature Id='Complete' Level='1' Title='Complete Plugin installation' Description='The complete package.' Display='expand' ConfigurableDirectory='PLUGINSDIR'>
             <Feature Id='PythonPluginFeature' Level='1' Title='Python Plugin' Description='Python Plugin for CloudCompare'>
                 <ComponentRef Id='PythonPlugin'/>

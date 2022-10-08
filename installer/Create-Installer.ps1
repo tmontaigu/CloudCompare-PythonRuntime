@@ -37,7 +37,8 @@ Write-Host "Localization name: $LocalizationName"
 Write-Host "Environment type : $EnvTypeName"
 Write-Host ""
 
-
+# # Scans the Python environment dir and
+# # generates a Wix source file
 &heat `
     dir "$CloudCompareInstallFolder\plugins\Python" `
     -scom `
@@ -49,7 +50,8 @@ Write-Host ""
     -dr PythonEnvironmentDir `
     -o PythonEnvironment.wxs
 
-
+# Compiles the Wix Source files
+# with the given variables
 &candle `
     -arch x64 `
     -dSourceInstallPath="$CloudCompareInstallFolder" `
@@ -59,6 +61,7 @@ Write-Host ""
 
 $OutputInstallerName = "CloudCompare-PythonPlugin-Setup-$LocalizationName-Python$PythonDllSuffix-$EnvTypeName.msi"
 
+# Link the compiled files together
 &light `
     -ext WixUIExtension `
     .\Installer.wixobj `
