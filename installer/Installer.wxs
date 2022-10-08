@@ -2,7 +2,7 @@
 
 
 <?define SourcePluginPath = "$(var.SourceInstallPath)/plugins" ?>
-
+<?define PLUGIN_STANDARD_QM3C2 = "ON" ?>
 
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
 
@@ -46,20 +46,51 @@
                                 <File Id='PluginDLL' Name='PythonPlugin.dll' DiskId='1' Source='$(var.SourcePluginPath)/PythonPlugin.dll' KeyPath='yes'/>
                             </Component>
 
+                            <?if $(var.PLUGIN_STANDARD_QM3C2) = "ON" ?>
+                                <Component Id='QM3C2_PLUGIN' Guid='20791491-83e8-4b31-af9f-9e864cfb59c6' Win64="yes">
+                                    <File Id='QM3C2_PLUGIN_DLL' Name='QM3C2_PLUGIN.dll' DiskId='1'
+                                          Source='$(var.SourcePluginPath)/QM3C2_PLUGIN.dll' KeyPath='yes'/>
+                                </Component>
+                            <?endif?>
+
                             <Directory Id='PythonEnvironmentDir' Name="Python"/>
                         </Directory>
-                </Directory>
+
+                        <?if $(var.PLUGIN_STANDARD_QM3C2) = "ON" ?>
+                            <Directory Id='PYTHONPLUGINSDIR' Name='plugins-python'>
+                                <Component Id='QM3C2_PLUGIN_WRAPPER' Guid='22964a74-bcb4-4898-a3fd-be2b261d9e76' Win64="yes">
+                                    <File Id='QM3C2_PLUGIN_WRAPPER_PYD' Name='pym3c2.cp$(var.PythonSuffix)-win_amd64.pyd' DiskId='1'
+                                          Source='$(var.SourceInstallPath)/plugins-python/pym3c2.cp$(var.PythonSuffix)-win_amd64.pyd' KeyPath='yes'/>
+                                </Component>
+                            </Directory>
+                        <?endif?>
+                    </Directory>
             </Directory>
         </Directory>
 
 
-        <Feature Id='Complete' Level='1' Title='Python Plugin' Description='The complete package.' Display='expand' ConfigurableDirectory='PLUGINSDIR'>
-            <ComponentRef Id='PythonPlugin' />
-            <ComponentGroupRef Id='PythonEnvironment' />
-            <ComponentRef Id='OfficialPythonDLL' />
+        <Feature Id='Complete' Level='1' Title='Complete Plugin installation' Description='The complete package.' Display='expand' ConfigurableDirectory='PLUGINSDIR'>
+            <Feature Id='PythonPluginFeature' Level='1' Title='Python Plugin' Description='Python Plugin for CloudCompare'>
+                <ComponentRef Id='PythonPlugin'/>
+                <ComponentGroupRef Id='PythonEnvironment'/>
+                <ComponentRef Id='OfficialPythonDLL'/>
+            </Feature>
+
+
+            <?if $(var.PLUGIN_STANDARD_QM3C2) = "ON" ?>
+                <!-- The level is higher than its parent, so it is disabled by default -->
+                <Feature Id='QM3C2_PLUGIN_FEATURE'
+                         Level='2'
+                         Title='qM3C2 Python Wrapper'
+                         Description='Allow using the qM3C2 plugin from Python.'>
+                    <ComponentRef Id='QM3C2_PLUGIN_WRAPPER'/>
+                    <ComponentRef Id='QM3C2_PLUGIN'/>
+                </Feature>
+            <?endif?>
         </Feature>
 
-        <UIRef Id="WixUI_InstallDir" />
+
+        <UIRef Id="WixUI_FeatureTree" />
         <UIRef Id="WixUI_ErrorProgressText" />
     </Product>
 </Wix>
