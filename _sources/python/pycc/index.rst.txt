@@ -17,3 +17,4 @@ It also define classes and functions that allows to interact with the "CloudComp
     data_structures
     primitives
     others
+    plugins

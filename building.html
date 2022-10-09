@@ -51,6 +51,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#building-as-independent-wheels">Building as independent wheels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#supported-cloudcompare-plugins">Supported CloudCompare Plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Building as Plugin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Building as independent wheels</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#other-development-related-things">Other development related things</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#running-the-tests">Running the tests</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#building-the-documentation">Building the documentation</a></li>
@@ -120,7 +125,7 @@ how to compile CloudCompare from source, otherwise refer
 to the CloudCompare documentation on how to do.</p>
 <p>To Compile this plugin you need to have Python installed.</p>
 <p>This plugin is known to compile and work with CloudCompare
-commit <cite>v2.12.2</cite>.</p>
+commit <cite>v2.12.4</cite>.</p>
 <p>Python 3.8 or more is required to build as a plugin.</p>
 <section id="windows">
 <h3>Windows<a class="headerlink" href="#windows" title="Permalink to this heading"></a></h3>
@@ -239,6 +244,25 @@ Run  <cite>pip install –upgrade pip</cite> to get the latest version</p>
 <span class="go">pip install wrapper/pycc</span>
 </pre></div>
 </div>
+</section>
+<section id="supported-cloudcompare-plugins">
+<h2>Supported CloudCompare Plugins<a class="headerlink" href="#supported-cloudcompare-plugins" title="Permalink to this heading"></a></h2>
+<p>Some CloudCompare plugins (the ones in C++) are available through python.
+And are compiled only if the corresponding C++ plugin is also being compiled.</p>
+<p>Currently the only available “plugin wrapper” is one for <code class="docutils literal notranslate"><span class="pre">qM3C2</span></code> plugin.</p>
+<p>To compile this wrapper do:</p>
+<section id="id1">
+<h3>Building as Plugin<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<p>Add <code class="docutils literal notranslate"><span class="pre">-DPLUGIN_STANDARD_QM3C2=ON</span></code> to the cmake configuration.</p>
+</section>
+<section id="id2">
+<h3>Building as independent wheels<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<p>Before the <code class="docutils literal notranslate"><span class="pre">pip</span></code> command, add <code class="docutils literal notranslate"><span class="pre">-DPLUGIN_STANDARD_QM3C2=ON</span></code>
+to the <code class="docutils literal notranslate"><span class="pre">SKBUILD_CONFIGURE_OPTIONS</span></code> environment variable.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">SKBUILD_CONFIGURE_OPTIONS</span><span class="o">=</span><span class="s2">&quot;-DPLUGIN_STANDARD_QM3C2=ON&quot;</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="other-development-related-things">
 <h2>Other development related things<a class="headerlink" href="#other-development-related-things" title="Permalink to this heading"></a></h2>

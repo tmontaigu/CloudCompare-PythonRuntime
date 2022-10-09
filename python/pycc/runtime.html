@@ -59,6 +59,7 @@
 <li class="toctree-l2"><a class="reference internal" href="data_structures.html">CloudCompare Data Structures &amp; Interfaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="primitives.html">Primitives</a></li>
 <li class="toctree-l2"><a class="reference internal" href="others.html">Others</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html">plugins</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../cpp/qCC_db/index.html">qCC_db (C++)</a></li>
@@ -124,6 +125,17 @@ the command line mode, otherwise returns <cite>None</cite>.</p>
 the command line mode, otherwise returns <cite>None</cite>.</p>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="pycc.InitQApplication">
+<span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">InitQApplication</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.InitQApplication" title="Permalink to this definition"></a></dt>
+<dd><p>Some functions and plugins always need to display
+GUI dialogs, thus they require an active QApplication.
+While this is not a problem when in plugin mode as CloudCompare is the QApplication,
+in stand alone mode it is a problem since CloudCompare is not running.</p>
+<p>This function setups a QApplication so that dialogs can be displayed.
+Does nothing in plugin mode.</p>
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.PythonPluginInterface">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">PythonPluginInterface</span></span><a class="headerlink" href="#pycc.PythonPluginInterface" title="Permalink to this definition"></a></dt>
@@ -169,6 +181,11 @@ Get selected objects, deselect/set selected state for entities…</p>
 <span class="sig-name descname"><span class="pre">addToDB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">updateZoom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autoExpandDBTree</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkDimensions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autoRedraw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.addToDB" title="Permalink to this definition"></a></dt>
 <dd><p>Adds the object to the GUI DB Tree</p>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccPythonInstance.app">
+<span class="sig-name descname"><span class="pre">app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pycc_runtime.ccMainAppInterface</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.app" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPythonInstance.dbRootObject">
