@@ -2,6 +2,7 @@
 #include <QString>
 #include <QDir>
 #include <QDirIterator>
+#include <QtGlobal>
 
 #include "casters.h"
 
@@ -11,7 +12,7 @@
 namespace py = pybind11;
 
 
-#ifdef Q_OS_WIN32
+#if defined(Q_OS_WIN32)
 const char *MODULE_EXTENSION = ".pyd";
 
 
@@ -27,7 +28,24 @@ QString getPluginsWrappersPath()
     return pluginPath;
 #endif
 }
+#elif defined(Q_OS_MACOS)
+const char *MODULE_EXTENSION = ".so";
 
+QString getPluginsWrappersPath()
+{
+#ifdef PYCC_STAND_ALONE
+    py::module_ sys = py::module_::import("sys");
+    const QString envPrefix = sys.attr("prefix").cast<QString>();
+    QString pluginPath = QString("%1/lib/cloudcompare/plugins-python").arg(envPrefix);
+#else
+    // This point to $InstallFolder/CloudCompare.app/Contents/MacOS
+    // We store python plugin wrappers in $InstallFolder/CloudCompare.app/Contents/PlugIns/ccPythonPlugins
+    QDir appDir = QCoreApplication::applicationDirPath();
+    appDir.cdUp();
+    QString pluginPath = QString("%1/PlugIns/ccPythonPlugins").arg(appDir.absolutePath());
+#endif
+    return pluginPath;
+}
 #else
 const char *MODULE_EXTENSION = ".so";
 
@@ -47,6 +65,7 @@ QString guessPlatlibdir()
 QString getPluginsWrappersPath()
 {
 #ifdef PYCC_STAND_ALONE
+    // We put the python wrapper in $venvPrefix/lib(64)/cloudcompare/plugins-python
     py::module_ sys = py::module_::import("sys");
     const QString envPrefix = sys.attr("prefix").cast<QString>();
     const QString platlibdir = guessPlatlibdir();

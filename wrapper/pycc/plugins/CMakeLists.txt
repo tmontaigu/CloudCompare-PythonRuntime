@@ -9,7 +9,23 @@ else()
 endif()
 
 
-if (UNIX AND NOT APPLE)
+
+# The goal of the following if chain is to set 2 variables
+# - INSTALL_PLUGINS_PATH: Where we are going to install the original C++ plugin
+#   (Should be the same as CC when compiling in plugin mode)
+# - INSTALL_PLUGINS_WRAPPERS_PATH: Where we are going to install the python
+#    wrapper
+if (APPLE)
+    if (PYCC_IS_MASTER_PROJECT)
+        include(GNUInstallDirs)
+        set(INSTALL_PLUGINS_PATH "${CMAKE_INSTALL_FULL_LIBDIR}/cloudcompare/plugins")
+        set(INSTALL_PLUGINS_WRAPPERS_PATH "${CMAKE_INSTALL_FULL_LIBDIR}/cloudcompare/plugins-python")
+    else()
+        set(CLOUDCOMPARE_MAC_BASE_DIR ${CMAKE_INSTALL_PREFIX}/${CLOUDCOMPARE_DEST_FOLDER}/CloudCompare.app)
+        set(INSTALL_PLUGINS_PATH "${CLOUDCOMPARE_MAC_BASE_DIR}/Contents/PlugIns/ccPlugins")
+        set(INSTALL_PLUGINS_WRAPPERS_PATH "${CLOUDCOMPARE_MAC_BASE_DIR}/Contents/PlugIns/ccPythonPlugins")
+    endif()
+elseif (UNIX)
     if (PYCC_IS_MASTER_PROJECT)
         include(GNUInstallDirs)
         # This is normally defined by CloudCompare's CMakeLists
@@ -18,7 +34,7 @@ if (UNIX AND NOT APPLE)
 
     set(INSTALL_PLUGINS_PATH "${LINUX_INSTALL_SHARED_DESTINATION}/plugins")
     set(INSTALL_PLUGINS_WRAPPERS_PATH "${LINUX_INSTALL_SHARED_DESTINATION}/plugins-python")
-elseif(WIN32)
+elseif (WIN32)
     if (PYCC_IS_MASTER_PROJECT)
         set(INSTALL_PLUGINS_PATH "pycc/plugins-python")
         set(INSTALL_PLUGINS_WRAPPERS_PATH "pycc/plugins-python")
@@ -76,8 +92,29 @@ function(AddPluginWrapper)
                 LIBRARY DESTINATION ${INSTALL_PLUGINS_PATH}
                 RUNTIME DESTINATION ${INSTALL_PLUGINS_PATH}
         )
+        if (APPLE)
+            # Change the RPATH
+            # The C++ plugin is in $envPrefix/libdir/cloudcompare/plugins
+            # and is linked to libs in
+            # - $envPrefix/libdir (where Qt / other CloudCompare stuff is)
+            set_property(
+                    TARGET ${PLUGIN_WRAPPER_WRAPPED}
+                    PROPERTY INSTALL_RPATH
+                    "@loader_path/../.."
+            )
 
-        if (UNIX AND NOT APPLE)
+            # Change the RPATH
+            # The Python plugin wrapper is in $envPrefix/libdir/cloudcompare/plugins-python
+            # and is linked to libs in
+            # - $envPrefix/libdir/cloudcompare/plugins (where the plugin it wraps is)
+            # - $envPrefix/libdir (where Qt / other CloudCompare stuff is)
+            set_property(
+                    TARGET ${PLUGIN_WRAPPER_NAME}
+                    PROPERTY INSTALL_RPATH
+                    "@loader_path/../.."
+                    "@loader_path/../plugins"
+            )
+        elseif (UNIX)
             # Change the RPATH
             # The C++ plugin is in $envPrefix/libdir/cloudcompare/plugins
             # and is linked to libs in 

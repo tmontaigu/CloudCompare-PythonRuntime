@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: 'v2.12.2'
+          ref: 'v2.12.4'
           submodules: true
 
       - name: Clone PythonPlugin
@@ -79,7 +79,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: 'v2.12.2'
+          ref: 'v2.12.4'
           submodules: true
 
       - name: Clone PythonPlugin
@@ -140,7 +140,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: 'v2.12.2'
+          ref: 'v2.12.4'
           submodules: true
 
       - name: Clone PythonPlugin
@@ -159,11 +159,13 @@ jobs:
         run: |
           mkdir build
           cmake  `
+            --log-level=debug `
             -G Ninja `
             -B build `
             -DCMAKE_BUILD_TYPE=Release `
             -DCMAKE_INSTALL_PREFIX=install `
             -DPLUGIN_PYTHON=ON `
+            -DPLUGIN_STANDARD_QM3C2=ON `
             .
 
       - name: Build
@@ -215,7 +217,7 @@ jobs:
         working-directory: "./wrapper"
         run: |
           pip install -v .\pycc
-        env: 
+        env:
           SKBUILD_CONFIGURE_OPTIONS: "-DPLUGIN_STANDARD_QM3C2=ON"
 
       - name: test cccorelib
@@ -223,7 +225,7 @@ jobs:
 
       - name: test pycc
         run: pytest -v wrapper\pycc\tests
-          
+
 
   Ubuntu-Wheels:
     name: "Ubuntu Wheels"
@@ -279,16 +281,21 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install pytest
           echo "CMAKE_PREFIX_PATH=/usr/local/opt/qt@5" >> $GITHUB_ENV
+
       - name: pip install cccorelib
         working-directory: "./wrapper"
         run: |
           source ../venv/bin/activate
           python -m pip install -v ./cccorelib
+
       - name: pip install pycc
         working-directory: "./wrapper"
         run: |
           source ../venv/bin/activate
           python -m pip install -v ./pycc
+        env:
+          SKBUILD_CONFIGURE_OPTIONS: "-DPLUGIN_STANDARD_QM3C2=ON"
+
       - name: test cccorelib & pycc
         run: |
           source venv/bin/activate
