@@ -67,7 +67,7 @@ typename std::enable_if<std::is_same<T, float>::value, void>::type define_scalar
 // We do not set a QApplication up by default in stand alone
 // as we think user might want to do it themselves if they plan on using PyQt5 for example
 // but we may have to change that.
-void InitializeQApplication()
+void InitQApplication()
 {
 #ifdef PYCC_STAND_ALONE
 #ifdef Q_OS_WIN32
@@ -161,7 +161,7 @@ void define_pycc(py::module &m)
     define_qcc_db(m);
     define_qcc_io(m);
 
-    m.def("InitQApplication", &InitializeQApplication);
+    m.def("InitQApplication", &InitQApplication);
 
     try
     {

@@ -34,6 +34,17 @@ Runtime
 .. autofunction:: pycc.RegisterAction
 
 
+.. autofunction:: pycc.InitQApplication
+
+    Some functions and plugins always need to display
+    GUI dialogs, thus they require an active QApplication.
+    While this is not a problem when in plugin mode as CloudCompare is the QApplication,
+    in stand alone mode it is a problem since CloudCompare is not running.
+
+    This function setups a QApplication so that dialogs can be displayed.
+    Does nothing in plugin mode.
+
+
 .. autoclass:: pycc.PythonPluginInterface
     :members:
     :undoc-members:

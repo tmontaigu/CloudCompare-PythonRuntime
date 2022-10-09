@@ -165,6 +165,34 @@ To do so:
     pip install wrapper/pycc
 
 
+Supported CloudCompare Plugins
+------------------------------
+
+Some CloudCompare plugins (the ones in C++) are available through python.
+And are compiled only if the corresponding C++ plugin is also being compiled.
+
+Currently the only available "plugin wrapper" is one for ``qM3C2`` plugin.
+
+To compile this wrapper do:
+
+Building as Plugin
+__________________
+
+Add ``-DPLUGIN_STANDARD_QM3C2=ON`` to the cmake configuration.
+
+Building as independent wheels
+______________________________
+
+Before the ``pip`` command, add ``-DPLUGIN_STANDARD_QM3C2=ON``
+to the ``SKBUILD_CONFIGURE_OPTIONS`` environment variable.
+
+
+.. code-block:: bash
+
+    export SKBUILD_CONFIGURE_OPTIONS="-DPLUGIN_STANDARD_QM3C2=ON"
+
+
+
 Other development related things
 --------------------------------
 
