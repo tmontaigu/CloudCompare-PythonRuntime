@@ -64,6 +64,7 @@ class PythonInterpreter final : public QObject
     /// Execution functions (and slots)
   public Q_SLOTS:
     bool executeFile(const std::string &filePath);
+    void executeFile2(const std::string &filepath, pybind11::object outout);
     void executeCode(const std::string &code, QListWidget *output);
     void executeCodeWithState(const std::string &code,
                               QListWidget *output,

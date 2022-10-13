@@ -440,10 +440,126 @@ struct PythonPluginCommand final : public ccCommandLineInterface::Command
     PythonInterpreter *interpreter{nullptr};
 };
 
+class PyStringIOLogger : public ccLog
+{
+  public:
+    explicit PyStringIOLogger(py::object stringIO);
+
+    ~PyStringIOLogger() override = default;
+
+    void logMessage(const QString &message, int level) override;
+
+  private:
+    py::object m_writeMethod;
+    std::mutex m_lock;
+};
+
+PyStringIOLogger::PyStringIOLogger(py::object stringIO) : m_writeMethod(stringIO.attr("write")), m_lock() {}
+
+void PyStringIOLogger::logMessage(const QString &message, int level)
+{
+    std::lock_guard<std::mutex> guard(m_lock);
+    const std::string stdMsg = message.toStdString();
+    m_writeMethod(stdMsg.c_str());
+    m_writeMethod('\n');
+}
+
+struct PythonTestCommand final : public ccCommandLineInterface::Command
+{
+    explicit PythonTestCommand(PythonInterpreter *interpreter_):
+          ccCommandLineInterface::Command("PYTHON TESTS", "PYTHON_TESTS"),
+          interpreter(interpreter_) {}
+
+    bool process(ccCommandLineInterface& cmd) override {
+        if (!Py_IsInitialized())
+        {
+            return cmd.error("[PythonPlugin] Python is not properly initialized");
+        }
+
+        if (cmd.arguments().isEmpty()) {
+            return cmd.error("[PythonPlugin] Expected path to a directory with test files");
+        }
+
+        const QString path = cmd.arguments().takeFirst();
+
+        py::object memStream;
+        py::object seekStreamTo;
+        PyStringIOLogger *logger;
+        try {
+            memStream = py::module_::import("io").attr("StringIO")();
+            seekStreamTo = memStream.attr("seek");
+            logger = new PyStringIOLogger(memStream);
+        } catch (const std::exception& e) {
+            const QString msg = QString("Failed to setup test runner: %1").arg(e.what());
+            return cmd.error(msg);
+        }
+
+        ccLog* oldLogInstance = ccLog::TheInstance();
+
+        QDir scriptDir(path);
+        QDirIterator dirIterator(scriptDir);
+        while (dirIterator.hasNext())
+        {
+            const QString entry = dirIterator.next();
+            if (!entry.endsWith(".py")) {
+                continue;
+            }
+
+            const QFileInfo info(entry);
+
+            ccLog::RegisterInstance(logger);
+            seekStreamTo(0);
+
+            const std::string filePath = entry.toStdString();
+            bool success;
+            try {
+                interpreter->executeFile2(filePath, memStream);
+                success = true;
+            } catch (const std::exception& e) {
+                success = false;
+                plgPrint() << e.what();
+            }
+
+            ccLog::RegisterInstance(oldLogInstance);
+            try
+            {
+                if (success)
+                {
+                    plgPrint() << info.fileName() << " [OK]";
+                }
+                else
+                {
+                    plgPrint() << info.fileName() << " [FAIL]";
+                    const auto actualLen = memStream.attr("tell")().cast<int64_t>();
+                    auto wholePythonString = memStream.attr("getvalue")().cast<py::str>();
+                    auto sliceString = wholePythonString[py::slice(0, actualLen, 1)].cast<py::str>();
+                    const std::string outputString(sliceString);
+                    plgPrint() << "Captured Output:";
+                    plgPrint() << outputString.c_str();
+                }
+            }
+            catch (const std::exception &e)
+            {
+                return cmd.error(e.what());
+            }
+        }
+
+        ccLog::RegisterInstance(oldLogInstance);
+        delete logger;
+
+        return true;
+    }
+
+    PythonInterpreter *interpreter{nullptr};
+};
+
+
 void PythonPlugin::registerCommands(ccCommandLineInterface *cmd)
 {
     cmd->registerCommand(
         ccCommandLineInterface::Command::Shared(new PythonPluginCommand(&m_interp)));
+    cmd->registerCommand(
+        ccCommandLineInterface::Command::Shared(new PythonTestCommand(&m_interp)));
     Runtime::setCmdLineInterfaceInstance(cmd);
 }
 

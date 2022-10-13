@@ -75,7 +75,7 @@ template <enum ccLog::MessageLevelFlags level> class PluginLogger : public ccLog
   public:
     PluginLogger() : ccLogger<level>()
     {
-        this->m_message += "[PythonPlugin]";
+        this->m_message += "[PythonPlugin] ";
     }
 
     //    friend PluginLogger& endl(PluginLogger<level>& logger) {

@@ -22,6 +22,8 @@
 
 #include <utility>
 
+#include <ccLog.h>
+
 namespace py = pybind11;
 
 /// This class redirects python's stdout and stderr

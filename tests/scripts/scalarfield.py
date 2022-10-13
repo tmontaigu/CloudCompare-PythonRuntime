@@ -1,41 +1,45 @@
 import cccorelib
 import pycc
+import unittest
 
 cc = pycc.GetInstance()
 cloud = cc.clouds()[0].pc
-
-assert cccorelib.ScalarFieldTools.computeMeanScalarValue(cloud) == 8204.2490234375
-assert cccorelib.ScalarFieldTools.computeMeanSquareScalarValue(cloud) == 93043936.0
-assert cccorelib.ScalarFieldTools.computeScalarFieldGradient(cloud, 0, False) == 0
-
-assert cccorelib.ScalarFieldTools.computeScalarFieldExtremas(cloud) == (0, 37522.00)
-assert cccorelib.ScalarFieldTools.countScalarFieldValidValues(cloud) == 10_683
+print(len(cc.clouds()))
 
 
-classificationSf = cloud.getScalarField(cloud.getScalarFieldIndexByName("Classification"))
-assert classificationSf is not None
-assert classificationSf.getName() == "Classification"
+class TestCase(unittest.TestCase):
+    def run_test(self):
+        self.assertEqual(cloud.size(), 10_683)
 
-classificationSf.setName("classification")
-assert classificationSf.getName() == "classification"
+        self.assertEqual(cccorelib.ScalarFieldTools.computeMeanScalarValue(cloud), 8203.892578125)
+        self.assertEqual(cccorelib.ScalarFieldTools.computeMeanSquareScalarValue(cloud), 93042544.0)
+        self.assertEqual(cccorelib.ScalarFieldTools.computeScalarFieldGradient(cloud, 0, False), 0)
 
-classificationSf.computeMinAndMax()
+        self.assertEqual(cccorelib.ScalarFieldTools.countScalarFieldValidValues(cloud), 10_683)
 
-assert classificationSf.getMax() == 11
-assert classificationSf.getMin() == 11
+        classificationSf = cloud.getScalarField(cloud.getScalarFieldIndexByName("Classification"))
+        self.assertIsNotNone(classificationSf)
+        self.assertEqual(classificationSf.getName(), "Classification")
 
-classificationSf.fill(0)
+        classificationSf.computeMinAndMax()
 
-classificationSf.computeMinAndMax()
+        self.assertEqual(classificationSf.getMax(), 11)
+        self.assertEqual(classificationSf.getMin(), 11)
 
-assert classificationSf.getMax() == 0
-assert classificationSf.getMin() == 0
+        classificationSf.fill(0)
+        classificationSf.computeMinAndMax()
+
+        self.assertEqual(classificationSf.getMax(), 0)
+        self.assertEqual(classificationSf.getMin(), 0)
+
+        classificationArray = classificationSf.asArray()
+        classificationArray[:] = 17
+        classificationSf.computeMinAndMax()
+
+        self.assertEqual(classificationSf.getMax(), 17)
+        self.assertEqual(classificationSf.getMin(), 17)
 
 
-classificationArray = classificationSf.asArray()
-classificationArray[:] = 17
+if __name__ == '__main__':
+    TestCase().run_test()
 
-classificationSf.computeMinAndMax()
-
-assert classificationSf.getMax() == 17
-assert classificationSf.getMin() == 17

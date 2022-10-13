@@ -86,6 +86,27 @@ bool PythonInterpreter::executeFile(const std::string &filepath)
     return success;
 }
 
+void PythonInterpreter::executeFile2(const std::string &filepath, pybind11::object outout)
+{
+    if (m_isExecuting)
+    {
+        return;
+    }
+    Q_EMIT executionStarted();
+
+
+    //const auto movePolicy = py::return_value_policy::move;
+    //py::object newStdout = py::cast(ccConsoleOutput(), movePolicy);
+    //py::object newStderr = py::cast(ccConsoleOutput(), movePolicy);
+    PyStdErrOutStreamRedirect r{outout, outout};
+
+    py::dict globals = CreateGlobals();
+    globals["__file__"] = filepath;
+    py::eval_file(filepath, globals);
+
+    Q_EMIT executionFinished();
+}
+
 template <pybind11::eval_mode mode>
 void PythonInterpreter::executeCodeString(const std::string &code,
                                           QListWidget *output,
