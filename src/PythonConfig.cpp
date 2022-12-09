@@ -368,7 +368,7 @@ void PythonConfig::initFromPythonExecutable(const QString &pythonExecutable)
     m_type = Type::Unknown;
 
     const QString pythonPathScript = QStringLiteral(
-        "import os;import sys;print(os.pathsep.join(sys.path[1:]), sys.prefix, end='')");
+        "import os;import sys;print(os.pathsep.join(sys.path[1:]));print(sys.prefix, end='')");
 
     QProcess pythonProcess;
     pythonProcess.setProgram(pythonExecutable);
@@ -379,12 +379,13 @@ void PythonConfig::initFromPythonExecutable(const QString &pythonExecutable)
     const QString result =
         QTextCodec::codecForName("utf-8")->toUnicode(pythonProcess.readAllStandardOutput());
 
-    QStringList pathsAndHome = result.split(' ');
+    QStringList pathsAndHome = result.split('\n');
 
     if (pathsAndHome.size() != 2)
     {
-        qWarning() << "'" << pathsAndHome
-                   << "' could not be parsed as a list if paths and a home path";
+        plgWarning() << "'" << result
+                   << "' could not be parsed as a list if paths and a home path."
+                   << "Expected 2 strings found " << pathsAndHome.size();
         return;
     }
 
