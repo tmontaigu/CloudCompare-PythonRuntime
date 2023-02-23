@@ -9,6 +9,6 @@
     <String Id="InstallDirDlgBannerBitmap" Overridable="yes">WixUI_Bmp_Banner</String>
     <String Id="InstallDirDlgFolderLabel" Overridable="yes">
         Sélectionnez, le dossier dans lequel CloudCompare.exe se situe.
-        CloudCompare v2.12.alpha requis.
+        CloudCompare v2.13.alpha requis.
     </String>
 </WixLocalization>

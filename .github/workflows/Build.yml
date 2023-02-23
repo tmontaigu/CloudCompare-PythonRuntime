@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: 'v2.12.4'
+          ref: 'e76bebd3'
           submodules: true
 
       - name: Clone PythonPlugin
@@ -79,7 +79,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: 'v2.12.4'
+          ref: 'e76bebd3'
           submodules: true
 
       - name: Clone PythonPlugin
@@ -140,7 +140,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: 'v2.12.4'
+          ref: 'e76bebd3'
           submodules: true
 
       - name: Clone PythonPlugin
