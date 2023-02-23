@@ -95,6 +95,6 @@ void define_cc2DLabel(py::module &m)
                     (bool (cc2DLabel::*)(const cc2DLabel::PickedPoint &)) &
                         cc2DLabel::addPickedPoint,
                     "pp"_a);
-    Pycc2DLabel.def("getPickedPoint", &cc2DLabel::getPickedPoint, "index"_a);
-    Pycc2DLabel.def("setRelativeMarkerScale", &cc2DLabel::setRelativeMarkerScale, "scale"_a);
+    Pycc2DLabel.def("getPickedPoint",(const cc2DLabel::PickedPoint & (cc2DLabel::*)(unsigned) const) &cc2DLabel::getPickedPoint, "index"_a);
+    Pycc2DLabel.def("getPickedPoint",(cc2DLabel::PickedPoint & (cc2DLabel::*)(unsigned)) &cc2DLabel::getPickedPoint, "index"_a);
 }

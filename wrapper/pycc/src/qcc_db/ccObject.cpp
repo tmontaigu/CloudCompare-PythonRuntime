@@ -159,7 +159,6 @@ void define_ccObject(py::module &m)
         .def("applyGLTransformation_recursive",
              &ccHObject::applyGLTransformation_recursive,
              "trans"_a = nullptr)
-        .def("getUniqueIDForDisplay", &ccHObject::getUniqueIDForDisplay)
         .def("getGLTransformationHistory", &ccHObject::getGLTransformationHistory)
         .def("setGLTransformationHistory", &ccHObject::setGLTransformationHistory, "mat"_a)
         .def("resetGLTransformationHistory", &ccHObject::resetGLTransformationHistory);

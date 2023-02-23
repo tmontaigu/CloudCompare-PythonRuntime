@@ -40,6 +40,8 @@ void define_ccViewPortParameters(py::module &m)
         .def_readwrite("zNear", &ccViewportParameters::zNear)
         .def_readwrite("zFar", &ccViewportParameters::zFar)
         .def_readwrite("fov_deg", &ccViewportParameters::fov_deg)
+        .def_readwrite("nearClippingDepth", &ccViewportParameters::nearClippingDepth)
+        .def_readwrite("farClippingDepth", &ccViewportParameters::farClippingDepth)
         .def_readwrite("cameraAspectRatio", &ccViewportParameters::cameraAspectRatio)
         .def(py::init<>())
         .def("setPivotPoint", &ccViewportParameters::setPivotPoint, "P"_a, "autoUpdateFocal"_a)
@@ -48,10 +50,6 @@ void define_ccViewPortParameters(py::module &m)
         .def("getCameraCenter", &ccViewportParameters::getCameraCenter)
         .def("setFocalDistance", &ccViewportParameters::setFocalDistance, "distance"_a)
         .def("getFocalDistance", &ccViewportParameters::getFocalDistance)
-        .def_static(
-            "IncrementToZNearCoef", &ccViewportParameters::IncrementToZNearCoef, "i"_a, "iMax"_a)
-        .def_static(
-            "ZNearCoefToIncrement", &ccViewportParameters::ZNearCoefToIncrement, "coef"_a, "iMax"_a)
         .def("computeViewMatrix", &ccViewportParameters::computeViewMatrix)
         .def("computeScaleMatrix",
              [](const ccViewportParameters &self, const py::sequence &glViewPort) {
