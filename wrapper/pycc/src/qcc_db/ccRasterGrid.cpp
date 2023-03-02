@@ -69,7 +69,8 @@ void define_ccRasterGrid(py::module &m)
         .value("FILL_MAXIMUM_HEIGHT", ccRasterGrid::EmptyCellFillOption::FILL_MAXIMUM_HEIGHT)
         .value("FILL_CUSTOM_HEIGHT", ccRasterGrid::EmptyCellFillOption::FILL_CUSTOM_HEIGHT)
         .value("FILL_AVERAGE_HEIGHT", ccRasterGrid::EmptyCellFillOption::FILL_AVERAGE_HEIGHT)
-        .value("INTERPOLATE", ccRasterGrid::EmptyCellFillOption::INTERPOLATE)
+        .value("INTERPOLATE_DELAUNAY", ccRasterGrid::EmptyCellFillOption::INTERPOLATE_DELAUNAY)
+        .value("KRIGING", ccRasterGrid::EmptyCellFillOption::KRIGING)
         .export_values();
 
     PyRasterGrid.def(py::init<>())
