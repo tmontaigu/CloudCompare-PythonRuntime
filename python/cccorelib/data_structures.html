@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CCCoreLib Data Structures &amp; Interfaces &mdash; CloudCompare-PythonPlugin  documentation</title>
@@ -31,11 +31,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> CloudCompare-PythonPlugin
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            CloudCompare-PythonPlugin
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -113,7 +117,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">cccorelib (Python)</a></li>
       <li class="breadcrumb-item active">CCCoreLib Data Structures &amp; Interfaces</li>
       <li class="wy-breadcrumbs-aside">
@@ -752,18 +756,18 @@
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="cccorelib.KDTree.findPointBelowDistance">
-<span class="sig-name descname"><span class="pre">findPointBelowDistance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.KDTree" title="cccorelib.KDTree"><span class="pre">cccorelib.KDTree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">queryPoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxDist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.KDTree.findPointBelowDistance" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cccorelib.KDTree.findPointsLyingToDistance">
-<span class="sig-name descname"><span class="pre">findPointsLyingToDistance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.KDTree" title="cccorelib.KDTree"><span class="pre">cccorelib.KDTree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">queryPoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.KDTree.IndicesVector" title="cccorelib.KDTree.IndicesVector"><span class="pre">cccorelib.KDTree.IndicesVector</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cccorelib.KDTree.findPointsLyingToDistance" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="cccorelib.KDTree.findNearestNeighbourWithMaxDist">
+<span class="sig-name descname"><span class="pre">findNearestNeighbourWithMaxDist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.KDTree" title="cccorelib.KDTree"><span class="pre">cccorelib.KDTree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">queryPoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxDist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.KDTree.findNearestNeighbourWithMaxDist" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.KDTree.getAssociatedCloud">
 <span class="sig-name descname"><span class="pre">getAssociatedCloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.KDTree" title="cccorelib.KDTree"><span class="pre">cccorelib.KDTree</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cccorelib.GenericIndexedCloud" title="cccorelib.GenericIndexedCloud"><span class="pre">cccorelib.GenericIndexedCloud</span></a></span></span><a class="headerlink" href="#cccorelib.KDTree.getAssociatedCloud" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.KDTree.radiusSearch">
+<span class="sig-name descname"><span class="pre">radiusSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.KDTree" title="cccorelib.KDTree"><span class="pre">cccorelib.KDTree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">queryPoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.KDTree.IndicesVector" title="cccorelib.KDTree.IndicesVector"><span class="pre">cccorelib.KDTree.IndicesVector</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cccorelib.KDTree.radiusSearch" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

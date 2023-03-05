@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CCCoreLib Tools &mdash; CloudCompare-PythonPlugin  documentation</title>
@@ -31,11 +31,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> CloudCompare-PythonPlugin
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            CloudCompare-PythonPlugin
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -86,7 +90,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">cccorelib (Python)</a></li>
       <li class="breadcrumb-item active">CCCoreLib Tools</li>
       <li class="wy-breadcrumbs-aside">
@@ -337,14 +341,14 @@
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">segment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cccorelib.ManualSegmentationTools.segment" title="Permalink to this definition"></a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>segment(aCloud: cccorelib.GenericIndexedCloudPersist, poly: cccorelib.Polyline, keppInside: bool, viewMat: float = None) -&gt; cccorelib.ReferenceCloud</p></li>
+<li><p>segment(aCloud: cccorelib.GenericIndexedCloudPersist, poly: cccorelib.Polyline, keepInside: bool, viewMat: float = None) -&gt; cccorelib.ReferenceCloud</p></li>
 <li><p>segment(cloud: cccorelib.GenericIndexedCloudPersist, minDist: float, maxDist: float, outside: bool = False) -&gt; cccorelib.ReferenceCloud</p></li>
 </ol>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.ManualSegmentationTools.segmentMesh">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">segmentMesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theMesh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="data_structures.html#cccorelib.GenericIndexedMesh" title="cccorelib.GenericIndexedMesh"><span class="pre">cccorelib.GenericIndexedMesh</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointsIndexes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="data_structures.html#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointsWillBeInside</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progressCb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="others.html#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destCloud</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="data_structures.html#cccorelib.GenericIndexedCloud" title="cccorelib.GenericIndexedCloud"><span class="pre">cccorelib.GenericIndexedCloud</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indexShift</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="data_structures.html#cccorelib.GenericIndexedMesh" title="cccorelib.GenericIndexedMesh"><span class="pre">cccorelib.GenericIndexedMesh</span></a></span></span><a class="headerlink" href="#cccorelib.ManualSegmentationTools.segmentMesh" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">segmentMesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theMesh:</span> <span class="pre">cccorelib.GenericIndexedMesh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointsIndexes:</span> <span class="pre">cccorelib.ReferenceCloud</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointsWillBeInside:</span> <span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progressCb:</span> <span class="pre">cccorelib.GenericProgressCallback</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destCloud:</span> <span class="pre">cccorelib.GenericIndexedCloud</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indexShift:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">triangleIndexMap:</span> <span class="pre">std::vector&lt;int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std::allocator&lt;int&gt;</span> <span class="pre">&gt;</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="data_structures.html#cccorelib.GenericIndexedMesh" title="cccorelib.GenericIndexedMesh"><span class="pre">cccorelib.GenericIndexedMesh</span></a></span></span><a class="headerlink" href="#cccorelib.ManualSegmentationTools.segmentMesh" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -355,11 +359,6 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.ManualSegmentationTools.segmentMeshWithAAPlane">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">segmentMeshWithAAPlane</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mesh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="data_structures.html#cccorelib.GenericIndexedMesh" title="cccorelib.GenericIndexedMesh"><span class="pre">cccorelib.GenericIndexedMesh</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="data_structures.html#cccorelib.GenericIndexedCloudPersist" title="cccorelib.GenericIndexedCloudPersist"><span class="pre">cccorelib.GenericIndexedCloudPersist</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ioParams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ManualSegmentationTools.MeshCutterParams" title="cccorelib.ManualSegmentationTools.MeshCutterParams"><span class="pre">cccorelib.ManualSegmentationTools.MeshCutterParams</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">progressCb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="others.html#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.ManualSegmentationTools.segmentMeshWithAAPlane" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cccorelib.ManualSegmentationTools.segmentReferenceCloud">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">segmentReferenceCloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cloud</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="data_structures.html#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">minDist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxDist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outside</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="data_structures.html#cccorelib.ReferenceCloud" title="cccorelib.ReferenceCloud"><span class="pre">cccorelib.ReferenceCloud</span></a></span></span><a class="headerlink" href="#cccorelib.ManualSegmentationTools.segmentReferenceCloud" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
