@@ -133,6 +133,8 @@ void define_someQtThings(py::module &m)
              });
 
     py::class_<QPointF>(m, "QPointF");
+    //TODO: https://doc.qt.io/qt-5/qt.html#CursorShape-enum
+    py::enum_<Qt::CursorShape>(m, "QtCursorShape");
 }
 
 void define_pycc(py::module &m)

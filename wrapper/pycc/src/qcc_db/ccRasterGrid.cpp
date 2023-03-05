@@ -32,24 +32,25 @@ void define_ccRasterGrid(py::module &m)
     py::class_<ccRasterCell>(m, "ccRasterCell")
         .def(py::init<>())
         .def_readwrite("h", &ccRasterCell::h)
-        .def_readwrite("avgHeight", &ccRasterCell::avgHeight)
-        .def_readwrite("stdDevHeight", &ccRasterCell::stdDevHeight)
         .def_readwrite("minHeight", &ccRasterCell::minHeight)
         .def_readwrite("maxHeight", &ccRasterCell::maxHeight)
         .def_readwrite("nbPoints", &ccRasterCell::nbPoints)
-        .def_readwrite("pointIndex", &ccRasterCell::pointIndex)
+        .def_readwrite("nearestPointIndex", &ccRasterCell::nearestPointIndex)
         .def_readwrite("color", &ccRasterCell::color);
 
     py::class_<ccRasterGrid> PyRasterGrid(m, "ccRasterGrid");
 
     py::enum_<ccRasterGrid::ExportableFields>(PyRasterGrid, "ExportableFields")
-        .value("PER_CELL_HEIGHT", ccRasterGrid::ExportableFields::PER_CELL_HEIGHT)
+        .value("PER_CELL_VALUE", ccRasterGrid::ExportableFields::PER_CELL_VALUE)
         .value("PER_CELL_COUNT", ccRasterGrid::ExportableFields::PER_CELL_COUNT)
-        .value("PER_CELL_MIN_HEIGHT", ccRasterGrid::ExportableFields::PER_CELL_MIN_HEIGHT)
-        .value("PER_CELL_MAX_HEIGHT", ccRasterGrid::ExportableFields::PER_CELL_MAX_HEIGHT)
-        .value("PER_CELL_AVG_HEIGHT", ccRasterGrid::ExportableFields::PER_CELL_AVG_HEIGHT)
-        .value("PER_CELL_HEIGHT_STD_DEV", ccRasterGrid::ExportableFields::PER_CELL_HEIGHT_STD_DEV)
-        .value("PER_CELL_HEIGHT_RANGE", ccRasterGrid::ExportableFields::PER_CELL_HEIGHT_RANGE)
+        .value("PER_CELL_MIN_VALUE", ccRasterGrid::ExportableFields::PER_CELL_MIN_VALUE)
+        .value("PER_CELL_MAX_VALUE", ccRasterGrid::ExportableFields::PER_CELL_MAX_VALUE)
+        .value("PER_CELL_AVG_VALUE", ccRasterGrid::ExportableFields::PER_CELL_AVG_VALUE)
+        .value("PER_CELL_VALUE_STD_DEV", ccRasterGrid::ExportableFields::PER_CELL_VALUE_STD_DEV)
+        .value("PER_CELL_VALUE_RANGE", ccRasterGrid::ExportableFields::PER_CELL_VALUE_RANGE)
+        .value("PER_CELL_MEDIAN_VALUE", ccRasterGrid::ExportableFields::PER_CELL_MEDIAN_VALUE)
+        .value("PER_CELL_PERCENTILE_VALUE", ccRasterGrid::ExportableFields::PER_CELL_PERCENTILE_VALUE)
+        .value("PER_CELL_UNIQUE_COUNT_VALUE", ccRasterGrid::ExportableFields::PER_CELL_UNIQUE_COUNT_VALUE)
         .value("PER_CELL_INVALID", ccRasterGrid::ExportableFields::PER_CELL_INVALID)
         .export_values();
 
@@ -57,6 +58,8 @@ void define_ccRasterGrid(py::module &m)
         .value("PROJ_MINIMUM_VALUE", ccRasterGrid::ProjectionType::PROJ_MINIMUM_VALUE)
         .value("PROJ_AVERAGE_VALUE", ccRasterGrid::ProjectionType::PROJ_AVERAGE_VALUE)
         .value("PROJ_MAXIMUM_VALUE", ccRasterGrid::ProjectionType::PROJ_MAXIMUM_VALUE)
+        .value("PROJ_MEDIAN_VALUE", ccRasterGrid::ProjectionType::PROJ_MEDIAN_VALUE)
+        .value("PROJ_INVERSE_VAR_VALUE", ccRasterGrid::ProjectionType::PROJ_INVERSE_VAR_VALUE)        
         .value("INVALID_PROJECTION_TYPE", ccRasterGrid::ProjectionType::INVALID_PROJECTION_TYPE)
         .export_values();
 
@@ -66,7 +69,8 @@ void define_ccRasterGrid(py::module &m)
         .value("FILL_MAXIMUM_HEIGHT", ccRasterGrid::EmptyCellFillOption::FILL_MAXIMUM_HEIGHT)
         .value("FILL_CUSTOM_HEIGHT", ccRasterGrid::EmptyCellFillOption::FILL_CUSTOM_HEIGHT)
         .value("FILL_AVERAGE_HEIGHT", ccRasterGrid::EmptyCellFillOption::FILL_AVERAGE_HEIGHT)
-        .value("INTERPOLATE", ccRasterGrid::EmptyCellFillOption::INTERPOLATE)
+        .value("INTERPOLATE_DELAUNAY", ccRasterGrid::EmptyCellFillOption::INTERPOLATE_DELAUNAY)
+        .value("KRIGING", ccRasterGrid::EmptyCellFillOption::KRIGING)
         .export_values();
 
     PyRasterGrid.def(py::init<>())
@@ -82,26 +86,29 @@ void define_ccRasterGrid(py::module &m)
         .def_static("GetDefaultFieldName", &ccRasterGrid::GetDefaultFieldName, "field"_a)
         .def("convertToCloud",
              &ccRasterGrid::convertToCloud,
-             "exportedFields"_a,
-             "interpolateSF"_a,
-             "interpolateColors"_a,
+             "exportHeightStats"_a,
+             "exportSFStat"_a,
+             "exportedStatistics"_a,
+             "projectSFs"_a,
+             "projectColors"_a,
              "resampleInputCloudXY"_a,
              "resampleInputCloudZ"_a,
              "inputCloud"_a,
              "Z"_a,
              "box"_a,
-             "fillEmptyCells"_a,
-             "emptyCellsHeight"_a,
-             "exportToOriginalCS"_a)
+             "percentileValue"_a,
+             "exportToOriginalCS"_a,
+             "progressDialog"_a = nullptr)
         .def("fillWith",
              &ccRasterGrid::fillWith,
              "cloud"_a,
              "projectionDimension"_a,
-             "maxEdgeLength"_a,
              "projectionType"_a,
-             "interpolateEmptyCells"_a,
+             "doInterpolateEmptyCells"_a,
+             "maxEdgeLength"_a,
              "sfInterpolation"_a = ccRasterGrid::ProjectionType::INVALID_PROJECTION_TYPE,
-             "progressDialog"_a = nullptr)
+             "progressDialog"_a = nullptr,
+             "zStdDevSfIndex"_a = -1)
         .def("fillEmptyCells",
              &ccRasterGrid::fillEmptyCells,
              "projectionDimension"_a,

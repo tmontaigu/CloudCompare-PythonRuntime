@@ -55,18 +55,18 @@ void define_KdTree(py::module &cccorelib)
             "queryPoint"_a,
             "maxDist"_a)
         .def(
-            "findPointBelowDistance",
+            "findNearestNeighbourWithMaxDist",
             [](CCCoreLib::KDTree &self, py::sequence &queryPoint, ScalarType maxDist) {
                 PointCoordinateType point[3];
                 point[0] = queryPoint[0].cast<PointCoordinateType>();
                 point[1] = queryPoint[1].cast<PointCoordinateType>();
                 point[2] = queryPoint[2].cast<PointCoordinateType>();
-                return self.findPointBelowDistance(point, maxDist);
+                return self.findNearestNeighbourWithMaxDist(point, maxDist);
             },
             "queryPoint"_a,
             "maxDist"_a)
         .def(
-            "findPointsLyingToDistance",
+            "radiusSearch",
             [](CCCoreLib::KDTree &self,
                py::sequence &queryPoint,
                ScalarType distance,
@@ -76,7 +76,7 @@ void define_KdTree(py::module &cccorelib)
                 point[0] = queryPoint[0].cast<PointCoordinateType>();
                 point[1] = queryPoint[1].cast<PointCoordinateType>();
                 point[2] = queryPoint[2].cast<PointCoordinateType>();
-                return self.findPointsLyingToDistance(point, distance, tolerance, points);
+                return self.radiusSearch(point, distance, tolerance, points);
             },
             "queryPoint"_a,
             "distance"_a,

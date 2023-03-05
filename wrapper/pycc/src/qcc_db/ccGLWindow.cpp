@@ -179,8 +179,9 @@ void define_ccGLWindow(py::module &m)
         .def("setInteractionMode", &ccGLWindow::setInteractionMode, "flags"_a)
         .def("getInteractionMode", &ccGLWindow::getInteractionMode)
         .def("setPickingMode",
-             &ccGLWindow::setPickingMode,
-             "mode"_a = ccGLWindow::PICKING_MODE::DEFAULT_PICKING)
+              &ccGLWindow::setPickingMode,
+              "mode"_a = ccGLWindow::PICKING_MODE::DEFAULT_PICKING,
+              "defaultCursorShape"_a = Qt::ArrowCursor)
         .def("getPickingMode", &ccGLWindow::getPickingMode)
         .def("lockPickingMode", &ccGLWindow::lockPickingMode, "state"_a)
         .def("isPickingModeLocked", &ccGLWindow::isPickingModeLocked)
@@ -198,7 +199,9 @@ void define_ccGLWindow(py::module &m)
         .def("setFov", &ccGLWindow::setFov, "fov"_a)
         .def("getFov", &ccGLWindow::getFov)
         .def("setGLCameraAspectRatio", &ccGLWindow::setGLCameraAspectRatio, "ar"_a)
-        .def("setZNearCoef", &ccGLWindow::setZNearCoef, "coef"_a)
+        .def("setFarClippingPlaneDepth", &ccGLWindow::setFarClippingPlaneDepth, "depth"_a)
+        .def("setClippingPlanesEnabled", &ccGLWindow::setClippingPlanesEnabled, "enabled"_a)
+        .def("clippingPlanesEnabled", &ccGLWindow::clippingPlanesEnabled)
         .def("invalidateVisualization", &ccGLWindow::invalidateVisualization)
         // TODO renderToImage
         .def("renderToFile",

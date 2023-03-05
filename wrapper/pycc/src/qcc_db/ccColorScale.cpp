@@ -61,8 +61,6 @@ void define_ccColorScale(py::module &m)
              })
         .def("isLocked", &ccColorScale::isLocked)
         .def("setLocked", &ccColorScale::setLocked, "state"_a)
-        .def("customLabels",
-             static_cast<std::set<double> &(ccColorScale::*)()>(&ccColorScale::customLabels))
         .def("setCustomLabels", &ccColorScale::setCustomLabels, "labels"_a)
         .def("stepCount", &ccColorScale::stepCount)
         .def("step",
@@ -90,7 +88,21 @@ void define_ccColorScale(py::module &m)
              "steps"_a,
              "outOfRangeColor"_a = nullptr)
         .def("getColorByIndex", &ccColorScale::getColorByIndex, "index"_a);
-    // TODO save load from XML
+        // TODO save load from XML
+
+    py::class_<ccColorScale::Label>(pyColorScale, "Label")
+        .def_readwrite("value", &ccColorScale::Label::value)
+        .def_readwrite("text", &ccColorScale::Label::text, py::return_value_policy::reference)
+        .def(py::init<double>(),
+             "value"_a)
+        .def(py::init<double, const QString&>(),
+             "value"_a,
+             "text"_a);
+
+    pyColorScale.def("customLabels",
+             static_cast<const std::set<ccColorScale::Label> &(ccColorScale::*)() const>(&ccColorScale::customLabels))
+        .def("customLabels",
+             static_cast<std::set<ccColorScale::Label> &(ccColorScale::*)()>(&ccColorScale::customLabels));
 
     // Thanks https://github.com/pybind/pybind11/issues/820#issuecomment-297894565
     py::class_<ccColorScale::Shared>(pyColorScale, "Shared");
