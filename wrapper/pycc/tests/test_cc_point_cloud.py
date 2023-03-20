@@ -33,7 +33,7 @@ def test_cc_point_cloud_from_sequences():
         pc.addScalarField("something", np.array([1.0, 2.0, 3.0, 4.0, 5.0], pycc.ScalarType))
 
     with pytest.raises(ValueError):
-            pc.addScalarField("wrong_size", np.array([1.0], pycc.ScalarType))
+        pc.addScalarField("wrong_size", np.array([1.0], pycc.ScalarType))
 
 
 def test_len_ccloud():

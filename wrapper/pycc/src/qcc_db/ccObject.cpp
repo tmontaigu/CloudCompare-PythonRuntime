@@ -106,6 +106,14 @@ void define_ccObject(py::module &m)
              "data"_a)
         .def("hasMetaData", &ccObject::hasMetaData, "key"_a);
 
+    py::enum_<ccHObject::DEPENDENCY_FLAGS>(m, "DEPENDENCY_FLAGS")
+        .value("DP_NONE", ccHObject::DEPENDENCY_FLAGS::DP_NONE)
+        .value("DP_NOTIFY_OTHER_ON_DELETE", ccHObject::DEPENDENCY_FLAGS::DP_NOTIFY_OTHER_ON_DELETE)
+        .value("DP_NOTIFY_OTHER_ON_UPDATE", ccHObject::DEPENDENCY_FLAGS::DP_NOTIFY_OTHER_ON_UPDATE)
+        .value("DP_DELETE_OTHER", ccHObject::DEPENDENCY_FLAGS::DP_DELETE_OTHER)
+        .value("DP_PARENT_OF_OTHER", ccHObject::DEPENDENCY_FLAGS::DP_PARENT_OF_OTHER)
+        .export_values();
+
     py::class_<ccHObject, ccObject, ccDrawableObject>(m, "ccHObject")
         .def("isGroup", &ccHObject::isGroup)
         .def("getParent", &ccHObject::getParent, py::return_value_policy::reference_internal)
@@ -134,6 +142,16 @@ void define_ccObject(py::module &m)
         .def("swapChildren", &ccHObject::swapChildren, "firstChildIndex"_a, "secondChildIndex"_a)
         .def("getChildIndex", &ccHObject::getChildIndex, "child"_a)
         .def("getIndex", &ccHObject::getIndex)
+        .def(
+            "addChild",
+            [](ccHObject &self, ccHObject *child, ccHObject::DEPENDENCY_FLAGS dependencyFlags, int insertIndex) {
+                return self.addChild(child, dependencyFlags, insertIndex);
+            },
+            py::keep_alive<2, 1>(), // keep alive parent (1) while added child (2) is alive
+            "child"_a,
+            "dependencyFlags"_a = ccHObject::DEPENDENCY_FLAGS::DP_PARENT_OF_OTHER,
+            "insertIndex"_a = -1
+            )
         .def(
             "getFirstChild",
             [](ccHObject &self) {
