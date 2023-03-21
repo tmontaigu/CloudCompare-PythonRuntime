@@ -37,6 +37,8 @@ function(copy_python_dll)
     "Python DLL: = ${PYTHON_BASE_PREFIX}/python${PYTHON_LIBRARY_SUFFIX}.dll"
   )
   install(FILES "${PYTHON_BASE_PREFIX}/python${PYTHON_LIBRARY_SUFFIX}.dll"
+                #install the python3 base dll as well because some libs will try to find it (PySide and PyQT for example)
+                "${PYTHON_BASE_PREFIX}/python3.dll" 
           DESTINATION ${CLOUDCOMPARE_DEST_FOLDER}
   )
 endfunction()

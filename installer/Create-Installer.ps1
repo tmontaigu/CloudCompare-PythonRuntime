@@ -12,17 +12,19 @@ if ($IsFolder -eq $False) {
     throw '$CloudCompareInstallFolder does no point to a Folder'
 }
 
-$PythonDlls = Get-ChildItem -Path $CloudCompareInstallFolder -Filter "python*.dll"
-if ($PythonDlls.count -gt 1) {
-    throw "Too many Python DLLs, please remove the incorrect ones"
-}
-elseif ($PythonDlls.count -eq 0)
-{
-    throw "No Python DLL found"
-}
-else {
-    $re = [Regex]::new("python(?<Suffix>[0-9]+).dll")
-    $PythonDllSuffix = $re.Match($PythonDlls[0].Name).Groups['Suffix'].Value
+# we need to find two DLLs
+# A python3.dll
+# A python3<minor version>.dll
+$PythonDlls = Get-ChildItem -Path $CloudCompareInstallFolder -Filter "python3*.dll"
+Write-Host "Python DLL suffix: $PythonDlls"
+if ($PythonDlls.count -ne 2) {
+    throw "Need 2 Python3 DLLs, found $PythonDlls.count"
+} else {
+    if($PythonDlls[0].Name -ne "python3.dll") {
+        throw "python3.dll not found"
+    }
+    $re = [Regex]::new("python3(?<Suffix>[0-9]+).dll")
+    $Python3DllSuffix = $re.Match($PythonDlls[1].Name).Groups['Suffix'].Value
 }
 
 $LocalizationFile = if ($Localization -eq "Fr") { "french.wxl" } else { "english.wxl" }
@@ -32,7 +34,7 @@ $LocalizationName = if ($Localization -eq "Fr") { "French" } else { "English" }
 $PythonEnvPrefix = Join-Path -Resolve -Path $CloudCompareInstallFolder -ChildPath "plugins" -AdditionalChildPath "Python"
 $EnvTypeName = if (Test-Path -Path (Join-Path -Path $PythonEnvPrefix -ChildPath "conda-meta")) { "Conda" } else { "Venv" }
 
-Write-Host "Python DLL suffix: $PythonDllSuffix"
+Write-Host "Python DLL suffix (minor version number): $Python3DllSuffix"
 Write-Host "Localization name: $LocalizationName"
 Write-Host "Environment type : $EnvTypeName"
 Write-Host ""
@@ -55,11 +57,11 @@ Write-Host ""
 &candle `
     -arch x64 `
     -dSourceInstallPath="$CloudCompareInstallFolder" `
-    -dPythonSuffix="$PythonDllSuffix" `
+    -dPythonSuffix="$Python3DllSuffix" `
     .\Installer.wxs `
     .\PythonEnvironment.wxs `
 
-$OutputInstallerName = "CloudCompare-PythonPlugin-Setup-$LocalizationName-Python$PythonDllSuffix-$EnvTypeName.msi"
+$OutputInstallerName = "CloudCompare-PythonPlugin-Setup-$LocalizationName-Python$Python3DllSuffix-$EnvTypeName.msi"
 
 # Link the compiled files together
 &light `

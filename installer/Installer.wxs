@@ -51,9 +51,13 @@
 
         <!-- Files to put int our installer  -->
         <DirectoryRef Id="CLOUDCOMPAREDIR">
-            <Component Id='OfficialPythonDLL' Guid='fd589986-9e18-491c-9272-a2ead3a573b9' Win64="yes">
-                <File Id='PythonDll' Name='python$(var.PythonSuffix).dll' DiskId='1'
-                      Source='$(var.SourceInstallPath)/python$(var.PythonSuffix).dll' KeyPath='yes'/>
+            <Component Id='OfficialPythonDLLBase' Guid='fd589986-9e18-491c-9272-a2ead3a573b1' Win64="yes">
+                <File Id='PythonDllBase' Name='python3.dll' DiskId='1'
+                      Source='$(var.SourceInstallPath)/python3.dll' KeyPath='yes'/>
+           </Component>
+            <Component Id='OfficialPythonDLLMinor' Guid='fd589986-9e18-491c-9272-a2ead3a573b9' Win64="yes">
+                <File Id='PythonDllMinor' Name='python3$(var.PythonSuffix).dll' DiskId='1'
+                      Source='$(var.SourceInstallPath)/python3$(var.PythonSuffix).dll' KeyPath='yes'/>
             </Component>
         </DirectoryRef>
 
@@ -74,8 +78,8 @@
 
             <DirectoryRef Id='PYTHONPLUGINSDIR'>
                 <Component Id='QM3C2_PLUGIN_WRAPPER' Guid='22964a74-bcb4-4898-a3fd-be2b261d9e76' Win64="yes">
-                    <File Id='QM3C2_PLUGIN_WRAPPER_PYD' Name='pym3c2.cp$(var.PythonSuffix)-win_amd64.pyd' DiskId='1'
-                          Source='$(var.SourceInstallPath)/plugins-python/pym3c2.cp$(var.PythonSuffix)-win_amd64.pyd'
+                    <File Id='QM3C2_PLUGIN_WRAPPER_PYD' Name='pym3c2.cp3$(var.PythonSuffix)-win_amd64.pyd' DiskId='1'
+                          Source='$(var.SourceInstallPath)/plugins-python/pym3c2.cp3$(var.PythonSuffix)-win_amd64.pyd'
                           KeyPath='yes'/>
                 </Component>
             </DirectoryRef>
@@ -88,7 +92,8 @@
             <Feature Id='PythonPluginFeature' Level='1' Title='Python Plugin' Description='Python Plugin for CloudCompare'>
                 <ComponentRef Id='PythonPlugin'/>
                 <ComponentGroupRef Id='PythonEnvironment'/>
-                <ComponentRef Id='OfficialPythonDLL'/>
+                <ComponentRef Id='OfficialPythonDLLBase'/>
+                <ComponentRef Id='OfficialPythonDLLMinor'/>
             </Feature>
 
 
