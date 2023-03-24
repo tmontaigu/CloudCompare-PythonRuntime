@@ -83,9 +83,14 @@ void define_ccPointCloud(py::module &m)
         .def("setCurrentDisplayedScalarField",
              &ccPointCloud::setCurrentDisplayedScalarField,
              "index"_a)
+        .def("setPointSize", &ccPointCloud::setPointSize, "size"_a)
         .def("sfColorScaleShown", &ccPointCloud::sfColorScaleShown)
         .def("showSFColorsScale", &ccPointCloud::showSFColorsScale, "state"_a)
         .def("addPoints", &PyCC::addPointsFromArrays<ccPointCloud>)
+        .def("setColor", [](ccPointCloud &self, ColorCompType r, ColorCompType g, ColorCompType b, ColorCompType a) {
+                self.setColor(r, g, b, a);
+            })
+        .def("colorize", &ccPointCloud::colorize)
         .def("points",
              [](ccPointCloud &self) {
                  if (self.size() > 0)
