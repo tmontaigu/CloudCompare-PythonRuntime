@@ -1,19 +1,19 @@
-//##########################################################################
-//#                                                                        #
-//#                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
-//#                                                                        #
-//#  This program is free software; you can redistribute it and/or modify  #
-//#  it under the terms of the GNU General Public License as published by  #
-//#  the Free Software Foundation; version 2 of the License.               #
-//#                                                                        #
-//#  This program is distributed in the hope that it will be useful,       #
-//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
-//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
-//#  GNU General Public License for more details.                          #
-//#                                                                        #
-//#                   COPYRIGHT: Thomas Montaigu                           #
-//#                                                                        #
-//##########################################################################
+// ##########################################################################
+// #                                                                        #
+// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                                                                        #
+// #  This program is free software; you can redistribute it and/or modify  #
+// #  it under the terms of the GNU General Public License as published by  #
+// #  the Free Software Foundation; version 2 of the License.               #
+// #                                                                        #
+// #  This program is distributed in the hope that it will be useful,       #
+// #  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+// #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+// #  GNU General Public License for more details.                          #
+// #                                                                        #
+// #                   COPYRIGHT: Thomas Montaigu                           #
+// #                                                                        #
+// ##########################################################################
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -79,17 +79,18 @@ void define_TrueKdTree(py::module &cccorelib)
         //                       &TrueKdTree::Leaf::planeEq) // FIXME
         .def_readwrite("error", &TrueKdTree::Leaf::error)
         .def_readwrite("userData", &TrueKdTree::Leaf::userData)
-        .def(
-            py::init([](CCCoreLib::ReferenceCloud *set, const py::sequence &planeEquation, ScalarType error) {
-                PointCoordinateType planeEq[4] = {0};
-                planeEq[0] = planeEquation[0].cast<PointCoordinateType>();
-                planeEq[1] = planeEquation[1].cast<PointCoordinateType>();
-                planeEq[2] = planeEquation[2].cast<PointCoordinateType>();
-                planeEq[3] = planeEquation[3].cast<PointCoordinateType>();
+        .def(py::init(
+                 [](CCCoreLib::ReferenceCloud *set, const py::sequence &planeEquation, ScalarType error)
+                 {
+                     PointCoordinateType planeEq[4] = {0};
+                     planeEq[0] = planeEquation[0].cast<PointCoordinateType>();
+                     planeEq[1] = planeEquation[1].cast<PointCoordinateType>();
+                     planeEq[2] = planeEquation[2].cast<PointCoordinateType>();
+                     planeEq[3] = planeEquation[3].cast<PointCoordinateType>();
 
-                return TrueKdTree::Leaf(set, nullptr, error);
-            }),
-            "set"_a,
-            "planeEquation"_a,
-            "_error"_a);
+                     return TrueKdTree::Leaf(set, nullptr, error);
+                 }),
+             "set"_a,
+             "planeEquation"_a,
+             "_error"_a);
 }

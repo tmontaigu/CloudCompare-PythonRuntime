@@ -1,19 +1,19 @@
-//##########################################################################
-//#                                                                        #
-//#                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
-//#                                                                        #
-//#  This program is free software; you can redistribute it and/or modify  #
-//#  it under the terms of the GNU General Public License as published by  #
-//#  the Free Software Foundation; version 2 of the License.               #
-//#                                                                        #
-//#  This program is distributed in the hope that it will be useful,       #
-//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
-//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
-//#  GNU General Public License for more details.                          #
-//#                                                                        #
-//#                   COPYRIGHT: Thomas Montaigu                           #
-//#                                                                        #
-//##########################################################################
+// ##########################################################################
+// #                                                                        #
+// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                                                                        #
+// #  This program is free software; you can redistribute it and/or modify  #
+// #  it under the terms of the GNU General Public License as published by  #
+// #  the Free Software Foundation; version 2 of the License.               #
+// #                                                                        #
+// #  This program is distributed in the hope that it will be useful,       #
+// #  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+// #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+// #  GNU General Public License for more details.                          #
+// #                                                                        #
+// #                   COPYRIGHT: Thomas Montaigu                           #
+// #                                                                        #
+// ##########################################################################
 
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
@@ -67,7 +67,8 @@ void define_ScalarFieldTools(py::module &cccorelib)
                     "progressCb"_a = nullptr)
         .def_static(
             "computeScalarFieldHistogram",
-            [](const CCCoreLib::GenericCloud *theCloud, unsigned numberOfClasses) {
+            [](const CCCoreLib::GenericCloud *theCloud, unsigned numberOfClasses)
+            {
                 std::vector<int> histo;
                 ScalarFieldTools::computeScalarFieldHistogram(theCloud, numberOfClasses, histo);
                 return py::array_t<int>(histo.size(), histo.data());
@@ -76,7 +77,8 @@ void define_ScalarFieldTools(py::module &cccorelib)
             "numberOfClasses"_a)
         .def_static(
             "computeScalarFieldExtremas",
-            [](const CCCoreLib::GenericCloud *theCloud) {
+            [](const CCCoreLib::GenericCloud *theCloud)
+            {
                 ScalarType minV{};
                 ScalarType maxV{};
                 CCCoreLib::ScalarFieldTools::computeScalarFieldExtremas(theCloud, minV, maxV);

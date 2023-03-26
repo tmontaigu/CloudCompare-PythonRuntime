@@ -1,19 +1,19 @@
-//##########################################################################
-//#                                                                        #
-//#                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
-//#                                                                        #
-//#  This program is free software; you can redistribute it and/or modify  #
-//#  it under the terms of the GNU General Public License as published by  #
-//#  the Free Software Foundation; version 2 of the License.               #
-//#                                                                        #
-//#  This program is distributed in the hope that it will be useful,       #
-//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
-//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
-//#  GNU General Public License for more details.                          #
-//#                                                                        #
-//#                   COPYRIGHT: Thomas Montaigu                           #
-//#                                                                        #
-//##########################################################################
+// ##########################################################################
+// #                                                                        #
+// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                                                                        #
+// #  This program is free software; you can redistribute it and/or modify  #
+// #  it under the terms of the GNU General Public License as published by  #
+// #  the Free Software Foundation; version 2 of the License.               #
+// #                                                                        #
+// #  This program is distributed in the hope that it will be useful,       #
+// #  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+// #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+// #  GNU General Public License for more details.                          #
+// #                                                                        #
+// #                   COPYRIGHT: Thomas Montaigu                           #
+// #                                                                        #
+// ##########################################################################
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
@@ -49,8 +49,10 @@ void define_ccRasterGrid(py::module &m)
         .value("PER_CELL_VALUE_STD_DEV", ccRasterGrid::ExportableFields::PER_CELL_VALUE_STD_DEV)
         .value("PER_CELL_VALUE_RANGE", ccRasterGrid::ExportableFields::PER_CELL_VALUE_RANGE)
         .value("PER_CELL_MEDIAN_VALUE", ccRasterGrid::ExportableFields::PER_CELL_MEDIAN_VALUE)
-        .value("PER_CELL_PERCENTILE_VALUE", ccRasterGrid::ExportableFields::PER_CELL_PERCENTILE_VALUE)
-        .value("PER_CELL_UNIQUE_COUNT_VALUE", ccRasterGrid::ExportableFields::PER_CELL_UNIQUE_COUNT_VALUE)
+        .value("PER_CELL_PERCENTILE_VALUE",
+               ccRasterGrid::ExportableFields::PER_CELL_PERCENTILE_VALUE)
+        .value("PER_CELL_UNIQUE_COUNT_VALUE",
+               ccRasterGrid::ExportableFields::PER_CELL_UNIQUE_COUNT_VALUE)
         .value("PER_CELL_INVALID", ccRasterGrid::ExportableFields::PER_CELL_INVALID)
         .export_values();
 
@@ -59,7 +61,7 @@ void define_ccRasterGrid(py::module &m)
         .value("PROJ_AVERAGE_VALUE", ccRasterGrid::ProjectionType::PROJ_AVERAGE_VALUE)
         .value("PROJ_MAXIMUM_VALUE", ccRasterGrid::ProjectionType::PROJ_MAXIMUM_VALUE)
         .value("PROJ_MEDIAN_VALUE", ccRasterGrid::ProjectionType::PROJ_MEDIAN_VALUE)
-        .value("PROJ_INVERSE_VAR_VALUE", ccRasterGrid::ProjectionType::PROJ_INVERSE_VAR_VALUE)        
+        .value("PROJ_INVERSE_VAR_VALUE", ccRasterGrid::ProjectionType::PROJ_INVERSE_VAR_VALUE)
         .value("INVALID_PROJECTION_TYPE", ccRasterGrid::ProjectionType::INVALID_PROJECTION_TYPE)
         .export_values();
 

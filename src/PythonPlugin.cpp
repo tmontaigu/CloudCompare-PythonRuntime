@@ -1,19 +1,19 @@
-//##########################################################################
-//#                                                                        #
-//#                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
-//#                                                                        #
-//#  This program is free software; you can redistribute it and/or modify  #
-//#  it under the terms of the GNU General Public License as published by  #
-//#  the Free Software Foundation; version 2 of the License.               #
-//#                                                                        #
-//#  This program is distributed in the hope that it will be useful,       #
-//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
-//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
-//#  GNU General Public License for more details.                          #
-//#                                                                        #
-//#                   COPYRIGHT: Thomas Montaigu                           #
-//#                                                                        #
-//##########################################################################
+// ##########################################################################
+// #                                                                        #
+// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                                                                        #
+// #  This program is free software; you can redistribute it and/or modify  #
+// #  it under the terms of the GNU General Public License as published by  #
+// #  the Free Software Foundation; version 2 of the License.               #
+// #                                                                        #
+// #  This program is distributed in the hope that it will be useful,       #
+// #  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+// #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+// #  GNU General Public License for more details.                          #
+// #                                                                        #
+// #                   COPYRIGHT: Thomas Montaigu                           #
+// #                                                                        #
+// ##########################################################################
 
 #include "PythonPlugin.h"
 #include "AboutDialog.h"
@@ -33,13 +33,13 @@
 
 #define slots Q_SLOTS
 #define signals Q_SIGNALS
-#include <ccCommandLineInterface.h>
-#include <QFileDialog>
 #include <QDialog>
-#include <QSettings>
-#include <functional>
 #include <QFile>
+#include <QFileDialog>
+#include <QSettings>
 #include <algorithm>
+#include <ccCommandLineInterface.h>
+#include <functional>
 
 // Useful link:
 // https://docs.python.org/3/c-api/init.html#initialization-finalization-and-threads
@@ -103,9 +103,10 @@ static std::unique_ptr<QSettings> LoadSettings()
         QCoreApplication::applicationName().append(":PythonPlugin.Settings"));
 }
 
-void PythonPlugin::stop() {
+void PythonPlugin::stop()
+{
 
-    //On software exit, the script list needs to be saved in a txt file
+    // On software exit, the script list needs to be saved in a txt file
     std::unique_ptr<QSettings> settings = LoadSettings();
     settings->setValue(QStringLiteral("RegisterListPath"), m_savedPath);
 }
@@ -189,7 +190,7 @@ QList<QAction *> PythonPlugin::getActions()
         // Settings do not need Python to be initialized in a valid state
         m_showSettings->setEnabled(true);
     }
-    if (!m_drawScriptRegister) 
+    if (!m_drawScriptRegister)
     {
         m_drawScriptRegister = new QMenu("Script Register");
         m_drawScriptRegister->setToolTip("Show all registered script");
@@ -209,7 +210,8 @@ QList<QAction *> PythonPlugin::getActions()
         m_drawScriptRegister->addSeparator();
 
         std::unique_ptr<QSettings> settings = LoadSettings();
-        QStringList loaded_paths = settings->value(QStringLiteral("RegisterListPath")).value<QStringList>();
+        QStringList loaded_paths =
+            settings->value(QStringLiteral("RegisterListPath")).value<QStringList>();
 
         for (QString path : loaded_paths)
         {
@@ -257,57 +259,58 @@ void PythonPlugin::showEditor() const
     }
 }
 
-void PythonPlugin::addScriptAction() 
+void PythonPlugin::addScriptAction()
 {
-    if(m_scriptList.empty())
+    if (m_scriptList.empty())
         m_removeScript->setEnabled(true);
 
     QString filePath = QFileDialog::getOpenFileName(m_drawScriptRegister,
-                                              QStringLiteral("Select Python Script"),
-                                              QString(),
-                                              QStringLiteral("Python Script (*.py)"));
+                                                    QStringLiteral("Select Python Script"),
+                                                    QString(),
+                                                    QStringLiteral("Python Script (*.py)"));
     addScript(filePath);
 }
 
-void PythonPlugin::addScript(QString path) {
-    if(m_scriptList.empty())
+void PythonPlugin::addScript(QString path)
+{
+    if (m_scriptList.empty())
         m_removeScript->setEnabled(true);
 
     QFileInfo fi(path);
 
-    //Doesn't add if file doesn't exist or if it's already present.
+    // Doesn't add if file doesn't exist or if it's already present.
     if (!fi.exists() || m_savedPath.contains(path))
         return;
 
-    QString fileName = fi.baseName();  
+    QString fileName = fi.baseName();
 
-    auto* newScript= new QAction(fileName);
+    auto *newScript = new QAction(fileName);
     newScript->setToolTip(fileName);
-    auto* removeNewScript = new QAction(fileName);
+    auto *removeNewScript = new QAction(fileName);
     removeNewScript->setToolTip(fileName);
 
-    connect(newScript, &QAction::triggered, [this,path]()
-    {
-        executeScript(path);
-    });
+    connect(newScript, &QAction::triggered, [this, path]() { executeScript(path); });
     newScript->setEnabled(true);
-    connect(removeNewScript, &QAction::triggered, [this,fileName,removeNewScript,path]()
-    {
-        removeScript(fileName,removeNewScript);
+    connect(removeNewScript,
+            &QAction::triggered,
+            [this, fileName, removeNewScript, path]()
+            {
+                removeScript(fileName, removeNewScript);
 
-        //prepare to save script list
-        auto pos = std::find(m_savedPath.begin(), m_savedPath.end(), path);
-        if (pos != m_savedPath.end()){
-            m_savedPath.erase(pos);
-        }
-    });
+                // prepare to save script list
+                auto pos = std::find(m_savedPath.begin(), m_savedPath.end(), path);
+                if (pos != m_savedPath.end())
+                {
+                    m_savedPath.erase(pos);
+                }
+            });
     removeNewScript->setEnabled(true);
 
     m_scriptList.insert({fileName, newScript});
     m_drawScriptRegister->addAction(newScript);
     m_removeScript->addAction(removeNewScript);
 
-    //prepare to save script list
+    // prepare to save script list
     m_savedPath.push_back(path);
 }
 
@@ -317,15 +320,15 @@ void PythonPlugin::executeScript(QString path)
     m_interp.executeFile(path_str);
 }
 
-void PythonPlugin::removeScript(QString name, QAction* self)
+void PythonPlugin::removeScript(QString name, QAction *self)
 {
-    QAction* script = m_scriptList[name];
+    QAction *script = m_scriptList[name];
     m_drawScriptRegister->removeAction(script);
     m_removeScript->removeAction(self);
     m_scriptList.erase(name);
     delete script;
     delete self;
-    if(m_scriptList.empty())
+    if (m_scriptList.empty())
         m_removeScript->setEnabled(false);
 }
 

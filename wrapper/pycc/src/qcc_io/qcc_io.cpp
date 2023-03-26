@@ -1,19 +1,19 @@
-//##########################################################################
-//#                                                                        #
-//#                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
-//#                                                                        #
-//#  This program is free software; you can redistribute it and/or modify  #
-//#  it under the terms of the GNU General Public License as published by  #
-//#  the Free Software Foundation; version 2 of the License.               #
-//#                                                                        #
-//#  This program is distributed in the hope that it will be useful,       #
-//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
-//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
-//#  GNU General Public License for more details.                          #
-//#                                                                        #
-//#                   COPYRIGHT: Thomas Montaigu                           #
-//#                                                                        #
-//##########################################################################
+// ##########################################################################
+// #                                                                        #
+// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                                                                        #
+// #  This program is free software; you can redistribute it and/or modify  #
+// #  it under the terms of the GNU General Public License as published by  #
+// #  the Free Software Foundation; version 2 of the License.               #
+// #                                                                        #
+// #  This program is distributed in the hope that it will be useful,       #
+// #  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+// #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+// #  GNU General Public License for more details.                          #
+// #                                                                        #
+// #                   COPYRIGHT: Thomas Montaigu                           #
+// #                                                                        #
+// ##########################################################################
 
 #include "../casters.h"
 
@@ -81,21 +81,23 @@ void define_qcc_io(py::module &m)
 
     py::class_<FileIOFilter> PyFileIOFilter(m, "FileIOFilter");
     PyFileIOFilter
-        .def_static("LoadFromFile",
-                    [](const QString &filename, FileIOFilter::LoadParameters &parameters) {
-                        CC_FILE_ERROR result = CC_FERR_NO_ERROR;
-                        ccHObject *newGroup =
-                            FileIOFilter::LoadFromFile(filename, parameters, result);
-                        ThrowForFileError(result);
-                        return newGroup;
-                    },
+        .def_static(
+            "LoadFromFile",
+            [](const QString &filename, FileIOFilter::LoadParameters &parameters)
+            {
+                CC_FILE_ERROR result = CC_FERR_NO_ERROR;
+                ccHObject *newGroup = FileIOFilter::LoadFromFile(filename, parameters, result);
+                ThrowForFileError(result);
+                return newGroup;
+            },
             py::return_value_policy::take_ownership)
         .def_static(
             "SaveToFile",
             [](ccHObject *entities,
                const QString &filename,
                const FileIOFilter::SaveParameters &parameters,
-               const QString filterName = QString()) {
+               const QString filterName = QString())
+            {
                 const QString requestedFilterName =
                     filterName.isEmpty() ? QFileInfo(filename).suffix() : filterName;
 
@@ -106,9 +108,8 @@ void define_qcc_io(py::module &m)
                     const auto it =
                         std::find_if(filters.begin(),
                                      filters.end(),
-                                     [&requestedFilterName](const QString &filterString) {
-                                         return filterString.contains(requestedFilterName);
-                                     });
+                                     [&requestedFilterName](const QString &filterString)
+                                     { return filterString.contains(requestedFilterName); });
                     if (it != filters.end())
                     {
                         CC_FILE_ERROR error =

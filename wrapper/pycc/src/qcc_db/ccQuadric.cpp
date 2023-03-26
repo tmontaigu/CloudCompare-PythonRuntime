@@ -1,19 +1,19 @@
-//##########################################################################
-//#                                                                        #
-//#                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
-//#                                                                        #
-//#  This program is free software; you can redistribute it and/or modify  #
-//#  it under the terms of the GNU General Public License as published by  #
-//#  the Free Software Foundation; version 2 of the License.               #
-//#                                                                        #
-//#  This program is distributed in the hope that it will be useful,       #
-//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
-//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
-//#  GNU General Public License for more details.                          #
-//#                                                                        #
-//#                   COPYRIGHT: Thomas Montaigu                           #
-//#                                                                        #
-//##########################################################################
+// ##########################################################################
+// #                                                                        #
+// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                                                                        #
+// #  This program is free software; you can redistribute it and/or modify  #
+// #  it under the terms of the GNU General Public License as published by  #
+// #  the Free Software Foundation; version 2 of the License.               #
+// #                                                                        #
+// #  This program is distributed in the hope that it will be useful,       #
+// #  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+// #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+// #  GNU General Public License for more details.                          #
+// #                                                                        #
+// #                   COPYRIGHT: Thomas Montaigu                           #
+// #                                                                        #
+// ##########################################################################
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -30,25 +30,28 @@ void define_ccQuadric(py::module &m)
 {
     py::class_<ccQuadric, ccGenericPrimitive>(m, "Quadric")
         .def(
-            py::init([](CCVector2 minCorner,
-                        CCVector2 maxCorner,
-                        const py::sequence eq,
-                        const Tuple3ub *dims = nullptr,
-                        const ccGLMatrix *transMat = nullptr,
-                        QString name = QString("Quadric"),
-                        unsigned precision = ccQuadric::DEFAULT_DRAWING_PRECISION) {
-                PointCoordinateType eqC[6];
-                if (eq.size() != 6)
+            py::init(
+                [](CCVector2 minCorner,
+                   CCVector2 maxCorner,
+                   const py::sequence eq,
+                   const Tuple3ub *dims = nullptr,
+                   const ccGLMatrix *transMat = nullptr,
+                   QString name = QString("Quadric"),
+                   unsigned precision = ccQuadric::DEFAULT_DRAWING_PRECISION)
                 {
-                    throw py::value_error("eq must have 6 elements");
-                }
+                    PointCoordinateType eqC[6];
+                    if (eq.size() != 6)
+                    {
+                        throw py::value_error("eq must have 6 elements");
+                    }
 
-                for (size_t i{0}; i < 6; i++)
-                {
-                    eqC[i] = eq[i].cast<PointCoordinateType>();
-                }
-                return new ccQuadric(minCorner, maxCorner, eqC, dims, transMat, name, precision);
-            }),
+                    for (size_t i{0}; i < 6; i++)
+                    {
+                        eqC[i] = eq[i].cast<PointCoordinateType>();
+                    }
+                    return new ccQuadric(
+                        minCorner, maxCorner, eqC, dims, transMat, name, precision);
+                }),
             "minCorner"_a,
             "maxCorner"_a,
             "eq"_a,
@@ -65,9 +68,11 @@ void define_ccQuadric(py::module &m)
         .def("getEquationDims", &ccQuadric::getEquationDims)
         .def("projectOnQuadric", &ccQuadric::projectOnQuadric, "P"_a, "Q"_a)
         .def("getEquationString", &ccQuadric::getEquationString)
-        .def_static("Fit", [](CCCoreLib::GenericIndexedCloudPersist *cloud) {
-            double rms;
-            ccQuadric::Fit(cloud, &rms);
-            return rms;
-        });
+        .def_static("Fit",
+                    [](CCCoreLib::GenericIndexedCloudPersist *cloud)
+                    {
+                        double rms;
+                        ccQuadric::Fit(cloud, &rms);
+                        return rms;
+                    });
 }

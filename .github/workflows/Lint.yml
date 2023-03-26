@@ -1,0 +1,16 @@
+name: Lint
+
+on: [push]
+
+jobs:
+  clang-format-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: DoozyX/clang-format-lint-action@v0.14
+      with:
+        source: '.'
+        extensions: 'h,cpp'
+        clangFormatVersion: 14
+

@@ -1,19 +1,19 @@
-//##########################################################################
-//#                                                                        #
-//#                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
-//#                                                                        #
-//#  This program is free software; you can redistribute it and/or modify  #
-//#  it under the terms of the GNU General Public License as published by  #
-//#  the Free Software Foundation; version 2 of the License.               #
-//#                                                                        #
-//#  This program is distributed in the hope that it will be useful,       #
-//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
-//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
-//#  GNU General Public License for more details.                          #
-//#                                                                        #
-//#                   COPYRIGHT: Thomas Montaigu                           #
-//#                                                                        #
-//##########################################################################
+// ##########################################################################
+// #                                                                        #
+// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                                                                        #
+// #  This program is free software; you can redistribute it and/or modify  #
+// #  it under the terms of the GNU General Public License as published by  #
+// #  the Free Software Foundation; version 2 of the License.               #
+// #                                                                        #
+// #  This program is distributed in the hope that it will be useful,       #
+// #  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+// #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+// #  GNU General Public License for more details.                          #
+// #                                                                        #
+// #                   COPYRIGHT: Thomas Montaigu                           #
+// #                                                                        #
+// ##########################################################################
 
 #ifndef PYTHON_PLUGIN_H
 #define PYTHON_PLUGIN_H
@@ -23,9 +23,9 @@
 #include "PythonPluginManager.h"
 #include "ccStdPluginInterface.h"
 
+#include <iostream>
 #include <map>
 #include <vector>
-#include <iostream>
 
 class QListWidget;
 class PythonEditor;
@@ -73,11 +73,11 @@ class PythonPlugin final : public QObject, public ccStdPluginInterface
     void showSettings() const;
     static void showDocumentation();
 
-    //Script list function
+    // Script list function
     void addScriptAction();
     void addScript(QString path);
     void executeScript(QString path);
-    void removeScript(QString name, QAction* self);
+    void removeScript(QString name, QAction *self);
 
     PythonConfig m_config{};
     PythonInterpreter m_interp;
@@ -106,7 +106,7 @@ class PythonPlugin final : public QObject, public ccStdPluginInterface
     /// Variable for script list submenu
     QAction *m_addScript{nullptr};
     QMenu *m_removeScript{nullptr};
-    std::map<QString, QAction*> m_scriptList;
+    std::map<QString, QAction *> m_scriptList;
     QStringList m_savedPath;
     QString m_saveFilePath;
 };

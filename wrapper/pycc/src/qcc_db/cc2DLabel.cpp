@@ -1,19 +1,19 @@
-//##########################################################################
-//#                                                                        #
-//#                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
-//#                                                                        #
-//#  This program is free software; you can redistribute it and/or modify  #
-//#  it under the terms of the GNU General Public License as published by  #
-//#  the Free Software Foundation; version 2 of the License.               #
-//#                                                                        #
-//#  This program is distributed in the hope that it will be useful,       #
-//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
-//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
-//#  GNU General Public License for more details.                          #
-//#                                                                        #
-//#                   COPYRIGHT: Thomas Montaigu                           #
-//#                                                                        #
-//##########################################################################
+// ##########################################################################
+// #                                                                        #
+// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                                                                        #
+// #  This program is free software; you can redistribute it and/or modify  #
+// #  it under the terms of the GNU General Public License as published by  #
+// #  the Free Software Foundation; version 2 of the License.               #
+// #                                                                        #
+// #  This program is distributed in the hope that it will be useful,       #
+// #  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+// #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+// #  GNU General Public License for more details.                          #
+// #                                                                        #
+// #                   COPYRIGHT: Thomas Montaigu                           #
+// #                                                                        #
+// ##########################################################################
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -36,22 +36,24 @@ void define_cc2DLabel(py::module &m)
     Pycc2DLabel.def("getLabelContent", &cc2DLabel::getLabelContent, "precision"_a);
     Pycc2DLabel.def("getTitle", &cc2DLabel::getTitle, "precision"_a);
     Pycc2DLabel.def("setPosition", &cc2DLabel::setPosition, "x"_a, "y"_a);
-    Pycc2DLabel.def("getPosition", [](const cc2DLabel &self) {
-        py::tuple pos(2);
-        pos[0] = self.getPosition()[0];
-        pos[1] = self.getPosition()[1];
-        return pos;
-    });
+    Pycc2DLabel.def("getPosition",
+                    [](const cc2DLabel &self)
+                    {
+                        py::tuple pos(2);
+                        pos[0] = self.getPosition()[0];
+                        pos[1] = self.getPosition()[1];
+                        return pos;
+                    });
     Pycc2DLabel.def("clear", &cc2DLabel::clear, "ignoreDependencies"_a = false);
     Pycc2DLabel.def("size", &cc2DLabel::size);
     Pycc2DLabel.def("addPickedPoint",
-                    (bool (cc2DLabel::*)(ccGenericPointCloud *, unsigned, bool)) &
+                    (bool(cc2DLabel::*)(ccGenericPointCloud *, unsigned, bool)) &
                         cc2DLabel::addPickedPoint,
                     "cloud"_a,
                     "pointIndex"_a,
                     "entityCenter"_a = false);
     Pycc2DLabel.def("addPickedPoint",
-                    (bool (cc2DLabel::*)(ccGenericMesh *, unsigned, const CCVector2d &, bool)) &
+                    (bool(cc2DLabel::*)(ccGenericMesh *, unsigned, const CCVector2d &, bool)) &
                         cc2DLabel::addPickedPoint,
                     "cloud"_a,
                     "triangleIndex"_a,
@@ -92,9 +94,14 @@ void define_cc2DLabel(py::module &m)
              "centerPoint"_a = false);
 
     Pycc2DLabel.def("addPickedPoint",
-                    (bool (cc2DLabel::*)(const cc2DLabel::PickedPoint &)) &
+                    (bool(cc2DLabel::*)(const cc2DLabel::PickedPoint &)) &
                         cc2DLabel::addPickedPoint,
                     "pp"_a);
-    Pycc2DLabel.def("getPickedPoint",(const cc2DLabel::PickedPoint & (cc2DLabel::*)(unsigned) const) &cc2DLabel::getPickedPoint, "index"_a);
-    Pycc2DLabel.def("getPickedPoint",(cc2DLabel::PickedPoint & (cc2DLabel::*)(unsigned)) &cc2DLabel::getPickedPoint, "index"_a);
+    Pycc2DLabel.def("getPickedPoint",
+                    (const cc2DLabel::PickedPoint &(cc2DLabel::*)(unsigned) const) &
+                        cc2DLabel::getPickedPoint,
+                    "index"_a);
+    Pycc2DLabel.def("getPickedPoint",
+                    (cc2DLabel::PickedPoint & (cc2DLabel::*)(unsigned)) & cc2DLabel::getPickedPoint,
+                    "index"_a);
 }

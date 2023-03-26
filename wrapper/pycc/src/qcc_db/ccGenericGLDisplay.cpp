@@ -1,19 +1,19 @@
-//##########################################################################
-//#                                                                        #
-//#                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
-//#                                                                        #
-//#  This program is free software; you can redistribute it and/or modify  #
-//#  it under the terms of the GNU General Public License as published by  #
-//#  the Free Software Foundation; version 2 of the License.               #
-//#                                                                        #
-//#  This program is distributed in the hope that it will be useful,       #
-//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
-//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
-//#  GNU General Public License for more details.                          #
-//#                                                                        #
-//#                   COPYRIGHT: Thomas Montaigu                           #
-//#                                                                        #
-//##########################################################################
+// ##########################################################################
+// #                                                                        #
+// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                                                                        #
+// #  This program is free software; you can redistribute it and/or modify  #
+// #  it under the terms of the GNU General Public License as published by  #
+// #  the Free Software Foundation; version 2 of the License.               #
+// #                                                                        #
+// #  This program is distributed in the hope that it will be useful,       #
+// #  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+// #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+// #  GNU General Public License for more details.                          #
+// #                                                                        #
+// #                   COPYRIGHT: Thomas Montaigu                           #
+// #                                                                        #
+// ##########################################################################
 
 #include "../casters.h"
 #include <pybind11/pybind11.h>
@@ -33,25 +33,25 @@ void define_ccGenericGLDisplay(py::module &m)
     py::class_<ccGLCameraParameters>(m, "ccGLCameraParameters")
         .def(py::init<>())
         .def("project",
-             (bool (ccGLCameraParameters::*)(const CCVector3d &, CCVector3d &, bool *)
+             (bool(ccGLCameraParameters::*)(const CCVector3d &, CCVector3d &, bool *)
                   const)(&ccGLCameraParameters::project),
              "input3D"_a,
              "output2D"_a,
              "checkInFrustrum"_a = false)
         .def("project",
-             (bool (ccGLCameraParameters::*)(const CCVector3 &, CCVector3d &, bool *)
+             (bool(ccGLCameraParameters::*)(const CCVector3 &, CCVector3d &, bool *)
                   const)(&ccGLCameraParameters::project),
              "input3D"_a,
              "output2D"_a,
              "checkInFrustrum"_a = false)
         .def("unproject",
-             (bool (ccGLCameraParameters::*)(const CCVector3d &, CCVector3d &)
+             (bool(ccGLCameraParameters::*)(const CCVector3d &, CCVector3d &)
                   const)(&ccGLCameraParameters::unproject),
              "input3D"_a,
              "output2D"_a)
 
         .def("unproject",
-             (bool (ccGLCameraParameters::*)(const CCVector3 &, CCVector3d &)
+             (bool(ccGLCameraParameters::*)(const CCVector3 &, CCVector3d &)
                   const)(&ccGLCameraParameters::unproject),
              "input3D"_a,
              "output2D"_a)

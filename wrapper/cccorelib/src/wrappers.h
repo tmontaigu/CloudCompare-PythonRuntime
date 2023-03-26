@@ -1,19 +1,19 @@
-//##########################################################################
-//#                                                                        #
-//#                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
-//#                                                                        #
-//#  This program is free software; you can redistribute it and/or modify  #
-//#  it under the terms of the GNU General Public License as published by  #
-//#  the Free Software Foundation; version 2 of the License.               #
-//#                                                                        #
-//#  This program is distributed in the hope that it will be useful,       #
-//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
-//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
-//#  GNU General Public License for more details.                          #
-//#                                                                        #
-//#                   COPYRIGHT: Thomas Montaigu                           #
-//#                                                                        #
-//##########################################################################
+// ##########################################################################
+// #                                                                        #
+// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                                                                        #
+// #  This program is free software; you can redistribute it and/or modify  #
+// #  it under the terms of the GNU General Public License as published by  #
+// #  the Free Software Foundation; version 2 of the License.               #
+// #                                                                        #
+// #  This program is distributed in the hope that it will be useful,       #
+// #  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+// #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+// #  GNU General Public License for more details.                          #
+// #                                                                        #
+// #                   COPYRIGHT: Thomas Montaigu                           #
+// #                                                                        #
+// ##########################################################################
 
 #ifndef PYTHON_PLUGIN_WRAPPERS_H
 #define PYTHON_PLUGIN_WRAPPERS_H
@@ -51,9 +51,8 @@ template <class T> py::array_t<T> VectorAsNumpyArray(std::vector<T> &vector)
 {
     // https://stackoverflow.com/questions/44659924/returning-numpy-arrays-via-pybind11
     // https://github.com/pybind/pybind11/issues/1042
-   return SpanAsNumpyArray(vector.data(), vector.size());
+    return SpanAsNumpyArray(vector.data(), vector.size());
 }
-
 
 template <class PointCloudType>
 void addPointsFromArrays(PointCloudType &self,
@@ -142,7 +141,8 @@ void addPointsFromArrays(PointCloudType &self,
             "addScalarField",                                                                                \
             [](CCCoreLib::PointCloudTpl<T, StringType> &self,                                                \
                const char *sfName,                                                                           \
-               const py::object &maybe_values = py::none()) {                                                \
+               const py::object &maybe_values = py::none())                                                  \
+            {                                                                                                \
                 int idx = self.addScalarField(sfName);                                                       \
                 if (idx == -1)                                                                               \
                 {                                                                                            \

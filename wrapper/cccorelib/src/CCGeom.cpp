@@ -1,19 +1,19 @@
-//##########################################################################
-//#                                                                        #
-//#                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
-//#                                                                        #
-//#  This program is free software; you can redistribute it and/or modify  #
-//#  it under the terms of the GNU General Public License as published by  #
-//#  the Free Software Foundation; version 2 of the License.               #
-//#                                                                        #
-//#  This program is distributed in the hope that it will be useful,       #
-//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
-//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
-//#  GNU General Public License for more details.                          #
-//#                                                                        #
-//#                   COPYRIGHT: Thomas Montaigu                           #
-//#                                                                        #
-//##########################################################################
+// ##########################################################################
+// #                                                                        #
+// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                                                                        #
+// #  This program is free software; you can redistribute it and/or modify  #
+// #  it under the terms of the GNU General Public License as published by  #
+// #  the Free Software Foundation; version 2 of the License.               #
+// #                                                                        #
+// #  This program is distributed in the hope that it will be useful,       #
+// #  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+// #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+// #  GNU General Public License for more details.                          #
+// #                                                                        #
+// #                   COPYRIGHT: Thomas Montaigu                           #
+// #                                                                        #
+// ##########################################################################
 
 #include <pybind11/operators.h>
 #include <pybind11/pybind11.h>
@@ -36,7 +36,8 @@ using namespace pybind11::literals;
         .def("dot", &cppname::dot)                                                                           \
         .def("cross", &cppname::cross)                                                                       \
         .def("__getitem__",                                                                                  \
-             [](const cppname &self, unsigned index) {                                                       \
+             [](const cppname &self, unsigned index)                                                         \
+             {                                                                                               \
                  if (index >= 2)                                                                             \
                  {                                                                                           \
                      throw py::index_error();                                                                \
@@ -48,7 +49,8 @@ using namespace pybind11::literals;
         .def(py::self *= type_())                                                                            \
         .def(                                                                                                \
             "__itruediv__",                                                                                  \
-            [](cppname &self, type_ val) {                                                                   \
+            [](cppname &self, type_ val)                                                                     \
+            {                                                                                                \
                 if (val == static_cast<type_>(0.0))                                                          \
                 {                                                                                            \
                     throw std::runtime_error("Division by 0");                                               \
@@ -61,7 +63,8 @@ using namespace pybind11::literals;
         .def(py::self *type_())                                                                              \
         .def(                                                                                                \
             "__truediv__",                                                                                   \
-            [](cppname &self, type_ val) {                                                                   \
+            [](cppname &self, type_ val)                                                                     \
+            {                                                                                                \
                 if (val == static_cast<type_>(0.0))                                                          \
                 {                                                                                            \
                     throw std::runtime_error("Division by 0");                                               \
@@ -69,10 +72,12 @@ using namespace pybind11::literals;
                 return self / val;                                                                           \
             },                                                                                               \
             py::is_operator())                                                                               \
-        .def("__repr__", [](const cppname &self) {                                                           \
-            return std::string("<") + pyname + "(" + std::to_string(self.x) + ", " +                         \
-                   std::to_string(self.y) + ")>";                                                            \
-        });
+        .def("__repr__",                                                                                     \
+             [](const cppname &self)                                                                         \
+             {                                                                                               \
+                 return std::string("<") + pyname + "(" + std::to_string(self.x) + ", " +                    \
+                        std::to_string(self.y) + ")>";                                                       \
+             });
 
 #define DEFINE_TUPLE3TPL(cppname, pyname, type_)                                                             \
     py::class_<cppname>(cccorelib, pyname)                                                                   \
@@ -86,7 +91,8 @@ using namespace pybind11::literals;
         .def(py::self *= type_())                                                                            \
         .def(                                                                                                \
             "__itruediv__",                                                                                  \
-            [](cppname &self, type_ val) {                                                                   \
+            [](cppname &self, type_ val)                                                                     \
+            {                                                                                                \
                 if (val == static_cast<type_>(0.0))                                                          \
                 {                                                                                            \
                     throw std::runtime_error("Division by 0");                                               \
@@ -99,7 +105,8 @@ using namespace pybind11::literals;
         .def(py::self *type_())                                                                              \
         .def(                                                                                                \
             "__truediv__",                                                                                   \
-            [](cppname &self, type_ val) {                                                                   \
+            [](cppname &self, type_ val)                                                                     \
+            {                                                                                                \
                 if (val == static_cast<type_>(0.0))                                                          \
                 {                                                                                            \
                     throw std::runtime_error("Division by 0");                                               \
@@ -107,19 +114,21 @@ using namespace pybind11::literals;
                 return self / val;                                                                           \
             },                                                                                               \
             py::is_operator())                                                                               \
-        .def("__getitem__", [](const cppname &self, unsigned index) {                                        \
-            switch (index)                                                                                   \
-            {                                                                                                \
-            case 0:                                                                                          \
-                return self.x;                                                                               \
-            case 1:                                                                                          \
-                return self.y;                                                                               \
-            case 2:                                                                                          \
-                return self.z;                                                                               \
-            default:                                                                                         \
-                throw py::index_error("index out of range");                                                 \
-            }                                                                                                \
-        });
+        .def("__getitem__",                                                                                  \
+             [](const cppname &self, unsigned index)                                                         \
+             {                                                                                               \
+                 switch (index)                                                                              \
+                 {                                                                                           \
+                 case 0:                                                                                     \
+                     return self.x;                                                                          \
+                 case 1:                                                                                     \
+                     return self.y;                                                                          \
+                 case 2:                                                                                     \
+                     return self.z;                                                                          \
+                 default:                                                                                    \
+                     throw py::index_error("index out of range");                                            \
+                 }                                                                                           \
+             });
 
 #define DEFINE_CCVECTOR3(cppname, pyname, type_)                                                             \
     py::class_<cppname, Tuple3Tpl<type_>>(cccorelib, pyname)                                                 \
@@ -129,10 +138,12 @@ using namespace pybind11::literals;
         .def("__sub__", [](const cppname &self, const cppname &other) { return self - other; })              \
         .def("__div__", &cppname::operator/)                                                                 \
         .def("__add__", &cppname::operator+)                                                                 \
-        .def("__repr__", [](const cppname &self) {                                                           \
-            return std::string("<") + pyname + "(" + std::to_string(self.x) + ", " +                         \
-                   std::to_string(self.y) + ", " + std::to_string(self.z) + ")>";                            \
-        });
+        .def("__repr__",                                                                                     \
+             [](const cppname &self)                                                                         \
+             {                                                                                               \
+                 return std::string("<") + pyname + "(" + std::to_string(self.x) + ", " +                    \
+                        std::to_string(self.y) + ", " + std::to_string(self.z) + ")>";                       \
+             });
 
 void define_CCGeom(py::module &cccorelib)
 {

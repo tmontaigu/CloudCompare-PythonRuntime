@@ -1,7 +1,7 @@
 #include <QCoreApplication>
-#include <QString>
 #include <QDir>
 #include <QDirIterator>
+#include <QString>
 #include <QtGlobal>
 
 #include "casters.h"
@@ -11,10 +11,8 @@
 
 namespace py = pybind11;
 
-
 #if defined(Q_OS_WIN32)
 const char *MODULE_EXTENSION = ".pyd";
-
 
 QString getPluginsWrappersPath()
 {
@@ -39,7 +37,8 @@ QString getPluginsWrappersPath()
     QString pluginPath = QString("%1/lib/cloudcompare/plugins-python").arg(envPrefix);
 #else
     // This point to $InstallFolder/CloudCompare.app/Contents/MacOS
-    // We store python plugin wrappers in $InstallFolder/CloudCompare.app/Contents/PlugIns/ccPythonPlugins
+    // We store python plugin wrappers in
+    // $InstallFolder/CloudCompare.app/Contents/PlugIns/ccPythonPlugins
     QDir appDir = QCoreApplication::applicationDirPath();
     appDir.cdUp();
     QString pluginPath = QString("%1/PlugIns/ccPythonPlugins").arg(appDir.absolutePath());
@@ -70,7 +69,7 @@ QString getPluginsWrappersPath()
     const QString envPrefix = sys.attr("prefix").cast<QString>();
     const QString platlibdir = guessPlatlibdir();
     QString pluginPath = QString("%1/%2/cloudcompare/plugins-python").arg(envPrefix, platlibdir);
-#else // PYCC_STAND_ALONE
+#else  // PYCC_STAND_ALONE
 
     const QString platlibdir = guessPlatlibdir();
     QDir theDir = QCoreApplication::applicationDirPath();
@@ -86,14 +85,12 @@ QString getPluginsWrappersPath()
 }
 #endif // Q_OS_WIN32
 
-
 void load_pluginWrappers(py::module_ &m)
 {
     py::module_ pluginWrappers = m.def_submodule("plugins");
     pluginWrappers.doc() = "Module we wrappers around some CloudCompare plugins";
 
     const QString pluginPath = getPluginsWrappersPath();
-
 
     QDir pluginPathDir(pluginPath);
     if (!pluginPathDir.exists())
@@ -116,12 +113,15 @@ void load_pluginWrappers(py::module_ &m)
 
         // Our wrappers are wheels with name like "pluginName.cpython.etc.etc.so"
         const std::string stdFileName = fileName.split('.')[0].toStdString();
-        try {
+        try
+        {
             const py::module mod = py::module_::import(stdFileName.c_str());
 
             const std::string pluginName = mod.attr("plugin_name").cast<std::string>();
             pluginWrappers.attr(pluginName.c_str()) = mod;
-        } catch (const std::exception& e) {
+        }
+        catch (const std::exception &e)
+        {
             py::print("Failed to load plugin '", stdFileName, "': ", e.what());
             continue;
         }

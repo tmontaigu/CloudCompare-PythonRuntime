@@ -1,19 +1,19 @@
-//##########################################################################
-//#                                                                        #
-//#                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
-//#                                                                        #
-//#  This program is free software; you can redistribute it and/or modify  #
-//#  it under the terms of the GNU General Public License as published by  #
-//#  the Free Software Foundation; version 2 of the License.               #
-//#                                                                        #
-//#  This program is distributed in the hope that it will be useful,       #
-//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
-//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
-//#  GNU General Public License for more details.                          #
-//#                                                                        #
-//#                   COPYRIGHT: Thomas Montaigu                           #
-//#                                                                        #
-//##########################################################################
+// ##########################################################################
+// #                                                                        #
+// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                                                                        #
+// #  This program is free software; you can redistribute it and/or modify  #
+// #  it under the terms of the GNU General Public License as published by  #
+// #  the Free Software Foundation; version 2 of the License.               #
+// #                                                                        #
+// #  This program is distributed in the hope that it will be useful,       #
+// #  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+// #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+// #  GNU General Public License for more details.                          #
+// #                                                                        #
+// #                   COPYRIGHT: Thomas Montaigu                           #
+// #                                                                        #
+// ##########################################################################
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl_bind.h>
@@ -58,14 +58,12 @@ void define_ScalarField(py::module &cccorelib)
         .def("addElement", &CCCoreLib::ScalarField::addElement, "value"_a)
         .def("asArray", [](CCCoreLib::ScalarField &self) { return PyCC::VectorAsNumpyArray(self); })
         .def("__getitem__",
-             [](const CCCoreLib::ScalarField &self, py::ssize_t index) {
-                 return self.at(index % self.size());
-             })
+             [](const CCCoreLib::ScalarField &self, py::ssize_t index)
+             { return self.at(index % self.size()); })
         .def("__setitem__",
-             [](CCCoreLib::ScalarField &self, py::ssize_t index, ScalarType value) {
-                 self.at(index % self.size()) = value;
-             })
-        .def("__repr__", [](const CCCoreLib::ScalarField &self) {
-            return std::string("<ScalarField(name=") + self.getName() + ")>";
-        });
+             [](CCCoreLib::ScalarField &self, py::ssize_t index, ScalarType value)
+             { self.at(index % self.size()) = value; })
+        .def("__repr__",
+             [](const CCCoreLib::ScalarField &self)
+             { return std::string("<ScalarField(name=") + self.getName() + ")>"; });
 }

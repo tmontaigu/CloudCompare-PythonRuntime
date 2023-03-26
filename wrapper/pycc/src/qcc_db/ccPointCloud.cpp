@@ -1,19 +1,19 @@
-//##########################################################################
-//#                                                                        #
-//#                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
-//#                                                                        #
-//#  This program is free software; you can redistribute it and/or modify  #
-//#  it under the terms of the GNU General Public License as published by  #
-//#  the Free Software Foundation; version 2 of the License.               #
-//#                                                                        #
-//#  This program is distributed in the hope that it will be useful,       #
-//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
-//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
-//#  GNU General Public License for more details.                          #
-//#                                                                        #
-//#                   COPYRIGHT: Thomas Montaigu                           #
-//#                                                                        #
-//##########################################################################
+// ##########################################################################
+// #                                                                        #
+// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                                                                        #
+// #  This program is free software; you can redistribute it and/or modify  #
+// #  it under the terms of the GNU General Public License as published by  #
+// #  the Free Software Foundation; version 2 of the License.               #
+// #                                                                        #
+// #  This program is distributed in the hope that it will be useful,       #
+// #  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+// #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+// #  GNU General Public License for more details.                          #
+// #                                                                        #
+// #                   COPYRIGHT: Thomas Montaigu                           #
+// #                                                                        #
+// ##########################################################################
 
 #include "../casters.h"
 
@@ -45,29 +45,30 @@ void define_ccPointCloud(py::module &m)
             py::init<QString, unsigned>(),
             "name"_a = QString(),
             "uniqueID"_a = []() { return ccUniqueIDGenerator::InvalidUniqueID; }())
-        .def(py::init([](py::array_t<PointCoordinateType> &xs,
-                         py::array_t<PointCoordinateType> &ys,
-                         py::array_t<PointCoordinateType> &zs) {
-            auto pointCloud = new ccPointCloud;
-            try
+        .def(py::init(
+            [](py::array_t<PointCoordinateType> &xs,
+               py::array_t<PointCoordinateType> &ys,
+               py::array_t<PointCoordinateType> &zs)
             {
-                PyCC::addPointsFromArrays(*pointCloud, xs, ys, zs);
-            }
-            catch (const std::exception &)
-            {
-                delete pointCloud;
-                throw;
-            }
+                auto pointCloud = new ccPointCloud;
+                try
+                {
+                    PyCC::addPointsFromArrays(*pointCloud, xs, ys, zs);
+                }
+                catch (const std::exception &)
+                {
+                    delete pointCloud;
+                    throw;
+                }
 
-            return pointCloud;
-        }))
+                return pointCloud;
+            }))
 
         // features deletion/clearing
         .def(
             "partialClone",
-            [](const ccPointCloud &self, const CCCoreLib::ReferenceCloud *refCloud) {
-                return self.partialClone(refCloud);
-            },
+            [](const ccPointCloud &self, const CCCoreLib::ReferenceCloud *refCloud)
+            { return self.partialClone(refCloud); },
             "reference"_a)
         // features allocation/resize
         .def("reserveThePointsTable", &ccPointCloud::reserveThePointsTable, "_numberOfPoints"_a)
@@ -87,12 +88,16 @@ void define_ccPointCloud(py::module &m)
         .def("sfColorScaleShown", &ccPointCloud::sfColorScaleShown)
         .def("showSFColorsScale", &ccPointCloud::showSFColorsScale, "state"_a)
         .def("addPoints", &PyCC::addPointsFromArrays<ccPointCloud>)
-        .def("setColor", [](ccPointCloud &self, ColorCompType r, ColorCompType g, ColorCompType b, ColorCompType a) {
-                self.setColor(r, g, b, a);
-            })
+        .def("setColor",
+             [](ccPointCloud &self,
+                ColorCompType r,
+                ColorCompType g,
+                ColorCompType b,
+                ColorCompType a) { self.setColor(r, g, b, a); })
         .def("colorize", &ccPointCloud::colorize)
         .def("points",
-             [](ccPointCloud &self) {
+             [](ccPointCloud &self)
+             {
                  if (self.size() > 0)
                  {
                      // FIXME, idealy, ccPointCloud would have a .points() method returning a ref
@@ -109,8 +114,10 @@ void define_ccPointCloud(py::module &m)
                      return py::array(py::dtype("3f"), 0);
                  }
              })
-        .def("__repr__", [](const ccPointCloud &self) {
-            return std::string("<ccPointCloud(") + "'" + self.getName().toStdString() + "', " +
-                   std::to_string(self.size()) + " points)>";
-        });
+        .def("__repr__",
+             [](const ccPointCloud &self)
+             {
+                 return std::string("<ccPointCloud(") + "'" + self.getName().toStdString() + "', " +
+                        std::to_string(self.size()) + " points)>";
+             });
 }

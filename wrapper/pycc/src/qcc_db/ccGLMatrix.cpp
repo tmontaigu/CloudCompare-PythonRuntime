@@ -1,19 +1,19 @@
-//##########################################################################
-//#                                                                        #
-//#                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
-//#                                                                        #
-//#  This program is free software; you can redistribute it and/or modify  #
-//#  it under the terms of the GNU General Public License as published by  #
-//#  the Free Software Foundation; version 2 of the License.               #
-//#                                                                        #
-//#  This program is distributed in the hope that it will be useful,       #
-//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
-//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
-//#  GNU General Public License for more details.                          #
-//#                                                                        #
-//#                   COPYRIGHT: Thomas Montaigu                           #
-//#                                                                        #
-//##########################################################################
+// ##########################################################################
+// #                                                                        #
+// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                                                                        #
+// #  This program is free software; you can redistribute it and/or modify  #
+// #  it under the terms of the GNU General Public License as published by  #
+// #  the Free Software Foundation; version 2 of the License.               #
+// #                                                                        #
+// #  This program is distributed in the hope that it will be useful,       #
+// #  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+// #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+// #  GNU General Public License for more details.                          #
+// #                                                                        #
+// #                   COPYRIGHT: Thomas Montaigu                           #
+// #                                                                        #
+// ##########################################################################
 
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
@@ -90,13 +90,11 @@ static void define_ccGLMatrixClass(py::module &m, const char *name)
         .def(py::self += Vector3Tpl<Inner>())
         .def(py::self -= Vector3Tpl<Inner>())
         .def("__mul__",
-             [](ccGLMatrixType &self, ccGLMatrixType &other) -> ccGLMatrixType {
-                 return self * other;
-             })
+             [](ccGLMatrixType &self, ccGLMatrixType &other) -> ccGLMatrixType
+             { return self * other; })
         .def("__getitem__",
-             [](const ccGLMatrixType &self, const std::pair<unsigned, unsigned> &item) {
-                 return self(item.first, item.second);
-             })
+             [](const ccGLMatrixType &self, const std::pair<unsigned, unsigned> &item)
+             { return self(item.first, item.second); })
         // apply and so on
         .def("shiftRotationCenter", &ccGLMatrixType::shiftRotationCenter, "vec"_a)
         .def("transpose", &ccGLMatrixType::transpose)
@@ -105,8 +103,10 @@ static void define_ccGLMatrixClass(py::module &m, const char *name)
         .def("scaleRotation", &ccGLMatrixType::scaleRotation, "coef"_a)
         .def("scaleRow", &ccGLMatrixType::scaleRow, "rowIndex"_a, "coef"_a)
         .def("scaleColumn", &ccGLMatrixType::scaleColumn, "rowIndex"_a, "coef"_a)
-        .def("asArray", [](ccGLMatrixType &self) { return PyCC::SpanAsNumpyArray(self.data(), {4, 4}); })
-        ;
+        .def("asArray",
+             [](ccGLMatrixType &self) {
+                 return PyCC::SpanAsNumpyArray(self.data(), {4, 4});
+             });
 }
 
 void define_ccGLMatrix(py::module &m)

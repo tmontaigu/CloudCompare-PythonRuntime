@@ -1,19 +1,19 @@
-//##########################################################################
-//#                                                                        #
-//#                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
-//#                                                                        #
-//#  This program is free software; you can redistribute it and/or modify  #
-//#  it under the terms of the GNU General Public License as published by  #
-//#  the Free Software Foundation; version 2 of the License.               #
-//#                                                                        #
-//#  This program is distributed in the hope that it will be useful,       #
-//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
-//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
-//#  GNU General Public License for more details.                          #
-//#                                                                        #
-//#                   COPYRIGHT: Thomas Montaigu                           #
-//#                                                                        #
-//##########################################################################
+// ##########################################################################
+// #                                                                        #
+// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                                                                        #
+// #  This program is free software; you can redistribute it and/or modify  #
+// #  it under the terms of the GNU General Public License as published by  #
+// #  the Free Software Foundation; version 2 of the License.               #
+// #                                                                        #
+// #  This program is distributed in the hope that it will be useful,       #
+// #  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+// #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+// #  GNU General Public License for more details.                          #
+// #                                                                        #
+// #                   COPYRIGHT: Thomas Montaigu                           #
+// #                                                                        #
+// ##########################################################################
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -33,9 +33,8 @@ void define_ccPolyline(py::module &m)
     py::class_<ccPolyline, CCCoreLib::Polyline, ccShiftedObject>(m, "ccPolyline")
         .def(
             py::init([](CCCoreLib::GenericIndexedCloudPersist *cloud,
-                        unsigned uniqueID = ccUniqueIDGenerator::InvalidUniqueID) {
-                return new ccPolyline(cloud, uniqueID);
-            }),
+                        unsigned uniqueID = ccUniqueIDGenerator::InvalidUniqueID)
+                     { return new ccPolyline(cloud, uniqueID); }),
             "associatedCloud"_a,
             "uniqueID"_a = []() { return ccUniqueIDGenerator::InvalidUniqueID; }())
 
@@ -48,7 +47,8 @@ void define_ccPolyline(py::module &m)
         .def("getColor", &ccPolyline::getColor)
         .def(
             "split",
-            [](ccPolyline &self, PointCoordinateType maxEdgeLength) {
+            [](ccPolyline &self, PointCoordinateType maxEdgeLength)
+            {
                 std::vector<ccPolyline *> parts;
                 self.split(maxEdgeLength, parts);
                 return parts;

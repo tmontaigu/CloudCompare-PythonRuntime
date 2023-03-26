@@ -1,19 +1,19 @@
-//##########################################################################
-//#                                                                        #
-//#                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
-//#                                                                        #
-//#  This program is free software; you can redistribute it and/or modify  #
-//#  it under the terms of the GNU General Public License as published by  #
-//#  the Free Software Foundation; version 2 of the License.               #
-//#                                                                        #
-//#  This program is distributed in the hope that it will be useful,       #
-//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
-//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
-//#  GNU General Public License for more details.                          #
-//#                                                                        #
-//#                   COPYRIGHT: Thomas Montaigu                           #
-//#                                                                        #
-//##########################################################################
+// ##########################################################################
+// #                                                                        #
+// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                                                                        #
+// #  This program is free software; you can redistribute it and/or modify  #
+// #  it under the terms of the GNU General Public License as published by  #
+// #  the Free Software Foundation; version 2 of the License.               #
+// #                                                                        #
+// #  This program is distributed in the hope that it will be useful,       #
+// #  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+// #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+// #  GNU General Public License for more details.                          #
+// #                                                                        #
+// #                   COPYRIGHT: Thomas Montaigu                           #
+// #                                                                        #
+// ##########################################################################
 
 #include <pybind11/pybind11.h>
 
@@ -27,7 +27,8 @@ void define_GenericIndexedCloud(py::module &cccorelib)
     py::class_<CCCoreLib::GenericIndexedCloud, CCCoreLib::GenericCloud>(cccorelib, "GenericIndexedCloud")
         .def(
             "getPoint",
-            [](CCCoreLib::GenericIndexedCloud &self, const unsigned index) {
+            [](CCCoreLib::GenericIndexedCloud &self, const unsigned index)
+            {
                 if (index < self.size())
                 {
                     return *self.getPoint(index);
@@ -41,7 +42,8 @@ void define_GenericIndexedCloud(py::module &cccorelib)
             py::return_value_policy::reference)
         .def(
             "getPoint",
-            [](CCCoreLib::GenericIndexedCloud &self, const unsigned index, CCVector3 &P) {
+            [](CCCoreLib::GenericIndexedCloud &self, const unsigned index, CCVector3 &P)
+            {
                 if (index < self.size())
                 {
                     self.getPoint(index, P);

@@ -1,19 +1,19 @@
-//##########################################################################
-//#                                                                        #
-//#                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
-//#                                                                        #
-//#  This program is free software; you can redistribute it and/or modify  #
-//#  it under the terms of the GNU General Public License as published by  #
-//#  the Free Software Foundation; version 2 of the License.               #
-//#                                                                        #
-//#  This program is distributed in the hope that it will be useful,       #
-//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
-//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
-//#  GNU General Public License for more details.                          #
-//#                                                                        #
-//#                   COPYRIGHT: Thomas Montaigu                           #
-//#                                                                        #
-//##########################################################################
+// ##########################################################################
+// #                                                                        #
+// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                                                                        #
+// #  This program is free software; you can redistribute it and/or modify  #
+// #  it under the terms of the GNU General Public License as published by  #
+// #  the Free Software Foundation; version 2 of the License.               #
+// #                                                                        #
+// #  This program is distributed in the hope that it will be useful,       #
+// #  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+// #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+// #  GNU General Public License for more details.                          #
+// #                                                                        #
+// #                   COPYRIGHT: Thomas Montaigu                           #
+// #                                                                        #
+// ##########################################################################
 
 #ifndef PYTHON_PLUGIN_CONSOLES_H
 #define PYTHON_PLUGIN_CONSOLES_H
@@ -95,7 +95,8 @@ class ccConsoleOutput
         m_output.write(messagePart);
     }
 
-    bool isatty() const {
+    bool isatty() const
+    {
         return false;
     }
 
@@ -106,16 +107,17 @@ class ccConsoleOutput
 
   private:
     const QString m_prefix;
-    ConsoleWrapper m_output{[this](const QString &message) {
-        if (m_prefix.isEmpty())
-        {
-            ccLog::Print(message);
-        }
-        else
-        {
-            ccLog::Print(m_prefix + message);
-        }
-    }};
+    ConsoleWrapper m_output{[this](const QString &message)
+                            {
+                                if (m_prefix.isEmpty())
+                                {
+                                    ccLog::Print(message);
+                                }
+                                else
+                                {
+                                    ccLog::Print(m_prefix + message);
+                                }
+                            }};
 };
 
 /// Writes messages to the QListWidget given
@@ -146,10 +148,11 @@ class ListWidgetConsole
     QListWidget *m_view;
     QBrush m_brush;
     QString m_prefix;
-    ConsoleWrapper m_output{[this](const QString &message) {
-        auto *messageItem = new QListWidgetItem(message);
-        messageItem->setForeground(m_brush);
-        m_view->addItem(messageItem);
-    }};
+    ConsoleWrapper m_output{[this](const QString &message)
+                            {
+                                auto *messageItem = new QListWidgetItem(message);
+                                messageItem->setForeground(m_brush);
+                                m_view->addItem(messageItem);
+                            }};
 };
 #endif // PYTHON_PLUGIN_CONSOLES_H

@@ -1,19 +1,19 @@
-//##########################################################################
-//#                                                                        #
-//#                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
-//#                                                                        #
-//#  This program is free software; you can redistribute it and/or modify  #
-//#  it under the terms of the GNU General Public License as published by  #
-//#  the Free Software Foundation; version 2 of the License.               #
-//#                                                                        #
-//#  This program is distributed in the hope that it will be useful,       #
-//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
-//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
-//#  GNU General Public License for more details.                          #
-//#                                                                        #
-//#                     COPYRIGHT: Chris S Brown                           #
-//#                                Thomas Montaigu                         #
-//##########################################################################
+// ##########################################################################
+// #                                                                        #
+// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                                                                        #
+// #  This program is free software; you can redistribute it and/or modify  #
+// #  it under the terms of the GNU General Public License as published by  #
+// #  the Free Software Foundation; version 2 of the License.               #
+// #                                                                        #
+// #  This program is distributed in the hope that it will be useful,       #
+// #  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+// #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+// #  GNU General Public License for more details.                          #
+// #                                                                        #
+// #                     COPYRIGHT: Chris S Brown                           #
+// #                                Thomas Montaigu                         #
+// ##########################################################################
 
 #include "PythonEditor.h"
 #include "CodeEditor.h"
@@ -521,9 +521,10 @@ void PythonEditor::updateWindowMenu()
             text = tr("%1 %2").arg(i + 1).arg(child->userFriendlyCurrentFile());
         }
         QAction *action = m_windowMenu->addAction(text);
-        connect(action, &QAction::triggered, mdiSubWindow, [this, mdiSubWindow]() {
-            m_mdiArea->setActiveSubWindow(mdiSubWindow);
-        });
+        connect(action,
+                &QAction::triggered,
+                mdiSubWindow,
+                [this, mdiSubWindow]() { m_mdiArea->setActiveSubWindow(mdiSubWindow); });
         action->setCheckable(true);
         action->setChecked(child == activeChildCodeEditor());
     }

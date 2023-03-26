@@ -1,19 +1,19 @@
-//##########################################################################
-//#                                                                        #
-//#                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
-//#                                                                        #
-//#  This program is free software; you can redistribute it and/or modify  #
-//#  it under the terms of the GNU General Public License as published by  #
-//#  the Free Software Foundation; version 2 of the License.               #
-//#                                                                        #
-//#  This program is distributed in the hope that it will be useful,       #
-//#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
-//#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
-//#  GNU General Public License for more details.                          #
-//#                                                                        #
-//#                   COPYRIGHT: Thomas Montaigu                           #
-//#                                                                        #
-//##########################################################################
+// ##########################################################################
+// #                                                                        #
+// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                                                                        #
+// #  This program is free software; you can redistribute it and/or modify  #
+// #  it under the terms of the GNU General Public License as published by  #
+// #  the Free Software Foundation; version 2 of the License.               #
+// #                                                                        #
+// #  This program is distributed in the hope that it will be useful,       #
+// #  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+// #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+// #  GNU General Public License for more details.                          #
+// #                                                                        #
+// #                   COPYRIGHT: Thomas Montaigu                           #
+// #                                                                        #
+// ##########################################################################
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -54,7 +54,8 @@ void define_ccColorScale(py::module &m)
         .def("setAbsolute", &ccColorScale::setAbsolute, "minVal"_a, "maxVal"_a)
         .def("setAbsolute", &ccColorScale::setAbsolute, "minVal"_a, "maxVal"_a)
         .def("getAbsoluteBoundaries",
-             [](const ccColorScale &self) {
+             [](const ccColorScale &self)
+             {
                  double minVal, maxVal;
                  self.getAbsoluteBoundaries(minVal, maxVal);
                  return py::make_tuple(minVal, maxVal);
@@ -88,21 +89,21 @@ void define_ccColorScale(py::module &m)
              "steps"_a,
              "outOfRangeColor"_a = nullptr)
         .def("getColorByIndex", &ccColorScale::getColorByIndex, "index"_a);
-        // TODO save load from XML
+    // TODO save load from XML
 
     py::class_<ccColorScale::Label>(pyColorScale, "Label")
         .def_readwrite("value", &ccColorScale::Label::value)
         .def_readwrite("text", &ccColorScale::Label::text, py::return_value_policy::reference)
-        .def(py::init<double>(),
-             "value"_a)
-        .def(py::init<double, const QString&>(),
-             "value"_a,
-             "text"_a);
+        .def(py::init<double>(), "value"_a)
+        .def(py::init<double, const QString &>(), "value"_a, "text"_a);
 
-    pyColorScale.def("customLabels",
-             static_cast<const std::set<ccColorScale::Label> &(ccColorScale::*)() const>(&ccColorScale::customLabels))
+    pyColorScale
         .def("customLabels",
-             static_cast<std::set<ccColorScale::Label> &(ccColorScale::*)()>(&ccColorScale::customLabels));
+             static_cast<const std::set<ccColorScale::Label> &(ccColorScale::*)() const>(
+                 &ccColorScale::customLabels))
+        .def("customLabels",
+             static_cast<std::set<ccColorScale::Label> &(ccColorScale::*)()>(
+                 &ccColorScale::customLabels));
 
     // Thanks https://github.com/pybind/pybind11/issues/820#issuecomment-297894565
     py::class_<ccColorScale::Shared>(pyColorScale, "Shared");
