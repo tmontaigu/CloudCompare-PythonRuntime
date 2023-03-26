@@ -1,8 +1,13 @@
 <?xml version='1.0' encoding='windows-1252'?>
 
+<!-- https://wixtoolset.org/docs/v3/overview/preprocessor/ -->
 
 <?define SourcePluginPath = "$(var.SourceInstallPath)/plugins" ?>
-<?define PLUGIN_STANDARD_QM3C2 = "ON" ?>
+
+<?ifndef PLUGIN_STANDARD_QM3C2 ?>
+    <?define PLUGIN_STANDARD_QM3C2 = "OFF" ?>
+<?endif?>
+
 
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
 

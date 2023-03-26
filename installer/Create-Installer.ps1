@@ -4,7 +4,11 @@ param(
 
     [Parameter()]
     [ValidateSet("En", "Fr")]
-    [String]$Localization = "En"
+    [String]$Localization = "En",
+
+    [Parameter()]
+    [ValidateSet("ON", "OFF")]
+    [String]$PLUGIN_STANDARD_QM3C2 = "OFF"
 )
 
 $IsFolder = Test-Path -Path $CloudCompareInstallFolder -PathType Container
@@ -18,7 +22,7 @@ if ($IsFolder -eq $False) {
 $PythonDlls = Get-ChildItem -Path $CloudCompareInstallFolder -Filter "python3*.dll"
 Write-Host "Python DLL suffix: $PythonDlls"
 if ($PythonDlls.count -ne 2) {
-    throw "Need 2 Python3 DLLs, found $PythonDlls.count"
+    throw "Need 2 Python3 DLLs, found ", $PythonDlls.count
 } else {
     if($PythonDlls[0].Name -ne "python3.dll") {
         throw "python3.dll not found"
@@ -34,9 +38,11 @@ $LocalizationName = if ($Localization -eq "Fr") { "French" } else { "English" }
 $PythonEnvPrefix = Join-Path -Resolve -Path $CloudCompareInstallFolder -ChildPath "plugins" -AdditionalChildPath "Python"
 $EnvTypeName = if (Test-Path -Path (Join-Path -Path $PythonEnvPrefix -ChildPath "conda-meta")) { "Conda" } else { "Venv" }
 
+Write-Host ""
 Write-Host "Python DLL suffix (minor version number): $Python3DllSuffix"
 Write-Host "Localization name: $LocalizationName"
 Write-Host "Environment type : $EnvTypeName"
+Write-Host "Plugin QM3C2     : $PLUGIN_STANDARD_QM3C2"
 Write-Host ""
 
 # # Scans the Python environment dir and
@@ -58,6 +64,7 @@ Write-Host ""
     -arch x64 `
     -dSourceInstallPath="$CloudCompareInstallFolder" `
     -dPythonSuffix="$Python3DllSuffix" `
+    -dPLUGIN_STANDARD_QM3C2="$PLUGIN_STANDARD_QM3C2" `
     .\Installer.wxs `
     .\PythonEnvironment.wxs `
 
