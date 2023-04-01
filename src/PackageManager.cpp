@@ -135,7 +135,14 @@ void PackageManager::refreshInstalledPackagesList()
         static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
         &loop,
         &QEventLoop::quit);
+    QObject::connect(m_pythonProcess, &QProcess::errorOccurred, &loop, &QEventLoop::quit);
     m_pythonProcess->start(QIODevice::ReadOnly);
+    if (m_pythonProcess->state() != QProcess::ProcessState::Starting &&
+        m_pythonProcess->state() != QProcess::ProcessState::Running)
+    {
+        ccLog::Warning("Failed to start python process");
+        return;
+    }
     loop.exec();
 
     if (m_pythonProcess->exitStatus() != QProcess::ExitStatus::NormalExit)
