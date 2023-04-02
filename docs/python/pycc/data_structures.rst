@@ -52,7 +52,6 @@ _____________
     C++: :cpp:class:`ccPointCloud`
 
 .. autoclass:: pycc.ccPointCloud
-    :inherited-members:
     :members:
     :undoc-members:
     :show-inheritance:
@@ -65,7 +64,6 @@ __________
     C++: :cpp:class:`ccPolyline`
 
 .. autoclass:: pycc.ccPolyline
-    :inherited-members:
     :members:
     :undoc-members:
     :show-inheritance:

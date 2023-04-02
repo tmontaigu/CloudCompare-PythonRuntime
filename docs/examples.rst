@@ -30,6 +30,13 @@ Merge
     :language: Python
 
 
+Crop2D
+------
+
+.. literalinclude:: ../script_examples/crop2d.py
+    :language: Python
+
+
 Using OpenGL Transformations
 ----------------------------
 

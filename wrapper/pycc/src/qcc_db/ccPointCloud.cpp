@@ -18,6 +18,7 @@
 #include "../casters.h"
 
 #include <ccPointCloud.h>
+#include <ccPolyline.h>
 #include <ccScalarField.h>
 #include <type_traits>
 #include <vector>
@@ -95,6 +96,7 @@ void define_ccPointCloud(py::module &m)
                 ColorCompType b,
                 ColorCompType a) { self.setColor(r, g, b, a); })
         .def("colorize", &ccPointCloud::colorize)
+        .def("crop2D", &ccPointCloud::crop2D, "poly"_a, "orthodDim"_a, "inside"_a = true)
         .def("points",
              [](ccPointCloud &self)
              {
