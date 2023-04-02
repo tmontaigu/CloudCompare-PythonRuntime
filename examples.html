@@ -54,6 +54,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#loading-a-file">Loading a file</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sub-sampling">Sub sampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#merge">Merge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#crop2d">Crop2D</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-opengl-transformations">Using OpenGL Transformations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#translation">Translation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rotation">Rotation</a></li>
@@ -281,6 +282,47 @@
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="crop2d">
+<h2>Crop2D<a class="headerlink" href="#crop2d" title="Permalink to this heading"></a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pycc</span>
+<span class="kn">import</span> <span class="nn">cccorelib</span>
+
+<span class="n">CC</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">GetInstance</span><span class="p">()</span>
+<span class="n">pc_to_crop</span> <span class="o">=</span> <span class="n">CC</span><span class="o">.</span><span class="n">getSelectedEntities</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">bbMin</span><span class="p">,</span> <span class="n">bbMax</span> <span class="o">=</span> <span class="n">cccorelib</span><span class="o">.</span><span class="n">CCVector3</span><span class="p">(),</span> <span class="n">cccorelib</span><span class="o">.</span><span class="n">CCVector3</span><span class="p">()</span>
+<span class="n">pc_to_crop</span><span class="o">.</span><span class="n">getBoundingBox</span><span class="p">(</span><span class="n">bbMin</span><span class="p">,</span> <span class="n">bbMax</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Min </span><span class="si">{</span><span class="n">bbMin</span><span class="si">}</span><span class="s2">, Max: </span><span class="si">{</span><span class="n">bbMax</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">diag</span> <span class="o">=</span> <span class="n">bbMax</span> <span class="o">-</span> <span class="n">bbMin</span>
+
+<span class="n">bbMin</span> <span class="o">=</span> <span class="n">bbMin</span> <span class="o">+</span> <span class="n">cccorelib</span><span class="o">.</span><span class="n">CCVector3</span><span class="p">(</span><span class="n">diag</span><span class="o">.</span><span class="n">x</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">vertices</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccPointCloud</span><span class="p">()</span>
+<span class="n">vertices</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s2">&quot;polyline.vertices&quot;</span><span class="p">)</span>
+<span class="n">vertices</span><span class="o">.</span><span class="n">addPoint</span><span class="p">(</span><span class="n">bbMin</span><span class="p">)</span>
+<span class="n">vertices</span><span class="o">.</span><span class="n">addPoint</span><span class="p">(</span><span class="n">bbMin</span> <span class="o">+</span> <span class="n">cccorelib</span><span class="o">.</span><span class="n">CCVector3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">diag</span><span class="o">.</span><span class="n">y</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">vertices</span><span class="o">.</span><span class="n">addPoint</span><span class="p">(</span><span class="n">bbMin</span> <span class="o">+</span> <span class="n">cccorelib</span><span class="o">.</span><span class="n">CCVector3</span><span class="p">(</span><span class="n">diag</span><span class="o">.</span><span class="n">x</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">diag</span><span class="o">.</span><span class="n">y</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">vertices</span><span class="o">.</span><span class="n">addPoint</span><span class="p">(</span><span class="n">bbMin</span> <span class="o">+</span> <span class="n">cccorelib</span><span class="o">.</span><span class="n">CCVector3</span><span class="p">(</span><span class="n">diag</span><span class="o">.</span><span class="n">x</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+<span class="n">polyline</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccPolyline</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span>
+<span class="n">polyline</span><span class="o">.</span><span class="n">setClosed</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># This is important, otherwise the polyline would have a size of 0</span>
+<span class="n">polyline</span><span class="o">.</span><span class="n">addPointIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">vertices</span><span class="o">.</span><span class="n">size</span><span class="p">())</span> 
+
+<span class="c1"># To see the crop area</span>
+<span class="c1"># CC.addToDB(vertices)</span>
+
+<span class="n">cropped_ref</span> <span class="o">=</span> <span class="n">pc_to_crop</span><span class="o">.</span><span class="n">crop2D</span><span class="p">(</span><span class="n">polyline</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">cropped_ref</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Failed to crop&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">cropped_ref</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">cropped</span> <span class="o">=</span> <span class="n">pc_to_crop</span><span class="o">.</span><span class="n">partialClone</span><span class="p">(</span><span class="n">cropped_ref</span><span class="p">)</span>
+    <span class="n">CC</span><span class="o">.</span><span class="n">addToDB</span><span class="p">(</span><span class="n">cropped</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No points fall in crop area&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
