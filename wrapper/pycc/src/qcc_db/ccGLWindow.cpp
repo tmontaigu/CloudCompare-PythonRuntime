@@ -47,6 +47,8 @@ void define_ccGLWindow(py::module &m)
         .value("TRIANGLE_PICKING", ccGLWindowInterface::PICKING_MODE::TRIANGLE_PICKING)
         .value("POINT_OR_TRIANGLE_PICKING",
                ccGLWindowInterface::PICKING_MODE::POINT_OR_TRIANGLE_PICKING)
+        .value("POINT_OR_TRIANGLE_OR_LABEL_PICKING",
+               ccGLWindowInterface::PICKING_MODE::POINT_OR_TRIANGLE_OR_LABEL_PICKING)
         .value("LABEL_PICKING", ccGLWindowInterface::PICKING_MODE::LABEL_PICKING)
         .value("DEFAULT_PICKING", ccGLWindowInterface::PICKING_MODE::DEFAULT_PICKING)
         .export_values();
@@ -111,7 +113,13 @@ void define_ccGLWindow(py::module &m)
         .value("PIVOT_ALWAYS_SHOW", ccGLWindowInterface::PivotVisibility::PIVOT_ALWAYS_SHOW)
         .export_values();
 
-    PyccGLWindow.def("setSceneDB", &ccGLWindowInterface::setSceneDB, "root"_a)
+    PyccGLWindow.def("isStereo", &ccGLWindowInterface::isStereo)
+        .def("getDevicePixelRatio", &ccGLWindowInterface::getDevicePixelRatio)
+        .def("doResize",
+             static_cast<void (ccGLWindowInterface::*)(int, int)>(&ccGLWindowInterface::doResize),
+             "w"_a,
+             "h"_a)
+        .def("setSceneDB", &ccGLWindowInterface::setSceneDB, "root"_a)
         .def("getSceneDB", &ccGLWindowInterface::getSceneDB)
         .def("renderText",
              static_cast<void (ccGLWindowInterface::*)(
@@ -205,7 +213,6 @@ void define_ccGLWindow(py::module &m)
         .def("setViewportParameters", &ccGLWindowInterface::setViewportParameters, "parameters"_a)
         .def("setFov", &ccGLWindowInterface::setFov, "fov"_a)
         .def("getFov", &ccGLWindowInterface::getFov)
-        //.def("setGLCameraAspectRatio", &ccGLWindowInterface::setGLCameraAspectRatio, "ar"_a)
         .def("setFarClippingPlaneDepth", &ccGLWindowInterface::setFarClippingPlaneDepth, "depth"_a)
         .def(
             "setClippingPlanesEnabled", &ccGLWindowInterface::setClippingPlanesEnabled, "enabled"_a)
@@ -218,7 +225,8 @@ void define_ccGLWindow(py::module &m)
              "zoomFactor"_a = 1.0f,
              "dontScaleFeatures"_a = false,
              "renderOverlayItems"_a = false)
-        //        .def_static("setShaderPath", &ccGLWindowInterface::setShaderPath, "path"_a)
+        .def_static("SetShaderPath", &ccGLWindowInterface::SetShaderPath, "path"_a)
+        .def_static("GetShaderPath", &ccGLWindowInterface::GetShaderPath)
         //        .def("setShader", &ccGLWindowInterface::setShader, "shader"_a)
         //        .def("setGlFilter", &ccGLWindowInterface::setGlFilter, "shader"_a)
         //        .def("getGlFilter", &ccGLWindowInterface::getGlFilter)
@@ -230,6 +238,18 @@ void define_ccGLWindow(py::module &m)
         .def("setRectangularPickingAllowed",
              &ccGLWindowInterface::setRectangularPickingAllowed,
              "state"_a)
-        // TODO unfinished
+        // TODO: this would need a ccGui::ParamStruct binding
+        //        .def("setShader", &ccGLWindowInterface::getDisplayParameters)
+        //        .def("setDisplayParameter", &ccGLWindowInterface::getDisplayParameters,
+        //        "params"_a, thisWindowOnly)
+        .def("hasOverriddenDisplayParameters", &ccGLWindowInterface::hasOverriddenDisplayParameters)
+        .def("setPickingRadius", &ccGLWindowInterface::setPickingRadius, "radius"_a)
+        .def("getPickingRadius", &ccGLWindowInterface::getPickingRadius)
+        .def("displayOverlayEntities",
+             &ccGLWindowInterface::displayOverlayEntities,
+             "showScale"_a,
+             "showTrihedron"_a)
+
+        // TODO
         ;
 }
