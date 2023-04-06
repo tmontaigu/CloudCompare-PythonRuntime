@@ -27,16 +27,17 @@
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-
 void define_ccGLWindow(py::module &m)
 {
     py::class_<ccGLWindowInterface, ccGenericGLDisplay> PyccGLWindow(m, "ccGLWindowInterface");
     py::enum_<ccGLWindowInterface::PICKING_MODE> PyPickingMode(PyccGLWindow, "PICKING_MODE");
     py::enum_<ccGLWindowInterface::INTERACTION_FLAG> PyInteractionFlag(
         PyccGLWindow, "INTERACTION_FLAG", py::arithmetic());
-    py::enum_<ccGLWindowInterface::MessagePosition> PyMessagePosition(PyccGLWindow, "MessagePosition");
+    py::enum_<ccGLWindowInterface::MessagePosition> PyMessagePosition(PyccGLWindow,
+                                                                      "MessagePosition");
     py::enum_<ccGLWindowInterface::MessageType> PyMessageType(PyccGLWindow, "MessageType");
-    py::enum_<ccGLWindowInterface::PivotVisibility> PyPivotVisibility(PyccGLWindow, "PivotVisibility");
+    py::enum_<ccGLWindowInterface::PivotVisibility> PyPivotVisibility(PyccGLWindow,
+                                                                      "PivotVisibility");
 
     PyPickingMode.value("NO_PICKING", ccGLWindowInterface::PICKING_MODE::NO_PICKING)
         .value("ENTITY_PICKING", ccGLWindowInterface::PICKING_MODE::ENTITY_PICKING)
@@ -44,19 +45,23 @@ void define_ccGLWindow(py::module &m)
         .value("FAST_PICKING", ccGLWindowInterface::PICKING_MODE::FAST_PICKING)
         .value("POINT_PICKING", ccGLWindowInterface::PICKING_MODE::POINT_PICKING)
         .value("TRIANGLE_PICKING", ccGLWindowInterface::PICKING_MODE::TRIANGLE_PICKING)
-        .value("POINT_OR_TRIANGLE_PICKING", ccGLWindowInterface::PICKING_MODE::POINT_OR_TRIANGLE_PICKING)
+        .value("POINT_OR_TRIANGLE_PICKING",
+               ccGLWindowInterface::PICKING_MODE::POINT_OR_TRIANGLE_PICKING)
         .value("LABEL_PICKING", ccGLWindowInterface::PICKING_MODE::LABEL_PICKING)
         .value("DEFAULT_PICKING", ccGLWindowInterface::PICKING_MODE::DEFAULT_PICKING)
         .export_values();
 
     PyInteractionFlag
         .value("INTERACT_NONE", ccGLWindowInterface::INTERACTION_FLAGS::enum_type::INTERACT_NONE)
-        .value("INTERACT_ROTATE", ccGLWindowInterface::INTERACTION_FLAGS::enum_type::INTERACT_ROTATE)
+        .value("INTERACT_ROTATE",
+               ccGLWindowInterface::INTERACTION_FLAGS::enum_type::INTERACT_ROTATE)
         .value("INTERACT_PAN", ccGLWindowInterface::INTERACTION_FLAGS::enum_type::INTERACT_PAN)
-        .value("INTERACT_CTRL_PAN", ccGLWindowInterface::INTERACTION_FLAGS::enum_type::INTERACT_CTRL_PAN)
+        .value("INTERACT_CTRL_PAN",
+               ccGLWindowInterface::INTERACTION_FLAGS::enum_type::INTERACT_CTRL_PAN)
         .value("INTERACT_ZOOM_CAMERA",
                ccGLWindowInterface::INTERACTION_FLAGS::enum_type::INTERACT_ZOOM_CAMERA)
-        .value("INTERACT_2D_ITEMS", ccGLWindowInterface::INTERACTION_FLAGS::enum_type::INTERACT_2D_ITEMS)
+        .value("INTERACT_2D_ITEMS",
+               ccGLWindowInterface::INTERACTION_FLAGS::enum_type::INTERACT_2D_ITEMS)
         .value("INTERACT_CLICKABLE_ITEMS",
                ccGLWindowInterface::INTERACTION_FLAGS::enum_type::INTERACT_CLICKABLE_ITEMS)
         .value("INTERACT_TRANSFORM_ENTITIES",
@@ -80,19 +85,23 @@ void define_ccGLWindow(py::module &m)
                ccGLWindowInterface::INTERACTION_FLAGS::enum_type::MODE_TRANSFORM_ENTITIES)
         .export_values();
 
-    PyMessagePosition.value("LOWER_LEFT_MESSAGE", ccGLWindowInterface::MessagePosition::LOWER_LEFT_MESSAGE)
+    PyMessagePosition
+        .value("LOWER_LEFT_MESSAGE", ccGLWindowInterface::MessagePosition::LOWER_LEFT_MESSAGE)
         .value("UPPER_CENTER_MESSAGE", ccGLWindowInterface::MessagePosition::UPPER_CENTER_MESSAGE)
         .value("SCREEN_CENTER_MESSAGE", ccGLWindowInterface::MessagePosition::SCREEN_CENTER_MESSAGE)
         .export_values();
 
     PyMessageType.value("CUSTOM_MESSAGE", ccGLWindowInterface::MessageType::CUSTOM_MESSAGE)
         .value("SCREEN_SIZE_MESSAGE", ccGLWindowInterface::MessageType::SCREEN_SIZE_MESSAGE)
-        .value("PERSPECTIVE_STATE_MESSAGE", ccGLWindowInterface::MessageType::PERSPECTIVE_STATE_MESSAGE)
+        .value("PERSPECTIVE_STATE_MESSAGE",
+               ccGLWindowInterface::MessageType::PERSPECTIVE_STATE_MESSAGE)
         .value("SUN_LIGHT_STATE_MESSAGE", ccGLWindowInterface::MessageType::SUN_LIGHT_STATE_MESSAGE)
-        .value("CUSTOM_LIGHT_STATE_MESSAGE", ccGLWindowInterface::MessageType::CUSTOM_LIGHT_STATE_MESSAGE)
+        .value("CUSTOM_LIGHT_STATE_MESSAGE",
+               ccGLWindowInterface::MessageType::CUSTOM_LIGHT_STATE_MESSAGE)
         .value("MANUAL_TRANSFORMATION_MESSAGE",
                ccGLWindowInterface::MessageType::MANUAL_TRANSFORMATION_MESSAGE)
-        .value("MANUAL_SEGMENTATION_MESSAGE", ccGLWindowInterface::MessageType::MANUAL_SEGMENTATION_MESSAGE)
+        .value("MANUAL_SEGMENTATION_MESSAGE",
+               ccGLWindowInterface::MessageType::MANUAL_SEGMENTATION_MESSAGE)
         .value("ROTAION_LOCK_MESSAGE", ccGLWindowInterface::MessageType::ROTAION_LOCK_MESSAGE)
         .value("FULL_SCREEN_MESSAGE", ccGLWindowInterface::MessageType::FULL_SCREEN_MESSAGE)
         .export_values();
@@ -102,11 +111,11 @@ void define_ccGLWindow(py::module &m)
         .value("PIVOT_ALWAYS_SHOW", ccGLWindowInterface::PivotVisibility::PIVOT_ALWAYS_SHOW)
         .export_values();
 
-    PyccGLWindow
-        .def("setSceneDB", &ccGLWindowInterface::setSceneDB, "root"_a)
+    PyccGLWindow.def("setSceneDB", &ccGLWindowInterface::setSceneDB, "root"_a)
         .def("getSceneDB", &ccGLWindowInterface::getSceneDB)
         .def("renderText",
-             static_cast<void (ccGLWindowInterface::*)(int, int, const QString &, uint16_t, const QFont &)>(
+             static_cast<void (ccGLWindowInterface::*)(
+                 int, int, const QString &, uint16_t, const QFont &)>(
                  &ccGLWindowInterface::renderText),
              "x"_a,
              "y"_a,
@@ -115,7 +124,8 @@ void define_ccGLWindow(py::module &m)
              "font"_a = QFont())
         .def("renderText",
              static_cast<void (ccGLWindowInterface::*)(
-                 double, double, double, const QString &, const QFont &)>(&ccGLWindowInterface::renderText),
+                 double, double, double, const QString &, const QFont &)>(
+                 &ccGLWindowInterface::renderText),
              "x"_a,
              "y"_a,
              "z"_a,
@@ -197,7 +207,8 @@ void define_ccGLWindow(py::module &m)
         .def("getFov", &ccGLWindowInterface::getFov)
         //.def("setGLCameraAspectRatio", &ccGLWindowInterface::setGLCameraAspectRatio, "ar"_a)
         .def("setFarClippingPlaneDepth", &ccGLWindowInterface::setFarClippingPlaneDepth, "depth"_a)
-        .def("setClippingPlanesEnabled", &ccGLWindowInterface::setClippingPlanesEnabled, "enabled"_a)
+        .def(
+            "setClippingPlanesEnabled", &ccGLWindowInterface::setClippingPlanesEnabled, "enabled"_a)
         .def("clippingPlanesEnabled", &ccGLWindowInterface::clippingPlanesEnabled)
         .def("invalidateVisualization", &ccGLWindowInterface::invalidateVisualization)
         // TODO renderToImage
@@ -216,7 +227,9 @@ void define_ccGLWindow(py::module &m)
         .def("computeActualPixelSize", &ccGLWindowInterface::computeActualPixelSize)
         .def("hasColorRampShader", &ccGLWindowInterface::hasColorRampShader)
         .def("isRectangularPickingAllowed", &ccGLWindowInterface::isRectangularPickingAllowed)
-        .def("setRectangularPickingAllowed", &ccGLWindowInterface::setRectangularPickingAllowed, "state"_a)
+        .def("setRectangularPickingAllowed",
+             &ccGLWindowInterface::setRectangularPickingAllowed,
+             "state"_a)
         // TODO unfinished
         ;
 }
