@@ -20,7 +20,7 @@
 #define slots Q_SLOTS
 #define signals Q_SIGNALS
 
-#include <ccGLWindow.h>
+#include <ccGLWindowInterface.h>
 #include <ccMainAppInterface.h>
 #include <ccPointCloud.h>
 
@@ -89,7 +89,7 @@ ccGuiPythonInstance::ccGuiPythonInstance(ccMainAppInterface *app) noexcept(false
     }
 }
 
-ccGLWindow *ccGuiPythonInstance::getActiveGLWindow()
+ccGLWindowInterface *ccGuiPythonInstance::getActiveGLWindow()
 {
     return m_app->getActiveGLWindow();
 }

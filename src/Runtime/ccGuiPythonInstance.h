@@ -22,7 +22,7 @@
 
 class ccMainAppInterface;
 class QMainWindow;
-class ccGLWindow;
+class ccGLWindowInterface;
 
 namespace pybind11
 {
@@ -42,7 +42,7 @@ class Q_DECL_EXPORT ccGuiPythonInstance final
 
     QMainWindow *getMainWindow();
 
-    ccGLWindow *getActiveGLWindow();
+    ccGLWindowInterface *getActiveGLWindow();
 
     bool haveSelection() const;
 
