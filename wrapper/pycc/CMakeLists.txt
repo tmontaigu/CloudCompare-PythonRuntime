@@ -4,7 +4,6 @@ project(pycc LANGUAGES CXX)
 include("${CMAKE_CURRENT_LIST_DIR}/../../cmake/Helpers.cmake")
 include("${CMAKE_CURRENT_LIST_DIR}/../../cmake/PythonEnvHelper.cmake")
 
-
 # MASTER_PROJECT means that this CMakeLists is the top level CMakeLists which in
 # our case means that this project is not built as a part of the PythonPlugin
 # but as a standalone wheel
@@ -15,7 +14,6 @@ else()
   set(PYCC_IS_MASTER_PROJECT OFF)
   option(DEFINE_PYCC_RUNTIME "Should the runtime functions be included" ON)
 endif()
-
 
 if(PYCC_IS_MASTER_PROJECT)
   message(DEBUG "PYTHON_EXECUTABLE: ${PYTHON_EXECUTABLE}")
@@ -58,7 +56,6 @@ find_package(pybind11 CONFIG REQUIRED)
 add_subdirectory(src)
 add_subdirectory(plugins)
 
-
 if(PYCC_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
 
   pybind11_add_module(pycc ${pycc_sources})
@@ -92,7 +89,7 @@ if(PYCC_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
       run_windeployqt(pycc "$<TARGET_FILE:QCC_IO_LIB>")
       run_windeployqt(pycc "$<TARGET_FILE:pycc>")
 
-      if (PYCC_PLUGIN_WRAPPER_LIST)
+      if(PYCC_PLUGIN_WRAPPER_LIST)
         run_windeployqt(pycc "$<TARGET_FILE:CCPluginAPI>")
       endif()
 

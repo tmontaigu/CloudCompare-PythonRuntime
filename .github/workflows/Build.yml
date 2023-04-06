@@ -265,7 +265,7 @@ jobs:
         run: |
           source venv/bin/activate
           xvfb-run python -m pytest -v wrapper/pycc/tests
-    
+
   MacOs-Wheels:
     name: "macOs Wheels"
     runs-on: macos-latest

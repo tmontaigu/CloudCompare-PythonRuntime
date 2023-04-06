@@ -31,4 +31,3 @@ ___________
 .. autoclass:: pycc.plugins.qM3C2.qM3C2Process
     :members:
     :undoc-members:
-

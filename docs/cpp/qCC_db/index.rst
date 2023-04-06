@@ -338,4 +338,3 @@ _____________
 
 .. doxygenclass:: ccScalarField
    :members:
-

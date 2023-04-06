@@ -1,4 +1,4 @@
-""" 
+"""
 This scripts applies a translation of the first selected entity.
 It's an OpenGL translation, so coordinates are not changed, its just visual
 """

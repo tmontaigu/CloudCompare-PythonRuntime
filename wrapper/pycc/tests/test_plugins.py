@@ -35,4 +35,3 @@ def test_m3c2_plugin():
 
     allowsDialog = False
     _result = qM3C2.qM3C2Process.Compute(m3c2_dialog, allowsDialog)
-
