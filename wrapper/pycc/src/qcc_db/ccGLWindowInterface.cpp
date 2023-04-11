@@ -27,7 +27,7 @@
 namespace py = pybind11;
 using namespace pybind11::literals;
 
-void define_ccGLWindow(py::module &m)
+void define_ccGLWindowInterface(py::module &m)
 {
     py::class_<ccGLWindowInterface, ccGenericGLDisplay> PyccGLWindow(m, "ccGLWindowInterface");
     py::enum_<ccGLWindowInterface::PICKING_MODE> PyPickingMode(PyccGLWindow, "PICKING_MODE");
