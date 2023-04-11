@@ -30,7 +30,7 @@ void define_ccObject(py::module &);
 void define_ccGenericPointCloud(py::module &);
 void define_ccPointCloud(py::module &);
 void define_ccGenericGLDisplay(py::module &);
-void define_ccGLWindow(py::module &);
+void define_ccGLWindowInterface(py::module &);
 void define_ccGenericMesh(py::module &);
 void define_ccMesh(py::module &);
 void define_ccGBLSensor(py::module &);
@@ -133,5 +133,5 @@ void define_qcc_db(py::module &m)
     define_ccProgressDialog(m);
 
     define_ccGenericGLDisplay(m);
-    define_ccGLWindow(m);
+    define_ccGLWindowInterface(m);
 }
