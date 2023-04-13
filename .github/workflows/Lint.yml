@@ -13,4 +13,3 @@ jobs:
         source: '.'
         extensions: 'h,cpp'
         clangFormatVersion: 14
-

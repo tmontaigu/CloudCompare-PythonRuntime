@@ -100,11 +100,10 @@ void define_ccGenericGLDisplay(py::module &m)
         .def("getGLCameraParameters", &ccGenericGLDisplay::getGLCameraParameters, "params"_a)
         .def("toCenteredGLCoordinates", &ccGenericGLDisplay::toCenteredGLCoordinates, "x"_a, "y"_a)
         .def("getViewportParameters", &ccGenericGLDisplay::getViewportParameters)
-        .def("setupProjectveViewport",
+        .def("setupProjectiveViewport",
              &ccGenericGLDisplay::setupProjectiveViewport,
              "cameraMatrix"_a,
              "fov_deg"_a = 0.0f,
-             "ar"_a = 1.0f,
              "viewerBasedPerspective"_a = true,
              "bubbleViewMode"_a = false);
     // TODO as widget

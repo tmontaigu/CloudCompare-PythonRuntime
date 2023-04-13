@@ -20,7 +20,7 @@ vertices.addPoint(bbMin + cccorelib.CCVector3(diag.x / 2, 0, 0))
 polyline = pycc.ccPolyline(vertices)
 polyline.setClosed(True)
 # This is important, otherwise the polyline would have a size of 0
-polyline.addPointIndex(0, vertices.size()) 
+polyline.addPointIndex(0, vertices.size())
 
 # To see the crop area
 # CC.addToDB(vertices)

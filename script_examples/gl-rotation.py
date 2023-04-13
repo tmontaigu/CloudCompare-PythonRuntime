@@ -1,4 +1,4 @@
-""" 
+"""
 This scripts applies a rotation of the first selected entity.
 It's an OpenGL rotation, so coordinates are not changed, its just visual
 """
@@ -37,7 +37,7 @@ glRot.initFromParameters(
     cccorelib.CCVector3(0.0, 0.0, 1.0),
     cccorelib.CCVector3(0.0, 0.0, 0.0)
 )
- 
+
 glMat = entity.getGLTransformation()
 glMat = glMat * glRot;
 
