@@ -309,7 +309,7 @@
 <span class="n">polyline</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccPolyline</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span>
 <span class="n">polyline</span><span class="o">.</span><span class="n">setClosed</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="c1"># This is important, otherwise the polyline would have a size of 0</span>
-<span class="n">polyline</span><span class="o">.</span><span class="n">addPointIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">vertices</span><span class="o">.</span><span class="n">size</span><span class="p">())</span> 
+<span class="n">polyline</span><span class="o">.</span><span class="n">addPointIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">vertices</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
 
 <span class="c1"># To see the crop area</span>
 <span class="c1"># CC.addToDB(vertices)</span>
@@ -330,7 +330,7 @@
 <h2>Using OpenGL Transformations<a class="headerlink" href="#using-opengl-transformations" title="Permalink to this heading"></a></h2>
 <section id="translation">
 <h3>Translation<a class="headerlink" href="#translation" title="Permalink to this heading"></a></h3>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot; </span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">This scripts applies a translation of the first selected entity.</span>
 <span class="sd">It&#39;s an OpenGL translation, so coordinates are not changed, its just visual</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -356,7 +356,7 @@
 </section>
 <section id="rotation">
 <h3>Rotation<a class="headerlink" href="#rotation" title="Permalink to this heading"></a></h3>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot; </span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">This scripts applies a rotation of the first selected entity.</span>
 <span class="sd">It&#39;s an OpenGL rotation, so coordinates are not changed, its just visual</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -395,7 +395,7 @@
     <span class="n">cccorelib</span><span class="o">.</span><span class="n">CCVector3</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
     <span class="n">cccorelib</span><span class="o">.</span><span class="n">CCVector3</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
 <span class="p">)</span>
- 
+
 <span class="n">glMat</span> <span class="o">=</span> <span class="n">entity</span><span class="o">.</span><span class="n">getGLTransformation</span><span class="p">()</span>
 <span class="n">glMat</span> <span class="o">=</span> <span class="n">glMat</span> <span class="o">*</span> <span class="n">glRot</span><span class="p">;</span>
 
