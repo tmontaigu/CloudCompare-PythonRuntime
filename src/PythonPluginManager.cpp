@@ -20,14 +20,71 @@
 #include <QDirIterator>
 #include <QFileInfo>
 
+using namespace pybind11::literals;
+
 const std::vector<Runtime::RegisteredPlugin> &PythonPluginManager::plugins() const
 {
     return m_plugins;
 }
 
-// Loading python plugins works in 3 steps
+void PythonPluginManager::loadPluginsFromEntryPoints()
+{
+    plgPrint() << "Searching for custom plugins (checking metadata in site-package)";
+    py::object versionInfo = py::module::import("sys").attr("version_info");
+
+    py::object metadata = py::module::import("importlib.metadata");
+    py::iterable entries;
+
+    // Get entry points filtered by group="cloudcompare.plugins"
+    if (versionInfo < py::make_tuple(3, 10))
+    {
+        py::dict entries_dict = metadata.attr("entry_points")();
+        entries = entries_dict["cloudcompare.plugins"]; // return a tuple of entries
+    }
+    else
+    {
+        entries = metadata.attr("entry_points")(
+            "group"_a = "cloudcompare.plugins"); // return a list of entries
+    }
+
+    plgDebug() << py::str(entries).cast<QString>();
+
+    for (auto &entry : entries)
+    {
+        QString pluginName = entry.attr("name").cast<QString>();
+        QString entry_point = entry.attr("value").cast<QString>();
+
+        QStringList entry_pieces = entry_point.split(':');
+        if (entry_pieces.size() != 2)
+        { // Entry point value should be in the form package_and_module:pluginclass
+            plgWarning() << "Malformed entry point specification for '" << pluginName << "':'"
+                         << entry_point << "'";
+            return;
+        }
+
+        // No need to check that it's a subclass of PythonPluginInterface, the instanciation
+        // and exception will work for us.
+        try
+        {
+            py::object plugin_class = py::module::import(entry_pieces[0].toStdString().c_str())
+                                          .attr(entry_pieces[1].toStdString().c_str());
+            Runtime::RegisteredPlugin plugin =
+                Runtime::RegisteredPlugin::InstanciatePlugin(plugin_class, pluginName);
+            m_plugins.push_back(plugin);
+            plgPrint() << "\tLoaded plugin: '" << pluginName << "'";
+        }
+        catch (const std::exception &e)
+        {
+            plgWarning() << "\tFailed to instantiate plugin named '" << pluginName
+                         << "'\nThe error was:\n"
+                         << e.what();
+        }
+    }
+}
+
+// Loading python plugins from path works in 3 steps
 // 1. Add the path from where we want to load the plugin(s) to
-//    the PythonPath (so that wa can import them)
+//    the PythonPath (so that we can import them)
 // 2. Import the file if it's a .py file or import directory name
 // 3. Create instances of subclasses of our interface for Python Plugin
 void PythonPluginManager::loadPluginsFrom(const QStringList &paths)
@@ -37,7 +94,7 @@ void PythonPluginManager::loadPluginsFrom(const QStringList &paths)
         return;
     }
 
-    plgPrint() << "Searching for custom plugin";
+    plgPrint() << "Searching for custom plugins (in custom paths)";
     py::object appendToPythonSysPath = py::module::import("sys").attr("path").attr("append");
     for (const QString &path : paths)
     {

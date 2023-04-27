@@ -43,9 +43,10 @@ struct RegisteredPlugin
         pybind11::object target{};
     };
 
-    static RegisteredPlugin InstanciatePlugin(pybind11::object class_type) noexcept(false)
+    /// Instanciate a plugin with a known name
+    static RegisteredPlugin InstanciatePlugin(pybind11::object class_type,
+                                              const QString &name) noexcept(false)
     {
-        QString name = class_type.attr("__name__").cast<QString>();
         pybind11::object instance = class_type();
         py::list pyActions = instance.attr("getActions")();
         std::vector<Action> actions;
@@ -57,6 +58,14 @@ struct RegisteredPlugin
         }
 
         return {name, instance, actions};
+    }
+
+    /// Instanciate a plugin with an unknown name.
+    /// In this case the name will be infered from the python class name.
+    static RegisteredPlugin InstanciatePlugin(pybind11::object class_type) noexcept(false)
+    {
+        QString name = class_type.attr("__name__").cast<QString>();
+        return InstanciatePlugin(class_type, name);
     }
 
     QString name;

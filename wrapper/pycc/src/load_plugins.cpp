@@ -88,7 +88,7 @@ QString getPluginsWrappersPath()
 void load_pluginWrappers(py::module_ &m)
 {
     py::module_ pluginWrappers = m.def_submodule("plugins");
-    pluginWrappers.doc() = "Module we wrappers around some CloudCompare plugins";
+    pluginWrappers.doc() = "Module we wrap around some CloudCompare plugins";
 
     const QString pluginPath = getPluginsWrappersPath();
 

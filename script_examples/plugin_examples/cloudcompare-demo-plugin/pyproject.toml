@@ -1,0 +1,117 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cloudcompare-demo-plugin"
+dynamic = ["version"]
+description = "A simple demo of a cloudcompare python plugin and its autodiscovering mechanism"
+readme = "README.md"
+requires-python = ">=3.8"
+license = "GPL-3.0-or-later"
+keywords = []
+authors = [
+  { name = "Thomas Montaigu", email = "thomas.montaigu@laposte.net" },
+  { name = "romain janvier", email = "romain.janvier@hotmail.fr" },
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: Implementation :: CPython",
+]
+dependencies = []
+
+[project.urls]
+Documentation = "https://github.com/tmontaigu/CloudCompare-PythonPlugin/tree/master/script_examples/plugin_examples/cloudcompare-demo-plugin#readme"
+Issues = "https://github.com/tmontaigu/CloudCompare-PythonPlugin/issues"
+Source = "https://github.com/tmontaigu/CloudCompare-PythonPlugin/tree/master/script_examples/plugin_examples/cloudcompare-demo-plugin"
+
+[tool.hatch.version]
+path = "src/cloudcompare_demo_plugin/__about__.py"
+
+[[tool.hatch.envs.all.matrix]]
+python = ["3.8", "3.9", "3.10", "3.11"]
+
+
+[tool.hatch.envs.default]
+dependencies = [
+  "coverage[toml]>=6.5",
+  "pytest",
+]
+
+[tool.hatch.envs.lint]
+detached = true
+dependencies = ["black>=23.1.0", "ruff>=0.0.243"]
+
+[tool.hatch.envs.lint.scripts]
+style = ["ruff {args:.}", "black --check --diff {args:.}"]
+fmt = ["black {args:.}", "ruff --fix {args:.}", "style"]
+
+[tool.black]
+target-version = ["py310"]
+line-length = 120
+skip-string-normalization = true
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+select = [
+  "A",
+  "ARG",
+  "B",
+  "C",
+  "DTZ",
+  "E",
+  "EM",
+  "F",
+  "FBT",
+  "I",
+  "ICN",
+  "ISC",
+  "N",
+  "PLC",
+  "PLE",
+  "PLR",
+  "PLW",
+  "Q",
+  "RUF",
+  "S",
+  "TID",
+  "UP",
+  "W",
+  "YTT",
+]
+ignore = [
+  # Allow non-abstract empty methods in abstract base classes
+  "B027",
+  'N802',
+  # Allow boolean positional values in function calls, like `dict.get(... True)`
+  "FBT003",
+  # Ignore checks for possible passwords
+  "S105",
+  "S106",
+  "S107",
+  # Ignore complexity
+  "C901",
+  "PLR0911",
+  "PLR0912",
+  "PLR0913",
+  "PLR0915",
+]
+unfixable = [
+  # Don't touch unused imports
+  "F401",
+]
+
+[tool.ruff.isort]
+known-first-party = ["cloudcompare_demo_plugin"]
+
+[tool.ruff.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[project.entry-points."cloudcompare.plugins"]
+autodiscovered-hello = "cloudcompare_demo_plugin.hello:HelloWorldAuto"

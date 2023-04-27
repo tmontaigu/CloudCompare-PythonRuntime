@@ -463,13 +463,26 @@ void PythonPlugin::setMainAppInterface(ccMainAppInterface *app)
     // Now that the mainAppInterface is set, we can load custom
     // python plugins, if we did this earlier, `pycc.GetInstance()`
     // in python would return `None` and that's bad.
+
+    // Start by autodiscovering plugins from metadata
+    try
+    {
+        m_pluginManager.loadPluginsFromEntryPoints();
+    }
+    catch (const std::exception &e)
+    {
+        ccLog::Warning("[PythonPlugin] Failed to load autodiscovered custom python plugins: %e",
+                       e.what());
+    }
+
+    // In the end, we add plugins from custom paths
     try
     {
         m_pluginManager.loadPluginsFrom(m_settings->pluginsPaths());
     }
     catch (const std::exception &e)
     {
-        ccLog::Warning("[PythonPlugin] Failed to load custom python plugins: %e", e.what());
+        ccLog::Warning("[PythonPlugin] Failed to load custom python plugins : %e", e.what());
     }
 
     m_fileRunner->setParent(m_app->getMainWindow(), Qt::Window);
