@@ -115,6 +115,10 @@ void define_ccObject(py::module &m)
         .export_values();
 
     py::class_<ccHObject, ccObject, ccDrawableObject>(m, "ccHObject")
+        .def(
+            py::init<QString, unsigned>(),
+            "name"_a = QString(),
+            "uniqueID"_a = []() { return ccUniqueIDGenerator::InvalidUniqueID; }())
         .def("isGroup", &ccHObject::isGroup)
         .def("getParent", &ccHObject::getParent, py::return_value_policy::reference_internal)
         // Children management
