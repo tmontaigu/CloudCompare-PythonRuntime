@@ -43,6 +43,12 @@ class PythonPluginInterface
 {
   public:
     virtual ~PythonPluginInterface(){};
+
+    virtual py::object getIcon()
+    {
+        return py::none();
+    }
+
     /// Called automatically after the plugin is instantiated.
     /// In this function, the plugin implementer should register actions
     /// it wishes to expose to the user.
@@ -59,7 +65,13 @@ class PythonPluginTrampoline : public PythonPluginInterface
     {
         PYBIND11_OVERLOAD_PURE(std::vector<Runtime::RegisteredPlugin::Action>,
                                PythonPluginInterface /* Parent class */,
-                               registerActions /* function name */);
+                               getActions /* function name */);
+    }
+
+    virtual py::object getIcon() override
+    {
+        PYBIND11_OVERRIDE(
+            py::object, PythonPluginInterface /* Parent class */, getIcon /* function name */);
     }
 };
 
@@ -201,5 +213,8 @@ PYBIND11_EMBEDDED_MODULE(pycc_runtime, m)
         py::return_value_policy::reference);
 
     py::class_<Runtime::RegisteredPlugin::Action>(m, "Action")
-        .def(py::init<QString, py::object>(), "name"_a, "target"_a);
+        .def(py::init<QString, py::object, py::object>(),
+             "name"_a,
+             "target"_a,
+             "icon"_a = py::none());
 }
