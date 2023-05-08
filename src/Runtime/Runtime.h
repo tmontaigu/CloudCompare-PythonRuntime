@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include <pybind11/pytypes.h>
 class ccMainAppInterface;
 class ccCommandLineInterface;
 
@@ -32,8 +33,8 @@ struct RegisteredPlugin
     struct Action
     {
         Action() = delete;
-        Action(QString name, pybind11::object target)
-            : name(std::move(name)), target(std::move(target))
+        Action(QString name, pybind11::object target, pybind11::object icon = pybind11::none())
+            : name(std::move(name)), target(std::move(target)), icon(std::move(icon))
         {
         }
 
@@ -41,6 +42,8 @@ struct RegisteredPlugin
         QString name{};
         /// The target python function (or method)
         pybind11::object target{};
+        /// Optional path or (bytes, str) where str is the format
+        pybind11::object icon{};
     };
 
     /// Instanciate a plugin with a known name
@@ -57,7 +60,9 @@ struct RegisteredPlugin
             actions.push_back(handle.cast<Runtime::RegisteredPlugin::Action>());
         }
 
-        return {name, instance, actions};
+        const pybind11::object mainIcon = instance.attr("getIcon")();
+
+        return {name, instance, actions, mainIcon};
     }
 
     /// Instanciate a plugin with an unknown name.
@@ -71,6 +76,7 @@ struct RegisteredPlugin
     QString name;
     pybind11::object instance;
     std::vector<Action> actions;
+    pybind11::object mainIcon;
 };
 
 /// Sets the internal pointer to the app interface that python

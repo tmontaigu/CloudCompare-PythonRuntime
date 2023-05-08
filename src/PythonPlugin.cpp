@@ -30,6 +30,7 @@
 
 #include <QDesktopServices>
 #include <QUrl>
+#include <pybind11/pytypes.h>
 
 #define slots Q_SLOTS
 #define signals Q_SIGNALS
@@ -89,6 +90,18 @@ PythonPlugin::PythonPlugin(QObject *parent)
     }
 
     m_config = config;
+    m_pluginsMenu = new QMenu("Plugins");
+    m_pluginsMenu->setEnabled(false);
+
+    connect(&m_interp,
+            &PythonInterpreter::executionStarted,
+            this,
+            &PythonPlugin::handlePythonExecutionStarted);
+
+    connect(&m_interp,
+            &PythonInterpreter::executionFinished,
+            this,
+            &PythonPlugin::handlePythonExecutionFinished);
 
     connect(QCoreApplication::instance(),
             &QCoreApplication::aboutToQuit,
@@ -223,15 +236,18 @@ QList<QAction *> PythonPlugin::getActions()
         }
     }
 
-    return {m_showEditor,
-            m_showFileRunner,
-            m_showAboutDialog,
-            m_showDoc,
-            m_showRepl,
-            m_showPackageManager,
-            m_showActionLauncher,
-            m_showSettings,
-            m_drawScriptRegister->menuAction()};
+    return {
+        m_showEditor,
+        m_showFileRunner,
+        m_showAboutDialog,
+        m_showDoc,
+        m_showRepl,
+        m_showPackageManager,
+        m_showActionLauncher,
+        m_showSettings,
+        m_drawScriptRegister->menuAction(),
+        m_pluginsMenu->menuAction(),
+    };
 }
 
 void PythonPlugin::showRepl()
@@ -330,6 +346,20 @@ void PythonPlugin::removeScript(QString name, QAction *self)
     delete self;
     if (m_scriptList.empty())
         m_removeScript->setEnabled(false);
+}
+
+void PythonPlugin::handlePluginActionClicked(bool checked)
+{
+    const auto *qAction = static_cast<QAction *>(sender());
+    try
+    {
+        auto action = m_pluginActions.at(qAction);
+        m_interp.executeFunction(action->target);
+    }
+    catch (const std::exception &e)
+    {
+        plgError() << "Failed to launch plugin action: '" << e.what() << "'";
+    }
 }
 
 void PythonPlugin::showFileRunner() const
@@ -485,9 +515,147 @@ void PythonPlugin::setMainAppInterface(ccMainAppInterface *app)
         ccLog::Warning("[PythonPlugin] Failed to load custom python plugins : %e", e.what());
     }
 
+    populatePluginSubMenu();
+
     m_fileRunner->setParent(m_app->getMainWindow(), Qt::Window);
     m_actionLauncher->setParent(m_app->getMainWindow(), Qt::Window);
     m_settings->setParent(m_app->getMainWindow(), Qt::Window);
+}
+
+/// The icon object can be:
+///
+/// - `str` pointing to the file path of the icon's file
+/// - `bytes` the bytes of the icon
+/// - (`bytes, `str`) tuple of bytes and format name
+static QIcon CreateQIconFromPyObject(const py::object &pyIcon)
+{
+    QIcon icon{};
+    if (py::isinstance<py::str>(pyIcon))
+    {
+        const auto filePath = pyIcon.cast<std::string>();
+        const auto qFilePath = QString::fromStdString(filePath);
+        icon = QIcon(qFilePath);
+    }
+    else if (py::isinstance<py::bytes>(pyIcon))
+    {
+        auto bytes = pyIcon.cast<std::string>();
+        QPixmap pixmap;
+        bool ok = pixmap.loadFromData(
+            reinterpret_cast<const uchar *>(bytes.c_str()), bytes.size(), nullptr /*format=*/);
+        if (!ok)
+        {
+            plgError() << "Failed to load icon from bytes";
+        }
+        icon = QIcon(pixmap);
+    }
+    else if (py::isinstance<py::tuple>(pyIcon))
+    {
+        auto icon_tuple = pyIcon.cast<py::tuple>();
+
+        std::string bytes{};
+        try
+        {
+            bytes = icon_tuple[0].cast<std::string>();
+        }
+        catch (const std::exception &e)
+        {
+            plgWarning() << "Invalid tuple member for icon, expected (bytes, str)";
+        }
+
+        std::string format{};
+        try
+        {
+            auto format = icon_tuple[1].cast<std::string>();
+        }
+        catch (const std::exception &e)
+        {
+            plgWarning() << "Invalid tuple member for icon, expected (bytes, str)";
+        }
+
+        if (!bytes.empty())
+        {
+            QPixmap pixmap;
+            // Here format may be empty, meaning its c_str is nullptr,
+            // that is okay, loadFromData accepts nullptr for the format
+            bool ok = pixmap.loadFromData(
+                reinterpret_cast<const uchar *>(bytes.c_str()), bytes.size(), format.c_str());
+            if (!ok)
+            {
+                plgError() << "Failed to load icon from bytes";
+            }
+            icon = QIcon(pixmap);
+        }
+    }
+    return icon;
+}
+
+template <typename T> static bool SetIconFromPyObject(T *iconReceiver, const py::object &pyIcon)
+{
+    if (pyIcon.is_none())
+    {
+        return false;
+    }
+
+    QIcon icon = CreateQIconFromPyObject(pyIcon);
+    if (!icon.isNull())
+    {
+        iconReceiver->setIcon(icon);
+        return true;
+    }
+
+    return false;
+}
+
+void PythonPlugin::populatePluginSubMenu()
+{
+    for (const Runtime::RegisteredPlugin &plugin : m_pluginManager.plugins())
+    {
+        if (plugin.actions.size() > 1)
+        {
+            auto *menu = new QMenu(plugin.name);
+            SetIconFromPyObject(menu, plugin.mainIcon);
+
+            for (const Runtime::RegisteredPlugin::Action &action : plugin.actions)
+            {
+                auto *qAction = new QAction(action.name);
+                qAction->setParent(menu);
+                menu->addAction(qAction);
+
+                SetIconFromPyObject(qAction, action.icon);
+
+                connect(
+                    qAction, &QAction::triggered, this, &PythonPlugin::handlePluginActionClicked);
+                m_pluginActions[qAction] = &action;
+            }
+            m_pluginsMenu->addMenu(menu);
+        }
+        else
+        {
+            auto *qAction = new QAction(plugin.actions[0].name);
+            if (!plugin.actions[0].icon.is_none())
+            {
+                QIcon icon = CreateQIconFromPyObject(plugin.actions[0].icon);
+                bool iconWasSet = SetIconFromPyObject(qAction, plugin.actions[0].icon);
+                if (!iconWasSet)
+                {
+                    SetIconFromPyObject(qAction, plugin.mainIcon);
+                }
+            }
+            connect(qAction, &QAction::triggered, this, &PythonPlugin::handlePluginActionClicked);
+            m_pluginsMenu->addAction(qAction);
+            m_pluginActions[qAction] = &plugin.actions[0];
+        }
+    }
+    m_pluginsMenu->setEnabled(!m_pluginsMenu->isEmpty());
+}
+
+void PythonPlugin::handlePythonExecutionStarted()
+{
+    m_pluginsMenu->setEnabled(false);
+}
+void PythonPlugin::handlePythonExecutionFinished()
+{
+    m_pluginsMenu->setEnabled(true);
 }
 
 void PythonPlugin::finalizeInterpreter()

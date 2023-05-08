@@ -79,6 +79,12 @@ class PythonPlugin final : public QObject, public ccStdPluginInterface
     void executeScript(QString path);
     void removeScript(QString name, QAction *self);
 
+    void populatePluginSubMenu();
+
+    void handlePluginActionClicked(bool checked);
+    void handlePythonExecutionStarted();
+    void handlePythonExecutionFinished();
+
     PythonConfig m_config{};
     PythonInterpreter m_interp;
     PythonPluginManager m_pluginManager;
@@ -102,6 +108,10 @@ class PythonPlugin final : public QObject, public ccStdPluginInterface
 
     /// Script list submenu
     QMenu *m_drawScriptRegister{nullptr};
+    QMenu *m_pluginsMenu{nullptr};
+
+    /// keep track of plugins QAction and their corresponding registered plugin actions
+    std::map<const QAction *, const Runtime::RegisteredPlugin::Action *> m_pluginActions;
 
     /// Variable for script list submenu
     QAction *m_addScript{nullptr};
