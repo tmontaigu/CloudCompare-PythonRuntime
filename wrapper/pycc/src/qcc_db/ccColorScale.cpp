@@ -88,8 +88,9 @@ void define_ccColorScale(py::module &m)
              "relativePos"_a,
              "steps"_a,
              "outOfRangeColor"_a = nullptr)
-        .def("getColorByIndex", &ccColorScale::getColorByIndex, "index"_a);
-    // TODO save load from XML
+        .def("getColorByIndex", &ccColorScale::getColorByIndex, "index"_a)
+        .def_static("LoadFromXML", &ccColorScale::LoadFromXML, "filename"_a)
+        .def("saveAsXML", &ccColorScale::saveAsXML, "filename"_a);
 
     py::class_<ccColorScale::Label>(pyColorScale, "Label")
         .def_readwrite("value", &ccColorScale::Label::value)
