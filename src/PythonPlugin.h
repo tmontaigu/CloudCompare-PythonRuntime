@@ -110,6 +110,9 @@ class PythonPlugin final : public QObject, public ccStdPluginInterface
     QMenu *m_drawScriptRegister{nullptr};
     QMenu *m_pluginsMenu{nullptr};
 
+    /// keep track of plugins QAction and their corresponding registered plugin actions
+    std::map<const QAction *, const Runtime::RegisteredPlugin::Action *> m_pluginActions;
+
     /// Variable for script list submenu
     QAction *m_addScript{nullptr};
     QMenu *m_removeScript{nullptr};

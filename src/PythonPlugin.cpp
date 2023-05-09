@@ -351,31 +351,7 @@ void PythonPlugin::removeScript(QString name, QAction *self)
 void PythonPlugin::handlePluginActionClicked(bool checked)
 {
     const auto *qAction = static_cast<QAction *>(sender());
-    auto *parent = static_cast<QMenu *>(qAction->parent());
-
-    const QString pluginName = parent->title();
-    const QString actionName = qAction->text();
-
-    const auto &plugins = m_pluginManager.plugins();
-
-    auto plugin =
-        std::find_if(plugins.begin(),
-                     plugins.end(),
-                     [pluginName](const auto &plugin) { return plugin.name == pluginName; });
-    if (plugin == plugins.end())
-    {
-        return;
-    }
-
-    auto action =
-        std::find_if(plugin->actions.begin(),
-                     plugin->actions.end(),
-                     [actionName](const auto &action) { return action.name == actionName; });
-    if (action == plugin->actions.end())
-    {
-        return;
-    }
-
+    auto action = m_pluginActions.at(qAction);
     m_interp.executeFunction(action->target);
 }
 
@@ -597,47 +573,73 @@ void PythonPlugin::populatePluginSubMenu()
 {
     for (const Runtime::RegisteredPlugin &plugin : m_pluginManager.plugins())
     {
-        auto *menu = new QMenu(plugin.name);
-
-        if (!plugin.mainIcon.is_none())
+        if (plugin.actions.size() > 1)
         {
-            QIcon icon = CreateQIconFromPyObject(plugin.mainIcon);
-            if (icon.isNull())
-            {
+            auto *menu = new QMenu(plugin.name);
 
-                plgWarning() << "Plugin '" << plugin.name
-                             << "' has an non None icon, but its invalid";
-            }
-            else
+            if (!plugin.mainIcon.is_none())
             {
-                menu->setIcon(icon);
-            }
-        }
-
-        for (const Runtime::RegisteredPlugin::Action &action : plugin.actions)
-        {
-            auto *qAction = new QAction(action.name);
-            qAction->setParent(menu);
-            menu->addAction(qAction);
-
-            if (!action.icon.is_none())
-            {
-                QIcon icon = CreateQIconFromPyObject(action.icon);
+                QIcon icon = CreateQIconFromPyObject(plugin.mainIcon);
                 if (icon.isNull())
                 {
 
-                    plgWarning() << "Action '" << action.name << "' of plugin '" << plugin.name
+                    plgWarning() << "Plugin '" << plugin.name
                                  << "' has an non None icon, but its invalid";
+                }
+                else
+                {
+                    menu->setIcon(icon);
+                }
+            }
+
+            for (const Runtime::RegisteredPlugin::Action &action : plugin.actions)
+            {
+                auto *qAction = new QAction(action.name);
+                qAction->setParent(menu);
+                menu->addAction(qAction);
+
+                if (!action.icon.is_none())
+                {
+                    QIcon icon = CreateQIconFromPyObject(action.icon);
+                    if (icon.isNull())
+                    {
+
+                        plgWarning() << "Action '" << action.name << "' of plugin '" << plugin.name
+                                     << "' has an non None icon, but its invalid";
+                    }
+                    else
+                    {
+                        qAction->setIcon(icon);
+                    }
+                }
+
+                connect(
+                    qAction, &QAction::triggered, this, &PythonPlugin::handlePluginActionClicked);
+                m_pluginActions[qAction] = &action;
+            }
+            m_pluginsMenu->addMenu(menu);
+        }
+        else
+        {
+            auto *qAction = new QAction(plugin.actions[0].name);
+            if (!plugin.actions[0].icon.is_none())
+            {
+                QIcon icon = CreateQIconFromPyObject(plugin.actions[0].icon);
+                if (icon.isNull())
+                {
+
+                    plgWarning() << "Action '" << plugin.actions[0].name << "' of plugin '"
+                                 << plugin.name << "' has an non None icon, but its invalid";
                 }
                 else
                 {
                     qAction->setIcon(icon);
                 }
             }
-
             connect(qAction, &QAction::triggered, this, &PythonPlugin::handlePluginActionClicked);
+            m_pluginsMenu->addAction(qAction);
+            m_pluginActions[qAction] = &plugin.actions[0];
         }
-        m_pluginsMenu->addMenu(menu);
     }
     m_pluginsMenu->setEnabled(!m_pluginsMenu->isEmpty());
 }
