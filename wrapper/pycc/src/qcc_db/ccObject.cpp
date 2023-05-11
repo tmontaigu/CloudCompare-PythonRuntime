@@ -201,5 +201,5 @@ void define_ccObject(py::module &m)
         .def("getGlobalShift", &ccShiftedObject::getGlobalShift)
         .def("setGlobalScale", &ccShiftedObject::setGlobalScale, "scale"_a)
         .def("isShifted", &ccShiftedObject::isShifted)
-        .def("getGlobalScale", &ccShiftedObject::setGlobalScale);
+        .def("getGlobalScale", &ccShiftedObject::getGlobalScale);
 }
