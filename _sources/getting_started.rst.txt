@@ -52,7 +52,8 @@ ______
 It is also possible to create scripts or module that register actions
 that will then be launch-able from the Ui, a bit like regular C++ plugins do.
 
-In the plugin settings, you can indicate a path where custom python plugin are
+
+In the plugin settings, you can indicate a path where custom python plugins are
 stored. When starting up, the indicated folder will be scanned and all python modules
 (.py files or folders) will be imported, which will allow them to register their actions
 using the :func:`pycc.RegisterAction` function.
@@ -62,6 +63,11 @@ the :class:`pycc.PythonPluginInterface`.
 See `this <https://github.com/tmontaigu/CloudCompare-PythonPlugin/tree/master/script_examples/plugin_examples>`_
 for an example.
 
+Alternatively, CloudCompare-PythonPlugin will autodiscover plugins in your site-package directory.
+In order to achieve this, it levrages package metadata. All you have to do is to create a plugin
+with a "cloudcompare.plugins" entry group. Each entry of this group should point
+to a :class:`pycc.PythonPluginInterface` provided by your package.
+An example of a plugin package embedding such metadata can be found `here <https://github.com/tmontaigu/CloudCompare-PythonPlugin/tree/master/script_examples/plugin_examples/cloudcompare-demo-plugin>`_ .
 
 
 
