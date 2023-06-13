@@ -87,7 +87,6 @@ void define_GeometricalAnalysisTools(py::module &cccorelib)
                                         "progressCb"_a = nullptr,
                                         "confidence"_a = 0.99,
                                         "seed"_a = 0);
-
     GeometricalAnalysisTools.def_static("ComputeSphereFrom4",
                                         &GeometricalAnalysisTools::ComputeSphereFrom4,
                                         "A"_a,
@@ -96,6 +95,15 @@ void define_GeometricalAnalysisTools(py::module &cccorelib)
                                         "D"_a,
                                         "center"_a,
                                         "radius"_a);
+
+    GeometricalAnalysisTools.def_static("DetectCircle",
+                                        &GeometricalAnalysisTools::DetectCircle,
+                                        "cloud"_a,
+                                        "center"_a,
+                                        "normal"_a,
+                                        "radius"_a,
+                                        "rms"_a,
+                                        "progressCb"_a = nullptr);
 
     PyGeomCharacteristic.value("Feature", GeometricalAnalysisTools::GeomCharacteristic::Feature)
         .value("Curvature", GeometricalAnalysisTools::GeomCharacteristic::Curvature)
