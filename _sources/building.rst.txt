@@ -22,17 +22,17 @@ The process to build is explained in the sections below.
 Building as Plugin
 ------------------
 
-Supported platforms: [Windows, Linux, macOs]
+Supported platforms: [Windows, Linux, macOS]
 
 In the following sections we assume that you know
 how to compile CloudCompare from source, otherwise refer
 to the CloudCompare documentation on how to do.
 
 
-To Compile this plugin you need to have Python installed.
+To compile this plugin you need to have Python installed.
 
 This plugin is known to compile and work with CloudCompare
-commit `ff67e23`.
+commit `3eeee79f933dd7d5d1f79135f40bb38e12da1485`.
 
 Python 3.8 or more is required to build as a plugin.
 
@@ -102,7 +102,7 @@ _____
 5. Install
 
 
-macOs
+macOS
 _____
 
 1. Clone this project in CloudCompare/plugins/private
@@ -119,7 +119,7 @@ _____
 Building as independent wheels
 -------------------------------
 
-Supported platforms: [Windows, Linux, macOs]
+Supported platforms: [Windows, Linux, macOS]
 
 It is also possible to build and install the bindings as standard python
 packages to use them in python scripts (run by a standalone python executable
@@ -138,7 +138,7 @@ To do so:
 
 1. Clone this project
 
-2. Set path to Qt (Windows/macOs)
+2. Set path to Qt (Windows/macOS)
 
 .. code-block:: PowerShell
 
@@ -147,7 +147,7 @@ To do so:
 
 .. code-block:: bash
 
-    macOs (bash)
+    macOS (bash)
     export CMAKE_PREFIX_PATH=/usr/local/opt/qt@5
 
 3. Run

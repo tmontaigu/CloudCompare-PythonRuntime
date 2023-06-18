@@ -51,7 +51,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#building-as-plugin">Building as Plugin</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#windows">Windows</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#linux">Linux</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#macos">macOs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#macos">macOS</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#building-as-independent-wheels">Building as independent wheels</a></li>
@@ -123,13 +123,13 @@ of the CloudCompare’s libraries in your Python environment.</p>
 <p>The process to build is explained in the sections below.</p>
 <section id="building-as-plugin">
 <h2>Building as Plugin<a class="headerlink" href="#building-as-plugin" title="Permalink to this heading"></a></h2>
-<p>Supported platforms: [Windows, Linux, macOs]</p>
+<p>Supported platforms: [Windows, Linux, macOS]</p>
 <p>In the following sections we assume that you know
 how to compile CloudCompare from source, otherwise refer
 to the CloudCompare documentation on how to do.</p>
-<p>To Compile this plugin you need to have Python installed.</p>
+<p>To compile this plugin you need to have Python installed.</p>
 <p>This plugin is known to compile and work with CloudCompare
-commit <cite>ff67e23</cite>.</p>
+commit <cite>3eeee79f933dd7d5d1f79135f40bb38e12da1485</cite>.</p>
 <p>Python 3.8 or more is required to build as a plugin.</p>
 <section id="windows">
 <h3>Windows<a class="headerlink" href="#windows" title="Permalink to this heading"></a></h3>
@@ -192,7 +192,7 @@ of the pyccenv created earlier.</p>
 </ol>
 </section>
 <section id="macos">
-<h3>macOs<a class="headerlink" href="#macos" title="Permalink to this heading"></a></h3>
+<h3>macOS<a class="headerlink" href="#macos" title="Permalink to this heading"></a></h3>
 <ol class="arabic">
 <li><p>Clone this project in CloudCompare/plugins/private</p></li>
 <li><p>Make sure you have python3 installed (and Qt)</p></li>
@@ -210,7 +210,7 @@ of the pyccenv created earlier.</p>
 </section>
 <section id="building-as-independent-wheels">
 <h2>Building as independent wheels<a class="headerlink" href="#building-as-independent-wheels" title="Permalink to this heading"></a></h2>
-<p>Supported platforms: [Windows, Linux, macOs]</p>
+<p>Supported platforms: [Windows, Linux, macOS]</p>
 <p>It is also possible to build and install the bindings as standard python
 packages to use them in python scripts (run by a standalone python executable
 and not the embedded python in the plugin).</p>
@@ -224,13 +224,13 @@ Run  <cite>pip install –upgrade pip</cite> to get the latest version</p>
 <p>To do so:</p>
 <ol class="arabic simple">
 <li><p>Clone this project</p></li>
-<li><p>Set path to Qt (Windows/macOs)</p></li>
+<li><p>Set path to Qt (Windows/macOS)</p></li>
 </ol>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="c"># Windows (PowerShell)</span>
 <span class="nv">$env:CMAKE_PREFIX_PATH</span><span class="p">+=</span><span class="s2">&quot;;C:\Qt\5.15.2\msvc2019_64&quot;</span>
 </pre></div>
 </div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>macOs <span class="o">(</span>bash<span class="o">)</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>macOS <span class="o">(</span>bash<span class="o">)</span>
 <span class="nb">export</span> <span class="nv">CMAKE_PREFIX_PATH</span><span class="o">=</span>/usr/local/opt/qt@5
 </pre></div>
 </div>
