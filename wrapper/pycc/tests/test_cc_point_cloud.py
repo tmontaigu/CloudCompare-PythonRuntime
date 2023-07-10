@@ -1,6 +1,10 @@
 import pycc
 import pytest
 import numpy as np
+import os
+from pathlib import Path
+
+abspath = os.path.dirname(os.path.abspath(__file__))
 
 def test_cc_point_cloud_from_sequences():
     xs = np.array([1.0, 2.0, 3.0, 4.0, 5.0], pycc.PointCoordinateType)
@@ -61,3 +65,16 @@ def test_metadata():
 
     obj.setMetaData("double value", 4536.135)
     assert obj.getMetaData("double value") == 4536.135
+
+
+def test_colors():
+    p = pycc.FileIOFilter.LoadParameters()
+    p.alwaysDisplayLoadDialog = False
+
+    filepath = Path(abspath).parent.parent.parent / "tests" / "data" / "cloud_with_tls_sensor.bin"
+
+    f = pycc.FileIOFilter.LoadFromFile(str(filepath), p)
+    cloud = f.getChild(0)
+
+    assert(len(cloud.colors()) == cloud.size())
+    assert(np.all(cloud.colors()[0] == [43, 48, 52, 255]))

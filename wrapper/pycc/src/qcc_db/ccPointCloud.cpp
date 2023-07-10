@@ -16,10 +16,15 @@
 // ##########################################################################
 
 #include "../casters.h"
+#include "ccAdvancedTypes.h"
+#include "ccColorTypes.h"
 
 #include <ccPointCloud.h>
 #include <ccPolyline.h>
 #include <ccScalarField.h>
+#include <climits>
+#include <cstdint>
+#include <pybind11/pytypes.h>
 #include <type_traits>
 #include <vector>
 
@@ -97,6 +102,33 @@ void define_ccPointCloud(py::module &m)
                 ColorCompType a) { self.setColor(r, g, b, a); })
         .def("colorize", &ccPointCloud::colorize)
         .def("crop2D", &ccPointCloud::crop2D, "poly"_a, "orthodDim"_a, "inside"_a = true)
+        .def("colors",
+             [](ccPointCloud &self) -> py::object
+             {
+                 RGBAColorsTableType *colorsTable = self.rgbaColors();
+                 if (colorsTable == nullptr)
+                 {
+                     return py::none();
+                 }
+
+                 ccColor::Rgba *colors = colorsTable->data();
+                 if (colors == nullptr)
+                 {
+                     return py::none();
+                 }
+
+                 static_assert(CHAR_BIT == 8, "A char must have 8 bits");
+                 static_assert(sizeof(ColorCompType) == 1, "ColorCompType must have 8 bit");
+                 static_assert(sizeof(ccColor::Rgba) == 4 * sizeof(ColorCompType), "");
+                 static_assert(alignof(uint8_t) == alignof(ccColor::Rgba), "Not same alignment");
+
+                 auto *ptr = reinterpret_cast<uint8_t *>(colors);
+
+                 auto capsule = py::capsule(ptr, [](void *) {});
+                 py::array a(py::dtype("4u1"), colorsTable->size(), ptr, capsule);
+
+                 return a;
+             })
         .def("points",
              [](ccPointCloud &self)
              {
