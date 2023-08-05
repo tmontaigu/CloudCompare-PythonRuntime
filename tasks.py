@@ -1,7 +1,7 @@
 from invoke import task
 from pathlib import Path
 from tqdm import tqdm
-from typing import List
+from typing import List, Iterable
 
 import itertools
 CLANG_FORMAT_CMD = "clang-format -i {}"
@@ -9,7 +9,7 @@ CLANG_FORMAT_CMD = "clang-format -i {}"
 DISALLOW_LIST = ['_skbuild']
 
 
-def filter_paths(paths: List[Path]) -> List[Path]:
+def filter_paths(paths: Iterable[Path]) -> List[Path]:
     filtered_paths = []
 
     for path in paths:
@@ -41,7 +41,7 @@ def cmake_format(c):
     cmakelists = list(Path('.').rglob('CMakeLists.txt'))
     cmakes = list(Path("./cmake").iterdir())
 
-    all_cmakes = filter_paths(list(itertools.chain(cmakes, cmakelists)))
+    all_cmakes = filter_paths(itertools.chain(cmakes, cmakelists))
 
     print('Formating CMakeLists.txt')
     for path in tqdm(all_cmakes, ncols=80):
