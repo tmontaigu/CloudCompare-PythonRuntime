@@ -24,6 +24,13 @@
 
 #include <ccLog.h>
 
+/// Wrapper around ccLog to have a std::cout like API
+///
+/// # Example
+///
+/// ```cpp
+/// ccPrint() << "Message";
+/// ```
 template <enum ccLog::MessageLevelFlags level> class ccLogger
 {
   public:
@@ -70,12 +77,21 @@ using ccDebug = ccLogger<ccLog::LOG_DEBUG>;
 using ccWarning = ccLogger<ccLog::LOG_WARNING>;
 using ccError = ccLogger<ccLog::LOG_ERROR>;
 
+/// Logger Specialized for the plugin.
+///
+/// It prepends every message with `[PythonPlugin]`.
+///
+/// # Example
+///
+/// ```cpp
+/// plgPrint() << "Message";
+/// ```
 template <enum ccLog::MessageLevelFlags level> class PluginLogger : public ccLogger<level>
 {
   public:
     PluginLogger() : ccLogger<level>()
     {
-        this->m_message += "[PythonPlugin]";
+        this->m_message += "[PythonPlugin] ";
     }
 
     //    friend PluginLogger& endl(PluginLogger<level>& logger) {
@@ -89,7 +105,7 @@ using plgDebug = PluginLogger<ccLog::LOG_DEBUG>;
 using plgWarning = PluginLogger<ccLog::LOG_WARNING>;
 using plgError = PluginLogger<ccLog::LOG_ERROR>;
 
-/// Returns a newly allocated array (null terminated) from a QString
+/// Returns a newly allocated wchar_t array (null terminated) from a QString
 inline wchar_t *QStringToWcharArray(const QString &string)
 {
     auto *wcharArray = new wchar_t[string.size() + 1];
@@ -99,6 +115,7 @@ inline wchar_t *QStringToWcharArray(const QString &string)
     return wcharArray;
 }
 
+/// Logs the PYTHON_PATH the log console of CloudCompare
 inline void LogPythonPath()
 {
     const wchar_t *pythonPath = Py_GetPath();
@@ -122,6 +139,7 @@ inline void LogPythonPath()
     }
 }
 
+/// Logs the PYTHON_HOME the log console of CloudCompare
 inline void LogPythonHome()
 {
     const wchar_t *pythonHome = Py_GetPythonHome();
