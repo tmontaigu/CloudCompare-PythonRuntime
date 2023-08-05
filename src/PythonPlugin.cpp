@@ -23,7 +23,6 @@
 #include "PythonActionLauncher.h"
 #include "PythonPluginSettings.h"
 #include "PythonRepl.h"
-#include "PythonStdErrOutRedirect.h"
 #include "Resources.h"
 #include "Runtime/Runtime.h"
 #include "Utilities.h"
@@ -40,7 +39,6 @@
 #include <QSettings>
 #include <algorithm>
 #include <ccCommandLineInterface.h>
-#include <functional>
 
 // Useful link:
 // https://docs.python.org/3/c-api/init.html#initialization-finalization-and-threads
@@ -348,7 +346,7 @@ void PythonPlugin::removeScript(QString name, QAction *self)
         m_removeScript->setEnabled(false);
 }
 
-void PythonPlugin::handlePluginActionClicked(bool checked)
+void PythonPlugin::handlePluginActionClicked(bool)
 {
     const auto *qAction = static_cast<QAction *>(sender());
     try
@@ -540,8 +538,9 @@ static QIcon CreateQIconFromPyObject(const py::object &pyIcon)
     {
         auto bytes = pyIcon.cast<std::string>();
         QPixmap pixmap;
+        auto size = static_cast<uint>(bytes.size());
         bool ok = pixmap.loadFromData(
-            reinterpret_cast<const uchar *>(bytes.c_str()), bytes.size(), nullptr /*format=*/);
+            reinterpret_cast<const uchar *>(bytes.c_str()), size, nullptr /*format=*/);
         if (!ok)
         {
             plgError() << "Failed to load icon from bytes";
@@ -557,7 +556,7 @@ static QIcon CreateQIconFromPyObject(const py::object &pyIcon)
         {
             bytes = icon_tuple[0].cast<std::string>();
         }
-        catch (const std::exception &e)
+        catch (const std::exception &)
         {
             plgWarning() << "Invalid tuple member for icon, expected (bytes, str)";
         }
@@ -565,9 +564,9 @@ static QIcon CreateQIconFromPyObject(const py::object &pyIcon)
         std::string format{};
         try
         {
-            auto format = icon_tuple[1].cast<std::string>();
+            format = icon_tuple[1].cast<std::string>();
         }
-        catch (const std::exception &e)
+        catch (const std::exception &)
         {
             plgWarning() << "Invalid tuple member for icon, expected (bytes, str)";
         }
@@ -577,8 +576,9 @@ static QIcon CreateQIconFromPyObject(const py::object &pyIcon)
             QPixmap pixmap;
             // Here format may be empty, meaning its c_str is nullptr,
             // that is okay, loadFromData accepts nullptr for the format
+            auto size = static_cast<uint>(bytes.size());
             bool ok = pixmap.loadFromData(
-                reinterpret_cast<const uchar *>(bytes.c_str()), bytes.size(), format.c_str());
+                reinterpret_cast<const uchar *>(bytes.c_str()), size, format.c_str());
             if (!ok)
             {
                 plgError() << "Failed to load icon from bytes";
