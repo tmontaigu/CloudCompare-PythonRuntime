@@ -11,7 +11,6 @@ __________
     Python: :py:class:`cccorelib.ccObject`
 
 .. doxygentypedef:: CCVector3
-   :members:
    :project: CCCoreLib
 
 
