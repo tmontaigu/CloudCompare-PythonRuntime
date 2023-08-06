@@ -21,12 +21,14 @@
 
 #include <ccScalarField.h>
 
+#include "../../cccorelib/src/wrappers.h"
+
 namespace py = pybind11;
 using namespace pybind11::literals;
 
 void define_ccScalarField(py::module &m)
 {
-    py::class_<ccScalarField, CCCoreLib::ScalarField, std::unique_ptr<ccScalarField, py::nodelete>>
+    py::class_<ccScalarField, CCCoreLib::ScalarField, CCShareableHolder<ccScalarField>>
         pyScalarField(m, "ccScalarField");
 
     py::class_<ccScalarField::Range>(pyScalarField, "Range")

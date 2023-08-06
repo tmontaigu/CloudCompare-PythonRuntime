@@ -19,12 +19,14 @@
 
 #include <CCShareable.h>
 
+#include "wrappers.h"
+
 namespace py = pybind11;
 using namespace pybind11::literals;
 
 void define_CCShareable(py::module &cccorelib)
 {
-    py::class_<CCShareable, std::unique_ptr<CCShareable, py::nodelete>>(cccorelib, "CCShareable")
+    py::class_<CCShareable, CCShareableHolder<CCShareable>>(cccorelib, "CCShareable")
         .def(py::init<>())
         .def("link", &CCShareable::link)
         .def("release", &CCShareable::release)
