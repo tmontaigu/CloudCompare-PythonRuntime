@@ -114,7 +114,7 @@ _____
 
 4. Run cmake with ``-DPLUGIN_PYTHON=ON``
 5. Build
-5. Install
+6. Install
 
 Building as independent wheels
 -------------------------------

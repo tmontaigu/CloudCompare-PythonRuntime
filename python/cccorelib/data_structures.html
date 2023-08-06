@@ -1234,6 +1234,20 @@
 <dt class="sig sig-object py" id="cccorelib.ScalarField">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">ScalarField</span></span><a class="headerlink" href="#cccorelib.ScalarField" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">CCShareable</span></code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that cccorelib.ScalarField uses float while Python only uses doubles
+which means a loss of precision will happen.</p>
+</div>
+<p>Getting / Setting values can be done via <a class="reference internal" href="#cccorelib.ScalarField.getValue" title="cccorelib.ScalarField.getValue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cccorelib.ScalarField.getValue()</span></code></a>
+or <a class="reference internal" href="#cccorelib.ScalarField.setValue" title="cccorelib.ScalarField.setValue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cccorelib.ScalarField.setValue()</span></code></a>.
+Alternatively, it is possible to use bracket operator.</p>
+<p>Use <a class="reference internal" href="#cccorelib.ScalarField.asArray" title="cccorelib.ScalarField.asArray"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cccorelib.ScalarField.asArray()</span></code></a> to be able to use the
+scalar field as a normal numpy array.</p>
+<p class="rubric">Example</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">scalar_field</span> <span class="o">=</span> <span class="n">cccorelib</span><span class="o">.</span><span class="n">ScalarField</span><span class="p">(</span><span class="s2">&quot;Codification&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.ScalarField.NaN">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NaN</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.NaN" title="Permalink to this definition"></a></dt>
@@ -1247,12 +1261,41 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.ScalarField.addElement">
 <span class="sig-name descname"><span class="pre">addElement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.addElement" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Appends a value</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">cccorelib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sf</span> <span class="o">=</span> <span class="n">cccorelib</span><span class="o">.</span><span class="n">ScalarField</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sf</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sf</span><span class="o">.</span><span class="n">addElement</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sf</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.ScalarField.asArray">
 <span class="sig-name descname"><span class="pre">asArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float32</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cccorelib.ScalarField.asArray" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Returns the scalar field viewed as a numpy array.</p>
+<p>This does not return a copy, so changes made to the array a reflected
+in the scalar field (and vice-versa).</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">scalar_field</span> <span class="o">=</span> <span class="n">cccorelib</span><span class="o">.</span><span class="n">ScalarField</span><span class="p">(</span><span class="s2">&quot;Codification&quot;</span><span class="p">)</span>
+<span class="n">scalar_field</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">array</span> <span class="o">=</span> <span class="n">scalar_field</span><span class="o">.</span><span class="n">asArray</span><span class="p">()</span>
+
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">array</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="c1"># Changes made to the scalar_field reflects on the array</span>
+<span class="n">scalar_field</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">array</span> <span class="o">==</span> <span class="mf">1.0</span><span class="p">)</span>
+
+<span class="c1"># and vice-versa</span>
+<span class="n">array</span><span class="p">[:]</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="k">assert</span> <span class="n">scalar_field</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mf">2.0</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.ScalarField.computeMeanAndVariance">
@@ -1262,12 +1305,15 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.ScalarField.computeMinAndMax">
 <span class="sig-name descname"><span class="pre">computeMinAndMax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.computeMinAndMax" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Computes the Min and Max, this needs to be called before retrieving the values
+with getMin or getMax</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.ScalarField.fill">
 <span class="sig-name descname"><span class="pre">fill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillValue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.fill" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Fills the scalar field with the given value</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.ScalarField.flagValueAsInvalid">
@@ -1277,47 +1323,105 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.ScalarField.getMax">
 <span class="sig-name descname"><span class="pre">getMax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.getMax" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Returns the highest value in the scalar field</p>
+<p>You need to call <a class="reference internal" href="#cccorelib.ScalarField.computeMinAndMax" title="cccorelib.ScalarField.computeMinAndMax"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cccorelib.ScalarField.computeMinAndMax()</span></code></a> if the array has changed
+since last call.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.ScalarField.getMin">
 <span class="sig-name descname"><span class="pre">getMin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.getMin" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Returns the lowest value in the scalar field</p>
+<p>You need to call <a class="reference internal" href="#cccorelib.ScalarField.computeMinAndMax" title="cccorelib.ScalarField.computeMinAndMax"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cccorelib.ScalarField.computeMinAndMax()</span></code></a> if the array has changed
+since last call.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.ScalarField.getName">
 <span class="sig-name descname"><span class="pre">getName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.getName" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Returns the name of the scalar field</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">cccorelib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sf</span> <span class="o">=</span> <span class="n">cccorelib</span><span class="o">.</span><span class="n">ScalarField</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sf</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span>
+<span class="go">name</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.ScalarField.getValue">
 <span class="sig-name descname"><span class="pre">getValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.getValue" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Returns the value at the given index.</p>
+<p>Only supports index in [0..self.size()[</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>IndexError on invalid index</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ScalarField.reserve">
+<span class="sig-name descname"><span class="pre">reserve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.reserve" title="Permalink to this definition"></a></dt>
+<dd><p>Reserves space for <code class="docutils literal notranslate"><span class="pre">count</span></code> element, but does not change the size.</p>
+<p>Will raise an exception if allocation failed</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.ScalarField.reserveSafe">
 <span class="sig-name descname"><span class="pre">reserveSafe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.reserveSafe" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Reserves space for <code class="docutils literal notranslate"><span class="pre">count</span></code> element, but does not change the size.</p>
+<p>Will NOT raise an exception if allocation failed.
+Instead, it returns a bool to indicate success.</p>
+<p>Prefer use of <a class="reference internal" href="#cccorelib.ScalarField.reserve" title="cccorelib.ScalarField.reserve"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cccorelib.ScalarField.reserve()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cccorelib.ScalarField.resize">
+<span class="sig-name descname"><span class="pre">resize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valueForNewElements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.resize" title="Permalink to this definition"></a></dt>
+<dd><p>Resize the scalar field</p>
+<p>Will raise an exception if allocation failed</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.ScalarField.resizeSafe">
 <span class="sig-name descname"><span class="pre">resizeSafe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initNewElements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valueForNewElements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.resizeSafe" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Resize the scalar field</p>
+<p>Will NOT raise an exception if allocation failed.
+Instead, it returns a bool to indicate success.</p>
+<p>Prefer use of <a class="reference internal" href="#cccorelib.ScalarField.resize" title="cccorelib.ScalarField.resize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cccorelib.ScalarField.resize()</span></code></a>.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.ScalarField.setName">
 <span class="sig-name descname"><span class="pre">setName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.setName" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Sets the name of the scalar field</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">cccorelib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sf</span> <span class="o">=</span> <span class="n">cccorelib</span><span class="o">.</span><span class="n">ScalarField</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sf</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s2">&quot;other_name&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sf</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span>
+<span class="go">other_name</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.ScalarField.setValue">
 <span class="sig-name descname"><span class="pre">setValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.setValue" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Sets the value at the given index.</p>
+<p>Only supports index in [0..self.size()[</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>IndexError on invalid index</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.ScalarField.size">
 <span class="sig-name descname"><span class="pre">size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.ScalarField" title="cccorelib.ScalarField"><span class="pre">cccorelib.ScalarField</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cccorelib.ScalarField.size" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Returns the number of elements (values) in the scalar field</p>
+</dd></dl>
 
 </dd></dl>
 
