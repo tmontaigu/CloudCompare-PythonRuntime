@@ -46,7 +46,52 @@ void define_ccPointCloud(py::module &m)
 {
     DEFINE_POINTCLOUDTPL(ccGenericPointCloud, QString, m, "__ccGenericPointCloudTpl");
     py::class_<ccPointCloud, CCCoreLib::PointCloudTpl<ccGenericPointCloud, QString>>(m,
-                                                                                     "ccPointCloud")
+                                                                                     "ccPointCloud",
+                                                                                     R"doc(
+    The main class to represent point clouds in CloudCompare.
+
+
+
+    Two constructor are available:
+
+    Parameters
+    ----------
+    name: str,
+        The name of the point cloud
+    uniqueID: int
+        Unique ID, you practically never need to give a value as it is
+        one is already selected by default.
+
+    Example
+    -------
+
+    .. code:: Python
+
+        import pycc
+        pc = pycc.ccPointCloud("Yoshi's Island")
+
+
+
+    Parameters
+    ----------
+    x: numpy.array
+    y: numpy.array
+    z: numpy.array
+
+    Example
+    -------
+
+    .. code:: Python
+
+        import numpy as np
+        import pycc
+
+        x = np.array([1, 2, 3])
+        y = np.array([1, 2, 3])
+        z = np.array([1, 2, 3])
+        pc = pycc.ccPointCloud(x, y, z)
+
+)doc")
         .def(
             py::init<QString, unsigned>(),
             "name"_a = QString(),
@@ -69,7 +114,6 @@ void define_ccPointCloud(py::module &m)
 
                 return pointCloud;
             }))
-
         // features deletion/clearing
         .def(
             "partialClone",
@@ -134,12 +178,12 @@ void define_ccPointCloud(py::module &m)
              {
                  if (self.size() > 0)
                  {
-                     // FIXME, idealy, ccPointCloud would have a .points() method returning a ref
+                     // FIXME, ideally, ccPointCloud would have a .points() method returning a ref
                      // to the std::vector of points, and we would avoid the const cast
                      auto *ptr = const_cast<CCVector3 *>(self.getPoint(0));
                      auto capsule = py::capsule(ptr, [](void *) {});
                      py::array a(py::dtype("3f"), self.size(), ptr, capsule);
-                     // Make the array non-writreable to make up for the const cast
+                     // Make the array non-writeable to make up for the const cast
                      a.attr("flags").attr("writeable") = false;
                      return a;
                  }

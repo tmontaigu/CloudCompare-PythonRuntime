@@ -88,9 +88,37 @@ void addPointsFromArrays(PointCloudType &self,
 }
 } // namespace PyCC
 
+static const constexpr char ADD_SCALAR_FIELD_DOCSTRING[] = R"doc(
+     Adds a scalar field with the given name to the point cloud.
+
+    Parameters
+    ----------
+    name: str
+        name of the scalar field that will be added.
+    values: optional, numpy.array, list of float
+        values to use when initializing the new scalar field
+
+    Raises
+    ------
+    RuntimeError if the point cloud already has a scalar field with the given ``name``
+    ValueError if values are provided don't have the same length (size) as the point cloud
+
+)doc";
+
+static const constexpr char SIZE_SCALAR_FIELD_DOCSTRING[] = R"doc(
+    Returns the size (number of points) in the point cloud.
+
+    ``len`` also works as an alias to size.
+
+    .. code:: Python
+
+        pc = pycc.ccPointCloud("name")
+        assert len(pc) == pc.size()
+)doc";
+
 #define DEFINE_POINTCLOUDTPL(T, StringType, module, name)                                                    \
     py::class_<CCCoreLib::PointCloudTpl<T, StringType>, T>(module, name)                                     \
-        .def("size", &CCCoreLib::PointCloudTpl<T, StringType>::size)                                         \
+        .def("size", &CCCoreLib::PointCloudTpl<T, StringType>::size, SIZE_SCALAR_FIELD_DOCSTRING)            \
         .def("forEach", &CCCoreLib::PointCloudTpl<T, StringType>::forEach, "action"_a)                       \
         .def("getBoundingBox",                                                                               \
              &CCCoreLib::PointCloudTpl<T, StringType>::getBoundingBox,                                       \
@@ -112,12 +140,36 @@ void addPointsFromArrays(PointCloudType &self,
         .def("reserve", &CCCoreLib::PointCloudTpl<T, StringType>::reserve, "newCapacity"_a)                  \
         .def("reset", &CCCoreLib::PointCloudTpl<T, StringType>::reset)                                       \
         .def("invalidateBoundingBox", &CCCoreLib::PointCloudTpl<T, StringType>::invalidateBoundingBox)       \
-        .def("getNumberOfScalarFields", &CCCoreLib::PointCloudTpl<T, StringType>::getNumberOfScalarFields)   \
-        .def("getScalarField", &CCCoreLib::PointCloudTpl<T, StringType>::getScalarField, "index"_a)          \
-        .def("getScalarFieldName", &CCCoreLib::PointCloudTpl<T, StringType>::getScalarFieldName, "index"_a)  \
-        .def("getScalarFieldIndexByName",                                                                    \
-             &CCCoreLib::PointCloudTpl<T, StringType>::getScalarFieldIndexByName,                            \
-             "name"_a)                                                                                       \
+        .def("getNumberOfScalarFields",                                                                      \
+             &CCCoreLib::PointCloudTpl<T, StringType>::getNumberOfScalarFields,                              \
+             "Returns the number of scalar field of the point cloud")                                        \
+        .def(                                                                                                \
+            "getScalarField",                                                                                \
+            &CCCoreLib::PointCloudTpl<T, StringType>::getScalarField,                                        \
+            "index"_a,                                                                                       \
+            R"doc(                                                                                           \
+    Returns the scalar field identified by its index.                                                        \
+                                                                                                             \
+    If index is invalid, None is returned                                                                    \
+)doc")                                                                                                       \
+        .def(                                                                                                \
+            "getScalarFieldName",                                                                            \
+            &CCCoreLib::PointCloudTpl<T, StringType>::getScalarFieldName,                                    \
+            "index"_a,                                                                                       \
+            R"doc(                                                                                           \
+    Returns the name of the scalar field identified by the index.                                            \
+                                                                                                             \
+    If index is invalid, -1 is returned                                                                      \
+)doc")                                                                                                       \
+        .def(                                                                                                \
+            "getScalarFieldIndexByName",                                                                     \
+            &CCCoreLib::PointCloudTpl<T, StringType>::getScalarFieldIndexByName,                             \
+            "name"_a,                                                                                        \
+            R"doc(                                                                                           \
+     Returns the scalar field identified by its name.                                                        \
+                                                                                                             \
+    If no scalar field has the given name, None is returned                                                  \
+)doc")                                                                                                       \
         .def("getCurrentInScalarField", &CCCoreLib::PointCloudTpl<T, StringType>::getCurrentInScalarField)   \
         .def("getCurrentOutScalarField", &CCCoreLib::PointCloudTpl<T, StringType>::getCurrentOutScalarField) \
         .def("setCurrentInScalarField",                                                                      \
@@ -165,11 +217,49 @@ void addPointsFromArrays(PointCloudType &self,
                 return idx;                                                                                  \
             },                                                                                               \
             "name"_a,                                                                                        \
-            "values"_a = py::none())                                                                         \
-        .def("deleteScalarField", &CCCoreLib::PointCloudTpl<T, StringType>::deleteScalarField, "index"_a)    \
-        .def("deleteAllScalarFields", &CCCoreLib::PointCloudTpl<T, StringType>::deleteAllScalarFields)       \
-        .def("addPoint", &CCCoreLib::PointCloudTpl<T, StringType>::addPoint, "P"_a)                          \
-        .def("addPoints", &PyCC::addPointsFromArrays<CCCoreLib::PointCloudTpl<T, StringType>>)               \
+            "values"_a = py::none(),                                                                         \
+            ADD_SCALAR_FIELD_DOCSTRING)                                                                      \
+        .def(                                                                                                \
+            "deleteScalarField",                                                                             \
+            &CCCoreLib::PointCloudTpl<T, StringType>::deleteScalarField,                                     \
+            "index"_a,                                                                                       \
+            R"doc(                                                                                           \
+     Removes the scalar field identified by the index          .                                             \
+                                                                                                             \
+    .. warning::                                                                                             \
+        This operation may modify the scalar fields order                                                    \
+        (especially if the deleted SF is not the last one).                                                  \
+        However current IN & OUT scalar fields will stay up-to-date                                          \
+        (while their index may change).                                                                      \
+                                                                                                             \
+    Does nothing if index is invalid                                                                         \
+)doc")                                                                                                       \
+        .def("deleteAllScalarFields",                                                                        \
+             &CCCoreLib::PointCloudTpl<T, StringType>::deleteAllScalarFields,                                \
+             "Deletes all scalar fields associated to this cloud")                                           \
+        .def(                                                                                                \
+            "addPoint",                                                                                      \
+            &CCCoreLib::PointCloudTpl<T, StringType>::addPoint,                                              \
+            "P"_a,                                                                                           \
+            R"doc(                                                                                           \
+    Adds a 3D point to the point cloud                                                                       \
+                                                                                                             \
+    .. note::                                                                                                \
+        For better performances it is better to use :meth:`.addPoints`.                                      \
+)doc")                                                                                                       \
+        .def(                                                                                                \
+            "addPoints",                                                                                     \
+            &PyCC::addPointsFromArrays<CCCoreLib::PointCloudTpl<T, StringType>>,                             \
+            "xs"_a,                                                                                          \
+            "ys"_a,                                                                                          \
+            "zs"_a,                                                                                          \
+            R"doc(                                                                                           \
+    Takes values from xs, yz, zs array and add them as points of the point cloud.                            \
+                                                                                                             \
+    Raises                                                                                                   \
+    ------                                                                                                   \
+    Value error if xs,ys,zs do not have the same length                                                      \
+)doc")                                                                                                       \
         .def("__len__", &CCCoreLib::PointCloudTpl<T, StringType>::size);
 
 #endif // PYTHON_PLUGIN_WRAPPERS_H

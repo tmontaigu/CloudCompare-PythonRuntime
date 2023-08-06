@@ -6,6 +6,7 @@ from pathlib import Path
 
 abspath = os.path.dirname(os.path.abspath(__file__))
 
+
 def test_cc_point_cloud_from_sequences():
     xs = np.array([1.0, 2.0, 3.0, 4.0, 5.0], pycc.PointCoordinateType)
     ys = np.ones(5, pycc.PointCoordinateType) * 18.5
@@ -28,11 +29,10 @@ def test_cc_point_cloud_from_sequences():
     sfArray[:] = np.ones(pc.size()) * 2
     assert np.all(sfArray == 2)
 
-
     # test our helper function
     pc.addScalarField("something", np.array([1.0, 2.0, 3.0, 4.0, 5.0], pycc.ScalarType))
 
-    # cannot add the a scalar field with same name
+    # cannot add a scalar field with same name
     with pytest.raises(RuntimeError):
         pc.addScalarField("something", np.array([1.0, 2.0, 3.0, 4.0, 5.0], pycc.ScalarType))
 
@@ -40,7 +40,27 @@ def test_cc_point_cloud_from_sequences():
         pc.addScalarField("wrong_size", np.array([1.0], pycc.ScalarType))
 
 
-def test_len_ccloud():
+def test_add_remove_scalar_field():
+    pc = pycc.ccPointCloud("po")
+
+    assert pc.getNumberOfScalarFields() == 0
+
+    pc.addScalarField("SomeName")
+    assert pc.getNumberOfScalarFields() == 1
+    assert pc.getScalarFieldIndexByName("SomeName") == 0
+
+    pc.addScalarField("OtherName")
+    assert pc.getNumberOfScalarFields() == 2
+    assert pc.getScalarFieldIndexByName("SomeName") == 0
+    assert pc.getScalarFieldIndexByName("OtherName") == 1
+
+    pc.deleteScalarField(0)
+    assert pc.getNumberOfScalarFields() == 1
+    assert pc.getScalarFieldIndexByName("SomeName") == -1
+    assert pc.getScalarFieldIndexByName("OtherName") == 0
+
+
+def test_len():
     pc = pycc.ccPointCloud()
 
     pc.resize(10)
@@ -76,5 +96,5 @@ def test_colors():
     f = pycc.FileIOFilter.LoadFromFile(str(filepath), p)
     cloud = f.getChild(0)
 
-    assert(len(cloud.colors()) == cloud.size())
-    assert(np.all(cloud.colors()[0] == [43, 48, 52, 255]))
+    assert (len(cloud.colors()) == cloud.size())
+    assert (np.all(cloud.colors()[0] == [43, 48, 52, 255]))
