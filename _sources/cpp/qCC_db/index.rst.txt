@@ -136,11 +136,6 @@ _______
 .. doxygenclass:: ccTorus
    :members:
 
-ccQuadric
-_________
-.. doxygenclass:: ccQuadric
-   :members:
-
 Others
 ------
 

@@ -26,7 +26,7 @@ ___________
 
 
 qM3C2Process
-___________
+____________
 
 .. autoclass:: pycc.plugins.qM3C2.qM3C2Process
     :members:
