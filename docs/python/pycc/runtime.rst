@@ -49,6 +49,10 @@ Runtime
     :members:
     :undoc-members:
 
+.. autoclass:: pycc.Action
+    :members:
+    :undoc-members:
+
 
 .. autofunction:: pycc.RunInThread
 

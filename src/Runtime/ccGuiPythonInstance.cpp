@@ -221,8 +221,7 @@ void define_ccGUIPythonInstance(py::module &m)
     The methods allow you to get/add objects to GUI DB Tree.
     Refresh/freeze/update the UI and display.
     Get selected objects, deselect/set selected state for entities...
-
-                                    )")
+)")
         .def("getMainWindow",
              &ccGuiPythonInstance::getMainWindow,
              py::return_value_policy::reference)
