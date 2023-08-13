@@ -143,11 +143,60 @@ Does nothing in plugin mode.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.PythonPluginInterface">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">PythonPluginInterface</span></span><a class="headerlink" href="#pycc.PythonPluginInterface" title="Permalink to this definition"></a></dt>
-<dd><dl class="py method">
+<dd><p>The base class for Python plugins.</p>
+<p>Every plugin must inherit from this.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pycc</span>
+
+<span class="k">class</span> <span class="nc">MyPlugin</span><span class="p">(</span><span class="n">pycc</span><span class="o">.</span><span class="n">PythonPluginInterface</span><span class="p">):</span>
+     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="py method">
 <dt class="sig sig-object py" id="pycc.PythonPluginInterface.getActions">
 <span class="sig-name descname"><span class="pre">getActions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.PythonPluginInterface" title="pycc_runtime.PythonPluginInterface"><span class="pre">pycc_runtime.PythonPluginInterface</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">std::vector&lt;Runtime::RegisteredPlugin::Action,</span> <span class="pre">std::allocator&lt;Runtime::RegisteredPlugin::Action&gt;</span> <span class="pre">&gt;</span></span></span><a class="headerlink" href="#pycc.PythonPluginInterface.getActions" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This method. must be implemented</p>
+</div>
+<p>The method shall return the list of actions the plugin can perform.
+Actions will get added to the context menu of the plugin.</p>
+<p>The returned actions must be of type <a class="reference internal" href="#pycc.Action" title="pycc.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.Action</span></code></a>.</p>
+</dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.PythonPluginInterface.getIcon">
+<span class="sig-name descname"><span class="pre">getIcon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.PythonPluginInterface" title="pycc_runtime.PythonPluginInterface"><span class="pre">pycc_runtime.PythonPluginInterface</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#pycc.PythonPluginInterface.getIcon" title="Permalink to this definition"></a></dt>
+<dd><p>It is not mandatory to implement this method.</p>
+<p>When implemented, it shall return the icon that shall be used for the
+plugin sub menu.</p>
+<p>see <a class="reference internal" href="#pycc.Action" title="pycc.Action"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.Action</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pycc.Action">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">Action</span></span><a class="headerlink" href="#pycc.Action" title="Permalink to this definition"></a></dt>
+<dd><p>Represent an action of a plugin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the action</p></li>
+<li><p><strong>target</strong> – method of the plugin that performs the action</p></li>
+<li><p><strong>icon</strong> (<em>optional</em><em>, </em><em>either bytes</em><em>, or </em><em>tuple</em><em>[</em><em>bytes</em><em>, </em><em>str</em><em>] or </em><em>str default to None</em>) – <p>Icon of the action.
+- If the type is bytes, then they shall the bytes of the icon itself.
+- If the types is Tuple[bytes, str], then bytes shall be the bytes of the icon</p>
+<blockquote>
+<div><p>itself and str the format, e.g. (some_bytes, “PNG”)</p>
+</div></blockquote>
+<ul>
+<li><p>If str then it shall be the path to a file.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">

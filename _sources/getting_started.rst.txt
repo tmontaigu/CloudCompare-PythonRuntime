@@ -6,7 +6,7 @@ This plugin allows to run scripts in the 2 _CloudCompares_ 'modes': GUI & Comman
 GUI
 ---
 
-In GUI, there are 3 actions:
+In GUI, there are 4 actions:
 
 *  The REPL (Read Print Eval Loop) which allows for quick testing of some actions.
     .. image:: ../images/repl-icon.png
@@ -67,7 +67,8 @@ Alternatively, CloudCompare-PythonPlugin will autodiscover plugins in your site-
 In order to achieve this, it levrages package metadata. All you have to do is to create a plugin
 with a "cloudcompare.plugins" entry group. Each entry of this group should point
 to a :class:`pycc.PythonPluginInterface` provided by your package.
-An example of a plugin package embedding such metadata can be found `here <https://github.com/tmontaigu/CloudCompare-PythonPlugin/tree/master/script_examples/plugin_examples/cloudcompare-demo-plugin>`_ .
+An example of a plugin package embedding such metadata can be found
+`here <https://github.com/tmontaigu/CloudCompare-PythonPlugin/tree/master/script_examples/plugin_examples/cloudcompare-demo-plugin>`_ .
 
 
 
