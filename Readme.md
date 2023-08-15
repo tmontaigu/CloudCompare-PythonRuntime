@@ -12,8 +12,9 @@ is hosted using GitHub pages.
 
 # Windows installer
 
-Windows user can download the [installer](https://u.pcloud.link/publink/show?code=XZHs7GXZjPafaI6pquRQOwSP1f1g8BJE6Qcy).
-This requires an installation of CloudCompare 2.12.2 downloadable from CloudCompare website.
+Windows user can download the [installer](https://u.pcloud.link/publink/show?code=XZW75aVZYzubajT4VVJJ0mfn9rCsBRRxEBTk).
+This requires an installation of CloudCompare 2.13 downloadable from CloudCompare website.
+(Note that CloudCompare 2.13 installer now has an option to install the python plugin)
 
 # Building & Installing
 
