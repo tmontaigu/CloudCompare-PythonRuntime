@@ -23,6 +23,8 @@
 #include <ccGenericPrimitive.h>
 #include <ccMesh.h>
 
+#include "../casters.h"
+
 namespace py = pybind11;
 using namespace pybind11::literals;
 
