@@ -21,6 +21,8 @@
 
 #include <ccQuadric.h>
 
+#include <utility>
+
 #include "../casters.h"
 
 namespace py = pybind11;
@@ -28,7 +30,36 @@ using namespace pybind11::literals;
 
 void define_ccQuadric(py::module &m)
 {
-    py::class_<ccQuadric, ccGenericPrimitive>(m, "Quadric")
+    py::class_<ccQuadric, ccGenericPrimitive>(m, "ccQuadric", R"doc(
+    ccQuadric
+
+    Parameters
+    ----------
+    minCorner : cccorelib.CCVector2
+        min corner of the 'representation' base area
+    maxCorner : cccorelib.CCVector2
+        max corner of the 'representation' base area
+    eq: list of PointCoordinateType
+        equation coefficients ( Z = a + b.X + c.Y + d.X^2 + e.X.Y + f.Y^2)
+        6 coefficients
+    dims: list of int, optional
+        optional dimension indexes
+    transMat : , optional
+        optional 3D transformation (can be set afterwards with ccDrawableObject::setGLTransformation)
+    name : str, default: Sphere
+        name of the sphere object
+
+    Example
+    -------
+
+    .. code:: Python
+
+        quadric = pycc.ccQuadric(
+            cccorelib.CCVector2(5.0, 10.0),
+            cccorelib.CCVector2(10.0, 20.0),
+            [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]
+        )
+    )doc")
         .def(
             py::init(
                 [](CCVector2 minCorner,
@@ -50,7 +81,7 @@ void define_ccQuadric(py::module &m)
                         eqC[i] = eq[i].cast<PointCoordinateType>();
                     }
                     return new ccQuadric(
-                        minCorner, maxCorner, eqC, dims, transMat, name, precision);
+                        minCorner, maxCorner, eqC, dims, transMat, std::move(name), precision);
                 }),
             "minCorner"_a,
             "maxCorner"_a,

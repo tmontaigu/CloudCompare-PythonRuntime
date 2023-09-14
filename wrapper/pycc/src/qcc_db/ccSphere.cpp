@@ -28,7 +28,30 @@ using namespace pybind11::literals;
 
 void define_ccSphere(py::module &m)
 {
-    py::class_<ccSphere, ccGenericPrimitive>(m, "ccSphere")
+    py::class_<ccSphere, ccGenericPrimitive>(m, "ccSphere", R"doc(
+    ccSphere
+
+    Parameters
+    ----------
+    radius : PointCoordinateType
+        radius of the sphere
+    transMat : , optional
+         optional 3D transformation (can be set afterwards with ccDrawableObject::setGLTransformation)
+    name : str, default: Sphere
+        name of the sphere object
+    precision : int, default: 24
+        drawing precision (angular step = 360/precision)
+    uniqueID : int, optional
+        unique ID (handle with care)
+
+    Example
+    -------
+
+    .. code:: Python
+
+        sphere = pycc.ccSphere(3.0)
+        sphere2 = pycc.ccSphere(5.0, name="Sphere2")
+)doc")
         .def(
             py::init<PointCoordinateType, const ccGLMatrix *, QString, unsigned, unsigned>(),
             "radius"_a,

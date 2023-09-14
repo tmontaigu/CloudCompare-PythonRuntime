@@ -28,7 +28,30 @@ using namespace pybind11::literals;
 
 void define_ccDish(py::module &m)
 {
-    py::class_<ccDish, ccGenericPrimitive>(m, "ccDish")
+    py::class_<ccDish, ccGenericPrimitive>(m, "ccDish", R"doc(
+    ccDish
+
+    Parameters
+    ----------
+    radius : PointCoordinateType
+        base radius
+    height : PointCoordinateType
+        maximum height of dished surface above base
+    radius2 : PointCoordinateType, default = 0
+        If radius2 is zero, dish is drawn as a section of sphere.
+         If radius2 is >0, dish is defined as half of an ellipsoid.
+    transMat : , optional
+        optional 3D transformation (can be set afterwards with ccDrawableObject::setGLTransformation)
+    name : str, default: Sphere
+        name of the sphere object
+
+    Example
+    -------
+
+    .. code:: Python
+
+    dish = pycc.ccDish(1.0, 4.0)
+    )doc")
         .def(
             py::init<PointCoordinateType,
                      PointCoordinateType,

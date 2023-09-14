@@ -35,7 +35,29 @@ void define_ccPlane(py::module &m)
         .def("normalVectorIsShown", &ccPlanarEntityInterface::normalVectorIsShown)
         .def("getNormal", &ccPlanarEntityInterface::getNormal);
 
-    py::class_<ccPlane, ccGenericPrimitive, ccPlanarEntityInterface>(m, "ccPlane")
+    py::class_<ccPlane, ccGenericPrimitive, ccPlanarEntityInterface>(m,
+                                                                     "ccPlane",
+                                                                     R"doc(
+    ccPlane
+
+    Parameters
+    ----------
+    xWidth : PointCoordinateType
+    yWidth : PointCoordinateType
+    transMat : , optional
+        optional 3D transformation (can be set afterwards with ccDrawableObject::setGLTransformation)
+    name : str, default: Sphere
+        name of the sphere object
+    uniqueID : int, optional
+        unique ID (handle with care)
+
+    Example
+    -------
+
+    .. code:: Python
+
+        cone = pycc.ccPLane(10.0, 5.0)
+    )doc")
         .def(py::init<PointCoordinateType, PointCoordinateType, const ccGLMatrix *, QString>(),
              "xWidth"_a,
              "yWidth"_a,
