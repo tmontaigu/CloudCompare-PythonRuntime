@@ -446,6 +446,8 @@
 </li>
       <li><a href="python/pycc/runtime.html#pycc.ccPythonInstance">ccPythonInstance (class in pycc)</a>
 </li>
+      <li><a href="python/pycc/primitives.html#pycc.ccQuadric">ccQuadric (class in pycc)</a>
+</li>
       <li><a href="python/pycc/others.html#pycc.ccRasterGrid">ccRasterGrid (class in pycc)</a>
 </li>
       <li><a href="python/pycc/others.html#pycc.ccRasterGrid.EmptyCellFillOption">ccRasterGrid.EmptyCellFillOption (class in pycc)</a>
@@ -488,10 +490,10 @@
       </ul></li>
       <li><a href="python/cccorelib/data_structures.html#cccorelib.DgmOctree.NearestNeighboursSearchStruct.cellCenter">cellCenter (cccorelib.DgmOctree.NearestNeighboursSearchStruct property)</a>
 </li>
-      <li><a href="python/cccorelib/data_structures.html#cccorelib.DgmOctree.NearestNeighboursSearchStruct.cellPos">cellPos (cccorelib.DgmOctree.NearestNeighboursSearchStruct property)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/cccorelib/data_structures.html#cccorelib.DgmOctree.NearestNeighboursSearchStruct.cellPos">cellPos (cccorelib.DgmOctree.NearestNeighboursSearchStruct property)</a>
+</li>
       <li><a href="python/cccorelib/data_structures.html#cccorelib.DgmOctree.CellDescriptor.center">center (cccorelib.DgmOctree.CellDescriptor property)</a>
 
       <ul>
@@ -672,6 +674,8 @@
         <li><a href="python/pycc/others.html#pycc.ccWaveformProxy.decodeSamples">(pycc.ccWaveformProxy method)</a>
 </li>
       </ul></li>
+      <li><a href="python/pycc/primitives.html#pycc.ccQuadric.DEFAULT_DRAWING_PRECISION">DEFAULT_DRAWING_PRECISION (pycc.ccQuadric property)</a>
+</li>
       <li><a href="python/pycc/others.html#pycc.ccColorScale.DEFAULT_STEPS">DEFAULT_STEPS (pycc.ccColorScale property)</a>
 </li>
       <li><a href="python/pycc/others.html#pycc.ccViewportParameters.defaultLineWidth">defaultLineWidth (pycc.ccViewportParameters property)</a>
@@ -888,16 +892,20 @@
 </li>
       <li><a href="python/cccorelib/data_structures.html#cccorelib.KDTree.findNearestNeighbourWithMaxDist">findNearestNeighbourWithMaxDist() (cccorelib.KDTree method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python/pycc/runtime.html#pycc.ccCommandLineInterface.GlobalShiftOptions.FIRST_GLOBAL_SHIFT">FIRST_GLOBAL_SHIFT (pycc.ccCommandLineInterface.GlobalShiftOptions attribute)</a>
 
       <ul>
         <li><a href="python/pycc/runtime.html#pycc.ccCommandLineInterface.GlobalShiftOptions.Mode.FIRST_GLOBAL_SHIFT">(pycc.ccCommandLineInterface.GlobalShiftOptions.Mode attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python/pycc/primitives.html#pycc.ccPlane.Fit">Fit() (pycc.ccPlane static method)</a>
+
+      <ul>
+        <li><a href="python/pycc/primitives.html#pycc.ccQuadric.Fit">(pycc.ccQuadric static method)</a>
 </li>
+      </ul></li>
       <li><a href="python/cccorelib/tools.html#cccorelib.GeometricalAnalysisTools.FlagDuplicatePoints">FlagDuplicatePoints() (cccorelib.GeometricalAnalysisTools static method)</a>
 </li>
       <li><a href="python/cccorelib/data_structures.html#cccorelib.ScalarField.flagValueAsInvalid">flagValueAsInvalid() (cccorelib.ScalarField method)</a>
@@ -1106,6 +1114,12 @@
 </li>
       <li><a href="python/pycc/primitives.html#pycc.ccPlane.getEquation">getEquation() (pycc.ccPlane method)</a>
 </li>
+      <li><a href="python/pycc/primitives.html#pycc.ccQuadric.getEquationCoefs">getEquationCoefs() (pycc.ccQuadric method)</a>
+</li>
+      <li><a href="python/pycc/primitives.html#pycc.ccQuadric.getEquationDims">getEquationDims() (pycc.ccQuadric method)</a>
+</li>
+      <li><a href="python/pycc/primitives.html#pycc.ccQuadric.getEquationString">getEquationString() (pycc.ccQuadric method)</a>
+</li>
       <li><a href="python/pycc/others.html#pycc.ccGBLSensor.GetErrorString">GetErrorString() (pycc.ccGBLSensor static method)</a>
 </li>
       <li><a href="python/pycc/runtime.html#pycc.ccCommandLineInterface.getExportFilename">getExportFilename() (pycc.ccCommandLineInterface method)</a>
@@ -1170,6 +1184,8 @@
 </li>
       <li><a href="python/cccorelib/data_structures.html#cccorelib.BoundingBox.getMaxBoxDim">getMaxBoxDim() (cccorelib.BoundingBox method)</a>
 </li>
+      <li><a href="python/pycc/primitives.html#pycc.ccQuadric.getMaxCorner">getMaxCorner() (pycc.ccQuadric method)</a>
+</li>
       <li><a href="python/cccorelib/data_structures.html#cccorelib.TrueKdTree.getMaxErrorType">getMaxErrorType() (cccorelib.TrueKdTree method)</a>
 </li>
       <li><a href="python/cccorelib/data_structures.html#cccorelib.DgmOctree.getMaxFillIndexes">getMaxFillIndexes() (cccorelib.DgmOctree method)</a>
@@ -1185,6 +1201,8 @@
       <li><a href="python/cccorelib/data_structures.html#cccorelib.ScalarField.getMin">getMin() (cccorelib.ScalarField method)</a>
 </li>
       <li><a href="python/cccorelib/data_structures.html#cccorelib.BoundingBox.getMinBoxDim">getMinBoxDim() (cccorelib.BoundingBox method)</a>
+</li>
+      <li><a href="python/pycc/primitives.html#pycc.ccQuadric.getMinCorner">getMinCorner() (pycc.ccQuadric method)</a>
 </li>
       <li><a href="python/cccorelib/data_structures.html#cccorelib.DgmOctree.getMinFillIndexes">getMinFillIndexes() (cccorelib.DgmOctree method)</a>
 </li>
@@ -1238,8 +1256,12 @@
 </li>
       <li><a href="python/pycc/others.html#pycc.cc2DLabel.getPosition">getPosition() (pycc.cc2DLabel method)</a>
 </li>
-      <li><a href="python/pycc/primitives.html#pycc.ccSphere.getRadius">getRadius() (pycc.ccSphere method)</a>
+      <li><a href="python/pycc/primitives.html#pycc.ccCylinder.getRadius">getRadius() (pycc.ccCylinder method)</a>
+
+      <ul>
+        <li><a href="python/pycc/primitives.html#pycc.ccSphere.getRadius">(pycc.ccSphere method)</a>
 </li>
+      </ul></li>
       <li><a href="python/pycc/others.html#pycc.ccWaveform.getRange">getRange() (pycc.ccWaveform method)</a>
 
       <ul>
@@ -1988,10 +2010,10 @@
 </li>
       <li><a href="python/cccorelib/data_structures.html#cccorelib.PointCloud">PointCloud (class in cccorelib)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python/cccorelib/data_structures.html#cccorelib.DgmOctree.PointDescriptor.pointIndex">pointIndex (cccorelib.DgmOctree.PointDescriptor property)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python/cccorelib/tools.html#cccorelib.PointProjectionTools">PointProjectionTools (class in cccorelib)</a>
 </li>
       <li><a href="python/cccorelib/tools.html#cccorelib.PointProjectionTools.IndexedCCVector2">PointProjectionTools.IndexedCCVector2 (class in cccorelib)</a>
@@ -2085,6 +2107,8 @@
 </li>
       </ul></li>
       <li><a href="python/pycc/others.html#pycc.ccGLCameraParameters.projectionMat">projectionMat (pycc.ccGLCameraParameters property)</a>
+</li>
+      <li><a href="python/pycc/primitives.html#pycc.ccQuadric.projectOnQuadric">projectOnQuadric() (pycc.ccQuadric method)</a>
 </li>
       <li><a href="python/pycc/others.html#pycc.ccGBLSensor.projectPoint">projectPoint() (pycc.ccGBLSensor method)</a>
 </li>
@@ -2432,12 +2456,16 @@
 </li>
       <li><a href="python/pycc/others.html#pycc.cc2DLabel.setPosition">setPosition() (pycc.cc2DLabel method)</a>
 </li>
-      <li><a href="python/pycc/primitives.html#pycc.ccSphere.setRadius">setRadius() (pycc.ccSphere method)</a>
+      <li><a href="python/pycc/primitives.html#pycc.ccCylinder.setRadius">setRadius() (pycc.ccCylinder method)</a>
+
+      <ul>
+        <li><a href="python/pycc/primitives.html#pycc.ccSphere.setRadius">(pycc.ccSphere method)</a>
 </li>
-      <li><a href="python/pycc/others.html#pycc.ccColorScale.setRelative">setRelative() (pycc.ccColorScale method)</a>
-</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pycc/others.html#pycc.ccColorScale.setRelative">setRelative() (pycc.ccColorScale method)</a>
+</li>
       <li><a href="python/pycc/others.html#pycc.ccColorScaleElement.setRelativePos">setRelativePos() (pycc.ccColorScaleElement method)</a>
 </li>
       <li><a href="python/pycc/others.html#pycc.ccWaveform.setReturnIndex">setReturnIndex() (pycc.ccWaveform method)</a>

@@ -154,6 +154,22 @@
 <dt class="sig sig-object py" id="pycc.ccSphere">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccSphere</span></span><a class="headerlink" href="#pycc.ccSphere" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pycc.ccGenericPrimitive" title="pycc.ccGenericPrimitive"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccGenericPrimitive</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>radius</strong> (<em>PointCoordinateType</em>) – radius of the sphere</p></li>
+<li><p><strong>transMat</strong> (<em>, </em><em>optional</em>) – optional 3D transformation (can be set afterwards with ccDrawableObject::setGLTransformation)</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>default: Sphere</em>) – name of the sphere object</p></li>
+<li><p><strong>precision</strong> (<em>int</em><em>, </em><em>default: 24</em>) – drawing precision (angular step = 360/precision)</p></li>
+<li><p><strong>uniqueID</strong> (<em>int</em><em>, </em><em>optional</em>) – unique ID (handle with care)</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">sphere</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccSphere</span><span class="p">(</span><span class="mf">3.0</span><span class="p">)</span>
+<span class="n">sphere2</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccSphere</span><span class="p">(</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Sphere2&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccSphere.getRadius">
 <span class="sig-name descname"><span class="pre">getRadius</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccSphere" title="pycc.ccSphere"><span class="pre">pycc.ccSphere</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#pycc.ccSphere.getRadius" title="Permalink to this definition"></a></dt>
@@ -173,6 +189,21 @@
 <dt class="sig sig-object py" id="pycc.ccPlane">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccPlane</span></span><a class="headerlink" href="#pycc.ccPlane" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pycc.ccGenericPrimitive" title="pycc.ccGenericPrimitive"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccGenericPrimitive</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ccPlanarEntityInterface</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xWidth</strong> (<em>PointCoordinateType</em>) – </p></li>
+<li><p><strong>yWidth</strong> (<em>PointCoordinateType</em>) – </p></li>
+<li><p><strong>transMat</strong> (<em>, </em><em>optional</em>) – optional 3D transformation (can be set afterwards with ccDrawableObject::setGLTransformation)</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>default: Sphere</em>) – name of the sphere object</p></li>
+<li><p><strong>uniqueID</strong> (<em>int</em><em>, </em><em>optional</em>) – unique ID (handle with care)</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">cone</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccPLane</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPlane.Fit">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cloud</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.GenericIndexedCloudPersist" title="cccorelib.GenericIndexedCloudPersist"><span class="pre">cccorelib.GenericIndexedCloudPersist</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycc.ccPlane" title="pycc.ccPlane"><span class="pre">pycc.ccPlane</span></a></span></span><a class="headerlink" href="#pycc.ccPlane.Fit" title="Permalink to this definition"></a></dt>
@@ -222,6 +253,25 @@
 <dt class="sig sig-object py" id="pycc.ccTorus">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccTorus</span></span><a class="headerlink" href="#pycc.ccTorus" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pycc.ccGenericPrimitive" title="pycc.ccGenericPrimitive"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccGenericPrimitive</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>insideRadius</strong> (<em>PointCoordinateType</em>) – </p></li>
+<li><p><strong>outsideRadius</strong> (<em>PointCoordinateType</em>) – </p></li>
+<li><p><strong>angleRad</strong> (<em>float</em>) – subtended angle (in radians)</p></li>
+<li><p><strong>rectangularSection</strong> (<em>bool</em>) – whether section is rectangular or round</p></li>
+<li><p><strong>rectSectionHeight</strong> (<em>PointCoordinateType</em>) – section height (if rectangular torus)</p></li>
+<li><p><strong>transMat</strong> (<em>, </em><em>optional</em>) – optional 3D transformation (can be set afterwards with ccDrawableObject::setGLTransformation)</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>default: Sphere</em>) – name of the sphere object</p></li>
+<li><p><strong>precision</strong> (<em>int</em><em>, </em><em>default: 24</em>) – drawing precision (angular step = 360/precision)</p></li>
+<li><p><strong>uniqueID</strong> (<em>int</em><em>, </em><em>optional</em>) – unique ID (handle with care)</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">torus</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccTorus</span><span class="p">(</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
@@ -231,6 +281,19 @@
 <dt class="sig sig-object py" id="pycc.ccBox">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccBox</span></span><a class="headerlink" href="#pycc.ccBox" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pycc.ccGenericPrimitive" title="pycc.ccGenericPrimitive"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccGenericPrimitive</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>insideRadius</strong> (<a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><em>cccorelib.CCVector3</em></a>) – box dimensions</p></li>
+<li><p><strong>transMat</strong> (<em>, </em><em>optional</em>) – optional 3D transformation (can be set afterwards with ccDrawableObject::setGLTransformation)</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>default: Sphere</em>) – name of the sphere object</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">box</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccBox</span><span class="p">(</span><span class="n">cccorelib</span><span class="o">.</span><span class="n">CCVector3</span><span class="p">(</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">))</span>
+</pre></div>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccBox.getDimensions">
 <span class="sig-name descname"><span class="pre">getDimensions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccBox" title="pycc.ccBox"><span class="pre">pycc.ccBox</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></span><a class="headerlink" href="#pycc.ccBox.getDimensions" title="Permalink to this definition"></a></dt>
@@ -250,6 +313,23 @@
 <dt class="sig sig-object py" id="pycc.ccDish">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccDish</span></span><a class="headerlink" href="#pycc.ccDish" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pycc.ccGenericPrimitive" title="pycc.ccGenericPrimitive"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccGenericPrimitive</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>radius</strong> (<em>PointCoordinateType</em>) – base radius</p></li>
+<li><p><strong>height</strong> (<em>PointCoordinateType</em>) – maximum height of dished surface above base</p></li>
+<li><p><strong>radius2</strong> (<em>PointCoordinateType</em><em>, </em><em>default = 0</em>) – <dl class="simple">
+<dt>If radius2 is zero, dish is drawn as a section of sphere.</dt><dd><p>If radius2 is &gt;0, dish is defined as half of an ellipsoid.</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>transMat</strong> (<em>, </em><em>optional</em>) – optional 3D transformation (can be set afterwards with ccDrawableObject::setGLTransformation)</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>default: Sphere</em>) – name of the sphere object</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>dish = pycc.ccDish(1.0, 4.0)</p>
 </dd></dl>
 
 </section>
@@ -259,6 +339,25 @@
 <dt class="sig sig-object py" id="pycc.ccCone">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccCone</span></span><a class="headerlink" href="#pycc.ccCone" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pycc.ccGenericPrimitive" title="pycc.ccGenericPrimitive"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccGenericPrimitive</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bottomRadius</strong> (<em>PointCoordinateType</em>) – </p></li>
+<li><p><strong>topRadius</strong> (<em>PointCoordinateType</em>) – </p></li>
+<li><p><strong>height</strong> (<em>PointCoordinateType</em>) – cone height (transformation should point to the axis center)</p></li>
+<li><p><strong>xOff</strong> (<em>PointCoordinateType</em><em>, </em><em>default = 0</em>) – displacement of axes along X-axis (Snout mode)</p></li>
+<li><p><strong>yOff</strong> (<em>PointCoordinateType</em><em>, </em><em>default = 0</em>) – displacement of axes along Y-axis (Snout mode)</p></li>
+<li><p><strong>transMat</strong> (<em>, </em><em>optional</em>) – optional 3D transformation (can be set afterwards with ccDrawableObject::setGLTransformation)</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>default: Sphere</em>) – name of the sphere object</p></li>
+<li><p><strong>precision</strong> (<em>int</em><em>, </em><em>default: 24</em>) – drawing precision (angular step = 360/precision)</p></li>
+<li><p><strong>uniqueID</strong> (<em>int</em><em>, </em><em>optional</em>) – unique ID (handle with care)</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">cone</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccCone</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccCone.getBottomCenter">
 <span class="sig-name descname"><span class="pre">getBottomCenter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCone" title="pycc.ccCone"><span class="pre">pycc.ccCone</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></span><a class="headerlink" href="#pycc.ccCone.getBottomCenter" title="Permalink to this definition"></a></dt>
@@ -333,11 +432,105 @@
 <dt class="sig sig-object py" id="pycc.ccCylinder">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccCylinder</span></span><a class="headerlink" href="#pycc.ccCylinder" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pycc.ccCone" title="pycc.ccCone"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccCone</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>radius</strong> (<em>PointCoordinateType</em>) – </p></li>
+<li><p><strong>height</strong> (<em>PointCoordinateType</em>) – </p></li>
+<li><p><strong>transMat</strong> (<em>, </em><em>optional</em>) – optional 3D transformation (can be set afterwards with ccDrawableObject::setGLTransformation)</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>default: Sphere</em>) – name of the sphere object</p></li>
+<li><p><strong>precision</strong> (<em>int</em><em>, </em><em>default: 24</em>) – drawing precision (angular step = 360/precision)</p></li>
+<li><p><strong>uniqueID</strong> (<em>int</em><em>, </em><em>optional</em>) – unique ID (handle with care)</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">cylinder</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccCylinder</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">)</span>
+<span class="n">cylinder2</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccCylinder</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Cylinder2&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccCylinder.getRadius">
+<span class="sig-name descname"><span class="pre">getRadius</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCylinder" title="pycc.ccCylinder"><span class="pre">pycc.ccCylinder</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#pycc.ccCylinder.getRadius" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccCylinder.setRadius">
+<span class="sig-name descname"><span class="pre">setRadius</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCylinder" title="pycc.ccCylinder"><span class="pre">pycc.ccCylinder</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccCylinder.setRadius" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </section>
 <section id="ccquadric">
 <h2>ccQuadric<a class="headerlink" href="#ccquadric" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycc.ccQuadric">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccQuadric</span></span><a class="headerlink" href="#pycc.ccQuadric" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycc.ccGenericPrimitive" title="pycc.ccGenericPrimitive"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccGenericPrimitive</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>minCorner</strong> (<em>cccorelib.CCVector2</em>) – min corner of the ‘representation’ base area</p></li>
+<li><p><strong>maxCorner</strong> (<em>cccorelib.CCVector2</em>) – max corner of the ‘representation’ base area</p></li>
+<li><p><strong>eq</strong> (<em>list of PointCoordinateType</em>) – equation coefficients ( Z = a + b.X + c.Y + d.X^2 + e.X.Y + f.Y^2)
+6 coefficients</p></li>
+<li><p><strong>dims</strong> (<em>list of int</em><em>, </em><em>optional</em>) – optional dimension indexes</p></li>
+<li><p><strong>transMat</strong> (<em>, </em><em>optional</em>) – optional 3D transformation (can be set afterwards with ccDrawableObject::setGLTransformation)</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>default: Sphere</em>) – name of the sphere object</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">quadric</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccQuadric</span><span class="p">(</span>
+    <span class="n">cccorelib</span><span class="o">.</span><span class="n">CCVector2</span><span class="p">(</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">),</span>
+    <span class="n">cccorelib</span><span class="o">.</span><span class="n">CCVector2</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">),</span>
+    <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccQuadric.Fit">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.GenericIndexedCloudPersist" title="cccorelib.GenericIndexedCloudPersist"><span class="pre">cccorelib.GenericIndexedCloudPersist</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#pycc.ccQuadric.Fit" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccQuadric.getEquationCoefs">
+<span class="sig-name descname"><span class="pre">getEquationCoefs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccQuadric" title="pycc.ccQuadric"><span class="pre">pycc.ccQuadric</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#pycc.ccQuadric.getEquationCoefs" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccQuadric.getEquationDims">
+<span class="sig-name descname"><span class="pre">getEquationDims</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccQuadric" title="pycc.ccQuadric"><span class="pre">pycc.ccQuadric</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">cccorelib.Tuple3ub</span></span></span><a class="headerlink" href="#pycc.ccQuadric.getEquationDims" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccQuadric.getEquationString">
+<span class="sig-name descname"><span class="pre">getEquationString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccQuadric" title="pycc.ccQuadric"><span class="pre">pycc.ccQuadric</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QString</span></span></span><a class="headerlink" href="#pycc.ccQuadric.getEquationString" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccQuadric.getMaxCorner">
+<span class="sig-name descname"><span class="pre">getMaxCorner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccQuadric" title="pycc.ccQuadric"><span class="pre">pycc.ccQuadric</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">cccorelib.CCVector2</span></span></span><a class="headerlink" href="#pycc.ccQuadric.getMaxCorner" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccQuadric.getMinCorner">
+<span class="sig-name descname"><span class="pre">getMinCorner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccQuadric" title="pycc.ccQuadric"><span class="pre">pycc.ccQuadric</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">cccorelib.CCVector2</span></span></span><a class="headerlink" href="#pycc.ccQuadric.getMinCorner" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccQuadric.projectOnQuadric">
+<span class="sig-name descname"><span class="pre">projectOnQuadric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccQuadric" title="pycc.ccQuadric"><span class="pre">pycc.ccQuadric</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">P</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#pycc.ccQuadric.projectOnQuadric" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccQuadric.DEFAULT_DRAWING_PRECISION">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DEFAULT_DRAWING_PRECISION</span></span><a class="headerlink" href="#pycc.ccQuadric.DEFAULT_DRAWING_PRECISION" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
