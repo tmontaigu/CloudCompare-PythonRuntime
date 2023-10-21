@@ -100,6 +100,7 @@ void define_ccRasterGrid(py::module &m)
              "box"_a,
              "percentileValue"_a,
              "exportToOriginalCS"_a,
+             "appendGridSizeToSFNames"_a,
              "progressDialog"_a = nullptr)
         .def("fillWith",
              &ccRasterGrid::fillWith,
