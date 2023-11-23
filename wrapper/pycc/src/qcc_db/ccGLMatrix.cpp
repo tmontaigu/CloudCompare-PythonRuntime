@@ -41,9 +41,30 @@ static void define_ccGLMatrixClass(py::module &m, const char *name)
              "Z"_a,
              "Tr"_a)
         .def_static("Interpolate", &ccGLMatrixType::Interpolate, "coef"_a, "glMat1"_a, "glMat2"_a)
-        .def_static("FromToRotation", &ccGLMatrixType::FromToRotation, "from"_a, "to"_a)
+        // For some unknown reason doing
+        // .def_static("FromToRotation", &ccGLMatrixType::FromViewDirAndUpDir, "forward"_a, "up"_a)
+        // creates a function that will create a runtime error when used:
+        // ```
+        // TypeError: Unable to convert function return value to a Python type! The signature was
+        // (forward: cccorelib.CCVector3d, up: cccorelib.CCVector3d) -> ccGLMatrixTpl<double>
+        // ```
+        // We have to use a fully typed lambda for it to work.
+        // We also provide this function as a __init__ alias
         .def_static(
-            "FromViewDirAndUpDir", &ccGLMatrixType::FromViewDirAndUpDir, "forward"_a, "up"_a)
+            "FromViewDirAndUpDir",
+            [](const Vector3Tpl<Inner> &a, const Vector3Tpl<Inner> &b) -> ccGLMatrixType
+            { return ccGLMatrixType::FromViewDirAndUpDir(a, b); },
+            "forward"_a,
+            "up"_a)
+        .def(py::init(&ccGLMatrixType::FromViewDirAndUpDir), py::kw_only(), "forward"_a, "up"_a)
+        // Same problem and solution as above
+        .def_static(
+            "FromToRotation",
+            [](const Vector3Tpl<Inner> &a, const Vector3Tpl<Inner> &b) -> ccGLMatrixType
+            { return ccGLMatrixType::FromToRotation(a, b); },
+            "from"_a,
+            "to"_a)
+        .def(py::init(&ccGLMatrixType::FromToRotation), py::kw_only(), "from"_a, "to"_a)
         .def("xRotation", &ccGLMatrixType::xRotation)
         .def("yRotation", &ccGLMatrixType::yRotation)
         .def("zRotation", &ccGLMatrixType::zRotation)
@@ -111,7 +132,6 @@ static void define_ccGLMatrixClass(py::module &m, const char *name)
 
 void define_ccGLMatrix(py::module &m)
 {
-    //    py::class_<ccGLMatrix>(m, "ccGLMatrix");
     define_ccGLMatrixClass<ccGLMatrix, float>(m, "ccGLMatrix");
     define_ccGLMatrixClass<ccGLMatrixd, double>(m, "ccGLMatrixd");
 }
