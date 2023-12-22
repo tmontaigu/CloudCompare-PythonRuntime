@@ -144,6 +144,41 @@ void define_ccPointCloud(py::module &m)
                 ColorCompType g,
                 ColorCompType b,
                 ColorCompType a) { self.setColor(r, g, b, a); })
+        .def("setPointNormal", &ccPointCloud::setPointNormal, "index"_a, "normal"_a)
+        .def("addNorm", &ccPointCloud::addNorm, "normal"_a)
+        .def("addNormals",
+             [](ccPointCloud &self,
+                const py::array_t<PointCoordinateType> &nx,
+                const py::array_t<PointCoordinateType> &ny,
+                const py::array_t<PointCoordinateType> &nz)
+             {
+                 if (nx.size() != ny.size() || nx.size() != nz.size())
+                 {
+                     throw py::value_error("nx, ny, nz must have the same size");
+                 }
+
+                 const py::ssize_t numToReserve = self.size() + nx.size();
+                 if (numToReserve > std::numeric_limits<unsigned int>::max())
+                 {
+                     throw std::out_of_range(std::to_string(numToReserve) +
+                                             " cannot be casted to unsigned int");
+                 }
+                 self.reserve(static_cast<unsigned int>(numToReserve));
+
+                 auto xs_it = nx.begin();
+                 auto ys_it = ny.begin();
+                 auto zs_it = nz.begin();
+
+                 while (xs_it != nx.end())
+                 {
+                     self.addNorm({xs_it->cast<PointCoordinateType>(),
+                                   ys_it->cast<PointCoordinateType>(),
+                                   zs_it->cast<PointCoordinateType>()});
+                     ++xs_it;
+                     ++ys_it;
+                     ++zs_it;
+                 }
+             })
         .def("colorize", &ccPointCloud::colorize)
         .def("crop2D", &ccPointCloud::crop2D, "poly"_a, "orthodDim"_a, "inside"_a = true)
         .def("colors",
