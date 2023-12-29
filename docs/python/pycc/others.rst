@@ -247,3 +247,15 @@ _______________
     :members:
     :undoc-members:
     :show-inheritance:
+
+
+ccNormalVectors
+_______________
+.. seealso::
+
+    C++: :cpp:class:`ccNormalVectors`
+
+.. autoclass:: pycc.ccNormalVectors
+    :members:
+    :undoc-members:
+    :show-inheritance:

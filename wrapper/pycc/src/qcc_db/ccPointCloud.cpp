@@ -21,6 +21,7 @@
 
 #include <ccPointCloud.h>
 #include <ccPolyline.h>
+#include <ccProgressDialog.h>
 #include <ccScalarField.h>
 #include <climits>
 #include <cstdint>
@@ -137,6 +138,30 @@ void define_ccPointCloud(py::module &m)
         .def("setPointSize", &ccPointCloud::setPointSize, "size"_a)
         .def("sfColorScaleShown", &ccPointCloud::sfColorScaleShown)
         .def("showSFColorsScale", &ccPointCloud::showSFColorsScale, "state"_a)
+        // normals computation/orientation
+        .def("computeNormalsWithGrids",
+             &ccPointCloud::computeNormalsWithGrids,
+             "minTriangleAngle_deg"_a = 1.0,
+             "pDlg"_a = nullptr)
+        .def("orientNormalsTowardViewPoint",
+             &ccPointCloud::orientNormalsTowardViewPoint,
+             "VP"_a,
+             "pDlg"_a = nullptr)
+        .def("computeNormalsWithOctree",
+             &ccPointCloud::computeNormalsWithOctree,
+             "model"_a,
+             "preferredOrientation"_a,
+             "defaultRadius"_a,
+             "pDlg"_a = nullptr)
+        .def("orientNormalsWithMST",
+             &ccPointCloud::orientNormalsWithMST,
+             "kNN"_a,
+             "pDlg"_a = nullptr)
+        .def("orientNormalsWithFM",
+             &ccPointCloud::orientNormalsWithFM,
+             "level"_a,
+             "pDlg"_a = nullptr)
+        // Special functions added by pycc
         .def("addPoints", &PyCC::addPointsFromArrays<ccPointCloud>)
         .def("setColor",
              [](ccPointCloud &self,
