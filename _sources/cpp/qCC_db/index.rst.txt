@@ -333,3 +333,15 @@ _____________
 
 .. doxygenclass:: ccScalarField
    :members:
+
+
+ccNormalVectors
+_____________
+.. seealso::
+
+    Python: :class:`pycc.ccNormalVectors`
+
+.. doxygenclass:: ccNormalVectors
+   :members:
+
+

@@ -85,6 +85,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#ccwaveform">ccWaveform</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ccwaveformproxy">ccWaveformProxy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ccrastergrid">ccRasterGrid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ccnormalvectors">ccNormalVectors</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="plugins.html">plugins</a></li>
@@ -3075,6 +3076,144 @@
 <dl class="py property">
 <dt class="sig sig-object py" id="pycc.ccRasterGrid.width">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">width</span></span><a class="headerlink" href="#pycc.ccRasterGrid.width" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="ccnormalvectors">
+<h2>ccNormalVectors<a class="headerlink" href="#ccnormalvectors" title="Permalink to this heading"></a></h2>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccNormalVectors</span></code></p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccNormalVectors</span></span><a class="headerlink" href="#pycc.ccNormalVectors" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_object</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.Orientation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Orientation</span></span><a class="headerlink" href="#pycc.ccNormalVectors.Orientation" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_object</span></code></p>
+<p>Members:</p>
+<p>PLUS_X</p>
+<p>MINUS_X</p>
+<p>PLUS_Y</p>
+<p>MINUS_Y</p>
+<p>PLUS_Z</p>
+<p>PLUS_BARYCENTER</p>
+<p>MINUS_BARYCENTER</p>
+<p>PLUS_ORIGIN</p>
+<p>MINUS_ORIGIN</p>
+<p>PREVIOUS</p>
+<p>PLUS_SENSOR_ORIGIN</p>
+<p>MINUS_SENSOR_ORIGIN</p>
+<p>UNDEFINED</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.Orientation.MINUS_BARYCENTER">
+<span class="sig-name descname"><span class="pre">MINUS_BARYCENTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.MINUS_BARYCENTER:</span> <span class="pre">7&gt;</span></em><a class="headerlink" href="#pycc.ccNormalVectors.Orientation.MINUS_BARYCENTER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.Orientation.MINUS_ORIGIN">
+<span class="sig-name descname"><span class="pre">MINUS_ORIGIN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.MINUS_ORIGIN:</span> <span class="pre">9&gt;</span></em><a class="headerlink" href="#pycc.ccNormalVectors.Orientation.MINUS_ORIGIN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.Orientation.MINUS_SENSOR_ORIGIN">
+<span class="sig-name descname"><span class="pre">MINUS_SENSOR_ORIGIN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.MINUS_SENSOR_ORIGIN:</span> <span class="pre">12&gt;</span></em><a class="headerlink" href="#pycc.ccNormalVectors.Orientation.MINUS_SENSOR_ORIGIN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.Orientation.MINUS_X">
+<span class="sig-name descname"><span class="pre">MINUS_X</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.MINUS_X:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#pycc.ccNormalVectors.Orientation.MINUS_X" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.Orientation.MINUS_Y">
+<span class="sig-name descname"><span class="pre">MINUS_Y</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.MINUS_Y:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#pycc.ccNormalVectors.Orientation.MINUS_Y" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.Orientation.PLUS_BARYCENTER">
+<span class="sig-name descname"><span class="pre">PLUS_BARYCENTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.PLUS_BARYCENTER:</span> <span class="pre">6&gt;</span></em><a class="headerlink" href="#pycc.ccNormalVectors.Orientation.PLUS_BARYCENTER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.Orientation.PLUS_ORIGIN">
+<span class="sig-name descname"><span class="pre">PLUS_ORIGIN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.PLUS_ORIGIN:</span> <span class="pre">8&gt;</span></em><a class="headerlink" href="#pycc.ccNormalVectors.Orientation.PLUS_ORIGIN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.Orientation.PLUS_SENSOR_ORIGIN">
+<span class="sig-name descname"><span class="pre">PLUS_SENSOR_ORIGIN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.PLUS_SENSOR_ORIGIN:</span> <span class="pre">11&gt;</span></em><a class="headerlink" href="#pycc.ccNormalVectors.Orientation.PLUS_SENSOR_ORIGIN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.Orientation.PLUS_X">
+<span class="sig-name descname"><span class="pre">PLUS_X</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.PLUS_X:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#pycc.ccNormalVectors.Orientation.PLUS_X" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.Orientation.PLUS_Y">
+<span class="sig-name descname"><span class="pre">PLUS_Y</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.PLUS_Y:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#pycc.ccNormalVectors.Orientation.PLUS_Y" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.Orientation.PLUS_Z">
+<span class="sig-name descname"><span class="pre">PLUS_Z</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.PLUS_Z:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#pycc.ccNormalVectors.Orientation.PLUS_Z" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.Orientation.PREVIOUS">
+<span class="sig-name descname"><span class="pre">PREVIOUS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.PREVIOUS:</span> <span class="pre">10&gt;</span></em><a class="headerlink" href="#pycc.ccNormalVectors.Orientation.PREVIOUS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.Orientation.UNDEFINED">
+<span class="sig-name descname"><span class="pre">UNDEFINED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.UNDEFINED:</span> <span class="pre">255&gt;</span></em><a class="headerlink" href="#pycc.ccNormalVectors.Orientation.UNDEFINED" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.Orientation.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pycc.ccNormalVectors.Orientation.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.Orientation.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#pycc.ccNormalVectors.Orientation.value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.GetNormIndex">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetNormIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#pycc.ccNormalVectors.GetNormIndex" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.GetNormal">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetNormal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normIndex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></span><a class="headerlink" href="#pycc.ccNormalVectors.GetNormal" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.GetNumberOfVectors">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetNumberOfVectors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#pycc.ccNormalVectors.GetNumberOfVectors" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.GetUniqueInstance">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetUniqueInstance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycc.ccNormalVectors" title="pycc.ccNormalVectors"><span class="pre">pycc.ccNormalVectors</span></a></span></span><a class="headerlink" href="#pycc.ccNormalVectors.GetUniqueInstance" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.ReleaseUniqueInstance">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ReleaseUniqueInstance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccNormalVectors.ReleaseUniqueInstance" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccNormalVectors.getNormal">
+<span class="sig-name descname"><span class="pre">getNormal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccNormalVectors" title="pycc.ccNormalVectors"><span class="pre">pycc.ccNormalVectors</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">normIndex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></span><a class="headerlink" href="#pycc.ccNormalVectors.getNormal" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
