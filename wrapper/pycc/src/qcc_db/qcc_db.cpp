@@ -48,6 +48,7 @@ void define_ccCone(py::module &);
 void define_ccCylinder(py::module &);
 void define_ccProgressDialog(py::module &);
 void define_ccLog(py::module &);
+void define_ccNormalVectors(py::module &);
 void define_ccInteractor(py::module &);
 void define_cc2DLabel(py::module &);
 void define_ccViewPortParameters(py::module &);
@@ -133,6 +134,7 @@ void define_qcc_db(py::module &m)
     define_ccGenericPointCloud(m);
     define_ccPointCloud(m);
     define_ccPolyline(m);
+    define_ccNormalVectors(m);
 
     define_ccLog(m);
     define_ccProgressDialog(m);
