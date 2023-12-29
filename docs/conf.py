@@ -32,6 +32,7 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.autosummary',
     'sphinx.ext.napoleon',
+    'sphinx.ext.doctest',
     'sphinx.ext.inheritance_diagram',
     'breathe'
 ]
