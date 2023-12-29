@@ -10,3 +10,4 @@ compile_commands.json
 wrapper/pycc/pycc.egg-info
 
 venv
+docs/_doctest

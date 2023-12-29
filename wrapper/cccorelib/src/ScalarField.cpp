@@ -77,8 +77,8 @@ void define_ScalarField(py::module &cccorelib)
     >>> import cccorelib
     >>> sf = cccorelib.ScalarField("name")
     >>> sf.setName("other_name")
-    >>> sf.getName()
-    other_name
+    >>> sf.getName() == "other_name"
+    True
 )doc")
         .def("getName", &CCCoreLib::ScalarField::getName, R"doc(
     Returns the name of the scalar field
@@ -86,7 +86,7 @@ void define_ScalarField(py::module &cccorelib)
     >>> import cccorelib
     >>> sf = cccorelib.ScalarField("name")
     >>> sf.getName()
-    name
+    'name'
  )doc")
         .def("size",
              &CCCoreLib::ScalarField::size,

@@ -117,6 +117,12 @@ jobs:
           export LD_LIBRARY_PATH=/usr/local/lib
           xvfb-run python3 -m pytest plugins/private/CloudCompare-PythonPlugin/tests --cloudcompare_exe /usr/local/bin/CloudCompare --verbose
 
+      - name: Run doctests
+        run: |
+          export LD_LIBRARY_PATH=/usr/local/lib
+          cd plugins/private/CloudCompare-PythonPlugin/docs
+          xvfb-run /usr/local/bin/CloudCompare -SILENT -PYTHON_SCRIPT build_doc.py -b doctest . _doctests
+
       - name: Build docs
         run: |
           export LD_LIBRARY_PATH=/usr/local/lib

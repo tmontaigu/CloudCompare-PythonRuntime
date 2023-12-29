@@ -41,9 +41,9 @@ void define_ccBox(py::module &m)
     Example
     -------
 
-    .. code:: Python
-
-        box = pycc.ccBox(cccorelib.CCVector3(5.0, 10.0, 4.0))
+        >>> import pycc
+        >>> import cccorelib
+        >>> box = pycc.ccBox(cccorelib.CCVector3(5.0, 10.0, 4.0))
     )doc")
         .def(py::init<const CCVector3 &, const ccGLMatrix *, QString>(),
              "dims"_a,
