@@ -122,19 +122,58 @@
 <p class="admonition-title">See also</p>
 <p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccObject</span></code></p>
 </div>
+digraph inheritance25cd227110 {
+bgcolor=transparent;
+rankdir=LR;
+size=&quot;8.0, 12.0&quot;;
+  &quot;pybind11_builtins.pybind11_object&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;];
+  &quot;pycc.ccObject&quot; [URL=&quot;#pycc.ccObject&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;The base class of all CloudCompare's data types&quot;];
+  &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;pycc.ccObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+}
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccObject">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccObject</span></span><a class="headerlink" href="#pycc.ccObject" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_object</span></code></p>
+<p>The base class of all CloudCompare’s data types</p>
+<ul class="simple">
+<li><p>ccOjbects have a name that can be changed</p></li>
+<li><p>an ‘enabled’ state to control if the object should be displayed</p></li>
+<li><p>a metadata system</p></li>
+</ul>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pycc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pc</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccPointCloud</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pc</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s2">&quot;Green Yoshi&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pc</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Green Yoshi&quot;</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pc</span><span class="o">.</span><span class="n">hasMetaData</span><span class="p">(</span><span class="s2">&quot;Favorite Food&quot;</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pc</span><span class="o">.</span><span class="n">getMetaData</span><span class="p">(</span><span class="s2">&quot;Favorite Food&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pc</span><span class="o">.</span><span class="n">setMetaData</span><span class="p">(</span><span class="s2">&quot;Favorite Food&quot;</span><span class="p">,</span> <span class="s2">&quot;Apples&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pc</span><span class="o">.</span><span class="n">hasMetaData</span><span class="p">(</span><span class="s2">&quot;Favorite Food&quot;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pc</span><span class="o">.</span><span class="n">getMetaData</span><span class="p">(</span><span class="s2">&quot;Favorite Food&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;Apples&quot;</span>
+<span class="go">True</span>
+</pre></div>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccObject.getMetaData">
 <span class="sig-name descname"><span class="pre">getMetaData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccObject" title="pycc.ccObject"><span class="pre">pycc.ccObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QVariant</span></span></span><a class="headerlink" href="#pycc.ccObject.getMetaData" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Returns the metadata associated to a key.</p>
+<p>Returns None if no metadata for the key is found</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>str</em>) – The key / name of the metadata to retrieve</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccObject.getName">
 <span class="sig-name descname"><span class="pre">getName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccObject" title="pycc.ccObject"><span class="pre">pycc.ccObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QString</span></span></span><a class="headerlink" href="#pycc.ccObject.getName" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Returns the name of the object</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccObject.getUniqueID">
@@ -144,7 +183,13 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccObject.hasMetaData">
 <span class="sig-name descname"><span class="pre">hasMetaData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccObject" title="pycc.ccObject"><span class="pre">pycc.ccObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccObject.hasMetaData" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Returns True if the object has some metadata associated to the key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>str</em>) – The key / name of the metadata to remove</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccObject.isCustom">
@@ -154,7 +199,8 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccObject.isEnabled">
 <span class="sig-name descname"><span class="pre">isEnabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccObject" title="pycc.ccObject"><span class="pre">pycc.ccObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccObject.isEnabled" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Returns whether the object is enabled</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccObject.isHierarchy">
@@ -169,17 +215,30 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccObject.isLocked">
 <span class="sig-name descname"><span class="pre">isLocked</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccObject" title="pycc.ccObject"><span class="pre">pycc.ccObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccObject.isLocked" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Returns whether the object is locked</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccObject.removeMetaData">
 <span class="sig-name descname"><span class="pre">removeMetaData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccObject" title="pycc.ccObject"><span class="pre">pycc.ccObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccObject.removeMetaData" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Removes the metadata associated to a key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>str</em>) – The key / name of the metadata to remove</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccObject.setEnabled">
-<span class="sig-name descname"><span class="pre">setEnabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccObject" title="pycc.ccObject"><span class="pre">pycc.ccObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccObject.setEnabled" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">setEnabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccObject" title="pycc.ccObject"><span class="pre">pycc.ccObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccObject.setEnabled" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the “enabled” state</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> (<em>bool</em>) – The new “enabled” state</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccObject.setLocked">
@@ -189,12 +248,27 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccObject.setMetaData">
 <span class="sig-name descname"><span class="pre">setMetaData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccObject" title="pycc.ccObject"><span class="pre">pycc.ccObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QVariant</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccObject.setMetaData" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Sets the metadata associated to a key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>str</em>) – The key / name of the metadata to remove</p></li>
+<li><p><strong>data</strong> (<em>str</em><em> | </em><em>int</em>) – The value</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccObject.setName">
-<span class="sig-name descname"><span class="pre">setName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccObject" title="pycc.ccObject"><span class="pre">pycc.ccObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccObject.setName" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">setName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccObject" title="pycc.ccObject"><span class="pre">pycc.ccObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccObject.setName" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the name of the object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The new name</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccObject.toggleActivation">
@@ -210,10 +284,37 @@
 <p class="admonition-title">See also</p>
 <p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccHObject</span></code></p>
 </div>
+digraph inheritance47e1e3bfcc {
+bgcolor=transparent;
+rankdir=LR;
+size=&quot;8.0, 12.0&quot;;
+  &quot;pybind11_builtins.pybind11_object&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;];
+  &quot;pycc.ccDrawableObject&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base class of all objects that CloudCompare is able to render/draw/display on the screen&quot;];
+  &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;pycc.ccDrawableObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;pycc.ccHObject&quot; [URL=&quot;#pycc.ccHObject&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;CloudCompare's hierarchical object&quot;];
+  &quot;pycc.ccObject&quot; -&gt; &quot;pycc.ccHObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;pycc.ccDrawableObject&quot; -&gt; &quot;pycc.ccHObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;pycc.ccObject&quot; [URL=&quot;#pycc.ccObject&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;The base class of all CloudCompare's data types&quot;];
+  &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;pycc.ccObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+}
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccHObject">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccHObject</span></span><a class="headerlink" href="#pycc.ccHObject" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pycc.ccObject" title="pycc.ccObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccObject</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ccDrawableObject</span></code></p>
+<p>CloudCompare’s hierarchical object</p>
+<p>Hierarchical objects can have children forming a hierarchy tree</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pycc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccHObject</span><span class="p">(</span><span class="s2">&quot;My Project Hierarchy&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This new hierarchy has no parents, nor children:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">h</span><span class="o">.</span><span class="n">getParent</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">h</span><span class="o">.</span><span class="n">getChildrenNumber</span><span class="p">(),</span> <span class="n">h</span><span class="o">.</span><span class="n">getChildCountRecursive</span><span class="p">()</span>
+<span class="go">(0, 0)</span>
+</pre></div>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccHObject.addChild">
 <span class="sig-name descname"><span class="pre">addChild</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">pycc.ccHObject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">child:</span> <span class="pre">pycc.ccHObject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dependencyFlags:</span> <span class="pre">pycc.DEPENDENCY_FLAGS</span> <span class="pre">=</span> <span class="pre">&lt;DEPENDENCY_FLAGS.DP_PARENT_OF_OTHER:</span> <span class="pre">24&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">insertIndex:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">-1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccHObject.addChild" title="Permalink to this definition"></a></dt>
@@ -252,7 +353,8 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccHObject.getChildCountRecursive">
 <span class="sig-name descname"><span class="pre">getChildCountRecursive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">pycc.ccHObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#pycc.ccHObject.getChildCountRecursive" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Returns the recursive number of children</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccHObject.getChildIndex">
@@ -262,7 +364,8 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccHObject.getChildrenNumber">
 <span class="sig-name descname"><span class="pre">getChildrenNumber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">pycc.ccHObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#pycc.ccHObject.getChildrenNumber" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Returns the number of ‘direct’ children this object has</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccHObject.getDisplayBB_recursive">
@@ -292,7 +395,9 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccHObject.getParent">
 <span class="sig-name descname"><span class="pre">getParent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">pycc.ccHObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">pycc.ccHObject</span></a></span></span><a class="headerlink" href="#pycc.ccHObject.getParent" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Returns the parent of this object</p>
+<p>Returns None if the object has no parent</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccHObject.isAncestorOf">
@@ -331,6 +436,30 @@
 <p class="admonition-title">See also</p>
 <p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccGenericPointCloud</span></code></p>
 </div>
+digraph inheritance9d8affe181 {
+bgcolor=transparent;
+rankdir=LR;
+size=&quot;8.0, 12.0&quot;;
+  &quot;cccorelib.GenericCloud&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.GenericCloud&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
+  &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;cccorelib.GenericCloud&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;cccorelib.GenericIndexedCloud&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.GenericIndexedCloud&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
+  &quot;cccorelib.GenericCloud&quot; -&gt; &quot;cccorelib.GenericIndexedCloud&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;cccorelib.GenericIndexedCloudPersist&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.GenericIndexedCloudPersist&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
+  &quot;cccorelib.GenericIndexedCloud&quot; -&gt; &quot;cccorelib.GenericIndexedCloudPersist&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;pybind11_builtins.pybind11_object&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;];
+  &quot;pycc.ccDrawableObject&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base class of all objects that CloudCompare is able to render/draw/display on the screen&quot;];
+  &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;pycc.ccDrawableObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;pycc.ccGenericPointCloud&quot; [URL=&quot;#pycc.ccGenericPointCloud&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
+  &quot;pycc.ccShiftedObject&quot; -&gt; &quot;pycc.ccGenericPointCloud&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;cccorelib.GenericIndexedCloudPersist&quot; -&gt; &quot;pycc.ccGenericPointCloud&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;pycc.ccHObject&quot; [URL=&quot;#pycc.ccHObject&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;CloudCompare's hierarchical object&quot;];
+  &quot;pycc.ccObject&quot; -&gt; &quot;pycc.ccHObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;pycc.ccDrawableObject&quot; -&gt; &quot;pycc.ccHObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;pycc.ccObject&quot; [URL=&quot;#pycc.ccObject&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;The base class of all CloudCompare's data types&quot;];
+  &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;pycc.ccObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;pycc.ccShiftedObject&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;];
+  &quot;pycc.ccHObject&quot; -&gt; &quot;pycc.ccShiftedObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+}
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccGenericPointCloud">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccGenericPointCloud</span></span><a class="headerlink" href="#pycc.ccGenericPointCloud" title="Permalink to this definition"></a></dt>
@@ -354,6 +483,12 @@
 <p class="admonition-title">See also</p>
 <p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccPointCloud</span></code></p>
 </div>
+digraph inheritancea1a21e48ac {
+bgcolor=transparent;
+rankdir=LR;
+size=&quot;8.0, 12.0&quot;;
+  &quot;pycc.ccPointCloud&quot; [URL=&quot;#pycc.ccPointCloud&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;The main class to represent point clouds in CloudCompare.&quot;];
+}
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccPointCloud">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccPointCloud</span></span><a class="headerlink" href="#pycc.ccPointCloud" title="Permalink to this definition"></a></dt>
@@ -537,6 +672,34 @@ one is already selected by default.</p></li>
 <p class="admonition-title">See also</p>
 <p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccPolyline</span></code></p>
 </div>
+digraph inheritance54ed96c92c {
+bgcolor=transparent;
+rankdir=LR;
+size=&quot;8.0, 12.0&quot;;
+  &quot;cccorelib.GenericCloud&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.GenericCloud&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
+  &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;cccorelib.GenericCloud&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;cccorelib.GenericIndexedCloud&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.GenericIndexedCloud&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
+  &quot;cccorelib.GenericCloud&quot; -&gt; &quot;cccorelib.GenericIndexedCloud&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;cccorelib.GenericIndexedCloudPersist&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.GenericIndexedCloudPersist&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
+  &quot;cccorelib.GenericIndexedCloud&quot; -&gt; &quot;cccorelib.GenericIndexedCloudPersist&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;cccorelib.Polyline&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.Polyline&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
+  &quot;cccorelib.ReferenceCloud&quot; -&gt; &quot;cccorelib.Polyline&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;cccorelib.ReferenceCloud&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.ReferenceCloud&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
+  &quot;cccorelib.GenericIndexedCloudPersist&quot; -&gt; &quot;cccorelib.ReferenceCloud&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;pybind11_builtins.pybind11_object&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;];
+  &quot;pycc.ccDrawableObject&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base class of all objects that CloudCompare is able to render/draw/display on the screen&quot;];
+  &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;pycc.ccDrawableObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;pycc.ccHObject&quot; [URL=&quot;#pycc.ccHObject&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;CloudCompare's hierarchical object&quot;];
+  &quot;pycc.ccObject&quot; -&gt; &quot;pycc.ccHObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;pycc.ccDrawableObject&quot; -&gt; &quot;pycc.ccHObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;pycc.ccObject&quot; [URL=&quot;#pycc.ccObject&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;The base class of all CloudCompare's data types&quot;];
+  &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;pycc.ccObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;pycc.ccPolyline&quot; [URL=&quot;#pycc.ccPolyline&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
+  &quot;cccorelib.Polyline&quot; -&gt; &quot;pycc.ccPolyline&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;pycc.ccShiftedObject&quot; -&gt; &quot;pycc.ccPolyline&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;pycc.ccShiftedObject&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;];
+  &quot;pycc.ccHObject&quot; -&gt; &quot;pycc.ccShiftedObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+}
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccPolyline">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccPolyline</span></span><a class="headerlink" href="#pycc.ccPolyline" title="Permalink to this definition"></a></dt>
@@ -646,17 +809,17 @@ size=&quot;8.0, 12.0&quot;;
   &quot;cccorelib.GenericMesh&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.GenericMesh&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
   &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;cccorelib.GenericMesh&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
   &quot;pybind11_builtins.pybind11_object&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;];
-  &quot;pycc.ccDrawableObject&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;];
+  &quot;pycc.ccDrawableObject&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base class of all objects that CloudCompare is able to render/draw/display on the screen&quot;];
   &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;pycc.ccDrawableObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
   &quot;pycc.ccGenericMesh&quot; [URL=&quot;#pycc.ccGenericMesh&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
   &quot;cccorelib.GenericIndexedMesh&quot; -&gt; &quot;pycc.ccGenericMesh&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
   &quot;pycc.ccHObject&quot; -&gt; &quot;pycc.ccGenericMesh&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccHObject&quot; [URL=&quot;#pycc.ccHObject&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
+  &quot;pycc.ccHObject&quot; [URL=&quot;#pycc.ccHObject&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;CloudCompare's hierarchical object&quot;];
   &quot;pycc.ccObject&quot; -&gt; &quot;pycc.ccHObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
   &quot;pycc.ccDrawableObject&quot; -&gt; &quot;pycc.ccHObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
   &quot;pycc.ccMesh&quot; [URL=&quot;#pycc.ccMesh&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
   &quot;pycc.ccGenericMesh&quot; -&gt; &quot;pycc.ccMesh&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccObject&quot; [URL=&quot;#pycc.ccObject&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
+  &quot;pycc.ccObject&quot; [URL=&quot;#pycc.ccObject&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;The base class of all CloudCompare's data types&quot;];
   &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;pycc.ccObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
   &quot;pycc.ccSubMesh&quot; [URL=&quot;#pycc.ccSubMesh&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
   &quot;pycc.ccGenericMesh&quot; -&gt; &quot;pycc.ccSubMesh&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];

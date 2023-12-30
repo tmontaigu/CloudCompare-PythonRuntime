@@ -1576,6 +1576,8 @@
 <dt class="sig sig-object py" id="pycc.ccLog">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccLog</span></span><a class="headerlink" href="#pycc.ccLog" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_object</span></code></p>
+<p>Class to log messages in CloudCompare’s console.</p>
+<p>Use one of the static method to log a message</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccLog.MessageLevelFlags">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MessageLevelFlags</span></span><a class="headerlink" href="#pycc.ccLog.MessageLevelFlags" title="Permalink to this definition"></a></dt>
@@ -1620,17 +1622,56 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccLog.Error">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccLog.Error" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Logs an error message</p>
+<p>This will also display a dialog</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> (<em>str</em>) – The message to log</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pycc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pycc</span><span class="o">.</span><span class="n">ccLog</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="s2">&quot;Oops something even worse happenned&quot;</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccLog.LogMessage">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LogMessage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccLog.LogMessage" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Logs a message with the given level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<em>str</em>) – The message to log</p></li>
+<li><p><strong>level</strong> (<a class="reference internal" href="#pycc.ccLog.MessageLevelFlags" title="pycc.ccLog.MessageLevelFlags"><em>pycc.ccLog.MessageLevelFlags</em></a>) – The severity level of the message</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pycc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pycc</span><span class="o">.</span><span class="n">ccLog</span><span class="o">.</span><span class="n">LogMessage</span><span class="p">(</span><span class="s2">&quot;Hello, world&quot;</span><span class="p">,</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccLog</span><span class="o">.</span><span class="n">MessageLevelFlags</span><span class="o">.</span><span class="n">LOG_STANDARD</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccLog.Print">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Print</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccLog.Print" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Logs a message with standard severity level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> (<em>str</em>) – The message to log</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pycc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pycc</span><span class="o">.</span><span class="n">ccLog</span><span class="o">.</span><span class="n">Print</span><span class="p">(</span><span class="s2">&quot;Hello, world&quot;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccLog.TheInstance">
@@ -1640,7 +1681,19 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccLog.Warning">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Warning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccLog.Warning" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Logs a warning message</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> (<em>str</em>) – The message to log</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pycc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pycc</span><span class="o">.</span><span class="n">ccLog</span><span class="o">.</span><span class="n">Warning</span><span class="p">(</span><span class="s2">&quot;Oops something bad happenned&quot;</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd></dl>
 
 </dd></dl>
 

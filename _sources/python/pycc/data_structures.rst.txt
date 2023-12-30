@@ -11,6 +11,8 @@ ________
 
     C++: :cpp:class:`ccObject`
 
+.. inheritance-diagram:: pycc.ccObject
+
 .. autoclass:: pycc.ccObject
     :members:
     :undoc-members:
@@ -21,6 +23,9 @@ _________
 .. seealso::
 
     C++: :cpp:class:`ccHObject`
+
+.. inheritance-diagram:: pycc.ccHObject
+
 
 .. autoclass:: pycc.ccHObject
     :members:
@@ -40,6 +45,8 @@ ___________________
 
     C++: :cpp:class:`ccGenericPointCloud`
 
+.. inheritance-diagram:: pycc.ccGenericPointCloud
+
 .. autoclass:: pycc.ccGenericPointCloud
     :members:
     :undoc-members:
@@ -50,6 +57,8 @@ _____________
 .. seealso::
 
     C++: :cpp:class:`ccPointCloud`
+
+.. inheritance-diagram:: pycc.ccPointCloud
 
 .. autoclass:: pycc.ccPointCloud
     :members:
@@ -62,6 +71,8 @@ __________
 .. seealso::
 
     C++: :cpp:class:`ccPolyline`
+
+.. inheritance-diagram:: pycc.ccPolyline
 
 .. autoclass:: pycc.ccPolyline
     :members:
