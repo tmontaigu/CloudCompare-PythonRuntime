@@ -1,0 +1,29 @@
+FROM ubuntu:23.10
+
+
+RUN apt update
+RUN apt install -qy cmake ninja-build build-essential xvfb doxygen git \
+    libqt5svg5-dev libqt5opengl5-dev qtbase5-dev qttools5-dev qttools5-dev-tools \
+    pybind11-dev
+RUN apt install -qy xvfb
+
+RUN git clone --recursive https://github.com/CloudCompare/CloudCompare
+COPY . /CloudCompare/plugins/private/CloudCompare-PythonPlugin
+
+RUN mkdir /CloudCompare/cmake-build-release
+RUN cmake -S /CloudCompare \
+          -B CloudCompare/cmake-build-release \
+          -GNinja  \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DPLUGIN_PYTHON=ON
+
+
+RUN cmake --build /CloudCompare/cmake-build-release
+RUN cmake --install /CloudCompare/cmake-build-release
+
+RUN rm -rf /CloudCompare
+
+
+# needs to be run with the --init arg:
+# docker run --init image-name arg1 arg2 ...
+ENTRYPOINT ["xvfb-run", "CloudCompare", "-SILENT"]
