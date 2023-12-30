@@ -53,10 +53,18 @@ void define_ccPlane(py::module &m)
 
     Example
     -------
-
-    .. code:: Python
-
-        cone = pycc.ccPLane(10.0, 5.0)
+    >>> import pycc
+    >>> plane = pycc.ccPlane(10.0, 5.0)
+    >>> plane.getXWidth()
+    10.0
+    >>> plane.getYWidth()
+    5.0
+    >>> plane.setXWidth(15.0)
+    >>> plane.setYWidth(12.5)
+    >>> plane.getXWidth()
+    15.0
+    >>> plane.getYWidth()
+    12.5
     )doc")
         .def(py::init<PointCoordinateType, PointCoordinateType, const ccGLMatrix *, QString>(),
              "xWidth"_a,

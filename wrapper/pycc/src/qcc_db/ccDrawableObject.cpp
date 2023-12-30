@@ -27,7 +27,9 @@ using namespace pybind11::literals;
 
 void define_ccDrawableObject(py::module &m)
 {
-    py::class_<ccDrawableObject>(m, "ccDrawableObject")
+    py::class_<ccDrawableObject>(m, "ccDrawableObject", R"pbdoc(
+    Base class of all objects that CloudCompare is able to render/draw/display on the screen
+)pbdoc")
         .def("draw", &ccDrawableObject::draw, "context"_a)
         .def("isVisible", &ccDrawableObject::isVisible)
         .def("setVisible", &ccDrawableObject::setVisible, "state"_a)

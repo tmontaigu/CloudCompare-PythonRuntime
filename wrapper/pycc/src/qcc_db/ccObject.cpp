@@ -34,7 +34,7 @@ using namespace pybind11::literals;
 void removePatient(py::object &nurse, py::object &patient)
 {
     py::detail::internals &internals = py::detail::get_internals();
-    auto instance = reinterpret_cast<py::detail::instance *>(nurse.ptr());
+    const auto instance = reinterpret_cast<py::detail::instance *>(nurse.ptr());
     if (!instance->has_patients)
     {
         return;
@@ -84,27 +84,105 @@ template <typename T> py::object castToFakeOwnedObject(T &&obj)
 
 void define_ccObject(py::module &m)
 {
-    py::class_<ccObject>(m, "ccObject")
-        .def("getName", &ccObject::getName)
-        .def("setName", &ccObject::setName)
+    py::class_<ccObject>(m, "ccObject", R"pbdoc(
+    The base class of all CloudCompare's data types
+
+    - ccOjbects have a name that can be changed
+    - an 'enabled' state to control if the object should be displayed
+    - a metadata system
+
+    Example
+    -------
+    >>> import pycc
+    >>> pc = pycc.ccPointCloud()
+    >>> pc.setName("Green Yoshi")
+    >>> pc.getName() == "Green Yoshi"
+    True
+    >>> pc.hasMetaData("Favorite Food")
+    False
+    >>> pc.getMetaData("Favorite Food") is None
+    True
+    >>> pc.setMetaData("Favorite Food", "Apples")
+    >>> pc.hasMetaData("Favorite Food")
+    True
+    >>> pc.getMetaData("Favorite Food") == "Apples"
+    True
+
+
+)pbdoc")
+        .def("getName", &ccObject::getName, R"pbdoc(
+    Returns the name of the object
+)pbdoc")
+        .def("setName", &ccObject::setName, "name"_a, R"pbdoc(
+    Sets the name of the object
+
+    Parameters
+    ----------
+    name: str
+        The new name
+)pbdoc")
         //			.def("getClassID", &ccObject::getClassID)
         .def("getUniqueID", &ccObject::getUniqueID)
-        .def("isEnabled", &ccObject::isEnabled)
-        .def("setEnabled", &ccObject::setEnabled)
+        .def("isEnabled", &ccObject::isEnabled, R"pbdoc(
+    Returns whether the object is enabled
+)pbdoc")
+        .def("setEnabled", &ccObject::setEnabled, "state"_a, R"pbdoc(
+    Sets the "enabled" state
+
+    Parameters
+    ----------
+    state: bool
+        The new "enabled" state
+)pbdoc")
         .def("toggleActivation", &ccObject::toggleActivation)
-        .def("isLocked", &ccObject::isLocked)
+        .def("isLocked", &ccObject::isLocked, R"pbdoc(
+    Returns whether the object is locked
+)pbdoc")
         .def("setLocked", &ccObject::setLocked)
         .def("isLeaf", &ccObject::isLeaf)
         .def("isCustom", &ccObject::isCustom)
         .def("isHierarchy", &ccObject::isHierarchy)
-        .def("getMetaData", &ccObject::getMetaData, "key"_a)
-        .def("removeMetaData", &ccObject::removeMetaData, "key"_a)
+        .def("getMetaData", &ccObject::getMetaData, "key"_a, R"pbdoc(
+    Returns the metadata associated to a key.
+
+    Returns None if no metadata for the key is found
+
+    Parameters
+    ----------
+    key: str
+        The key / name of the metadata to retrieve
+)pbdoc")
+        .def("removeMetaData", &ccObject::removeMetaData, "key"_a, R"pbdoc(
+    Removes the metadata associated to a key.
+
+    Parameters
+    ----------
+    key: str
+        The key / name of the metadata to remove
+)pbdoc")
         .def("setMetaData",
              static_cast<void (ccObject::*)(const QString &, const QVariant &)>(
                  &ccObject::setMetaData),
              "key"_a,
-             "data"_a)
-        .def("hasMetaData", &ccObject::hasMetaData, "key"_a);
+             "data"_a,
+             R"pbdoc(
+    Sets the metadata associated to a key.
+
+    Parameters
+    ----------
+    key: str
+        The key / name of the metadata to remove
+    data: str | int
+        The value
+)pbdoc")
+        .def("hasMetaData", &ccObject::hasMetaData, "key"_a, R"pbdoc(
+    Returns True if the object has some metadata associated to the key
+
+    Parameters
+    ----------
+    key: str
+        The key / name of the metadata to remove
+)pbdoc");
 
     py::enum_<ccHObject::DEPENDENCY_FLAGS>(m, "DEPENDENCY_FLAGS")
         .value("DP_NONE", ccHObject::DEPENDENCY_FLAGS::DP_NONE)
@@ -114,19 +192,46 @@ void define_ccObject(py::module &m)
         .value("DP_PARENT_OF_OTHER", ccHObject::DEPENDENCY_FLAGS::DP_PARENT_OF_OTHER)
         .export_values();
 
-    py::class_<ccHObject, ccObject, ccDrawableObject>(m, "ccHObject")
+    py::class_<ccHObject, ccObject, ccDrawableObject>(m, "ccHObject", R"pbdoc(
+    CloudCompare's hierarchical object
+
+    Hierarchical objects can have children forming a hierarchy tree
+
+    Example
+    -------
+    >>> import pycc
+    >>> h = pycc.ccHObject("My Project Hierarchy")
+
+    This new hierarchy has no parents, nor children:
+
+    >>> h.getParent() is None
+    True
+    >>> h.getChildrenNumber(), h.getChildCountRecursive()
+    (0, 0)
+)pbdoc")
         .def(
             py::init<QString, unsigned>(),
             "name"_a = QString(),
             "uniqueID"_a = []() { return ccUniqueIDGenerator::InvalidUniqueID; }())
         .def("isGroup", &ccHObject::isGroup)
-        .def("getParent", &ccHObject::getParent, py::return_value_policy::reference_internal)
+        .def("getParent",
+             &ccHObject::getParent,
+             py::return_value_policy::reference_internal,
+             R"pbdoc(
+    Returns the parent of this object
+
+    Returns None if the object has no parent
+)pbdoc")
         // Children management
-        .def("getChildrenNumber", &ccHObject::getChildrenNumber)
-        .def("getChildCountRecursive", &ccHObject::getChildCountRecursive)
+        .def("getChildrenNumber", &ccHObject::getChildrenNumber, R"pbdoc(
+    Returns the number of 'direct' children this object has
+)pbdoc")
+        .def("getChildCountRecursive", &ccHObject::getChildCountRecursive, R"pbdoc(
+    Returns the recursive number of children
+)pbdoc")
         .def(
             "getChild",
-            [](py::object &self, unsigned int index)
+            [](py::object &self, const unsigned int index)
             {
                 auto *child = self.cast<ccHObject *>()->getChild(index);
                 return castToFakeOwnedObject(child);

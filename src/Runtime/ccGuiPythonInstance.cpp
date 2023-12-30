@@ -76,6 +76,8 @@ static void ThrowForFileError(CC_FILE_ERROR error)
         throw std::runtime_error("Third party lib failure");
     case CC_FERR_THIRD_PARTY_LIB_EXCEPTION:
         throw std::runtime_error("Third party lib exception");
+    case CC_FERR_INTERNAL:
+        throw std::runtime_error("Internal error");
     case CC_FERR_NOT_IMPLEMENTED:
         throw std::runtime_error("Not implemented");
     }
