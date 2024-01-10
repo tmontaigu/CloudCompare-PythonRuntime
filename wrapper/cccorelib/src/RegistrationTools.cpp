@@ -45,6 +45,8 @@ void define_RegistrationTools(py::module &cccorelib)
                                  &CCCoreLib::RegistrationTools::FilterTransformation,
                                  "inTrans"_a,
                                  "transformationFilters"_a,
+                                 "toBeAlignedGravityCenter"_a,
+                                 "referenceGravityCenter"_a,
                                  "outTrans"_a);
 
     // HornRegistrationTools
