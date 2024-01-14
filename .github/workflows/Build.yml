@@ -20,10 +20,10 @@ jobs:
           ref: d17314ca8538e187bf12d4ebe97525d61886b735
           submodules: recursive
 
-      - name: Clone PythonPlugin
+      - name: Clone PythonRuntime
         uses: actions/checkout@v3
         with:
-          path: 'plugins/private/CloudCompare-PythonPlugin'
+          path: 'plugins/private/CloudCompare-PythonRuntime'
 
       - name: Install Miniconda
         uses: conda-incubator/setup-miniconda@v2
@@ -82,17 +82,17 @@ jobs:
           ref: d17314ca8538e187bf12d4ebe97525d61886b735
           submodules: recursive
 
-      - name: Clone PythonPlugin
+      - name: Clone PythonRuntime
         uses: actions/checkout@v3
         with:
-          path: 'plugins/private/CloudCompare-PythonPlugin'
+          path: 'plugins/private/CloudCompare-PythonRuntime'
 
       - name: Install Dependencies
         run: |
           sudo apt-get update -qq
           sudo apt install -y build-essential cmake ninja-build xvfb doxygen
           sudo apt install -y libqt5svg5-dev libqt5opengl5-dev qtbase5-dev qttools5-dev qttools5-dev-tools pybind11-dev
-          python3 -m pip install -r plugins/private/CloudCompare-PythonPlugin/requirements-dev.txt
+          python3 -m pip install -r plugins/private/CloudCompare-PythonRuntime/requirements-dev.txt
 
       - name: Configure CMake
         shell: pwsh
@@ -115,18 +115,18 @@ jobs:
       - name: Run Tests
         run: |
           export LD_LIBRARY_PATH=/usr/local/lib
-          xvfb-run python3 -m pytest plugins/private/CloudCompare-PythonPlugin/tests --cloudcompare_exe /usr/local/bin/CloudCompare --verbose
+          xvfb-run python3 -m pytest plugins/private/CloudCompare-PythonRuntime/tests --cloudcompare_exe /usr/local/bin/CloudCompare --verbose
 
       - name: Run doctests
         run: |
           export LD_LIBRARY_PATH=/usr/local/lib
-          cd plugins/private/CloudCompare-PythonPlugin/docs
+          cd plugins/private/CloudCompare-PythonRuntime/docs
           xvfb-run /usr/local/bin/CloudCompare -SILENT -PYTHON_SCRIPT build_doc.py -b doctest . _doctests
 
       - name: Build docs
         run: |
           export LD_LIBRARY_PATH=/usr/local/lib
-          cd plugins/private/CloudCompare-PythonPlugin/docs
+          cd plugins/private/CloudCompare-PythonRuntime/docs
           xvfb-run /usr/local/bin/CloudCompare -SILENT -PYTHON_SCRIPT build_doc.py -b html . _build
 
       - name: Deploy Documentation
@@ -134,7 +134,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: gh-pages
-          folder: plugins/private/CloudCompare-PythonPlugin/docs/_build
+          folder: plugins/private/CloudCompare-PythonRuntime/docs/_build
 
 
   MacOs-Build:
@@ -149,10 +149,10 @@ jobs:
           ref: d17314ca8538e187bf12d4ebe97525d61886b735
           submodules: recursive
 
-      - name: Clone PythonPlugin
+      - name: Clone PythonRuntime
         uses: actions/checkout@v3
         with:
-          path: 'plugins/private/CloudCompare-PythonPlugin'
+          path: 'plugins/private/CloudCompare-PythonRuntime'
 
       - name: Install Dependencies
         run: |

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>439</width>
-    <height>216</height>
+    <height>400</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,9 +25,7 @@
      <item>
       <widget class="QLabel" name="mainLabel">
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span
-         style=&quot; font-size:16pt; font-weight:600;&quot;&gt;Python Plugin&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-        </string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;Python Runtime&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>
@@ -114,7 +112,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../CloudCompare-PythonPlugin.qrc"/>
+  <include location="../../CloudCompare-PythonRuntime.qrc"/>
  </resources>
  <connections/>
 </ui>

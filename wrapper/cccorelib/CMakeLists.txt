@@ -5,7 +5,7 @@ include("${CMAKE_CURRENT_LIST_DIR}/../../cmake/Helpers.cmake")
 include("${CMAKE_CURRENT_LIST_DIR}/../../cmake/PythonEnvHelper.cmake")
 
 # MASTER_PROJECT means that this CMakeLists is the top level CMakeLists which in
-# our case means that this project is not built as a part of the PythonPlugin
+# our case means that this project is not built as a part of the PythonRuntime
 # but as a standalone wheel
 if(CMAKE_PROJECT_NAME STREQUAL pycccorelib)
   set(CCCORELIB_PYTHON_IS_MASTER_PROJECT ON)

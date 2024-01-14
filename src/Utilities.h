@@ -1,6 +1,6 @@
 // ##########################################################################
 // #                                                                        #
-// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                CLOUDCOMPARE PLUGIN: PythonRuntime                       #
 // #                                                                        #
 // #  This program is free software; you can redistribute it and/or modify  #
 // #  it under the terms of the GNU General Public License as published by  #
@@ -91,7 +91,7 @@ template <enum ccLog::MessageLevelFlags level> class PluginLogger : public ccLog
   public:
     PluginLogger() : ccLogger<level>()
     {
-        this->m_message += "[PythonPlugin] ";
+        this->m_message += "[PythonRuntime] ";
     }
 
     //    friend PluginLogger& endl(PluginLogger<level>& logger) {
@@ -125,17 +125,17 @@ inline void LogPythonPath()
         char *cPythonPath = Py_EncodeLocale(pythonPath, &errPos);
         if (cPythonPath)
         {
-            ccLog::Print("[PythonPlugin] PythonPath is set to: %s", cPythonPath);
+            ccLog::Print("[PythonRuntime] PythonPath is set to: %s", cPythonPath);
             PyMem_Free(cPythonPath);
         }
         else
         {
-            ccLog::Print("[PythonPlugin] Failed to convert the PythonPath");
+            ccLog::Print("[PythonRuntime] Failed to convert the PythonPath");
         }
     }
     else
     {
-        ccLog::Print("[PythonPlugin] PythonPath is not set");
+        ccLog::Print("[PythonRuntime] PythonPath is not set");
     }
 }
 
@@ -149,17 +149,17 @@ inline void LogPythonHome()
         char *cPythonHome = Py_EncodeLocale(pythonHome, &errPos);
         if (cPythonHome)
         {
-            ccLog::Print("[PythonPlugin] PythonHome is set to: %s", cPythonHome);
+            ccLog::Print("[PythonRuntime] PythonHome is set to: %s", cPythonHome);
             PyMem_Free(cPythonHome);
         }
         else
         {
-            ccLog::Print("[PythonPlugin]Failed to convert the PythonHome path");
+            ccLog::Print("[PythonRuntime]Failed to convert the PythonHome path");
         }
     }
     else
     {
-        ccLog::Print("[PythonPlugin] PythonHome is not set");
+        ccLog::Print("[PythonRuntime] PythonHome is not set");
     }
 }
 

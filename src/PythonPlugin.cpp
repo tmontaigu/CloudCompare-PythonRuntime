@@ -1,6 +1,6 @@
 // ##########################################################################
 // #                                                                        #
-// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                CLOUDCOMPARE PLUGIN: PythonRuntime                       #
 // #                                                                        #
 // #  This program is free software; you can redistribute it and/or modify  #
 // #  it under the terms of the GNU General Public License as published by  #
@@ -21,8 +21,8 @@
 #include "FileRunner.h"
 #include "PackageManager.h"
 #include "PythonActionLauncher.h"
-#include "PythonPluginSettings.h"
 #include "PythonRepl.h"
+#include "PythonRuntimeSettings.h"
 #include "Resources.h"
 #include "Runtime/Runtime.h"
 #include "Utilities.h"
@@ -44,8 +44,8 @@
 // https://docs.python.org/3/c-api/init.html#initialization-finalization-and-threads
 PythonPlugin::PythonPlugin(QObject *parent)
     : QObject(parent),
-      ccStdPluginInterface(":/CC/plugin/PythonPlugin/info.json"),
-      m_settings(new PythonPluginSettings),
+      ccStdPluginInterface(":/CC/plugin/PythonRuntime/info.json"),
+      m_settings(new PythonRuntimeSettings),
       m_interp(nullptr),
       m_editor(new PythonEditor(&m_interp)),
       m_fileRunner(new FileRunner(&m_interp)),
@@ -111,7 +111,7 @@ static std::unique_ptr<QSettings> LoadSettings()
 {
     return std::make_unique<QSettings>(
         QCoreApplication::organizationName(),
-        QCoreApplication::applicationName().append(":PythonPlugin.Settings"));
+        QCoreApplication::applicationName().append(":PythonRuntime.Settings"));
 }
 
 void PythonPlugin::stop()
@@ -367,7 +367,7 @@ void PythonPlugin::showFileRunner() const
 
 void PythonPlugin::showDocumentation()
 {
-    const QUrl url(QString("https://tmontaigu.github.io/CloudCompare-PythonPlugin/index.html"));
+    const QUrl url(QString("https://tmontaigu.github.io/CloudCompare-PythonRuntime/index.html"));
     QDesktopServices::openUrl(url);
 }
 
@@ -414,7 +414,7 @@ struct PythonPluginCommand final : public ccCommandLineInterface::Command
     bool process(ccCommandLineInterface &cmd) override
     {
         Q_ASSERT(interpreter);
-        cmd.print("[PythonPlugin] Starting");
+        cmd.print("[PythonRuntime] Starting");
         Args args;
         if (!args.parseFrom(cmd))
         {
@@ -423,13 +423,13 @@ struct PythonPluginCommand final : public ccCommandLineInterface::Command
 
         if (!Py_IsInitialized())
         {
-            return cmd.error("[PythonPlugin] Python is not properly initialized");
+            return cmd.error("[PythonRuntime] Python is not properly initialized");
         }
 
         PySys_SetArgvEx(static_cast<int>(args.pythonArgv.size()), args.pythonArgv.data(), 1);
         const bool success = interpreter->executeFile(qPrintable(args.filepath));
 
-        cmd.print(QString("[PythonPlugin] Script %1 executed")
+        cmd.print(QString("[PythonRuntime] Script %1 executed")
                       .arg(success ? "successfully" : "unsuccessfully"));
         return success;
     }
@@ -499,7 +499,7 @@ void PythonPlugin::setMainAppInterface(ccMainAppInterface *app)
     }
     catch (const std::exception &e)
     {
-        ccLog::Warning("[PythonPlugin] Failed to load autodiscovered custom python plugins: %e",
+        ccLog::Warning("[PythonRuntime] Failed to load autodiscovered custom python plugins: %s",
                        e.what());
     }
 
@@ -510,7 +510,7 @@ void PythonPlugin::setMainAppInterface(ccMainAppInterface *app)
     }
     catch (const std::exception &e)
     {
-        ccLog::Warning("[PythonPlugin] Failed to load custom python plugins : %e", e.what());
+        ccLog::Warning("[PythonRuntime] Failed to load custom python plugins : %s", e.what());
     }
 
     populatePluginSubMenu();

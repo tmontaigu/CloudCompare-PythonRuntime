@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>PythonPluginSettings</class>
- <widget class="QDialog" name="PythonPluginSettings">
+ <class>PythonRuntimeSettings</class>
+ <widget class="QDialog" name="PythonRuntimeSettings">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Python Plugin Settings</string>
+   <string>Python Runtime Settings</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -133,7 +133,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>PythonPluginSettings</receiver>
+   <receiver>PythonRuntimeSettings</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -149,7 +149,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>PythonPluginSettings</receiver>
+   <receiver>PythonRuntimeSettings</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

@@ -7,7 +7,7 @@ target_sources(
           ${CMAKE_CURRENT_LIST_DIR}/PackageManager.ui
           ${CMAKE_CURRENT_LIST_DIR}/PathVariableEditor.ui
           ${CMAKE_CURRENT_LIST_DIR}/PythonEditor.ui
-          ${CMAKE_CURRENT_LIST_DIR}/PythonPluginSettings.ui
+        ${CMAKE_CURRENT_LIST_DIR}/PythonRuntimeSettings.ui
           ${CMAKE_CURRENT_LIST_DIR}/PythonREPL.ui
 )
 

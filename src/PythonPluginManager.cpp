@@ -1,6 +1,6 @@
 // ##########################################################################
 // #                                                                        #
-// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                CLOUDCOMPARE PLUGIN: PythonRuntime                       #
 // #                                                                        #
 // #  This program is free software; you can redistribute it and/or modify  #
 // #  it under the terms of the GNU General Public License as published by  #
@@ -30,16 +30,25 @@ const std::vector<Runtime::RegisteredPlugin> &PythonPluginManager::plugins() con
 void PythonPluginManager::loadPluginsFromEntryPoints()
 {
     plgPrint() << "Searching for custom plugins (checking metadata in site-package)";
-    py::object versionInfo = py::module::import("sys").attr("version_info");
+    const py::object versionInfo = py::module::import("sys").attr("version_info");
 
-    py::object metadata = py::module::import("importlib.metadata");
+    const py::object metadata = py::module::import("importlib.metadata");
     py::iterable entries;
 
     // Get entry points filtered by group="cloudcompare.plugins"
     if (versionInfo < py::make_tuple(3, 10))
     {
-        py::dict entries_dict = metadata.attr("entry_points")();
-        entries = entries_dict["cloudcompare.plugins"]; // return a tuple of entries
+        const py::dict entries_dict = metadata.attr("entry_points")();
+        if (entries_dict.contains("cloudcompare.plugins"))
+        {
+            entries = entries_dict["cloudcompare.plugins"];
+        }
+        else
+        {
+            plgDebug() << "No custom plugin registered in site-packages";
+
+            return;
+        }
     }
     else
     {

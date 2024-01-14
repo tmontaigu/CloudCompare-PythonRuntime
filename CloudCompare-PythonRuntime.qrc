@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/CC/plugin/PythonPlugin">
+    <qresource prefix="/CC/plugin/PythonRuntime">
         <file>images/python-icon.png</file>
         <file>images/repl-icon.png</file>
         <file>images/runner-icon.png</file>
