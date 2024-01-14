@@ -6,7 +6,7 @@ include(cmake/CloudCompareVariables.cmake)
 option(PLUGIN_PYTHON "Install Python Plugin" OFF)
 
 if(PLUGIN_PYTHON)
-  project(PythonPlugin)
+  project(PythonRuntime)
 
   addplugin(NAME ${PROJECT_NAME})
 
@@ -37,14 +37,14 @@ if(PLUGIN_PYTHON)
   add_subdirectory(src)
 
   if(PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
-    target_compile_definitions(PythonPlugin PRIVATE USE_EMBEDDED_MODULES)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE USE_EMBEDDED_MODULES)
 
     embed_cccorelib_in(${PROJECT_NAME})
     embed_pycc_in(${PROJECT_NAME})
   endif()
 
-  target_link_libraries(PythonPlugin pybind11::embed)
-  set_target_properties(PythonPlugin PROPERTIES CXX_VISIBILITY_PRESET hidden)
+  target_link_libraries(${PROJECT_NAME} pybind11::embed)
+  set_target_properties(${PROJECT_NAME} PROPERTIES CXX_VISIBILITY_PRESET hidden)
 
   add_subdirectory(tests)
   add_subdirectory(docs)

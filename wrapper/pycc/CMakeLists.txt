@@ -5,7 +5,7 @@ include("${CMAKE_CURRENT_LIST_DIR}/../../cmake/Helpers.cmake")
 include("${CMAKE_CURRENT_LIST_DIR}/../../cmake/PythonEnvHelper.cmake")
 
 # MASTER_PROJECT means that this CMakeLists is the top level CMakeLists which in
-# our case means that this project is not built as a part of the PythonPlugin
+# our case means that this project is not built as a part of the PythonRuntime
 # but as a standalone wheel
 if(CMAKE_PROJECT_NAME STREQUAL pycc)
   set(PYCC_IS_MASTER_PROJECT ON)
@@ -66,7 +66,7 @@ if(PYCC_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
   )
 
   if(DEFINE_PYCC_RUNTIME)
-    target_link_libraries(pycc PRIVATE PythonPlugin)
+    target_link_libraries(pycc PRIVATE PythonRuntime)
     target_compile_definitions(pycc PRIVATE DEFINE_PYCC_RUNTIME)
   endif()
 

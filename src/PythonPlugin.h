@@ -1,6 +1,6 @@
 // ##########################################################################
 // #                                                                        #
-// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                CLOUDCOMPARE PLUGIN: PythonRuntime                       #
 // #                                                                        #
 // #  This program is free software; you can redistribute it and/or modify  #
 // #  it under the terms of the GNU General Public License as published by  #
@@ -33,7 +33,7 @@ class PythonRepl;
 class FileRunner;
 class PackageManager;
 class PythonActionLauncher;
-class PythonPluginSettings;
+class PythonRuntimeSettings;
 
 /// "Entry point" of the plugin
 class PythonPlugin final : public QObject, public ccStdPluginInterface
@@ -41,7 +41,7 @@ class PythonPlugin final : public QObject, public ccStdPluginInterface
     Q_OBJECT
     Q_INTERFACES(ccPluginInterface ccStdPluginInterface)
 
-    Q_PLUGIN_METADATA(IID "cccorp.cloudcompare.plugin.PythonPlugin" FILE "../info.json")
+    Q_PLUGIN_METADATA(IID "cccorp.cloudcompare.plugin.PythonRuntime" FILE "../info.json")
 
   public:
     explicit PythonPlugin(QObject *parent = nullptr);
@@ -89,7 +89,7 @@ class PythonPlugin final : public QObject, public ccStdPluginInterface
     PythonInterpreter m_interp;
     PythonPluginManager m_pluginManager;
 
-    PythonPluginSettings *m_settings{nullptr};
+    PythonRuntimeSettings *m_settings{nullptr};
     PythonRepl *m_repl{nullptr};
     PythonEditor *m_editor{nullptr};
     FileRunner *m_fileRunner{nullptr};

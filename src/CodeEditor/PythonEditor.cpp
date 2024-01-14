@@ -1,6 +1,6 @@
 // ##########################################################################
 // #                                                                        #
-// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                CLOUDCOMPARE PLUGIN: PythonRuntime                       #
 // #                                                                        #
 // #  This program is free software; you can redistribute it and/or modify  #
 // #  it under the terms of the GNU General Public License as published by  #
@@ -591,7 +591,7 @@ QMdiSubWindow *PythonEditor::findChildCodeEditor(const QString &fileName) const
 
 QString PythonEditor::SettingsApplicationName()
 {
-    return QString(QCoreApplication::applicationName()).append(":PythonPlugin");
+    return QString(QCoreApplication::applicationName()).append(":PythonRuntime");
 }
 
 void PythonEditor::runExecute()

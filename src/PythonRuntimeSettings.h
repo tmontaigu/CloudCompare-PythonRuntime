@@ -1,6 +1,6 @@
 // ##########################################################################
 // #                                                                        #
-// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                CLOUDCOMPARE PLUGIN: PythonRuntime                       #
 // #                                                                        #
 // #  This program is free software; you can redistribute it and/or modify  #
 // #  it under the terms of the GNU General Public License as published by  #
@@ -21,12 +21,12 @@
 
 #include <QDialog>
 
-class Ui_PythonPluginSettings;
+class Ui_PythonRuntimeSettings;
 
-class PythonPluginSettings final : public QDialog
+class PythonRuntimeSettings final : public QDialog
 {
   public:
-    explicit PythonPluginSettings(QWidget *parent = nullptr);
+    explicit PythonRuntimeSettings(QWidget *parent = nullptr);
 
     QStringList pluginsPaths() const;
     PythonConfig pythonEnvConfig() const;
@@ -43,7 +43,7 @@ class PythonPluginSettings final : public QDialog
     void handleSelectLocalEnv();
 
   private:
-    Ui_PythonPluginSettings *m_ui;
+    Ui_PythonRuntimeSettings *m_ui;
     QStringList m_pluginsPaths;
 };
 

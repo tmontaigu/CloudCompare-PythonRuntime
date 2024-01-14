@@ -1,6 +1,6 @@
 // ##########################################################################
 // #                                                                        #
-// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                CLOUDCOMPARE PLUGIN: PythonRuntime                       #
 // #                                                                        #
 // #  This program is free software; you can redistribute it and/or modify  #
 // #  it under the terms of the GNU General Public License as published by  #
@@ -25,7 +25,7 @@ static const auto COLOR_SCHEME_SETTINGS_KEY = QStringLiteral("ColorSchemeName");
 
 static QString SettingsScopeName()
 {
-    return QCoreApplication::applicationName().append(":PythonPlugin.Editor");
+    return QCoreApplication::applicationName().append(":PythonRuntime.Editor");
 }
 
 EditorSettings::EditorSettings() : QDialog(), Ui::EditorSettings()

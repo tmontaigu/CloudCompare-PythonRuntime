@@ -1,6 +1,6 @@
 // ##########################################################################
 // #                                                                        #
-// #                CLOUDCOMPARE PLUGIN: PythonPlugin                       #
+// #                CLOUDCOMPARE PLUGIN: PythonRuntime                       #
 // #                                                                        #
 // #  This program is free software; you can redistribute it and/or modify  #
 // #  it under the terms of the GNU General Public License as published by  #
@@ -19,16 +19,16 @@
 
 #include <QStringLiteral>
 
-#define ABOUT_ICON_PATH QStringLiteral(":/CC/plugin/PythonPlugin/images/about-icon.png")
-#define EDITOR_ICON_PATH QStringLiteral(":/CC/plugin/PythonPlugin/images/python-editor-icon.png")
-#define REPL_ICON_PATH QStringLiteral(":/CC/plugin/PythonPlugin/images/repl-icon.png")
+#define ABOUT_ICON_PATH QStringLiteral(":/CC/plugin/PythonRuntime/images/about-icon.png")
+#define EDITOR_ICON_PATH QStringLiteral(":/CC/plugin/PythonRuntime/images/python-editor-icon.png")
+#define REPL_ICON_PATH QStringLiteral(":/CC/plugin/PythonRuntime/images/repl-icon.png")
 #define DOCUMENTATION_ICON_PATH                                                                    \
-    QStringLiteral(":/CC/plugin/PythonPlugin/images/documentation-icon.png")
-#define RUNNER_ICON_PATH QStringLiteral(":/CC/plugin/PythonPlugin/images/runner-icon.png")
+    QStringLiteral(":/CC/plugin/PythonRuntime/images/documentation-icon.png")
+#define RUNNER_ICON_PATH QStringLiteral(":/CC/plugin/PythonRuntime/images/runner-icon.png")
 #define PACKAGE_MANAGER_ICON_PATH                                                                  \
-    QStringLiteral(":/CC/plugin/PythonPlugin/images/package-manager-icon.png")
+    QStringLiteral(":/CC/plugin/PythonRuntime/images/package-manager-icon.png")
 #define ACTION_LAUNCHER_ICON_PATH                                                                  \
-    QStringLiteral(":/CC/plugin/PythonPlugin/images/launcher-icon.png")
-#define SETTINGS_ICON_PATH QStringLiteral(":/CC/plugin/PythonPlugin/images/settings-icon.png")
+    QStringLiteral(":/CC/plugin/PythonRuntime/images/launcher-icon.png")
+#define SETTINGS_ICON_PATH QStringLiteral(":/CC/plugin/PythonRuntime/images/settings-icon.png")
 
 #endif // PYTHON_PLUGIN_RESOURCES_H
