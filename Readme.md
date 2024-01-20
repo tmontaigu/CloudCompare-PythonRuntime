@@ -1,8 +1,8 @@
-# CloudCompare Python Plugin
+# CloudCompare Python Runtime
 
 Early step attempt at allowing to use Python to automate some stuff in CloudCompare.
 
-The [documentation](https://tmontaigu.github.io/CloudCompare-PythonPlugin/index.html)
+The [documentation](https://tmontaigu.github.io/CloudCompare-PythonRuntime/index.html)
 is hosted using GitHub pages.
 
 # Dependencies
