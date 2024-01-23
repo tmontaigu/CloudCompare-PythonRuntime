@@ -68,7 +68,7 @@ Write-Host ""
     .\Installer.wxs `
     .\PythonEnvironment.wxs `
 
-$OutputInstallerName = "CloudCompare-PythonPlugin-Setup-$LocalizationName-Python$Python3DllSuffix-$EnvTypeName.msi"
+$OutputInstallerName = "CloudCompare-PythonRuntime-Setup-$LocalizationName-Python$Python3DllSuffix-$EnvTypeName.msi"
 
 # Link the compiled files together
 &light `

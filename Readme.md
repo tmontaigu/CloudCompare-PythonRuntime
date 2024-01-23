@@ -12,7 +12,7 @@ is hosted using GitHub pages.
 
 # Windows installer
 
-Windows user can download the [installer](https://u.pcloud.link/publink/show?code=XZW75aVZYzubajT4VVJJ0mfn9rCsBRRxEBTk).
+Windows user can download the [installer](https://u.pcloud.link/publink/show?code=XZlNs00Z5koREF3zkzSSFRmBs9tQUFj5Cq97).
 This requires an installation of CloudCompare 2.13 downloadable from CloudCompare website.
 (Note that CloudCompare 2.13 installer now has an option to install the python plugin)
 
