@@ -79,7 +79,7 @@ using ccError = ccLogger<ccLog::LOG_ERROR>;
 
 /// Logger Specialized for the plugin.
 ///
-/// It prepends every message with `[PythonPlugin]`.
+/// It prepends every message with `[PythonRuntime]`.
 ///
 /// # Example
 ///

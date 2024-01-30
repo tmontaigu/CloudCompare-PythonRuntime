@@ -47,7 +47,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Initially developed at &lt;a
        href=&quot;https://www.geo-sat.com/fr/&quot;&gt;&lt;span style=&quot; text-decoration:
        underline; color:#0000ff;&quot;&gt;Geosat&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;a
-       href=&quot;https://www.geo-sat.com/en&quot;&gt;&lt;img src=&quot;:/CC/plugin/PythonPlugin/images/geo-sat-logo.svg&quot;
+       href=&quot;https://www.geo-sat.com/en&quot;&gt;&lt;img src=&quot;:/CC/plugin/PythonRuntime/images/geo-sat-logo.svg&quot;
        width=&quot;200&quot;/&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
       </string>
      </property>
