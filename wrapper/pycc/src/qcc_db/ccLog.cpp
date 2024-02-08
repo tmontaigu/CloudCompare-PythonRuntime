@@ -102,8 +102,9 @@ void define_ccLog(py::module &m)
 )pbdoc");
 
     py::enum_<ccLog::MessageLevelFlags>(PyccLog, "MessageLevelFlags")
+        .value("LOG_VERBOSE", ccLog::MessageLevelFlags::LOG_VERBOSE)
         .value("LOG_STANDARD", ccLog::MessageLevelFlags::LOG_STANDARD)
-        .value("LOG_DEBUG", ccLog::MessageLevelFlags::LOG_DEBUG)
+        .value("LOG_IMPORTANT", ccLog::MessageLevelFlags::LOG_IMPORTANT)
         .value("LOG_WARNING", ccLog::MessageLevelFlags::LOG_WARNING)
         .value("LOG_ERROR", ccLog::MessageLevelFlags::LOG_ERROR);
 }

@@ -45,7 +45,7 @@ void PythonPluginManager::loadPluginsFromEntryPoints()
         }
         else
         {
-            plgDebug() << "No custom plugin registered in site-packages";
+            plgVerbose() << "No custom plugin registered in site-packages";
 
             return;
         }
@@ -56,7 +56,7 @@ void PythonPluginManager::loadPluginsFromEntryPoints()
             "group"_a = "cloudcompare.plugins"); // return a list of entries
     }
 
-    plgDebug() << py::str(entries).cast<QString>();
+    plgVerbose() << py::str(entries).cast<QString>();
 
     for (auto &entry : entries)
     {
@@ -131,7 +131,7 @@ void PythonPluginManager::loadPluginsFrom(const QStringList &paths)
             try
             {
                 py::module::import(nameToImportStd.c_str());
-                plgDebug() << "\tLoaded python module '" << nameToImportStd.c_str() << "'";
+                plgVerbose() << "\tLoaded python module '" << nameToImportStd.c_str() << "'";
             }
             catch (const std::exception &e)
             {
