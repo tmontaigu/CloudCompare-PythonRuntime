@@ -72,8 +72,9 @@ template <enum ccLog::MessageLevelFlags level> class ccLogger
     QString m_message;
 };
 
+using ccVerbose = ccLogger<ccLog::LOG_VERBOSE>;
 using ccPrint = ccLogger<ccLog::LOG_STANDARD>;
-using ccDebug = ccLogger<ccLog::LOG_DEBUG>;
+using ccPrintHigh = ccLogger<ccLog::LOG_IMPORTANT>;
 using ccWarning = ccLogger<ccLog::LOG_WARNING>;
 using ccError = ccLogger<ccLog::LOG_ERROR>;
 
@@ -100,8 +101,9 @@ template <enum ccLog::MessageLevelFlags level> class PluginLogger : public ccLog
     //    }
 };
 
+using plgVerbose = PluginLogger<ccLog::LOG_VERBOSE>;
 using plgPrint = PluginLogger<ccLog::LOG_STANDARD>;
-using plgDebug = PluginLogger<ccLog::LOG_DEBUG>;
+using plgPrintHigh = PluginLogger<ccLog::LOG_IMPORTANT>;
 using plgWarning = PluginLogger<ccLog::LOG_WARNING>;
 using plgError = PluginLogger<ccLog::LOG_ERROR>;
 

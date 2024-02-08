@@ -179,8 +179,7 @@ void PythonInterpreter::executeFunction(const pybind11::object &function)
 
 void PythonInterpreter::initialize(const PythonConfig &config)
 {
-
-    plgDebug() << "Initializing the interpreter with: " << config;
+    plgVerbose() << "Initializing the interpreter with: " << config;
 
 #ifdef Q_OS_LINUX
     // Work-around issue: undefined symbol: PyExc_RecursionError
