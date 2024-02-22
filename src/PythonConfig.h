@@ -154,7 +154,7 @@ class PythonConfig final
     /// # Other Platforms
     /// Does nothing, as we rely on the system's python to be properly installed
     void initDefault();
-#ifdef Q_OS_WIN32
+#if defined(Q_OS_WIN32) || defined(Q_OS_MACOS)
     /// Initialize the paths to point to where the Python
     /// environment was bundled on a Windows installation
     void initBundled();
