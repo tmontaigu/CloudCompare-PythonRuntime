@@ -171,7 +171,7 @@ static QString PathToPythonExecutableInEnv(PythonConfig::Type envType, const QSt
 
 void PythonConfig::initDefault()
 {
-#ifdef Q_OS_WIN32
+#if defined(Q_OS_WIN32) || defined(Q_OS_MACOS)
     initBundled();
 #else
     // On Non windows platform
@@ -180,10 +180,14 @@ void PythonConfig::initDefault()
 #endif
 }
 
-#ifdef Q_OS_WIN32
+#if defined(Q_OS_WIN32) || defined(Q_OS_MACOS)
 void PythonConfig::initBundled()
 {
+#if defined(Q_OS_MACOS)
+    const QString pythonEnvDirPath(QApplication::applicationDirPath() + "/../Resources/python");
+#else
     const QString pythonEnvDirPath(QApplication::applicationDirPath() + "/plugins/Python");
+#endif
     initFromLocation(pythonEnvDirPath);
 }
 #endif
@@ -231,6 +235,22 @@ void PythonConfig::initFromLocation(const QString &prefix)
         }
     }
     else
+#if defined(Q_OS_MACOS)
+    {
+        QString pythonExePath = PathToPythonExecutableInEnv(Type::Unknown, prefix);
+        initFromPythonExecutable(pythonExePath);
+        if (m_pythonHome.isEmpty() && m_pythonPath.isEmpty())
+        {
+            qDebug() << "Failed to get paths info from python executable at (bundled)"
+                     << pythonExePath;
+            initVenv(envRoot.path());
+        }
+        else
+        {
+            m_type = Type::Unknown;
+        }
+    }
+#else
     {
         m_pythonHome = envRoot.path();
         m_pythonPath = QString("%1/DLLs;%1/lib;%1/Lib/site-packages;").arg(m_pythonHome);
@@ -240,6 +260,7 @@ void PythonConfig::initFromLocation(const QString &prefix)
         m_pythonPath.append(WindowsBundledSitePackagesPath());
 #endif
     }
+#endif
 }
 
 void PythonConfig::initCondaEnv(const QString &condaPrefix)
