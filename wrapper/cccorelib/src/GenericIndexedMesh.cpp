@@ -33,7 +33,7 @@ void define_GenericIndexedMesh(py::module &cccorelib)
         .def_readwrite("i2", &CCCoreLib::VerticesIndexes::i2)
         .def_readwrite("i3", &CCCoreLib::VerticesIndexes::i3)
         .def("__getitem__",
-             [](CCCoreLib::VerticesIndexes &self, unsigned index)
+             [](CCCoreLib::VerticesIndexes &self, const unsigned index)
              {
                  switch (index)
                  {
@@ -53,16 +53,61 @@ void define_GenericIndexedMesh(py::module &cccorelib)
              &CCCoreLib::GenericIndexedMesh::_getTriangle,
              "triangleIndex"_a,
              py::return_value_policy::reference)
-        .def("getTriangleVertIndexes",
-             &CCCoreLib::GenericIndexedMesh::getTriangleVertIndexes,
-             "triangleIndex"_a,
-             py::return_value_policy::reference)
-        .def("getTriangleVertices",
-             &CCCoreLib::GenericIndexedMesh::getTriangleVertices,
-             "triangleIndex"_a,
-             "A"_a,
-             "B"_a,
-             "C"_a)
+        .def(
+            "getTriangleVertIndexes",
+            [](CCCoreLib::GenericIndexedMesh &self, const unsigned int triangleIndex)
+            {
+                if (triangleIndex >= self.size())
+                {
+                    throw py::index_error("index out of range");
+                }
+                return self.getTriangleVertIndexes(triangleIndex);
+            },
+            "triangleIndex"_a,
+            py::return_value_policy::reference_internal,
+            R"pbdoc(
+    Returns the indexes of the vertices of a given triangle
+
+    Parameters
+    ----------
+    triangleIndex: int, index of the triangle
+
+    Raises
+    ------
+    IndexError if triangleIndex >= self.size()
+)pbdoc")
+        .def(
+            "getTriangleVertices",
+            [](CCCoreLib::GenericIndexedMesh &self,
+               const unsigned triangleIndex,
+               CCVector3 &A,
+               CCVector3 &B,
+               CCVector3 &C)
+            {
+                if (triangleIndex >= self.size())
+                {
+                    throw py::index_error("index out of range");
+                }
+                self.getTriangleVertices(triangleIndex, A, B, C);
+            },
+            "triangleIndex"_a,
+            "A"_a,
+            "B"_a,
+            "C"_a,
+            R"pbdoc(
+    Returns the vertices of a given triangle
+
+    Parameters
+    ----------
+    triangleIndex: index of the triangle
+    A: first vertex, this is an out parameter
+    B: second vertex, this is an out parameter
+    C: third vertex, this is an out parameter
+
+    Raises
+    ------
+    IndexError if triangleIndex >= self.size()
+)pbdoc")
         .def("getNextTriangleVertIndexes",
              &CCCoreLib::GenericIndexedMesh::getNextTriangleVertIndexes,
              py::return_value_policy::reference);
