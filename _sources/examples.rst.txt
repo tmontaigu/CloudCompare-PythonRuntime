@@ -9,6 +9,12 @@ Creating a ccPointCloud from Python
     :language: Python
 
 
+Using ccMesh
+-----------------------------------
+
+.. literalinclude:: ../script_examples/creating_a_mesh.py
+    :language: Python
+
 Loading a file
 --------------
 

@@ -454,7 +454,8 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="cccorelib.GenericMesh">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">GenericMesh</span></span><a class="headerlink" href="#cccorelib.GenericMesh" title="Permalink to this definition"></a></dt>
-<dd><dl class="py method">
+<dd><p>A generic mesh interface for data communication between library and client applications</p>
+<dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.GenericMesh.forEach">
 <span class="sig-name descname"><span class="pre">forEach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">cccorelib.GenericMesh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action:</span> <span class="pre">std::function&lt;void</span> <span class="pre">(CCCoreLib::GenericTriangle&amp;)&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.GenericMesh.forEach" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -462,7 +463,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.GenericMesh.getBoundingBox">
 <span class="sig-name descname"><span class="pre">getBoundingBox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericMesh" title="cccorelib.GenericMesh"><span class="pre">cccorelib.GenericMesh</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bbMin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bbMax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.GenericMesh.getBoundingBox" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Returns the mesh bounding-box</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bbMin</strong> (<em>out parameter</em><em>, </em><em>lower bounding-box limits</em><em> (</em><em>Xmin</em><em>,</em><em>Ymin</em><em>,</em><em>Zmin</em><em>)</em>) – </p></li>
+<li><p><strong>bbMax</strong> (<em>out parameter</em><em>, </em><em>higher bounding-box limits</em><em> (</em><em>Xmax</em><em>,</em><em>Ymax</em><em>,</em><em>Zmax</em><em>)</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.GenericMesh.placeIteratorAtBeginning">
@@ -472,7 +482,8 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.GenericMesh.size">
 <span class="sig-name descname"><span class="pre">size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericMesh" title="cccorelib.GenericMesh"><span class="pre">cccorelib.GenericMesh</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cccorelib.GenericMesh.size" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Returns the number of triangles</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -495,12 +506,35 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.GenericIndexedMesh.getTriangleVertIndexes">
 <span class="sig-name descname"><span class="pre">getTriangleVertIndexes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericIndexedMesh" title="cccorelib.GenericIndexedMesh"><span class="pre">cccorelib.GenericIndexedMesh</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">triangleIndex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">cccorelib.VerticesIndexes</span></span></span><a class="headerlink" href="#cccorelib.GenericIndexedMesh.getTriangleVertIndexes" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Returns the indexes of the vertices of a given triangle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>triangleIndex</strong> (<em>int</em><em>, </em><em>index of the triangle</em>) – </p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>IndexError if triangleIndex &gt;= self.size</strong><strong>(</strong><strong>)</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.GenericIndexedMesh.getTriangleVertices">
 <span class="sig-name descname"><span class="pre">getTriangleVertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericIndexedMesh" title="cccorelib.GenericIndexedMesh"><span class="pre">cccorelib.GenericIndexedMesh</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">triangleIndex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.GenericIndexedMesh.getTriangleVertices" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Returns the vertices of a given triangle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>triangleIndex</strong> (<em>index of the triangle</em>) – </p></li>
+<li><p><strong>A</strong> (<em>first vertex</em><em>, </em><em>this is an out parameter</em>) – </p></li>
+<li><p><strong>B</strong> (<em>second vertex</em><em>, </em><em>this is an out parameter</em>) – </p></li>
+<li><p><strong>C</strong> (<em>third vertex</em><em>, </em><em>this is an out parameter</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>IndexError if triangleIndex &gt;= self.size</strong><strong>(</strong><strong>)</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 

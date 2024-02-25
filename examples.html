@@ -53,6 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#creating-a-ccpointcloud-from-python">Creating a ccPointCloud from Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-ccmesh">Using ccMesh</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#loading-a-file">Loading a file</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sub-sampling">Sub sampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#merge">Merge</a></li>
@@ -158,6 +159,82 @@
 
 <span class="n">cc</span><span class="o">.</span><span class="n">addToDB</span><span class="p">(</span><span class="n">point_cloud</span><span class="p">)</span>
 <span class="n">cc</span><span class="o">.</span><span class="n">updateUI</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="using-ccmesh">
+<h2>Using ccMesh<a class="headerlink" href="#using-ccmesh" title="Permalink to this heading"></a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">An example of how to create a mesh or query a mesh</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">cccorelib</span>
+<span class="kn">import</span> <span class="nn">pycc</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Vertices of the cube</span>
+<span class="n">VERTICES</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="c1"># Indices of the cube</span>
+<span class="n">INDICES</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="p">])</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># Creating mesh</span>
+    <span class="n">vertices</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccPointCloud</span><span class="p">(</span><span class="n">VERTICES</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">VERTICES</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">VERTICES</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
+    <span class="n">mesh</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccMesh</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i1</span><span class="p">,</span> <span class="n">i2</span><span class="p">,</span> <span class="n">i3</span><span class="p">)</span> <span class="ow">in</span> <span class="n">INDICES</span><span class="p">:</span>
+        <span class="n">mesh</span><span class="o">.</span><span class="n">addTriangle</span><span class="p">(</span><span class="n">i1</span><span class="p">,</span> <span class="n">i2</span><span class="p">,</span> <span class="n">i3</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">vertices</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">VERTICES</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">mesh</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">INDICES</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">vertices</span> <span class="o">==</span> <span class="n">mesh</span><span class="o">.</span><span class="n">getAssociatedCloud</span><span class="p">()</span>
+
+    <span class="c1"># Query triangles</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">cccorelib</span><span class="o">.</span><span class="n">CCVector3</span><span class="p">(),</span> <span class="n">cccorelib</span><span class="o">.</span><span class="n">CCVector3</span><span class="p">(),</span> <span class="n">cccorelib</span><span class="o">.</span><span class="n">CCVector3</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">size</span><span class="p">()):</span>
+        <span class="n">vert_indices</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">getTriangleVertIndexes</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">vert_indices</span><span class="o">.</span><span class="n">i1</span> <span class="o">==</span> <span class="n">INDICES</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="n">vert_indices</span><span class="o">.</span><span class="n">i2</span> <span class="o">==</span> <span class="n">INDICES</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="n">vert_indices</span><span class="o">.</span><span class="n">i3</span> <span class="o">==</span> <span class="n">INDICES</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="n">vert_indices</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">INDICES</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+
+        <span class="n">vertices</span><span class="o">.</span><span class="n">getPoint</span><span class="p">(</span><span class="n">vert_indices</span><span class="o">.</span><span class="n">i1</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="n">vertices</span><span class="o">.</span><span class="n">getPoint</span><span class="p">(</span><span class="n">vert_indices</span><span class="o">.</span><span class="n">i2</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">vertices</span><span class="o">.</span><span class="n">getPoint</span><span class="p">(</span><span class="n">vert_indices</span><span class="o">.</span><span class="n">i3</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+
+        <span class="c1"># or</span>
+        <span class="n">mesh</span><span class="o">.</span><span class="n">getTriangleVertices</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+
+    <span class="n">CC</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">GetInstance</span><span class="p">()</span>
+    <span class="n">CC</span><span class="o">.</span><span class="n">addToDB</span><span class="p">(</span><span class="n">mesh</span><span class="p">)</span>
+    <span class="n">CC</span><span class="o">.</span><span class="n">updateUI</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>

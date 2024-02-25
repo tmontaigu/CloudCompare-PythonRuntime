@@ -410,6 +410,12 @@ size=&quot;8.0, 12.0&quot;;
 <dd></dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccHObject.notifyGeometryUpdate">
+<span class="sig-name descname"><span class="pre">notifyGeometryUpdate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">pycc.ccHObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccHObject.notifyGeometryUpdate" title="Permalink to this definition"></a></dt>
+<dd><p>Notifies all dependent entities that the geometry of this entity has changed</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccHObject.resetGLTransformationHistory">
 <span class="sig-name descname"><span class="pre">resetGLTransformationHistory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">pycc.ccHObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccHObject.resetGLTransformationHistory" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -806,7 +812,7 @@ rankdir=LR;
 size=&quot;8.0, 12.0&quot;;
   &quot;cccorelib.GenericIndexedMesh&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.GenericIndexedMesh&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
   &quot;cccorelib.GenericMesh&quot; -&gt; &quot;cccorelib.GenericIndexedMesh&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;cccorelib.GenericMesh&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.GenericMesh&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
+  &quot;cccorelib.GenericMesh&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.GenericMesh&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A generic mesh interface for data communication between library and client applications&quot;];
   &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;cccorelib.GenericMesh&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
   &quot;pybind11_builtins.pybind11_object&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;];
   &quot;pycc.ccDrawableObject&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base class of all objects that CloudCompare is able to render/draw/display on the screen&quot;];
@@ -917,6 +923,24 @@ size=&quot;8.0, 12.0&quot;;
 <dt class="sig sig-object py" id="pycc.ccMesh">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccMesh</span></span><a class="headerlink" href="#pycc.ccMesh" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pycc.ccGenericMesh" title="pycc.ccGenericMesh"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccGenericMesh</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccMesh.addTriangle">
+<span class="sig-name descname"><span class="pre">addTriangle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccMesh" title="pycc.ccMesh"><span class="pre">pycc.ccMesh</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">i1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccMesh.addTriangle" title="Permalink to this definition"></a></dt>
+<dd><p>Adds a triangle to the mesh
+Bounding-box validity is broken after a call to this method.
+However, for the sake of performance, no call to notifyGeometryUpdate
+is made automatically. Make sure to do so when all modifications are done!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cloud</strong><strong>)</strong> (<em>i3 third vertex index</em><em> (</em><em>relatively to the vertex</em>) – </p></li>
+<li><p><strong>cloud</strong><strong>)</strong> – </p></li>
+<li><p><strong>cloud</strong><strong>)</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccMesh.setAssociatedCloud">
 <span class="sig-name descname"><span class="pre">setAssociatedCloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccMesh" title="pycc.ccMesh"><span class="pre">pycc.ccMesh</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cloud</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccGenericPointCloud" title="pycc.ccGenericPointCloud"><span class="pre">ccGenericPointCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccMesh.setAssociatedCloud" title="Permalink to this definition"></a></dt>
