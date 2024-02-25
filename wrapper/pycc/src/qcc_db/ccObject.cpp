@@ -292,7 +292,10 @@ void define_ccObject(py::module &m)
              "trans"_a = nullptr)
         .def("getGLTransformationHistory", &ccHObject::getGLTransformationHistory)
         .def("setGLTransformationHistory", &ccHObject::setGLTransformationHistory, "mat"_a)
-        .def("resetGLTransformationHistory", &ccHObject::resetGLTransformationHistory);
+        .def("resetGLTransformationHistory", &ccHObject::resetGLTransformationHistory)
+        .def("notifyGeometryUpdate", &ccHObject::notifyGeometryUpdate, R"pbdoc(
+    Notifies all dependent entities that the geometry of this entity has changed
+)pbdoc");
 
     py::class_<ccShiftedObject, ccHObject>(m, "ccShiftedObject")
         .def("setGlobalShift",
