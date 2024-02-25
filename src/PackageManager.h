@@ -51,6 +51,7 @@ class PackageManager final : public QWidget
     Ui_PackageManager *m_ui;
     QProcess *m_pythonProcess;
     CommandOutputDialog *m_outputDialog;
+    bool m_shouldUseUserOption;
 };
 
 #endif // PYTHON_PLUGIN_PACKAGE_MANAGER_H

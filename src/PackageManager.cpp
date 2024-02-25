@@ -34,6 +34,128 @@
 
 #include <ui_InstallDialog.h>
 
+#include "Utilities.h"
+
+#if defined(Q_OS_WIN32)
+#include <Windows.h>
+#endif
+
+#if defined(Q_OS_WIN32)
+static BOOL GetFolderRights(LPCTSTR folderName, DWORD genericAccessRights, DWORD *grantedRights)
+{
+    DWORD length = 0;
+
+    constexpr SECURITY_INFORMATION requestedInformation =
+        OWNER_SECURITY_INFORMATION | GROUP_SECURITY_INFORMATION | DACL_SECURITY_INFORMATION;
+
+    /* Get the needed length */
+    GetFileSecurity(folderName, requestedInformation, nullptr, NULL, &length);
+
+    if (ERROR_INSUFFICIENT_BUFFER != GetLastError())
+    {
+        return FALSE;
+    }
+
+    PSECURITY_DESCRIPTOR security = LocalAlloc(LPTR, length);
+    if (GetFileSecurity(folderName, requestedInformation, security, length, &length) == FALSE)
+    {
+        LocalFree(security);
+        return FALSE;
+    }
+
+    DWORD desiredAccess = TOKEN_IMPERSONATE | TOKEN_QUERY | TOKEN_DUPLICATE | STANDARD_RIGHTS_READ;
+    HANDLE hToken = nullptr;
+    if (OpenProcessToken(GetCurrentProcess(), desiredAccess, &hToken) == FALSE)
+    {
+        LocalFree(security);
+        return FALSE;
+    }
+
+    HANDLE hImpersonatedToken = nullptr;
+    if (DuplicateToken(hToken, SecurityImpersonation, &hImpersonatedToken) == FALSE)
+    {
+        CloseHandle(hToken);
+        LocalFree(security);
+        return FALSE;
+    }
+
+    GENERIC_MAPPING mapping = {0xFFFFFFFF};
+    PRIVILEGE_SET privileges = {0};
+    DWORD grantedAccess = 0, privilegesLength = sizeof(privileges);
+    BOOL result = FALSE;
+
+    mapping.GenericRead = FILE_GENERIC_READ;
+    mapping.GenericWrite = FILE_GENERIC_WRITE;
+    mapping.GenericExecute = FILE_GENERIC_EXECUTE;
+    mapping.GenericAll = FILE_ALL_ACCESS;
+
+    MapGenericMask(&genericAccessRights, &mapping);
+    if (AccessCheck(security,
+                    hImpersonatedToken,
+                    genericAccessRights,
+                    &mapping,
+                    &privileges,
+                    &privilegesLength,
+                    &grantedAccess,
+                    &result) == FALSE)
+    {
+        CloseHandle(hImpersonatedToken);
+        CloseHandle(hToken);
+        LocalFree(security);
+        return FALSE;
+    }
+
+    *grantedRights = grantedAccess;
+
+    CloseHandle(hImpersonatedToken);
+    CloseHandle(hToken);
+    LocalFree(security);
+
+    return TRUE;
+}
+
+static bool HasReadWriteAccessToFolder(const QString &folderPath)
+{
+    constexpr DWORD access_mask = MAXIMUM_ALLOWED;
+    DWORD grant = 0;
+#if defined(UNICODE)
+    const std::wstring str = folderPath.toStdWString();
+    BOOL ret = GetFolderRights(str.c_str(), access_mask, &grant);
+#else
+    const std::string str = folderPath.toStdString();
+    BOOL ret = GetFolderRights(str.c_str(), access_mask, &grant);
+#endif
+
+    if (ret == FALSE)
+    {
+        plgWarning() << "Failed to get access rights for path '" << folderPath << '\n';
+        return false;
+    }
+
+    bool hasRead = false;
+    if (((grant & GENERIC_READ) == GENERIC_READ) ||
+        ((grant & FILE_GENERIC_READ) == FILE_GENERIC_READ))
+    {
+        hasRead = true;
+    }
+
+    bool hasWrite = false;
+    if (((grant & GENERIC_WRITE) == GENERIC_WRITE) ||
+        ((grant & FILE_GENERIC_WRITE) == FILE_GENERIC_WRITE))
+    {
+        hasWrite = true;
+    }
+
+    bool hasExecute = false;
+    if (((grant & GENERIC_EXECUTE) == GENERIC_EXECUTE) ||
+        ((grant & FILE_GENERIC_EXECUTE) == FILE_GENERIC_EXECUTE))
+    {
+        hasExecute = true;
+    }
+    return hasRead && hasWrite && hasExecute;
+}
+#endif // defined(Q_OS_WIN32)
+
 class InstallDialog : public QDialog
 {
     Q_OBJECT
@@ -75,12 +197,12 @@ class CommandOutputDialog : public QDialog
         resize(600, 300);
     }
 
-    void appendPlainText(const QString &text)
+    void appendPlainText(const QString &text) const
     {
         m_display->appendPlainText(text);
     }
 
-    void clear()
+    void clear() const
     {
         m_display->clear();
     }
@@ -93,7 +215,8 @@ PackageManager::PackageManager(const PythonConfig &config, QWidget *parent)
     : QWidget(parent),
       m_ui(new Ui_PackageManager),
       m_pythonProcess(new QProcess),
-      m_outputDialog(new CommandOutputDialog(this))
+      m_outputDialog(new CommandOutputDialog(this)),
+      m_shouldUseUserOption(false)
 {
     m_ui->setupUi(this);
     connect(m_pythonProcess, &QProcess::started, [this]() { setBusy(true); });
@@ -120,6 +243,45 @@ PackageManager::PackageManager(const PythonConfig &config, QWidget *parent)
     connect(m_ui->searchBar, &QLineEdit::returnPressed, this, &PackageManager::handleSearch);
     config.preparePythonProcess(*m_pythonProcess);
     refreshInstalledPackagesList();
+
+    m_ui->installBtn->setEnabled(true);
+    m_ui->messageFrame->hide();
+
+    switch (config.type())
+    {
+    // The main intent of checking access rights of venv is for the Windows bundled
+    // env, but checking for all venv won't hurt.
+    // on Windowsn the bundled env  is very likely to be installed in
+    // "C:\Programs\Cloud Compare\plugins\Python" and that requires admin rights to add/modify.
+    // It is better to notify user and prevent them from trying something that will faill.
+    case PythonConfig::Type::Venv:
+    case PythonConfig::Type::Conda:
+    case PythonConfig::Type::Unknown:
+    {
+#if defined Q_OS_WIN32
+        // On Windows we use a custom function because isWritable from Qt was not correct
+        // for our use case (its mentionned in their doc)
+        const bool hasEnoughRights = HasReadWriteAccessToFolder(config.pythonHome());
+#else
+        const QFileInfo dirInfo(config.pythonHome());
+        const bool hasEnoughRights = dirInfo.isWritable();
+#endif
+        if (!hasEnoughRights)
+        {
+            m_ui->installBtn->setEnabled(false);
+            m_ui->messageIconLabel->setPixmap(QApplication::style()
+                                                  ->standardIcon(QStyle::SP_MessageBoxCritical)
+                                                  .pixmap({64, 64}));
+            m_ui->messageTextLabel->setText("Admin rights are required to be able to install "
+                                            "packages in the current environment");
+            m_ui->messageFrame->show();
+        }
+    }
+    break;
+    case PythonConfig::Type::System:
+        m_shouldUseUserOption = true;
+        break;
+    }
 }
 
 void PackageManager::refreshInstalledPackagesList()
@@ -224,6 +386,10 @@ void PackageManager::handleInstallPackage()
     if (installDialog.upgrade())
     {
         arguments.push_back("--upgrade");
+    }
+    if (m_shouldUseUserOption)
+    {
+        arguments.push_back("--user");
     }
     executeCommand(arguments);
 
