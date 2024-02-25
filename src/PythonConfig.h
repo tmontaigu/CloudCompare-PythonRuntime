@@ -87,12 +87,6 @@ class PythonConfig final
         Unknown
     };
 
-    /// # On Windows:
-    /// Initialize python home and python path
-    /// corresponding to the environment to be used.
-    ///
-    /// # Other Platforms
-    /// Does nothing, as we rely on the system's python to be properly installed
     PythonConfig() = default;
 
     Type type() const
@@ -118,6 +112,11 @@ class PythonConfig final
             break;
         }
         return o;
+    }
+
+    const QString &pythonHome() const
+    {
+        return m_pythonHome;
     }
 
     /// Sets the necessary settings of the QProcess so that
@@ -148,6 +147,12 @@ class PythonConfig final
     static bool IsInsideEnvironment();
     static PythonConfig fromContainingEnvironment();
 
+    /// # On Windows:
+    /// Initialize python home and python path
+    /// corresponding to the environment to be used.
+    ///
+    /// # Other Platforms
+    /// Does nothing, as we rely on the system's python to be properly installed
     void initDefault();
 #ifdef Q_OS_WIN32
     /// Initialize the paths to point to where the Python
