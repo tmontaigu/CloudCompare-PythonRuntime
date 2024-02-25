@@ -25,10 +25,21 @@ using namespace pybind11::literals;
 
 void define_GenericMesh(py::module &cccorelib)
 {
-    py::class_<CCCoreLib::GenericMesh>(cccorelib, "GenericMesh")
-        .def("size", &CCCoreLib::GenericMesh::size)
+    py::class_<CCCoreLib::GenericMesh>(cccorelib, "GenericMesh", R"pbdoc(
+	A generic mesh interface for data communication between library and client applications
+)pbdoc")
+        .def("size", &CCCoreLib::GenericMesh::size, R"pbdoc(
+	Returns the number of triangles
+)pbdoc")
         .def("forEach", &CCCoreLib::GenericMesh::forEach, "action"_a)
-        .def("getBoundingBox", &CCCoreLib::GenericMesh::getBoundingBox, "bbMin"_a, "bbMax"_a)
+        .def("getBoundingBox", &CCCoreLib::GenericMesh::getBoundingBox, "bbMin"_a, "bbMax"_a, R"pbdoc(
+	Returns the mesh bounding-box
+
+	Parameters
+	----------
+	bbMin: out parameter, lower bounding-box limits (Xmin,Ymin,Zmin)
+	bbMax: out parameter, higher bounding-box limits (Xmax,Ymax,Zmax)
+)pbdoc")
         .def("placeIteratorAtBeginning", &CCCoreLib::GenericMesh::placeIteratorAtBeginning)
         .def("_getNextTriangle",
              &CCCoreLib::GenericMesh::_getNextTriangle,
