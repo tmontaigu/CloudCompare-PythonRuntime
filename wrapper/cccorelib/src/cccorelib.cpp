@@ -143,10 +143,38 @@ class NumpyCloud : public CCCoreLib::GenericIndexedCloud
   public:
     explicit NumpyCloud(const py::array &array)
     {
-        py::detail::PyArrayDescr_Proxy *descr =
-            py::detail::array_descriptor_proxy(py::detail::array_proxy(array.ptr())->descr);
 
-        py::list names = py::cast<py::list>(descr->names);
+        py::list names;
+#if ((PYBIND11_VERSION_MAJOR > 2) || (PYBIND11_VERSION_MAJOR == 2 && PYBIND11_VERSION_MINOR > 11))
+        // The "name" field is no longer available in Descr_Proxy struct,
+        // but it is available on both Descr1_Proxy and Descr2_Proxy structs
+
+        // Get the currrent numpy version
+        // Maybe it would be worth having a dedicated function in the long run.
+        py::module_ numpy = py::module_::import("numpy");
+        py::str version_string = numpy.attr("__version__");
+
+        py::module_ numpy_lib = py::module_::import("numpy.lib");
+        py::object numpy_version = numpy_lib.attr("NumpyVersion")(version_string);
+        int major_version = numpy_version.attr("major").cast<int>();
+
+        if (major_version < 2)
+        {
+            const py::detail::PyArrayDescr1_Proxy *descr =
+                py::detail::array_descriptor1_proxy(py::detail::array_proxy(array.ptr())->descr);
+            names = py::cast<py::list>(descr->names);
+        }
+        else
+        {
+            const py::detail::PyArrayDescr2_Proxy *descr =
+                py::detail::array_descriptor2_proxy(py::detail::array_proxy(array.ptr())->descr);
+            names = py::cast<py::list>(descr->names);
+        }
+#else
+        const py::detail::PyArrayDescr_Proxy *descr =
+            py::detail::array_descriptor_proxy(py::detail::array_proxy(array.ptr())->descr);
+        names = py::cast<py::list>(descr->names);
+#endif
         if (names.size() >= 3)
         {
             m_xs = array[names[0]].cast<py::array_t<PointCoordinateType>>();
