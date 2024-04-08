@@ -146,7 +146,7 @@ class NumpyCloud : public CCCoreLib::GenericIndexedCloud
 
         py::list names;
 #if ((PYBIND11_VERSION_MAJOR > 2) || (PYBIND11_VERSION_MAJOR == 2 && PYBIND11_VERSION_MINOR > 11))
-        // The "name" field is no longer available in Descr_Proxy struct,
+        // The "names" field is no longer available in Descr_Proxy struct,
         // but it is available on both Descr1_Proxy and Descr2_Proxy structs
 
         // Get the currrent numpy version
