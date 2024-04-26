@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.14..3.27)
 project(pycc LANGUAGES CXX)
 
 include("${CMAKE_CURRENT_LIST_DIR}/../../cmake/Helpers.cmake")
@@ -51,7 +51,8 @@ if(PYCC_IS_MASTER_PROJECT)
   endif()
 endif()
 
-find_package(pybind11 CONFIG REQUIRED)
+find_package(Python COMPONENTS Interpreter Development)
+find_package(pybind11 CONFIG)
 
 add_subdirectory(src)
 add_subdirectory(plugins)

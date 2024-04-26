@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.14..3.27)
+
 include(cmake/Helpers.cmake)
 include(cmake/CompilerWarnings.cmake)
 include(cmake/PythonEnvHelper.cmake)
@@ -31,7 +33,8 @@ if(PLUGIN_PYTHON)
     ensure_pybind11_cmake_module_is_in_path()
   endif()
 
-  find_package(pybind11 CONFIG REQUIRED)
+  find_package(Python COMPONENTS Interpreter Development)
+  find_package(pybind11 CONFIG)
 
   add_subdirectory(wrapper)
   add_subdirectory(src)
@@ -44,7 +47,7 @@ if(PLUGIN_PYTHON)
   endif()
 
   target_link_libraries(${PROJECT_NAME} pybind11::embed)
-  set_target_properties(${PROJECT_NAME} PROPERTIES CXX_VISIBILITY_PRESET hidden)
+  set_target_properties(${PROJECT_NAME} PROPERTIES INTERPROCEDURAL_OPTIMIZATION ON CXX_VISIBILITY_PRESET hidden)
 
   add_subdirectory(tests)
   add_subdirectory(docs)

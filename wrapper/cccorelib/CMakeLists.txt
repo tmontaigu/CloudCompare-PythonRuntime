@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.14..3.27)
 project(pycccorelib LANGUAGES CXX)
 
 include("${CMAKE_CURRENT_LIST_DIR}/../../cmake/Helpers.cmake")
@@ -49,7 +49,8 @@ if(CCCORELIB_PYTHON_IS_MASTER_PROJECT)
 endif()
 
 if(CCCORELIB_PYTHON_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
-  find_package(pybind11 CONFIG REQUIRED)
+  find_package(Python COMPONENTS Interpreter Development)
+  find_package(pybind11 CONFIG)
   pybind11_add_module(cccorelib ${cccorelib_sources})
   target_link_libraries(cccorelib PRIVATE CCCoreLib)
 
