@@ -159,8 +159,13 @@ jobs:
       - name: Install Dependencies
         run: |
           brew install qt@5 ninja pybind11
-          python3 -m pip install pytest
-          echo "CMAKE_PREFIX_PATH=/usr/local/opt/qt@5" >> $GITHUB_ENV
+          # homebrew now enforce PEP 668
+          # we use a venv to install pytest
+          python3 -m venv venv
+          source venv/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install pytest
+          echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@5)" >> $GITHUB_ENV
 
       - name: Configure CMake
         shell: pwsh
@@ -184,7 +189,9 @@ jobs:
         run: sudo cmake --install build
 
       - name: Run Tests
-        run: cmake --build build --target pytest
+        run: |
+          source venv/bin/activate
+          cmake --build build --target pytest
 
 
   Windows-Wheels:
@@ -289,7 +296,7 @@ jobs:
           source venv/bin/activate
           python -m pip install --upgrade pip
           python -m pip install pytest
-          echo "CMAKE_PREFIX_PATH=/usr/local/opt/qt@5" >> $GITHUB_ENV
+          echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@5)" >> $GITHUB_ENV
 
       - name: pip install cccorelib
         working-directory: "./wrapper"
