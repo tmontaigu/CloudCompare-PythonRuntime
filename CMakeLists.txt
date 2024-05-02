@@ -25,10 +25,6 @@ if(PLUGIN_PYTHON)
     mark_as_advanced(PLUGIN_PYTHON_COPY_ENV)
   endif()
 
-  if(NOT PYTHON_EXECUTABLE)
-    set_python_executable_from_current_venv()
-  endif()
-
   if(PYTHON_EXECUTABLE)
     ensure_pybind11_cmake_module_is_in_path()
   endif()

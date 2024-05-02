@@ -55,6 +55,7 @@ jobs:
           cmake  `
             -G Ninja `
             -B build `
+            -DPLUGIN_PYTHON_COPY_ENV=OFF `
             -DCMAKE_BUILD_TYPE=Release `
             -DOPTION_BUILD_CCVIEWER=OFF `
             -DCMAKE_INSTALL_PREFIX=install `

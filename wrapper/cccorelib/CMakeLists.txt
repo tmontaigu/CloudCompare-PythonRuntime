@@ -16,9 +16,6 @@ endif()
 add_subdirectory(src)
 
 if(CCCORELIB_PYTHON_IS_MASTER_PROJECT)
-  if(NOT PYTHON_EXECUTABLE)
-    set_python_executable_from_current_venv()
-  endif()
 
   if(PYTHON_EXECUTABLE)
     ensure_pybind11_cmake_module_is_in_path()

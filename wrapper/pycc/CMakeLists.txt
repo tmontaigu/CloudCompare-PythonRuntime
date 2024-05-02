@@ -16,12 +16,8 @@ else()
 endif()
 
 if(PYCC_IS_MASTER_PROJECT)
-  message(DEBUG "PYTHON_EXECUTABLE: ${PYTHON_EXECUTABLE}")
-  if(NOT PYTHON_EXECUTABLE)
-    set_python_executable_from_current_venv()
-  endif()
+  message(WARNING "PYTHON_EXECUTABLE: ${PYTHON_EXECUTABLE}")
 
-  message(DEBUG "PYTHON_EXECUTABLE: ${PYTHON_EXECUTABLE}")
   if(PYTHON_EXECUTABLE)
     ensure_pybind11_cmake_module_is_in_path()
   endif()
