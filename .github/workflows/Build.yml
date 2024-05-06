@@ -158,28 +158,29 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          brew install qt@5 ninja pybind11
+          brew install qt@5 ninja
+          echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@5)" >> $GITHUB_ENV
           # homebrew now enforce PEP 668
-          # we use a venv to install pytest
+          # we use a venv to install pytest since it's not distributed
+          # by homebrew
           python3 -m venv venv
           source venv/bin/activate
           python -m pip install --upgrade pip
-          python -m pip install pytest
-          echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@5)" >> $GITHUB_ENV
+          python -m pip install pytest pybind11
 
       - name: Configure CMake
-        shell: pwsh
         run: |
+          source venv/bin/activate
           mkdir build
-          cmake  `
-            --log-level=debug `
-            -G Ninja `
-            -B build `
-            -DCMAKE_BUILD_TYPE=Release `
-            -DOPTION_BUILD_CCVIEWER=OFF `
-            -DCMAKE_INSTALL_PREFIX=install `
-            -DPLUGIN_PYTHON=ON `
-            -DPLUGIN_STANDARD_QM3C2=ON `
+          cmake \
+            --log-level=debug \
+            -G Ninja \
+            -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DOPTION_BUILD_CCVIEWER=OFF \
+            -DCMAKE_INSTALL_PREFIX=install \
+            -DPLUGIN_PYTHON=ON \
+            -DPLUGIN_STANDARD_QM3C2=ON \
             .
 
       - name: Build
