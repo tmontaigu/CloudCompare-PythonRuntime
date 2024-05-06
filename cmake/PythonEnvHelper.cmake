@@ -1,6 +1,6 @@
 macro(ensure_pybind11_cmake_module_is_in_path)
   execute_process(
-    COMMAND "${PYTHON_EXECUTABLE}" "-m" "pybind11" "--cmake"
+    COMMAND "${Python_EXECUTABLE}" "-m" "pybind11" "--cmake"
     RESULT_VARIABLE _PYTHON_SUCCESS
     OUTPUT_VARIABLE PYBIND11_CMAKE_MODULES_PATH
   )

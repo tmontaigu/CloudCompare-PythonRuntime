@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14..3.27)
+cmake_minimum_required(VERSION 3.15..3.27)
 
 include(cmake/Helpers.cmake)
 include(cmake/CompilerWarnings.cmake)
@@ -12,6 +12,10 @@ if(PLUGIN_PYTHON)
 
   addplugin(NAME ${PROJECT_NAME})
 
+  find_package(Python 3.8 COMPONENTS Interpreter Development REQUIRED)
+  ensure_pybind11_cmake_module_is_in_path()
+  find_package(pybind11 CONFIG REQUIRED)
+
   option(PLUGIN_PYTHON_USE_EMBEDDED_MODULES
          "Should the Python wrapper libs be embedded in the plugin" ON
   )
@@ -19,19 +23,12 @@ if(PLUGIN_PYTHON)
 
   if(WIN32)
     option(PLUGIN_PYTHON_COPY_ENV
-           "Should the content of the current python venv be copied on install"
+           "Should the content of the current python site-package be copied on install"
            ON
     )
     mark_as_advanced(PLUGIN_PYTHON_COPY_ENV)
   endif()
-
-  if(PYTHON_EXECUTABLE)
-    ensure_pybind11_cmake_module_is_in_path()
-  endif()
-
-  find_package(Python COMPONENTS Interpreter Development)
-  find_package(pybind11 CONFIG)
-
+  
   add_subdirectory(wrapper)
   add_subdirectory(src)
 
