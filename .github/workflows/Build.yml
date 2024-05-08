@@ -156,21 +156,22 @@ jobs:
         with:
           path: 'plugins/private/CloudCompare-PythonRuntime'
 
+      - name : setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.8'
+          cache: 'pip'
+
+
       - name: Install Dependencies
         run: |
           brew install qt@5 ninja
           echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@5)" >> $GITHUB_ENV
-          # homebrew now enforce PEP 668
-          # we use a venv to install pytest since it's not distributed
-          # by homebrew
-          python3 -m venv venv
-          source venv/bin/activate
-          python -m pip install --upgrade pip
-          python -m pip install pytest pybind11
+          pip install --upgrade pip
+          pip install pytest pybind11
 
       - name: Configure CMake
         run: |
-          source venv/bin/activate
           mkdir build
           cmake \
             --log-level=debug \
@@ -191,7 +192,6 @@ jobs:
 
       - name: Run Tests
         run: |
-          source venv/bin/activate
           cmake --build build --target pytest
 
 
