@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.15..3.27)
 project(pycc LANGUAGES CXX)
 
 include("${CMAKE_CURRENT_LIST_DIR}/../../cmake/Helpers.cmake")
@@ -16,15 +16,11 @@ else()
 endif()
 
 if(PYCC_IS_MASTER_PROJECT)
-  message(DEBUG "PYTHON_EXECUTABLE: ${PYTHON_EXECUTABLE}")
-  if(NOT PYTHON_EXECUTABLE)
-    set_python_executable_from_current_venv()
-  endif()
+  message(DEBUG "Python_EXECUTABLE: ${Python_EXECUTABLE}")
 
-  message(DEBUG "PYTHON_EXECUTABLE: ${PYTHON_EXECUTABLE}")
-  if(PYTHON_EXECUTABLE)
-    ensure_pybind11_cmake_module_is_in_path()
-  endif()
+
+  message(DEBUG "Python_EXECUTABLE: ${Python_EXECUTABLE}")
+  ensure_pybind11_cmake_module_is_in_path()
 
   include(FetchContent)
 
@@ -51,6 +47,8 @@ if(PYCC_IS_MASTER_PROJECT)
   endif()
 endif()
 
+find_package(Python 3.8 COMPONENTS Interpreter Development REQUIRED)
+ensure_pybind11_cmake_module_is_in_path()
 find_package(pybind11 CONFIG REQUIRED)
 
 add_subdirectory(src)

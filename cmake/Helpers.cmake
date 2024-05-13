@@ -1,9 +1,7 @@
-# PYTHON_PREFIX & PYTHON_LIBRARY_SUFFIX come from pybind11 cmake
-
 # This function sets a global PYTHON_BASE_PREFIX cache variable
 function(getset_python_base_prefix)
   execute_process(
-    COMMAND "${PYTHON_EXECUTABLE}" "-c"
+    COMMAND "${Python_EXECUTABLE}" "-c"
             "import sys;print(sys.base_prefix.replace('\\\\', '/'), end='')"
     OUTPUT_VARIABLE PYTHON_BASE_PREFIX
   )
@@ -13,34 +11,34 @@ function(getset_python_base_prefix)
   )
 endfunction()
 
-function(copy_python_venv INSTALL_DIR)
+function(copy_python_env INSTALL_DIR)
   message(
     DEBUG
-    "Venv copy:
+    "ENV copy:
         PYTHON_BASE_PREFIX: ${PYTHON_BASE_PREFIX}
-        PYTHON_PREFIX:      ${PYTHON_PREFIX}
-        INSTALL_DIR:        ${INSTALL_DIR}"
+        PYTHON_SITELIB:     ${Python_SITELIB}
+        PYTHON_STDARCH:     ${Python_STDARCH}
+        PYTHON_STDLIB:      ${Python_STDLIB}
+        PYTHON_LIBRARIES:   ${Python_RUNTIME_LIBRARY_DIRS}"
   )
-  message(DEBUG "COPYING venv from ${PYTHON_BASE_PREFIX} to ${INSTALL_DIR}")
+  message(DEBUG "COPYING venv from ${Python_SITELIB}/ to ${INSTALL_DIR}/Lib/site-packages/")
   install(DIRECTORY "${PYTHON_BASE_PREFIX}/" DESTINATION "${INSTALL_DIR}")
 
-  if(NOT "${PYTHON_BASE_PREFIX}" STREQUAL "${PYTHON_PREFIX}")
-    install(DIRECTORY "${PYTHON_PREFIX}/Lib/site-packages/"
-            DESTINATION "${INSTALL_DIR}/Lib/site-packages/"
-    )
-  endif()
+  install(DIRECTORY "${Python_SITELIB}/"
+        DESTINATION "${INSTALL_DIR}/Lib/site-packages/"
+  )
 endfunction()
 
 function(copy_python_dll)
   message(
     DEBUG
-    "Python DLL: = ${PYTHON_BASE_PREFIX}/python${PYTHON_LIBRARY_SUFFIX}.dll"
+    "Python DLL: = ${Python_RUNTIME_LIBRARY_DIRS}/python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}.dll"
   )
   install(
-    FILES "${PYTHON_BASE_PREFIX}/python${PYTHON_LIBRARY_SUFFIX}.dll"
+    FILES "${Python_RUNTIME_LIBRARY_DIRS}/python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}.dll"
           # install the python3 base dll as well because some libs will try to
           # find it (PySide and PyQT for example)
-          "${PYTHON_BASE_PREFIX}/python3.dll"
+          "${Python_RUNTIME_LIBRARY_DIRS}/python${Python_VERSION_MAJOR}.dll"
     DESTINATION ${CLOUDCOMPARE_DEST_FOLDER}
   )
 endfunction()
@@ -50,7 +48,7 @@ function(manage_windows_install)
   getset_python_base_prefix()
 
   if(PLUGIN_PYTHON_COPY_ENV)
-    copy_python_venv(${CC_PYTHON_INSTALL_DIR})
+    copy_python_env(${CC_PYTHON_INSTALL_DIR})
   endif()
 
   copy_python_dll()
