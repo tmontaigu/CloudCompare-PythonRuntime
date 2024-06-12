@@ -72,7 +72,7 @@ _______
 
     1. Start the cmake generation while still within the activated environment
 
-    2. Add ``-DPYTHON_EXECUTABLE="somepath_to_python.exe"``
+    2. Add ``-DPython_EXECUTABLE="somepath_to_python.exe"``
        Where ``somepath_to_python.exe`` is the absolute path to the python executable
        of the pyccenv created earlier.
 
