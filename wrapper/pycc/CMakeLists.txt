@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15..3.27)
+cmake_minimum_required(VERSION 3.15)
 project(pycc LANGUAGES CXX)
 
 include("${CMAKE_CURRENT_LIST_DIR}/../../cmake/Helpers.cmake")
