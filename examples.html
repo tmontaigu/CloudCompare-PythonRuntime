@@ -391,7 +391,8 @@
 <span class="n">polyline</span><span class="o">.</span><span class="n">addPointIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">vertices</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
 
 <span class="c1"># To see the crop area</span>
-<span class="c1"># CC.addToDB(vertices)</span>
+<span class="c1"># CC.addToDB(polyline)</span>
+
 
 <span class="n">cropped_ref</span> <span class="o">=</span> <span class="n">pc_to_crop</span><span class="o">.</span><span class="n">crop2D</span><span class="p">(</span><span class="n">polyline</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">cropped_ref</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
