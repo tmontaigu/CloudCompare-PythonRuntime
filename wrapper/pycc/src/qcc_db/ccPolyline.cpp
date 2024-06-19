@@ -36,7 +36,9 @@ void define_ccPolyline(py::module &m)
                         unsigned uniqueID = ccUniqueIDGenerator::InvalidUniqueID)
                      { return new ccPolyline(cloud, uniqueID); }),
             "associatedCloud"_a,
-            "uniqueID"_a = []() { return ccUniqueIDGenerator::InvalidUniqueID; }())
+            "uniqueID"_a = []() { return ccUniqueIDGenerator::InvalidUniqueID; }(),
+            py::keep_alive<1, 2>() // Keep cloud alive while polyline is
+            )
 
         .def("set2DMode", &ccPolyline::set2DMode, "state"_a)
         .def("is2DMode", &ccPolyline::is2DMode)

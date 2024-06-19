@@ -23,7 +23,8 @@ polyline.setClosed(True)
 polyline.addPointIndex(0, vertices.size())
 
 # To see the crop area
-# CC.addToDB(vertices)
+# CC.addToDB(polyline)
+
 
 cropped_ref = pc_to_crop.crop2D(polyline, 2, True)
 if cropped_ref is None:
@@ -34,3 +35,4 @@ if cropped_ref.size() != 0:
     CC.addToDB(cropped)
 else:
     print("No points fall in crop area")
+
