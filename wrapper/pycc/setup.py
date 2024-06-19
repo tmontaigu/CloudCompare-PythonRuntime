@@ -10,6 +10,6 @@ setup(
     description="Python bindings for CloudCompare libs",
     long_description="",
     packages=["pycc"],
-    cmake_args=['-GNinja', '-DOPTION_BUILD_CCVIEWER=OFF'],
+    cmake_args=['-DOPTION_BUILD_CCVIEWER=OFF'],
     zip_safe=False,
 )
