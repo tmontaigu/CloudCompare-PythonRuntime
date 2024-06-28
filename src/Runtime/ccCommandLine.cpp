@@ -105,12 +105,12 @@ void define_ccCommandLine(py::module &m)
              &ccCommandLineInterface::saveClouds,
              "suffix"_a = QString(),
              "allAtOnce"_a = false,
-             "allAtOnceFileName"_a = nullptr)
+             "allAtOnceFileName"_a = QString())
         .def("saveMeshes",
              &ccCommandLineInterface::saveMeshes,
              "suffix"_a = QString(),
              "allAtOnce"_a = false,
-             "allAtOnceFileName"_a = nullptr)
+             "allAtOnceFileName"_a = QString())
         .def(
             "importFile",
             [](ccCommandLineInterface &self,

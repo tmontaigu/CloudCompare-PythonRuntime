@@ -115,8 +115,8 @@ bool KeyPressEater::eventFilter(QObject *obj, QEvent *event)
             {
                 m_repl->codeEdit()->clear();
                 m_repl->codeEdit()->insertPlainText(m_repl->m_history.older());
-                return true;
             }
+            return true;
         case Qt::Key_Home:
             m_repl->codeEdit()->moveCursor(QTextCursor::StartOfLine);
             m_repl->codeEdit()->moveCursor(QTextCursor::NextWord);

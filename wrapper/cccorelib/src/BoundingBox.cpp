@@ -47,6 +47,6 @@ void define_BoundingBox(py::module &cccorelib)
         .def(py::self += py::self)
         .def(py::self += CCVector3())
         .def(py::self -= CCVector3())
-        .def(py::self *= double());
+        .def(py::self *= PointCoordinateType());
     // TODO operator *= square matrix
 }
