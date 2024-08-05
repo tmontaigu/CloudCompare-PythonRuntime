@@ -55,6 +55,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#creating-a-ccpointcloud-from-python">Creating a ccPointCloud from Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-ccmesh">Using ccMesh</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#loading-a-file">Loading a file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scalar-field">Scalar Field</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sub-sampling">Sub sampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#merge">Merge</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#crop2d">Crop2D</a></li>
@@ -265,6 +266,52 @@
 <span class="n">params</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">FileIOFilter</span><span class="o">.</span><span class="n">SaveParameters</span><span class="p">()</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">FileIOFilter</span><span class="o">.</span><span class="n">SaveToFile</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;savedFromPlugin.bin&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">FileIOFilter</span><span class="o">.</span><span class="n">SaveToFile</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">getChild</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="sa">r</span><span class="s1">&#39;savedFromPlugin.laz&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="scalar-field">
+<h2>Scalar Field<a class="headerlink" href="#scalar-field" title="Permalink to this heading"></a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Example that shows how to add a scalar field</span>
+<span class="sd">as well as how to make it properly be displayed in the UI</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">pycc</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">pycc</span><span class="o">.</span><span class="n">PointCoordinateType</span><span class="p">)</span>
+<span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">),</span> <span class="n">pycc</span><span class="o">.</span><span class="n">PointCoordinateType</span><span class="p">)</span> <span class="o">*</span> <span class="mf">18.5</span>
+<span class="n">zs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">),</span> <span class="n">pycc</span><span class="o">.</span><span class="n">PointCoordinateType</span><span class="p">)</span> <span class="o">*</span> <span class="mf">17.33</span>
+
+<span class="n">pc</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccPointCloud</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">zs</span><span class="p">)</span>
+
+<span class="c1"># Create and add a new scalar field</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">pc</span><span class="o">.</span><span class="n">addScalarField</span><span class="p">(</span><span class="s2">&quot;Intensity&quot;</span><span class="p">)</span>
+<span class="n">scalar_field</span> <span class="o">=</span> <span class="n">pc</span><span class="o">.</span><span class="n">getScalarField</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+
+<span class="c1"># Change the values</span>
+<span class="n">sfArray</span> <span class="o">=</span> <span class="n">pc</span><span class="o">.</span><span class="n">getScalarField</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span><span class="o">.</span><span class="n">asArray</span><span class="p">()</span>
+<span class="n">num_chunk</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">chunk_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span> <span class="o">//</span> <span class="n">num_chunk</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_chunk</span><span class="p">):</span>
+    <span class="n">sfArray</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">chunk_size</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">chunk_size</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+
+<span class="c1"># Make it so the scalar field is displayed</span>
+<span class="n">scalar_field</span><span class="o">.</span><span class="n">computeMinAndMax</span><span class="p">()</span>
+<span class="n">pc</span><span class="o">.</span><span class="n">setCurrentDisplayedScalarField</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+<span class="n">pc</span><span class="o">.</span><span class="n">showSF</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Optional: choose the color scale</span>
+<span class="n">scale</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccColorScalesManager</span><span class="o">.</span><span class="n">GetDefaultScale</span><span class="p">(</span>
+    <span class="n">pycc</span><span class="o">.</span><span class="n">ccColorScalesManager</span><span class="o">.</span><span class="n">YELLOW_BROWN</span>
+<span class="p">)</span>
+<span class="n">scalar_field</span><span class="o">.</span><span class="n">setColorScale</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
+
+<span class="n">pc</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s2">&quot;Scalar Field Example&quot;</span><span class="p">)</span>
+<span class="c1"># Change the point size so that the cloud is more</span>
+<span class="c1"># visible by default (only needed here as the point cloud</span>
+<span class="c1"># is very small)</span>
+<span class="n">pc</span><span class="o">.</span><span class="n">setPointSize</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+
+<span class="n">pycc</span><span class="o">.</span><span class="n">GetInstance</span><span class="p">()</span><span class="o">.</span><span class="n">addToDB</span><span class="p">(</span><span class="n">pc</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
