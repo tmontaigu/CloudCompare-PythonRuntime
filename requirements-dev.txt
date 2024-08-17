@@ -2,7 +2,6 @@ numpy
 pybind11>=2.6.0
 sphinx==5.0.2
 sphinx-rtd-theme
-breathe
 pytest==7.4.4
 tqdm
 invoke
