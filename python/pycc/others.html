@@ -61,6 +61,8 @@
 <li class="toctree-l2"><a class="reference internal" href="data_structures.html">CloudCompare Data Structures &amp; Interfaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="primitives.html">Primitives</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Others</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rgb">Rgb</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rgba">Rgba</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ccscalarfield">ccScalarField</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#cc2dlabel">cc2DLabel</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ccbbox">ccBBox</a></li>
@@ -122,6 +124,61 @@
              
   <section id="others">
 <h1>Others<a class="headerlink" href="#others" title="Permalink to this heading"></a></h1>
+<section id="rgb">
+<h2>Rgb<a class="headerlink" href="#rgb" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycc.Rgb">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">Rgb</span></span><a class="headerlink" href="#pycc.Rgb" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_object</span></code></p>
+<p>RGB color structure</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.Rgb.b">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">b</span></span><a class="headerlink" href="#pycc.Rgb.b" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.Rgb.g">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">g</span></span><a class="headerlink" href="#pycc.Rgb.g" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.Rgb.r">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">r</span></span><a class="headerlink" href="#pycc.Rgb.r" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="rgba">
+<h2>Rgba<a class="headerlink" href="#rgba" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycc.Rgba">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">Rgba</span></span><a class="headerlink" href="#pycc.Rgba" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_object</span></code></p>
+<p>RGBA color structure</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.Rgba.a">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a</span></span><a class="headerlink" href="#pycc.Rgba.a" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.Rgba.b">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">b</span></span><a class="headerlink" href="#pycc.Rgba.b" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.Rgba.g">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">g</span></span><a class="headerlink" href="#pycc.Rgba.g" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycc.Rgba.r">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">r</span></span><a class="headerlink" href="#pycc.Rgba.r" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="ccscalarfield">
 <h2>ccScalarField<a class="headerlink" href="#ccscalarfield" title="Permalink to this heading"></a></h2>
 <div class="admonition seealso">
@@ -215,7 +272,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccScalarField.getColor">
-<span class="sig-name descname"><span class="pre">getColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccScalarField" title="pycc.ccScalarField"><span class="pre">pycc.ccScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ccColor::RgbTpl&lt;unsigned</span> <span class="pre">char&gt;</span></span></span><a class="headerlink" href="#pycc.ccScalarField.getColor" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccScalarField" title="pycc.ccScalarField"><span class="pre">pycc.ccScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycc.Rgb" title="pycc.Rgb"><span class="pre">pycc.Rgb</span></a></span></span><a class="headerlink" href="#pycc.ccScalarField.getColor" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -245,7 +302,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccScalarField.getValueColor">
-<span class="sig-name descname"><span class="pre">getValueColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccScalarField" title="pycc.ccScalarField"><span class="pre">pycc.ccScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ccColor::RgbTpl&lt;unsigned</span> <span class="pre">char&gt;</span></span></span><a class="headerlink" href="#pycc.ccScalarField.getValueColor" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getValueColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccScalarField" title="pycc.ccScalarField"><span class="pre">pycc.ccScalarField</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycc.Rgb" title="pycc.Rgb"><span class="pre">pycc.Rgb</span></a></span></span><a class="headerlink" href="#pycc.ccScalarField.getValueColor" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -500,7 +557,7 @@
 <dd><p>Bases: <a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.BoundingBox" title="cccorelib.BoundingBox"><code class="xref py py-class docutils literal notranslate"><span class="pre">BoundingBox</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccBBox.draw">
-<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">pycc.ccBBox</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context:</span> <span class="pre">ccGLDrawContext</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col:</span> <span class="pre">ccColor::RgbTpl&lt;unsigned</span> <span class="pre">char&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccBBox.draw" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccBBox" title="pycc.ccBBox"><span class="pre">pycc.ccBBox</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ccGLDrawContext</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.Rgb" title="pycc.Rgb"><span class="pre">pycc.Rgb</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccBBox.draw" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1124,7 +1181,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccColorScale.getColorByIndex">
-<span class="sig-name descname"><span class="pre">getColorByIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccColorScale" title="pycc.ccColorScale"><span class="pre">pycc.ccColorScale</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ccColor::RgbTpl&lt;unsigned</span> <span class="pre">char&gt;</span></span></span><a class="headerlink" href="#pycc.ccColorScale.getColorByIndex" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getColorByIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccColorScale" title="pycc.ccColorScale"><span class="pre">pycc.ccColorScale</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycc.Rgb" title="pycc.Rgb"><span class="pre">pycc.Rgb</span></a></span></span><a class="headerlink" href="#pycc.ccColorScale.getColorByIndex" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1132,14 +1189,14 @@
 <span class="sig-name descname"><span class="pre">getColorByRelativePos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycc.ccColorScale.getColorByRelativePos" title="Permalink to this definition"></a></dt>
 <dd><p>Overloaded function.</p>
 <ol class="arabic simple">
-<li><p>getColorByRelativePos(self: pycc.ccColorScale, relativePos: float, outOfRangeColor: ccColor::RgbTpl&lt;unsigned char&gt; = None) -&gt; ccColor::RgbTpl&lt;unsigned char&gt;</p></li>
-<li><p>getColorByRelativePos(self: pycc.ccColorScale, relativePos: float, steps: int, outOfRangeColor: ccColor::RgbTpl&lt;unsigned char&gt; = None) -&gt; ccColor::RgbTpl&lt;unsigned char&gt;</p></li>
+<li><p>getColorByRelativePos(self: pycc.ccColorScale, relativePos: float, outOfRangeColor: pycc.Rgb = None) -&gt; pycc.Rgb</p></li>
+<li><p>getColorByRelativePos(self: pycc.ccColorScale, relativePos: float, steps: int, outOfRangeColor: pycc.Rgb = None) -&gt; pycc.Rgb</p></li>
 </ol>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccColorScale.getColorByValue">
-<span class="sig-name descname"><span class="pre">getColorByValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">pycc.ccColorScale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value:</span> <span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outOfRangeColor:</span> <span class="pre">ccColor::RgbTpl&lt;unsigned</span> <span class="pre">char&gt;</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ccColor::RgbTpl&lt;unsigned</span> <span class="pre">char&gt;</span></span></span><a class="headerlink" href="#pycc.ccColorScale.getColorByValue" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getColorByValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccColorScale" title="pycc.ccColorScale"><span class="pre">pycc.ccColorScale</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outOfRangeColor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.Rgb" title="pycc.Rgb"><span class="pre">pycc.Rgb</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycc.Rgb" title="pycc.Rgb"><span class="pre">pycc.Rgb</span></a></span></span><a class="headerlink" href="#pycc.ccColorScale.getColorByValue" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

@@ -2,6 +2,26 @@ Others
 ======
 
 
+Rgb
+___
+.. seealso::
+
+.. autoclass:: pycc.Rgb
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Rgba
+____
+.. seealso::
+
+.. autoclass:: pycc.Rgba
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 ccScalarField
 _____________
 .. seealso::
