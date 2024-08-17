@@ -77,7 +77,30 @@ void define_qcc_db(py::module &m)
      * qCC_db
      **********************************/
 
-    py::class_<ccColor::Rgba>(m, "Rgba");
+    py::class_<ccColor::Rgba>(m, "Rgba", R"doc(
+    RGBA color structure
+)doc")
+        .def(py::init<>(), R"doc(Inits color to (0,0,0, 0))doc")
+        .def(py::init<ColorCompType, ColorCompType, ColorCompType, ColorCompType>(),
+             "r"_a,
+             "g"_a,
+             "b"_a,
+             "a"_a)
+        .def_readwrite("r", &ccColor::Rgba::r)
+        .def_readwrite("g", &ccColor::Rgba::g)
+        .def_readwrite("b", &ccColor::Rgba::b)
+        .def_readwrite("a", &ccColor::Rgba::a)
+        .def("__ne__", &ccColor::Rgba::operator!=);
+
+    py::class_<ccColor::Rgb>(m, "Rgb", R"doc(
+    RGB color structure
+)doc")
+        .def(py::init<>(), R"doc(Inits color to (0,0,0))doc")
+        .def(py::init<ColorCompType, ColorCompType, ColorCompType>(), "r"_a, "g"_a, "b"_a)
+        .def_readwrite("r", &ccColor::Rgb::r)
+        .def_readwrite("g", &ccColor::Rgb::g)
+        .def_readwrite("b", &ccColor::Rgb::b)
+        .def("__ne__", &ccColor::Rgb::operator!=);
 
     define_ccScalarField(m);
     define_ccGLMatrix(m);
