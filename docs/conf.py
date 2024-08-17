@@ -36,12 +36,6 @@ extensions = [
     'sphinx.ext.inheritance_diagram',
     'breathe'
 ]
-breathe_projects = {
-    "CCCoreLib": r"__build/CCCoreLib/xml",
-    "qCC_db": r"__build/qCC_db/xml"
-}
-
-breathe_default_project = "qCC_db"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
