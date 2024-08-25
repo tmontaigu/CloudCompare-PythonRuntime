@@ -204,6 +204,7 @@ void define_ccPointCloud(py::module &m)
                      ++zs_it;
                  }
              })
+        .def("showNormalsAsLines", &ccPointCloud::showNormalsAsLines, "state"_a)
         .def("colorize", &ccPointCloud::colorize)
         .def("crop2D", &ccPointCloud::crop2D, "poly"_a, "orthodDim"_a, "inside"_a = true)
         .def("colors",
