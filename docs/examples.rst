@@ -27,6 +27,11 @@ Scalar Field
 .. literalinclude:: ../script_examples/scalar_field.py
     :language: Python
 
+Polyline
+---------
+
+.. literalinclude:: ../script_examples/polyline.py
+    :language: Python
 
 Sub sampling
 ------------
