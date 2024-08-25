@@ -56,6 +56,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#using-ccmesh">Using ccMesh</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#loading-a-file">Loading a file</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#scalar-field">Scalar Field</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#polyline">Polyline</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sub-sampling">Sub sampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#merge">Merge</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#crop2d">Crop2D</a></li>
@@ -312,6 +313,35 @@
 <span class="n">pc</span><span class="o">.</span><span class="n">setPointSize</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
 
 <span class="n">pycc</span><span class="o">.</span><span class="n">GetInstance</span><span class="p">()</span><span class="o">.</span><span class="n">addToDB</span><span class="p">(</span><span class="n">pc</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="polyline">
+<h2>Polyline<a class="headerlink" href="#polyline" title="Permalink to this heading"></a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pycc</span>
+<span class="kn">import</span> <span class="nn">cccorelib</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">CC</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">GetInstance</span><span class="p">()</span>
+<span class="n">VERTICES</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">])</span>
+<span class="n">vertices</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccPointCloud</span><span class="p">(</span><span class="n">VERTICES</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">VERTICES</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">VERTICES</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">polyline</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccPolyline</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span>
+<span class="n">polyline</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">pycc</span><span class="o">.</span><span class="n">Rgb</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="c1"># set the color to red</span>
+<span class="n">polyline</span><span class="o">.</span><span class="n">showColors</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">polyline</span><span class="o">.</span><span class="n">setClosed</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="c1"># This is important, otherwise the polyline would have a size of 0</span>
+<span class="n">polyline</span><span class="o">.</span><span class="n">addPointIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+
+<span class="n">CC</span><span class="o">.</span><span class="n">addToDB</span><span class="p">(</span><span class="n">polyline</span><span class="p">)</span>
+<span class="n">CC</span><span class="o">.</span><span class="n">updateUI</span><span class="p">()</span>
+<span class="n">polyline</span><span class="o">.</span><span class="n">getDisplay</span><span class="p">()</span><span class="o">.</span><span class="n">display3DLabel</span><span class="p">(</span><span class="s2">&quot;Hello, world&quot;</span><span class="p">,</span> <span class="n">cccorelib</span><span class="o">.</span><span class="n">CCVector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
 </pre></div>
 </div>
 </section>
