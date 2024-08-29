@@ -165,7 +165,8 @@ void ccGuiPythonInstance::removeFromDB(pybind11::object &obj)
         // it'll be a use after free.
         m_app->removeFromDB(hobj, false /*delete*/);
         Q_ASSERT(obj.ref_count() >= 2);
-        obj.dec_ref();
+        // obj.dec_ref();
+        obj = pybind11::none();
     }
     catch (const pybind11::cast_error &)
     {
