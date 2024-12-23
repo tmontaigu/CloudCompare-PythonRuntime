@@ -51,6 +51,4 @@ void define_GenericDistribution(py::module &cccorelib)
              "Yk"_a,
              "numberOfClasses"_a,
              "histo"_a = nullptr);
-
-    py::bind_vector<CCCoreLib::GenericDistribution::ScalarContainer>(GenericDistribution, "ScalarContainer");
 }

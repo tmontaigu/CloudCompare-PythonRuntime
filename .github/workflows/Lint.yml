@@ -8,8 +8,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - uses: DoozyX/clang-format-lint-action@v0.14
+    - uses: DoozyX/clang-format-lint-action@v0.18.1
       with:
         source: '.'
         extensions: 'h,cpp'
-        clangFormatVersion: 14
+        clangFormatVersion: 18

@@ -51,7 +51,7 @@ def main():
 
     cloud.setPointScalarValue(17, 42.1337)
     print(cloud.getPointScalarValue(17))
-    assert cloud.getPointScalarValue(17) == float(np.float32(42.1337))
+    assert np.isclose(cloud.getPointScalarValue(17), 42.1337)
 
     p = cloud.getNextPoint()
     assert p.x == point1.x

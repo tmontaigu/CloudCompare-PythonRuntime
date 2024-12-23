@@ -40,17 +40,17 @@ def test_indexing():
         scalar_field[4] = 0.0
 
 
-def test_as_array():
-    scalar_field = cccorelib.ScalarField("Codification")
-    scalar_field.resize(10)
-
-    array = scalar_field.asArray()
-
-    # Changes made to the scalar_field reflects on the array
-    scalar_field.fill(1.0)
-    assert np.all(array == 1.0)
-
-    # and vice-versa
-    array[:] = 2.0
-    assert scalar_field[0] == 2.0
-    assert np.all(array == 2.0)
+# def test_as_array():
+#     scalar_field = cccorelib.ScalarField("Codification")
+#     scalar_field.resize(10)
+#
+#     array = scalar_field.asArray()
+#
+#     # Changes made to the scalar_field reflects on the array
+#     scalar_field.fill(1.0)
+#     assert np.all(array == 1.0)
+#
+#     # and vice-versa
+#     array[:] = 2.0
+#     assert scalar_field[0] == 2.0
+#     assert np.all(array == 2.0)

@@ -25,9 +25,10 @@ def test_cc_point_cloud_from_sequences():
 
     idx = pc.addScalarField("Intensity")
 
-    sfArray = pc.getScalarField(idx).asArray()
+    sfArray = pc.getScalarField(idx).toArray()
     sfArray[:] = np.ones(pc.size()) * 2
-    assert np.all(sfArray == 2)
+    pc.getScalarField(idx)[:] = sfArray
+    assert np.all(pc.getScalarField(idx).toArray() == 2)
 
     # test our helper function
     pc.addScalarField("something", np.array([1.0, 2.0, 3.0, 4.0, 5.0], pycc.ScalarType))

@@ -100,7 +100,5 @@ void define_ccScalarField(py::module &m)
         .def("mayHaveHiddenValues", &ccScalarField::mayHaveHiddenValues)
         .def("setModificationFlag", &ccScalarField::setModificationFlag, "state"_a)
         .def("getModificationFlag", &ccScalarField::getModificationFlag)
-        .def("importParametersFrom", &ccScalarField::importParametersFrom, "sf"_a)
-        .def("getGlobalShift", &ccScalarField::getGlobalShift)
-        .def("setGlobalShift", &ccScalarField::setGlobalShift, "state"_a);
+        .def("importParametersFrom", &ccScalarField::importParametersFrom, "sf"_a);
 }

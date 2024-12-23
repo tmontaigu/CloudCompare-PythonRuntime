@@ -112,7 +112,7 @@ void addPointsFromArrays(PointCloudType &self,
         throw py::value_error("xs, ys, zs must have the same size");
     }
 
-    py::ssize_t numToReserve = self.size() + xs.size();
+    const py::ssize_t numToReserve = self.size() + xs.size();
     if (numToReserve > std::numeric_limits<unsigned int>::max())
     {
         throw std::out_of_range(std::to_string(numToReserve) + " cannot be casted to unsigned int");
@@ -258,7 +258,7 @@ static const constexpr char SIZE_SCALAR_FIELD_DOCSTRING[] = R"doc(
                     CCCoreLib::ScalarField *sf = self.getScalarField(idx);                                   \
                     for (py::ssize_t i{0}; i < values.size(); ++i)                                           \
                     {                                                                                        \
-                        (*sf)[i] = values_u(i);                                                              \
+                        sf->setValue(i, values_u(i));                                                        \
                     }                                                                                        \
                 }                                                                                            \
                 return idx;                                                                                  \

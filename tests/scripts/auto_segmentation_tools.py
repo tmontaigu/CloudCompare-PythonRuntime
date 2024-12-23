@@ -39,7 +39,7 @@ def test_tribox_overlap():
         cccorelib.CCVector3(0.75, 1.25, 1.0)
     ]
 
-    assert cccorelib.CCMiscTools.TriBoxOverlap(boxCenter, boxHalfSize, triangle)
+    assert cccorelib.CCMiscTools.TriBoxOverlap(boxCenter, boxHalfSize, triangle), "TriBoxOverlap failed"
 
     # TODO: needs CCVector3D to be defined in cccorelib to be uncommented
     # boxCenter = cccorelib.CCVector3d(0, 0, 0)
@@ -59,7 +59,7 @@ def test_connected_components(cloud):
 
     reference_clouds = cccorelib.ReferenceCloudContainer()
     success = cccorelib.AutoSegmentationTools.extractConnectedComponents(cloud, reference_clouds)
-    assert success
+    assert success, "extractConnectedComponents failed"
 
 
 def main():

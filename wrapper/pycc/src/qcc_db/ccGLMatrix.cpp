@@ -125,9 +125,7 @@ static void define_ccGLMatrixClass(py::module &m, const char *name)
         .def("scaleRow", &ccGLMatrixType::scaleRow, "rowIndex"_a, "coef"_a)
         .def("scaleColumn", &ccGLMatrixType::scaleColumn, "rowIndex"_a, "coef"_a)
         .def("asArray",
-             [](ccGLMatrixType &self) {
-                 return PyCC::SpanAsNumpyArray(self.data(), {4, 4});
-             });
+             [](ccGLMatrixType &self) { return PyCC::SpanAsNumpyArray(self.data(), {4, 4}); });
 }
 
 void define_ccGLMatrix(py::module &m)

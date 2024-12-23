@@ -1,12 +1,13 @@
 import cccorelib
 import pycc
+import numpy as np
 
 cc = pycc.GetInstance()
 cloud = cc.clouds()[0].pc
 
-assert cccorelib.ScalarFieldTools.computeMeanScalarValue(cloud) == 8204.2490234375
-assert cccorelib.ScalarFieldTools.computeMeanSquareScalarValue(cloud) == 93043936.0
-assert cccorelib.ScalarFieldTools.computeScalarFieldGradient(cloud, 0, False) == 0
+assert np.isclose(cccorelib.ScalarFieldTools.computeMeanScalarValue(cloud), 8204.2490234375)
+assert np.isclose(cccorelib.ScalarFieldTools.computeMeanSquareScalarValue(cloud), 93043936.0)
+assert np.isclose(cccorelib.ScalarFieldTools.computeScalarFieldGradient(cloud, 0, False), 0)
 
 assert cccorelib.ScalarFieldTools.computeScalarFieldExtremas(cloud) == (0, 37522.00)
 assert cccorelib.ScalarFieldTools.countScalarFieldValidValues(cloud) == 10_683

@@ -50,7 +50,7 @@ static py::dict CreateGlobals()
     return globals;
 }
 
-PythonInterpreter::State::State() : globals(CreateGlobals()), locals(){};
+PythonInterpreter::State::State() : globals(CreateGlobals()), locals() {};
 
 //================================================================================
 

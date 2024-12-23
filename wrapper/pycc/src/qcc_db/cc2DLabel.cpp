@@ -65,6 +65,7 @@ void define_cc2DLabel(py::module &m)
     Pycc2DLabel.def("isPointLegendDisplayed", &cc2DLabel::isPointLegendDisplayed);
     Pycc2DLabel.def("setDisplayedIn2D", &cc2DLabel::setDisplayedIn2D, "state"_a);
     Pycc2DLabel.def("isDisplayedIn2D", &cc2DLabel::isDisplayedIn2D);
+    Pycc2DLabel.def("setRelativeMarkerScale", &cc2DLabel::setRelativeMarkerScale, "value"_a);
 
     py::class_<cc2DLabel::PickedPoint>(Pycc2DLabel, "PickedPoint")
         .def_readwrite(

@@ -25,7 +25,7 @@ if(CCCORELIB_PYTHON_IS_MASTER_PROJECT)
     GIT_REPOSITORY https://github.com/CloudCompare/CCCoreLib
     GIT_PROGRESS ON
     GIT_SHALLOW OFF
-    GIT_TAG ee426c368280aef8dc3e2c418e6a007064280e58
+    GIT_TAG 83732e77561da45b857a8a2ffcd2949e6057a393
   )
 
   FetchContent_GetProperties(CCCoreLib)
@@ -44,7 +44,7 @@ if(CCCORELIB_PYTHON_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
   find_package(Python 3.8 COMPONENTS Interpreter Development REQUIRED)
   ensure_pybind11_cmake_module_is_in_path()
   find_package(pybind11 CONFIG REQUIRED)
-  
+
   pybind11_add_module(cccorelib ${cccorelib_sources})
   target_link_libraries(cccorelib PRIVATE CCCoreLib)
 

@@ -20,5 +20,5 @@ cloud = CC.clouds()[0].pc
 d.computeParameters(cloud)
 
 d.setParameters(1.1, 0.6)
-assert d.getMu() == float(np.float32(1.1))
-assert d.getSigma2() == float(np.float32(0.6))
+assert d.getMu() == 1.1
+assert d.getSigma2() == 0.6
