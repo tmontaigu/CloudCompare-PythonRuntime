@@ -557,7 +557,10 @@ one is already selected by default.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPointCloud.colors">
 <span class="sig-name descname"><span class="pre">colors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPointCloud" title="pycc.ccPointCloud"><span class="pre">pycc.ccPointCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#pycc.ccPointCloud.colors" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>“Returns a the colors as a “view” in a numpy array
+if the point cloud does not have colors, None is returned</p>
+<p>As this is a “view”, modifications made to this will reflect on the point cloud</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPointCloud.computeNormalsWithGrids">
@@ -583,6 +586,15 @@ one is already selected by default.</p></li>
 <dt class="sig sig-object py" id="pycc.ccPointCloud.getCurrentDisplayedScalarFieldIndex">
 <span class="sig-name descname"><span class="pre">getCurrentDisplayedScalarFieldIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPointCloud" title="pycc.ccPointCloud"><span class="pre">pycc.ccPointCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#pycc.ccPointCloud.getCurrentDisplayedScalarFieldIndex" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccPointCloud.getPointColor">
+<span class="sig-name descname"><span class="pre">getPointColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPointCloud" title="pycc.ccPointCloud"><span class="pre">pycc.ccPointCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="others.html#pycc.Rgba" title="pycc.Rgba"><span class="pre">pycc.Rgba</span></a></span></span><a class="headerlink" href="#pycc.ccPointCloud.getPointColor" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the color of the point at the given index</p>
+<blockquote>
+<div><p>Colors must have been enabled before</p>
+</div></blockquote>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPointCloud.orientNormalsTowardViewPoint">
@@ -621,13 +633,8 @@ one is already selected by default.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPointCloud.reserveTheRGBTable">
-<span class="sig-name descname"><span class="pre">reserveTheRGBTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycc.ccPointCloud.reserveTheRGBTable" title="Permalink to this definition"></a></dt>
-<dd><p>Overloaded function.</p>
-<ol class="arabic simple">
-<li><p>reserveTheRGBTable(self: pycc.ccPointCloud, arg0: int) -&gt; bool</p></li>
-<li><p>reserveTheRGBTable(self: pycc.ccPointCloud, fillWithWhite: int = False) -&gt; bool</p></li>
-</ol>
-</dd></dl>
+<span class="sig-name descname"><span class="pre">reserveTheRGBTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPointCloud" title="pycc.ccPointCloud"><span class="pre">pycc.ccPointCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccPointCloud.reserveTheRGBTable" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPointCloud.resizeTheNormsTable">
@@ -635,14 +642,62 @@ one is already selected by default.</p></li>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="pycc.ccPointCloud.setColor">
-<span class="sig-name descname"><span class="pre">setColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPointCloud" title="pycc.ccPointCloud"><span class="pre">pycc.ccPointCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPointCloud.setColor" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="pycc.ccPointCloud.resizeTheRGBTable">
+<span class="sig-name descname"><span class="pre">resizeTheRGBTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPointCloud" title="pycc.ccPointCloud"><span class="pre">pycc.ccPointCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillWithWhite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccPointCloud.resizeTheRGBTable" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccPointCloud.setColor">
+<span class="sig-name descname"><span class="pre">setColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPointCloud" title="pycc.ccPointCloud"><span class="pre">pycc.ccPointCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">255</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPointCloud.setColor" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the color for the whole point cloud</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccPointCloud.setColors">
+<span class="sig-name descname"><span class="pre">setColors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycc.ccPointCloud.setColors" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>setColors(self: pycc.ccPointCloud, r: numpy.ndarray[numpy.uint8], g: numpy.ndarray[numpy.uint8], b: numpy.ndarray[numpy.uint8], a: numpy.ndarray[numpy.uint8] = None) -&gt; None</p>
+<blockquote>
+<div><p>Sets the colors in the point cloud with the given  r, g, b arrays
+(and the optinal alpha array).</p>
+<p>Enables colors if not done already</p>
+</div></blockquote>
+</li>
+<li><p>setColors(self: pycc.ccPointCloud, colors: numpy.ndarray[numpy.uint8]) -&gt; None</p>
+<blockquote>
+<div><p>Sets the colors in the point cloud with the given  r, g, b arrays
+(and the optinal alpha array).</p>
+<p>Enables colors if not done already</p>
+</div></blockquote>
+</li>
+</ol>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPointCloud.setCurrentDisplayedScalarField">
 <span class="sig-name descname"><span class="pre">setCurrentDisplayedScalarField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPointCloud" title="pycc.ccPointCloud"><span class="pre">pycc.ccPointCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPointCloud.setCurrentDisplayedScalarField" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccPointCloud.setPointColor">
+<span class="sig-name descname"><span class="pre">setPointColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycc.ccPointCloud.setPointColor" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic">
+<li><p>setPointColor(self: pycc.ccPointCloud, index: int, color: pycc.Rgb) -&gt; None</p>
+<blockquote>
+<div><p>Sets the color of the point at the given index with the new value</p>
+<p>Colors must have been enabled before</p>
+</div></blockquote>
+</li>
+<li><p>setPointColor(self: pycc.ccPointCloud, index: int, color: pycc.Rgba) -&gt; None</p>
+<blockquote>
+<div><p>Sets the color of the point at the given index with the new value</p>
+<p>Colors must have been enabled before</p>
+</div></blockquote>
+</li>
+</ol>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPointCloud.setPointNormal">
