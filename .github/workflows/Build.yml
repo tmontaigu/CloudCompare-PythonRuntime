@@ -91,7 +91,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update -qq
-          sudo apt install -y build-essential cmake ninja-build xvfb doxygen
+          sudo apt install -y build-essential cmake ninja-build xvfb doxygen graphviz
           sudo apt install -y libqt5svg5-dev libqt5opengl5-dev qtbase5-dev qttools5-dev qttools5-dev-tools pybind11-dev
           python3 -m pip install -r plugins/private/CloudCompare-PythonRuntime/requirements-dev.txt
 
