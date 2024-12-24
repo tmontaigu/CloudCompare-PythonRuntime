@@ -1,0 +1,10 @@
+<map id="inheritance4c34c5f181" name="inheritance4c34c5f181">
+<area shape="rect" id="node1" href="../cccorelib/data_structures.html#cccorelib.GenericIndexedMesh" target="_top" title="cccorelib.GenericIndexedMesh" alt="" coords="356,4,506,21"/>
+<area shape="rect" id="node5" href="#pycc.ccGenericMesh" target="_top" title="pycc.ccGenericMesh" alt="" coords="539,21,644,38"/>
+<area shape="rect" id="node2" href="../cccorelib/data_structures.html#cccorelib.GenericMesh" target="_top" title="A generic mesh interface for data communication between library and client applications" alt="" coords="207,4,322,21"/>
+<area shape="rect" id="node4" title="Base class of all objects that CloudCompare is able to render/draw/display on the screen" alt="" coords="205,37,324,54"/>
+<area shape="rect" id="node7" href="#pycc.ccObject" target="_top" title="The base class of all CloudCompare&#39;s data types" alt="" coords="226,71,302,88"/>
+<area shape="rect" id="node6" href="#pycc.ccHObject" target="_top" title="CloudCompare&#39;s hierarchical object" alt="" coords="389,37,473,54"/>
+<area shape="rect" id="node8" href="#pycc.ccMesh" target="_top" title="pycc.ccMesh" alt="" coords="685,4,756,21"/>
+<area shape="rect" id="node9" href="#pycc.ccSubMesh" target="_top" title="pycc.ccSubMesh" alt="" coords="676,37,764,54"/>
+</map>

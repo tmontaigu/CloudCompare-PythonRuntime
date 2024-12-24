@@ -1,0 +1,11 @@
+<map id="inheritance54ed96c92c" name="inheritance54ed96c92c">
+<area shape="rect" id="node1" href="../cccorelib/data_structures.html#cccorelib.GenericCloud" target="_top" title="cccorelib.GenericCloud" alt="" coords="141,2,220,14"/>
+<area shape="rect" id="node3" href="../cccorelib/data_structures.html#cccorelib.GenericIndexedCloud" target="_top" title="cccorelib.GenericIndexedCloud" alt="" coords="243,2,346,14"/>
+<area shape="rect" id="node7" title="Base class of all objects that CloudCompare is able to render/draw/display on the screen" alt="" coords="140,25,221,37"/>
+<area shape="rect" id="node9" href="#pycc.ccObject" target="_top" title="The base class of all CloudCompare&#39;s data types" alt="" coords="154,48,206,60"/>
+<area shape="rect" id="node4" href="../cccorelib/data_structures.html#cccorelib.GenericIndexedCloudPersist" target="_top" title="cccorelib.GenericIndexedCloudPersist" alt="" coords="369,2,492,14"/>
+<area shape="rect" id="node6" href="../cccorelib/data_structures.html#cccorelib.ReferenceCloud" target="_top" title="cccorelib.ReferenceCloud" alt="" coords="514,2,601,14"/>
+<area shape="rect" id="node5" href="../cccorelib/data_structures.html#cccorelib.Polyline" target="_top" title="cccorelib.Polyline" alt="" coords="623,2,686,14"/>
+<area shape="rect" id="node10" href="#pycc.ccPolyline" target="_top" title="pycc.ccPolyline" alt="" coords="709,14,766,26"/>
+<area shape="rect" id="node8" href="#pycc.ccHObject" target="_top" title="CloudCompare&#39;s hierarchical object" alt="" coords="266,26,323,38"/>
+</map>

@@ -122,15 +122,10 @@
 <p class="admonition-title">See also</p>
 <p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccObject</span></code></p>
 </div>
-digraph inheritance25cd227110 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;pybind11_builtins.pybind11_object&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;];
-  &quot;pycc.ccObject&quot; [URL=&quot;#pycc.ccObject&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;The base class of all CloudCompare's data types&quot;];
-  &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;pycc.ccObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-}
-<dl class="py class">
+<div class="graphviz"><img src="../../_images/inheritance-12c779b1cbb296c9763497d1fac09e4ae3c7abcc.png" alt="Inheritance diagram of pycc.ccObject" usemap="#inheritance25cd227110" class="inheritance graphviz" /></div>
+<map id="inheritance25cd227110" name="inheritance25cd227110">
+<area shape="rect" id="node2" href="#pycc.ccObject" target="_top" title="The base class of all CloudCompare&#39;s data types" alt="" coords="301,5,413,31"/>
+</map><dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccObject">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccObject</span></span><a class="headerlink" href="#pycc.ccObject" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_object</span></code></p>
@@ -284,20 +279,11 @@ size=&quot;8.0, 12.0&quot;;
 <p class="admonition-title">See also</p>
 <p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccHObject</span></code></p>
 </div>
-digraph inheritance47e1e3bfcc {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;pybind11_builtins.pybind11_object&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;];
-  &quot;pycc.ccDrawableObject&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base class of all objects that CloudCompare is able to render/draw/display on the screen&quot;];
-  &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;pycc.ccDrawableObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccHObject&quot; [URL=&quot;#pycc.ccHObject&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;CloudCompare's hierarchical object&quot;];
-  &quot;pycc.ccObject&quot; -&gt; &quot;pycc.ccHObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccDrawableObject&quot; -&gt; &quot;pycc.ccHObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccObject&quot; [URL=&quot;#pycc.ccObject&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;The base class of all CloudCompare's data types&quot;];
-  &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;pycc.ccObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-}
-<dl class="py class">
+<div class="graphviz"><img src="../../_images/inheritance-298fae3b6d72a07190fa09754c8bf0cf95cf19a0.png" alt="Inheritance diagram of pycc.ccHObject" usemap="#inheritance47e1e3bfcc" class="inheritance graphviz" /></div>
+<map id="inheritance47e1e3bfcc" name="inheritance47e1e3bfcc">
+<area shape="rect" id="node4" href="#pycc.ccObject" target="_top" title="The base class of all CloudCompare&#39;s data types" alt="" coords="333,55,445,80"/>
+<area shape="rect" id="node3" href="#pycc.ccHObject" target="_top" title="CloudCompare&#39;s hierarchical object" alt="" coords="524,31,647,56"/>
+</map><dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccHObject">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccHObject</span></span><a class="headerlink" href="#pycc.ccHObject" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pycc.ccObject" title="pycc.ccObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccObject</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ccDrawableObject</span></code></p>
@@ -442,31 +428,15 @@ size=&quot;8.0, 12.0&quot;;
 <p class="admonition-title">See also</p>
 <p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccGenericPointCloud</span></code></p>
 </div>
-digraph inheritance9d8affe181 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;cccorelib.GenericCloud&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.GenericCloud&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;cccorelib.GenericCloud&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;cccorelib.GenericIndexedCloud&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.GenericIndexedCloud&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;cccorelib.GenericCloud&quot; -&gt; &quot;cccorelib.GenericIndexedCloud&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;cccorelib.GenericIndexedCloudPersist&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.GenericIndexedCloudPersist&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;cccorelib.GenericIndexedCloud&quot; -&gt; &quot;cccorelib.GenericIndexedCloudPersist&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pybind11_builtins.pybind11_object&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;];
-  &quot;pycc.ccDrawableObject&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base class of all objects that CloudCompare is able to render/draw/display on the screen&quot;];
-  &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;pycc.ccDrawableObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccGenericPointCloud&quot; [URL=&quot;#pycc.ccGenericPointCloud&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;pycc.ccShiftedObject&quot; -&gt; &quot;pycc.ccGenericPointCloud&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;cccorelib.GenericIndexedCloudPersist&quot; -&gt; &quot;pycc.ccGenericPointCloud&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccHObject&quot; [URL=&quot;#pycc.ccHObject&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;CloudCompare's hierarchical object&quot;];
-  &quot;pycc.ccObject&quot; -&gt; &quot;pycc.ccHObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccDrawableObject&quot; -&gt; &quot;pycc.ccHObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccObject&quot; [URL=&quot;#pycc.ccObject&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;The base class of all CloudCompare's data types&quot;];
-  &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;pycc.ccObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccShiftedObject&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;];
-  &quot;pycc.ccHObject&quot; -&gt; &quot;pycc.ccShiftedObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-}
-<dl class="py class">
+<div class="graphviz"><img src="../../_images/inheritance-ca2e6368c49ed84156621a1dadbe2e3b5e4755fc.png" alt="Inheritance diagram of pycc.ccGenericPointCloud" usemap="#inheritance9d8affe181" class="inheritance graphviz" /></div>
+<map id="inheritance9d8affe181" name="inheritance9d8affe181">
+<area shape="rect" id="node1" href="../cccorelib/data_structures.html#cccorelib.GenericCloud" target="_top" title="cccorelib.GenericCloud" alt="" coords="178,3,279,18"/>
+<area shape="rect" id="node3" href="../cccorelib/data_structures.html#cccorelib.GenericIndexedCloud" target="_top" title="cccorelib.GenericIndexedCloud" alt="" coords="308,3,439,18"/>
+<area shape="rect" id="node9" href="#pycc.ccObject" target="_top" title="The base class of all CloudCompare&#39;s data types" alt="" coords="196,61,262,76"/>
+<area shape="rect" id="node4" href="../cccorelib/data_structures.html#cccorelib.GenericIndexedCloudPersist" target="_top" title="cccorelib.GenericIndexedCloudPersist" alt="" coords="468,3,624,18"/>
+<area shape="rect" id="node6" href="#pycc.ccGenericPointCloud" target="_top" title="pycc.ccGenericPointCloud" alt="" coords="653,18,765,33"/>
+<area shape="rect" id="node8" href="#pycc.ccHObject" target="_top" title="CloudCompare&#39;s hierarchical object" alt="" coords="338,32,410,47"/>
+</map><dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccGenericPointCloud">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccGenericPointCloud</span></span><a class="headerlink" href="#pycc.ccGenericPointCloud" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ccShiftedObject</span></code>, <a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.GenericIndexedCloudPersist" title="cccorelib.GenericIndexedCloudPersist"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericIndexedCloudPersist</span></code></a></p>
@@ -489,13 +459,10 @@ size=&quot;8.0, 12.0&quot;;
 <p class="admonition-title">See also</p>
 <p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccPointCloud</span></code></p>
 </div>
-digraph inheritancea1a21e48ac {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;pycc.ccPointCloud&quot; [URL=&quot;#pycc.ccPointCloud&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;The main class to represent point clouds in CloudCompare.&quot;];
-}
-<dl class="py class">
+<div class="graphviz"><img src="../../_images/inheritance-38994e291c49db8b1b8035fea3115cad9e7a2a56.png" alt="Inheritance diagram of pycc.ccPointCloud" usemap="#inheritancea1a21e48ac" class="inheritance graphviz" /></div>
+<map id="inheritancea1a21e48ac" name="inheritancea1a21e48ac">
+<area shape="rect" id="node1" href="#pycc.ccPointCloud" target="_top" title="The main class to represent point clouds in CloudCompare." alt="" coords="5,5,145,31"/>
+</map><dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccPointCloud">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccPointCloud</span></span><a class="headerlink" href="#pycc.ccPointCloud" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">__ccGenericPointCloudTpl</span></code></p>
@@ -738,35 +705,17 @@ if the point cloud does not have colors, None is returned</p>
 <p class="admonition-title">See also</p>
 <p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ccPolyline</span></code></p>
 </div>
-digraph inheritance54ed96c92c {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;cccorelib.GenericCloud&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.GenericCloud&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;cccorelib.GenericCloud&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;cccorelib.GenericIndexedCloud&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.GenericIndexedCloud&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;cccorelib.GenericCloud&quot; -&gt; &quot;cccorelib.GenericIndexedCloud&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;cccorelib.GenericIndexedCloudPersist&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.GenericIndexedCloudPersist&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;cccorelib.GenericIndexedCloud&quot; -&gt; &quot;cccorelib.GenericIndexedCloudPersist&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;cccorelib.Polyline&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.Polyline&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;cccorelib.ReferenceCloud&quot; -&gt; &quot;cccorelib.Polyline&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;cccorelib.ReferenceCloud&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.ReferenceCloud&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;cccorelib.GenericIndexedCloudPersist&quot; -&gt; &quot;cccorelib.ReferenceCloud&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pybind11_builtins.pybind11_object&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;];
-  &quot;pycc.ccDrawableObject&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base class of all objects that CloudCompare is able to render/draw/display on the screen&quot;];
-  &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;pycc.ccDrawableObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccHObject&quot; [URL=&quot;#pycc.ccHObject&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;CloudCompare's hierarchical object&quot;];
-  &quot;pycc.ccObject&quot; -&gt; &quot;pycc.ccHObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccDrawableObject&quot; -&gt; &quot;pycc.ccHObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccObject&quot; [URL=&quot;#pycc.ccObject&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;The base class of all CloudCompare's data types&quot;];
-  &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;pycc.ccObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccPolyline&quot; [URL=&quot;#pycc.ccPolyline&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;cccorelib.Polyline&quot; -&gt; &quot;pycc.ccPolyline&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccShiftedObject&quot; -&gt; &quot;pycc.ccPolyline&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccShiftedObject&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;];
-  &quot;pycc.ccHObject&quot; -&gt; &quot;pycc.ccShiftedObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-}
-<dl class="py class">
+<div class="graphviz"><img src="../../_images/inheritance-30670d02d61afb23e3bee513b377c848fed79aab.png" alt="Inheritance diagram of pycc.ccPolyline" usemap="#inheritance54ed96c92c" class="inheritance graphviz" /></div>
+<map id="inheritance54ed96c92c" name="inheritance54ed96c92c">
+<area shape="rect" id="node1" href="../cccorelib/data_structures.html#cccorelib.GenericCloud" target="_top" title="cccorelib.GenericCloud" alt="" coords="141,2,220,14"/>
+<area shape="rect" id="node3" href="../cccorelib/data_structures.html#cccorelib.GenericIndexedCloud" target="_top" title="cccorelib.GenericIndexedCloud" alt="" coords="243,2,346,14"/>
+<area shape="rect" id="node9" href="#pycc.ccObject" target="_top" title="The base class of all CloudCompare&#39;s data types" alt="" coords="154,48,206,60"/>
+<area shape="rect" id="node4" href="../cccorelib/data_structures.html#cccorelib.GenericIndexedCloudPersist" target="_top" title="cccorelib.GenericIndexedCloudPersist" alt="" coords="369,2,492,14"/>
+<area shape="rect" id="node6" href="../cccorelib/data_structures.html#cccorelib.ReferenceCloud" target="_top" title="cccorelib.ReferenceCloud" alt="" coords="514,2,601,14"/>
+<area shape="rect" id="node5" href="../cccorelib/data_structures.html#cccorelib.Polyline" target="_top" title="cccorelib.Polyline" alt="" coords="623,2,686,14"/>
+<area shape="rect" id="node10" href="#pycc.ccPolyline" target="_top" title="pycc.ccPolyline" alt="" coords="709,14,766,26"/>
+<area shape="rect" id="node8" href="#pycc.ccHObject" target="_top" title="CloudCompare&#39;s hierarchical object" alt="" coords="266,26,323,38"/>
+</map><dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccPolyline">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccPolyline</span></span><a class="headerlink" href="#pycc.ccPolyline" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.Polyline" title="cccorelib.Polyline"><code class="xref py py-class docutils literal notranslate"><span class="pre">Polyline</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ccShiftedObject</span></code></p>
@@ -866,31 +815,16 @@ size=&quot;8.0, 12.0&quot;;
 </section>
 <section id="mesh">
 <h2>Mesh<a class="headerlink" href="#mesh" title="Permalink to this heading"></a></h2>
-digraph inheritance4c34c5f181 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;cccorelib.GenericIndexedMesh&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.GenericIndexedMesh&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;cccorelib.GenericMesh&quot; -&gt; &quot;cccorelib.GenericIndexedMesh&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;cccorelib.GenericMesh&quot; [URL=&quot;../cccorelib/data_structures.html#cccorelib.GenericMesh&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A generic mesh interface for data communication between library and client applications&quot;];
-  &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;cccorelib.GenericMesh&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pybind11_builtins.pybind11_object&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;];
-  &quot;pycc.ccDrawableObject&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base class of all objects that CloudCompare is able to render/draw/display on the screen&quot;];
-  &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;pycc.ccDrawableObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccGenericMesh&quot; [URL=&quot;#pycc.ccGenericMesh&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;cccorelib.GenericIndexedMesh&quot; -&gt; &quot;pycc.ccGenericMesh&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccHObject&quot; -&gt; &quot;pycc.ccGenericMesh&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccHObject&quot; [URL=&quot;#pycc.ccHObject&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;CloudCompare's hierarchical object&quot;];
-  &quot;pycc.ccObject&quot; -&gt; &quot;pycc.ccHObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccDrawableObject&quot; -&gt; &quot;pycc.ccHObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccMesh&quot; [URL=&quot;#pycc.ccMesh&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;pycc.ccGenericMesh&quot; -&gt; &quot;pycc.ccMesh&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccObject&quot; [URL=&quot;#pycc.ccObject&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;The base class of all CloudCompare's data types&quot;];
-  &quot;pybind11_builtins.pybind11_object&quot; -&gt; &quot;pycc.ccObject&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;pycc.ccSubMesh&quot; [URL=&quot;#pycc.ccSubMesh&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;pycc.ccGenericMesh&quot; -&gt; &quot;pycc.ccSubMesh&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-}
-<section id="ccgenericmesh">
+<div class="graphviz"><img src="../../_images/inheritance-49978bb303db2b04904e9181faa696a8c76e5925.png" alt="Inheritance diagram of pycc.ccGenericMesh, pycc.ccMesh, pycc.ccSubMesh" usemap="#inheritance4c34c5f181" class="inheritance graphviz" /></div>
+<map id="inheritance4c34c5f181" name="inheritance4c34c5f181">
+<area shape="rect" id="node1" href="../cccorelib/data_structures.html#cccorelib.GenericIndexedMesh" target="_top" title="cccorelib.GenericIndexedMesh" alt="" coords="356,4,506,21"/>
+<area shape="rect" id="node5" href="#pycc.ccGenericMesh" target="_top" title="pycc.ccGenericMesh" alt="" coords="539,21,644,38"/>
+<area shape="rect" id="node2" href="../cccorelib/data_structures.html#cccorelib.GenericMesh" target="_top" title="A generic mesh interface for data communication between library and client applications" alt="" coords="207,4,322,21"/>
+<area shape="rect" id="node7" href="#pycc.ccObject" target="_top" title="The base class of all CloudCompare&#39;s data types" alt="" coords="226,71,302,88"/>
+<area shape="rect" id="node6" href="#pycc.ccHObject" target="_top" title="CloudCompare&#39;s hierarchical object" alt="" coords="389,37,473,54"/>
+<area shape="rect" id="node8" href="#pycc.ccMesh" target="_top" title="pycc.ccMesh" alt="" coords="685,4,756,21"/>
+<area shape="rect" id="node9" href="#pycc.ccSubMesh" target="_top" title="pycc.ccSubMesh" alt="" coords="676,37,764,54"/>
+</map><section id="ccgenericmesh">
 <h3>ccGenericMesh<a class="headerlink" href="#ccgenericmesh" title="Permalink to this heading"></a></h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>

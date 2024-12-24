@@ -1,0 +1,5 @@
+<map id="inheritance47e1e3bfcc" name="inheritance47e1e3bfcc">
+<area shape="rect" id="node2" title="Base class of all objects that CloudCompare is able to render/draw/display on the screen" alt="" coords="301,5,476,31"/>
+<area shape="rect" id="node4" href="#pycc.ccObject" target="_top" title="The base class of all CloudCompare&#39;s data types" alt="" coords="333,55,445,80"/>
+<area shape="rect" id="node3" href="#pycc.ccHObject" target="_top" title="CloudCompare&#39;s hierarchical object" alt="" coords="524,31,647,56"/>
+</map>
