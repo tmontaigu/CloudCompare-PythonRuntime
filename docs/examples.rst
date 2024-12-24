@@ -27,6 +27,12 @@ Scalar Field
 .. literalinclude:: ../script_examples/scalar_field.py
     :language: Python
 
+PointCloud Colors
+-----------------
+
+.. literalinclude:: ../scripts_examples/point-cloud-colors.py
+    :language: Python
+
 Polyline
 ---------
 

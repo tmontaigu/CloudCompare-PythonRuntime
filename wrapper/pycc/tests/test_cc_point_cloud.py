@@ -88,7 +88,7 @@ def test_metadata():
     assert obj.getMetaData("double value") == 4536.135
 
 
-def test_colors():
+def test_colors_of_loaded_file():
     p = pycc.FileIOFilter.LoadParameters()
     p.alwaysDisplayLoadDialog = False
 
@@ -99,3 +99,74 @@ def test_colors():
 
     assert (len(cloud.colors()) == cloud.size())
     assert (np.all(cloud.colors()[0] == [43, 48, 52, 255]))
+
+
+def test_new_cloud_with_colors():
+    points = np.array([
+        [0, 0, 0],
+        [1, 1, 0],
+        [2, 2, 0]
+    ])
+    cloud = pycc.ccPointCloud(points[:, 0], points[:, 1], points[:, 2])
+    # This point cloud does not yet have colors:
+    assert cloud.hasColors() == False
+    assert cloud.colors() is None
+
+
+    red = pycc.Rgb(255, 0, 0)
+    green = pycc.Rgb(0, 255, 0)
+    blue = pycc.Rgb(0, 0, 255)
+
+    with pytest.raises(RuntimeError):
+        # resizeTheRGB table must have been called before
+        cloud.setPointColor(0, red)
+
+    cloud.resizeTheRGBTable()
+
+    cloud.setPointColor(0, red)
+    cloud.setPointColor(1, green)
+    cloud.setPointColor(2, blue)
+
+    with pytest.raises(IndexError):
+        cloud.setPointColor(4, red)
+
+    assert cloud.getPointColor(0) == pycc.Rgba(red, 255)
+    assert cloud.getPointColor(1) == pycc.Rgba(green, 255)
+    assert cloud.getPointColor(2) == pycc.Rgba(blue, 255)
+
+    with pytest.raises(IndexError):
+        cloud.getPointColor(4)
+
+    colors = cloud.colors()
+    assert np.all(colors[0] == [255, 0, 0, 255])
+    assert np.all(colors[1] == [0, 255, 0, 255])
+    assert np.all(colors[2] == [0, 0, 255, 255])
+
+    colors[0][:] = [255, 0, 255, 255]
+    colors = cloud.colors()
+    assert np.all(colors[0] == [255, 0, 255, 255])
+
+
+def test_new_cloud_with_colors_2():
+    # Another way is to use the setColors function
+    points = np.array([
+        [3, 3, 0],
+        [4, 4, 0],
+        [5, 5, 0]
+    ])
+    cloud = pycc.ccPointCloud(points[:, 0], points[:, 1], points[:, 2])
+
+    # This point cloud does not yet have colors:
+    assert cloud.hasColors() == False
+    assert cloud.colors() is None
+
+    pointColors = np.array([[255, 0, 0], [0, 255, 0], [0, 0, 255]])
+    cloud.setColors(pointColors)
+
+    colors = cloud.colors()
+    assert np.all(colors[:, :3] == pointColors)
+    colors[0][:] = [255, 0, 255, 255]
+
+    colors = cloud.colors()
+    assert np.all(colors[0] == [255, 0, 255, 255])
+

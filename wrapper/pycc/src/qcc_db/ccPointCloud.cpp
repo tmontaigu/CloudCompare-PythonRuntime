@@ -25,7 +25,9 @@
 #include <ccScalarField.h>
 #include <climits>
 #include <cstdint>
+#include <pybind11/detail/common.h>
 #include <pybind11/pytypes.h>
+#include <stdexcept>
 #include <type_traits>
 #include <vector>
 
@@ -42,6 +44,60 @@ static_assert(std::is_same<PointCoordinateType, float>::value,
               "PointCoordinateType is neither double or float");
 static_assert(sizeof(CCVector3) == sizeof(PointCoordinateType) * 3,
               "Unexpected layout for CCVector3");
+
+void ccPointCloud_setColors(ccPointCloud &self,
+                            const py::array_t<ColorCompType> &r,
+                            const py::array_t<ColorCompType> &g,
+                            const py::array_t<ColorCompType> &b,
+                            const py::array_t<ColorCompType> *a)
+{
+    if (r.ndim() != 1 || g.ndim() != 1 || b.ndim() != 1 || (a && a->ndim() != 1))
+    {
+        throw py::value_error("arrays must be one dimensional");
+    }
+
+    if (r.size() != g.size() || r.size() != b.size() || a && r.size() != a->size())
+    {
+        throw py::value_error("r, g, b must have the same size");
+    }
+
+    if (r.size() != self.size())
+    {
+        throw py::value_error("The number of colors must match the number of points");
+    }
+
+    if (!self.resizeTheRGBTable())
+    {
+        throw std::runtime_error("failed to allocate rgb table");
+    }
+
+    py::iterator a_begin;
+    if (a)
+    {
+        a_begin = a->begin();
+    }
+
+    auto r_it = r.begin();
+    auto g_it = g.begin();
+    auto b_it = b.begin();
+    auto *a_it = a ? &a_begin : nullptr;
+
+    for (size_t i = 0; i < self.size(); ++i)
+    {
+        const ccColor::Rgba value(r_it->cast<ColorCompType>(),
+                                  g_it->cast<ColorCompType>(),
+                                  b_it->cast<ColorCompType>(),
+                                  a_it ? a_it->cast<ColorCompType>() : ccColor::MAX);
+        self.setPointColor(i, value);
+        ++r_it;
+        ++g_it;
+        ++b_it;
+        if (a_it)
+        {
+            ++(*a_it);
+        }
+    }
+}
 
 void define_ccPointCloud(py::module &m)
 {
@@ -123,8 +179,8 @@ void define_ccPointCloud(py::module &m)
             "reference"_a)
         // features allocation/resize
         .def("reserveThePointsTable", &ccPointCloud::reserveThePointsTable, "_numberOfPoints"_a)
-        .def("reserveTheRGBTable", &ccPointCloud::reserveThePointsTable)
-        .def("reserveTheRGBTable", &ccPointCloud::reserveThePointsTable, "fillWithWhite"_a = false)
+        .def("reserveTheRGBTable", &ccPointCloud::reserveTheRGBTable)
+        .def("resizeTheRGBTable", &ccPointCloud::resizeTheRGBTable, "fillWithWhite"_a = false)
         .def("reserveTheNormsTable", &ccPointCloud::reserveTheNormsTable)
         .def("resizeTheNormsTable", &ccPointCloud::resizeTheNormsTable)
         .def("shrinkToFit", &ccPointCloud::shrinkToFit)
@@ -161,14 +217,180 @@ void define_ccPointCloud(py::module &m)
              &ccPointCloud::orientNormalsWithFM,
              "level"_a,
              "pDlg"_a = nullptr)
-        // Special functions added by pycc
         .def("addPoints", &PyCC::addPointsFromArrays<ccPointCloud>)
-        .def("setColor",
-             [](ccPointCloud &self,
-                ColorCompType r,
-                ColorCompType g,
-                ColorCompType b,
-                ColorCompType a) { self.setColor(r, g, b, a); })
+        .def(
+            "setColor",
+            [](ccPointCloud &self,
+               ColorCompType r,
+               ColorCompType g,
+               ColorCompType b,
+               ColorCompType a) { self.setColor(r, g, b, a); },
+            "r"_a,
+            "g"_a,
+            "b"_a,
+            "a"_a = ccColor::MAX,
+            R"doc(
+            Sets the color for the whole point cloud
+            )doc")
+        .def(
+            "setPointColor",
+            [](ccPointCloud &self, const unsigned index, const ccColor::Rgb &color)
+            {
+                if (!self.hasColors())
+                {
+                    throw std::runtime_error("colors needs to be enabled first");
+                }
+                if (index >= self.size())
+                {
+                    throw py::index_error("invalid index");
+                }
+                self.setPointColor(index, color);
+            },
+            "index"_a,
+            "color"_a,
+            R"doc(
+            Sets the color of the point at the given index with the new value
+
+            Colors must have been enabled before
+            )doc")
+        .def(
+            "setPointColor",
+            [](ccPointCloud &self, const unsigned index, const ccColor::Rgba &color)
+            {
+                if (!self.hasColors())
+                {
+                    throw std::runtime_error("colors needs to be enabled first");
+                }
+
+                if (index >= self.size())
+                {
+                    throw py::index_error("invalid index");
+                }
+                self.setPointColor(index, color);
+            },
+            "index"_a,
+            "color"_a,
+            R"doc(
+            Sets the color of the point at the given index with the new value
+
+            Colors must have been enabled before
+            )doc")
+        .def(
+            "getPointColor",
+            [](ccPointCloud &self, const unsigned index)
+            {
+                if (!self.hasColors())
+                {
+                    throw std::runtime_error("colors needs to be enabled first");
+                }
+
+                if (index >= self.size())
+                {
+                    throw py::index_error("invalid index");
+                }
+                return self.getPointColor(index);
+            },
+            "index"_a,
+            R"doc(
+            Returns the color of the point at the given index
+
+			Colors must have been enabled before
+            )doc")
+        .def("setColors",
+             &ccPointCloud_setColors,
+             "r"_a,
+             "g"_a,
+             "b"_a,
+             "a"_a = nullptr,
+             R"doc(
+             Sets the colors in the point cloud with the given  r, g, b arrays
+             (and the optinal alpha array).
+
+             Enables colors if not done already
+             )doc")
+        .def(
+            "setColors",
+            [](ccPointCloud &self, const py::array_t<ColorCompType> &colors)
+            {
+                if (colors.ndim() != 2)
+                {
+                    throw py::value_error("color array must be 2 dimensional");
+                }
+
+                if (colors.shape(0) != self.size())
+                {
+                    throw py::value_error("The number of colors must match the number of points");
+                }
+
+                if (colors.shape(1) != 3 && colors.shape(1) != 4)
+                {
+                    throw py::value_error("Colors must be RGB or RGBA");
+                }
+
+                if (!self.resizeTheRGBTable())
+                {
+                    throw std::runtime_error("failed to allocate rgb table");
+                }
+
+                if (colors.shape(1) == 3)
+                {
+                    auto rgb = colors.unchecked<2>();
+                    for (size_t i = 0; i < self.size(); ++i)
+                    {
+                        self.setPointColor(i, ccColor::Rgb(rgb(i, 0), rgb(i, 1), rgb(i, 2)));
+                    }
+                }
+                else if (colors.shape(1) == 4)
+                {
+                    auto rgba = colors.unchecked<2>();
+                    for (size_t i = 0; i < self.size(); ++i)
+                    {
+                        self.setPointColor(
+                            i, ccColor::Rgba(rgba(i, 0), rgba(i, 1), rgba(i, 2), rgba(i, 3)));
+                    }
+                }
+            },
+            "colors"_a,
+            R"doc(
+             Sets the colors in the point cloud with the given  r, g, b arrays
+             (and the optinal alpha array).
+
+             Enables colors if not done already
+             )doc")
+        .def(
+            "colors",
+            [](ccPointCloud &self) -> py::object
+            {
+                RGBAColorsTableType *colorsTable = self.rgbaColors();
+                if (colorsTable == nullptr)
+                {
+                    return py::none();
+                }
+
+                ccColor::Rgba *colors = colorsTable->data();
+                if (colors == nullptr)
+                {
+                    return py::none();
+                }
+
+                static_assert(CHAR_BIT == 8, "A char must have 8 bits");
+                static_assert(sizeof(ColorCompType) == 1, "ColorCompType must have 8 bit");
+                static_assert(sizeof(ccColor::Rgba) == 4 * sizeof(ColorCompType), "");
+                static_assert(alignof(uint8_t) == alignof(ccColor::Rgba), "Not same alignment");
+
+                auto *ptr = reinterpret_cast<uint8_t *>(colors);
+
+                auto capsule = py::capsule(ptr, [](void *) {});
+                py::array a(py::dtype("4u1"), colorsTable->size(), ptr, capsule);
+
+                return a;
+            },
+            R"doc(
+            "Returns a the colors as a "view" in a numpy array
+            if the point cloud does not have colors, None is returned
+
+            As this is a "view", modifications made to this will reflect on the point cloud
+            )doc")
         .def("setPointNormal", &ccPointCloud::setPointNormal, "index"_a, "normal"_a)
         .def("addNorm", &ccPointCloud::addNorm, "normal"_a)
         .def("addNormals",
@@ -207,33 +429,6 @@ void define_ccPointCloud(py::module &m)
         .def("showNormalsAsLines", &ccPointCloud::showNormalsAsLines, "state"_a)
         .def("colorize", &ccPointCloud::colorize)
         .def("crop2D", &ccPointCloud::crop2D, "poly"_a, "orthodDim"_a, "inside"_a = true)
-        .def("colors",
-             [](ccPointCloud &self) -> py::object
-             {
-                 RGBAColorsTableType *colorsTable = self.rgbaColors();
-                 if (colorsTable == nullptr)
-                 {
-                     return py::none();
-                 }
-
-                 ccColor::Rgba *colors = colorsTable->data();
-                 if (colors == nullptr)
-                 {
-                     return py::none();
-                 }
-
-                 static_assert(CHAR_BIT == 8, "A char must have 8 bits");
-                 static_assert(sizeof(ColorCompType) == 1, "ColorCompType must have 8 bit");
-                 static_assert(sizeof(ccColor::Rgba) == 4 * sizeof(ColorCompType), "");
-                 static_assert(alignof(uint8_t) == alignof(ccColor::Rgba), "Not same alignment");
-
-                 auto *ptr = reinterpret_cast<uint8_t *>(colors);
-
-                 auto capsule = py::capsule(ptr, [](void *) {});
-                 py::array a(py::dtype("4u1"), colorsTable->size(), ptr, capsule);
-
-                 return a;
-             })
         .def("points",
              [](ccPointCloud &self)
              {

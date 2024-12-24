@@ -17,6 +17,7 @@
 
 #include <ccAdvancedTypes.h>
 #include <ccColorTypes.h>
+#include <string>
 
 #undef slots
 #include <pybind11/pybind11.h>
@@ -81,6 +82,7 @@ void define_qcc_db(py::module &m)
     RGBA color structure
 )doc")
         .def(py::init<>(), R"doc(Inits color to (0,0,0, 0))doc")
+        .def(py::init<ccColor::Rgb, ColorCompType>())
         .def(py::init<ColorCompType, ColorCompType, ColorCompType, ColorCompType>(),
              "r"_a,
              "g"_a,
@@ -90,7 +92,15 @@ void define_qcc_db(py::module &m)
         .def_readwrite("g", &ccColor::Rgba::g)
         .def_readwrite("b", &ccColor::Rgba::b)
         .def_readwrite("a", &ccColor::Rgba::a)
-        .def("__ne__", &ccColor::Rgba::operator!=);
+        .def("__eq__", [](ccColor::Rgba &self, ccColor::Rgba &other) { return !(self != other); })
+        .def("__ne__", &ccColor::Rgba::operator!=)
+        .def("__repr__",
+             [](const ccColor::Rgba &self)
+             {
+                 return std::string("<Rgba(") + std::to_string(self.r) + ", " +
+                        std::to_string(self.g) + ", " + std::to_string(self.b) + ", " +
+                        std::to_string(self.a) + ")>";
+             });
 
     py::class_<ccColor::Rgb>(m, "Rgb", R"doc(
     RGB color structure
@@ -100,7 +110,14 @@ void define_qcc_db(py::module &m)
         .def_readwrite("r", &ccColor::Rgb::r)
         .def_readwrite("g", &ccColor::Rgb::g)
         .def_readwrite("b", &ccColor::Rgb::b)
-        .def("__ne__", &ccColor::Rgb::operator!=);
+        .def("__eq__", [](ccColor::Rgb &self, ccColor::Rgb &other) { return !(self != other); })
+        .def("__ne__", &ccColor::Rgb::operator!=)
+        .def("__repr__",
+             [](const ccColor::Rgb &self)
+             {
+                 return std::string("<Rgba(") + std::to_string(self.r) + ", " +
+                        std::to_string(self.g) + ", " + std::to_string(self.b) + ")>";
+             });
 
     define_ccScalarField(m);
     define_ccGLMatrix(m);

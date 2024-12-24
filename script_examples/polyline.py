@@ -6,7 +6,7 @@ CC = pycc.GetInstance()
 VERTICES = np.array([
     [-0.5, -0.5, 0],
     [1, 1, 0],
-[2, 2, 0]
+	[2, 2, 0]
 ])
 vertices = pycc.ccPointCloud(VERTICES[:, 0], VERTICES[:, 1], VERTICES[:, 2])
 polyline = pycc.ccPolyline(vertices)
