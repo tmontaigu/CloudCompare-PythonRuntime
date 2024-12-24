@@ -319,6 +319,74 @@
 </section>
 <section id="pointcloud-colors">
 <h2>PointCloud Colors<a class="headerlink" href="#pointcloud-colors" title="Permalink to this heading"></a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">An example on how to create a point cloud and add colors</span>
+<span class="sd">And how to get colors of a point clouds</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">pycc</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">CC</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">GetInstance</span><span class="p">()</span>
+
+<span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+	<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+	<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+	<span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">])</span>
+<span class="n">cloud</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccPointCloud</span><span class="p">(</span><span class="n">points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">points</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s2">&quot;Colored Cloud 1&quot;</span><span class="p">)</span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">setPointSize</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span> <span class="c1"># So that the point are visible</span>
+
+<span class="c1"># This point cloud does not yet have colors:</span>
+<span class="k">assert</span> <span class="n">cloud</span><span class="o">.</span><span class="n">hasColors</span><span class="p">()</span> <span class="o">==</span> <span class="kc">False</span>
+<span class="k">assert</span> <span class="n">cloud</span><span class="o">.</span><span class="n">colors</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span>
+
+<span class="n">red</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">Rgb</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">green</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">Rgb</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">blue</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">Rgb</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+
+<span class="c1"># This needs to be called after points have been added</span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">resizeTheRGBTable</span><span class="p">()</span>
+
+<span class="n">cloud</span><span class="o">.</span><span class="n">setPointColor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">red</span><span class="p">)</span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">setPointColor</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">green</span><span class="p">)</span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">setPointColor</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">blue</span><span class="p">)</span>
+<span class="c1"># So that the colors are show by default</span>
+<span class="c1"># without having to select in the UI</span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">showColors</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;First point color: </span><span class="si">{</span><span class="n">cloud</span><span class="o">.</span><span class="n">getPointColor</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">color</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">getPointColor</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Second point r: </span><span class="si">{</span><span class="n">color</span><span class="o">.</span><span class="n">r</span><span class="si">}</span><span class="s2">, g: </span><span class="si">{</span><span class="n">color</span><span class="o">.</span><span class="n">g</span><span class="si">}</span><span class="s2">, b: </span><span class="si">{</span><span class="n">color</span><span class="o">.</span><span class="n">b</span><span class="si">}</span><span class="s2">, a: </span><span class="si">{</span><span class="n">color</span><span class="o">.</span><span class="n">a</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Get the colors as a numpy array</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">colors</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span>
+<span class="c1"># This array is a view so modifications made on it will reflect on</span>
+<span class="c1"># the point cloud</span>
+<span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">][:]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">]</span>
+
+<span class="n">CC</span><span class="o">.</span><span class="n">addToDB</span><span class="p">(</span><span class="n">cloud</span><span class="p">)</span>
+
+<span class="c1"># Another way is to use the setColors function</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+	<span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+	<span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+	<span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">])</span>
+<span class="n">cloud</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccPointCloud</span><span class="p">(</span><span class="n">points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">points</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s2">&quot;Colored Cloud 2&quot;</span><span class="p">)</span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">setPointSize</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span> <span class="c1"># So that the point are visible</span>
+<span class="n">pointColors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">]])</span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">setColors</span><span class="p">(</span><span class="n">pointColors</span><span class="p">)</span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">showColors</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># We can then also get colors as an array</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">colors</span><span class="p">()</span>
+<span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">][:]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">]</span>
+
+<span class="n">CC</span><span class="o">.</span><span class="n">addToDB</span><span class="p">(</span><span class="n">cloud</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 <section id="polyline">
 <h2>Polyline<a class="headerlink" href="#polyline" title="Permalink to this heading"></a></h2>
