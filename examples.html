@@ -57,6 +57,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#loading-a-file">Loading a file</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#scalar-field">Scalar Field</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#pointcloud-colors">PointCloud Colors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pointcloud-normals">PointCloud Normals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#polyline">Polyline</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sub-sampling">Sub sampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#merge">Merge</a></li>
@@ -385,6 +386,78 @@
 <span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">][:]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">]</span>
 
 <span class="n">CC</span><span class="o">.</span><span class="n">addToDB</span><span class="p">(</span><span class="n">cloud</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="pointcloud-normals">
+<h2>PointCloud Normals<a class="headerlink" href="#pointcloud-normals" title="Permalink to this heading"></a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">An example of creating a ploint cloud and adding normals, and getting</span>
+<span class="sd">normals stored in it</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">pycc</span>
+<span class="kn">import</span> <span class="nn">cccorelib</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">])</span>
+<span class="n">cloud</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccPointCloud</span><span class="p">(</span><span class="n">points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">points</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="c1"># This point cloud does not yet have colors:</span>
+<span class="k">assert</span> <span class="n">cloud</span><span class="o">.</span><span class="n">hasNormals</span><span class="p">()</span> <span class="o">==</span> <span class="kc">False</span>
+<span class="k">assert</span> <span class="n">cloud</span><span class="o">.</span><span class="n">normals</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span>
+
+<span class="n">norm1</span> <span class="o">=</span> <span class="n">cccorelib</span><span class="o">.</span><span class="n">CCVector3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">norm2</span> <span class="o">=</span> <span class="n">cccorelib</span><span class="o">.</span><span class="n">CCVector3</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">norm3</span> <span class="o">=</span> <span class="n">cccorelib</span><span class="o">.</span><span class="n">CCVector3</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Some vectors:&quot;</span><span class="p">,</span> <span class="n">norm1</span><span class="p">,</span> <span class="n">norm2</span><span class="p">,</span> <span class="n">norm3</span><span class="p">)</span>
+
+<span class="c1"># Explicitely normalize (if not done, setPointNormal will)</span>
+<span class="n">norm1</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>
+<span class="n">norm2</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>
+<span class="n">norm3</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Normalized normals&quot;</span><span class="p">,</span> <span class="n">norm1</span><span class="p">,</span> <span class="n">norm2</span><span class="p">,</span> <span class="n">norm3</span><span class="p">)</span>
+
+<span class="n">cloud</span><span class="o">.</span><span class="n">resizeTheNormsTable</span><span class="p">()</span>
+
+<span class="n">cloud</span><span class="o">.</span><span class="n">setPointNormal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">norm1</span><span class="p">)</span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">setPointNormal</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">norm2</span><span class="p">)</span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">setPointNormal</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">norm3</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Normals using getPointNormal:&quot;</span><span class="p">,</span> 
+    <span class="n">cloud</span><span class="o">.</span><span class="n">getPointNormal</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">cloud</span><span class="o">.</span><span class="n">getPointNormal</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">cloud</span><span class="o">.</span><span class="n">getPointNormal</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">normals</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">normals</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Normals as array:&quot;</span><span class="p">,</span> <span class="n">normals</span><span class="p">)</span>
+ 
+<span class="n">normals</span><span class="p">[</span><span class="mi">0</span><span class="p">][:]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="c1"># normals is a copy, so changing it did not reflect of the point cloud</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Normals:&quot;</span><span class="p">,</span> <span class="n">cloud</span><span class="o">.</span><span class="n">normals</span><span class="p">())</span>
+
+<span class="c1"># Another way is to use setNormals</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">])</span>
+<span class="n">cloud</span> <span class="o">=</span> <span class="n">pycc</span><span class="o">.</span><span class="n">ccPointCloud</span><span class="p">(</span><span class="n">points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">points</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="c1"># This point cloud does not yet have colors:</span>
+<span class="k">assert</span> <span class="n">cloud</span><span class="o">.</span><span class="n">hasNormals</span><span class="p">()</span> <span class="o">==</span> <span class="kc">False</span>
+<span class="k">assert</span> <span class="n">cloud</span><span class="o">.</span><span class="n">normals</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span>
+<span class="n">normals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.57735026</span><span class="p">,</span> <span class="mf">0.57735026</span><span class="p">,</span> <span class="mf">0.57735026</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.57735026</span><span class="p">,</span> <span class="mf">0.57735026</span><span class="p">,</span> <span class="mf">0.57735026</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.57735026</span><span class="p">,</span> <span class="mf">0.57735026</span><span class="p">,</span> <span class="mf">0.57735026</span><span class="p">],</span>
+<span class="p">])</span>
+<span class="c1"># Note that this takes care of calling resizeTheNormsTable</span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">setNormals</span><span class="p">(</span><span class="n">normals</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cloud</span><span class="o">.</span><span class="n">normals</span><span class="p">())</span>
 </pre></div>
 </div>
 </section>

@@ -502,16 +502,6 @@ one is already selected by default.</p></li>
 </pre></div>
 </div>
 <dl class="py method">
-<dt class="sig sig-object py" id="pycc.ccPointCloud.addNorm">
-<span class="sig-name descname"><span class="pre">addNorm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPointCloud" title="pycc.ccPointCloud"><span class="pre">pycc.ccPointCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">normal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPointCloud.addNorm" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pycc.ccPointCloud.addNormals">
-<span class="sig-name descname"><span class="pre">addNormals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPointCloud" title="pycc.ccPointCloud"><span class="pre">pycc.ccPointCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float32</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float32</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float32</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPointCloud.addNormals" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPointCloud.addPoints">
 <span class="sig-name descname"><span class="pre">addPoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPointCloud" title="pycc.ccPointCloud"><span class="pre">pycc.ccPointCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float32</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float32</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float32</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPointCloud.addPoints" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -524,7 +514,7 @@ one is already selected by default.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPointCloud.colors">
 <span class="sig-name descname"><span class="pre">colors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPointCloud" title="pycc.ccPointCloud"><span class="pre">pycc.ccPointCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#pycc.ccPointCloud.colors" title="Permalink to this definition"></a></dt>
-<dd><p>“Returns a the colors as a “view” in a numpy array
+<dd><p>“Returns the colors as a “view” in a numpy array
 if the point cloud does not have colors, None is returned</p>
 <p>As this is a “view”, modifications made to this will reflect on the point cloud</p>
 </dd></dl>
@@ -561,6 +551,19 @@ if the point cloud does not have colors, None is returned</p>
 <blockquote>
 <div><p>Colors must have been enabled before</p>
 </div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccPointCloud.getPointNormal">
+<span class="sig-name descname"><span class="pre">getPointNormal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPointCloud" title="pycc.ccPointCloud"><span class="pre">pycc.ccPointCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></span><a class="headerlink" href="#pycc.ccPointCloud.getPointNormal" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the normal of the point at the given index</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccPointCloud.normals">
+<span class="sig-name descname"><span class="pre">normals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPointCloud" title="pycc.ccPointCloud"><span class="pre">pycc.ccPointCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#pycc.ccPointCloud.normals" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a <strong>copy</strong> of the normals into a numpy array</p>
+<p>As this is a copy, changes made to this array won’t reflect in the point cloud</p>
 </dd></dl>
 
 <dl class="py method">
@@ -633,8 +636,8 @@ if the point cloud does not have colors, None is returned</p>
 </li>
 <li><p>setColors(self: pycc.ccPointCloud, colors: numpy.ndarray[numpy.uint8]) -&gt; None</p>
 <blockquote>
-<div><p>Sets the colors in the point cloud with the given  r, g, b arrays
-(and the optinal alpha array).</p>
+<div><p>Sets the colors of the points using the given array.</p>
+<p>The array must be of shape (cloud.size(), 3)</p>
 <p>Enables colors if not done already</p>
 </div></blockquote>
 </li>
@@ -645,6 +648,14 @@ if the point cloud does not have colors, None is returned</p>
 <dt class="sig sig-object py" id="pycc.ccPointCloud.setCurrentDisplayedScalarField">
 <span class="sig-name descname"><span class="pre">setCurrentDisplayedScalarField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPointCloud" title="pycc.ccPointCloud"><span class="pre">pycc.ccPointCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPointCloud.setCurrentDisplayedScalarField" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycc.ccPointCloud.setNormals">
+<span class="sig-name descname"><span class="pre">setNormals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPointCloud" title="pycc.ccPointCloud"><span class="pre">pycc.ccPointCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float32</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPointCloud.setNormals" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the normals of the points using the given array.</p>
+<p>The array must be of shape (cloud.size(), 3)</p>
+<p>Enables normas if not done already</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPointCloud.setPointColor">
@@ -669,7 +680,8 @@ if the point cloud does not have colors, None is returned</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPointCloud.setPointNormal">
 <span class="sig-name descname"><span class="pre">setPointNormal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPointCloud" title="pycc.ccPointCloud"><span class="pre">pycc.ccPointCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../cccorelib/data_structures.html#cccorelib.CCVector3" title="cccorelib.CCVector3"><span class="pre">cccorelib.CCVector3</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPointCloud.setPointNormal" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Sets the normal of the point at the given index with the new value</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPointCloud.setPointSize">

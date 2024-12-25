@@ -33,6 +33,12 @@ PointCloud Colors
 .. literalinclude:: ../script_examples/point-cloud-colors.py
     :language: Python
 
+PointCloud Normals
+------------------
+
+.. literalinclude:: ../script_examples/point-cloud-normals.py
+    :language: Python
+
 Polyline
 ---------
 
