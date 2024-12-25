@@ -179,8 +179,6 @@ void define_ccPointCloud(py::module &m)
             "reference"_a)
         // features allocation/resize
         .def("reserveThePointsTable", &ccPointCloud::reserveThePointsTable, "_numberOfPoints"_a)
-        .def("reserveTheRGBTable", &ccPointCloud::reserveTheRGBTable)
-        .def("resizeTheRGBTable", &ccPointCloud::resizeTheRGBTable, "fillWithWhite"_a = false)
         .def("reserveTheNormsTable", &ccPointCloud::reserveTheNormsTable)
         .def("resizeTheNormsTable", &ccPointCloud::resizeTheNormsTable)
         .def("shrinkToFit", &ccPointCloud::shrinkToFit)
@@ -218,6 +216,8 @@ void define_ccPointCloud(py::module &m)
              "level"_a,
              "pDlg"_a = nullptr)
         .def("addPoints", &PyCC::addPointsFromArrays<ccPointCloud>)
+        .def("reserveTheRGBTable", &ccPointCloud::reserveTheRGBTable)
+        .def("resizeTheRGBTable", &ccPointCloud::resizeTheRGBTable, "fillWithWhite"_a = false)
         .def(
             "setColor",
             [](ccPointCloud &self,
@@ -352,8 +352,9 @@ void define_ccPointCloud(py::module &m)
             },
             "colors"_a,
             R"doc(
-             Sets the colors in the point cloud with the given  r, g, b arrays
-             (and the optinal alpha array).
+             Sets the colors of the points using the given array.
+
+             The array must be of shape (cloud.size(), 3)
 
              Enables colors if not done already
              )doc")
@@ -386,46 +387,115 @@ void define_ccPointCloud(py::module &m)
                 return a;
             },
             R"doc(
-            "Returns a the colors as a "view" in a numpy array
+            "Returns the colors as a "view" in a numpy array
             if the point cloud does not have colors, None is returned
 
             As this is a "view", modifications made to this will reflect on the point cloud
             )doc")
-        .def("setPointNormal", &ccPointCloud::setPointNormal, "index"_a, "normal"_a)
-        .def("addNorm", &ccPointCloud::addNorm, "normal"_a)
-        .def("addNormals",
-             [](ccPointCloud &self,
-                const py::array_t<PointCoordinateType> &nx,
-                const py::array_t<PointCoordinateType> &ny,
-                const py::array_t<PointCoordinateType> &nz)
-             {
-                 if (nx.size() != ny.size() || nx.size() != nz.size())
-                 {
-                     throw py::value_error("nx, ny, nz must have the same size");
-                 }
+        .def(
+            "getPointNormal",
+            [](ccPointCloud &self, const unsigned index)
+            {
+                if (!self.hasNormals())
+                {
+                    throw std::runtime_error("normals must be enabled first");
+                }
 
-                 const py::ssize_t numToReserve = self.size() + nx.size();
-                 if (numToReserve > std::numeric_limits<unsigned int>::max())
-                 {
-                     throw std::out_of_range(std::to_string(numToReserve) +
-                                             " cannot be casted to unsigned int");
-                 }
-                 self.reserve(static_cast<unsigned int>(numToReserve));
+                if (index >= self.size())
+                {
+                    throw py::index_error("invalid index");
+                }
+                return self.getPointNormal(index);
+            },
+            "index"_a,
+            R"doc(
+            Returns the normal of the point at the given index
+            )doc")
+        .def(
+            "setPointNormal",
+            [](ccPointCloud &self, const unsigned index, const CCVector3 &normal)
+            {
+                if (!self.hasNormals())
+                {
+                    throw std::runtime_error("normals must be enabled first");
+                }
+                if (index >= self.size())
+                {
+                    throw py::index_error("invalid index");
+                }
+                self.setPointNormal(index, normal);
+            },
+            "index"_a,
+            "normal"_a,
+            R"doc(
+            Sets the normal of the point at the given index with the new value
+            )doc")
+        .def(
+            "setNormals",
+            [](ccPointCloud &self, const py::array_t<PointCoordinateType> &normals)
+            {
+                if (normals.ndim() != 2)
+                {
+                    throw py::value_error("normals array must be 2 dimensional");
+                }
 
-                 auto xs_it = nx.begin();
-                 auto ys_it = ny.begin();
-                 auto zs_it = nz.begin();
+                if (normals.shape(0) != self.size())
+                {
+                    throw py::value_error("The number of normals must match the number of points");
+                }
 
-                 while (xs_it != nx.end())
-                 {
-                     self.addNorm({xs_it->cast<PointCoordinateType>(),
-                                   ys_it->cast<PointCoordinateType>(),
-                                   zs_it->cast<PointCoordinateType>()});
-                     ++xs_it;
-                     ++ys_it;
-                     ++zs_it;
-                 }
-             })
+                if (normals.shape(1) != 3)
+                {
+                    throw py::value_error("Colors must have 3 colums");
+                }
+
+                if (!self.resizeTheNormsTable())
+                {
+                    throw std::runtime_error("failed to allocate normals table");
+                }
+
+                auto norms = normals.unchecked<2>();
+                for (size_t i = 0; i < self.size(); ++i)
+                {
+                    const CCVector3 normal(norms(i, 0), norms(i, 1), norms(i, 2));
+                    self.setPointNormal(i, normal);
+                }
+            },
+            R"doc(
+             Sets the normals of the points using the given array.
+
+             The array must be of shape (cloud.size(), 3)
+
+             Enables normas if not done already
+             )doc")
+        .def(
+            "normals",
+            [](const ccPointCloud &self) -> py::object
+            {
+                if (!self.hasNormals())
+                {
+                    return py::none();
+                }
+
+                const size_t shape[2] = {self.size(), 3};
+                py::array_t<float> normals(shape);
+
+                auto norms = normals.mutable_unchecked<2>();
+                for (size_t i = 0; i < self.size(); ++i)
+                {
+                    const CCVector3 normal = self.getPointNormal(i);
+                    norms(i, 0) = normal.x;
+                    norms(i, 1) = normal.y;
+                    norms(i, 2) = normal.z;
+                }
+
+                return normals;
+            },
+            R"doc(
+		Returns a **copy** of the normals into a numpy array
+
+		As this is a copy, changes made to this array won't reflect in the point cloud
+		)doc")
         .def("showNormalsAsLines", &ccPointCloud::showNormalsAsLines, "state"_a)
         .def("colorize", &ccPointCloud::colorize)
         .def("crop2D", &ccPointCloud::crop2D, "poly"_a, "orthodDim"_a, "inside"_a = true)

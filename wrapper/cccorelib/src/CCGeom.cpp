@@ -134,6 +134,7 @@ using namespace pybind11::literals;
     py::class_<cppname, Tuple3Tpl<type_>>(cccorelib, pyname)                                                 \
         .def(py::init<>())                                                                                   \
         .def(py::init<type_, type_, type_>())                                                                \
+        .def("normalize", &cppname::normalize)                                                               \
         .def("__mul__", [](const cppname &self, PointCoordinateType val) { return self * val; })             \
         .def("__sub__", [](const cppname &self, const cppname &other) { return self - other; })              \
         .def("__div__", &cppname::operator/)                                                                 \

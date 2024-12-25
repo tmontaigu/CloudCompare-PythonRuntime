@@ -1,3 +1,4 @@
+import cccorelib
 import pycc
 import pytest
 import numpy as np
@@ -170,3 +171,92 @@ def test_new_cloud_with_colors_2():
     colors = cloud.colors()
     assert np.all(colors[0] == [255, 0, 255, 255])
 
+
+def test_new_cloud_with_normals():
+    """ Test using setPointNormal"""
+    points = np.array([
+        [0, 0, 0],
+        [1, 1, 0],
+        [2, 2, 0]
+    ])
+    cloud = pycc.ccPointCloud(points[:, 0], points[:, 1], points[:, 2])
+    # This point cloud does not yet have colors:
+    assert cloud.hasNormals() == False
+    assert cloud.normals() is None
+
+    norm1 = cccorelib.CCVector3(1, 1, 1)
+    norm2 = cccorelib.CCVector3(2, 2, 2)
+    norm3 = cccorelib.CCVector3(3, 3, 3)
+
+    norm1.normalize()
+    norm2.normalize()
+    norm3.normalize()
+
+    with pytest.raises(RuntimeError):
+        # resizeTheNormsTable table must have been called before
+        cloud.setPointNormal(0, norm1)
+
+    cloud.resizeTheNormsTable()
+
+    cloud.setPointNormal(0, norm1)
+    cloud.setPointNormal(1, norm2)
+    cloud.setPointNormal(2, norm3)
+
+    with pytest.raises(IndexError):
+        cloud.setPointNormal(4, norm1)
+
+    assert np.allclose(list(cloud.getPointNormal(0)), list(norm1))
+    assert np.allclose(list(cloud.getPointNormal(1)), list(norm2))
+    assert np.allclose(list(cloud.getPointNormal(2)), list(norm3))
+
+    with pytest.raises(IndexError):
+        cloud.getPointNormal(4)
+
+    normals = cloud.normals()
+    assert np.allclose(normals[0], list(norm1))
+    assert np.allclose(normals[1], list(norm2))
+    assert np.allclose(normals[2], list(norm3))
+
+    normals[0][:] = [0, 0, 0]
+    # normals is a copy, so changing it did not reflect of the point cloud
+    normals2 = cloud.normals()
+    assert np.allclose(normals2[0], list(norm1))
+    assert np.allclose(normals2[1], list(norm2))
+    assert np.allclose(normals2[2], list(norm3))
+
+
+def test_new_cloud_with_normals_2():
+    """ Test using setNormals first
+    """
+    points = np.array([
+        [0, 0, 0],
+        [1, 1, 0],
+        [2, 2, 0]
+    ])
+    cloud = pycc.ccPointCloud(points[:, 0], points[:, 1], points[:, 2])
+    # This point cloud does not yet have colors:
+    assert cloud.hasNormals() == False
+    assert cloud.normals() is None
+
+    norm1 = cccorelib.CCVector3(1, 1, 1)
+    norm2 = cccorelib.CCVector3(2, 2, 2)
+    norm3 = cccorelib.CCVector3(3, 3, 3)
+
+    norm1.normalize()
+    norm2.normalize()
+    norm3.normalize()
+
+    normals = np.array([list(norm1), list(norm2), list(norm3)])
+    cloud.setNormals(normals)
+
+    normals = cloud.normals()
+    assert np.allclose(normals[0], list(norm1))
+    assert np.allclose(normals[1], list(norm2))
+    assert np.allclose(normals[2], list(norm3))
+
+    with pytest.raises(IndexError):
+        cloud.setPointNormal(4, norm1)
+
+    assert np.allclose(list(cloud.getPointNormal(0)), list(norm1))
+    assert np.allclose(list(cloud.getPointNormal(1)), list(norm2))
+    assert np.allclose(list(cloud.getPointNormal(2)), list(norm3))
