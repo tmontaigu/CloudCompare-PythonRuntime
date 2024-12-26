@@ -84,27 +84,28 @@ PythonPlugin::PythonPlugin(QObject *parent)
     catch (const std::exception &e)
     {
         plgError() << "Failed to initialize Python: " << e.what();
-        return;
     }
 
     m_config = config;
     m_pluginsMenu = new QMenu("Plugins");
     m_pluginsMenu->setEnabled(false);
 
-    connect(&m_interp,
-            &PythonInterpreter::executionStarted,
-            this,
-            &PythonPlugin::handlePythonExecutionStarted);
+    if (PythonInterpreter::IsInitialized()) {
+        connect(&m_interp,
+                &PythonInterpreter::executionStarted,
+                this,
+                &PythonPlugin::handlePythonExecutionStarted);
 
-    connect(&m_interp,
-            &PythonInterpreter::executionFinished,
-            this,
-            &PythonPlugin::handlePythonExecutionFinished);
+        connect(&m_interp,
+                &PythonInterpreter::executionFinished,
+                this,
+                &PythonPlugin::handlePythonExecutionFinished);
 
-    connect(QCoreApplication::instance(),
-            &QCoreApplication::aboutToQuit,
-            this,
-            &PythonPlugin::finalizeInterpreter);
+        connect(QCoreApplication::instance(),
+                &QCoreApplication::aboutToQuit,
+                this,
+                &PythonPlugin::finalizeInterpreter);
+    }
 }
 
 static std::unique_ptr<QSettings> LoadSettings()
