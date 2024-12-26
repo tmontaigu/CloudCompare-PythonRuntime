@@ -1,11 +1,18 @@
 from invoke import task
 from pathlib import Path
-from tqdm import tqdm
+
+try:
+    from tqdm import tqdm
+except ModuleNotFoundError:
+    def tqdm(iter, *args, **kwargs):
+        return iter
 from typing import List, Iterable
 
 import itertools
+
 CLANG_FORMAT_CMD = "clang-format -i {}"
 
+# List of folder names to be ignoreed when formatting
 DISALLOW_LIST = ['_skbuild']
 
 
@@ -26,10 +33,14 @@ def filter_paths(paths: Iterable[Path]) -> List[Path]:
 
 @task
 def clang_format(c):
-    sources = Path('.').rglob("*.cpp")
-    headers = Path('.').rglob("*.h")
+    sources = Path('./src/').rglob("*.cpp")
+    headers = Path('./src/').rglob("*.h")
 
-    all_sources = filter_paths(itertools.chain(sources, headers))
+    wrapper_sources =  Path('./wrapper/').rglob("*.cpp")
+    wrapper_headers =  Path('./wrapper/').rglob("*.h")
+
+
+    all_sources = filter_paths(itertools.chain(sources, headers, wrapper_headers, wrapper_sources))
 
     print('Formating source files')
     for path in tqdm(all_sources, ncols=80):
@@ -51,3 +62,29 @@ def cmake_format(c):
 @task(clang_format, cmake_format)
 def format(c):
     ...
+
+VENV_PYTHON_EXEC = "./venv/bin/python"
+
+@task
+def create_venv(c):
+    if not Path("venv").exists():
+        c.run("python3 -m venv venv")
+        c.run(f"{VENV_PYTHON_EXEC} -m pip install -r requirements-dev.txt")
+    else:
+        print("venv already exists")
+
+@task
+def install_ccorelib(c):
+    c.run(f"{VENV_PYTHON_EXEC} -m pip install --verbose wrapper/cccorelib")
+
+@task
+def install_pycc(c):
+    c.run(f"{VENV_PYTHON_EXEC} -m pip install --verbose wrapper/pycc")
+
+@task
+def test_cccorelib(c):
+    c.run(f"{VENV_PYTHON_EXEC} -m pytest wrapper/cccorelib/tests")
+
+@task
+def test_pycc(c):
+    c.run(f"{VENV_PYTHON_EXEC} -m pytest wrapper/pycc/tests")
