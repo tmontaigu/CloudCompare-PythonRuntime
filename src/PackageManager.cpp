@@ -251,7 +251,7 @@ PackageManager::PackageManager(const PythonConfig &config, QWidget *parent)
     {
     // The main intent of checking access rights of venv is for the Windows bundled
     // env, but checking for all venv won't hurt.
-    // on Windowsn the bundled env  is very likely to be installed in
+    // on Windows the bundled env  is very likely to be installed in
     // "C:\Programs\Cloud Compare\plugins\Python" and that requires admin rights to add/modify.
     // It is better to notify user and prevent them from trying something that will faill.
     case PythonConfig::Type::Venv:
