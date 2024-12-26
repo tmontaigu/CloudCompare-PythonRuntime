@@ -311,7 +311,14 @@ void PythonConfig::preparePythonProcess(QProcess &pythonProcess) const
 PythonConfigPaths PythonConfig::pythonCompatiblePaths() const
 {
     PythonConfigPaths paths;
-    paths.m_pythonHome.reset(QStringToWcharArray(m_pythonHome));
+    if (getVersion().minor >= 10)
+    {
+        paths.m_pythonHome.reset(nullptr);
+    }
+    else
+    {
+        paths.m_pythonHome.reset(QStringToWcharArray(m_pythonHome));
+    }
     paths.m_pythonPath.reset(QStringToWcharArray(m_pythonPath));
     return paths;
 }
