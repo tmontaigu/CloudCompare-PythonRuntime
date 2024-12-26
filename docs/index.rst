@@ -36,5 +36,3 @@ be found on the corresponding C++ function documentation.
 
    python/cccorelib/index
    python/pycc/index
-   cpp/qCC_db/index
-   cpp/CCCoreLib/index

@@ -4,7 +4,6 @@ Others
 
 Rgb
 ___
-.. seealso::
 
 .. autoclass:: pycc.Rgb
     :members:
@@ -14,7 +13,6 @@ ___
 
 Rgba
 ____
-.. seealso::
 
 .. autoclass:: pycc.Rgba
     :members:
@@ -24,9 +22,6 @@ ____
 
 ccScalarField
 _____________
-.. seealso::
-
-    C++: :cpp:class:`ccScalarField`
 
 .. autoclass:: pycc.ccScalarField
     :members:
@@ -53,9 +48,6 @@ ______
 
 ccSensor
 ________
-.. seealso::
-
-    C++: :cpp:class:`ccSensor`
 
 .. autoclass:: pycc.ccSensor
     :members:
@@ -64,9 +56,6 @@ ________
 
 ccGBLSensor
 ___________
-.. seealso::
-
-    C++: :cpp:class:`ccGBLSensor`
 
 .. autoclass:: pycc.ccGBLSensor
     :members:
@@ -83,9 +72,6 @@ ______________
 
 ccColorScaleElement
 ___________________
-.. seealso::
-
-    C++: :cpp:class:`ccColorScaleElement`
 
 
 .. autoclass:: pycc.ccColorScaleElement
@@ -96,9 +82,6 @@ ___________________
 
 ccColorScale
 ____________
-.. seealso::
-
-    C++: :cpp:class:`ccColorScale`
 
 .. autoclass:: pycc.ccColorScale
     :members:
@@ -107,9 +90,6 @@ ____________
 
 ccColorScalesManager
 ____________________
-.. seealso::
-
-    C++: :cpp:class:`ccColorScalesManager`
 
 .. autoclass:: pycc.ccColorScalesManager
     :members:
@@ -190,9 +170,6 @@ __________________
 
 ccGLMatrix
 __________
-.. seealso::
-
-    C++: :cpp:class:`ccGLMatrix`
 
 .. autoclass:: pycc.ccGLMatrix
     :members:
@@ -202,9 +179,6 @@ __________
 
 ccGLMatrixd
 ___________
-.. seealso::
-
-    C++: :cpp:class:`ccGLMatrixd`
 
 .. autoclass:: pycc.ccGLMatrixd
     :members:
@@ -213,9 +187,6 @@ ___________
 
 ccIndexedTransformation
 _______________________
-.. seealso::
-
-    C++: :cpp:class:`ccIndexedTransformation`
 
 .. autoclass:: pycc.ccIndexedTransformation
     :members:
@@ -225,9 +196,6 @@ _______________________
 
 WaveformDescriptor
 __________________
-.. seealso::
-
-    C++: :cpp:class:`WaveformDescriptor`
 
 .. autoclass:: pycc.WaveformDescriptor
     :members:
@@ -236,9 +204,6 @@ __________________
 
 ccWaveform
 __________
-.. seealso::
-
-    C++: :cpp:class:`ccWaveform`
 
 .. autoclass:: pycc.ccWaveform
     :members:
@@ -248,9 +213,6 @@ __________
 
 ccWaveformProxy
 _______________
-.. seealso::
-
-    C++: :cpp:class:`ccWaveformProxy`
 
 .. autoclass:: pycc.ccWaveformProxy
     :members:
@@ -259,9 +221,6 @@ _______________
 
 ccRasterGrid
 _______________
-.. seealso::
-
-    C++: :cpp:class:`ccRasterGrid`
 
 .. autoclass:: pycc.ccRasterGrid
     :members:
@@ -271,9 +230,6 @@ _______________
 
 ccNormalVectors
 _______________
-.. seealso::
-
-    C++: :cpp:class:`ccNormalVectors`
 
 .. autoclass:: pycc.ccNormalVectors
     :members:
