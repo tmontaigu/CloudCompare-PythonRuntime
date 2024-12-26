@@ -41,7 +41,7 @@ if(CCCORELIB_PYTHON_IS_MASTER_PROJECT)
 endif()
 
 if(CCCORELIB_PYTHON_IS_MASTER_PROJECT OR NOT PLUGIN_PYTHON_USE_EMBEDDED_MODULES)
-  find_package(Python 3.8 COMPONENTS Interpreter Development REQUIRED)
+  find_package(Python 3.9 COMPONENTS Interpreter Development REQUIRED)
   ensure_pybind11_cmake_module_is_in_path()
   find_package(pybind11 CONFIG REQUIRED)
 

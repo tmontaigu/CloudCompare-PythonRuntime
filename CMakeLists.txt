@@ -12,7 +12,7 @@ if(PLUGIN_PYTHON)
 
   addplugin(NAME ${PROJECT_NAME})
 
-  find_package(Python 3.8 COMPONENTS Interpreter Development REQUIRED)
+  find_package(Python 3.9 COMPONENTS Interpreter Development REQUIRED)
   ensure_pybind11_cmake_module_is_in_path()
   find_package(pybind11 CONFIG REQUIRED)
 

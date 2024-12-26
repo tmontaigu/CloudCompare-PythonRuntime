@@ -218,7 +218,7 @@ void define_ccPointCloud(py::module &m)
              {
                  if (self.size() > 0)
                  {
-                    static_assert(sizeof(PointCoordinateType) == sizeof(float));
+                     static_assert(sizeof(PointCoordinateType) == sizeof(float));
                      // FIXME, ideally, ccPointCloud would have a .points() method returning a ref
                      // to the std::vector of points, and we would avoid the const cast
                      auto *ptr = const_cast<CCVector3 *>(self.getPoint(0));
