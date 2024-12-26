@@ -177,10 +177,6 @@ void define_ccPointCloud(py::module &m)
             [](const ccPointCloud &self, const CCCoreLib::ReferenceCloud *refCloud)
             { return self.partialClone(refCloud); },
             "reference"_a)
-        // features allocation/resize
-        .def("reserveThePointsTable", &ccPointCloud::reserveThePointsTable, "_numberOfPoints"_a)
-        .def("reserveTheNormsTable", &ccPointCloud::reserveTheNormsTable)
-        .def("resizeTheNormsTable", &ccPointCloud::resizeTheNormsTable)
         .def("shrinkToFit", &ccPointCloud::shrinkToFit)
         // ScalarField management
         .def("getCurrentDisplayedScalarField", &ccPointCloud::getCurrentDisplayedScalarField)
@@ -215,7 +211,29 @@ void define_ccPointCloud(py::module &m)
              &ccPointCloud::orientNormalsWithFM,
              "level"_a,
              "pDlg"_a = nullptr)
+        .def("reserveThePointsTable", &ccPointCloud::reserveThePointsTable, "_numberOfPoints"_a)
         .def("addPoints", &PyCC::addPointsFromArrays<ccPointCloud>)
+        .def("points",
+             [](ccPointCloud &self)
+             {
+                 if (self.size() > 0)
+                 {
+                    static_assert(sizeof(PointCoordinateType) == sizeof(float));
+                     // FIXME, ideally, ccPointCloud would have a .points() method returning a ref
+                     // to the std::vector of points, and we would avoid the const cast
+                     auto *ptr = const_cast<CCVector3 *>(self.getPoint(0));
+                     auto capsule = py::capsule(ptr, [](void *) {});
+                     py::array a(py::dtype("3f"), self.size(), ptr, capsule);
+                     // Make the array non-writeable to make up for the const cast
+                     a.attr("flags").attr("writeable") = false;
+                     return a;
+                 }
+                 else
+                 {
+                     return py::array(py::dtype("3f"), 0);
+                 }
+             })
+        // colors
         .def("reserveTheRGBTable", &ccPointCloud::reserveTheRGBTable)
         .def("resizeTheRGBTable", &ccPointCloud::resizeTheRGBTable, "fillWithWhite"_a = false)
         .def(
@@ -392,6 +410,9 @@ void define_ccPointCloud(py::module &m)
 
             As this is a "view", modifications made to this will reflect on the point cloud
             )doc")
+        // normals
+        .def("reserveTheNormsTable", &ccPointCloud::reserveTheNormsTable)
+        .def("resizeTheNormsTable", &ccPointCloud::resizeTheNormsTable)
         .def(
             "getPointNormal",
             [](ccPointCloud &self, const unsigned index)
@@ -499,25 +520,6 @@ void define_ccPointCloud(py::module &m)
         .def("showNormalsAsLines", &ccPointCloud::showNormalsAsLines, "state"_a)
         .def("colorize", &ccPointCloud::colorize)
         .def("crop2D", &ccPointCloud::crop2D, "poly"_a, "orthodDim"_a, "inside"_a = true)
-        .def("points",
-             [](ccPointCloud &self)
-             {
-                 if (self.size() > 0)
-                 {
-                     // FIXME, ideally, ccPointCloud would have a .points() method returning a ref
-                     // to the std::vector of points, and we would avoid the const cast
-                     auto *ptr = const_cast<CCVector3 *>(self.getPoint(0));
-                     auto capsule = py::capsule(ptr, [](void *) {});
-                     py::array a(py::dtype("3f"), self.size(), ptr, capsule);
-                     // Make the array non-writeable to make up for the const cast
-                     a.attr("flags").attr("writeable") = false;
-                     return a;
-                 }
-                 else
-                 {
-                     return py::array(py::dtype("3f"), 0);
-                 }
-             })
         .def("__repr__",
              [](const ccPointCloud &self)
              {
