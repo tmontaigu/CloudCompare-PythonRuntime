@@ -201,6 +201,9 @@ void PythonRuntimeSettings::restoreSettings()
         const QString localEnvPath = settings->value(QStringLiteral("EnvPath")).toString();
         m_ui->localEnvPathLabel->setText(localEnvPath);
     }
+
+    bool ignoreVenv = settings->value(QStringLiteral("IgnoreVenv")).toBool();
+    m_ui->ignoreVenvCheckBox->setChecked(ignoreVenv);
 }
 
 void PythonRuntimeSettings::saveSettings() const
@@ -209,6 +212,7 @@ void PythonRuntimeSettings::saveSettings() const
     settings->setValue(QStringLiteral("PluginPaths"), pluginsPaths());
     settings->setValue(QStringLiteral("EnvType"), selectedEnvType());
     settings->setValue(QStringLiteral("EnvPath"), localEnvPath());
+    settings->setValue(QStringLiteral("IgnoreVenv"), ingoreVenv());
 }
 
 void PythonRuntimeSettings::handleEditPluginsPaths()
@@ -289,4 +293,9 @@ PythonConfig PythonRuntimeSettings::pythonEnvConfig() const
 bool PythonRuntimeSettings::isDefaultPythonEnv() const
 {
     return m_ui->envTypeComboBox->currentIndex() == 0;
+}
+
+bool PythonRuntimeSettings::ingoreVenv() const
+{
+    return m_ui->ignoreVenvCheckBox->isChecked();
 }

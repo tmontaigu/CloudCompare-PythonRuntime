@@ -29,8 +29,10 @@ class PythonRuntimeSettings final : public QDialog
     explicit PythonRuntimeSettings(QWidget *parent = nullptr);
 
     QStringList pluginsPaths() const;
+    /// Creates a config that the env type selected in the settings
     PythonConfig pythonEnvConfig() const;
     bool isDefaultPythonEnv() const;
+    bool ingoreVenv() const;
 
   private: // Methods
     QString selectedEnvType() const;

@@ -54,7 +54,7 @@ PythonPlugin::PythonPlugin(QObject *parent)
     PythonConfig config;
     bool isDefaultPythonEnv;
 
-    if (PythonConfig::IsInsideEnvironment())
+    if (!m_settings->ingoreVenv() && PythonConfig::IsInsideEnvironment())
     {
         config = PythonConfig::fromContainingEnvironment();
         isDefaultPythonEnv = false;
@@ -90,7 +90,8 @@ PythonPlugin::PythonPlugin(QObject *parent)
     m_pluginsMenu = new QMenu("Plugins");
     m_pluginsMenu->setEnabled(false);
 
-    if (PythonInterpreter::IsInitialized()) {
+    if (PythonInterpreter::IsInitialized())
+    {
         connect(&m_interp,
                 &PythonInterpreter::executionStarted,
                 this,
