@@ -248,7 +248,15 @@ void define_ccObject(py::module &m)
                 setDeletable(child, true);
             },
             "child"_a)
-        .def("detachChild", &ccHObject::detachChild, "child"_a)
+        .def("detachChild",
+             [](ccHObject &self, py::object &obj)
+             {
+                 auto *child = obj.cast<ccHObject *>();
+
+                 setDeletable(obj, true);
+
+                 self.detachChild(child);
+             })
         .def("detachAllChildren", &ccHObject::detachAllChildren)
         .def("swapChildren", &ccHObject::swapChildren, "firstChildIndex"_a, "secondChildIndex"_a)
         .def("getChildIndex", &ccHObject::getChildIndex, "child"_a)
@@ -256,9 +264,25 @@ void define_ccObject(py::module &m)
         .def(
             "addChild",
             [](ccHObject &self,
-               ccHObject *child,
+               py::object &obj,
                ccHObject::DEPENDENCY_FLAGS dependencyFlags,
-               int insertIndex) { return self.addChild(child, dependencyFlags, insertIndex); },
+               int insertIndex)
+            {
+                auto *child = obj.cast<ccHObject *>();
+
+                switch (dependencyFlags)
+                {
+                case ccHObject::DEPENDENCY_FLAGS::DP_PARENT_OF_OTHER:
+                case ccHObject::DEPENDENCY_FLAGS::DP_DELETE_OTHER:
+                    // The parent (self) takes owner ship of the child
+                    // thus the child must no free itself
+                    setDeletable(obj, false);
+                    break;
+                default:
+                    break;
+                }
+                return self.addChild(child, dependencyFlags, insertIndex);
+            },
             py::keep_alive<2, 1>(), // keep alive parent (1) while added child (2) is alive
             "child"_a,
             "dependencyFlags"_a = ccHObject::DEPENDENCY_FLAGS::DP_PARENT_OF_OTHER,

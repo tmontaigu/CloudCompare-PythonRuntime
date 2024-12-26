@@ -1,7 +1,6 @@
 import pycc
 
 def test_cc_hobject_child_deletion():
-    """Test that deleting the child removed it from the parent container"""
     parent = pycc.ccPointCloud("parent")
     child = pycc.ccPointCloud("child")
 
@@ -9,14 +8,16 @@ def test_cc_hobject_child_deletion():
     parent.addChild(child, pycc.DEPENDENCY_FLAGS.DP_PARENT_OF_OTHER)
     assert parent.getChildrenNumber() == 1
     del child
-    assert parent.getChildrenNumber() == 0
+    # DP_PARENT_OF_OTHER makes the parent take ownership
+    # so deleting the child does nothing
+    assert parent.getChildrenNumber() == 1
+
 
 def test_cc_hobject_parent_deletion():
-    """Test that deleting the a parent keep the child alive"""
-    parent = pycc.ccPointCloud("parent")
-    child = pycc.ccPointCloud("child")
+    cloud = pycc.ccPointCloud("Yoshi")
+    folder = pycc.ccHObject("Folder")
 
-    # DP_PARENT_OF_OTHER is the default, we make it explicit for the test
-    parent.addChild(child, pycc.DEPENDENCY_FLAGS.DP_PARENT_OF_OTHER)
-    del parent
-    assert child is not None
+    folder.addChild(cloud)
+
+    del cloud
+    assert folder.getChild(0).size() == 0
