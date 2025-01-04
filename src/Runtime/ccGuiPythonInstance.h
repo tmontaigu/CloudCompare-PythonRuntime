@@ -23,6 +23,7 @@
 class ccMainAppInterface;
 class QMainWindow;
 class ccGLWindowInterface;
+class ccPickingHub;
 
 namespace pybind11
 {
@@ -73,6 +74,8 @@ class Q_DECL_EXPORT ccGuiPythonInstance final
     void updateUI();
 
     void freezeUI(bool state);
+
+    ccPickingHub *pickingHub();
 
     ccHObject *loadFile(const char *filename, FileIOFilter::LoadParameters &parameters);
 

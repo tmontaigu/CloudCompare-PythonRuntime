@@ -22,6 +22,7 @@
 
 #include <ccGLWindowInterface.h>
 #include <ccMainAppInterface.h>
+#include <ccPickingHub.h>
 #include <ccPointCloud.h>
 
 #include <QMainWindow>
@@ -208,6 +209,12 @@ void ccGuiPythonInstance::freezeUI(bool state)
 {
     m_app->freezeUI(state);
 }
+
+ccPickingHub *ccGuiPythonInstance::pickingHub()
+{
+    return m_app->pickingHub();
+}
+
 ccMainAppInterface *ccGuiPythonInstance::app()
 {
     return m_app;
@@ -265,6 +272,10 @@ void define_ccGUIPythonInstance(py::module &m)
         .def("updateUI", &ccGuiPythonInstance::updateUI)
         .def("freezeUI", &ccGuiPythonInstance::freezeUI, "state"_a)
         .def("app", &ccGuiPythonInstance::app)
+        .def("pickingHub",
+             &ccGuiPythonInstance::pickingHub,
+             py::return_value_policy::reference,
+             R"(Returns the picking hub)")
         .def("loadFile",
              &ccGuiPythonInstance::loadFile,
              py::return_value_policy::reference,

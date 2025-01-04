@@ -130,6 +130,31 @@ PYBIND11_EMBEDDED_MODULE(ccinternals, m)
 
     py::class_<QColor>(m, "QColor");
 
+    py::class_<QPoint>(m, "QPoint")
+        .def(py::init<>())
+        .def(py::init<int, int>())
+        .def("x", &QPoint::x)
+        .def("y", &QPoint::y)
+        .def("setX", &QPoint::setX)
+        .def("setY", &QPoint::setY)
+        .def("isNull", &QPoint::isNull)
+        .def("manhattanLength", &QPoint::manhattanLength)
+        .def("transposed", &QPoint::transposed)
+        .def("rx", &QPoint::rx)
+        .def("ry", &QPoint::ry)
+        .def("__iadd__", &QPoint::operator+=)
+        .def("__isub__", &QPoint::operator-=)
+        .def("__imul__", py::overload_cast<double>(&QPoint::operator*=))
+        .def("__imul__", py::overload_cast<int>(&QPoint::operator*=))
+        .def("__idiv__", &QPoint::operator/=)
+        .def("__eq__", [](const QPoint &self, const QPoint &other) { return self == other; })
+        .def("__ne__", [](const QPoint &self, const QPoint &other) { return self != other; })
+        .def_static("dotProduct", &QPoint::dotProduct)
+        .def("__add__", [](const QPoint &self, const QPoint &other) { return self + other; })
+        .def("__sub__", [](const QPoint &self, const QPoint &other) { return self - other; })
+        .def("__mul__", [](const QPoint &self, const double other) { return self * other; })
+        .def("__div__", [](const QPoint &self, const double other) { return self / other; });
+
     py::class_<QListWidget, std::unique_ptr<QListWidget, py::nodelete>>(m, "QListWidget");
 
     py::class_<ccConsoleOutput>(m, "ccConsoleOutput")
@@ -150,11 +175,13 @@ PYBIND11_EMBEDDED_MODULE(ccinternals, m)
 
 void define_ccGUIPythonInstance(py::module &);
 void define_ccCommandLine(py::module &);
+void define_ccPickingHub(py::module &);
 
 PYBIND11_EMBEDDED_MODULE(pycc_runtime, m)
 {
     py::class_<ccMainAppInterface>(m, "ccMainAppInterface");
 
+    define_ccPickingHub(m);
     define_ccGUIPythonInstance(m);
     define_ccCommandLine(m);
 

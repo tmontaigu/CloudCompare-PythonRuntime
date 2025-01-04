@@ -80,3 +80,12 @@ ________
 
 .. literalinclude:: ../script_examples/gl-rotation.py
     :language: Python
+
+
+Picking
+________
+
+This is shown as a plugin as it is required to be able
+to have a start/stop mechanism
+
+.. literalinclude:: ../script_examples/plugin_examples/picking.py
