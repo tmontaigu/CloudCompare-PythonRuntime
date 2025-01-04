@@ -35,7 +35,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          conda install -c conda-forge qt=5.12.* ninja doxygen
+          conda install -c conda-forge qt=5.15.* ninja doxygen
           pip install pytest pybind11 numpy
 
       - name: Configure MSVC console
