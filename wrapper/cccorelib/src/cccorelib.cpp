@@ -48,6 +48,8 @@ void define_CCMath(py::module &);
 
 void define_CCConst(py::module &);
 
+void define_SquareMatrix(py::module &);
+
 void define_CCShareable(py::module &);
 
 void define_ChamferDistanceTransform(py::module &);
@@ -275,6 +277,7 @@ void define_cccorelib(py::module &m)
     define_CCGeom(m);
     define_CCMath(m);
     define_CCConst(m);
+    define_SquareMatrix(m);
     define_BoundingBox(m);
     py::bind_vector<std::vector<CCVector2>>(m, "CCVector2List");
 
@@ -339,7 +342,6 @@ void define_cccorelib(py::module &m)
     // FastMarchingFor...
     // RayAndBox
     // SaitoSquared...
-    // SquareMatrix
 }
 
 #ifdef USE_EMBEDDED_MODULES

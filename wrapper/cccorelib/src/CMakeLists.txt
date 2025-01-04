@@ -40,6 +40,7 @@ set(cccorelib_sources
     ${CMAKE_CURRENT_LIST_DIR}/ScalarFieldTools.cpp
     ${CMAKE_CURRENT_LIST_DIR}/SimpleMesh.cpp
     ${CMAKE_CURRENT_LIST_DIR}/SimpleTriangle.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/SquareMatrix.cpp
     ${CMAKE_CURRENT_LIST_DIR}/StatisticalTestingTools.cpp
     ${CMAKE_CURRENT_LIST_DIR}/TrueKdTree.cpp
     ${CMAKE_CURRENT_LIST_DIR}/WeibullDistribution.cpp

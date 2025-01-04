@@ -42,8 +42,8 @@ void define_ccQuadric(py::module &m)
     eq: list of PointCoordinateType
         equation coefficients ( Z = a + b.X + c.Y + d.X^2 + e.X.Y + f.Y^2)
         6 coefficients
-    dims: list of int, optional
-        optional dimension indexes
+    toLocalOrientation : , optional
+        rotation matrix to convert a point (relative to the cloud gravity center) from its original coordinate system to the quadric local one
     transMat : , optional
         optional 3D transformation (can be set afterwards with ccDrawableObject::setGLTransformation)
     name : str, default: Sphere
@@ -65,7 +65,7 @@ void define_ccQuadric(py::module &m)
                 [](CCVector2 minCorner,
                    CCVector2 maxCorner,
                    const py::sequence eq,
-                   const Tuple3ub *dims = nullptr,
+                   const CCCoreLib::SquareMatrix *toLocalOrientation = nullptr,
                    const ccGLMatrix *transMat = nullptr,
                    QString name = QString("Quadric"),
                    unsigned precision = ccQuadric::DEFAULT_DRAWING_PRECISION)
@@ -80,13 +80,18 @@ void define_ccQuadric(py::module &m)
                     {
                         eqC[i] = eq[i].cast<PointCoordinateType>();
                     }
-                    return new ccQuadric(
-                        minCorner, maxCorner, eqC, dims, transMat, std::move(name), precision);
+                    return new ccQuadric(minCorner,
+                                         maxCorner,
+                                         eqC,
+                                         toLocalOrientation,
+                                         transMat,
+                                         std::move(name),
+                                         precision);
                 }),
             "minCorner"_a,
             "maxCorner"_a,
             "eq"_a,
-            "dims"_a = nullptr,
+            "toLocalOrientation"_a = nullptr,
             "transMat"_a = nullptr,
 
             "name"_a = QString("Quadric"),
@@ -96,7 +101,7 @@ void define_ccQuadric(py::module &m)
         .def("getMinCorner", &ccQuadric::getMinCorner)
         .def("getMaxCorner", &ccQuadric::getMaxCorner)
         .def("getEquationCoefs", &ccQuadric::getEquationCoefs)
-        .def("getEquationDims", &ccQuadric::getEquationDims)
+        .def("getLocalOrientation", &ccQuadric::getLocalOrientation)
         .def("projectOnQuadric", &ccQuadric::projectOnQuadric, "P"_a, "Q"_a)
         .def("getEquationString", &ccQuadric::getEquationString)
         .def_static("Fit",
