@@ -490,7 +490,7 @@
 <li><p><strong>maxCorner</strong> (<em>cccorelib.CCVector2</em>) – max corner of the ‘representation’ base area</p></li>
 <li><p><strong>eq</strong> (<em>list of PointCoordinateType</em>) – equation coefficients ( Z = a + b.X + c.Y + d.X^2 + e.X.Y + f.Y^2)
 6 coefficients</p></li>
-<li><p><strong>dims</strong> (<em>list of int</em><em>, </em><em>optional</em>) – optional dimension indexes</p></li>
+<li><p><strong>toLocalOrientation</strong> (<em>, </em><em>optional</em>) – rotation matrix to convert a point (relative to the cloud gravity center) from its original coordinate system to the quadric local one</p></li>
 <li><p><strong>transMat</strong> (<em>, </em><em>optional</em>) – optional 3D transformation (can be set afterwards with ccDrawableObject::setGLTransformation)</p></li>
 <li><p><strong>name</strong> (<em>str</em><em>, </em><em>default: Sphere</em>) – name of the sphere object</p></li>
 </ul>
@@ -515,13 +515,13 @@
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="pycc.ccQuadric.getEquationDims">
-<span class="sig-name descname"><span class="pre">getEquationDims</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccQuadric" title="pycc.ccQuadric"><span class="pre">pycc.ccQuadric</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">cccorelib.Tuple3ub</span></span></span><a class="headerlink" href="#pycc.ccQuadric.getEquationDims" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="pycc.ccQuadric.getEquationString">
+<span class="sig-name descname"><span class="pre">getEquationString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccQuadric" title="pycc.ccQuadric"><span class="pre">pycc.ccQuadric</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QString</span></span></span><a class="headerlink" href="#pycc.ccQuadric.getEquationString" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="pycc.ccQuadric.getEquationString">
-<span class="sig-name descname"><span class="pre">getEquationString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccQuadric" title="pycc.ccQuadric"><span class="pre">pycc.ccQuadric</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QString</span></span></span><a class="headerlink" href="#pycc.ccQuadric.getEquationString" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="pycc.ccQuadric.getLocalOrientation">
+<span class="sig-name descname"><span class="pre">getLocalOrientation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccQuadric" title="pycc.ccQuadric"><span class="pre">pycc.ccQuadric</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">cccorelib.SquareMatrix</span></span></span><a class="headerlink" href="#pycc.ccQuadric.getLocalOrientation" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
