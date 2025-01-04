@@ -88,3 +88,19 @@ ______________________
 .. autoclass:: pycc.ccCommandLineInterface
     :members:
     :undoc-members:
+
+
+ccPickingHub
+____________
+
+.. autoclass:: pycc.ccPickingHub
+    :members:
+    :undoc-members:
+
+
+ccPickingListener
+_________________
+
+.. autoclass:: pycc.ccPickingListener
+    :members:
+    :undoc-members:
