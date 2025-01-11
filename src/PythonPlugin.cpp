@@ -29,13 +29,16 @@
 
 #include <QDesktopServices>
 #include <QUrl>
+
 #include <pybind11/pytypes.h>
 
 #define slots Q_SLOTS
 #define signals Q_SIGNALS
+#include <QCoreApplication>
 #include <QDialog>
 #include <QFile>
 #include <QFileDialog>
+#include <QMenu>
 #include <QSettings>
 #include <algorithm>
 #include <ccCommandLineInterface.h>
