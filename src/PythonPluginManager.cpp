@@ -107,6 +107,12 @@ void PythonPluginManager::loadPluginsFrom(const QStringList &paths)
     py::object appendToPythonSysPath = py::module::import("sys").attr("path").attr("append");
     for (const QString &path : paths)
     {
+        if (!QDir(path).exists())
+        {
+            plgWarning() << path << " does not exists";
+            continue;
+        }
+
         plgPrint() << "Searching in " << path;
         appendToPythonSysPath(path);
         QDirIterator iter(path);
@@ -142,7 +148,7 @@ void PythonPluginManager::loadPluginsFrom(const QStringList &paths)
     }
 
     py::list subClassTypes =
-        py::module::import("pycc_runtime").attr("PythonPluginInterface").attr("__subclasses__")();
+        py::module::import("pycc").attr("PythonPluginInterface").attr("__subclasses__")();
     for (auto &subClassType : subClassTypes)
     {
         QString pluginName;
