@@ -1,24 +1,22 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>pycc (Python) &mdash; CloudCompare-PythonPlugin  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -64,8 +62,6 @@
 <li class="toctree-l2"><a class="reference internal" href="plugins.html">plugins</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../cpp/qCC_db/index.html">qCC_db (C++)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../cpp/CCCoreLib/index.html">CCCoreLib (C++)</a></li>
 </ul>
 
         </div>
@@ -93,7 +89,7 @@
            <div itemprop="articleBody">
              
   <section id="pycc-python">
-<h1>pycc (Python)<a class="headerlink" href="#pycc-python" title="Permalink to this heading"></a></h1>
+<h1>pycc (Python)<a class="headerlink" href="#pycc-python" title="Link to this heading"></a></h1>
 <p>pycc is the module that wraps CloudCompare’s data structures to make them
 available in Python.</p>
 <p>It also define classes and functions that allows to interact with the “CloudCompare runtime”
@@ -102,6 +98,13 @@ available in Python.</p>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="runtime.html">Runtime</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#pycc.GetInstance"><code class="docutils literal notranslate"><span class="pre">GetInstance()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#pycc.GetCmdLineInstance"><code class="docutils literal notranslate"><span class="pre">GetCmdLineInstance()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#pycc.GetGUIInstance"><code class="docutils literal notranslate"><span class="pre">GetGUIInstance()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#pycc.InitQApplication"><code class="docutils literal notranslate"><span class="pre">InitQApplication()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#pycc.PythonPluginInterface"><code class="docutils literal notranslate"><span class="pre">PythonPluginInterface</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#pycc.Action"><code class="docutils literal notranslate"><span class="pre">Action</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#pycc.RunInThread"><code class="docutils literal notranslate"><span class="pre">RunInThread()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="runtime.html#ccpythoninstance">ccPythonInstance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="runtime.html#cccommandlineinterface">ccCommandLineInterface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="runtime.html#ccpickinghub">ccPickingHub</a></li>

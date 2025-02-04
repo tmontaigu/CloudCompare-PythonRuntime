@@ -1,24 +1,22 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Others &mdash; CloudCompare-PythonPlugin  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -59,15 +57,19 @@
 <li class="toctree-l2"><a class="reference internal" href="tools.html">CCCoreLib Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_structures.html">CCCoreLib Data Structures &amp; Interfaces</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Others</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#genericprogresscallback">GenericProgressCallback</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#normalizedprogress">NormalizedProgress</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#genericprogresscallback">GenericProgressCallback</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#cccorelib.GenericProgressCallback"><code class="docutils literal notranslate"><span class="pre">GenericProgressCallback</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#normalizedprogress">NormalizedProgress</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#cccorelib.NormalizedProgress"><code class="docutils literal notranslate"><span class="pre">NormalizedProgress</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../pycc/index.html">pycc (Python)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../cpp/qCC_db/index.html">qCC_db (C++)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../cpp/CCCoreLib/index.html">CCCoreLib (C++)</a></li>
 </ul>
 
         </div>
@@ -96,81 +98,73 @@
            <div itemprop="articleBody">
              
   <section id="others">
-<h1>Others<a class="headerlink" href="#others" title="Permalink to this heading"></a></h1>
+<h1>Others<a class="headerlink" href="#others" title="Link to this heading"></a></h1>
 <section id="genericprogresscallback">
-<h2>GenericProgressCallback<a class="headerlink" href="#genericprogresscallback" title="Permalink to this heading"></a></h2>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::GenericProgressCallback</span></code></p>
-</div>
+<h2>GenericProgressCallback<a class="headerlink" href="#genericprogresscallback" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="cccorelib.GenericProgressCallback">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">GenericProgressCallback</span></span><a class="headerlink" href="#cccorelib.GenericProgressCallback" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">GenericProgressCallback</span></span><a class="headerlink" href="#cccorelib.GenericProgressCallback" title="Link to this definition"></a></dt>
 <dd><dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.GenericProgressCallback.isCancelRequested">
-<span class="sig-name descname"><span class="pre">isCancelRequested</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.GenericProgressCallback.isCancelRequested" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">isCancelRequested</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.GenericProgressCallback.isCancelRequested" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.GenericProgressCallback.setInfo">
-<span class="sig-name descname"><span class="pre">setInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.GenericProgressCallback.setInfo" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">setInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.GenericProgressCallback.setInfo" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.GenericProgressCallback.setMethodTitle">
-<span class="sig-name descname"><span class="pre">setMethodTitle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.GenericProgressCallback.setMethodTitle" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">setMethodTitle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.GenericProgressCallback.setMethodTitle" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.GenericProgressCallback.start">
-<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.GenericProgressCallback.start" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.GenericProgressCallback.start" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.GenericProgressCallback.stop">
-<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.GenericProgressCallback.stop" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.GenericProgressCallback.stop" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.GenericProgressCallback.textCanBeEdited">
-<span class="sig-name descname"><span class="pre">textCanBeEdited</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.GenericProgressCallback.textCanBeEdited" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">textCanBeEdited</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.GenericProgressCallback.textCanBeEdited" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.GenericProgressCallback.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.GenericProgressCallback.update" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.GenericProgressCallback" title="cccorelib.GenericProgressCallback"><span class="pre">cccorelib.GenericProgressCallback</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.GenericProgressCallback.update" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 </section>
 <section id="normalizedprogress">
-<h2>NormalizedProgress<a class="headerlink" href="#normalizedprogress" title="Permalink to this heading"></a></h2>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p>C++: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">CCCoreLib::NormalizedProgress</span></code></p>
-</div>
+<h2>NormalizedProgress<a class="headerlink" href="#normalizedprogress" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="cccorelib.NormalizedProgress">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">NormalizedProgress</span></span><a class="headerlink" href="#cccorelib.NormalizedProgress" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cccorelib.</span></span><span class="sig-name descname"><span class="pre">NormalizedProgress</span></span><a class="headerlink" href="#cccorelib.NormalizedProgress" title="Link to this definition"></a></dt>
 <dd><dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.NormalizedProgress.oneStep">
-<span class="sig-name descname"><span class="pre">oneStep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.NormalizedProgress" title="cccorelib.NormalizedProgress"><span class="pre">cccorelib.NormalizedProgress</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.NormalizedProgress.oneStep" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">oneStep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.NormalizedProgress" title="cccorelib.NormalizedProgress"><span class="pre">cccorelib.NormalizedProgress</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.NormalizedProgress.oneStep" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.NormalizedProgress.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.NormalizedProgress" title="cccorelib.NormalizedProgress"><span class="pre">cccorelib.NormalizedProgress</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.NormalizedProgress.reset" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.NormalizedProgress" title="cccorelib.NormalizedProgress"><span class="pre">cccorelib.NormalizedProgress</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.NormalizedProgress.reset" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.NormalizedProgress.scale">
-<span class="sig-name descname"><span class="pre">scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.NormalizedProgress" title="cccorelib.NormalizedProgress"><span class="pre">cccorelib.NormalizedProgress</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">totalSteps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">totalPercentage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">updateCurrentProgress</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.NormalizedProgress.scale" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.NormalizedProgress" title="cccorelib.NormalizedProgress"><span class="pre">cccorelib.NormalizedProgress</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">totalSteps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">totalPercentage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">updateCurrentProgress</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cccorelib.NormalizedProgress.scale" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cccorelib.NormalizedProgress.steps">
-<span class="sig-name descname"><span class="pre">steps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.NormalizedProgress" title="cccorelib.NormalizedProgress"><span class="pre">cccorelib.NormalizedProgress</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.NormalizedProgress.steps" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">steps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cccorelib.NormalizedProgress" title="cccorelib.NormalizedProgress"><span class="pre">cccorelib.NormalizedProgress</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cccorelib.NormalizedProgress.steps" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

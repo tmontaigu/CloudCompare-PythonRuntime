@@ -1,24 +1,22 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Runtime &mdash; CloudCompare-PythonPlugin  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -58,10 +56,33 @@
 <li class="toctree-l1"><a class="reference internal" href="../cccorelib/index.html">cccorelib (Python)</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">pycc (Python)</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Runtime</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#ccpythoninstance">ccPythonInstance</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#cccommandlineinterface">ccCommandLineInterface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ccpickinghub">ccPickingHub</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ccpickinglistener">ccPickingListener</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycc.GetInstance"><code class="docutils literal notranslate"><span class="pre">GetInstance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycc.GetCmdLineInstance"><code class="docutils literal notranslate"><span class="pre">GetCmdLineInstance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycc.GetGUIInstance"><code class="docutils literal notranslate"><span class="pre">GetGUIInstance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycc.InitQApplication"><code class="docutils literal notranslate"><span class="pre">InitQApplication()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycc.PythonPluginInterface"><code class="docutils literal notranslate"><span class="pre">PythonPluginInterface</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pycc.PythonPluginInterface.getActions"><code class="docutils literal notranslate"><span class="pre">PythonPluginInterface.getActions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pycc.PythonPluginInterface.getIcon"><code class="docutils literal notranslate"><span class="pre">PythonPluginInterface.getIcon()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pycc.Action"><code class="docutils literal notranslate"><span class="pre">Action</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pycc.RunInThread"><code class="docutils literal notranslate"><span class="pre">RunInThread()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ccpythoninstance">ccPythonInstance</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pycc.ccPythonInstance"><code class="docutils literal notranslate"><span class="pre">ccPythonInstance</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#cccommandlineinterface">ccCommandLineInterface</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pycc.ccCommandLineInterface"><code class="docutils literal notranslate"><span class="pre">ccCommandLineInterface</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ccpickinghub">ccPickingHub</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pycc.ccPickingHub"><code class="docutils literal notranslate"><span class="pre">ccPickingHub</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ccpickinglistener">ccPickingListener</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pycc.ccPickingListener"><code class="docutils literal notranslate"><span class="pre">ccPickingListener</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="data_structures.html">CloudCompare Data Structures &amp; Interfaces</a></li>
@@ -70,8 +91,6 @@
 <li class="toctree-l2"><a class="reference internal" href="plugins.html">plugins</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../cpp/qCC_db/index.html">qCC_db (C++)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../cpp/CCCoreLib/index.html">CCCoreLib (C++)</a></li>
 </ul>
 
         </div>
@@ -100,7 +119,7 @@
            <div itemprop="articleBody">
              
   <section id="runtime">
-<h1>Runtime<a class="headerlink" href="#runtime" title="Permalink to this heading"></a></h1>
+<h1>Runtime<a class="headerlink" href="#runtime" title="Link to this heading"></a></h1>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>As the functions and types below allow to interact with the CloudCompare app,
@@ -109,7 +128,7 @@ when using standalone pycc module.</p>
 </div>
 <dl class="py function">
 <dt class="sig sig-object py" id="pycc.GetInstance">
-<span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">GetInstance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#pycc.GetInstance" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">GetInstance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#pycc.GetInstance" title="Link to this definition"></a></dt>
 <dd><p>This function returns an object that allows to interact with the running CC instance
 to get access to already loaded PointCloud and Meshes.</p>
 <div class="admonition warning">
@@ -121,21 +140,21 @@ to get access to already loaded PointCloud and Meshes.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pycc.GetCmdLineInstance">
-<span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">GetCmdLineInstance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc_runtime.ccCommandLineInterface"><span class="pre">pycc_runtime.ccCommandLineInterface</span></a></span></span><a class="headerlink" href="#pycc.GetCmdLineInstance" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">GetCmdLineInstance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc_runtime.ccCommandLineInterface"><span class="pre">pycc_runtime.ccCommandLineInterface</span></a></span></span><a class="headerlink" href="#pycc.GetCmdLineInstance" title="Link to this definition"></a></dt>
 <dd><p>Returns the <a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc.ccCommandLineInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccCommandLineInterface</span></code></a> object if the script is ran from
 the command line mode, otherwise returns <cite>None</cite>.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pycc.GetGUIInstance">
-<span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">GetGUIInstance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></span><a class="headerlink" href="#pycc.GetGUIInstance" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">GetGUIInstance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></span><a class="headerlink" href="#pycc.GetGUIInstance" title="Link to this definition"></a></dt>
 <dd><p>Returns the <a class="reference internal" href="#pycc.ccPythonInstance" title="pycc.ccPythonInstance"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccPythonInstance</span></code></a> object if the script is ran from
 the command line mode, otherwise returns <cite>None</cite>.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pycc.InitQApplication">
-<span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">InitQApplication</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.InitQApplication" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">InitQApplication</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.InitQApplication" title="Link to this definition"></a></dt>
 <dd><p>Some functions and plugins always need to display
 GUI dialogs, thus they require an active QApplication.
 While this is not a problem when in plugin mode as CloudCompare is the QApplication,
@@ -146,7 +165,7 @@ Does nothing in plugin mode.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.PythonPluginInterface">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">PythonPluginInterface</span></span><a class="headerlink" href="#pycc.PythonPluginInterface" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">PythonPluginInterface</span></span><a class="headerlink" href="#pycc.PythonPluginInterface" title="Link to this definition"></a></dt>
 <dd><p>The base class for Python plugins.</p>
 <p>Every plugin must inherit from this.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pycc</span>
@@ -158,7 +177,7 @@ Does nothing in plugin mode.</p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.PythonPluginInterface.getActions">
-<span class="sig-name descname"><span class="pre">getActions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.PythonPluginInterface" title="pycc_runtime.PythonPluginInterface"><span class="pre">pycc_runtime.PythonPluginInterface</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">std::vector&lt;Runtime::RegisteredPlugin::Action,</span> <span class="pre">std::allocator&lt;Runtime::RegisteredPlugin::Action&gt;</span> <span class="pre">&gt;</span></span></span><a class="headerlink" href="#pycc.PythonPluginInterface.getActions" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getActions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.PythonPluginInterface" title="pycc_runtime.PythonPluginInterface"><span class="pre">pycc_runtime.PythonPluginInterface</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">std::vector&lt;Runtime::RegisteredPlugin::Action,</span> <span class="pre">std::allocator&lt;Runtime::RegisteredPlugin::Action&gt;</span> <span class="pre">&gt;</span></span></span><a class="headerlink" href="#pycc.PythonPluginInterface.getActions" title="Link to this definition"></a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>This method. must be implemented</p>
@@ -170,7 +189,7 @@ Actions will get added to the context menu of the plugin.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.PythonPluginInterface.getIcon">
-<span class="sig-name descname"><span class="pre">getIcon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.PythonPluginInterface" title="pycc_runtime.PythonPluginInterface"><span class="pre">pycc_runtime.PythonPluginInterface</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#pycc.PythonPluginInterface.getIcon" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getIcon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.PythonPluginInterface" title="pycc_runtime.PythonPluginInterface"><span class="pre">pycc_runtime.PythonPluginInterface</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#pycc.PythonPluginInterface.getIcon" title="Link to this definition"></a></dt>
 <dd><p>It is not mandatory to implement this method.</p>
 <p>When implemented, it shall return the icon that shall be used for the
 plugin sub menu.</p>
@@ -181,7 +200,7 @@ plugin sub menu.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.Action">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">Action</span></span><a class="headerlink" href="#pycc.Action" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">Action</span></span><a class="headerlink" href="#pycc.Action" title="Link to this definition"></a></dt>
 <dd><p>Represent an action of a plugin.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -205,7 +224,7 @@ plugin sub menu.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pycc.RunInThread">
-<span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">RunInThread</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#pycc.RunInThread" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">RunInThread</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#pycc.RunInThread" title="Link to this definition"></a></dt>
 <dd><p>Runs the function in a different thread to keep the UI
 responsive and returns the result of the function when the
 thread is done.</p>
@@ -225,77 +244,77 @@ thread is done.</p>
 </dd></dl>
 
 <section id="ccpythoninstance">
-<h2>ccPythonInstance<a class="headerlink" href="#ccpythoninstance" title="Permalink to this heading"></a></h2>
+<h2>ccPythonInstance<a class="headerlink" href="#ccpythoninstance" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccPythonInstance">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccPythonInstance</span></span><a class="headerlink" href="#pycc.ccPythonInstance" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccPythonInstance</span></span><a class="headerlink" href="#pycc.ccPythonInstance" title="Link to this definition"></a></dt>
 <dd><p>Class to interact with the running GUI of CloudCompare.</p>
 <p>The methods allow you to get/add objects to GUI DB Tree.
 Refresh/freeze/update the UI and display.
 Get selected objects, deselect/set selected state for entities…</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPythonInstance.addToDB">
-<span class="sig-name descname"><span class="pre">addToDB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">updateZoom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autoExpandDBTree</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkDimensions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autoRedraw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.addToDB" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">addToDB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">updateZoom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autoExpandDBTree</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkDimensions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autoRedraw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.addToDB" title="Link to this definition"></a></dt>
 <dd><p>Adds the object to the GUI DB Tree</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPythonInstance.app">
-<span class="sig-name descname"><span class="pre">app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pycc_runtime.ccMainAppInterface</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.app" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pycc_runtime.ccMainAppInterface</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.app" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPythonInstance.dbRootObject">
-<span class="sig-name descname"><span class="pre">dbRootObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="data_structures.html#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">pycc.ccHObject</span></a></span></span><a class="headerlink" href="#pycc.ccPythonInstance.dbRootObject" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">dbRootObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="data_structures.html#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">pycc.ccHObject</span></a></span></span><a class="headerlink" href="#pycc.ccPythonInstance.dbRootObject" title="Link to this definition"></a></dt>
 <dd><p>Returns the root of the GUI DB Tree</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPythonInstance.disableAll">
-<span class="sig-name descname"><span class="pre">disableAll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.disableAll" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">disableAll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.disableAll" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPythonInstance.enableAll">
-<span class="sig-name descname"><span class="pre">enableAll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.enableAll" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">enableAll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.enableAll" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPythonInstance.freezeUI">
-<span class="sig-name descname"><span class="pre">freezeUI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.freezeUI" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">freezeUI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.freezeUI" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPythonInstance.getActiveGLWindow">
-<span class="sig-name descname"><span class="pre">getActiveGLWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pycc.ccGLWindowInterface</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.getActiveGLWindow" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getActiveGLWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pycc.ccGLWindowInterface</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.getActiveGLWindow" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPythonInstance.getMainWindow">
-<span class="sig-name descname"><span class="pre">getMainWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pycc.QMainWindow</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.getMainWindow" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getMainWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pycc.QMainWindow</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.getMainWindow" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPythonInstance.getSelectedEntities">
-<span class="sig-name descname"><span class="pre">getSelectedEntities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="data_structures.html#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">pycc.ccHObject</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.getSelectedEntities" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getSelectedEntities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="data_structures.html#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">pycc.ccHObject</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.getSelectedEntities" title="Link to this definition"></a></dt>
 <dd><p>Returns the list of selected entities in the GUI DB Tree</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPythonInstance.haveOneSelection">
-<span class="sig-name descname"><span class="pre">haveOneSelection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.haveOneSelection" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">haveOneSelection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.haveOneSelection" title="Link to this definition"></a></dt>
 <dd><p>Returns True if exactly one entity is selected in the GUI DB Tree</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPythonInstance.haveSelection">
-<span class="sig-name descname"><span class="pre">haveSelection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.haveSelection" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">haveSelection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.haveSelection" title="Link to this definition"></a></dt>
 <dd><p>Returns true if at least one entity is selected in the GUI DB Tree</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPythonInstance.loadFile">
-<span class="sig-name descname"><span class="pre">loadFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loadParameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="others.html#pycc.FileIOFilter.LoadParameters" title="pycc.FileIOFilter.LoadParameters"><span class="pre">pycc.FileIOFilter.LoadParameters</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="data_structures.html#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">pycc.ccHObject</span></a></span></span><a class="headerlink" href="#pycc.ccPythonInstance.loadFile" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">loadFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loadParameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="others.html#pycc.FileIOFilter.LoadParameters" title="pycc.FileIOFilter.LoadParameters"><span class="pre">pycc.FileIOFilter.LoadParameters</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="data_structures.html#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">pycc.ccHObject</span></a></span></span><a class="headerlink" href="#pycc.ccPythonInstance.loadFile" title="Link to this definition"></a></dt>
 <dd><p>Loads the file located at the filepath.</p>
 <p>Adds the file content of the file into the DBTree
 and then returns loaded object handle.</p>
@@ -304,66 +323,66 @@ and then returns loaded object handle.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPythonInstance.pickingHub">
-<span class="sig-name descname"><span class="pre">pickingHub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycc.ccPickingHub" title="pycc_runtime.ccPickingHub"><span class="pre">pycc_runtime.ccPickingHub</span></a></span></span><a class="headerlink" href="#pycc.ccPythonInstance.pickingHub" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">pickingHub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pycc.ccPickingHub" title="pycc_runtime.ccPickingHub"><span class="pre">pycc_runtime.ccPickingHub</span></a></span></span><a class="headerlink" href="#pycc.ccPythonInstance.pickingHub" title="Link to this definition"></a></dt>
 <dd><p>Returns the picking hub</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPythonInstance.redrawAll">
-<span class="sig-name descname"><span class="pre">redrawAll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">only2D</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.redrawAll" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">redrawAll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">only2D</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.redrawAll" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPythonInstance.refreshAll">
-<span class="sig-name descname"><span class="pre">refreshAll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">only2D</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.refreshAll" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">refreshAll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">only2D</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.refreshAll" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPythonInstance.removeFromDB">
-<span class="sig-name descname"><span class="pre">removeFromDB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.removeFromDB" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">removeFromDB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.removeFromDB" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPythonInstance.setSelectedInDB">
-<span class="sig-name descname"><span class="pre">setSelectedInDB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="data_structures.html#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">pycc.ccHObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.setSelectedInDB" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">setSelectedInDB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="data_structures.html#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">pycc.ccHObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.setSelectedInDB" title="Link to this definition"></a></dt>
 <dd><p>Set the selection state of the object in the GUI DB Tree</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPythonInstance.updateUI">
-<span class="sig-name descname"><span class="pre">updateUI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.updateUI" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">updateUI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.updateUI" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 </section>
 <section id="cccommandlineinterface">
-<h2>ccCommandLineInterface<a class="headerlink" href="#cccommandlineinterface" title="Permalink to this heading"></a></h2>
+<h2>ccCommandLineInterface<a class="headerlink" href="#cccommandlineinterface" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccCommandLineInterface</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccCommandLineInterface</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface" title="Link to this definition"></a></dt>
 <dd><dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.ExportOption">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ExportOption</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.ExportOption" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ExportOption</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.ExportOption" title="Link to this definition"></a></dt>
 <dd><p>Members:</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.ExportOption.name">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.ExportOption.name" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.ExportOption.name" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.ExportOption.value">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.ExportOption.value" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.ExportOption.value" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.GlobalShiftOptions">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GlobalShiftOptions</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GlobalShiftOptions</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions" title="Link to this definition"></a></dt>
 <dd><dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.GlobalShiftOptions.Mode">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Mode</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.Mode" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Mode</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.Mode" title="Link to this definition"></a></dt>
 <dd><p>Members:</p>
 <p>NO_GLOBAL_SHIFT</p>
 <p>AUTO_GLOBAL_SHIFT</p>
@@ -371,129 +390,129 @@ and then returns loaded object handle.</p>
 <p>CUSTOM_GLOBAL_SHIFT</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.GlobalShiftOptions.Mode.AUTO_GLOBAL_SHIFT">
-<span class="sig-name descname"><span class="pre">AUTO_GLOBAL_SHIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Mode.AUTO_GLOBAL_SHIFT:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.Mode.AUTO_GLOBAL_SHIFT" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">AUTO_GLOBAL_SHIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Mode.AUTO_GLOBAL_SHIFT:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.Mode.AUTO_GLOBAL_SHIFT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.GlobalShiftOptions.Mode.CUSTOM_GLOBAL_SHIFT">
-<span class="sig-name descname"><span class="pre">CUSTOM_GLOBAL_SHIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Mode.CUSTOM_GLOBAL_SHIFT:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.Mode.CUSTOM_GLOBAL_SHIFT" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">CUSTOM_GLOBAL_SHIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Mode.CUSTOM_GLOBAL_SHIFT:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.Mode.CUSTOM_GLOBAL_SHIFT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.GlobalShiftOptions.Mode.FIRST_GLOBAL_SHIFT">
-<span class="sig-name descname"><span class="pre">FIRST_GLOBAL_SHIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Mode.FIRST_GLOBAL_SHIFT:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.Mode.FIRST_GLOBAL_SHIFT" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">FIRST_GLOBAL_SHIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Mode.FIRST_GLOBAL_SHIFT:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.Mode.FIRST_GLOBAL_SHIFT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.GlobalShiftOptions.Mode.NO_GLOBAL_SHIFT">
-<span class="sig-name descname"><span class="pre">NO_GLOBAL_SHIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Mode.NO_GLOBAL_SHIFT:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.Mode.NO_GLOBAL_SHIFT" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">NO_GLOBAL_SHIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Mode.NO_GLOBAL_SHIFT:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.Mode.NO_GLOBAL_SHIFT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.GlobalShiftOptions.Mode.name">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.Mode.name" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.Mode.name" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.GlobalShiftOptions.Mode.value">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.Mode.value" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.Mode.value" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.GlobalShiftOptions.AUTO_GLOBAL_SHIFT">
-<span class="sig-name descname"><span class="pre">AUTO_GLOBAL_SHIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Mode.AUTO_GLOBAL_SHIFT:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.AUTO_GLOBAL_SHIFT" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">AUTO_GLOBAL_SHIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Mode.AUTO_GLOBAL_SHIFT:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.AUTO_GLOBAL_SHIFT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.GlobalShiftOptions.CUSTOM_GLOBAL_SHIFT">
-<span class="sig-name descname"><span class="pre">CUSTOM_GLOBAL_SHIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Mode.CUSTOM_GLOBAL_SHIFT:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.CUSTOM_GLOBAL_SHIFT" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">CUSTOM_GLOBAL_SHIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Mode.CUSTOM_GLOBAL_SHIFT:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.CUSTOM_GLOBAL_SHIFT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.GlobalShiftOptions.FIRST_GLOBAL_SHIFT">
-<span class="sig-name descname"><span class="pre">FIRST_GLOBAL_SHIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Mode.FIRST_GLOBAL_SHIFT:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.FIRST_GLOBAL_SHIFT" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">FIRST_GLOBAL_SHIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Mode.FIRST_GLOBAL_SHIFT:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.FIRST_GLOBAL_SHIFT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.GlobalShiftOptions.NO_GLOBAL_SHIFT">
-<span class="sig-name descname"><span class="pre">NO_GLOBAL_SHIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Mode.NO_GLOBAL_SHIFT:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.NO_GLOBAL_SHIFT" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">NO_GLOBAL_SHIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Mode.NO_GLOBAL_SHIFT:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.NO_GLOBAL_SHIFT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.GlobalShiftOptions.customGlobalShift">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">customGlobalShift</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.customGlobalShift" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">customGlobalShift</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.customGlobalShift" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.GlobalShiftOptions.mode">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mode</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.mode" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mode</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.GlobalShiftOptions.mode" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.clouds">
-<span class="sig-name descname"><span class="pre">clouds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc_runtime.ccCommandLineInterface"><span class="pre">pycc_runtime.ccCommandLineInterface</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pycc_runtime.CLCloudDescVector</span></span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.clouds" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">clouds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc_runtime.ccCommandLineInterface"><span class="pre">pycc_runtime.ccCommandLineInterface</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pycc_runtime.CLCloudDescVector</span></span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.clouds" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.exportEntity">
-<span class="sig-name descname"><span class="pre">exportEntity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">pycc_runtime.ccCommandLineInterface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entityDesc:</span> <span class="pre">pycc_runtime.CLEntityDesc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix:</span> <span class="pre">QString</span> <span class="pre">=</span> <span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputFilename:</span> <span class="pre">QString</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options:</span> <span class="pre">QFlags&lt;ccCommandLineInterface::ExportOption&gt;</span> <span class="pre">=</span> <span class="pre">&lt;ExportOption.???:</span> <span class="pre">0&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QString</span></span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.exportEntity" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">exportEntity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">pycc_runtime.ccCommandLineInterface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entityDesc:</span> <span class="pre">pycc_runtime.CLEntityDesc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix:</span> <span class="pre">QString</span> <span class="pre">=</span> <span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputFilename:</span> <span class="pre">QString</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options:</span> <span class="pre">QFlags&lt;ccCommandLineInterface::ExportOption&gt;</span> <span class="pre">=</span> <span class="pre">&lt;ExportOption.???:</span> <span class="pre">0&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QString</span></span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.exportEntity" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.getExportFilename">
-<span class="sig-name descname"><span class="pre">getExportFilename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc_runtime.ccCommandLineInterface"><span class="pre">pycc_runtime.ccCommandLineInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">entityDesc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pycc_runtime.CLEntityDesc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baseOutputFilename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forceNoTimestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QString</span></span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.getExportFilename" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getExportFilename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc_runtime.ccCommandLineInterface"><span class="pre">pycc_runtime.ccCommandLineInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">entityDesc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pycc_runtime.CLEntityDesc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baseOutputFilename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forceNoTimestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QString</span></span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.getExportFilename" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.importFile">
-<span class="sig-name descname"><span class="pre">importFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc_runtime.ccCommandLineInterface"><span class="pre">pycc_runtime.ccCommandLineInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCommandLineInterface.GlobalShiftOptions" title="pycc_runtime.ccCommandLineInterface.GlobalShiftOptions"><span class="pre">pycc_runtime.ccCommandLineInterface.GlobalShiftOptions</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.importFile" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">importFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc_runtime.ccCommandLineInterface"><span class="pre">pycc_runtime.ccCommandLineInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCommandLineInterface.GlobalShiftOptions" title="pycc_runtime.ccCommandLineInterface.GlobalShiftOptions"><span class="pre">pycc_runtime.ccCommandLineInterface.GlobalShiftOptions</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.importFile" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.meshes">
-<span class="sig-name descname"><span class="pre">meshes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc_runtime.ccCommandLineInterface"><span class="pre">pycc_runtime.ccCommandLineInterface</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pycc_runtime.CLMeshDescVector</span></span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.meshes" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">meshes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc_runtime.ccCommandLineInterface"><span class="pre">pycc_runtime.ccCommandLineInterface</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pycc_runtime.CLMeshDescVector</span></span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.meshes" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.saveCloud">
-<span class="sig-name descname"><span class="pre">saveCloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc_runtime.ccCommandLineInterface"><span class="pre">pycc_runtime.ccCommandLineInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allAtOnce</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allAtOnceFileName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.saveCloud" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">saveCloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc_runtime.ccCommandLineInterface"><span class="pre">pycc_runtime.ccCommandLineInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allAtOnce</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allAtOnceFileName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.saveCloud" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.saveMeshes">
-<span class="sig-name descname"><span class="pre">saveMeshes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc_runtime.ccCommandLineInterface"><span class="pre">pycc_runtime.ccCommandLineInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allAtOnce</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allAtOnceFileName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.saveMeshes" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">saveMeshes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccCommandLineInterface" title="pycc_runtime.ccCommandLineInterface"><span class="pre">pycc_runtime.ccCommandLineInterface</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allAtOnce</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allAtOnceFileName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.saveMeshes" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 </section>
 <section id="ccpickinghub">
-<h2>ccPickingHub<a class="headerlink" href="#ccpickinghub" title="Permalink to this heading"></a></h2>
+<h2>ccPickingHub<a class="headerlink" href="#ccpickinghub" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccPickingHub">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccPickingHub</span></span><a class="headerlink" href="#pycc.ccPickingHub" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccPickingHub</span></span><a class="headerlink" href="#pycc.ccPickingHub" title="Link to this definition"></a></dt>
 <dd><p>Point/triangle picking hub</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPickingHub.activeWindow">
-<span class="sig-name descname"><span class="pre">activeWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPickingHub" title="pycc_runtime.ccPickingHub"><span class="pre">pycc_runtime.ccPickingHub</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pycc.ccGLWindowInterface</span></span></span><a class="headerlink" href="#pycc.ccPickingHub.activeWindow" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">activeWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPickingHub" title="pycc_runtime.ccPickingHub"><span class="pre">pycc_runtime.ccPickingHub</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pycc.ccGLWindowInterface</span></span></span><a class="headerlink" href="#pycc.ccPickingHub.activeWindow" title="Link to this definition"></a></dt>
 <dd><p>Returns the currently active window</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPickingHub.addListener">
-<span class="sig-name descname"><span class="pre">addListener</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">pycc_runtime.ccPickingHub</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">listener:</span> <span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclusive:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autoStartPicking:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode:</span> <span class="pre">pycc.ccGLWindowInterface.PICKING_MODE</span> <span class="pre">=</span> <span class="pre">&lt;PICKING_MODE.POINT_OR_TRIANGLE_PICKING:</span> <span class="pre">6&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPickingHub.addListener" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">addListener</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">pycc_runtime.ccPickingHub</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">listener:</span> <span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclusive:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autoStartPicking:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode:</span> <span class="pre">pycc.ccGLWindowInterface.PICKING_MODE</span> <span class="pre">=</span> <span class="pre">&lt;PICKING_MODE.POINT_OR_TRIANGLE_PICKING:</span> <span class="pre">6&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPickingHub.addListener" title="Link to this definition"></a></dt>
 <dd><p>Adds a listener</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>listener</strong> (<em>listener to be registered</em>) – </p></li>
-<li><p><strong>exclusive</strong> (<em>prevents new listeners from registering</em>) – </p></li>
-<li><p><strong>autoStartPicking</strong> (<em>automatically enables the picking mode on the active window</em><em> (</em><em>if any</em><em>)</em>) – </p></li>
-<li><p><strong>mode</strong> (<em>sets the picking mode</em><em> (</em><em>warning: may be rejected if another listener is currently registered with another mode</em><em>)</em>) – </p></li>
+<li><p><strong>listener</strong> (<em>listener to be registered</em>)</p></li>
+<li><p><strong>exclusive</strong> (<em>prevents new listeners from registering</em>)</p></li>
+<li><p><strong>autoStartPicking</strong> (<em>automatically enables the picking mode on the active window</em><em> (</em><em>if any</em><em>)</em>)</p></li>
+<li><p><strong>mode</strong> (<em>sets the picking mode</em><em> (</em><em>warning: may be rejected if another listener is currently registered with another mode</em><em>)</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
@@ -504,19 +523,19 @@ and then returns loaded object handle.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPickingHub.isLocked">
-<span class="sig-name descname"><span class="pre">isLocked</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPickingHub" title="pycc_runtime.ccPickingHub"><span class="pre">pycc_runtime.ccPickingHub</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccPickingHub.isLocked" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">isLocked</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPickingHub" title="pycc_runtime.ccPickingHub"><span class="pre">pycc_runtime.ccPickingHub</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#pycc.ccPickingHub.isLocked" title="Link to this definition"></a></dt>
 <dd><p>Returns whether the picking hub is locked  (i.e. an exclusive listener is registered)</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPickingHub.listenerCount">
-<span class="sig-name descname"><span class="pre">listenerCount</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPickingHub" title="pycc_runtime.ccPickingHub"><span class="pre">pycc_runtime.ccPickingHub</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#pycc.ccPickingHub.listenerCount" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">listenerCount</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPickingHub" title="pycc_runtime.ccPickingHub"><span class="pre">pycc_runtime.ccPickingHub</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#pycc.ccPickingHub.listenerCount" title="Link to this definition"></a></dt>
 <dd><p>Returns the number of currently registered listeners</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPickingHub.removeListener">
-<span class="sig-name descname"><span class="pre">removeListener</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPickingHub" title="pycc_runtime.ccPickingHub"><span class="pre">pycc_runtime.ccPickingHub</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">listener</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autoStopPickingIfLast</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPickingHub.removeListener" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">removeListener</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPickingHub" title="pycc_runtime.ccPickingHub"><span class="pre">pycc_runtime.ccPickingHub</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">listener</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autoStopPickingIfLast</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPickingHub.removeListener" title="Link to this definition"></a></dt>
 <dd><blockquote>
 <div><p>Removes a listener</p>
 </div></blockquote>
@@ -526,7 +545,7 @@ autoStopPickingIfLast: automatically disables the picking mode on the active win
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPickingHub.togglePickingMode">
-<span class="sig-name descname"><span class="pre">togglePickingMode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPickingHub" title="pycc_runtime.ccPickingHub"><span class="pre">pycc_runtime.ccPickingHub</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPickingHub.togglePickingMode" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">togglePickingMode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPickingHub" title="pycc_runtime.ccPickingHub"><span class="pre">pycc_runtime.ccPickingHub</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPickingHub.togglePickingMode" title="Link to this definition"></a></dt>
 <dd><p>Manual start / stop of the picking mode on the active window</p>
 </dd></dl>
 
@@ -534,10 +553,10 @@ autoStopPickingIfLast: automatically disables the picking mode on the active win
 
 </section>
 <section id="ccpickinglistener">
-<h2>ccPickingListener<a class="headerlink" href="#ccpickinglistener" title="Permalink to this heading"></a></h2>
+<h2>ccPickingListener<a class="headerlink" href="#ccpickinglistener" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccPickingListener">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccPickingListener</span></span><a class="headerlink" href="#pycc.ccPickingListener" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycc.</span></span><span class="sig-name descname"><span class="pre">ccPickingListener</span></span><a class="headerlink" href="#pycc.ccPickingListener" title="Link to this definition"></a></dt>
 <dd><p>Point/triangle picking listener interface</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pycc</span>
 
@@ -548,40 +567,40 @@ autoStopPickingIfLast: automatically disables the picking mode on the active win
 </div>
 <dl class="py class">
 <dt class="sig sig-object py" id="pycc.ccPickingListener.PickedItem">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PickedItem</span></span><a class="headerlink" href="#pycc.ccPickingListener.PickedItem" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PickedItem</span></span><a class="headerlink" href="#pycc.ccPickingListener.PickedItem" title="Link to this definition"></a></dt>
 <dd><dl class="py property">
 <dt class="sig sig-object py" id="pycc.ccPickingListener.PickedItem.P3D">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">P3D</span></span><a class="headerlink" href="#pycc.ccPickingListener.PickedItem.P3D" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">P3D</span></span><a class="headerlink" href="#pycc.ccPickingListener.PickedItem.P3D" title="Link to this definition"></a></dt>
 <dd><p>Picked point in 3D (if any)</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pycc.ccPickingListener.PickedItem.clickPoint">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">clickPoint</span></span><a class="headerlink" href="#pycc.ccPickingListener.PickedItem.clickPoint" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">clickPoint</span></span><a class="headerlink" href="#pycc.ccPickingListener.PickedItem.clickPoint" title="Link to this definition"></a></dt>
 <dd><p>Position of the user click</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pycc.ccPickingListener.PickedItem.entity">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">entity</span></span><a class="headerlink" href="#pycc.ccPickingListener.PickedItem.entity" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">entity</span></span><a class="headerlink" href="#pycc.ccPickingListener.PickedItem.entity" title="Link to this definition"></a></dt>
 <dd><p>Picked entity (if any)</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pycc.ccPickingListener.PickedItem.entityCenter">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">entityCenter</span></span><a class="headerlink" href="#pycc.ccPickingListener.PickedItem.entityCenter" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">entityCenter</span></span><a class="headerlink" href="#pycc.ccPickingListener.PickedItem.entityCenter" title="Link to this definition"></a></dt>
 <dd><p>The point doesn’t correspond to a real ‘item’ but to the entity center</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pycc.ccPickingListener.PickedItem.itemIndex">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">itemIndex</span></span><a class="headerlink" href="#pycc.ccPickingListener.PickedItem.itemIndex" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">itemIndex</span></span><a class="headerlink" href="#pycc.ccPickingListener.PickedItem.itemIndex" title="Link to this definition"></a></dt>
 <dd><p>e.g. point or triangle index</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pycc.ccPickingListener.PickedItem.uvw">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">uvw</span></span><a class="headerlink" href="#pycc.ccPickingListener.PickedItem.uvw" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">uvw</span></span><a class="headerlink" href="#pycc.ccPickingListener.PickedItem.uvw" title="Link to this definition"></a></dt>
 <dd><p>Picked point barycentric coordinates (if picked on a triangle)</p>
 </dd></dl>
 
@@ -589,7 +608,7 @@ autoStopPickingIfLast: automatically disables the picking mode on the active win
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPickingListener.onItemPicked">
-<span class="sig-name descname"><span class="pre">onItemPicked</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">pycc_runtime.ccPickingListener</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pi:</span> <span class="pre">ccPickingListener::PickedItem</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPickingListener.onItemPicked" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">onItemPicked</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">pycc_runtime.ccPickingListener</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pi:</span> <span class="pre">ccPickingListener::PickedItem</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycc.ccPickingListener.onItemPicked" title="Link to this definition"></a></dt>
 <dd><p>Method called whenever an item is picked</p>
 </dd></dl>
 

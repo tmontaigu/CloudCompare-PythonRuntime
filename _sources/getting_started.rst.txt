@@ -8,17 +8,17 @@ GUI
 
 In GUI, there are 4 actions:
 
-*  The REPL (Read Print Eval Loop) which allows for quick testing of some actions.
+-  The REPL (Read Print Eval Loop) which allows for quick testing of some actions.
     .. image:: ../images/repl-icon.png
 
-*  The editor which allows to create,edit,save python script and most importantly run them.
+-  The editor which allows to create,edit,save python script and most importantly run them.
     .. image:: ../images/python-editor-icon.png
 
-*  The file runner, which shows a small dialog where you can select a file and run it
+-  The file runner, which shows a small dialog where you can select a file and run it 
    without having to have the editor opened.
     .. image:: ../images/runner-icon.png
 
-*  The action launcher which shows the list plugins written in Python and their registered actions
+-  The action launcher which shows the list plugins written in Python and their registered actions 
    that you can use.
     .. image:: ../images/launcher-icon.png
 

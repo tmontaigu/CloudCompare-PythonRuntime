@@ -1,24 +1,22 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>cccorelib (Python) &mdash; CloudCompare-PythonPlugin  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -62,8 +60,6 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../pycc/index.html">pycc (Python)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../cpp/qCC_db/index.html">qCC_db (C++)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../cpp/CCCoreLib/index.html">CCCoreLib (C++)</a></li>
 </ul>
 
         </div>
@@ -91,7 +87,7 @@
            <div itemprop="articleBody">
              
   <section id="cccorelib-python">
-<h1>cccorelib (Python)<a class="headerlink" href="#cccorelib-python" title="Permalink to this heading"></a></h1>
+<h1>cccorelib (Python)<a class="headerlink" href="#cccorelib-python" title="Link to this heading"></a></h1>
 <p>cccorelib defines some data structures and interfaces/methods
 of these data structures.</p>
 <p>But the things that will probably interest you are the tools.</p>
@@ -99,63 +95,299 @@ of these data structures.</p>
 <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tools.html">CCCoreLib Tools</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#ccmisctools">CCMiscTools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#autosegmentationtools">AutoSegmentationTools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#distancecomputationtools">DistanceComputationTools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#manualsegmentationtools">ManualSegmentationTools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#scalarfieldtools">ScalarFieldTools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#chamferdistancetools">ChamferDistanceTools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#cloudsamplingtools">CloudSamplingTools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#geometricalanalysistools">GeometricalAnalysisTools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#statisticaltestingtools">StatisticalTestingTools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#pointprojectiontools">PointProjectionTools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#registrationtools">RegistrationTools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#ccmisctools">CCMiscTools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#cccorelib.CCMiscTools"><code class="docutils literal notranslate"><span class="pre">CCMiscTools</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.CCMiscTools.ComputeBaseVectors"><code class="docutils literal notranslate"><span class="pre">CCMiscTools.ComputeBaseVectors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.CCMiscTools.EnlargeBox"><code class="docutils literal notranslate"><span class="pre">CCMiscTools.EnlargeBox()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.CCMiscTools.MakeMinAndMaxCubical"><code class="docutils literal notranslate"><span class="pre">CCMiscTools.MakeMinAndMaxCubical()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.CCMiscTools.TriBoxOverlap"><code class="docutils literal notranslate"><span class="pre">CCMiscTools.TriBoxOverlap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.CCMiscTools.TriBoxOverlapd"><code class="docutils literal notranslate"><span class="pre">CCMiscTools.TriBoxOverlapd()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#autosegmentationtools">AutoSegmentationTools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#cccorelib.AutoSegmentationTools"><code class="docutils literal notranslate"><span class="pre">AutoSegmentationTools</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.AutoSegmentationTools.extractConnectedComponents"><code class="docutils literal notranslate"><span class="pre">AutoSegmentationTools.extractConnectedComponents()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.AutoSegmentationTools.frontPropagationBasedSegmentation"><code class="docutils literal notranslate"><span class="pre">AutoSegmentationTools.frontPropagationBasedSegmentation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.AutoSegmentationTools.labelConnectedComponents"><code class="docutils literal notranslate"><span class="pre">AutoSegmentationTools.labelConnectedComponents()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#distancecomputationtools">DistanceComputationTools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#cccorelib.DistanceComputationTools"><code class="docutils literal notranslate"><span class="pre">DistanceComputationTools</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.DistanceComputationTools.ERRPOR_MEASURES"><code class="docutils literal notranslate"><span class="pre">DistanceComputationTools.ERRPOR_MEASURES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.DistanceComputationTools.MAX_DIST"><code class="docutils literal notranslate"><span class="pre">DistanceComputationTools.MAX_DIST</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.DistanceComputationTools.MAX_DIST_68_PERCENT"><code class="docutils literal notranslate"><span class="pre">DistanceComputationTools.MAX_DIST_68_PERCENT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.DistanceComputationTools.MAX_DIST_95_PERCENT"><code class="docutils literal notranslate"><span class="pre">DistanceComputationTools.MAX_DIST_95_PERCENT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.DistanceComputationTools.MAX_DIST_99_PERCENT"><code class="docutils literal notranslate"><span class="pre">DistanceComputationTools.MAX_DIST_99_PERCENT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.DistanceComputationTools.RMS"><code class="docutils literal notranslate"><span class="pre">DistanceComputationTools.RMS</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#manualsegmentationtools">ManualSegmentationTools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#cccorelib.ManualSegmentationTools"><code class="docutils literal notranslate"><span class="pre">ManualSegmentationTools</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.ManualSegmentationTools.MeshCutterParams"><code class="docutils literal notranslate"><span class="pre">ManualSegmentationTools.MeshCutterParams</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.ManualSegmentationTools.isPointInsidePoly"><code class="docutils literal notranslate"><span class="pre">ManualSegmentationTools.isPointInsidePoly()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.ManualSegmentationTools.segment"><code class="docutils literal notranslate"><span class="pre">ManualSegmentationTools.segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.ManualSegmentationTools.segmentMesh"><code class="docutils literal notranslate"><span class="pre">ManualSegmentationTools.segmentMesh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.ManualSegmentationTools.segmentMeshWithAABox"><code class="docutils literal notranslate"><span class="pre">ManualSegmentationTools.segmentMeshWithAABox()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.ManualSegmentationTools.segmentMeshWithAAPlane"><code class="docutils literal notranslate"><span class="pre">ManualSegmentationTools.segmentMeshWithAAPlane()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#scalarfieldtools">ScalarFieldTools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#cccorelib.ScalarFieldTools"><code class="docutils literal notranslate"><span class="pre">ScalarFieldTools</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.ScalarFieldTools.SetScalarValueInverted"><code class="docutils literal notranslate"><span class="pre">ScalarFieldTools.SetScalarValueInverted()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.ScalarFieldTools.SetScalarValueToNaN"><code class="docutils literal notranslate"><span class="pre">ScalarFieldTools.SetScalarValueToNaN()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.ScalarFieldTools.applyScalarFieldGaussianFilter"><code class="docutils literal notranslate"><span class="pre">ScalarFieldTools.applyScalarFieldGaussianFilter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.ScalarFieldTools.computeKmeans"><code class="docutils literal notranslate"><span class="pre">ScalarFieldTools.computeKmeans()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.ScalarFieldTools.computeMeanScalarValue"><code class="docutils literal notranslate"><span class="pre">ScalarFieldTools.computeMeanScalarValue()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.ScalarFieldTools.computeMeanSquareScalarValue"><code class="docutils literal notranslate"><span class="pre">ScalarFieldTools.computeMeanSquareScalarValue()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.ScalarFieldTools.computeScalarFieldExtremas"><code class="docutils literal notranslate"><span class="pre">ScalarFieldTools.computeScalarFieldExtremas()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.ScalarFieldTools.computeScalarFieldGradient"><code class="docutils literal notranslate"><span class="pre">ScalarFieldTools.computeScalarFieldGradient()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.ScalarFieldTools.computeScalarFieldHistogram"><code class="docutils literal notranslate"><span class="pre">ScalarFieldTools.computeScalarFieldHistogram()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.ScalarFieldTools.countScalarFieldValidValues"><code class="docutils literal notranslate"><span class="pre">ScalarFieldTools.countScalarFieldValidValues()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.ScalarFieldTools.multiplyScalarFields"><code class="docutils literal notranslate"><span class="pre">ScalarFieldTools.multiplyScalarFields()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#chamferdistancetools">ChamferDistanceTools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#cccorelib.ChamferDistanceTransform"><code class="docutils literal notranslate"><span class="pre">ChamferDistanceTransform</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.ChamferDistanceTransform.init"><code class="docutils literal notranslate"><span class="pre">ChamferDistanceTransform.init()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.ChamferDistanceTransform.propagateDistance"><code class="docutils literal notranslate"><span class="pre">ChamferDistanceTransform.propagateDistance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.ChamferDistanceTransform.MAX_DIST"><code class="docutils literal notranslate"><span class="pre">ChamferDistanceTransform.MAX_DIST</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#cloudsamplingtools">CloudSamplingTools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#cccorelib.CloudSamplingTools"><code class="docutils literal notranslate"><span class="pre">CloudSamplingTools</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.CloudSamplingTools.RESAMPLING_CELL_METHOD"><code class="docutils literal notranslate"><span class="pre">CloudSamplingTools.RESAMPLING_CELL_METHOD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.CloudSamplingTools.SFModulationParams"><code class="docutils literal notranslate"><span class="pre">CloudSamplingTools.SFModulationParams</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.CloudSamplingTools.SUBSAMPLING_CELL_METHODS"><code class="docutils literal notranslate"><span class="pre">CloudSamplingTools.SUBSAMPLING_CELL_METHODS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.CloudSamplingTools.noiseFilter"><code class="docutils literal notranslate"><span class="pre">CloudSamplingTools.noiseFilter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.CloudSamplingTools.resampleCloudSpatially"><code class="docutils literal notranslate"><span class="pre">CloudSamplingTools.resampleCloudSpatially()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.CloudSamplingTools.resampleCloudWithOctree"><code class="docutils literal notranslate"><span class="pre">CloudSamplingTools.resampleCloudWithOctree()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.CloudSamplingTools.resampleCloudWithOctreeAtLevel"><code class="docutils literal notranslate"><span class="pre">CloudSamplingTools.resampleCloudWithOctreeAtLevel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.CloudSamplingTools.sorFilter"><code class="docutils literal notranslate"><span class="pre">CloudSamplingTools.sorFilter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.CloudSamplingTools.subsampleCloudRandomly"><code class="docutils literal notranslate"><span class="pre">CloudSamplingTools.subsampleCloudRandomly()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.CloudSamplingTools.subsampleCloudWithOctree"><code class="docutils literal notranslate"><span class="pre">CloudSamplingTools.subsampleCloudWithOctree()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.CloudSamplingTools.subsampleCloudWithOctreeAtLevel"><code class="docutils literal notranslate"><span class="pre">CloudSamplingTools.subsampleCloudWithOctreeAtLevel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.CloudSamplingTools.CELL_CENTER"><code class="docutils literal notranslate"><span class="pre">CloudSamplingTools.CELL_CENTER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.CloudSamplingTools.CELL_GRAVITY_CENTER"><code class="docutils literal notranslate"><span class="pre">CloudSamplingTools.CELL_GRAVITY_CENTER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.CloudSamplingTools.NEAREST_POINT_TO_CELL_CENTER"><code class="docutils literal notranslate"><span class="pre">CloudSamplingTools.NEAREST_POINT_TO_CELL_CENTER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.CloudSamplingTools.RANDOM_POINT"><code class="docutils literal notranslate"><span class="pre">CloudSamplingTools.RANDOM_POINT</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#geometricalanalysistools">GeometricalAnalysisTools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.Density"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.Density</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.ErrorCode"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.ErrorCode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.GeomCharacteristic"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.GeomCharacteristic</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.ComputeCharactersitic"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.ComputeCharactersitic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.ComputeCrossCovarianceMatrix"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.ComputeCrossCovarianceMatrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.ComputeGravityCenter"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.ComputeGravityCenter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.ComputeLocalDensityApprox"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.ComputeLocalDensityApprox()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.ComputeSphereFrom4"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.ComputeSphereFrom4()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.ComputeWeightedCrossCovarianceMatrix"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.ComputeWeightedCrossCovarianceMatrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.ComputeWeightedGravityCenter"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.ComputeWeightedGravityCenter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.DetectCircle"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.DetectCircle()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.DetectSphereRobust"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.DetectSphereRobust()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.FlagDuplicatePoints"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.FlagDuplicatePoints()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.ApproxLocalDensity"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.ApproxLocalDensity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.Curvature"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.Curvature</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.DENSITY_2D"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.DENSITY_2D</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.DENSITY_3D"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.DENSITY_3D</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.DENSITY_KNN"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.DENSITY_KNN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.Feature"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.Feature</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.InvalidInput"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.InvalidInput</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.LocalDensity"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.LocalDensity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.MomentOrder1"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.MomentOrder1</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.NoError"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.NoError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.NotEnoughMemory"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.NotEnoughMemory</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.NotEnoughPoints"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.NotEnoughPoints</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.OctreeComputationFailed"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.OctreeComputationFailed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.ProcessCancelledByUser"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.ProcessCancelledByUser</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.ProcessFailed"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.ProcessFailed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.Roughness"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.Roughness</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.GeometricalAnalysisTools.UnhandledCharacteristic"><code class="docutils literal notranslate"><span class="pre">GeometricalAnalysisTools.UnhandledCharacteristic</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#statisticaltestingtools">StatisticalTestingTools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#cccorelib.StatisticalTestingTools"><code class="docutils literal notranslate"><span class="pre">StatisticalTestingTools</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.StatisticalTestingTools.computeAdaptativeChi2Dist"><code class="docutils literal notranslate"><span class="pre">StatisticalTestingTools.computeAdaptativeChi2Dist()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.StatisticalTestingTools.computeChi2Fractile"><code class="docutils literal notranslate"><span class="pre">StatisticalTestingTools.computeChi2Fractile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.StatisticalTestingTools.computeChi2Probability"><code class="docutils literal notranslate"><span class="pre">StatisticalTestingTools.computeChi2Probability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.StatisticalTestingTools.testCloudWithStatisticalModel"><code class="docutils literal notranslate"><span class="pre">StatisticalTestingTools.testCloudWithStatisticalModel()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#pointprojectiontools">PointProjectionTools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#cccorelib.PointProjectionTools"><code class="docutils literal notranslate"><span class="pre">PointProjectionTools</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.PointProjectionTools.IndexedCCVector2"><code class="docutils literal notranslate"><span class="pre">PointProjectionTools.IndexedCCVector2</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.PointProjectionTools.Transformation"><code class="docutils literal notranslate"><span class="pre">PointProjectionTools.Transformation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.PointProjectionTools.applyTransformation"><code class="docutils literal notranslate"><span class="pre">PointProjectionTools.applyTransformation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.PointProjectionTools.computeTriangulation"><code class="docutils literal notranslate"><span class="pre">PointProjectionTools.computeTriangulation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.PointProjectionTools.developCloudOnCone"><code class="docutils literal notranslate"><span class="pre">PointProjectionTools.developCloudOnCone()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.PointProjectionTools.developCloudOnCylinder"><code class="docutils literal notranslate"><span class="pre">PointProjectionTools.developCloudOnCylinder()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#registrationtools">RegistrationTools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#cccorelib.RegistrationTools"><code class="docutils literal notranslate"><span class="pre">RegistrationTools</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.RegistrationTools.TRANSFORMATION_FILTERS"><code class="docutils literal notranslate"><span class="pre">RegistrationTools.TRANSFORMATION_FILTERS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.RegistrationTools.FilterTransformation"><code class="docutils literal notranslate"><span class="pre">RegistrationTools.FilterTransformation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.RegistrationTools.SKIP_NONE"><code class="docutils literal notranslate"><span class="pre">RegistrationTools.SKIP_NONE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.RegistrationTools.SKIP_ROTATION"><code class="docutils literal notranslate"><span class="pre">RegistrationTools.SKIP_ROTATION</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.RegistrationTools.SKIP_RXY"><code class="docutils literal notranslate"><span class="pre">RegistrationTools.SKIP_RXY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.RegistrationTools.SKIP_RXZ"><code class="docutils literal notranslate"><span class="pre">RegistrationTools.SKIP_RXZ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.RegistrationTools.SKIP_RYZ"><code class="docutils literal notranslate"><span class="pre">RegistrationTools.SKIP_RYZ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.RegistrationTools.SKIP_TRANSLATION"><code class="docutils literal notranslate"><span class="pre">RegistrationTools.SKIP_TRANSLATION</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.RegistrationTools.SKIP_TX"><code class="docutils literal notranslate"><span class="pre">RegistrationTools.SKIP_TX</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.RegistrationTools.SKIP_TY"><code class="docutils literal notranslate"><span class="pre">RegistrationTools.SKIP_TY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tools.html#cccorelib.RegistrationTools.SKIP_TZ"><code class="docutils literal notranslate"><span class="pre">RegistrationTools.SKIP_TZ</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="data_structures.html">CCCoreLib Data Structures &amp; Interfaces</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="data_structures.html#vectors">Vectors</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#ccvector3">CCVector3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#ccvector3">CCVector3</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html#cccorelib.CCVector3"><code class="docutils literal notranslate"><span class="pre">CCVector3</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="data_structures.html#pointclouds">PointClouds</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#genericcloud">GenericCloud</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#genericindexedcloud">GenericIndexedCloud</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#genericindexedcloudpersist">GenericIndexedCloudPersist</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#pointcloud">PointCloud</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#referencecloud">ReferenceCloud</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#genericcloud">GenericCloud</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html#cccorelib.GenericCloud"><code class="docutils literal notranslate"><span class="pre">GenericCloud</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#genericindexedcloud">GenericIndexedCloud</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html#cccorelib.GenericIndexedCloud"><code class="docutils literal notranslate"><span class="pre">GenericIndexedCloud</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#genericindexedcloudpersist">GenericIndexedCloudPersist</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html#cccorelib.GenericIndexedCloudPersist"><code class="docutils literal notranslate"><span class="pre">GenericIndexedCloudPersist</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#pointcloud">PointCloud</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html#cccorelib.PointCloud"><code class="docutils literal notranslate"><span class="pre">PointCloud</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#referencecloud">ReferenceCloud</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html#cccorelib.ReferenceCloud"><code class="docutils literal notranslate"><span class="pre">ReferenceCloud</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="data_structures.html#meshes">Meshes</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#generictriangle">GenericTriangle</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#genericmesh">GenericMesh</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#genericindexedmesh">GenericIndexedMesh</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#delaunay2dmesh">Delaunay2dMesh</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#polyline">Polyline</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#simpletriangle">SimpleTriangle</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#simplemesh">SimpleMesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#generictriangle">GenericTriangle</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html#cccorelib.GenericTriangle"><code class="docutils literal notranslate"><span class="pre">GenericTriangle</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#genericmesh">GenericMesh</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html#cccorelib.GenericMesh"><code class="docutils literal notranslate"><span class="pre">GenericMesh</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#genericindexedmesh">GenericIndexedMesh</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html#cccorelib.GenericIndexedMesh"><code class="docutils literal notranslate"><span class="pre">GenericIndexedMesh</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#delaunay2dmesh">Delaunay2dMesh</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html#cccorelib.Delaunay2dMesh"><code class="docutils literal notranslate"><span class="pre">Delaunay2dMesh</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#polyline">Polyline</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html#cccorelib.Polyline"><code class="docutils literal notranslate"><span class="pre">Polyline</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#simpletriangle">SimpleTriangle</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html#cccorelib.SimpleTriangle"><code class="docutils literal notranslate"><span class="pre">SimpleTriangle</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#simplemesh">SimpleMesh</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html#cccorelib.SimpleMesh"><code class="docutils literal notranslate"><span class="pre">SimpleMesh</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="data_structures.html#kdtrees">KdTrees</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#kdtree">KDTree</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#truekdtree">TrueKdTree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#kdtree">KDTree</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html#cccorelib.KDTree"><code class="docutils literal notranslate"><span class="pre">KDTree</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#truekdtree">TrueKdTree</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html#cccorelib.TrueKdTree"><code class="docutils literal notranslate"><span class="pre">TrueKdTree</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="data_structures.html#octrees">Octrees</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#genericoctree">GenericOctree</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#dgmoctree">DgmOctree</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#dgmoctreereferencecloud">DgmOctreeReferenceCloud</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#genericoctree">GenericOctree</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html#cccorelib.GenericOctree"><code class="docutils literal notranslate"><span class="pre">GenericOctree</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#dgmoctree">DgmOctree</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html#cccorelib.DgmOctree"><code class="docutils literal notranslate"><span class="pre">DgmOctree</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#dgmoctreereferencecloud">DgmOctreeReferenceCloud</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html#cccorelib.DgmOctreeReferenceCloud"><code class="docutils literal notranslate"><span class="pre">DgmOctreeReferenceCloud</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="data_structures.html#others">Others</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#boundingbox">BoundingBox</a></li>
-<li class="toctree-l3"><a class="reference internal" href="data_structures.html#scalarfield">ScalarField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#boundingbox">BoundingBox</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html#cccorelib.BoundingBox"><code class="docutils literal notranslate"><span class="pre">BoundingBox</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="data_structures.html#scalarfield">ScalarField</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="data_structures.html#cccorelib.ScalarField"><code class="docutils literal notranslate"><span class="pre">ScalarField</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="others.html">Others</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="others.html#genericprogresscallback">GenericProgressCallback</a></li>
-<li class="toctree-l2"><a class="reference internal" href="others.html#normalizedprogress">NormalizedProgress</a></li>
+<li class="toctree-l2"><a class="reference internal" href="others.html#genericprogresscallback">GenericProgressCallback</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="others.html#cccorelib.GenericProgressCallback"><code class="docutils literal notranslate"><span class="pre">GenericProgressCallback</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="others.html#cccorelib.GenericProgressCallback.isCancelRequested"><code class="docutils literal notranslate"><span class="pre">GenericProgressCallback.isCancelRequested()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="others.html#cccorelib.GenericProgressCallback.setInfo"><code class="docutils literal notranslate"><span class="pre">GenericProgressCallback.setInfo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="others.html#cccorelib.GenericProgressCallback.setMethodTitle"><code class="docutils literal notranslate"><span class="pre">GenericProgressCallback.setMethodTitle()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="others.html#cccorelib.GenericProgressCallback.start"><code class="docutils literal notranslate"><span class="pre">GenericProgressCallback.start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="others.html#cccorelib.GenericProgressCallback.stop"><code class="docutils literal notranslate"><span class="pre">GenericProgressCallback.stop()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="others.html#cccorelib.GenericProgressCallback.textCanBeEdited"><code class="docutils literal notranslate"><span class="pre">GenericProgressCallback.textCanBeEdited()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="others.html#cccorelib.GenericProgressCallback.update"><code class="docutils literal notranslate"><span class="pre">GenericProgressCallback.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="others.html#normalizedprogress">NormalizedProgress</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="others.html#cccorelib.NormalizedProgress"><code class="docutils literal notranslate"><span class="pre">NormalizedProgress</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="others.html#cccorelib.NormalizedProgress.oneStep"><code class="docutils literal notranslate"><span class="pre">NormalizedProgress.oneStep()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="others.html#cccorelib.NormalizedProgress.reset"><code class="docutils literal notranslate"><span class="pre">NormalizedProgress.reset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="others.html#cccorelib.NormalizedProgress.scale"><code class="docutils literal notranslate"><span class="pre">NormalizedProgress.scale()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="others.html#cccorelib.NormalizedProgress.steps"><code class="docutils literal notranslate"><span class="pre">NormalizedProgress.steps()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
