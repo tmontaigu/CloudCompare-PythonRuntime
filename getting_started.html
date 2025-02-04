@@ -174,13 +174,13 @@ An example of a plugin package embedding such metadata can be found
 </div>
 <p>CC will be an object of type <a class="reference internal" href="python/pycc/runtime.html#pycc.ccCommandLineInterface" title="pycc.ccCommandLineInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.ccCommandLineInterface</span></code></a>.</p>
 <p>To run in command line mode pass following option: <cite>-PYTHON_SCRIPT</cite></p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>cloudcompare -PYTHON_SCRIPT my_script.py
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>cloudcompare<span class="w"> </span>-PYTHON_SCRIPT<span class="w"> </span>my_script.py
 </pre></div>
 </div>
 <p>The plugin will take all arguments that follows the script name and populate
 python’s sys.argv with them:</p>
 <p>Example:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>/path/to/cloudcompare -PYTHON_SCRIPT my_script.py some_positional_arg --size <span class="m">50</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>/path/to/cloudcompare<span class="w"> </span>-PYTHON_SCRIPT<span class="w"> </span>my_script.py<span class="w"> </span>some_positional_arg<span class="w"> </span>--size<span class="w"> </span><span class="m">50</span>
 </pre></div>
 </div>
 <p>Python’s sys.argv will be equal to:

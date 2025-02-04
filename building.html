@@ -232,19 +232,19 @@ Run  <cite>pip install –upgrade pip</cite> to get the latest version</p>
 <span class="nv">$env:CMAKE_PREFIX_PATH</span><span class="p">+=</span><span class="s2">&quot;;C:\Qt\5.15.2\msvc2019_64&quot;</span>
 </pre></div>
 </div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>macOS <span class="o">(</span>bash<span class="o">)</span>
-<span class="nb">export</span> <span class="nv">CMAKE_PREFIX_PATH</span><span class="o">=</span>/usr/local/opt/qt@5
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>macOS<span class="w"> </span><span class="o">(</span>bash<span class="o">)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">CMAKE_PREFIX_PATH</span><span class="o">=</span>/usr/local/opt/qt@5
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
 <li><p>Run</p></li>
 </ol>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>Building the wheels
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>Building<span class="w"> </span>the<span class="w"> </span>wheels
 
 <span class="go">pip wheel --no-deps wrapper/cccorelib</span>
 <span class="go">pip wheel --no-deps wrapper/pycc</span>
 
-<span class="gp"># </span>Installing directly
+<span class="gp"># </span>Installing<span class="w"> </span>directly
 
 <span class="go">pip install wrapper/cccorelib</span>
 <span class="go">pip install wrapper/pycc</span>
@@ -265,7 +265,7 @@ And are compiled only if the corresponding C++ plugin is also being compiled.</p
 <h3>Building as independent wheels<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
 <p>Before the <code class="docutils literal notranslate"><span class="pre">pip</span></code> command, add <code class="docutils literal notranslate"><span class="pre">-DPLUGIN_STANDARD_QM3C2=ON</span></code>
 to the <code class="docutils literal notranslate"><span class="pre">SKBUILD_CONFIGURE_OPTIONS</span></code> environment variable.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">SKBUILD_CONFIGURE_OPTIONS</span><span class="o">=</span><span class="s2">&quot;-DPLUGIN_STANDARD_QM3C2=ON&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">SKBUILD_CONFIGURE_OPTIONS</span><span class="o">=</span><span class="s2">&quot;-DPLUGIN_STANDARD_QM3C2=ON&quot;</span>
 </pre></div>
 </div>
 </section>
