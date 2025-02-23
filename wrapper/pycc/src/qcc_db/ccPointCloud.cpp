@@ -88,7 +88,7 @@ void ccPointCloud_setColors(ccPointCloud &self,
                                   g_it->cast<ColorCompType>(),
                                   b_it->cast<ColorCompType>(),
                                   a_it ? a_it->cast<ColorCompType>() : ccColor::MAX);
-        self.setPointColor(i, value);
+        self.setPointColor(static_cast<unsigned>(i), value);
         ++r_it;
         ++g_it;
         ++b_it;
@@ -355,7 +355,8 @@ void define_ccPointCloud(py::module &m)
                     auto rgb = colors.unchecked<2>();
                     for (size_t i = 0; i < self.size(); ++i)
                     {
-                        self.setPointColor(i, ccColor::Rgb(rgb(i, 0), rgb(i, 1), rgb(i, 2)));
+                        self.setPointColor(static_cast<unsigned>(i),
+                                           ccColor::Rgb(rgb(i, 0), rgb(i, 1), rgb(i, 2)));
                     }
                 }
                 else if (colors.shape(1) == 4)
@@ -364,7 +365,8 @@ void define_ccPointCloud(py::module &m)
                     for (size_t i = 0; i < self.size(); ++i)
                     {
                         self.setPointColor(
-                            i, ccColor::Rgba(rgba(i, 0), rgba(i, 1), rgba(i, 2), rgba(i, 3)));
+                            static_cast<unsigned>(i),
+                            ccColor::Rgba(rgba(i, 0), rgba(i, 1), rgba(i, 2), rgba(i, 3)));
                     }
                 }
             },
@@ -479,7 +481,7 @@ void define_ccPointCloud(py::module &m)
                 for (size_t i = 0; i < self.size(); ++i)
                 {
                     const CCVector3 normal(norms(i, 0), norms(i, 1), norms(i, 2));
-                    self.setPointNormal(i, normal);
+                    self.setPointNormal(static_cast<unsigned>(i), normal);
                 }
             },
             R"doc(
@@ -504,7 +506,7 @@ void define_ccPointCloud(py::module &m)
                 auto norms = normals.mutable_unchecked<2>();
                 for (size_t i = 0; i < self.size(); ++i)
                 {
-                    const CCVector3 normal = self.getPointNormal(i);
+                    const CCVector3 &normal = self.getPointNormal(static_cast<unsigned>(i));
                     norms(i, 0) = normal.x;
                     norms(i, 1) = normal.y;
                     norms(i, 2) = normal.z;
