@@ -150,6 +150,10 @@ void PythonInterpreter::executeStatementWithState(const std::string &code,
 
 void PythonInterpreter::executeCode(const std::string &code, QListWidget *output)
 {
+    if (m_isExecuting)
+    {
+        return;
+    }
     State tmpState;
     executeCodeWithState(code, output, tmpState);
 }

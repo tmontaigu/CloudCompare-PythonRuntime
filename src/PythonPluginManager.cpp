@@ -27,6 +27,37 @@ const std::vector<Runtime::RegisteredPlugin> &PythonPluginManager::plugins() con
     return m_plugins;
 }
 
+void PythonPluginManager::loadPlugins(const QStringList &pluginsPaths) noexcept
+{
+    // Start by autodiscovering plugins from metadata
+    try
+    {
+        loadPluginsFromEntryPoints();
+    }
+    catch (const std::exception &e)
+    {
+        plgWarning() << "Failed to load autodiscovered custom python plugins: " << e.what();
+    }
+    catch (...)
+    {
+        plgWarning() << "Failed to load autodiscovered custom python plugins";
+    }
+
+    // In the end, we add plugins from custom paths
+    try
+    {
+        loadPluginsFrom(pluginsPaths);
+    }
+    catch (const std::exception &e)
+    {
+        plgWarning() << "Failed to load custom python plugins: " << e.what();
+    }
+    catch (...)
+    {
+        plgWarning() << "Failed to load custom python plugins";
+    }
+}
+
 void PythonPluginManager::loadPluginsFromEntryPoints()
 {
     plgPrint() << "Searching for custom plugins (checking metadata in site-package)";

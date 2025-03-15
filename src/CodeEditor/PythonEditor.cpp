@@ -45,6 +45,8 @@ PythonEditor::PythonEditor(PythonInterpreter *interpreter)
     readSettings();
     QCoreApplication::instance()->installEventFilter(this);
 
+    actionRun->setEnabled(!interpreter->isExecuting());
+
     connect(this, &PythonEditor::executionCalled, interpreter, &PythonInterpreter::executeCode);
     connect(
         interpreter, &PythonInterpreter::executionStarted, this, &PythonEditor::executionStarted);
