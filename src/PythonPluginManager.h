@@ -31,6 +31,18 @@ class PythonPluginManager final
     /// Returns the currently loaded plugins
     const std::vector<Runtime::RegisteredPlugin> &plugins() const;
 
+    /// load plugins
+    ///
+    /// * First loads plugins from the `cloudcompare.plugins` entry point
+    /// * Then loads plugins from the given paths
+    ///
+    /// Errors are logged.
+    void loadPlugins(const QStringList &pluginsPaths) noexcept;
+
+    /// This MUST be called before finalizing the interpreter
+    void unloadPlugins();
+
+  private:
     /// Autodiscover plugins based on the package metadata.
     /// it uses the entry point mechanism described
     /// - In PyPa docs:
@@ -50,10 +62,6 @@ class PythonPluginManager final
     /// \param paths where we will look for plugins to load
     void loadPluginsFrom(const QStringList &paths);
 
-    /// This MUST be called before finalizing the interpreter
-    void unloadPlugins();
-
-  private:
     std::vector<Runtime::RegisteredPlugin> m_plugins;
 };
 

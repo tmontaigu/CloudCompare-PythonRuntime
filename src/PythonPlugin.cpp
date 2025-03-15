@@ -27,21 +27,52 @@
 #include "Runtime/Runtime.h"
 #include "Utilities.h"
 
-#include <QDesktopServices>
-#include <QUrl>
-
 #include <pybind11/pytypes.h>
 
 #define slots Q_SLOTS
 #define signals Q_SIGNALS
 #include <QCoreApplication>
+#include <QDesktopServices>
 #include <QDialog>
 #include <QFile>
 #include <QFileDialog>
 #include <QMenu>
+#include <QRunnable>
 #include <QSettings>
+#include <QThreadPool>
+#include <QUrl>
+
 #include <algorithm>
 #include <ccCommandLineInterface.h>
+
+/// Loading Python plugins may be slow,
+/// we want cloudcompare to open as fast as possible
+/// so we load plugins in a separate thread
+class LoadPluginsTask : public QObject, public QRunnable
+{
+    Q_OBJECT
+
+  public:
+    explicit LoadPluginsTask(PythonPluginManager &pluginManager, const QStringList &pluginsPaths)
+        : m_pluginManager(pluginManager), m_pluginsPaths(pluginsPaths)
+    {
+    }
+
+    void run() override
+    {
+        py::gil_scoped_acquire acquire;
+        m_pluginManager.loadPlugins(m_pluginsPaths);
+        Q_EMIT finished();
+    }
+
+  Q_SIGNALS:
+    void finished();
+
+  private:
+    // References are fine here as this object is short-lived
+    PythonPluginManager &m_pluginManager;
+    const QStringList m_pluginsPaths;
+};
 
 // Useful link:
 // https://docs.python.org/3/c-api/init.html#initialization-finalization-and-threads
@@ -110,6 +141,10 @@ PythonPlugin::PythonPlugin(QObject *parent)
                 this,
                 &PythonPlugin::finalizeInterpreter);
     }
+
+    // The REPL action is created here, as we need it to exist in
+    // order to enable / disable it depending on circumstances
+    m_showRepl = new QAction("Show REPL", this);
 }
 
 static std::unique_ptr<QSettings> LoadSettings()
@@ -140,14 +175,9 @@ QList<QAction *> PythonPlugin::getActions()
         m_showEditor->setEnabled(isPythonProperlyInitialized);
     }
 
-    if (!m_showRepl)
-    {
-        m_showRepl = new QAction("Show REPL", this);
-        m_showRepl->setToolTip("Show the Python REPL");
-        m_showRepl->setIcon(QIcon(REPL_ICON_PATH));
-        connect(m_showRepl, &QAction::triggered, this, &PythonPlugin::showRepl);
-        m_showRepl->setEnabled(isPythonProperlyInitialized);
-    }
+    m_showRepl->setToolTip("Show the Python REPL");
+    m_showRepl->setIcon(QIcon(REPL_ICON_PATH));
+    connect(m_showRepl, &QAction::triggered, this, &PythonPlugin::showRepl);
 
     if (!m_showDoc)
     {
@@ -497,28 +527,28 @@ void PythonPlugin::setMainAppInterface(ccMainAppInterface *app)
     // python plugins, if we did this earlier, `pycc.GetInstance()`
     // in python would return `None` and that's bad.
 
-    // Start by autodiscovering plugins from metadata
-    try
-    {
-        m_pluginManager.loadPluginsFromEntryPoints();
-    }
-    catch (const std::exception &e)
-    {
-        ccLog::Warning("[PythonRuntime] Failed to load autodiscovered custom python plugins: %s",
-                       e.what());
-    }
-
-    // In the end, we add plugins from custom paths
-    try
-    {
-        m_pluginManager.loadPluginsFrom(m_settings->pluginsPaths());
-    }
-    catch (const std::exception &e)
-    {
-        ccLog::Warning("[PythonRuntime] Failed to load custom python plugins : %s", e.what());
-    }
-
-    populatePluginSubMenu();
+    // We load the plugins in a separate thread to avoid the app from being too slow to start
+    // However, the thread that will load plugins will need to acquire the GIL,
+    // which the interpreter on the main thread currently owns.
+    // So we release it first, and re-acquire it as soon as plugin loading is done
+    auto *gilReleaser = new py::gil_scoped_release();
+    // While plugins are loading it's not possible to run any python code
+    Q_EMIT m_interp.executionStarted();
+    m_showRepl->setEnabled(false); // repl is slight harder to handle
+    auto *task = new LoadPluginsTask(m_pluginManager, m_settings->pluginsPaths());
+    QObject::connect(task,
+                     &LoadPluginsTask::finished,
+                     this,
+                     [gilReleaser, this]()
+                     {
+                         delete gilReleaser;
+                         Q_EMIT m_interp.executionFinished();
+                         this->populatePluginSubMenu();
+                         m_showRepl->setEnabled(true);
+                         plgPrint() << "Plugins loaded, running code is enabled";
+                     });
+    plgPrint() << "Loading plugins, running code is disabled";
+    QThreadPool::globalInstance()->start(task);
 
     m_fileRunner->setParent(m_app->getMainWindow(), Qt::Window);
     m_actionLauncher->setParent(m_app->getMainWindow(), Qt::Window);
@@ -671,3 +701,5 @@ void PythonPlugin::finalizeInterpreter()
     m_pluginManager.unloadPlugins();
     m_interp.finalize();
 }
+
+#include "PythonPlugin.moc"
