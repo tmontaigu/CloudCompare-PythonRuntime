@@ -687,10 +687,12 @@ void PythonPlugin::populatePluginSubMenu()
 void PythonPlugin::handlePythonExecutionStarted()
 {
     m_pluginsMenu->setEnabled(false);
+    QApplication::setOverrideCursor(Qt::CursorShape::BusyCursor);
 }
 void PythonPlugin::handlePythonExecutionFinished()
 {
     m_pluginsMenu->setEnabled(true);
+    QApplication::restoreOverrideCursor();
 }
 
 void PythonPlugin::finalizeInterpreter()
