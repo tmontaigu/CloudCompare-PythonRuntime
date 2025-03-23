@@ -469,6 +469,7 @@ void PackageManager::executeCommand(const QStringList &arguments)
     m_outputDialog->clear();
     m_pythonProcess->setArguments(arguments);
     m_pythonProcess->start(QIODevice::ReadOnly);
+    m_pythonProcess->startDetached()
     QTextCodec *utf8Codec = QTextCodec::codecForName("utf-8");
 
     while (m_pythonProcess->state() != QProcess::ProcessState::NotRunning)

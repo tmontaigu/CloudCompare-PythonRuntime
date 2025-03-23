@@ -29,18 +29,18 @@ const std::vector<Runtime::RegisteredPlugin> &PythonPluginManager::plugins() con
 
 void PythonPluginManager::loadPlugins(const QStringList &pluginsPaths) noexcept
 {
-    // Start by autodiscovering plugins from metadata
+    // Start by auto-discovering plugins from metadata
     try
     {
         loadPluginsFromEntryPoints();
     }
     catch (const std::exception &e)
     {
-        plgWarning() << "Failed to load autodiscovered custom python plugins: " << e.what();
+        plgWarning() << "Failed to load auto-discovered custom python plugins: " << e.what();
     }
     catch (...)
     {
-        plgWarning() << "Failed to load autodiscovered custom python plugins";
+        plgWarning() << "Failed to load auto-discovered custom python plugins";
     }
 
     // In the end, we add plugins from custom paths
@@ -178,7 +178,7 @@ void PythonPluginManager::loadPluginsFrom(const QStringList &paths)
         }
     }
 
-    py::list subClassTypes =
+    const py::list subClassTypes =
         py::module::import("pycc").attr("PythonPluginInterface").attr("__subclasses__")();
     for (auto &subClassType : subClassTypes)
     {

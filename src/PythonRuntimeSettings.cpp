@@ -71,7 +71,7 @@ class PathVariableInputDialog final : public QDialog
   private:
     void handleSelectPath()
     {
-        QString selectedDir = QFileDialog::getExistingDirectory(
+        const QString selectedDir = QFileDialog::getExistingDirectory(
             this,
             tr("Select a path to add"),
             QString(),
@@ -111,11 +111,11 @@ class PathVariableEditor final : public QDialog
 
         PathVariableInputDialog dlg(this);
         dlg.exec();
-        QString path = dlg.selectedPath();
+        const QString path = dlg.selectedPath();
 
         if (!path.isEmpty())
         {
-            int rowCount = m_model->rowCount();
+            const int rowCount = m_model->rowCount();
             m_model->insertRows(rowCount, 1);
             m_model->setData(m_model->index(rowCount), path);
         }
@@ -202,7 +202,7 @@ void PythonRuntimeSettings::restoreSettings()
         m_ui->localEnvPathLabel->setText(localEnvPath);
     }
 
-    bool ignoreVenv = settings->value(QStringLiteral("IgnoreVenv")).toBool();
+    const bool ignoreVenv = settings->value(QStringLiteral("IgnoreVenv")).toBool();
     m_ui->ignoreVenvCheckBox->setChecked(ignoreVenv);
 }
 
@@ -238,13 +238,13 @@ void PythonRuntimeSettings::handleEnvComboBoxChange(const QString &envTypeName)
 
 void PythonRuntimeSettings::handleSelectLocalEnv()
 {
-    QString selectedDir = QFileDialog::getExistingDirectory(this, "Python Environment Root");
+    const QString selectedDir = QFileDialog::getExistingDirectory(this, "Python Environment Root");
     if (!selectedDir.isEmpty())
     {
         PythonConfig config;
         config.initFromLocation(selectedDir);
 
-        bool isEnvValid = config.validateAndDisplayErrors(this);
+        const bool isEnvValid = config.validateAndDisplayErrors(this);
         if (!isEnvValid)
         {
             m_ui->envTypeComboBox->setCurrentIndex(0);

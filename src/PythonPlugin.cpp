@@ -43,18 +43,19 @@
 #include <QUrl>
 
 #include <algorithm>
+#include <utility>
 #include <ccCommandLineInterface.h>
 
 /// Loading Python plugins may be slow,
 /// we want cloudcompare to open as fast as possible
 /// so we load plugins in a separate thread
-class LoadPluginsTask : public QObject, public QRunnable
+class LoadPluginsTask final : public QObject, public QRunnable
 {
     Q_OBJECT
 
   public:
-    explicit LoadPluginsTask(PythonPluginManager &pluginManager, const QStringList &pluginsPaths)
-        : m_pluginManager(pluginManager), m_pluginsPaths(pluginsPaths)
+    explicit LoadPluginsTask(PythonPluginManager &pluginManager, QStringList pluginsPaths)
+        : m_pluginManager(pluginManager), m_pluginsPaths(std::move(pluginsPaths))
     {
     }
 
@@ -79,8 +80,8 @@ class LoadPluginsTask : public QObject, public QRunnable
 PythonPlugin::PythonPlugin(QObject *parent)
     : QObject(parent),
       ccStdPluginInterface(":/CC/plugin/PythonRuntime/info.json"),
-      m_settings(new PythonRuntimeSettings),
       m_interp(nullptr),
+      m_settings(new PythonRuntimeSettings),
       m_editor(new PythonEditor(&m_interp)),
       m_fileRunner(new FileRunner(&m_interp)),
       m_actionLauncher(new PythonActionLauncher(&m_pluginManager, &m_interp))
@@ -103,7 +104,7 @@ PythonPlugin::PythonPlugin(QObject *parent)
 
     if (!isDefaultPythonEnv)
     {
-        bool seemsValid = config.validateAndDisplayErrors();
+        const bool seemsValid = config.validateAndDisplayErrors();
         if (!seemsValid)
         {
             plgError() << "Falling back to default Python configuration due to previous errors";
@@ -256,10 +257,10 @@ QList<QAction *> PythonPlugin::getActions()
         m_drawScriptRegister->addSeparator();
 
         std::unique_ptr<QSettings> settings = LoadSettings();
-        QStringList loaded_paths =
+        auto loaded_paths =
             settings->value(QStringLiteral("RegisterListPath")).value<QStringList>();
 
-        for (QString path : loaded_paths)
+        for (const QString& path : loaded_paths)
         {
             QFileInfo fi(path);
             if (!fi.exists())
@@ -325,7 +326,7 @@ void PythonPlugin::addScript(QString path)
     if (m_scriptList.empty())
         m_removeScript->setEnabled(true);
 
-    QFileInfo fi(path);
+    const QFileInfo fi(path);
 
     // Doesn't add if file doesn't exist or if it's already present.
     if (!fi.exists() || m_savedPath.contains(path))
@@ -534,12 +535,12 @@ void PythonPlugin::setMainAppInterface(ccMainAppInterface *app)
     auto *gilReleaser = new py::gil_scoped_release();
     // While plugins are loading it's not possible to run any python code
     Q_EMIT m_interp.executionStarted();
-    m_showRepl->setEnabled(false); // repl is slight harder to handle
+    m_showRepl->setEnabled(false); // repl is slightly harder to handle
     auto *task = new LoadPluginsTask(m_pluginManager, m_settings->pluginsPaths());
-    QObject::connect(task,
+    connect(task,
                      &LoadPluginsTask::finished,
                      this,
-                     [gilReleaser, this]()
+                     [gilReleaser, this]
                      {
                          delete gilReleaser;
                          Q_EMIT m_interp.executionFinished();
@@ -669,8 +670,7 @@ void PythonPlugin::populatePluginSubMenu()
             auto *qAction = new QAction(plugin.actions[0].name);
             if (!plugin.actions[0].icon.is_none())
             {
-                QIcon icon = CreateQIconFromPyObject(plugin.actions[0].icon);
-                bool iconWasSet = SetIconFromPyObject(qAction, plugin.actions[0].icon);
+                const bool iconWasSet = SetIconFromPyObject(qAction, plugin.actions[0].icon);
                 if (!iconWasSet)
                 {
                     SetIconFromPyObject(qAction, plugin.mainIcon);

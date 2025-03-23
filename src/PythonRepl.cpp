@@ -142,7 +142,7 @@ bool KeyPressEater::eventFilter(QObject *obj, QEvent *event)
 KeyPressEater::KeyPressEater(PythonRepl *repl, QObject *parent) : QObject(parent), m_repl(repl) {}
 
 PythonRepl::PythonRepl(PythonInterpreter *interpreter, QMainWindow *parent)
-    : m_interpreter(interpreter), QMainWindow(parent), m_ui(new Ui_PythonREPL), m_state()
+    : QMainWindow(parent), m_ui(new Ui_PythonREPL), m_interpreter(interpreter)
 {
     m_buf.reserve(255);
 
