@@ -63,9 +63,18 @@ void define_ccViewPortParameters(py::module &m)
         .def("getViewDir", &ccViewportParameters::getViewDir)
         .def("getUpDir", &ccViewportParameters::getUpDir)
         .def("getRotationCenter", &ccViewportParameters::getRotationCenter)
-        .def("computeDistanceToHalfWidthRation",
+        .def("computeDistanceToHalfWidthRatio",
              &ccViewportParameters::computeDistanceToHalfWidthRatio)
-        .def("computeDistanceToWidthRatio", &ccViewportParameters::computeDistanceToWidthRatio)
-        .def("computeWidthAtFocalDist", &ccViewportParameters::computeWidthAtFocalDist)
-        .def("computePixelSize", &ccViewportParameters::computePixelSize);
+        .def("computeDistanceToWidthRatio",
+             &ccViewportParameters::computeDistanceToWidthRatio,
+             "screenWidth"_a,
+             "screenHeight"_a)
+        .def("computeWidthAtFocalDist",
+             &ccViewportParameters::computeWidthAtFocalDist,
+             "screenWidth"_a,
+             "screenHeight"_a)
+        .def("computePixelSize",
+             &ccViewportParameters::computePixelSize,
+             "screenWidth"_a,
+             "screenHeight"_a);
 }

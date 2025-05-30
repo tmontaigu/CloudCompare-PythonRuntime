@@ -84,6 +84,7 @@ void define_GeometricalAnalysisTools(py::module &cccorelib)
                                         "center"_a,
                                         "radius"_a,
                                         "rms"_a,
+                                        "useInputRadius"_a = false,
                                         "progressCb"_a = nullptr,
                                         "confidence"_a = 0.99,
                                         "seed"_a = 0);
