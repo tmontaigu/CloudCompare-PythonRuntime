@@ -192,7 +192,8 @@ void define_ccPointCloud(py::module &m)
         .def("computeNormalsWithGrids",
              &ccPointCloud::computeNormalsWithGrids,
              "minTriangleAngle_deg"_a = 1.0,
-             "pDlg"_a = nullptr)
+             "pDlg"_a = nullptr,
+             "preferredOrientation"_a = ccNormalVectors::Orientation::UNDEFINED)
         .def("orientNormalsTowardViewPoint",
              &ccPointCloud::orientNormalsTowardViewPoint,
              "VP"_a,
