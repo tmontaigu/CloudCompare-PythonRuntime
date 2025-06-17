@@ -172,9 +172,9 @@ void define_qcc_db(py::module &m)
     define_ccWaveform(m);
     define_ccRasterGrid(m);
     define_ccGenericPointCloud(m);
+    define_ccNormalVectors(m);
     define_ccPointCloud(m);
     define_ccPolyline(m);
-    define_ccNormalVectors(m);
 
     define_ccLog(m);
     define_ccProgressDialog(m);
