@@ -31,7 +31,7 @@ if(PYCC_IS_MASTER_PROJECT)
     GIT_REPOSITORY https://github.com/CloudCompare/CloudCompare
     GIT_SUBMODULES "libs/qCC_db/extern/CCCoreLib;libs/CCAppCommon/QDarkStyleSheet"
     GIT_PROGRESS ON
-    GIT_TAG 4891ce3d0c957e3a49ba768a6f33e56d648c0ad3
+    GIT_TAG 8894a756846e69b28e6e3d8ce98da91edde48eb5
     GIT_SHALLOW OFF
     GIT_SUBMODULES
   )

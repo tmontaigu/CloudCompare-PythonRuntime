@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: 4891ce3d0c957e3a49ba768a6f33e56d648c0ad3
+          ref: 8894a756846e69b28e6e3d8ce98da91edde48eb5
           submodules: recursive
 
       - name: Clone PythonRuntime
@@ -80,7 +80,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: 4891ce3d0c957e3a49ba768a6f33e56d648c0ad3
+          ref: 8894a756846e69b28e6e3d8ce98da91edde48eb5
           submodules: recursive
 
       - name: Clone PythonRuntime
@@ -148,7 +148,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: 4891ce3d0c957e3a49ba768a6f33e56d648c0ad3
+          ref: 8894a756846e69b28e6e3d8ce98da91edde48eb5
           submodules: recursive
 
       - name: Clone PythonRuntime
