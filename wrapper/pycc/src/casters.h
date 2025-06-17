@@ -81,7 +81,7 @@ template <> struct type_caster<QByteArray>
         ssize_t length;
         if (PyBytes_AsStringAndSize(src.ptr(), &buffer, &length) == -1)
         {
-            std::runtime_error("Unable to extract bytes contents!");
+            throw std::runtime_error("Unable to extract bytes contents!");
         }
         value = QByteArray(buffer, length);
         return true;
