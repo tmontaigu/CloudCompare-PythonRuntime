@@ -36,7 +36,7 @@ jobs:
       - name: Install Dependencies
         run: |
           conda install -c conda-forge qt=5.15.* ninja doxygen
-          pip install pytest pybind11 numpy
+          pip install pytest pybind11<3.0 numpy
 
       - name: Configure MSVC console
         uses: ilammy/msvc-dev-cmd@v1
@@ -168,7 +168,7 @@ jobs:
           brew install qt@5 ninja
           echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@5)" >> $GITHUB_ENV
           pip install --upgrade pip
-          pip install pytest pybind11
+          pip install pytest pybind11<3.0
 
       - name: Configure CMake
         run: |
