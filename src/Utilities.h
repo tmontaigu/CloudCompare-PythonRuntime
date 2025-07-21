@@ -56,7 +56,13 @@ template <enum ccLog::MessageLevelFlags level> class ccLogger
         return *this;
     }
 
-    inline ccLogger &operator<<(int value)
+    inline ccLogger &operator<<(const int value)
+    {
+        m_message += QString::number(value);
+        return *this;
+    }
+
+    inline ccLogger &operator<<(const size_t value)
     {
         m_message += QString::number(value);
         return *this;

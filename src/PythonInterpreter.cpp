@@ -67,11 +67,7 @@ bool PythonInterpreter::executeFile(const std::string &filepath)
     bool success{true};
     try
     {
-        const auto movePolicy = py::return_value_policy::move;
-        py::object newStdout = py::cast(ccConsoleOutput(), movePolicy);
-        py::object newStderr = py::cast(ccConsoleOutput(), movePolicy);
-        PyStdErrOutStreamRedirect r{newStdout, newStderr};
-
+        PyStdErrOutStreamRedirect guard;
         py::dict globals = CreateGlobals();
         globals["__file__"] = filepath;
         py::eval_file(filepath, globals);
@@ -98,16 +94,16 @@ void PythonInterpreter::executeCodeString(const std::string &code,
 
     Q_EMIT executionStarted();
     m_isExecuting = true;
-    const QColor orange(255, 100, 0);
+    constexpr QColor orange(255, 100, 0);
 
     try
     {
         if (output != nullptr)
         {
-            const auto movePolicy = py::return_value_policy::move;
+            constexpr auto movePolicy = py::return_value_policy::move;
             py::object newStdout = py::cast(ListWidgetConsole(output), movePolicy);
             py::object newStderr = py::cast(ListWidgetConsole(output, orange), movePolicy);
-            PyStdErrOutStreamRedirect redirect{newStdout, newStderr};
+            PyStdErrOutStreamRedirect redirect{std::move(newStdout), std::move(newStderr)};
             py::eval<mode>(code, state.globals, state.locals);
         }
         else

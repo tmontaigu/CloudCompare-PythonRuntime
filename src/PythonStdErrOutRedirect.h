@@ -20,7 +20,8 @@
 
 #include <pybind11/pybind11.h>
 
-#include <utility>
+#include "Utilities.h"
+#include "ccLog.h"
 
 namespace py = pybind11;
 
@@ -38,10 +39,8 @@ namespace py = pybind11;
 // largely taken from https://github.com/pybind/pybind11/issues/1622
 class PyStdErrOutStreamRedirect
 {
-    py::object m_stdout;
-    py::object m_stderr;
-    py::object m_stdout_buffer;
-    py::object m_stderr_buffer;
+    py::object m_savedStdout;
+    py::object m_savedStderr;
 
   public:
     /// Default constructor
@@ -50,13 +49,11 @@ class PyStdErrOutStreamRedirect
     PyStdErrOutStreamRedirect()
     {
         auto sysm = py::module::import("sys");
-        m_stdout = sysm.attr("stdout");
-        m_stderr = sysm.attr("stderr");
+        m_savedStdout = sysm.attr("stdout");
+        m_savedStderr = sysm.attr("stderr");
         auto ccConsoleOutput = py::module::import("ccinternals").attr("ccConsoleOutput");
-        m_stdout_buffer = ccConsoleOutput();
-        m_stderr_buffer = ccConsoleOutput();
-        sysm.attr("stdout") = m_stdout_buffer;
-        sysm.attr("stderr") = m_stderr_buffer;
+        sysm.attr("stdout") = ccConsoleOutput();
+        sysm.attr("stderr") = ccConsoleOutput();
     }
 
     /// Creates a stream redirection
@@ -67,15 +64,14 @@ class PyStdErrOutStreamRedirect
     ///
     /// \param stdout_obj python object to redirect *stdout* to
     /// \param stderr_obj python object to redirect *stderr* to
-    PyStdErrOutStreamRedirect(py::object stdout_obj, py::object stderr_obj)
+    PyStdErrOutStreamRedirect(py::object &&stdout_obj, py::object &&stderr_obj)
     {
         auto sysm = py::module::import("sys");
-        m_stdout = sysm.attr("stdout");
-        m_stderr = sysm.attr("stderr");
-        m_stdout_buffer = std::move(stdout_obj);
-        m_stderr_buffer = std::move(stderr_obj);
-        sysm.attr("stdout") = m_stdout_buffer;
-        sysm.attr("stderr") = m_stderr_buffer;
+        m_savedStdout = sysm.attr("stdout");
+        m_savedStderr = sysm.attr("stderr");
+
+        sysm.attr("stdout") = stdout_obj;
+        sysm.attr("stderr") = stderr_obj;
     }
 
     ~PyStdErrOutStreamRedirect() noexcept
@@ -83,11 +79,12 @@ class PyStdErrOutStreamRedirect
         try
         {
             const auto sysm = py::module::import("sys");
-            sysm.attr("stdout") = m_stdout;
-            sysm.attr("stderr") = m_stderr;
+            sysm.attr("stdout") = m_savedStdout;
+            sysm.attr("stderr") = m_savedStderr;
         }
         catch (const std::exception &)
         {
+            plgWarning() << "PyStdErrOutStreamRedirect: failed to restore sys.stdout & sys.stderr";
         }
     }
 };
