@@ -43,6 +43,7 @@ void define_ccMesh(py::module &m)
         .def("setAssociatedCloud",
              &ccMesh::setAssociatedCloud,
              "cloud"_a,
+             "autoRemoveFlags"_a = true,
              py::keep_alive<1, 2>() /* Keep the cloud (2) alive while the mesh (1) is alive */)
         .def("addTriangle",
              &ccMesh::addTriangle,
