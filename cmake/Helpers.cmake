@@ -12,6 +12,12 @@ function(getset_python_base_prefix)
 endfunction()
 
 function(copy_python_env INSTALL_DIR)
+  string(REPLACE "\\" "/" PYTHON_BASE_PREFIX "${PYTHON_BASE_PREFIX}")
+  string(REPLACE "\\" "/" Python_SITELIB "${Python_SITELIB}")
+  string(REPLACE "\\" "/" Python_STDARCH "${Python_STDARCH}")
+  string(REPLACE "\\" "/" Python_STDLIB "${Python_STDLIB}")
+  string(REPLACE "\\" "/" Python_RUNTIME_LIBRARY_DIRS "${Python_RUNTIME_LIBRARY_DIRS}")
+
   message(
     DEBUG
     "ENV copy:
