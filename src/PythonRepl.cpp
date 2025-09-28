@@ -176,7 +176,7 @@ void PythonRepl::setupUI()
 
     codeEdit()->installEventFilter(keyPressEater);
     codeEdit()->resize(codeEdit()->width(), 20);
-    codeEdit()->setTabStopWidth(codeEdit()->fontMetrics().width(' ') * 8);
+    codeEdit()->setTabStopDistance(codeEdit()->fontMetrics().horizontalAdvance(' ') * 8);
 
     QFont font("Monospace");
     font.setStyleHint(QFont::TypeWriter);

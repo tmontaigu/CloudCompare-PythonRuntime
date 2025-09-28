@@ -18,16 +18,14 @@
 #include "PythonInterpreter.h"
 #include "Resources.h"
 
-#include <QDialog>
 #include <QDir>
 #include <QIcon>
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QPlainTextEdit>
 #include <QProcess>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QTableWidgetItem>
-#include <QTextCodec>
 #include <QtGlobal>
 
 #include <ccLog.h>
@@ -292,12 +290,12 @@ void PackageManager::refreshInstalledPackagesList()
     m_pythonProcess->setArguments(arguments);
 
     QEventLoop loop;
-    QObject::connect(
+    connect(
         m_pythonProcess,
-        static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
+        &QProcess::finished,
         &loop,
         &QEventLoop::quit);
-    QObject::connect(m_pythonProcess, &QProcess::errorOccurred, &loop, &QEventLoop::quit);
+    connect(m_pythonProcess, &QProcess::errorOccurred, &loop, &QEventLoop::quit);
     m_pythonProcess->start(QIODevice::ReadOnly);
     if (m_pythonProcess->state() != QProcess::ProcessState::Starting &&
         m_pythonProcess->state() != QProcess::ProcessState::Running)
@@ -316,11 +314,11 @@ void PackageManager::refreshInstalledPackagesList()
     }
 
     const QString output =
-        QTextCodec::codecForName("utf-8")->toUnicode(m_pythonProcess->readAllStandardOutput());
+       QString::fromUtf8(m_pythonProcess->readAllStandardOutput());
 
-    const QVector<QStringRef> lines = output.splitRef("\n");
+    const QStringList lines = output.split("\n");
 
-    const QRegExp regex(R"((\S*)(?:\s*)(\S*)(?:\s*)(\S?))");
+    const QRegularExpression regex(R"((\S*)(?:\s*)(\S*)(?:\s*)(\S?))");
 
     // First line is a header, second is separator
     // and last one seems to always be empty
@@ -333,15 +331,15 @@ void PackageManager::refreshInstalledPackagesList()
 
     for (int i{2}; i < lines.size() - 1; ++i)
     {
-        const QStringRef &currentLine = lines[i];
+        const QString &currentLine = lines[i];
 
         // Do it this way to avoid an extra allocation
-        int pos = regex.indexIn(currentLine.toString());
-        if (pos != -1)
+       const  QRegularExpressionMatch match = regex.match(currentLine);
+        if (match.hasMatch())
         {
             for (int j = 1; j < 3; ++j)
             {
-                const QString lol = regex.cap(j);
+                const QString lol = match.captured(j);
                 auto *thing = new QTableWidgetItem(lol);
                 if (j != 1)
                 {
@@ -353,7 +351,7 @@ void PackageManager::refreshInstalledPackagesList()
     }
 
     const QString errorOutput =
-        QTextCodec::codecForName("utf-8")->toUnicode(m_pythonProcess->readAllStandardError());
+        QString::fromUtf8(m_pythonProcess->readAllStandardError());
 
     if (!errorOutput.isEmpty())
     {
@@ -469,13 +467,12 @@ void PackageManager::executeCommand(const QStringList &arguments)
     m_outputDialog->clear();
     m_pythonProcess->setArguments(arguments);
     m_pythonProcess->start(QIODevice::ReadOnly);
-    QTextCodec *utf8Codec = QTextCodec::codecForName("utf-8");
 
     while (m_pythonProcess->state() != QProcess::ProcessState::NotRunning)
     {
         if (m_pythonProcess->waitForReadyRead())
         {
-            const QString output = utf8Codec->toUnicode(m_pythonProcess->readAll());
+            const QString output = QString::fromUtf8(m_pythonProcess->readAll());
             m_outputDialog->appendPlainText(output);
             QApplication::processEvents();
         }

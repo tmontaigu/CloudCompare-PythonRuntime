@@ -41,7 +41,7 @@ struct Version
     {
     }
 
-    explicit Version(const QStringRef &versionStr);
+    explicit Version(const QString &versionStr);
 
     /// Checks whether the Python version number described by
     /// this instance is compatible with the Python version the plugin
