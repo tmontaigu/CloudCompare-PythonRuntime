@@ -7,6 +7,9 @@ include(cmake/CloudCompareVariables.cmake)
 
 option(PLUGIN_PYTHON "Install Python Plugin" OFF)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 if(PLUGIN_PYTHON)
   project(PythonRuntime)
 

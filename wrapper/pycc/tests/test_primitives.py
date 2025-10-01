@@ -2,6 +2,19 @@ import pycc
 import cccorelib
 
 
+def test_cc_disc():
+    disc = pycc.ccDisc(3.0)
+    assert disc.getTypeName() == "Disc"
+    assert disc.getName() == "Disc"
+    assert disc.getRadius() == 3.0
+    disc.setRadius(10.0)
+    assert disc.getRadius() == 10.0
+
+    disc2 = pycc.ccDisc(5.0, name="Disc2")
+    assert disc2.getTypeName() == "Disc"
+    assert disc2.getName() == "Disc2"
+
+
 def test_cc_sphere():
     sphere = pycc.ccSphere(3.0)
     assert sphere.getTypeName() == "Sphere"
