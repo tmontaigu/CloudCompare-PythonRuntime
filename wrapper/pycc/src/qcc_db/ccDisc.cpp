@@ -52,13 +52,13 @@ void define_ccDisc(py::module &m)
         disc = pycc.ccDisc(3.0)
         disc2 = pycc.ccDisc(5.0, name="Disc2")
 )doc")
-		.def(
-			py::init<PointCoordinateType, const ccGLMatrix *, QString, unsigned, unsigned>(),
-			"radius"_a,
-			"transMat"_a = nullptr,
-			"name"_a = QString("Disc"),
-			"precision"_a = 24,
-			"uniqueId"_a = []() { return ccUniqueIDGenerator::InvalidUniqueID; }())
-		.def("getRadius", &ccDisc::getRadius)
-		.def("setRadius", &ccDisc::setRadius, "radius"_a);
+        .def(
+            py::init<PointCoordinateType, const ccGLMatrix *, QString, unsigned, unsigned>(),
+            "radius"_a,
+            "transMat"_a = nullptr,
+            "name"_a = QString("Disc"),
+            "precision"_a = 24,
+            "uniqueId"_a = []() { return ccUniqueIDGenerator::InvalidUniqueID; }())
+        .def("getRadius", &ccDisc::getRadius)
+        .def("setRadius", &ccDisc::setRadius, "radius"_a);
 }
