@@ -132,8 +132,31 @@ void define_someQtThings(py::module &m)
              });
 
     py::class_<QPointF>(m, "QPointF");
-    // TODO: https://doc.qt.io/qt-5/qt.html#CursorShape-enum
-    py::enum_<Qt::CursorShape>(m, "QtCursorShape");
+    py::enum_<Qt::CursorShape>(m, "QtCursorShape")
+        .value("ArrowCursor", Qt::CursorShape::ArrowCursor)
+        .value("UpArrowCursor", Qt::CursorShape::UpArrowCursor)
+        .value("CrossCursor", Qt::CursorShape::CrossCursor)
+        .value("WaitCursor", Qt::CursorShape::WaitCursor)
+        .value("IBeamCursor", Qt::CursorShape::IBeamCursor)
+        .value("SizeVerCursor", Qt::CursorShape::SizeVerCursor)
+        .value("SizeHorCursor", Qt::CursorShape::SizeHorCursor)
+        .value("SizeBDiagCursor", Qt::CursorShape::SizeBDiagCursor)
+        .value("SizeFDiagCursor", Qt::CursorShape::SizeFDiagCursor)
+        .value("SizeAllCursor", Qt::CursorShape::SizeAllCursor)
+        .value("BlankCursor", Qt::CursorShape::BlankCursor)
+        .value("SplitVCursor", Qt::CursorShape::SplitVCursor)
+        .value("SplitHCursor", Qt::CursorShape::SplitHCursor)
+        .value("PointingHandCursor", Qt::CursorShape::PointingHandCursor)
+        .value("ForbiddenCursor", Qt::CursorShape::ForbiddenCursor)
+        .value("WhatsThisCursor", Qt::CursorShape::WhatsThisCursor)
+        .value("BusyCursor", Qt::CursorShape::BusyCursor)
+        .value("OpenHandCursor", Qt::CursorShape::OpenHandCursor)
+        .value("ClosedHandCursor", Qt::CursorShape::ClosedHandCursor)
+        .value("DragCopyCursor", Qt::CursorShape::DragCopyCursor)
+        .value("DragLinkCursor", Qt::CursorShape::DragLinkCursor)
+        .value("LastCursor", Qt::CursorShape::LastCursor)
+        .value("BitmapCursor", Qt::CursorShape::BitmapCursor)
+        .value("CustomCursor", Qt::CursorShape::CustomCursor);
 }
 
 void define_pycc(py::module &m)
