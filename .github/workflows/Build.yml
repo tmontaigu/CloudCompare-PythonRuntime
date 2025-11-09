@@ -156,12 +156,6 @@ jobs:
         with:
           path: 'plugins/private/CloudCompare-PythonRuntime'
 
-      - name : setup-python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.14'
-          cache: 'pip'
-
       - name: Install Dependencies
         run: |
           brew install qt@6 ninja
