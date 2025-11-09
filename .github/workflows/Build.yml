@@ -156,18 +156,21 @@ jobs:
         with:
           path: 'plugins/private/CloudCompare-PythonRuntime'
 
-      - name: Brew Install Dependencies
+      - name : setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+          cache: 'pip'
+
+      - name: Install Dependencies
         run: |
           brew install qt6 ninja
-
-      - name: Pip Install Dependencies
-        run: |
+          echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@6)" >> $GITHUB_ENV
           pip install --upgrade pip
-          pip install pytest pybind11<3.0
+          pip install pytest "pybind11<3.0"
 
       - name: Configure CMake
         run: |
-          echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@6)" >> $GITHUB_ENV
           mkdir build
           cmake \
             --log-level=debug \
@@ -186,6 +189,6 @@ jobs:
       - name: Install
         run: sudo cmake --install build
 
-#      - name: Run Tests
-#        run: |
-#          cmake --build build --target pytest
+      - name: Run Tests
+        run: |
+          cmake --build build --target pytest
