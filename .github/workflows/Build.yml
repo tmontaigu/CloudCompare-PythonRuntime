@@ -158,7 +158,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          brew install qt@6 ninja
+          brew install qt6 ninja
           echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@6)" >> $GITHUB_ENV
           pip install --upgrade pip
           pip install pytest pybind11<3.0
