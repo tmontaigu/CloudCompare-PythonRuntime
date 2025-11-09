@@ -108,7 +108,7 @@ jobs:
           python3 -m venv venv
           source venv/bin/activate
           python -m pip install --upgrade pip
-          python -m pip install "pytest<3.0"
+          python -m pip install pytest
           echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@6)" >> $GITHUB_ENV
 
       - name: pip install cccorelib
