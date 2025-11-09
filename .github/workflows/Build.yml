@@ -156,12 +156,17 @@ jobs:
         with:
           path: 'plugins/private/CloudCompare-PythonRuntime'
 
-      - name: Install Dependencies
+      - name: Brew Install Dependencies
         run: |
           brew install qt6 ninja
-#          echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@6)" >> $GITHUB_ENV
-#          pip install --upgrade pip
-#          pip install pytest pybind11<3.0
+          echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@6)" >> $GITHUB_ENV
+          pip install --upgrade pip
+          pip install pytest pybind11<3.0
+
+      - name: Pip Install Dependencies
+        run: |
+          pip install --upgrade pip
+          pip install pytest pybind11<3.0
 
       - name: Configure CMake
         run: |
