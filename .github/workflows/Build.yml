@@ -35,7 +35,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          conda install -c conda-forge qt=5.15.* ninja doxygen
+          conda install -c conda-forge qt>=6.9.* ninja doxygen
           pip install pytest pybind11<3.0 numpy
 
       - name: Configure MSVC console
@@ -92,7 +92,7 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt install -y build-essential cmake ninja-build xvfb doxygen graphviz
-          sudo apt install -y libqt5svg5-dev libqt5opengl5-dev qtbase5-dev qttools5-dev qttools5-dev-tools pybind11-dev
+          sudo apt install -y qt6-base-dev qt6-svg-dev qt6-tools-dev qt6-tools-dev-tools pybind11-dev
           python3 -m pip install -r plugins/private/CloudCompare-PythonRuntime/requirements-dev.txt
 
       - name: Configure CMake
@@ -165,8 +165,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          brew install qt@5 ninja
-          echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@5)" >> $GITHUB_ENV
+          brew install qt@6 ninja
+          echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@6)" >> $GITHUB_ENV
           pip install --upgrade pip
           pip install pytest pybind11<3.0
 
