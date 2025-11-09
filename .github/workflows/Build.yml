@@ -159,9 +159,6 @@ jobs:
       - name: Brew Install Dependencies
         run: |
           brew install qt6 ninja
-          echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@6)" >> $GITHUB_ENV
-          pip install --upgrade pip
-          pip install pytest pybind11<3.0
 
       - name: Pip Install Dependencies
         run: |
@@ -170,6 +167,7 @@ jobs:
 
       - name: Configure CMake
         run: |
+          echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@6)" >> $GITHUB_ENV
           mkdir build
           cmake \
             --log-level=debug \
