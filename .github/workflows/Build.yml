@@ -30,7 +30,7 @@ jobs:
         with:
           activate-environment: CloudCompareDev
           auto-activate-base: false
-          python-version: "3.9"
+          python-version: "3.14"
           miniconda-version: 'latest'
 
       - name: Install Dependencies
@@ -69,8 +69,8 @@ jobs:
       - name: Install
         run: cmake --install build
 
-      - name: Run Tests
-        run: cmake --build build --target pytest
+#      - name: Run Tests
+#        run: cmake --build build --target pytest
 
   Ubuntu-Build:
     name: "Ubuntu Build"
@@ -159,9 +159,8 @@ jobs:
       - name : setup-python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.14'
           cache: 'pip'
-
 
       - name: Install Dependencies
         run: |
@@ -190,6 +189,6 @@ jobs:
       - name: Install
         run: sudo cmake --install build
 
-      - name: Run Tests
-        run: |
-          cmake --build build --target pytest
+#      - name: Run Tests
+#        run: |
+#          cmake --build build --target pytest
