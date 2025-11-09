@@ -19,12 +19,12 @@ jobs:
         with:
           activate-environment: CloudCompareDev
           auto-activate-base: false
-          python-version: "3.9"
+          python-version: "3.14"
           miniconda-version: 'latest'
 
       - name: Install Dependencies
         run: |
-          conda install -c conda-forge qt=5.12.*
+          conda install -c conda-forge qt=6.9.*
           python -m pip install --upgrade pip
           pip install pytest
 
@@ -104,12 +104,12 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          brew install qt@5 ninja
+          brew install qt@6 ninja
           python3 -m venv venv
           source venv/bin/activate
           python -m pip install --upgrade pip
-          python -m pip install pytest
-          echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@5)" >> $GITHUB_ENV
+          python -m pip install "pytest<3.0"
+          echo "CMAKE_PREFIX_PATH=$(brew --prefix qt@6)" >> $GITHUB_ENV
 
       - name: pip install cccorelib
         working-directory: "./wrapper"

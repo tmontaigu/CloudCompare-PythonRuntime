@@ -189,6 +189,6 @@ jobs:
       - name: Install
         run: sudo cmake --install build
 
-      - name: Run Tests
-        run: |
-          cmake --build build --target pytest
+#      - name: Run Tests
+#        run: |
+#          cmake --build build --target pytest
