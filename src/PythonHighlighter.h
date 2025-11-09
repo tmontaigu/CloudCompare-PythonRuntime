@@ -22,8 +22,8 @@
 #ifndef PYTHON_HIGHLIGHTER_H
 #define PYTHON_HIGHLIGHTER_H
 
-#include <QSyntaxHighlighter>
 #include <QRegularExpression>
+#include <QSyntaxHighlighter>
 
 class ColorScheme;
 

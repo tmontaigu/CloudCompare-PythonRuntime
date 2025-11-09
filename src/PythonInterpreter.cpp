@@ -44,7 +44,8 @@ static py::dict CreateGlobals()
 {
     py::dict globals;
     globals["__name__"] = "__main__";
-    // TODO Someday we should require pybind11 > 2.6 and use py::detail::ensure_builtins_in_globals ?
+    // TODO Someday we should require pybind11 > 2.6 and use py::detail::ensure_builtins_in_globals
+    // ?
     globals["__builtins__"] = PyEval_GetBuiltins();
     return globals;
 }
