@@ -550,7 +550,7 @@ void PythonEditor::readSettings()
     const QByteArray geometry = settings.value("geometry", QByteArray()).toByteArray();
     if (geometry.isEmpty())
     {
-        const QRect availableGeometry = this->screen()->availableGeometry();;
+        const QRect availableGeometry = this->screen()->availableGeometry();
         resize(availableGeometry.width() / 3, availableGeometry.height() / 2);
         move((availableGeometry.width() - width()) / 2,
              (availableGeometry.height() - height()) / 2);

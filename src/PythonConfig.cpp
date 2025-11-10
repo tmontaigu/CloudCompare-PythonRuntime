@@ -22,9 +22,9 @@
 #include <QDir>
 #include <QMessageBox>
 #include <QProcess>
+#include <QStringView>
 #include <QVector>
 #include <QtGlobal>
-#include <QStringView>
 
 #if !defined(USE_EMBEDDED_MODULES) && defined(Q_OS_WINDOWS)
 static QString WindowsBundledSitePackagesPath()

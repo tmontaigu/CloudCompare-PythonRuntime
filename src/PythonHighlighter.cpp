@@ -204,10 +204,13 @@ bool PythonHighlighter::matchMultiLine(const QString &text, const HighlightingRu
     else
     {
         QRegularExpressionMatch match = rule.pattern.match(text);
-        if (match.hasMatch()) {
+        if (match.hasMatch())
+        {
             start = match.capturedStart(0);
             add = match.capturedLength(0);
-        } else {
+        }
+        else
+        {
             start = -1;
             add = 0;
         }

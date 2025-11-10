@@ -290,11 +290,7 @@ void PackageManager::refreshInstalledPackagesList()
     m_pythonProcess->setArguments(arguments);
 
     QEventLoop loop;
-    connect(
-        m_pythonProcess,
-        &QProcess::finished,
-        &loop,
-        &QEventLoop::quit);
+    connect(m_pythonProcess, &QProcess::finished, &loop, &QEventLoop::quit);
     connect(m_pythonProcess, &QProcess::errorOccurred, &loop, &QEventLoop::quit);
     m_pythonProcess->start(QIODevice::ReadOnly);
     if (m_pythonProcess->state() != QProcess::ProcessState::Starting &&
@@ -313,8 +309,7 @@ void PackageManager::refreshInstalledPackagesList()
         return;
     }
 
-    const QString output =
-       QString::fromUtf8(m_pythonProcess->readAllStandardOutput());
+    const QString output = QString::fromUtf8(m_pythonProcess->readAllStandardOutput());
 
     const QStringList lines = output.split("\n");
 
@@ -334,7 +329,7 @@ void PackageManager::refreshInstalledPackagesList()
         const QString &currentLine = lines[i];
 
         // Do it this way to avoid an extra allocation
-       const  QRegularExpressionMatch match = regex.match(currentLine);
+        const QRegularExpressionMatch match = regex.match(currentLine);
         if (match.hasMatch())
         {
             for (int j = 1; j < 3; ++j)
@@ -350,8 +345,7 @@ void PackageManager::refreshInstalledPackagesList()
         }
     }
 
-    const QString errorOutput =
-        QString::fromUtf8(m_pythonProcess->readAllStandardError());
+    const QString errorOutput = QString::fromUtf8(m_pythonProcess->readAllStandardError());
 
     if (!errorOutput.isEmpty())
     {
