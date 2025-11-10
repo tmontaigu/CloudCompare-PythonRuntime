@@ -64,7 +64,7 @@ bool KeyPressEater::eventFilter(QObject *obj, QEvent *event)
             // Try to be smart, create a new line if the python code will need one
 
             const int lastCharPos = m_repl->codeEdit()->document()->characterCount() - 2;
-            if (m_repl->codeEdit()->document()->characterAt(lastCharPos) == ":")
+            if (m_repl->codeEdit()->document()->characterAt(lastCharPos) == QChar(':'))
             {
                 m_repl->codeEdit()->appendPlainText(continuationDots);
                 return true;
