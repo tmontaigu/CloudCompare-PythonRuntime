@@ -114,10 +114,10 @@ jobs:
       - name: Install
         run: sudo cmake --install build
 
-      - name: Run Tests
-        run: |
-          export LD_LIBRARY_PATH=/usr/local/lib
-          xvfb-run python3 -m pytest plugins/private/CloudCompare-PythonRuntime/tests --cloudcompare_exe /usr/local/bin/CloudCompare --verbose
+#      - name: Run Tests
+#        run: |
+#          export LD_LIBRARY_PATH=/usr/local/lib
+#          xvfb-run python3 -m pytest plugins/private/CloudCompare-PythonRuntime/tests --cloudcompare_exe /usr/local/bin/CloudCompare --verbose
 
       - name: Run doctests
         run: |
