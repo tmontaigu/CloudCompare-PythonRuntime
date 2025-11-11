@@ -28,13 +28,14 @@
 #include <QMessageBox>
 
 #include <ccLog.h>
+#include <QProcess>
 
 #ifdef Q_OS_LINUX
 #include <cstdio>
 #include <dlfcn.h>
 #endif
 
-// seems like gcc defines macro with these names
+// it seems like gcc defines macro with these names
 #undef major
 #undef minor
 
@@ -211,8 +212,7 @@ void PythonInterpreter::initialize(const PythonConfig &config)
         }
     }
 #endif
-    if (config.type() != PythonConfig::Type::System)
-    {
+    if (config.type() != PythonConfig::Type::System) {
         // We use PEP 0587 to init the interpreter.
         // The changes introduced in this PEP allows to handle the error
         // when the interpreter could not be initialized.
@@ -226,12 +226,17 @@ void PythonInterpreter::initialize(const PythonConfig &config)
         PyStatus status;
 
         PyConfig pyConfig;
+        // I think, in theory, we should use PyConfig_InitIsolatedConfig
+        // byt non-isolated config is easier to setup
         PyConfig_InitPythonConfig(&pyConfig);
-        pyConfig.isolated = 1;
 
-        status = PyConfig_SetString(&pyConfig, &pyConfig.home, m_config.pythonHome());
-        if (PyStatus_Exception(status))
-        {
+        const QString qPythonExecutable = config.pythonExecutable();
+        const wchar_t* pythonExecutable = QStringToWcharArray(qPythonExecutable);
+        status = PyConfig_SetString(&pyConfig, &pyConfig.executable,
+                                    pythonExecutable);
+        delete[] pythonExecutable;
+
+        if (PyStatus_Exception(status)) {
             PyConfig_Clear(&pyConfig);
             throw std::runtime_error(status.err_msg);
         }
@@ -243,9 +248,15 @@ void PythonInterpreter::initialize(const PythonConfig &config)
             throw std::runtime_error(status.err_msg);
         }
 
-        status = PyConfig_Read(&pyConfig);
+        status = PyConfig_SetString(&pyConfig, &pyConfig.home, m_config.pythonHome());
         if (PyStatus_Exception(status))
         {
+            PyConfig_Clear(&pyConfig);
+            throw std::runtime_error(status.err_msg);
+        }
+
+        status = PyConfig_Read(&pyConfig);
+        if (PyStatus_Exception(status)) {
             PyConfig_Clear(&pyConfig);
             throw std::runtime_error(status.err_msg);
         }

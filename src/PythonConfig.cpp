@@ -140,7 +140,7 @@ const wchar_t *PythonConfigPaths::pythonPath() const
 
 //================================================================================
 
-static QString PathToPythonExecutableInEnv(PythonConfig::Type envType, const QString &envRoot)
+static QString PathToPythonExecutableInEnv(const PythonConfig::Type envType, const QString &envRoot)
 {
 #if defined(Q_OS_WINDOWS)
     switch (envType)
@@ -279,7 +279,7 @@ void PythonConfig::initVenv(const QString &venvPrefix)
 
     m_type = Type::Venv;
     m_pythonHome = venvPrefix;
-    m_pythonPath = QString("%1/Lib/site-packages;%3/DLLS;%3/lib").arg(venvPrefix, cfg.home);
+    m_pythonPath = QString("%1/Lib/site-packages;%2/DLLS;%2/Lib").arg(venvPrefix, cfg.home);
     if (cfg.includeSystemSitesPackages)
     {
         m_pythonPath.append(QString("%1/Lib/site-packages").arg(cfg.home));
@@ -288,6 +288,10 @@ void PythonConfig::initVenv(const QString &venvPrefix)
 #if !defined(USE_EMBEDDED_MODULES) && defined(Q_OS_WINDOWS)
     m_pythonPath.append(WindowsBundledSitePackagesPath());
 #endif
+}
+
+QString PythonConfig::pythonExecutable() const {
+    return PathToPythonExecutableInEnv(type(), m_pythonHome);
 }
 
 void PythonConfig::preparePythonProcess(QProcess &pythonProcess) const
