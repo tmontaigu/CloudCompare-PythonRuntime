@@ -83,14 +83,14 @@ function(manage_windows_install)
 endfunction()
 
 function(run_windeployqt TARGET_NAME FILE_PATH)
-  # Force finding Qt5 to have the Qt5::qmake thing later
+  # Force finding Qt6 to have the Qt6::qmake thing later
   find_package(
-    Qt5
+    Qt6
     COMPONENTS Core
     REQUIRED
   )
 
-  get_target_property(QMAKE_EXE Qt5::qmake IMPORTED_LOCATION)
+  get_target_property(QMAKE_EXE Qt6::qmake IMPORTED_LOCATION)
   get_filename_component(QT_BIN_DIR "${QMAKE_EXE}" DIRECTORY)
 
   find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${QT_BIN_DIR}")

@@ -2,6 +2,7 @@
 #define CLOUDCOMPAREPROJECTS_PYPRINTLOGGER_H
 #include <ccLog.h>
 
+#undef slots
 #include <pybind11/pybind11.h>
 
 #include <mutex>

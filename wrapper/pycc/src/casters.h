@@ -195,8 +195,6 @@ template <> struct type_caster<QVariant>
             Q_FALLTHROUGH();
         case QVariant::PointF:
             Q_FALLTHROUGH();
-        case QVariant::RegExp:
-            Q_FALLTHROUGH();
         case QVariant::RegularExpression:
             Q_FALLTHROUGH();
         case QVariant::Hash:
@@ -238,8 +236,6 @@ template <> struct type_caster<QVariant>
         case QVariant::TextLength:
             Q_FALLTHROUGH();
         case QVariant::TextFormat:
-            Q_FALLTHROUGH();
-        case QVariant::Matrix:
             Q_FALLTHROUGH();
         case QVariant::Transform:
             Q_FALLTHROUGH();

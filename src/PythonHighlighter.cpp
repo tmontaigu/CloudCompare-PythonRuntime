@@ -57,7 +57,7 @@ static const QStringList s_Operators = {"=",
                                         "<<"};
 
 // Python braces
-static const QStringList s_Braces = {"\\{", "\\}", "\\(", "\\)", R"([)", R"(])"};
+static const QStringList s_Braces = {"\\{", "\\}", "\\(", "\\)", R"(\[)", R"(\])"};
 
 QString PythonHighlighter::CodeElementName(PythonHighlighter::CodeElement e)
 {
@@ -145,7 +145,7 @@ void PythonHighlighter::initialize()
     m_highlightingRules += HighlightingRule(CodeElement::Definition, R"(\bclass\b\s*(\w+))", 1);
 
     // From '#' until a newline
-    m_highlightingRules += HighlightingRule(CodeElement::Comment, "#[^\\n]*", 0);
+    m_highlightingRules += HighlightingRule(CodeElement::Comment, "#[^\r\n]*", 0);
 
     // Numeric literals
     m_highlightingRules += HighlightingRule(CodeElement::Numbers, "\\b[+-]?[0-9]+[lL]?\\b", 0);
@@ -160,22 +160,18 @@ void PythonHighlighter::highlightPythonBlock(const QString &text)
     if (text.isEmpty())
         return;
 
-    int index = -1;
-
     // Do other syntax formatting
     for (const auto &rule : m_highlightingRules)
     {
-        index = rule.pattern.indexIn(text, 0);
-
-        // We actually want the index of the nth match
-        while (index >= 0)
+        QRegularExpressionMatchIterator i = rule.pattern.globalMatch(text);
+        while (i.hasNext())
         {
-            index = rule.pattern.pos(rule.matchIndex);
-            int length = rule.pattern.cap(rule.matchIndex).length();
+            QRegularExpressionMatch match = i.next();
+            const int index = match.capturedStart(rule.matchIndex);
+            const int length = match.captured(rule.matchIndex).length();
             if (length > 0)
             {
                 setFormat(index, length, rule.format);
-                index = rule.pattern.indexIn(text, index + length);
             }
         }
     }
@@ -196,7 +192,7 @@ inside a multi-line string when this function is finished.
 */
 bool PythonHighlighter::matchMultiLine(const QString &text, const HighlightingRule &rule)
 {
-    int start, add, end, length;
+    int start, add, length;
 
     // If inside triple-single quotes, start at 0
     if (previousBlockState() == rule.matchIndex)
@@ -207,36 +203,45 @@ bool PythonHighlighter::matchMultiLine(const QString &text, const HighlightingRu
     // Otherwise, look for the delimiter on this line
     else
     {
-        start = rule.pattern.indexIn(text);
-        // Move past this match
-        add = rule.pattern.matchedLength();
+        QRegularExpressionMatch match = rule.pattern.match(text);
+        if (match.hasMatch())
+        {
+            start = match.capturedStart(0);
+            add = match.capturedLength(0);
+        }
+        else
+        {
+            start = -1;
+            add = 0;
+        }
     }
 
-    // As long as there's a delimiter match on this line...
     while (start >= 0)
     {
         // Look for the ending delimiter
-        end = rule.pattern.indexIn(text, start + add);
-        // Ending delimiter on this line?
+        QRegularExpressionMatch endMatch = rule.pattern.match(text, start + add);
+        int end = endMatch.hasMatch() ? endMatch.capturedStart(0) : -1;
+
         if (end >= add)
         {
-            length = end - start + add + rule.pattern.matchedLength();
+            // Ending delimiter on this line
+            length = end - start + add + endMatch.capturedLength(0);
             setCurrentBlockState(0);
         }
-        // No; multi-line string
         else
         {
+            // No; multi-line string
             setCurrentBlockState(rule.matchIndex);
             length = text.length() - start + add;
         }
 
-        // Apply formatting
         setFormat(start, length, rule.format);
 
         // Look for the next match
-        start = rule.pattern.indexIn(text, start + length);
+        QRegularExpressionMatch nextMatch = rule.pattern.match(text, start + length);
+        start = nextMatch.hasMatch() ? nextMatch.capturedStart(0) : -1;
+        add = nextMatch.hasMatch() ? nextMatch.capturedLength(0) : 0;
     }
 
-    // Return True if still inside a multi-line string, False otherwise
     return currentBlockState() == rule.matchIndex;
 }

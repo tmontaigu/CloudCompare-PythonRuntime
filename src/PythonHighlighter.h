@@ -22,6 +22,7 @@
 #ifndef PYTHON_HIGHLIGHTER_H
 #define PYTHON_HIGHLIGHTER_H
 
+#include <QRegularExpression>
 #include <QSyntaxHighlighter>
 
 class ColorScheme;
@@ -59,14 +60,14 @@ class PythonHighlighter final : public QSyntaxHighlighter
     struct HighlightingRule
     {
         CodeElement element = CodeElement::End;
-        QRegExp pattern;
+        QRegularExpression pattern;
         QTextCharFormat format;
         int matchIndex = 0;
 
         HighlightingRule() = default;
 
         HighlightingRule(const CodeElement e, const QString &p, const int i)
-            : element(e), pattern(QRegExp(p)), matchIndex(i)
+            : element(e), pattern(QRegularExpression(p)), matchIndex(i)
         {
         }
     };

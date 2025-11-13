@@ -22,7 +22,7 @@
 #include <QDir>
 #include <QMessageBox>
 #include <QProcess>
-#include <QTextCodec>
+#include <QStringView>
 #include <QVector>
 #include <QtGlobal>
 
@@ -36,9 +36,9 @@ static QString WindowsBundledSitePackagesPath()
 
 //================================================================================
 
-Version::Version(const QStringRef &versionStr) : Version()
+Version::Version(const QString &versionStr) : Version()
 {
-    QVector<QStringRef> parts = versionStr.split('.');
+    const QStringList parts = versionStr.split('.');
     if (parts.size() == 3)
     {
         major = parts[0].toUInt();
@@ -63,13 +63,12 @@ static Version GetPythonExeVersion(QProcess &pythonProcess)
     pythonProcess.start(QIODevice::ReadOnly);
     pythonProcess.waitForFinished();
 
-    const QString versionStr =
-        QTextCodec::codecForName("utf-8")->toUnicode(pythonProcess.readAllStandardOutput());
+    const QString versionStr = QString::fromUtf8(pythonProcess.readAllStandardOutput());
 
-    QVector<QStringRef> splits = versionStr.splitRef(" ");
+    const QStringList splits = versionStr.split(" ");
     if (splits.size() == 2 && splits[0].contains("Python"))
     {
-        return Version(splits[1]);
+        return Version(splits.at(1));
     }
     return Version{};
 }
@@ -113,7 +112,7 @@ PyVenvCfg PyVenvCfg::FromFile(const QString &path)
                 }
                 else if (name == "version")
                 {
-                    cfg.version = Version(QStringRef(&value));
+                    cfg.version = Version(value);
                 }
             }
         }
@@ -398,8 +397,7 @@ void PythonConfig::initFromPythonExecutable(const QString &pythonExecutable)
     pythonProcess.start(QIODevice::ReadOnly);
     pythonProcess.waitForFinished();
 
-    const QString result =
-        QTextCodec::codecForName("utf-8")->toUnicode(pythonProcess.readAllStandardOutput());
+    const QString result = QString::fromUtf8(pythonProcess.readAllStandardOutput());
 
     QStringList pathsAndHome = result.split('\n');
 

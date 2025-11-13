@@ -64,7 +64,7 @@ bool KeyPressEater::eventFilter(QObject *obj, QEvent *event)
             // Try to be smart, create a new line if the python code will need one
 
             const int lastCharPos = m_repl->codeEdit()->document()->characterCount() - 2;
-            if (m_repl->codeEdit()->document()->characterAt(lastCharPos) == ":")
+            if (m_repl->codeEdit()->document()->characterAt(lastCharPos) == QChar(':'))
             {
                 m_repl->codeEdit()->appendPlainText(continuationDots);
                 return true;
@@ -176,7 +176,7 @@ void PythonRepl::setupUI()
 
     codeEdit()->installEventFilter(keyPressEater);
     codeEdit()->resize(codeEdit()->width(), 20);
-    codeEdit()->setTabStopWidth(codeEdit()->fontMetrics().width(' ') * 8);
+    codeEdit()->setTabStopDistance(codeEdit()->fontMetrics().horizontalAdvance(' ') * 8);
 
     QFont font("Monospace");
     font.setStyleHint(QFont::TypeWriter);
