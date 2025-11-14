@@ -8,6 +8,7 @@ set(pycc_db_sources
     ${CMAKE_CURRENT_LIST_DIR}/ccColorScalesManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccCone.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccCylinder.cpp
+	${CMAKE_CURRENT_LIST_DIR}/ccDisc.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccDish.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccDrawableObject.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ccGBLSensor.cpp

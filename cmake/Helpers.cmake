@@ -40,13 +40,24 @@ function(copy_python_dll)
     DEBUG
     "Python DLL: = ${Python_RUNTIME_LIBRARY_DIRS}/python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}.dll"
   )
-  install(
-    FILES "${Python_RUNTIME_LIBRARY_DIRS}/python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}.dll"
+  if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+	message(STATUS "Debug build")
+	install(
+	  FILES "${Python_RUNTIME_LIBRARY_DIRS}/python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}_d.dll"
+		  # install the python3 base dll as well because some libs will try to
+		  # find it (PySide and PyQT for example)
+		  "${Python_RUNTIME_LIBRARY_DIRS}/python${Python_VERSION_MAJOR}_d.dll"
+	  DESTINATION ${CLOUDCOMPARE_DEST_FOLDER}
+	)
+  else()
+	install(
+	  FILES "${Python_RUNTIME_LIBRARY_DIRS}/python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}.dll"
           # install the python3 base dll as well because some libs will try to
           # find it (PySide and PyQT for example)
           "${Python_RUNTIME_LIBRARY_DIRS}/python${Python_VERSION_MAJOR}.dll"
-    DESTINATION ${CLOUDCOMPARE_DEST_FOLDER}
-  )
+	  DESTINATION ${CLOUDCOMPARE_DEST_FOLDER}
+	)
+  endif()
 endfunction()
 
 function(manage_windows_install)

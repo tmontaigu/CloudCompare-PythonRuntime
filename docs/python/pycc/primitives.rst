@@ -9,6 +9,14 @@ __________________
     :undoc-members:
     :show-inheritance:
 
+ccDisc
+________
+
+.. autoclass:: pycc.ccDisc
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 ccSphere
 ________
 
