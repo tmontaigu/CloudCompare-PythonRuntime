@@ -1,0 +1,85 @@
+name: "CodeQL"
+
+on:
+  push:
+    branches: [ 'master' ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ 'master' ]
+  schedule:
+    - cron: '1 16 * * 1'
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'cpp' ]
+
+    env:
+      COMPILER: GCC
+      CC: gcc
+      CXX: g++
+
+    steps:
+      - name: Clone CloudCompare
+        uses: actions/checkout@v4
+        with:
+          repository: 'CloudCompare/CloudCompare'
+          ref: fc2fe88a33ca9e406aab43b3bda6a9c6d38a2313
+          submodules: recursive
+
+      - name: Clone PythonRuntime
+        uses: actions/checkout@v4
+        with:
+          path: 'plugins/private/CloudCompare-PythonRuntime'
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt install -y build-essential cmake ninja-build xvfb doxygen graphviz
+          sudo apt install -y qt6-base-dev qt6-svg-dev qt6-tools-dev qt6-tools-dev-tools pybind11-dev
+          python3 -m pip install -r plugins/private/CloudCompare-PythonRuntime/requirements-dev.txt
+
+      - name: Configure CMake
+        shell: pwsh
+        run: |
+          mkdir build
+          cmake  `
+            -G Ninja `
+            -B build `
+            -DPLUGIN_PYTHON=ON `
+            -DOPTION_BUILD_CCVIEWER=OFF `
+            -DCMAKE_BUILD_TYPE=Release `
+            -DPLUGIN_STANDARD_QM3C2=ON `
+            .
+
+      # Initializes the CodeQL tools for scanning.
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          # If you wish to specify custom queries, you can do so here or in a config file.
+          # By default, queries listed here will override any specified in a config file.
+          # Prefix the list here with "+" to use these queries and those in the config file.
+
+          # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
+          # queries: security-extended,security-and-quality
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:${{matrix.language}}"
+          checkout_path: 'plugins/private/CloudCompare-PythonRuntime' 
+
