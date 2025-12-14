@@ -60,7 +60,13 @@ void define_ccCommandLine(py::module &m)
 
     py::class_<ccCommandLineInterface> PyccCommandLineInterface(m, "ccCommandLineInterface");
 
-    py::enum_<ccCommandLineInterface::ExportOption>(PyccCommandLineInterface, "ExportOption");
+    py::enum_<ccCommandLineInterface::ExportOption>(
+        PyccCommandLineInterface, "ExportOption", py::arithmetic())
+        .value("NoOptions", ccCommandLineInterface::ExportOption::NoOptions)
+        .value("ForceCloud", ccCommandLineInterface::ExportOption::ForceCloud)
+        .value("ForceMesh", ccCommandLineInterface::ExportOption::ForceMesh)
+        .value("ForceHierarchy", ccCommandLineInterface::ExportOption::ForceHierarchy)
+        .value("ForceNoTimestamp", ccCommandLineInterface::ExportOption::ForceNoTimestamp);
 
     py::class_<ccCommandLineInterface::GlobalShiftOptions> PyGlobalShiftOptions(
         PyccCommandLineInterface, "GlobalShiftOptions");

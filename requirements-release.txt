@@ -1,2 +1,2 @@
 numpy>=2.0
-pybind11>=2.13.0
+pybind11>=3.0

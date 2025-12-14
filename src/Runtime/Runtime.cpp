@@ -126,7 +126,27 @@ void unsetCmdLineInterfaceInstance() noexcept
 
 PYBIND11_EMBEDDED_MODULE(ccinternals, m)
 {
-    py::enum_<Qt::GlobalColor>(m, "GlobalColor");
+    py::enum_<Qt::GlobalColor>(m, "GlobalColor")
+        .value("color0", Qt::color0)
+        .value("color1", Qt::color1)
+        .value("black", Qt::black)
+        .value("white", Qt::white)
+        .value("darkGray", Qt::darkGray)
+        .value("gray", Qt::gray)
+        .value("lightGray", Qt::lightGray)
+        .value("red", Qt::red)
+        .value("green", Qt::green)
+        .value("blue", Qt::blue)
+        .value("cyan", Qt::cyan)
+        .value("magenta", Qt::magenta)
+        .value("yellow", Qt::yellow)
+        .value("darkRed", Qt::darkRed)
+        .value("darkGreen", Qt::darkGreen)
+        .value("darkBlue", Qt::darkBlue)
+        .value("darkCyan", Qt::darkCyan)
+        .value("darkMagenta", Qt::darkMagenta)
+        .value("darkYellow", Qt::darkYellow)
+        .value("transparent", Qt::transparent);
 
     py::class_<QColor>(m, "QColor");
 
