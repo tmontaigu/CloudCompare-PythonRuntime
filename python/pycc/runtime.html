@@ -296,7 +296,7 @@ Get selected objects, deselect/set selected state for entities…</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccPythonInstance.getSelectedEntities">
-<span class="sig-name descname"><span class="pre">getSelectedEntities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="data_structures.html#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">pycc.ccHObject</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.getSelectedEntities" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">getSelectedEntities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pycc.ccPythonInstance" title="pycc_runtime.ccPythonInstance"><span class="pre">pycc_runtime.ccPythonInstance</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="data_structures.html#pycc.ccHObject" title="pycc.ccHObject"><span class="pre">pycc.ccHObject</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pycc.ccPythonInstance.getSelectedEntities" title="Link to this definition"></a></dt>
 <dd><p>Returns the list of selected entities in the GUI DB Tree</p>
 </dd></dl>
 
@@ -365,6 +365,36 @@ and then returns loaded object handle.</p>
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.ExportOption">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ExportOption</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.ExportOption" title="Link to this definition"></a></dt>
 <dd><p>Members:</p>
+<p>NoOptions</p>
+<p>ForceCloud</p>
+<p>ForceMesh</p>
+<p>ForceHierarchy</p>
+<p>ForceNoTimestamp</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccCommandLineInterface.ExportOption.ForceCloud">
+<span class="sig-name descname"><span class="pre">ForceCloud</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ExportOption.ForceCloud:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#pycc.ccCommandLineInterface.ExportOption.ForceCloud" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccCommandLineInterface.ExportOption.ForceHierarchy">
+<span class="sig-name descname"><span class="pre">ForceHierarchy</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ExportOption.ForceHierarchy:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#pycc.ccCommandLineInterface.ExportOption.ForceHierarchy" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccCommandLineInterface.ExportOption.ForceMesh">
+<span class="sig-name descname"><span class="pre">ForceMesh</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ExportOption.ForceMesh:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#pycc.ccCommandLineInterface.ExportOption.ForceMesh" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccCommandLineInterface.ExportOption.ForceNoTimestamp">
+<span class="sig-name descname"><span class="pre">ForceNoTimestamp</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ExportOption.ForceNoTimestamp:</span> <span class="pre">8&gt;</span></em><a class="headerlink" href="#pycc.ccCommandLineInterface.ExportOption.ForceNoTimestamp" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycc.ccCommandLineInterface.ExportOption.NoOptions">
+<span class="sig-name descname"><span class="pre">NoOptions</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ExportOption.NoOptions:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#pycc.ccCommandLineInterface.ExportOption.NoOptions" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.ExportOption.name">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.ExportOption.name" title="Link to this definition"></a></dt>
@@ -459,7 +489,7 @@ and then returns loaded object handle.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pycc.ccCommandLineInterface.exportEntity">
-<span class="sig-name descname"><span class="pre">exportEntity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">pycc_runtime.ccCommandLineInterface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entityDesc:</span> <span class="pre">pycc_runtime.CLEntityDesc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix:</span> <span class="pre">QString</span> <span class="pre">=</span> <span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputFilename:</span> <span class="pre">QString</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options:</span> <span class="pre">QFlags&lt;ccCommandLineInterface::ExportOption&gt;</span> <span class="pre">=</span> <span class="pre">&lt;ExportOption.???:</span> <span class="pre">0&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QString</span></span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.exportEntity" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">exportEntity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">pycc_runtime.ccCommandLineInterface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entityDesc:</span> <span class="pre">pycc_runtime.CLEntityDesc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix:</span> <span class="pre">QString</span> <span class="pre">=</span> <span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputFilename:</span> <span class="pre">QString</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options:</span> <span class="pre">QFlags&lt;ccCommandLineInterface::ExportOption&gt;</span> <span class="pre">=</span> <span class="pre">&lt;ExportOption.NoOptions:</span> <span class="pre">0&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QString</span></span></span><a class="headerlink" href="#pycc.ccCommandLineInterface.exportEntity" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
