@@ -27,7 +27,7 @@ void define_GenericCloud(py::module &cccorelib)
 {
     py::class_<CCCoreLib::GenericCloud>(cccorelib, "GenericCloud")
         .def("size", &CCCoreLib::GenericCloud::size)
-        .def("forEach", &CCCoreLib::GenericCloud::forEach, "action"_a)
+        .def("setPointScalarValues", &CCCoreLib::GenericCloud::setPointScalarValues, "value"_a)
         .def("getBoundingBox", &CCCoreLib::GenericCloud::getBoundingBox, "bbMin"_a, "bbMax"_a)
         .def("testVisibility", &CCCoreLib::GenericCloud::testVisibility, "P"_a)
         .def("placeIteratorAtBeginning", &CCCoreLib::GenericCloud::placeIteratorAtBeginning)

@@ -166,7 +166,9 @@ static const constexpr char SIZE_SCALAR_FIELD_DOCSTRING[] = R"doc(
 #define DEFINE_POINTCLOUDTPL(T, StringType, module, name)                                                    \
     py::class_<CCCoreLib::PointCloudTpl<T, StringType>, T>(module, name)                                     \
         .def("size", &CCCoreLib::PointCloudTpl<T, StringType>::size, SIZE_SCALAR_FIELD_DOCSTRING)            \
-        .def("forEach", &CCCoreLib::PointCloudTpl<T, StringType>::forEach, "action"_a)                       \
+        .def("setPointScalarValues",                                                                         \
+             &CCCoreLib::PointCloudTpl<T, StringType>::setPointScalarValues,                                 \
+             "value"_a)                                                                                      \
         .def("getBoundingBox",                                                                               \
              &CCCoreLib::PointCloudTpl<T, StringType>::getBoundingBox,                                       \
              "bbMin"_a,                                                                                      \

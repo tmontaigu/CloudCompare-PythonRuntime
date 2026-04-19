@@ -283,6 +283,7 @@ void define_ScalarField(py::module &cccorelib)
         .def("fill",
              &CCCoreLib::ScalarField::fill,
              "fillValue"_a = 0,
+             "autoResetOffset"_a = true,
              "Fills the scalar field with the given value")
         .def(
             "reserve",

@@ -6,25 +6,6 @@ import cccorelib
 import pycc
 
 
-def test_foreach_get_bounding_box(cloud):
-    bbMin = cccorelib.CCVector3(sys.float_info.max, sys.float_info.max, sys.float_info.max)
-
-    def updatebbMin(point, _scalarValue):
-        bbMin.x = min(point.x, bbMin.x)
-        bbMin.y = min(point.y, bbMin.y)
-        bbMin.z = min(point.z, bbMin.z)
-
-    cloud.forEach(updatebbMin)
-
-    actualMin = cccorelib.CCVector3()
-    actualMax = cccorelib.CCVector3()
-    cloud.getBoundingBox(actualMin, actualMax)
-
-    assert math.isclose(actualMin.x, bbMin.x)
-    assert math.isclose(actualMin.y, bbMin.y)
-    assert math.isclose(actualMin.z, bbMin.z)
-
-
 def main():
     CC = pycc.GetCmdLineInstance()
 
@@ -33,8 +14,6 @@ def main():
     assert len(cloudDescs) == 1
 
     cloud = cloudDescs[0].pc
-
-    test_foreach_get_bounding_box(cloud)
 
     assert cloud.size() == 10683
     point0 = cloud.getNextPoint()
