@@ -36,8 +36,6 @@ void define_PointProjectionTools(py::module &cccorelib)
         .value("DELAUNAY_2D_AXIS_ALIGNED", CCCoreLib::TRIANGULATION_TYPES::DELAUNAY_2D_AXIS_ALIGNED)
         .value("DELAUNAY_2D_BEST_LS_PLANE", CCCoreLib::TRIANGULATION_TYPES::DELAUNAY_2D_BEST_LS_PLANE);
 
-    py::class_<CCCoreLib::SquareMatrixTpl<double>> PySquareMatrixd(cccorelib, "SquareMatrixd");
-
     py::class_<PointProjectionTools> PyPointProjectionTools(cccorelib, "PointProjectionTools");
     py::class_<PointProjectionTools::Transformation> PyTransformation(PyPointProjectionTools,
                                                                       "Transformation");
