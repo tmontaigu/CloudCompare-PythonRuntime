@@ -92,11 +92,5 @@ void define_ScalarFieldTools(py::module &cccorelib)
                     "theCloud"_a,
                     "K"_a,
                     "kmcc"_a,
-                    "progressCb"_a = nullptr)
-        .def_static(
-            "SetScalarValueToNaN", &CCCoreLib::ScalarFieldTools::SetScalarValueToNaN, "P"_a, "scalarValue"_a)
-        .def_static(
-            "SetScalarValueInverted", &ScalarFieldTools::SetScalarValueInverted, "P"_a, "scalarValue"_a)
-        .def_static(
-            "SetScalarValueInverted", &ScalarFieldTools::SetScalarValueInverted, "P"_a, "scalarValue"_a);
+                    "progressCb"_a = nullptr);
 }

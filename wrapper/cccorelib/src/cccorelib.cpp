@@ -213,36 +213,38 @@ class NumpyCloud : public CCCoreLib::GenericIndexedCloud
         return static_cast<unsigned int>(m_xs.size());
     }
 
-    void forEach(genericPointAction action) override
+    void setPointScalarValues(ScalarType value) override
+    {
+        // TODO: not supported
+    }
+
+    void getBoundingBox(CCVector3 &bbMin, CCVector3 &bbMax) override
     {
         auto xs = m_xs.mutable_unchecked<1>();
         auto ys = m_xs.mutable_unchecked<1>();
         auto zs = m_xs.mutable_unchecked<1>();
 
-        CCVector3 p;
         for (size_t i{0}; i < size(); ++i)
         {
-            p.x = xs(i);
-            p.y = ys(i);
-            p.z = zs(i);
-
-            ScalarType todoScalar = 0;
-            action(p, todoScalar);
-        };
-    }
-    void getBoundingBox(CCVector3 &bbMin, CCVector3 &bbMax) override
-    {
-        const auto updateMinMax = [&bbMin, &bbMax](const CCVector3 &point, ScalarType _s)
-        {
-            bbMin.x = std::min(point.x, bbMin.x);
-            bbMin.y = std::min(point.y, bbMin.y);
-            bbMin.z = std::min(point.z, bbMin.z);
-            bbMax.x = std::max(point.x, bbMax.x);
-            bbMax.y = std::max(point.y, bbMax.y);
-            bbMax.z = std::max(point.z, bbMax.z);
-        };
-
-        forEach(updateMinMax);
+            if (i != 0)
+            {
+                bbMin.x = std::min(xs(i), bbMin.x);
+                bbMin.y = std::min(ys(i), bbMin.y);
+                bbMin.z = std::min(zs(i), bbMin.z);
+                bbMax.x = std::max(xs(i), bbMax.x);
+                bbMax.y = std::max(ys(i), bbMax.y);
+                bbMax.z = std::max(zs(i), bbMax.z);
+            }
+            else
+            {
+                bbMin.x = xs(i);
+                bbMin.y = ys(i);
+                bbMin.z = zs(i);
+                bbMax.x = xs(i);
+                bbMax.y = ys(i);
+                bbMax.z = zs(i);
+            }
+        }
     }
     void placeIteratorAtBeginning() override {}
     const CCVector3 *getNextPoint() override
@@ -331,7 +333,6 @@ void define_cccorelib(py::module &m)
 
     py::class_<NumpyCloud, CCCoreLib::GenericIndexedCloud, CCCoreLib::GenericCloud>(m, "NumpyCloud")
         .def(py::init<py::array>());
-    //        .def("forEach", &NumpyCloud::forEach)
     //        .def("getBoundingBox", &NumpyCloud::getBoundingBox);
 
     // Conjugate Gradient

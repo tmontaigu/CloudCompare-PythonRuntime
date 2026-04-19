@@ -31,7 +31,6 @@ void define_GenericMesh(py::module &cccorelib)
         .def("size", &CCCoreLib::GenericMesh::size, R"pbdoc(
 	Returns the number of triangles
 )pbdoc")
-        .def("forEach", &CCCoreLib::GenericMesh::forEach, "action"_a)
         .def("getBoundingBox", &CCCoreLib::GenericMesh::getBoundingBox, "bbMin"_a, "bbMax"_a, R"pbdoc(
 	Returns the mesh bounding-box
 
