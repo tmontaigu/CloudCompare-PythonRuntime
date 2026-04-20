@@ -30,6 +30,7 @@ set(cccorelib_sources
     ${CMAKE_CURRENT_LIST_DIR}/KdTree.cpp
     ${CMAKE_CURRENT_LIST_DIR}/LocalModel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ManualSegmentationTools.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Neighbourhood.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NormalDistribution.cpp
     ${CMAKE_CURRENT_LIST_DIR}/PointCloud.cpp
     ${CMAKE_CURRENT_LIST_DIR}/PointProjectionTools.cpp

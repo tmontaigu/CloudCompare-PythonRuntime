@@ -112,6 +112,8 @@ void define_ManualSegmentationTools(py::module &);
 
 void define_CCMiscTools(py::module &);
 
+void define_Neighbourhood(py::module &);
+
 void define_NormalDistribution(py::module &);
 
 void define_Delaunay2dMesh(py::module &);
@@ -323,6 +325,7 @@ void define_cccorelib(py::module &m)
     define_CloudSamplingTools(m);
     define_PointProjectionTools(m);
     define_GeometricalAnalysisTools(m);
+    define_Neighbourhood(m);
     define_StatisticalTestingTools(m);
     define_RegistrationTools(m);
 
