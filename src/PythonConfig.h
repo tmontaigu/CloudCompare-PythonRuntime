@@ -119,6 +119,13 @@ class PythonConfig final
         return m_pythonHome;
     }
 
+    const QString &pythonPath() const
+    {
+        return m_pythonPath;
+    }
+
+    QString pythonExecutable() const;
+
     /// Sets the necessary settings of the QProcess so that
     /// it uses the correct Python exe.
     void preparePythonProcess(QProcess &pythonProcess) const;
