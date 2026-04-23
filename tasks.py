@@ -15,6 +15,8 @@ CLANG_FORMAT_CMD = "clang-format -i {}"
 # List of folder names to be ignoreed when formatting
 DISALLOW_LIST = ['_skbuild']
 
+VENV_PYTHON_EXEC = "./venv/bin/python"
+
 
 def filter_paths(paths: Iterable[Path]) -> List[Path]:
     filtered_paths = []
@@ -63,8 +65,6 @@ def cmake_format(c):
 def format(c):
     ...
 
-VENV_PYTHON_EXEC = "./venv/bin/python"
-
 @task
 def create_venv(c):
     if not Path("venv").exists():
@@ -74,7 +74,7 @@ def create_venv(c):
         print("venv already exists")
 
 @task
-def install_ccorelib(c):
+def install_cccorelib(c):
     c.run(f"{VENV_PYTHON_EXEC} -m pip install --verbose wrapper/cccorelib")
 
 @task

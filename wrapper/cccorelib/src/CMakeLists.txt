@@ -27,9 +27,11 @@ set(cccorelib_sources
     ${CMAKE_CURRENT_LIST_DIR}/GenericProgressCallback.cpp
     ${CMAKE_CURRENT_LIST_DIR}/GenericTriangle.cpp
     ${CMAKE_CURRENT_LIST_DIR}/GeometricalAnalysisTools.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Jacobi.cpp
     ${CMAKE_CURRENT_LIST_DIR}/KdTree.cpp
     ${CMAKE_CURRENT_LIST_DIR}/LocalModel.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ManualSegmentationTools.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MeshSamplingTools.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Neighbourhood.cpp
     ${CMAKE_CURRENT_LIST_DIR}/NormalDistribution.cpp
     ${CMAKE_CURRENT_LIST_DIR}/PointCloud.cpp

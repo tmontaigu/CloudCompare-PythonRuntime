@@ -110,7 +110,11 @@ void define_LocalModel(py::module &cccorelib);
 
 void define_ManualSegmentationTools(py::module &);
 
+void define_MeshSamplingTools(py::module &);
+
 void define_CCMiscTools(py::module &);
+
+void define_Jacobi(py::module &);
 
 void define_Neighbourhood(py::module &);
 
@@ -276,6 +280,19 @@ class NumpyCloud : public CCCoreLib::GenericIndexedCloud
 
 void define_cccorelib(py::module &m)
 {
+    // CCTypes.h
+    m.attr("PointCoordinateType") = py::dtype::of<PointCoordinateType>();
+    m.attr("ScalarType") = py::dtype::of<ScalarType>();
+
+    // ConjugateGradient.h:
+    // 	skipped because its a template class over <int N, class Scalar>,
+    // 	while we could put Scalar as double, instanciating it for arbitrary N feels bad
+
+    // ParallelSort.h
+    // 	skipped because is just an alias to std::sort/tbb::parallel_sort
+
+    // MathTools.h: empty
+
     define_CCShareable(m);
 
     define_CCGeom(m);
@@ -320,11 +337,13 @@ void define_cccorelib(py::module &m)
     define_AutoSegmentationTools(m);
     define_DistanceComputationTools(m);
     define_ManualSegmentationTools(m);
+    define_MeshSamplingTools(m);
     define_ScalarFieldTools(m);
     define_ChamferDistanceTransform(m);
     define_CloudSamplingTools(m);
     define_PointProjectionTools(m);
     define_GeometricalAnalysisTools(m);
+    define_Jacobi(m);
     define_Neighbourhood(m);
     define_StatisticalTestingTools(m);
     define_RegistrationTools(m);

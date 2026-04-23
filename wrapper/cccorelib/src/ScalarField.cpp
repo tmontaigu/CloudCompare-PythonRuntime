@@ -280,6 +280,68 @@ void define_ScalarField(py::module &cccorelib)
 )doc")
         .def_static("ValidValue", &CCCoreLib::ScalarField::ValidValue, "value"_a)
         .def("flagValueAsInvalid", &CCCoreLib::ScalarField::flagValueAsInvalid, "index"_a)
+        .def("countValidValues",
+             &CCCoreLib::ScalarField::countValidValues,
+             "Returns the number of finite (valid) values in the field.")
+        .def("getOffset",
+             &CCCoreLib::ScalarField::getOffset,
+             "Returns the offset applied when converting between local (float) and global (double) values.")
+        .def("setOffset",
+             &CCCoreLib::ScalarField::setOffset,
+             "offset"_a,
+             R"doc(
+Sets the offset. Handle with care — all stored (local) values are taken
+relative to the offset, so changing it shifts every returned value.
+
+Note: magnitudes below 100.0 are rounded to 0.0 to avoid precision loss
+at the float level.
+)doc")
+        .def("resetOffset",
+             &CCCoreLib::ScalarField::resetOffset,
+             "Resets the offset to 0.0 and marks it as 'not explicitly set'.")
+        .def("clear",
+             &CCCoreLib::ScalarField::clear,
+             "Empties the scalar field and resets the offset state.")
+        .def("invert",
+             &CCCoreLib::ScalarField::invert,
+             R"doc(
+Inverts every value in place.
+
+The internal offset is inverted alongside the stored values so
+``getValue(i)`` returns the negated original.
+)doc")
+        .def("swap",
+             &CCCoreLib::ScalarField::swap,
+             "i1"_a,
+             "i2"_a,
+             "Swaps the values at the two given indices.")
+        .def("getLocalValue",
+             &CCCoreLib::ScalarField::getLocalValue,
+             "index"_a,
+             "Returns the raw float value at ``index`` (no offset applied).")
+        .def("setLocalValue",
+             &CCCoreLib::ScalarField::setLocalValue,
+             "index"_a,
+             "value"_a,
+             "Sets the raw float value at ``index`` (no offset adjustment).")
+        .def(
+            "getLocalValues",
+            [](const CCCoreLib::ScalarField &self)
+            {
+                py::array_t<float> out(self.currentSize());
+                auto access = out.mutable_unchecked<1>();
+                const float *data = self.getLocalValues();
+                for (unsigned i = 0; i < self.currentSize(); ++i)
+                {
+                    access[i] = data[i];
+                }
+                return out;
+            },
+            R"doc(
+Returns a copy of the raw float values as a numpy array (no offset applied).
+
+For offset-applied values, use :meth:`toArray`.
+)doc")
         .def("fill",
              &CCCoreLib::ScalarField::fill,
              "fillValue"_a = 0,
