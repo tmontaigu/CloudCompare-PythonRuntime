@@ -514,10 +514,10 @@
         <li><a href="python/cccorelib/tools.html#cccorelib.CloudSamplingTools.RESAMPLING_CELL_METHOD.CELL_GRAVITY_CENTER">(cccorelib.CloudSamplingTools.RESAMPLING_CELL_METHOD attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python/cccorelib/data_structures.html#cccorelib.DgmOctree.NearestNeighboursSearchStruct.cellCenter">cellCenter (cccorelib.DgmOctree.NearestNeighboursSearchStruct property)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python/cccorelib/data_structures.html#cccorelib.DgmOctree.NearestNeighboursSearchStruct.cellPos">cellPos (cccorelib.DgmOctree.NearestNeighboursSearchStruct property)</a>
 </li>
       <li><a href="python/cccorelib/data_structures.html#cccorelib.DgmOctree.CellDescriptor.center">center (cccorelib.DgmOctree.CellDescriptor property)</a>
@@ -544,6 +544,8 @@
         <li><a href="python/cccorelib/data_structures.html#cccorelib.Polyline.clear">(cccorelib.Polyline method)</a>
 </li>
         <li><a href="python/cccorelib/data_structures.html#cccorelib.ReferenceCloud.clear">(cccorelib.ReferenceCloud method)</a>
+</li>
+        <li><a href="python/cccorelib/data_structures.html#cccorelib.ScalarField.clear">(cccorelib.ScalarField method)</a>
 </li>
         <li><a href="python/cccorelib/data_structures.html#cccorelib.SimpleMesh.clear">(cccorelib.SimpleMesh method)</a>
 </li>
@@ -669,6 +671,8 @@
       <li><a href="python/cccorelib/data_structures.html#cccorelib.KDTree.IndicesVector.count">count() (cccorelib.KDTree.IndicesVector method)</a>
 </li>
       <li><a href="python/cccorelib/tools.html#cccorelib.ScalarFieldTools.countScalarFieldValidValues">countScalarFieldValidValues() (cccorelib.ScalarFieldTools static method)</a>
+</li>
+      <li><a href="python/cccorelib/data_structures.html#cccorelib.ScalarField.countValidValues">countValidValues() (cccorelib.ScalarField method)</a>
 </li>
       <li><a href="python/pycc/data_structures.html#pycc.ccPointCloud.crop2D">crop2D() (pycc.ccPointCloud method)</a>
 </li>
@@ -1216,12 +1220,16 @@
 </li>
       <li><a href="python/pycc/primitives.html#pycc.ccQuadric.getLocalOrientation">getLocalOrientation() (pycc.ccQuadric method)</a>
 </li>
-      <li><a href="python/pycc/runtime.html#pycc.ccPythonInstance.getMainWindow">getMainWindow() (pycc.ccPythonInstance method)</a>
+      <li><a href="python/cccorelib/data_structures.html#cccorelib.ScalarField.getLocalValue">getLocalValue() (cccorelib.ScalarField method)</a>
 </li>
-      <li><a href="python/pycc/data_structures.html#pycc.ccGenericMesh.getMaterialSet">getMaterialSet() (pycc.ccGenericMesh method)</a>
+      <li><a href="python/cccorelib/data_structures.html#cccorelib.ScalarField.getLocalValues">getLocalValues() (cccorelib.ScalarField method)</a>
+</li>
+      <li><a href="python/pycc/runtime.html#pycc.ccPythonInstance.getMainWindow">getMainWindow() (pycc.ccPythonInstance method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/pycc/data_structures.html#pycc.ccGenericMesh.getMaterialSet">getMaterialSet() (pycc.ccGenericMesh method)</a>
+</li>
       <li><a href="python/cccorelib/data_structures.html#cccorelib.ScalarField.getMax">getMax() (cccorelib.ScalarField method)</a>
 </li>
       <li><a href="python/cccorelib/data_structures.html#cccorelib.BoundingBox.getMaxBoxDim">getMaxBoxDim() (cccorelib.BoundingBox method)</a>
@@ -1283,6 +1291,8 @@
       <li><a href="python/cccorelib/data_structures.html#cccorelib.DgmOctree.getOctreeMaxs">getOctreeMaxs() (cccorelib.DgmOctree method)</a>
 </li>
       <li><a href="python/cccorelib/data_structures.html#cccorelib.DgmOctree.getOctreeMins">getOctreeMins() (cccorelib.DgmOctree method)</a>
+</li>
+      <li><a href="python/cccorelib/data_structures.html#cccorelib.ScalarField.getOffset">getOffset() (cccorelib.ScalarField method)</a>
 </li>
       <li><a href="python/pycc/others.html#pycc.cc2DViewportObject.getParameters">getParameters() (pycc.cc2DViewportObject method)</a>
 </li>
@@ -1590,9 +1600,11 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="python/pycc/others.html#pycc.ccGLMatrix.invert">invert() (pycc.ccGLMatrix method)</a>
+      <li><a href="python/cccorelib/data_structures.html#cccorelib.ScalarField.invert">invert() (cccorelib.ScalarField method)</a>
 
       <ul>
+        <li><a href="python/pycc/others.html#pycc.ccGLMatrix.invert">(pycc.ccGLMatrix method)</a>
+</li>
         <li><a href="python/pycc/others.html#pycc.ccGLMatrixd.invert">(pycc.ccGLMatrixd method)</a>
 </li>
       </ul></li>
@@ -2306,6 +2318,8 @@
       </ul></li>
       <li><a href="python/pycc/data_structures.html#pycc.ccHObject.resetGLTransformationHistory">resetGLTransformationHistory() (pycc.ccHObject method)</a>
 </li>
+      <li><a href="python/cccorelib/data_structures.html#cccorelib.ScalarField.resetOffset">resetOffset() (cccorelib.ScalarField method)</a>
+</li>
       <li><a href="python/cccorelib/data_structures.html#cccorelib.ReferenceCloud.resize">resize() (cccorelib.ReferenceCloud method)</a>
 
       <ul>
@@ -2504,6 +2518,8 @@
 </li>
       <li><a href="python/pycc/others.html#pycc.ccCameraSensor.setIntrinsicParameters">setIntrinsicParameters() (pycc.ccCameraSensor method)</a>
 </li>
+      <li><a href="python/cccorelib/data_structures.html#cccorelib.ScalarField.setLocalValue">setLocalValue() (cccorelib.ScalarField method)</a>
+</li>
       <li><a href="python/pycc/others.html#pycc.ccColorScale.setLocked">setLocked() (pycc.ccColorScale method)</a>
 
       <ul>
@@ -2532,6 +2548,8 @@
       </ul></li>
       <li><a href="python/pycc/data_structures.html#pycc.ccPointCloud.setNormals">setNormals() (pycc.ccPointCloud method)</a>
 </li>
+      <li><a href="python/cccorelib/data_structures.html#cccorelib.ScalarField.setOffset">setOffset() (cccorelib.ScalarField method)</a>
+</li>
       <li><a href="python/pycc/others.html#pycc.cc2DViewportObject.setParameters">setParameters() (pycc.cc2DViewportObject method)</a>
 </li>
       <li><a href="python/pycc/others.html#pycc.ccGBLSensor.setPitchRange">setPitchRange() (pycc.ccGBLSensor method)</a>
@@ -2554,6 +2572,8 @@
 </li>
       <li><a href="python/pycc/others.html#pycc.cc2DLabel.setPosition">setPosition() (pycc.cc2DLabel method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python/pycc/primitives.html#pycc.ccCylinder.setRadius">setRadius() (pycc.ccCylinder method)</a>
 
       <ul>
@@ -2562,8 +2582,6 @@
         <li><a href="python/pycc/primitives.html#pycc.ccSphere.setRadius">(pycc.ccSphere method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python/pycc/others.html#pycc.ccColorScale.setRelative">setRelative() (pycc.ccColorScale method)</a>
 </li>
       <li><a href="python/pycc/others.html#pycc.cc2DLabel.setRelativeMarkerScale">setRelativeMarkerScale() (pycc.cc2DLabel method)</a>
@@ -2763,7 +2781,11 @@
       <li><a href="python/cccorelib/tools.html#cccorelib.CloudSamplingTools.subsampleCloudWithOctreeAtLevel">subsampleCloudWithOctreeAtLevel() (cccorelib.CloudSamplingTools static method)</a>
 </li>
       <li><a href="python/cccorelib/data_structures.html#cccorelib.ReferenceCloud.swap">swap() (cccorelib.ReferenceCloud method)</a>
+
+      <ul>
+        <li><a href="python/cccorelib/data_structures.html#cccorelib.ScalarField.swap">(cccorelib.ScalarField method)</a>
 </li>
+      </ul></li>
       <li><a href="python/pycc/data_structures.html#pycc.ccHObject.swapChildren">swapChildren() (pycc.ccHObject method)</a>
 </li>
       <li><a href="python/pycc/others.html#pycc.ccScalarField.symmetricalScale">symmetricalScale() (pycc.ccScalarField method)</a>
