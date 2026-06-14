@@ -14,11 +14,11 @@ In GUI, there are 4 actions:
 -  The editor which allows to create,edit,save python script and most importantly run them.
     .. image:: ../images/python-editor-icon.png
 
--  The file runner, which shows a small dialog where you can select a file and run it 
+-  The file runner, which shows a small dialog where you can select a file and run it
    without having to have the editor opened.
     .. image:: ../images/runner-icon.png
 
--  The action launcher which shows the list plugins written in Python and their registered actions 
+-  The action launcher which shows the list plugins written in Python and their registered actions
    that you can use.
     .. image:: ../images/launcher-icon.png
 
@@ -52,13 +52,12 @@ ______
 It is also possible to create scripts or module that register actions
 that will then be launch-able from the Ui, a bit like regular C++ plugins do.
 
-
 In the plugin settings, you can indicate a path where custom python plugins are
 stored. When starting up, the indicated folder will be scanned and all python modules
-(.py files or folders) will be imported, which will allow them to register their actions
-using the :func:`pycc.RegisterAction` function.
+(.py files or folders) will be imported, which will allow automatically register
+all them to register all classes derived from :class:`pycc.PythonPluginInterface`.
 
-You can create a `class` plugin by creating a class that implements
+You can create a plugin by creating a class that implements
 the :class:`pycc.PythonPluginInterface`.
 See `this <https://github.com/tmontaigu/CloudCompare-PythonPlugin/tree/master/script_examples/plugin_examples>`_
 for an example.

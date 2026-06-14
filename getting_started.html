@@ -145,9 +145,9 @@ functions and data-structures of cloudcompare:</p>
 that will then be launch-able from the Ui, a bit like regular C++ plugins do.</p>
 <p>In the plugin settings, you can indicate a path where custom python plugins are
 stored. When starting up, the indicated folder will be scanned and all python modules
-(.py files or folders) will be imported, which will allow them to register their actions
-using the <code class="xref py py-func docutils literal notranslate"><span class="pre">pycc.RegisterAction()</span></code> function.</p>
-<p>You can create a <cite>class</cite> plugin by creating a class that implements
+(.py files or folders) will be imported, which will allow automatically register
+all them to register all classes derived from <a class="reference internal" href="python/pycc/runtime.html#pycc.PythonPluginInterface" title="pycc.PythonPluginInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.PythonPluginInterface</span></code></a>.</p>
+<p>You can create a plugin by creating a class that implements
 the <a class="reference internal" href="python/pycc/runtime.html#pycc.PythonPluginInterface" title="pycc.PythonPluginInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycc.PythonPluginInterface</span></code></a>.
 See <a class="reference external" href="https://github.com/tmontaigu/CloudCompare-PythonPlugin/tree/master/script_examples/plugin_examples">this</a>
 for an example.</p>
