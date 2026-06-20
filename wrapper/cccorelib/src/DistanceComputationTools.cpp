@@ -27,15 +27,11 @@ void define_DistanceComputationTools(py::module &cccorelib)
     py::class_<CCCoreLib::DistanceComputationTools> DistanceComputationTools(cccorelib,
                                                                              "DistanceComputationTools");
 
-    py::enum_<CCCoreLib::DistanceComputationTools::MEASURE_TYPE>(DistanceComputationTools,
-                                                                   "ERRPOR_MEASURES")
+    py::enum_<CCCoreLib::DistanceComputationTools::MEASURE_TYPE>(DistanceComputationTools, "MEASURE_TYPE")
         .value("RMS", CCCoreLib::DistanceComputationTools::MEASURE_TYPE::RMS)
-        .value("MAX_DIST_68_PERCENT",
-               CCCoreLib::DistanceComputationTools::MEASURE_TYPE::MAX_DIST_68_PERCENT)
-        .value("MAX_DIST_95_PERCENT",
-               CCCoreLib::DistanceComputationTools::MEASURE_TYPE::MAX_DIST_95_PERCENT)
-        .value("MAX_DIST_99_PERCENT",
-               CCCoreLib::DistanceComputationTools::MEASURE_TYPE::MAX_DIST_99_PERCENT)
+        .value("MAX_DIST_68_PERCENT", CCCoreLib::DistanceComputationTools::MEASURE_TYPE::MAX_DIST_68_PERCENT)
+        .value("MAX_DIST_95_PERCENT", CCCoreLib::DistanceComputationTools::MEASURE_TYPE::MAX_DIST_95_PERCENT)
+        .value("MAX_DIST_99_PERCENT", CCCoreLib::DistanceComputationTools::MEASURE_TYPE::MAX_DIST_99_PERCENT)
         .value("MAX_DIST", CCCoreLib::DistanceComputationTools::MEASURE_TYPE::MAX_DIST)
         .export_values();
 }
