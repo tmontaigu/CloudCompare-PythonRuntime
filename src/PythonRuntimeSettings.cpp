@@ -36,6 +36,8 @@
 
 #include <memory>
 
+namespace py = pybind11;
+
 /// Simple Dialog that displays a Line Edit with a button next to it
 /// to let the user select a path to a directory
 class PathVariableInputDialog final : public QDialog
@@ -275,7 +277,18 @@ void PythonRuntimeSettings::handleCreateVenv()
 
     try
     {
-        const auto createVenvFn = pybind11::module_::import("venv").attr("create");
+// On Windows we create the venv with ensurepip, to allow users to use the "Package Manager" GUI
+// with the newly created venv. ensurepip is only "sure" on Windows, Linux distro packages do not
+// "ensure" ensurepip (sic.). On macOS it should be sure, but macOS bundle has some quirks, so we
+// stay conservative for now.
+#if defined(Q_OS_WINDOWS)
+        const py::module_ venvModule = py::module_::import("venv");
+        const py::object envBuilder = venvModule.attr("EnvBuilder");
+        const py::object builder = envBuilder(py::arg("with_pip") = true);
+        const auto createVenvFn = builder.attr("create");
+#else
+        const auto createVenvFn = py::module_::import("venv").attr("create");
+#endif
         createVenvFn(path);
     }
     catch (const std::exception &e)
