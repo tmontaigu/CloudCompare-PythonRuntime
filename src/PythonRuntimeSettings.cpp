@@ -277,9 +277,10 @@ void PythonRuntimeSettings::handleCreateVenv()
 
     try
     {
-// On Windows we create the venv with ensurepip, to allow users to use the "Package Manager" GUI with the newly created venv.
-// ensurepip is only "sure" on Windows, Linux distro packages do not "ensure" ensurepip (sic.).
-// On macOS it should be sure, but macOS bundle has some quirks, so we stay conservative for now.
+// On Windows we create the venv with ensurepip, to allow users to use the "Package Manager" GUI
+// with the newly created venv. ensurepip is only "sure" on Windows, Linux distro packages do not
+// "ensure" ensurepip (sic.). On macOS it should be sure, but macOS bundle has some quirks, so we
+// stay conservative for now.
 #if defined(Q_OS_WINDOWS)
         const py::module_ venvModule = py::module_::import("venv");
         const py::object envBuilder = venvModule.attr("EnvBuilder");
