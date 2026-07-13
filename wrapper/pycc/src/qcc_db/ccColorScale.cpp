@@ -60,8 +60,8 @@ void define_ccColorScale(py::module &m)
                  self.getAbsoluteBoundaries(minVal, maxVal);
                  return py::make_tuple(minVal, maxVal);
              })
-        .def("isLocked", &ccColorScale::isLocked)
-        .def("setLocked", &ccColorScale::setLocked, "state"_a)
+        .def("isReadOnly", &ccColorScale::isReadOnly)
+        .def("setReadOnly", &ccColorScale::setReadOnly, "state"_a)
         .def("setCustomLabels", &ccColorScale::setCustomLabels, "labels"_a)
         .def("stepCount", &ccColorScale::stepCount)
         .def("step",

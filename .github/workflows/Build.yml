@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: b61e465568ae23b17131929b4dba2ba9e5aec48b
+          ref: 4024ed1e288dcf0d35e13d3f46cf9c8522724854
           submodules: recursive
 
       - name: Clone PythonRuntime
@@ -80,7 +80,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: b61e465568ae23b17131929b4dba2ba9e5aec48b
+          ref: 4024ed1e288dcf0d35e13d3f46cf9c8522724854
           submodules: recursive
 
       - name: Clone PythonRuntime
@@ -106,6 +106,7 @@ jobs:
             -DOPTION_BUILD_CCVIEWER=OFF `
             -DCMAKE_BUILD_TYPE=Release `
             -DPLUGIN_STANDARD_QM3C2=ON `
+            -DOPTION_SUPPORT_3DMOUSE_WITH_HIDAPI=OFF `
             .
 
       - name: Build
@@ -148,7 +149,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: b61e465568ae23b17131929b4dba2ba9e5aec48b
+          ref: 4024ed1e288dcf0d35e13d3f46cf9c8522724854
           submodules: recursive
 
       - name: Clone PythonRuntime
