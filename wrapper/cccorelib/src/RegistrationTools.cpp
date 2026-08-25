@@ -110,6 +110,8 @@ void define_RegistrationTools(py::module &cccorelib)
         .def_readwrite("minRMSDecrease", &CCCoreLib::ICPRegistrationTools::Parameters::minRMSDecrease)
         .def_readwrite("nbMaxIterations", &CCCoreLib::ICPRegistrationTools::Parameters::nbMaxIterations)
         .def_readwrite("adjustScale", &CCCoreLib::ICPRegistrationTools::Parameters::adjustScale)
+        .def_readwrite("minScale", &CCCoreLib::ICPRegistrationTools::Parameters::minScale)
+        .def_readwrite("maxScale", &CCCoreLib::ICPRegistrationTools::Parameters::maxScale)
         .def_readwrite("filterOutFarthestPoints",
                        &CCCoreLib::ICPRegistrationTools::Parameters::filterOutFarthestPoints)
         .def_readwrite("samplingLimit", &CCCoreLib::ICPRegistrationTools::Parameters::samplingLimit)

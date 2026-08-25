@@ -25,7 +25,7 @@ if(CCCORELIB_PYTHON_IS_MASTER_PROJECT)
     GIT_REPOSITORY https://github.com/CloudCompare/CCCoreLib
     GIT_PROGRESS ON
     GIT_SHALLOW OFF
-    GIT_TAG 4095bea6552096cb528c3b8b5cb9505df2aa6002
+    GIT_TAG 623f09efd65dbeef0f06830ff9b9bbb7cc07142c
   )
 
   FetchContent_GetProperties(CCCoreLib)

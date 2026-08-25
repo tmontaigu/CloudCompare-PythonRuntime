@@ -104,7 +104,8 @@ void define_CloudSamplingTools(py::module &cccorelib)
                                   "knn"_a = 6,
                                   "nSigma"_a = 1.0,
                                   "octree"_a = nullptr,
-                                  "progressCb"_a = nullptr);
+                                  "progressCb"_a = nullptr,
+                                  "maxThreadCount"_a = 0);
 
     CloudSamplingTools.def_static("noiseFilter",
                                   &CCCoreLib::CloudSamplingTools::noiseFilter,
@@ -117,5 +118,6 @@ void define_CloudSamplingTools(py::module &cccorelib)
                                   "useAbsoluteError"_a = true,
                                   "absoluteError"_a = true,
                                   "octree"_a = nullptr,
-                                  "progressCb"_a = nullptr);
+                                  "progressCb"_a = nullptr,
+                                  "maxThreadCount"_a = 0);
 }

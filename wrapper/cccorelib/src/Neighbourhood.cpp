@@ -74,6 +74,8 @@ Typically suited to handle "nearest neighbours" of a point in a cloud.
         .value("EigenValue1", Neighbourhood::EigenValue1)
         .value("EigenValue2", Neighbourhood::EigenValue2)
         .value("EigenValue3", Neighbourhood::EigenValue3)
+        .value("DegreeOfPlanarity", Neighbourhood::DegreeOfPlanarity)
+        .value("DegreeOfLinearity", Neighbourhood::DegreeOfLinearity)
         .export_values();
 
     PyNeighbourhood.attr("IGNORE_MAX_EDGE_LENGTH") = Neighbourhood::IGNORE_MAX_EDGE_LENGTH;
