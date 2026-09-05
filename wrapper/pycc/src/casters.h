@@ -1,3 +1,4 @@
+#pragma once
 // ##########################################################################
 // #                                                                        #
 // #                CLOUDCOMPARE PLUGIN: PythonRuntime                       #
@@ -14,9 +15,6 @@
 // #                   COPYRIGHT: Thomas Montaigu                           #
 // #                                                                        #
 // ##########################################################################
-
-#ifndef PYTHON_PLUGIN_CASTERS_H
-#define PYTHON_PLUGIN_CASTERS_H
 
 #include <QSharedPointer>
 #include <QString>
@@ -130,139 +128,39 @@ template <> struct type_caster<QVariant>
     static handle cast(const QVariant &src, return_value_policy policy, handle handle)
     {
         pybind11::object h = none();
-        switch (src.type())
+        switch (src.metaType().id())
         {
-        case QVariant::Invalid:
+        case QMetaType::Void:
             break;
-        case QVariant::Bool:
+        case QMetaType::Bool:
             h = pybind11::cast(src.toBool(), policy, handle);
             break;
-        case QVariant::Int:
+        case QMetaType::Int:
             h = pybind11::cast(src.toInt(), policy, handle);
             break;
-        case QVariant::UInt:
+        case QMetaType::UInt:
             h = pybind11::cast(src.toUInt(), policy, handle);
             break;
-        case QVariant::LongLong:
+        case QMetaType::LongLong:
             h = pybind11::cast(src.toLongLong(), policy, handle);
             break;
-        case QVariant::ULongLong:
+        case QMetaType::ULongLong:
             h = pybind11::cast(src.toULongLong(), policy, handle);
             break;
-        case QVariant::Double:
+        case QMetaType::Double:
             h = pybind11::cast(src.toDouble(), policy, handle);
             break;
-        case QVariant::Char:
+        case QMetaType::Char:
             h = pybind11::cast(src.toChar(), policy, handle);
             break;
-        case QVariant::String:
+        case QMetaType::QString:
             h = pybind11::cast(src.toString(), policy, handle);
             break;
-        case QVariant::Map:
-            Q_FALLTHROUGH();
-        case QVariant::List:
-            Q_FALLTHROUGH();
-        case QVariant::StringList:
-            Q_FALLTHROUGH();
-        case QVariant::ByteArray:
+        case QMetaType::QByteArray:
             h = pybind11::cast(src.toByteArray(), policy, handle);
             break;
-        case QVariant::BitArray:
-            Q_FALLTHROUGH();
-        case QVariant::Date:
-            Q_FALLTHROUGH();
-        case QVariant::Time:
-            Q_FALLTHROUGH();
-        case QVariant::DateTime:
-            Q_FALLTHROUGH();
-        case QVariant::Url:
-            Q_FALLTHROUGH();
-        case QVariant::Locale:
-            Q_FALLTHROUGH();
-        case QVariant::Rect:
-            Q_FALLTHROUGH();
-        case QVariant::RectF:
-            Q_FALLTHROUGH();
-        case QVariant::Size:
-            Q_FALLTHROUGH();
-        case QVariant::SizeF:
-            Q_FALLTHROUGH();
-        case QVariant::Line:
-            Q_FALLTHROUGH();
-        case QVariant::LineF:
-            Q_FALLTHROUGH();
-        case QVariant::Point:
-            Q_FALLTHROUGH();
-        case QVariant::PointF:
-            Q_FALLTHROUGH();
-        case QVariant::RegularExpression:
-            Q_FALLTHROUGH();
-        case QVariant::Hash:
-            Q_FALLTHROUGH();
-        case QVariant::EasingCurve:
-            Q_FALLTHROUGH();
-        case QVariant::Uuid:
-            Q_FALLTHROUGH();
-        case QVariant::ModelIndex:
-            Q_FALLTHROUGH();
-        case QVariant::PersistentModelIndex:
-            Q_FALLTHROUGH();
-        case QVariant::LastCoreType:
-            Q_FALLTHROUGH();
-        case QVariant::Font:
-            Q_FALLTHROUGH();
-        case QVariant::Pixmap:
-            Q_FALLTHROUGH();
-        case QVariant::Brush:
-            Q_FALLTHROUGH();
-        case QVariant::Color:
-            Q_FALLTHROUGH();
-        case QVariant::Palette:
-            Q_FALLTHROUGH();
-        case QVariant::Image:
-            Q_FALLTHROUGH();
-        case QVariant::Polygon:
-            Q_FALLTHROUGH();
-        case QVariant::Region:
-            Q_FALLTHROUGH();
-        case QVariant::Bitmap:
-            Q_FALLTHROUGH();
-        case QVariant::Cursor:
-            Q_FALLTHROUGH();
-        case QVariant::KeySequence:
-            Q_FALLTHROUGH();
-        case QVariant::Pen:
-            Q_FALLTHROUGH();
-        case QVariant::TextLength:
-            Q_FALLTHROUGH();
-        case QVariant::TextFormat:
-            Q_FALLTHROUGH();
-        case QVariant::Transform:
-            Q_FALLTHROUGH();
-        case QVariant::Matrix4x4:
-            Q_FALLTHROUGH();
-        case QVariant::Vector2D:
-            Q_FALLTHROUGH();
-        case QVariant::Vector3D:
-            Q_FALLTHROUGH();
-        case QVariant::Vector4D:
-            Q_FALLTHROUGH();
-        case QVariant::Quaternion:
-            Q_FALLTHROUGH();
-        case QVariant::Icon:
-            Q_FALLTHROUGH();
-        case QVariant::LastGuiType:
-            Q_FALLTHROUGH();
-        case QVariant::SizePolicy:
-            Q_FALLTHROUGH();
-        case QVariant::UserType:
-            Q_FALLTHROUGH();
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-        case QVariant::PolygonF:
-            Q_FALLTHROUGH();
-#endif
-        case QVariant::LastType:
-            throw std::runtime_error("Cannot convert this QVariant to python object");
+        default:
+            throw std::runtime_error("Cannot convert this QMetaType to python object");
         }
         return h.release();
     }
@@ -270,4 +168,3 @@ template <> struct type_caster<QVariant>
 
 } // namespace detail
 } // namespace pybind11
-#endif // PYTHON_PLUGIN_CASTERS_H
