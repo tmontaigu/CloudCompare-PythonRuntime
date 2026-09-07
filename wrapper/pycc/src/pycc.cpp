@@ -131,7 +131,19 @@ void define_someQtThings(py::module &m)
                         std::to_string(self.height()) + ")>";
              });
 
-    py::class_<QPointF>(m, "QPointF");
+    py::class_<QPointF>(m, "QPointF")
+        .def(py::init<>())
+        .def(py::init<qreal, qreal>(), "x"_a, "y"_a)
+        .def("x", &QPointF::x)
+        .def("y", &QPointF::y)
+        .def("isNull", &QPointF::isNull)
+        .def("__repr__",
+             [](const QPointF &self)
+             {
+                 return std::string("<QPointF(") + std::to_string(self.x()) + ", " +
+                        std::to_string(self.y()) + ")>";
+             });
+
     py::enum_<Qt::CursorShape>(m, "QtCursorShape")
         .value("ArrowCursor", Qt::CursorShape::ArrowCursor)
         .value("UpArrowCursor", Qt::CursorShape::UpArrowCursor)

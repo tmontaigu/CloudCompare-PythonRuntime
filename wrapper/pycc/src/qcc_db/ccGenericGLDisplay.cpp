@@ -105,6 +105,7 @@ void define_ccGenericGLDisplay(py::module &m)
              "cameraMatrix"_a,
              "fov_deg"_a = 0.0f,
              "viewerBasedPerspective"_a = true,
-             "bubbleViewMode"_a = false);
+             "bubbleViewMode"_a = false,
+             "projectionCenterOffset"_a = QPointF());
     // TODO as widget
 }

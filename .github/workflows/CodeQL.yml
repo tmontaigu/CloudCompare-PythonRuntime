@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: 'CloudCompare/CloudCompare'
-          ref: fc2fe88a33ca9e406aab43b3bda6a9c6d38a2313
+          ref: 04942bfd61458d9b67b10beb0690dcefdb2debb4
           submodules: recursive
 
       - name: Clone PythonRuntime
