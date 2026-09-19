@@ -18,6 +18,7 @@
 #ifndef PYTHON_PLUGIN_CONSOLES_H
 #define PYTHON_PLUGIN_CONSOLES_H
 
+#include <QBrush>
 #include <QListWidget>
 #include <QString>
 
@@ -107,27 +108,30 @@ class ccConsoleOutput
 
   private:
     const QString m_prefix;
-    ConsoleWrapper m_output{[this](const QString &message)
+    /// The callback must capture the values it needs, not "this":
+    /// because instances of this class are moved by pybind11...
+    ConsoleWrapper m_output{[prefix = m_prefix](const QString &message)
                             {
-                                if (m_prefix.isEmpty())
+                                if (prefix.isEmpty())
                                 {
                                     ccLog::Print(message);
                                 }
                                 else
                                 {
-                                    ccLog::Print(m_prefix + message);
+                                    ccLog::Print(prefix + message);
                                 }
                             }};
 };
 
 /// Writes messages to the QListWidget given
+///
 class ListWidgetConsole
 {
   public:
     ListWidgetConsole(QListWidget *view, const Qt::GlobalColor color) : m_view(view), m_brush(color)
     {
     }
-    ListWidgetConsole(QListWidget *view, const QColor &color) : m_view(view), m_brush() {}
+    ListWidgetConsole(QListWidget *view, const QColor &color) : m_view(view), m_brush(color) {}
     explicit ListWidgetConsole(QListWidget *view) : m_view(view), m_brush() {}
 
     void write(const char *messagePart)
@@ -147,12 +151,13 @@ class ListWidgetConsole
   private:
     QListWidget *m_view;
     QBrush m_brush;
-    QString m_prefix;
-    ConsoleWrapper m_output{[this](const QString &message)
+    /// callback must capture the values it needs, not "this".
+    /// because instances of this class are moved by pybind11...
+    ConsoleWrapper m_output{[view = m_view, brush = m_brush](const QString &message)
                             {
                                 auto *messageItem = new QListWidgetItem(message);
-                                messageItem->setForeground(m_brush);
-                                m_view->addItem(messageItem);
+                                messageItem->setForeground(brush);
+                                view->addItem(messageItem);
                             }};
 };
 #endif // PYTHON_PLUGIN_CONSOLES_H
