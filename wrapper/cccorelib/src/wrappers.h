@@ -18,7 +18,6 @@
 #ifndef PYTHON_PLUGIN_WRAPPERS_H
 #define PYTHON_PLUGIN_WRAPPERS_H
 
-#include <CCShareable.h>
 #include <CCTypes.h>
 #include <PointCloudTpl.h>
 
@@ -32,52 +31,6 @@ namespace py = pybind11;
 using namespace pybind11::literals;
 
 /// A unique_ptr that never free its ptr.
-template <class T> using observer_ptr = std::unique_ptr<T, py::nodelete>;
-
-/// A holder type for any type that inherits CCShareable
-///
-/// CCShareable is CC's ref counted mechanism.
-/// It works by inheritance + manual call to link/release.
-template <class T> class CCShareableHolder
-{
-  public:
-    static_assert(std::is_base_of<CCShareable, T>::value == true, "T must be a subclass of CCShareable");
-
-    CCShareableHolder() = default;
-
-    explicit CCShareableHolder(T *obj) : m_ptr(obj)
-    {
-        if (m_ptr)
-        {
-            m_ptr->link();
-        }
-    }
-
-    T *get()
-    {
-        return m_ptr;
-    }
-
-    const T *get() const
-    {
-        return m_ptr;
-    }
-
-    ~CCShareableHolder()
-    {
-        if (m_ptr)
-        {
-            m_ptr->release();
-            m_ptr = nullptr;
-        }
-    }
-
-  private:
-    T *m_ptr = nullptr;
-};
-
-PYBIND11_DECLARE_HOLDER_TYPE(T, CCShareableHolder<T>);
-
 namespace PyCC
 {
 inline void NoOpDelete(void *) {}
@@ -257,7 +210,7 @@ static const constexpr char SIZE_SCALAR_FIELD_DOCSTRING[] = R"doc(
                         throw py::value_error("value must have the same len as the poinc cloud size");       \
                     }                                                                                        \
                     auto values_u = values.unchecked<1>();                                                   \
-                    CCCoreLib::ScalarField *sf = self.getScalarField(idx);                                   \
+                    CCCoreLib::ScalarField::Shared sf = self.getScalarField(idx);                            \
                     for (py::ssize_t i{0}; i < values.size(); ++i)                                           \
                     {                                                                                        \
                         sf->setValue(i, values_u(i));                                                        \

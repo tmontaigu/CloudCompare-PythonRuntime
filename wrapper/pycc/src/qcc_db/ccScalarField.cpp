@@ -28,8 +28,8 @@ using namespace pybind11::literals;
 
 void define_ccScalarField(py::module &m)
 {
-    py::class_<ccScalarField, CCCoreLib::ScalarField, CCShareableHolder<ccScalarField>>
-        pyScalarField(m, "ccScalarField");
+    py::class_<ccScalarField, CCCoreLib::ScalarField, std::shared_ptr<ccScalarField>> pyScalarField(
+        m, "ccScalarField");
 
     py::class_<ccScalarField::Range>(pyScalarField, "Range")
         .def(py::init<>())

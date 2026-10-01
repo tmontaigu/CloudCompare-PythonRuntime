@@ -50,8 +50,6 @@ void define_CCConst(py::module &);
 
 void define_SquareMatrix(py::module &);
 
-void define_CCShareable(py::module &);
-
 void define_ChamferDistanceTransform(py::module &);
 
 void define_CloudSamplingTools(py::module &);
@@ -292,8 +290,6 @@ void define_cccorelib(py::module &m)
     // 	skipped because is just an alias to std::sort/tbb::parallel_sort
 
     // MathTools.h: empty
-
-    define_CCShareable(m);
 
     define_CCGeom(m);
     define_CCMath(m);

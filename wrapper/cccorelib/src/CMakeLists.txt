@@ -8,7 +8,6 @@ set(cccorelib_sources
     ${CMAKE_CURRENT_LIST_DIR}/CCGeom.cpp
     ${CMAKE_CURRENT_LIST_DIR}/CCMath.cpp
     ${CMAKE_CURRENT_LIST_DIR}/CCMiscTools.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/CCShareable.cpp
     ${CMAKE_CURRENT_LIST_DIR}/ChamferDistanceTransform.cpp
     ${CMAKE_CURRENT_LIST_DIR}/CloudSamplingTools.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Delaynay2dMesh.cpp

@@ -138,12 +138,14 @@ void define_qcc_db(py::module &m)
         m, "_VectorCompressedNormType", py::module_local(true));
 #endif
 
-    // Cannot have CCShareable as we would require CCShareable holder, but
-    // VectorCompressedNormType does not have 'non-default holder type'.
     // We need to do a proper ccArray wrapping
+    // The holder can't be another holder than std::unique_ptr because
+    // type "_NormsIndexesArrayType" has a non-default holder type while its base
+    // "std::vector<unsigned int, std::allocator<unsigned int> >" does not have one
+    // (and older is only possible for custom types)
+    // with obverver_ptr, the array is always managed by the CC/C++ side.
     py::class_<ccArrayCompressedNormType,
                VectorCompressedNormType,
-               // CCShareable,
                ccHObject,
                observer_ptr<ccArrayCompressedNormType>>(m, "_NormsIndexesArrayType");
     // py::class_<NormsIndexesTableType, ccArrayCompressedNormType>(m, "NormsIndexesTableType")

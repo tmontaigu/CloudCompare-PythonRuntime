@@ -383,7 +383,7 @@ void define_ccPointCloud(py::module &m)
             "colors",
             [](ccPointCloud &self) -> py::object
             {
-                RGBAColorsTableType *colorsTable = self.rgbaColors();
+                RGBAColorsTableType::Shared colorsTable = self.rgbaColors();
                 if (colorsTable == nullptr)
                 {
                     return py::none();
