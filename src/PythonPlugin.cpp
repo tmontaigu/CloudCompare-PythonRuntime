@@ -259,7 +259,7 @@ QList<QAction *> PythonPlugin::getActions()
         QStringList loaded_paths =
             settings->value(QStringLiteral("RegisterListPath")).value<QStringList>();
 
-        for (QString path : loaded_paths)
+        for (const QString& path : loaded_paths)
         {
             QFileInfo fi(path);
             if (!fi.exists())

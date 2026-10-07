@@ -139,7 +139,7 @@ inline void LogPythonPath()
         char *cPythonPath = Py_EncodeLocale(pythonPath, &errPos);
         if (cPythonPath)
         {
-            ccLog::Print("[PythonRuntime] PythonPath is set to: %s", cPythonPath);
+            ccLog::Printf("[PythonRuntime] PythonPath is set to: %s", cPythonPath);
             PyMem_Free(cPythonPath);
         }
         else
@@ -163,7 +163,7 @@ inline void LogPythonHome()
         char *cPythonHome = Py_EncodeLocale(pythonHome, &errPos);
         if (cPythonHome)
         {
-            ccLog::Print("[PythonRuntime] PythonHome is set to: %s", cPythonHome);
+            ccLog::Printf("[PythonRuntime] PythonHome is set to: %s", cPythonHome);
             PyMem_Free(cPythonHome);
         }
         else

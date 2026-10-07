@@ -54,7 +54,6 @@ void define_ccColorScalesManager(py::module &m)
         .def_static("GetUniqueInstance",
                     &ccColorScalesManager::GetUniqueInstance,
                     py::return_value_policy::reference)
-        .def_static("ReleaseUniqueInstance", &ccColorScalesManager::ReleaseUniqueInstance)
         .def_static("GetDefaultScaleUUID", &ccColorScalesManager::GetDefaultScaleUUID, "scale"_a)
         .def_static("GetDefaultScale",
                     &ccColorScalesManager::GetDefaultScale,

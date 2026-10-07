@@ -34,7 +34,7 @@ void define_ccLog(py::module &m)
     Use one of the static method to log a message
 )pbdoc");
     PyccLog.def_static("TheInstance", &ccLog::TheInstance, py::return_value_policy::reference);
-    PyccLog.def_static("LogMessage", &ccLog::LogMessage, "message"_a, "level"_a, R"pbdoc(
+    PyccLog.def_static("LogMessage", &ccLog::LogMessage, "message"_a, "level"_a, "time_ns"_a=-1, R"pbdoc(
     Logs a message with the given level.
 
     Parameters
@@ -43,6 +43,9 @@ void define_ccLog(py::module &m)
         The message to log
     level: pycc.ccLog.MessageLevelFlags
         The severity level of the message
+    time_ns: int
+        Timestamp in nanoseconds. default to -1, compute the timestamp as the elapsed time since
+        ccLog::statt().
 
     Example
     -------

@@ -1,8 +1,8 @@
 #include "PyPrintLogger.h"
 
-void PyPrintLogger::logMessage(const QString &message, int level)
+void PyPrintLogger::logMessage(const Message &message)
 {
     std::lock_guard<std::mutex> guard(m_lock);
-    const std::string stdMsg = message.toStdString();
+    const std::string stdMsg = message.text.toStdString();
     py::print(stdMsg.c_str());
 }

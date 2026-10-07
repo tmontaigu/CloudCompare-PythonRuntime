@@ -30,7 +30,6 @@ void define_ccNormalVectors(py::module &m)
     py::class_<ccNormalVectors> pyNormalVectors(m, "ccNormalVectors");
 
     pyNormalVectors.def_static("GetUniqueInstance", &ccNormalVectors::GetUniqueInstance)
-        .def_static("ReleaseUniqueInstance", &ccNormalVectors::ReleaseUniqueInstance)
         .def_static("GetNumberOfVectors", &ccNormalVectors::GetNumberOfVectors)
         .def_static("GetNormal", &ccNormalVectors::GetNormal, "normIndex"_a)
         .def("getNormal", &ccNormalVectors::getNormal, "normIndex"_a)

@@ -205,7 +205,7 @@ void define_pycc(py::module &m)
     }
     catch (std::exception &e)
     {
-        ccLog::Print("Failed to import wrapped plugins: ", e.what());
+        ccLog::Printf("Failed to import wrapped plugins: %s", e.what());
     }
 
 #ifdef DEFINE_PYCC_RUNTIME
@@ -215,7 +215,7 @@ void define_pycc(py::module &m)
     }
     catch (std::exception &e)
     {
-        ccLog::Print("Failed to import pycc_runtime content: ", e.what());
+        ccLog::Printf("Failed to import pycc_runtime content: %s", e.what());
     }
 #endif
 }

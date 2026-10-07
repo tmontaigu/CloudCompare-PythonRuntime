@@ -23,7 +23,7 @@ class PyPrintLogger : public ccLog
 
     ~PyPrintLogger() override = default;
 
-    void logMessage(const QString &message, int level) override;
+    void logMessage(const Message &message) override;
 
   private:
     std::mutex m_lock;

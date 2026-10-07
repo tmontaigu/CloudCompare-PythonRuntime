@@ -45,9 +45,9 @@ void define_ccGenericMesh(py::module &m)
             "getTriangleTexCoordinates",
             [](ccGenericMesh &self, unsigned triIndex)
             {
-                TexCoords2D *tx1, *tx2, *tx3;
+                const TexCoords2D *tx1, *tx2, *tx3;
                 self.getTriangleTexCoordinates(triIndex, tx1, tx2, tx3);
-                return py::make_tuple(tx1, tx2, tx2);
+                return py::make_tuple(tx1, tx2, tx3);
             },
             "triIndex"_a,
             py::return_value_policy::reference)
@@ -75,7 +75,7 @@ void define_ccGenericMesh(py::module &m)
             "getTriangleNormals",
             [](ccGenericMesh &self, unsigned triangleIndex)
             {
-                CCVector3 Na, Nb, Nc;
+                const CCVector3 *Na = nullptr, *Nb = nullptr, *Nc = nullptr;
                 self.getTriangleNormals(triangleIndex, Na, Nb, Nc);
                 return py::make_tuple(Na, Nb, Nc);
             },
