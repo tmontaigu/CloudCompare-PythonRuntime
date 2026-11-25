@@ -373,7 +373,7 @@ void PackageManager::handleInstallPackage()
     QStringList arguments = {"-m", "pip", "install", packageName};
     if (installDialog.force())
     {
-        arguments.push_back("--force");
+        arguments.push_back("--break-system-packages");
     }
     if (installDialog.upgrade())
     {
@@ -412,7 +412,8 @@ void PackageManager::handleUninstallPackage()
         {
             continue;
         }
-        const QStringList arguments = {"-m", "pip", "uninstall", "--yes", packageName};
+        const QStringList arguments = {
+            "-m", "pip", "uninstall", "--yes", "--break-system-packages", packageName};
         executeCommand(arguments);
 
         if (m_pythonProcess->exitCode() != 0)
